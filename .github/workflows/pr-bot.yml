@@ -1,0 +1,75 @@
+name: pr-bot
+
+# One comment per pull request, kept up to date: how to fix the text gates, which checks the change needs, a welcome for
+# first contributions. The text is built by tools/pr_bot.py from fixed strings; no model runs here.
+#
+# Why `pull_request_target`: a pull request from a fork gets a read-only token on `pull_request`, so it cannot comment.
+# This is the "pwn request" pattern that GitHub Security Lab warns about ("Keeping your GitHub Actions and workflows
+# secure: Preventing pwn requests", https://securitylab.github.com/resources/github-actions-preventing-pwn-requests/)
+# and that zizmor reports as `dangerous-triggers`. It is safe here because all four of these hold, and the gate
+# tools/gates/workflows.py refuses the workflow if the first one breaks:
+#   1. only the BASE branch is checked out, never the head of the pull request, and no PR code runs;
+#   2. title, text, file list and author come through `gh api` into files and are read as data by the base's own
+#      scripts (python3 -I); they reach no shell command line and no `${{ }}` expression;
+#   3. the token has `contents: read` and `pull-requests: write` only, no other secret exists in the job;
+#   4. text of the pull request reaches the comment only inside inline code spans (tools/pr_bot.py).
+# A change of this file in a pull request does not apply to that pull request: the base's version runs.
+
+on:
+  pull_request_target: # zizmor: ignore[dangerous-triggers] -- see the header: base checkout, data only, minimal token
+    types: [opened, synchronize, reopened, edited]
+
+# No default permissions; the job asks for what it needs.
+permissions: {}
+
+concurrency:
+  group: pr-bot-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  comment:
+    # Dependabot pull requests have no template.
+    if: github.event.pull_request.user.login != 'dependabot[bot]'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # The base branch (the default for this event, stated so nobody changes it): its scripts are trusted.
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: false
+      - name: Read the pull request through the API (data only)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          # The API, not the event payload: the payload is the state at the time of the event, a later edit is newer.
+          dir="$RUNNER_TEMP/pr"
+          mkdir -p "$dir"
+          gh api "repos/$GH_REPO/pulls/$PR_NUMBER" > "$dir/pr.json"
+          jq -r '.title' "$dir/pr.json" > "$dir/title.txt"
+          jq -r '.body // ""' "$dir/pr.json" > "$dir/body.md"
+          jq -r '.author_association' "$dir/pr.json" > "$dir/association.txt"
+          jq -r '.user.login' "$dir/pr.json" > "$dir/author.txt"
+          gh api --paginate "repos/$GH_REPO/pulls/$PR_NUMBER/files" --jq '.[] | .filename, (.previous_filename // empty)' > "$dir/files.txt"
+      - name: Build the comment (the base's own script)
+        run: python3 -I tools/pr_bot.py --dir "$RUNNER_TEMP/pr" --out "$RUNNER_TEMP/pr/comment.md"
+      - name: Create or update the comment
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          comment="$RUNNER_TEMP/pr/comment.md"
+          [ -s "$comment" ] || exit 0
+          # Only the bot's own comment counts: its login and the fixed first line, so nobody can hijack it by copying the line.
+          id=$(gh api --paginate "repos/$GH_REPO/issues/$PR_NUMBER/comments" \
+            --jq '.[] | select(.user.login == "github-actions[bot]" and (.body | startswith("**Pull request checks**"))) | .id' | head -n 1)
+          if [ -n "$id" ]; then
+            gh api --method PATCH "repos/$GH_REPO/issues/comments/$id" -F "body=@$comment" > /dev/null
+          else
+            gh api --method POST "repos/$GH_REPO/issues/$PR_NUMBER/comments" -F "body=@$comment" > /dev/null
+          fi

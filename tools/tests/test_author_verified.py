@@ -61,3 +61,20 @@ def test_box_of_another_section_is_ignored():
 
 def test_comment_starts_with_marker():
     assert av.COMMENT.splitlines()[0] == av.COMMENT_FIRST_LINE
+
+
+def test_main_state_reads_the_file(tmp_path, capsys):
+    body = tmp_path / "body.md"
+    body.write_text("### AI use\n\n- [x] I verified this report myself.\n", encoding="utf-8")
+    assert av.main(["author_verified.py", "state", str(body)]) == 0
+    assert capsys.readouterr().out.strip() == "verified"
+
+
+def test_main_comment_prints_the_comment(capsys):
+    assert av.main(["author_verified.py", "comment"]) == 0
+    assert capsys.readouterr().out.strip() == av.COMMENT.strip()
+
+
+def test_main_without_arguments_prints_usage(capsys):
+    assert av.main(["author_verified.py"]) == 2
+    assert capsys.readouterr().err

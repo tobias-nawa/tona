@@ -18,6 +18,8 @@ line):
 - `labels.yml`, job `sync`: on push to main that touches `.github/labels.tsv`, and by hand, it creates or updates the
   labels from that file (`scripts/sync-labels.sh`, also used by `scripts/github-setup.sh`). It is additive: a label that
   is not in the file is never deleted, so removing one from the file means deleting it in the GitHub UI.
+- `pr-bot.yml`: keeps one comment per pull request (text gates, needed checks, welcome); it is a script with fixed
+  text, not a model ([github.md](../contribute/github.md)).
 
 Labels (`.github/labels.tsv`, at most 16): `accepted`, `needs-info`, `needs-repro`, `confirmed`, `cannot-repro`,
 `owner-needed`, `help-wanted`, `wontfix`, `orphaned`, `bug`, `backend`, `docs`, `model`, `feature`, `author-verified`,

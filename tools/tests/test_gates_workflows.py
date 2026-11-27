@@ -111,3 +111,29 @@ def test_files_outside_the_workflow_directory_are_ignored(repo, monkeypatch):
 def test_without_arguments_checks_the_tracked_workflows(repo, monkeypatch):
     write(repo, ".github/workflows/w.yml", with_job("    runs-on: self-hosted"))
     assert run(monkeypatch) == 1
+
+
+TARGET = "name: t\non:\n  pull_request_target:\njobs:\n  a:\n    runs-on: ubuntu-latest\n    steps:\n{step}\n"
+
+
+@pytest.mark.parametrize(
+    "step",
+    [
+        "      - uses: actions/checkout@abc\n        with:\n          ref: ${{ github.event.pull_request.head.sha }}",
+        "      - uses: actions/checkout@abc\n        with:\n          ref: ${{ github.head_ref }}",
+        "      - uses: actions/checkout@abc\n        with:\n          ref: refs/pull/1/merge",
+    ],
+)
+def test_pull_request_target_must_not_touch_the_head(repo, monkeypatch, capsys, step):
+    write(repo, ".github/workflows/w.yml", TARGET.format(step=step))
+    assert run(monkeypatch, ".github/workflows/w.yml") == 1
+    assert "head of the pull request" in capsys.readouterr().err
+
+
+def test_pull_request_target_on_the_base_and_head_outside_it_pass(repo, monkeypatch):
+    base = "      - uses: actions/checkout@abc\n        with:\n          ref: main  # not pull_request.head\n"
+    write(repo, ".github/workflows/w.yml", TARGET.format(step=base))
+    write(repo, ".github/workflows/x.yml", GOOD.replace("echo", "echo $X # pull_request.head.sha"))
+    other = "name: t\non: pull_request\njobs:\n  a:\n    steps:\n      - with:\n          ref: ${{ github.head_ref }}\n"
+    write(repo, ".github/workflows/y.yml", other)
+    assert run(monkeypatch, *(f".github/workflows/{n}.yml" for n in "wxy")) == 0
