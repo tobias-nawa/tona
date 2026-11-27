@@ -187,14 +187,9 @@ echo "# https://docs.github.com/en/rest/actions/permissions#set-the-fork-pr-cont
 call PUT actions/permissions/fork-pr-contributor-approval '{"approval_policy": "all_external_contributors"}'
 
 section "Labels (.github/labels.tsv)"
-while IFS=$'\t' read -r name color description; do
-    [[ -z $name || $name == \#* ]] && continue
-    if ((apply)); then
-        gh label create "$name" --repo "$repo" --color "$color" --description "$description" --force >/dev/null
-    else
-        printf 'gh label create %q --repo %q --color %q --description %q --force\n' "$name" "$repo" "$color" "$description"
-    fi
-done <"$(dirname "$0")/../.github/labels.tsv"
+sync_args=("$repo")
+((apply)) && sync_args+=(--apply)
+"$(dirname "$0")/sync-labels.sh" "${sync_args[@]}"
 
 if ((!apply)); then
     echo
