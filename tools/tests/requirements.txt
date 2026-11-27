@@ -177,9 +177,9 @@ coverage==7.17.3 \
     --hash=sha256:ff273110e4e1505ef7a642523ba43f58eb6770ae9e8f869d72efea816cb4bc2c \
     --hash=sha256:ff5069e99039739c2fade5dd12cf8df7dc1b1217a0b915110605e0bbdddf1187
     # via -r requirements.in
-diff-cover==11.0.3 \
-    --hash=sha256:64319dae259dc860eef89ce05cc4f27c0fd69f6fc69cbbd7fb7d4fc2e5a219a3 \
-    --hash=sha256:f97cfe094567922e4d7fd063262c5fca36d6325296813dc5814d7439e1c3a733
+diff-cover==11.0.4 \
+    --hash=sha256:41555d73bc237dc35e42927feb70729dc2fb0a6d2ece8c14cfb10d5f4a48b551 \
+    --hash=sha256:595b03ab755c49bce82c0dd9572e3d3466dd25e32bf19856e8d101991a536921
     # via -r requirements.in
 gcovr==8.8 \
     --hash=sha256:0320230a432c033c1a41f34ba943082f450008c789bee05d414e532f380fd788 \
