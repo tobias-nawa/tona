@@ -7,6 +7,7 @@ What protects the repository on GitHub and what to check by hand.
 | File | What it does |
 |---|---|
 | `.github/workflows/check.yml` | code gates (pre-commit incl. actionlint, zizmor) on changes and all files, installer build |
+| `.github/workflows/pr-bot.yml`, `tools/pr_bot.py` | one comment per pull request, updated in place: how to fix the failed text gates, which checks the change needs, a welcome for first contributions. Fixed text, no model |
 | `.github/workflows/codeql.yml`, `.github/codeql/codeql-config.yml` | CodeQL for C/C++, Python, workflows; every PR, `main`, weekly; `engine/third_party/` ignored |
 | `.github/workflows/scorecard.yml` | OpenSSF Scorecard (SARIF, public score) |
 | `.github/workflows/release.yml` | tag `v*`: builds, attests, creates a **draft**; no secrets ([docs/maintain/release.md](../maintain/release.md)) |
@@ -16,7 +17,10 @@ What protects the repository on GitHub and what to check by hand.
 | `scripts/github-setup.sh` | settings that exist only in the API |
 
 Every workflow (zizmor): `permissions: {}` at the top, least privilege per job; `persist-credentials: false`; actions
-pinned to a full SHA with the version as a comment; no `pull_request_target`, no `workflow_run` with fork code.
+pinned to a full SHA with the version as a comment; no `workflow_run` with fork code; `pull_request_target` only in `pr-bot.yml`: it must comment on fork pull requests, so it checks out the base branch
+only, reads title, text and file list through `gh api` as data, and has `pull-requests: write` and `contents: read` and nothing else
+([Preventing pwn requests](https://securitylab.github.com/resources/github-actions-preventing-pwn-requests/); zizmor `dangerous-triggers` is ignored there with the reason in the file;
+`tools/gates/workflows.py` refuses the head of the pull request in any such workflow).
 `tools/gates/workflows.py` also refuses `statuses: write`, `self-hosted` and `github.event.*` in `run:` (use `env:`).
 Dependabot does not see the tools in `additional_dependencies` of `.pre-commit-config.yaml` (clang-format, lizard,
 gitleaks): update them by hand with the files they reformat.
