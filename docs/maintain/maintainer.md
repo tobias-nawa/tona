@@ -8,6 +8,9 @@ No bot reads the text of issues and pull requests from outsiders (prompt injecti
 [Comment and Control](https://labs.cloudsecurityalliance.org/research/csa-research-note-comment-control-github-prompt-injection-20/)):
 no stale bot, auto-labeler, AI reviewer, vouch system or SBOM.
 
+Automations: `pr-bot.yml` keeps one comment per pull request (text gates, needed checks, welcome); it is a script with
+fixed text, not a model ([github.md](../contribute/github.md)).
+
 Labels (`.github/labels.tsv`, at most 15): `accepted`, `needs-info`, `needs-repro`, `confirmed`, `cannot-repro`,
 `owner-needed`, `help-wanted`, `wontfix`, `unverified`, `orphaned`, `bug`, `backend`, `docs`, `model`, `feature`, plus
 one label per accepted backend. The next step of an issue is exactly one of `needs-info`, `needs-repro`, `confirmed`,
