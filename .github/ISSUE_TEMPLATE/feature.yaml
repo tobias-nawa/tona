@@ -32,5 +32,5 @@ body:
     attributes:
       label: AI use
       options:
-        - label: I wrote or verified this proposal myself; it is not an unchecked AI text.
+        - label: I verified this proposal myself; it is not an unchecked AI text.
           required: true

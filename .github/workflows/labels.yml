@@ -1,0 +1,78 @@
+name: Labels
+
+# Two jobs, both without an action beyond checkout (gh is preinstalled on the runners):
+# - sync: creates or updates the labels of .github/labels.tsv on push to main. Additive: it never deletes a label.
+# - author: sets author-verified or author-unverified from the AI-use box of an issue form. The issue text is
+#   outsider input: it is only read into a file and parsed by tools/author_verified.py, never put into a shell line.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/labels.tsv
+      - scripts/sync-labels.sh
+  workflow_dispatch:
+  issues:
+    types: [opened, edited]
+
+permissions: {}
+
+jobs:
+  sync:
+    if: github.event_name != 'issues'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      issues: write # create and update labels
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Sync labels
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: scripts/sync-labels.sh "$REPO" --apply
+
+  author:
+    if: github.event_name == 'issues'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      issues: write # labels and one comment
+    concurrency:
+      group: author-label-${{ github.event.issue.number }}
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Set the author label
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          ISSUE: ${{ github.event.issue.number }}
+        run: |
+          set -euo pipefail
+          # Read the current text, not the event payload: a quick second edit must win.
+          gh issue view "$ISSUE" --repo "$REPO" --json body --jq .body > "$RUNNER_TEMP/body.md"
+          state=$(python3 tools/author_verified.py state "$RUNNER_TEMP/body.md")
+          [[ $state == none ]] && exit 0
+          labels=$(gh issue view "$ISSUE" --repo "$REPO" --json labels --jq '.labels[].name')
+          other=unverified
+          [[ $state == unverified ]] && other=verified
+          if ! grep -qx "author-$state" <<<"$labels"; then
+            gh issue edit "$ISSUE" --repo "$REPO" --add-label "author-$state"
+          fi
+          if grep -qx "author-$other" <<<"$labels"; then
+            gh issue edit "$ISSUE" --repo "$REPO" --remove-label "author-$other"
+          fi
+          [[ $state == unverified ]] || exit 0
+          # One comment per issue: look for the bot's own earlier one by its fixed first line.
+          first=$(python3 tools/author_verified.py comment | head -n 1)
+          seen=$(gh api "repos/$REPO/issues/$ISSUE/comments" --paginate \
+            --jq '.[] | select(.user.login == "github-actions[bot]") | .body | split("\n")[0]')
+          if ! grep -qxF "$first" <<<"$seen"; then
+            python3 tools/author_verified.py comment > "$RUNNER_TEMP/comment.md"
+            gh issue comment "$ISSUE" --repo "$REPO" --body-file "$RUNNER_TEMP/comment.md"
+          fi

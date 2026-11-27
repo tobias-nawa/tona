@@ -6,22 +6,30 @@ estimates.
 
 No bot reads the text of issues and pull requests from outsiders (prompt injection:
 [Comment and Control](https://labs.cloudsecurityalliance.org/research/csa-research-note-comment-control-github-prompt-injection-20/)):
-no stale bot, auto-labeler, AI reviewer, vouch system or SBOM.
+no AI reviewer, vouch system or SBOM.
 
-## Automations
+**Automations** (`.github/workflows/`; each reads outsider text only through a parser in the repository, never in a shell
+line):
 
-- Issue template check (`.github/workflows/issue-check.yml`, `tools/issue_bot.py`): an empty or `_No response_` required
-  section of the form sets `needs-info` and lists the sections in one comment; filled in later, it updates the comment
-  and removes the label only if it set it. No model reads the text. The AI-use box is left to the author labels.
-- Issue reminder (`.github/workflows/issue-reminder.yml`): `needs-info` and no comment from the author for 14 days: one
-  reminder; after 28 days: closed as not planned, reopenable. Daily; run by hand with `dry-run` to see the plan. Issues
-  only, not pull requests.
+- `labels.yml`, job `author`: from the AI-use box of an issue form it sets `author-verified` (ticked) or
+  `author-unverified` (unticked) when an issue is opened or edited, and switches back when the box changes. The first
+  time it sets `author-unverified` it writes one comment. Forms without the box (backend proposal, blank issue) get
+  neither label. Parser: `tools/author_verified.py`.
+- `labels.yml`, job `sync`: on push to main that touches `.github/labels.tsv`, and by hand, it creates or updates the
+  labels from that file (`scripts/sync-labels.sh`, also used by `scripts/github-setup.sh`). It is additive: a label that
+  is not in the file is never deleted, so removing one from the file means deleting it in the GitHub UI.
+- `issue-check.yml` (`tools/issue_bot.py`): an empty or `_No response_` required section of the form sets `needs-info`
+  and lists the sections in one comment; filled in later, it updates the comment and removes the label only if it set
+  it. No model reads the text. The AI-use box is left to the author labels.
+- `issue-reminder.yml`: `needs-info` and no comment from the author for 14 days: one reminder; after 28 days: closed as
+  not planned, reopenable. Daily; run by hand with `dry-run` to see the plan. Issues only, not pull requests.
 - `pr-bot.yml`: keeps one comment per pull request (text gates, needed checks, welcome); it is a script with fixed
   text, not a model ([github.md](../contribute/github.md)).
 
-Labels (`.github/labels.tsv`, at most 15): `accepted`, `needs-info`, `needs-repro`, `confirmed`, `cannot-repro`,
-`owner-needed`, `help-wanted`, `wontfix`, `unverified`, `orphaned`, `bug`, `backend`, `docs`, `model`, `feature`, plus
-one label per accepted backend. The next step of an issue is exactly one of `needs-info`, `needs-repro`, `confirmed`,
+Labels (`.github/labels.tsv`, at most 16): `accepted`, `needs-info`, `needs-repro`, `confirmed`, `cannot-repro`,
+`owner-needed`, `help-wanted`, `wontfix`, `orphaned`, `bug`, `backend`, `docs`, `model`, `feature`, `author-verified`,
+`author-unverified`, plus one label per accepted backend. The two author labels are set by
+the bot, not by hand. The next step of an issue is exactly one of `needs-info`, `needs-repro`, `confirmed`,
 `owner-needed`, `wontfix`, `help-wanted`. Replies S1 to S7 are at the end.
 
 ## 1. Issue triage
@@ -36,7 +44,7 @@ Weekly, 45 minutes. Start with the filter `is:open no:label`.
    repro from the reporter: `needs-repro`.
 6. Bug on another backend: `backend` plus that backend's label, mention its owner, do not reproduce it. No owner:
    `owner-needed` and S6.
-7. A speed or quality claim needs the format of AGENTS.md rule 2 (S4), else `unverified`.
+7. A speed or quality claim needs the format of AGENTS.md rule 2 (S4), else `needs-info`.
 8. Inactive for 30 days in `needs-info` or `needs-repro`: close with S5; it reopens with the missing answer.
 
 Done when `no:label` is empty; a label and a template reply are enough.
@@ -160,7 +168,7 @@ it is accepted, a pull request is welcome.
 
 **S4 benchmark format.** A speed or quality claim needs several runs with their spread, the rate named (decode or
 prefill), a plan written before the run and one file under `research/measurements/` (AGENTS.md rule 2,
-docs/contribute/measurement.md). Until then I label this `unverified`.
+docs/contribute/measurement.md). Until then I label this `needs-info`.
 
 **S5 closing for inactivity.** I close this because the information asked for did not arrive within 30 days. Reopen it
 with the answer and I will continue.
