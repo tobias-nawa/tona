@@ -1,6 +1,7 @@
 """scripts/release_notes.py: the notes of a version come from CHANGELOG.md, a missing section stops the release."""
 
 import json
+import re
 
 import pytest
 from conftest import ROOT, load_script
@@ -93,8 +94,14 @@ def test_the_notes_end_up_in_the_manifest(tmp_path):
     assert json.loads((tmp_path / "manifest.json").read_text())["changelog"] == notes
 
 
-def test_the_real_changelog_has_the_versioning_statement_and_valid_unreleased_text():
+def test_the_real_changelog_has_the_versioning_statement_and_valid_notes():
     text = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
     assert "## [Unreleased]" in text and "Semantic Versioning" in text and "0.Y.0" in text
-    renamed = text.replace("## [Unreleased]", "## [0.1.0] - 2026-12-01", 1)
-    assert "### Added" in rn.notes_of(renamed, "0.1.0")  # fits the 16 KiB limit, no control characters
+    # The newest released section is what the next build signs; before the first release the draft sits in
+    # [Unreleased], so that one is checked as if it were released.
+    newest = re.search(r"^## \[(\d+\.\d+\.\d+)\] - \d{4}-\d{2}-\d{2}$", text, re.M)
+    if newest:
+        version = newest.group(1)
+    else:
+        version, text = "0.1.0", text.replace("## [Unreleased]", "## [0.1.0] - 2026-12-01", 1)
+    assert "### Added" in rn.notes_of(text, version)  # fits the 16 KiB limit, no control characters
