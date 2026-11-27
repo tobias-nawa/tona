@@ -55,5 +55,5 @@ body:
     attributes:
       label: AI use
       options:
-        - label: I verified this report myself; it is not pasted from an AI tool.
+        - label: I verified this report myself.
           required: true
