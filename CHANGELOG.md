@@ -30,36 +30,42 @@ under `research/`, the code of the engine, and measured speeds.
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-11-27
+
 ### Added
 
-- `tona` asks on its first start (and again with `tona setup`): it detects your hardware, asks what you want to do and in which programming languages, recommends one
-  model per task with its measured speed, strengths and limits, downloads it and sets up the server as a systemd
-  user unit. Autostart is off unless you choose it.
+- `tona` asks on its first start (and again with `tona setup`): it detects your hardware, asks what you want to do
+  and in which programming languages, recommends one model per task with its measured speed, strengths and limits,
+  downloads it and sets up the server (a systemd user unit on Linux, launchd on macOS). Autostart is off unless you
+  choose it.
+- After the installation the setup asks two things, each an explicit tick: add `~/.local/bin` to your PATH (a marked
+  block in your shell profile, removed again by `tona uninstall`) and check for updates once a day.
 - `tona`, the control centre: running conversations with decode and prefill rate, memory, last requests, server
-  start and stop, and a launcher for coding agents that talk to the local server.
+  start and stop, and a launcher for coding agents (Claude Code, OpenCode, Junie, Pi) that talk to the local server.
 - `tona` is the one program you download: setup, control centre, commands without a screen, the coding agents, the
   background server, `tona update` and `tona uninstall`; it needs neither bash nor `jq`.
 - `tona-server`: OpenAI- and Anthropic-compatible API on `127.0.0.1:8662`, optional API key.
-- Three models: Coder (Qwen3.8-Flash-Next, IQ1_M) for coding agents, Ornith 1.5 35B-A3B (Q4_K_M) for coding, strong
-  in Rust, and Nemotron 3.5 Bolt 74B-A9B (2-bit) for knowledge and research. Numbers and limits: README and
-  `BENCHMARKS.md`.
+- Three models on the PC: Coder (Qwen3.8-Flash-Next, IQ1_M) for coding agents, Ornith 1.5 35B-A3B (Q4_K_M) for
+  coding, strong in Rust, and Nemotron 3.5 Bolt 74B-A9B (2-bit) for knowledge and research. Numbers and limits:
+  README and `BENCHMARKS.md`.
 - Updates you switch on yourself: `tona` checks for a new release (two small files, no identifier) and installs
   it only after you confirm. Every release is signed with minisign and carries build attestations.
-
 - Experimental: macOS 15 or newer on Apple silicon (Metal). The release carries prebuilt `tona-server`,
   `tona` and the Metal kernels as `macos-arm64-*` files; `tona` installs them into `~/.local/share/tona`
-  (`tona start`, `tona stop`, `tona update`, optional autostart at login). Not part of the Mac release yet:
-  notarization (a browser download needs one command, see `docs/use/macos.md`).
+  (`tona start`, `tona stop`, `tona update`, optional autostart at login). On the Mac the setup offers the Coder
+  with one agent and 32K context. Not part of the Mac release yet: notarization (a browser download needs one
+  command, see `docs/use/macos.md`).
 
 ### Security
 
 - Releases are installable only with a valid minisign signature of `manifest.json` (published as
   `manifest.json.minisig`); the installer and `tona` check it against keys compiled into the program, then size
-  and SHA-256 of every file. How to check by hand: `docs/maintain/release.md`.
+  and SHA-256 of every file. Release key ID 8023179EE8B21737 (`release/main.pub`), backup key ID
+  DDEC9F11E653337D (`release/backup.pub`). How to check by hand: `docs/maintain/release.md`.
 - Model files are checked against pinned SHA-256 values; a wrong file never gets its final name.
 
 ### Known limits
 
 - Supported: AMD Radeon RX 9060 XT (16 GB) with 64 GB of DDR5 on Linux. Apple silicon with macOS 15 or newer is
-  experimental (see above). Other hardware is not supported yet.
+  experimental (see above): Coder only, one agent. Other hardware is not supported yet.
 - Not built yet, no date promised: reading documents and images, audio to text, reading aloud, image generation.
