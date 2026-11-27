@@ -66,10 +66,11 @@ def test_no_response_counts_as_empty():
     assert "- Proposed change" in plan[1]["body"]
 
 
-def test_unticked_required_box_is_missing_but_optional_field_is_not():
-    plan = bot.check_plan(issue(feature_body(box=" ")), [], TEMPLATES)
-    assert "- AI use" in plan[1]["body"]
-    assert "Effect on speed" not in plan[1]["body"]
+def test_unticked_ai_box_is_left_to_the_author_label_and_optional_field_is_not_missing():
+    assert bot.check_plan(issue(feature_body(box=" ")), [], TEMPLATES) == []
+    plan = bot.check_plan(issue(feature_body(problem="", box=" ")), [], TEMPLATES)
+    assert "- The problem" in plan[1]["body"]
+    assert "- AI use" not in plan[1]["body"] and "Effect on speed" not in plan[1]["body"]
 
 
 def test_template_found_by_label_when_prefix_was_removed():
@@ -173,3 +174,37 @@ def test_only_open_issues_with_the_label_and_no_pull_requests():
 def test_flatten_accepts_slurped_pages_and_plain_lists():
     assert bot.flatten([[{"a": 1}], [{"a": 2}]]) == [{"a": 1}, {"a": 2}]
     assert bot.flatten([{"a": 1}]) == [{"a": 1}]
+
+
+def test_apply_plan_calls_the_api_per_action(monkeypatch, capsys):
+    calls = []
+    monkeypatch.setattr(bot, "gh_api", lambda method, path, payload: calls.append((method, path, payload)))
+    plan = [
+        {"op": "add_label"},
+        {"op": "remove_label"},
+        {"op": "comment", "body": "head\nsecond line"},
+        {"op": "update_comment", "id": 5, "body": "head\nupdated"},
+        {"op": "close"},
+    ]
+    bot.apply_plan(plan, "o/r", 7, dry_run=False)
+    assert [c[0] for c in calls] == ["POST", "DELETE", "POST", "PATCH", "PATCH"]
+    assert calls[3][1] == "repos/o/r/issues/comments/5" and calls[4][2]["state_reason"] == "not_planned"
+    assert "#7: comment (second line)" in capsys.readouterr().out
+
+
+def test_apply_plan_dry_run_calls_nothing(monkeypatch):
+    monkeypatch.setattr(bot, "gh_api", lambda *a: (_ for _ in ()).throw(AssertionError("called")))
+    bot.apply_plan([{"op": "close"}], "o/r", 7, dry_run=True)
+
+
+def test_main_check_and_sweep_in_dry_run(tmp_path, capsys):
+    import json
+
+    (tmp_path / "issue.json").write_text(json.dumps(issue(feature_body(problem=""))), encoding="utf-8")
+    (tmp_path / "comments.json").write_text("[]", encoding="utf-8")
+    (tmp_path / "timeline.json").write_text("[]", encoding="utf-8")
+    common = ["--repo", "o/r", "--issue", str(tmp_path / "issue.json"), "--dry-run"]
+    assert bot.main(["check", *common, "--comments", str(tmp_path / "comments.json")]) == 0
+    assert "#7: add_label" in capsys.readouterr().out
+    sweep = ["sweep", *common, "--timeline", str(tmp_path / "timeline.json"), "--now", "2026-12-31T12:00:00Z"]
+    assert bot.main(sweep) == 0

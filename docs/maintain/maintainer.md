@@ -12,10 +12,12 @@ no stale bot, auto-labeler, AI reviewer, vouch system or SBOM.
 
 - Issue template check (`.github/workflows/issue-check.yml`, `tools/issue_bot.py`): an empty or `_No response_` required
   section of the form sets `needs-info` and lists the sections in one comment; filled in later, it updates the comment
-  and removes the label only if it set it. No model reads the text.
+  and removes the label only if it set it. No model reads the text. The AI-use box is left to the author labels.
 - Issue reminder (`.github/workflows/issue-reminder.yml`): `needs-info` and no comment from the author for 14 days: one
   reminder; after 28 days: closed as not planned, reopenable. Daily; run by hand with `dry-run` to see the plan. Issues
   only, not pull requests.
+- `pr-bot.yml`: keeps one comment per pull request (text gates, needed checks, welcome); it is a script with fixed
+  text, not a model ([github.md](../contribute/github.md)).
 
 Labels (`.github/labels.tsv`, at most 15): `accepted`, `needs-info`, `needs-repro`, `confirmed`, `cannot-repro`,
 `owner-needed`, `help-wanted`, `wontfix`, `unverified`, `orphaned`, `bug`, `backend`, `docs`, `model`, `feature`, plus

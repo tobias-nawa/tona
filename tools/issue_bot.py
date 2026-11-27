@@ -97,6 +97,9 @@ def parse_sections(body: str, labels: list[str]) -> dict[str, str]:
     return {name: "\n".join(lines).strip() for name, lines in sections.items()}
 
 
+AI_USE = "AI use"
+
+
 def _checked(value: str, option: str) -> bool:
     return re.search(rf"^- \[[xX]\] {re.escape(option)}\s*$", value, re.MULTILINE) is not None
 
@@ -107,6 +110,8 @@ def missing_sections(body: str, template: dict) -> list[str]:
     missing = []
     for field in template["fields"]:
         value = sections.get(field["label"], "")
+        if field["label"] == AI_USE:
+            continue  # labels.yml (author-verified/author-unverified) owns this box: one signal, not two
         if field["type"] == "checkboxes":
             needed = [name for name, req in field["options"] if req]
             if any(not _checked(value, name) for name in needed):
