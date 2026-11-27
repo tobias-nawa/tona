@@ -60,5 +60,5 @@ body:
     attributes:
       label: AI use
       options:
-        - label: I verified the facts and links in this proposal myself.
+        - label: I verified the facts and links in this proposal myself; they are not pasted from an AI tool unchecked.
           required: true
