@@ -8,6 +8,15 @@ No bot reads the text of issues and pull requests from outsiders (prompt injecti
 [Comment and Control](https://labs.cloudsecurityalliance.org/research/csa-research-note-comment-control-github-prompt-injection-20/)):
 no stale bot, auto-labeler, AI reviewer, vouch system or SBOM.
 
+## Automations
+
+- Issue template check (`.github/workflows/issue-check.yml`, `tools/issue_bot.py`): an empty or `_No response_` required
+  section of the form sets `needs-info` and lists the sections in one comment; filled in later, it updates the comment
+  and removes the label only if it set it. No model reads the text.
+- Issue reminder (`.github/workflows/issue-reminder.yml`): `needs-info` and no comment from the author for 14 days: one
+  reminder; after 28 days: closed as not planned, reopenable. Daily; run by hand with `dry-run` to see the plan. Issues
+  only, not pull requests.
+
 Labels (`.github/labels.tsv`, at most 15): `accepted`, `needs-info`, `needs-repro`, `confirmed`, `cannot-repro`,
 `owner-needed`, `help-wanted`, `wontfix`, `unverified`, `orphaned`, `bug`, `backend`, `docs`, `model`, `feature`, plus
 one label per accepted backend. The next step of an issue is exactly one of `needs-info`, `needs-repro`, `confirmed`,
@@ -138,7 +147,7 @@ behavior a ban; reports by e-mail only.
 ## Saved replies
 
 **S1 needs info.** Thank you for the report. To look at it I need the missing parts of the form: [list]. I set
-`needs-info`; with the answer I continue. Without one, this closes after 30 days.
+`needs-info`; with the answer I continue. Without one, this closes after 28 days (the issue bot does it).
 
 **S2 moved to Discussions.** This is a question or an idea rather than a defect, so Discussions is the better place. I
 moved it. A feature becomes an issue once a maintainer accepts a proposal.

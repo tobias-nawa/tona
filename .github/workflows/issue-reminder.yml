@@ -1,0 +1,48 @@
+name: issue-reminder
+
+# Issues with `needs-info` and no comment from their author: a reminder after 14 days, closed as not planned after 28
+# (tools/issue_bot.py). Pull requests are left out: `needs-info` is an issue label, and a pull request already
+# waits on its own checks and review (docs/maintain/maintainer.md, runbook 2). Run by hand with dry-run to see the plan
+# without writing anything.
+
+on:
+  schedule:
+    - cron: "17 5 * * *"
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: Print what would happen, change nothing
+        type: boolean
+        default: true
+
+permissions: {}
+
+concurrency:
+  group: issue-reminder
+  cancel-in-progress: false
+
+jobs:
+  sweep:
+    runs-on: ubuntu-24.04
+    permissions:
+      issues: write # comment and close
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Remind and close
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          DRY_RUN: ${{ inputs.dry-run }}
+        run: |
+          # Only issue numbers go through the shell; every text stays in files.
+          numbers=$(gh api --paginate "repos/${REPO}/issues?labels=needs-info&state=open&per_page=100" \
+            --jq '.[] | select(.pull_request | not) | .number')
+          for n in ${numbers}; do
+            gh api "repos/${REPO}/issues/${n}" > "${RUNNER_TEMP}/issue.json"
+            gh api --paginate --slurp "repos/${REPO}/issues/${n}/timeline?per_page=100" > "${RUNNER_TEMP}/timeline.json"
+            python3 tools/issue_bot.py sweep --repo "${REPO}" --issue "${RUNNER_TEMP}/issue.json" \
+              --timeline "${RUNNER_TEMP}/timeline.json"
+          done
