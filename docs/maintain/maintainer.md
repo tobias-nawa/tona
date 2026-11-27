@@ -18,6 +18,11 @@ line):
 - `labels.yml`, job `sync`: on push to main that touches `.github/labels.tsv`, and by hand, it creates or updates the
   labels from that file (`scripts/sync-labels.sh`, also used by `scripts/github-setup.sh`). It is additive: a label that
   is not in the file is never deleted, so removing one from the file means deleting it in the GitHub UI.
+- `issue-check.yml` (`tools/issue_bot.py`): an empty or `_No response_` required section of the form sets `needs-info`
+  and lists the sections in one comment; filled in later, it updates the comment and removes the label only if it set
+  it. No model reads the text. The AI-use box is left to the author labels.
+- `issue-reminder.yml`: `needs-info` and no comment from the author for 14 days: one reminder; after 28 days: closed as
+  not planned, reopenable. Daily; run by hand with `dry-run` to see the plan. Issues only, not pull requests.
 - `pr-bot.yml`: keeps one comment per pull request (text gates, needed checks, welcome); it is a script with fixed
   text, not a model ([github.md](../contribute/github.md)).
 
@@ -152,7 +157,7 @@ behavior a ban; reports by e-mail only.
 ## Saved replies
 
 **S1 needs info.** Thank you for the report. To look at it I need the missing parts of the form: [list]. I set
-`needs-info`; with the answer I continue. Without one, this closes after 30 days.
+`needs-info`; with the answer I continue. Without one, this closes after 28 days (the issue bot does it).
 
 **S2 moved to Discussions.** This is a question or an idea rather than a defect, so Discussions is the better place. I
 moved it. A feature becomes an issue once a maintainer accepts a proposal.
