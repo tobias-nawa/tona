@@ -20,7 +20,7 @@ namespace tona::client {
 
 struct CenterOptions {
     std::string url;         // server to watch (default: the port of the settings)
-    bool autostart = false;  // start the server if none answers (just top / tona without a running server)
+    bool autostart = false;  // start the server if none answers (just tona / tona without a running server)
     std::string tab;         // first page: "start", "models", "agents", "settings"
 };
 

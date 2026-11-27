@@ -1,6 +1,6 @@
-# Code gates as hooks. `just check` runs them on the changes, `just check-all` on every file; CI runs the same.
+# Code gates as hooks. `just lint` runs them on the changes, `just lint-all` on every file; CI runs the same.
 # All tool versions are pinned here (rev / ==version) except clang-tidy, which comes with the ROCm toolchain
-# (toolchain/rocm-10.1.lock) and runs through `just check` (tools/gates/tidy.py). Update a pin together with the
+# (toolchain/rocm-10.1.lock) and runs through `just lint` (tools/gates/tidy.py). Update a pin together with the
 # files it reformats. Hooks only check; `just fmt` rewrites.
 minimum_pre_commit_version: "4.0.0"
 # commit-msg too: the trailer rules (tools/gates/commit_trailers.py) run on the message. Existing clones run
@@ -178,7 +178,7 @@ repos:
         pass_filenames: false
         always_run: true
 
-      # The whole git history; for CI and `just check-all`: pre-commit run --hook-stage manual gitleaks-history
+      # The whole git history; for CI and `just lint-all`: pre-commit run --hook-stage manual gitleaks-history
       - id: gitleaks-history
         name: gitleaks (whole history)
         language: golang

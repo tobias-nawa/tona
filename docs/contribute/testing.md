@@ -6,16 +6,16 @@ Golden checks, kernels and speed proofs: [verification.md](verification.md).
 
 | Test | Needs | CI | Locally |
 |---|---|---|---|
-| C++ unit tests (ctest label `unit`) | a compiler | `engine-cpu-tests` | `just test-cpu` |
-| the same with ASan and UBSan | nothing | `engine-sanitizers` | `just test-sanitize` |
-| Python tests of gates and tools (`tools/tests`) | pinned tools | `coverage` | `just test-py` |
-| installer tests (`installer/tests`) | nothing | `installer` in `check.yml` | `ctest --test-dir work/build/installer` |
-| tests with the model (`model_shapes`, `cpu_experts`, `chat_vs_jinja`, `chat_tokens`, tokenizer and dequantization against llama.cpp) | model, partly llama.cpp | no | `just test` |
+| C++ unit tests (ctest label `unit`) | a compiler | `engine-cpu-tests` | `just test` |
+| the same with ASan and UBSan | nothing | `engine-sanitizers` | `just sanitize` |
+| Python tests of gates and tools (`tools/tests`) | pinned tools | `coverage` | `just test` |
+| installer tests (`installer/tests`) | nothing | `installer` in `check.yml` | `just test` |
+| tests with the model (`model_shapes`, `cpu_experts`, `chat_vs_jinja`, `chat_tokens`, tokenizer and dequantization against llama.cpp) | model, partly llama.cpp | no | `just test-gpu` |
 | golden checks, `expert_bitexact`, speed | GPU and model | no: the maintainer sets `gpu-golden` | [verification.md](verification.md) |
 
 Unit tests need no model, GPU or network and write only into a temporary directory. CI (`tests.yml`) runs them in a
 pinned `fedora:44` container (GCC 16) with `-DTONA_MARCH=x86-64-v3`; the default is `znver5`. Other CMake options:
-`TONA_SANITIZE`, `TONA_COVERAGE` (gcov at `-O0`). `just test-cpu` and `just test-sanitize` build in `work/build/cpu` and
+`TONA_SANITIZE`, `TONA_COVERAGE` (gcov at `-O0`). `just test` and `just sanitize` build in `work/build/cpu` and
 `work/build/sanitize` with the CI flags (packages: `openssl-devel`, for sanitizers `libasan`, `libubsan`).
 
 `TONA_DIAG=1` in the shell makes `toolchain/env.sh` write an allocation trace per GPU process and a GPU dump on a fault
@@ -134,14 +134,14 @@ GOLDEN_MODEL=mini scripts/golden.sh record        # references in work/golden/mi
 GOLDEN_MODEL=mini scripts/golden.sh compare       # also GOLDEN_PLAN=cpu and GOLDEN_MODE=prefill
 GOLDEN_MODEL=mini scripts/golden-server.sh compare   # both APIs, MTP head of the mini model
 scripts/extra-slots-check.sh work/build/engine       # extra expert slots in the prefill workspace: same answers with and without
-just mini-check                                   # CPU token check on all three mini models, no GPU
+python3 tools/mini_token_check.py compare --build work/build/cpu   # CPU token check on all three mini models, no GPU (`just test` runs it after the build)
 ```
 
 The mini models are built from the headers in `data/mini-models/` (tokenizer, template, metadata and tensor
 directory of the real models, 1.6 to 2.3 MB each, xz, under the models' own licences: [README](../../data/mini-models/README.md)), so no big model is needed. Building the four files takes 4 s;
 the same seed gives the same bytes.
 
-**Token check.** `just mini-check` builds `tona-ref`, builds the mini models and compares the greedy token ids and the
+**Token check.** `just test` builds `tona-ref`, builds the mini models and compares the greedy token ids and the
 logits of every step of two prompts (128 tokens each) with `data/mini-models/expected/cpu.json`. It takes about 26 s on
 4 threads plus 28 s for a cold build. CI runs it as `mini-tokens`. The result does not depend on the thread count or on
 `-march` (tested: 1, 2, 4, 16 threads; `x86-64-v3` and `znver5`).
@@ -150,7 +150,7 @@ logits of every step of two prompts (128 tokens each) with `data/mini-models/exp
 
 ```sh
 python3 tools/make_mini_model.py --export-header coder   # also coder-mtp, ornith, bolt; needs the model in work/models/
-python3 tools/mini_token_check.py record                 # after a build: just mini-check builds work/build/cpu
+python3 tools/mini_token_check.py record                 # after a build: just test builds work/build/cpu
 ```
 
 Record references only with a current build (`golden.sh` exits 2 on a stale binary; `scripts/build-fresh.sh`).

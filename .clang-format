@@ -1,5 +1,5 @@
 # Engine code style. The formatter version is pinned in .pre-commit-config.yaml (clang-format 22.1.8); `just fmt`
-# applies it, `just check` verifies it.
+# applies it, `just lint` verifies it.
 BasedOnStyle: Google
 ColumnLimit: 120
 IndentWidth: 4

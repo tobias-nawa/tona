@@ -48,7 +48,7 @@ one reference platform** and exploits it fully: AMD RX 9060 XT (RDNA4, gfx1200, 
    [docs/contribute/measurement.md](docs/contribute/measurement.md).
 3. **Bit-exact or measured.** A refactor of compute code must produce identical tokens (`TONA_DETERMINISTIC=1`). A
    change that alters numbers needs the quality check in [docs/backends/README.md](docs/backends/README.md#checks).
-4. **All gates green** before you ask for review (`just check`, [Code gates](#code-gates)). There are no exception lists.
+4. **All gates green** before you ask for review (`just lint` and `just test`, or `just ready`; [Code gates](#code-gates)). There are no exception lists.
 5. **Everything in English**: code, comments, identifiers, docs, commit messages. Every text follows
    [docs/contribute/style.md](docs/contribute/style.md): short, action first, no fluff.
 
@@ -117,9 +117,9 @@ anything under `research/` and `work/` that someone else produced.
 | Pull request title | Conventional Commit `type(scope)!: subject (#n)`; the title is the squash commit and sets the version | `tools/gates/pr_title.py` (CI job `pr-text`) | the repository |
 
 All gates except clang-tidy are [pre-commit](https://pre-commit.com) hooks (`.pre-commit-config.yaml`). The same hooks
-run before every commit, in `just check` and in CI (`.github/workflows/check.yml`). Only pre-commit itself is installed
+run before every commit, in `just lint` and in CI (`.github/workflows/check.yml`). Only pre-commit itself is installed
 by hand (`tools/gates/requirements.txt`); it fetches the hook tools in the pinned versions. clang-tidy needs the ROCm
-toolchain and a compile database, so it runs in `just check` only, not in CI.
+toolchain and a compile database, so it runs in `just lint` only, not in CI.
 
 Why these limits: an agent reads a file of up to ~500 lines and a function of up to ~80 lines completely and checks
 it in one pass; beyond that it samples and misses wiring. They hold for GPU code too, without speed loss: split
@@ -139,12 +139,14 @@ kernel argument buffer is the same either way). `engine/third_party/` is vendore
 ```sh
 scripts/setup.sh && source toolchain/env.sh   # ROCm toolchain and gate tools into work/, installs the git hooks
 just build                                    # engine
-just check                                    # all gates on your commits since the base branch
-just test                                     # unit tests; some need the model (tools/get_model.py)
+just lint                                     # all gates on your commits since the base branch
+just test                                     # everything without GPU and model, what CI runs
+just ready                                    # before review: lint, test, test-gpu (GPU and model), select_checks
+just                                          # all recipes, in groups
 ```
 
 No AMD GPU (a laptop, a cloud sandbox, another vendor)? `scripts/setup.sh --no-gpu` installs the same pinned toolchain
-and gate tools and skips the steps that need the device; `just check`, `just test-cpu` and `just test-py` then work, the
+and gate tools and skips the steps that need the device; `just lint` and `just test` then work, the
 engine cannot run. Needed from the system: git, Python 3.11+ with `venv`, cmake, ninja, GCC 14+ (the CPU code is compiled with
 `-march=znver5`, which GCC 13 of Ubuntu 24.04 rejects; the CI compiler is GCC 16), OpenSSL development files, `just` 1.40+
 (distribution packages are often older: use the release binary of [casey/just](https://github.com/casey/just/releases)
@@ -152,11 +154,12 @@ or `cargo install just`).
 
 | Command | What it does |
 |---|---|
-| `just check` | all gates on what you changed since `origin/main` (else `main`; `TONA_BASE=<ref>` to change): the pre-commit hooks plus clang-tidy (configures a compile database, does not build). Must be green before you ask for review |
-| `just check-all` | the same on every file and on the whole git history |
-| `just test-cpu` | the unit tests without model and GPU (ctest label `unit`), the ones CI runs; needs no ROCm toolchain, only the compiler and cmake |
-| `just test-sanitize` | the same with AddressSanitizer and UndefinedBehaviorSanitizer (needs `libasan`, `libubsan`; every engine build needs the OpenSSL development files for `tona`) |
-| `just test-py` | the pytest tests of the gates and tools |
+| `just lint` | all gates on what you changed since `origin/main` (else `main`; `TONA_BASE=<ref>` to change): the pre-commit hooks plus clang-tidy (configures a compile database, does not build). Must be green before you ask for review |
+| `just lint-all` | the same on every file and on the whole git history |
+| `just test` | everything without GPU and model, exactly what CI runs: unit tests (ctest label `unit`), the mini-model token check, the pytest tests of the gates and tools, the installer tests; needs no ROCm toolchain, only the compiler and cmake |
+| `just test-gpu` | all tests with the model (`tools/get_model.py`) and the API test against its own server on a free port; needs the GPU |
+| `just ready` | `lint`, `test`, `test-gpu` when a GPU and the model are here, and the output of `tools/select_checks.py`; run it before you ask for review |
+| `just sanitize` | the unit tests with AddressSanitizer and UndefinedBehaviorSanitizer (needs `libasan`, `libubsan`; every engine build needs the OpenSSL development files for `tona`) |
 | `python3 tools/select_checks.py` | before review: the change class and the checks your change needs, from the build graph ([docs/contribute/verification.md](docs/contribute/verification.md#which-checks-a-change-needs)) |
 | `just coverage [base]` | coverage of the host code with the floor check; with a base ref also 80 % on the changed lines ([docs/contribute/testing.md](docs/contribute/testing.md)) |
 | `just fmt` | rewrite the changed files with the pinned clang-format and ruff format |

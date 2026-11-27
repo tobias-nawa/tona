@@ -55,8 +55,8 @@ RECIPES = {
     "C5": ["R0", "R1", "R3", "R4", "R5"],
 }
 RECIPE_NAMES = {
-    "R0": "gates (just check)",
-    "R1": "unit tests (just test-cpu; just test-py when Python changed)",
+    "R0": "gates (just lint)",
+    "R1": "unit tests (just test)",
     "R2": "kernel identity (scripts/isa-diff.py base build against yours)",
     "R3": "golden checks (those the build graph reaches)",
     "R4": "bit-exact (scripts/ab.py, TONA_DETERMINISTIC=1, workloads mid and long)",

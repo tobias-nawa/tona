@@ -12,7 +12,7 @@ To run the engine: Linux with the amdgpu driver, access to `/dev/kfd` (group `re
   `justfile`: take the release binary from [casey/just](https://github.com/casey/just/releases)),
 - GCC 14 or newer (`-march=znver5`; Ubuntu 24.04 has `g++-14`, Fedora and CI GCC 16) and the OpenSSL development files
   (`libssl-dev` on Debian and Ubuntu, `openssl-devel` on Fedora),
-- about 12 GB of free disk space for the ROCm toolchain (`just check` needs it for clang-tidy).
+- about 12 GB of free disk space for the ROCm toolchain (`just lint` needs it for clang-tidy).
 
 Without the reference GPU run `scripts/setup.sh --no-gpu`: same toolchain and gate tools, no step that needs the device.
 macOS: [macos.md](../use/macos.md).
@@ -50,29 +50,37 @@ scripts/baseline.sh llamacpp-hip # baseline measurement; also llamacpp-vulkan
 
 ## Recipes
 
-[`just`](https://github.com/casey/just) (`justfile`); `just` alone lists all recipes. The port is 8662 (8080 clashes with
-other dev servers). Another port for all recipes: `just port=9000 serve` or `TONA_PORT=9000`.
+[`just`](https://github.com/casey/just) 1.40 or newer (`justfile`); `just` alone lists the recipes in groups. The installed
+server uses port 8662 (8080 clashes with other dev servers); `just run` and `just test-gpu` take a free port and never
+8662. A fixed port for `run`: `just run_port=9000 run`. `tona` uses `TONA_PORT` (default 8662).
 
-| Command | What it does |
-|---|---|
-| `just build` | build the engine |
-| `just test` | build and run all tests (some need the model) |
-| `just test-cpu`, `just test-sanitize` | unit tests without model and GPU (label `unit`), the CI ones; with ASan/UBSan |
-| `just test-py` | pytest of gates and tools |
-| `just coverage [base]` | coverage with floor check; with a base ref also 80 % on changed lines |
-| `just check`, `just check-all` | all gates on your changes since `origin/main` / on every file and the whole history |
-| `just fmt` | clang-format and ruff format on changed files |
-| `just serve [options]` | server in the foreground with 256K context (KV cache then in RAM); options go to `tona-server`; smaller: `just ctx=65536 serve` |
-| `just start`, `just stop` | server as systemd service `tona-server` (`journalctl --user -u tona-server -f`); `stop` also ends `just serve` |
-| `just install-service`, `just uninstall-service` | permanent setup (starts at login, pins about 25 GB RAM), or remove |
-| `just top` | the control centre ([client.md](../use/client.md)); starts the server if none runs |
-| `just smoke` | one agent round against the running server |
-| `just gen "question" [n]` | generate text without a server |
-| `just bench [runs]` | decode measurement, median and range |
-| `just cross-check` | compare the GPU path with the CPU reference (top-1 and logit deviation) |
-| `just mem` | show RAM, page cache and VRAM use |
-| `just check-ram` | test the RAM after installing it |
-| `just fuzz [seconds] [targets]` | fuzz the parsers (`api`, `gguf`, `minisig`; CI: `fuzz.yml`, 60 s per pull request, 30 min per night); one folder per target under `work/fuzz`, crashes in `<target>/findings` |
+| Group | Command | What it does |
+|---|---|---|
+| start | `just setup [--no-gpu]` | fetch the ROCm toolchain and the gate tools, install the git hooks |
+| start | `just setup-tona` | build, then the guided setup of the checkout |
+| every day | `just build` | build the engine |
+| every day | `just fmt` | clang-format and ruff format on changed files |
+| every day | `just lint` | all gates on your changes since `origin/main` |
+| every day | `just test` | everything without GPU and model, what CI runs: unit tests, mini-model token check, pytest, installer tests |
+| every day | `just test-gpu` | all tests with GPU and model, then the API test (agent round through both APIs) against its own server on a free port |
+| every day | `just ready` | before review: `lint`, `test`, `test-gpu` when GPU and model are here, and the checks `tools/select_checks.py` names |
+| run | `just run [options]` | server from the build in the foreground, 256K context (KV cache then in RAM), free port; options go to `tona-server`; smaller: `just ctx=65536 run` |
+| run | `just tona` | the control centre ([client.md](../use/client.md)); starts the server if none runs |
+| run | `just ask "question" [n]` | one answer without a server |
+| measure | `just bench [runs]`, `just bench-pass` | decode measurement, median and range; verify pass without reloading |
+| measure | `just ab ...` | A/B speed comparison ([testing.md](testing.md#speed-comparison-scriptsabpy)) |
+| measure | `just baseline [target]` | measure the yardsticks (llama.cpp HIP, Vulkan) |
+| deep | `just sanitize` | the unit tests with ASan and UBSan |
+| deep | `just fuzz [seconds] [targets]` | fuzz the parsers (`api`, `gguf`, `minisig`; CI: `fuzz.yml`, 60 s per pull request, 30 min per night); one folder per target under `work/fuzz`, crashes in `<target>/findings` |
+| deep | `just coverage [base]` | coverage with floor check; with a base ref also 80 % on changed lines |
+| deep | `just cross-check` | compare the GPU path with the CPU reference (top-1 and logit deviation) |
+| deep | `just lint-all` | the gates on every file and the whole history |
+| machine | `just mem` | show RAM, page cache and VRAM use |
+| machine | `just check-ram`, `just hang-repro` | test the RAM after installing it; reproduce a GPU hang (both ask first) |
+
+Hidden: `start`, `stop` and `install-service` run the server as systemd service `tona-server`
+(`journalctl --user -u tona-server -f`); `tona start`, `tona stop` and `tona setup` of a checkout call them, so you do not.
+The old names (`check`, `serve`, `top`, ...) print where they went and exit 1.
 
 Measurements: `scripts/ab.py` ([testing.md](testing.md#speed-comparison-scriptsabpy)); checks a change needs:
 `python3 tools/select_checks.py` ([verification.md](verification.md)); settings: [environment.md](../use/environment.md).

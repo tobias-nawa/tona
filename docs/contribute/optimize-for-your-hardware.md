@@ -37,8 +37,8 @@ On the reference platform path A is a change to the reference backend; AGENTS.md
 
 0. **Are you on the machine that measures?**
    - **Sandbox, CI, container** (the `sandbox:` line of `python3 tools/hw_report.py`; cloud agents never see your GPU):
-     tell the user that only reading, planning, code and CPU gates (`scripts/setup.sh --no-gpu`, `just check`,
-     `just test-cpu`, [AGENTS.md](../../AGENTS.md#build-and-test)) are possible and measurement needs a local agent. Write
+     tell the user that only reading, planning, code and CPU gates (`scripts/setup.sh --no-gpu`, `just lint`,
+     `just test`, [AGENTS.md](../../AGENTS.md#build-and-test)) are possible and measurement needs a local agent. Write
      no measurement file; put "not measured on target hardware" into the PR text.
    - **No GPU** on a real machine (`GPU: none detected`): path C.
    - **Not interactive** (`codex exec`, `claude -p`, scheduled runs): an ASK is never a yes; list it under "Open
@@ -85,7 +85,7 @@ On the reference platform path A is a change to the reference backend; AGENTS.md
    needs [backends/README.md](../backends/README.md#checks). Run R3 to R6 of [measurement.md](measurement.md#recipes).
 9. **Select the checks:** `python3 tools/select_checks.py` ([verification.md](verification.md#which-checks-a-change-needs));
    run them all.
-10. **Gates:** `just check`, `just test-cpu` (`just test-py` if Python changed) until green; never touch a gate to get
+10. **Gates:** `just lint`, `just test` until green; never touch a gate to get
     past it.
 11. **Record:** several runs, for each chosen model (the others stay unmeasured) with spread, one file per run under `research/measurements/` with test conditions, one row
     in [BENCHMARKS.md](../../BENCHMARKS.md), every rate named, speeds compared with `scripts/ab.py`
@@ -118,7 +118,7 @@ On the reference platform path A is a change to the reference backend; AGENTS.md
 - **Plan and results:** measurement files (plan first, spread, rates named) and the BENCHMARKS row.
 - **Correctness:** identical tokens or the quality check, with commands.
 - **Effect on the reference:** untouched, or before/after.
-- **Gates:** the tail of `just check` and the tests, green.
+- **Gates:** the tail of `just lint` and the tests, green.
 - **A named owner** for a backend the maintainers cannot run ([backends/README.md](../backends/README.md#tiers)).
 
 You must be able to explain every line without the tool.

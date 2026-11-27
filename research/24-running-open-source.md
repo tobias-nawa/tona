@@ -50,7 +50,7 @@ Majority: allow, disclose, a human is liable. 78 % of 118 rules allow AI, 51 % r
 
 - File gate 500 lines, method gate (lizard) 80 lines, 6 parameters, nesting 5, CCN 15.
 - Rationale: an agent reads a file up to 500 lines entirely, above that only samples and overlooks wiring.
-- Gates as pre-commit hooks and in `just check`; CI only as a supplement.
+- Gates as pre-commit hooks and in `just lint`; CI only as a supplement.
 
 ## Own measurement (lizard, without third_party, 2026-10-27)
 
