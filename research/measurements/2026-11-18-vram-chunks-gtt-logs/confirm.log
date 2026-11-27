@@ -1,0 +1,3 @@
+gpu queue: 3 ahead of you (gpu)
+VRAM: weights and buffers 4.91 GB (of which prefill workspace 807 MB), restore point 149 MB, slots 81 x 98.2 MB, free per sysfs 9.91 GB
+VRAM: the core (slots and prefill workspace, 8764 MB) is built from 262 chunks of 34 MB

@@ -1,0 +1,189 @@
+{
+  "id": "ornith-1.5-122b",
+  "name": "Ornith-1.5-122B",
+  "vendor": "ornith-ai",
+  "release_date": "2026-10-16",
+  "lineage": {
+    "base_model": "Ornith-1.0 (Qwen3.5 and Gemma 4)",
+    "family": "Ornith 1.5"
+  },
+  "purpose": "ornith-ai states: the most capable and efficient member of the Ornith-1.5 family, a reasoning and agentic model for terminal-based coding agents, designed for efficient single-GPU deployment.",
+  "tasks": [
+    "coding",
+    "general",
+    "vision"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en"
+    ],
+    "programming": {}
+  },
+  "license": {
+    "name": "MIT (tag; LICENSE file reported missing for the 35B sibling)",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card tag mit and license_link to a LICENSE file; the file could not be fetched (404 on raw/main/LICENSE) 2026-11-19, so the text was not read."
+  },
+  "architecture": {
+    "kind": "hybrid DeltaNet + gated attention MoE (qwen35moe family)",
+    "gguf_arch": "qwen35moe",
+    "params_total_b": 125,
+    "context_native": 262144,
+    "context_max": 1000000,
+    "drafter": "MTP in a community GGUF name, not verified",
+    "why_this_design": "The card of the 122B shares the Ornith-1.5 training description (self-improvement loop over tasks, scaffolds and rollouts); it states no architecture reasons."
+  },
+  "variants": [
+    {
+      "repo": "prithivMLmods/Ornith-1.5-122B-MXFP4-MoE-MTP-GGUF",
+      "format": "GGUF MXFP4_MOE",
+      "size_gb": 69.7,
+      "official": false,
+      "notes": "community; ornith-ai GGUF repo announced, sizes not published on the card"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "no",
+      "variant": "MXFP4_MOE",
+      "basis": "estimate",
+      "notes": "estimate from the file size (69.7 GB) against the budget of docs/hardware: 9.6 GB VRAM plus 50 GB RAM = 60 GB; about 14% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that)"
+    },
+    "pc-16gb": {
+      "fits": "marginal",
+      "variant": "MXFP4_MOE",
+      "basis": "estimate",
+      "notes": "estimate from the file size (69.7 GB) against the budget of docs/hardware: 13.6 GB VRAM plus 50 GB RAM = 64 GB; about 20% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that)"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "MXFP4_MOE",
+      "basis": "estimate",
+      "notes": "estimate from the file size (69.7 GB) against the budget of docs/hardware: 21.6 GB VRAM plus 82 GB RAM = 104 GB; about 31% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that)"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "MXFP4_MOE",
+      "basis": "estimate",
+      "notes": "estimate from the file size (69.7 GB) against the budget of docs/hardware: 29.6 GB VRAM plus 114 GB RAM = 144 GB; about 42% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that)"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "MXFP4_MOE",
+      "basis": "estimate",
+      "notes": "estimate from the file size (69.7 GB) against the GPU share of docs/hardware (about 12 GB)"
+    },
+    "mac-32gb": {
+      "fits": "no",
+      "variant": "MXFP4_MOE",
+      "basis": "estimate",
+      "notes": "estimate from the file size (69.7 GB) against the GPU share of docs/hardware (about 22 GB)"
+    },
+    "mac-64gb+": {
+      "fits": "no",
+      "variant": "MXFP4_MOE",
+      "basis": "estimate",
+      "notes": "estimate from the file size (69.7 GB) against the GPU share of docs/hardware (about 52 GB)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "vLLM >= 0.19.1",
+      "SGLang >= 0.5.9"
+    ],
+    "notes": "same family as Ornith 35B which Tona runs; MXFP4 expert kernels and different shapes would be needed"
+  },
+  "benchmarks": [
+    {
+      "name": "SWE-bench Verified (non-hack)",
+      "score": 84.5,
+      "kind": "vendor",
+      "source": "https://huggingface.co/ornith-ai/Ornith-1.5-122B",
+      "variant": "BF16"
+    },
+    {
+      "name": "SWE-bench Pro (no-hack)",
+      "score": 76.9,
+      "kind": "vendor",
+      "source": "https://huggingface.co/ornith-ai/Ornith-1.5-122B",
+      "variant": "BF16"
+    },
+    {
+      "name": "SWE-bench Multilingual (non-hack)",
+      "score": 76.4,
+      "kind": "vendor",
+      "source": "https://huggingface.co/ornith-ai/Ornith-1.5-122B",
+      "variant": "BF16"
+    },
+    {
+      "name": "Terminal-Bench 2.1",
+      "score": 81.2,
+      "kind": "vendor",
+      "source": "https://huggingface.co/ornith-ai/Ornith-1.5-122B",
+      "variant": "BF16",
+      "harness": "modified Qwen chat template"
+    },
+    {
+      "name": "NL2Repo",
+      "score": 51.2,
+      "kind": "vendor",
+      "source": "https://huggingface.co/ornith-ai/Ornith-1.5-122B",
+      "variant": "BF16"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "Vendor SWE-bench Verified 84.5, above every other open model in this set"
+    ],
+    "weaknesses": [
+      "Needs an 80 GB GPU for single-GPU BF16; 70 GB at MXFP4",
+      "Numbers vendor only",
+      "Active parameters not stated"
+    ],
+    "behavior": "Reasoning model, think block by default; static YaRN may slightly hurt short inputs.",
+    "maturity": "New vendor; 9 finetunes and 56 quantizations listed."
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "Natural top-tier option for the 24 to 32 GB VRAM classes (MXFP4 69.7 GB; vendor SWE-bench Multilingual 76.4) with the same MIT tag as the 35B; no independent number and no license text yet. Out of reach of 16 GB + 64 GB.",
+    "blockers": [
+      "license file missing in the repository",
+      "no measurement by us",
+      "does not fit 16 GB + 64 GB (69.7 GB against about 64 GB budget)"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/ornith-ai/Ornith-1.5-122B",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "page text read through a summarizer (WebFetch)"
+    },
+    {
+      "url": "research/49-moe-models-2026-11.md",
+      "kind": "own",
+      "checked": "2026-11-19",
+      "note": "community MXFP4 GGUF size"
+    }
+  ],
+  "open_questions": [
+    "Active parameters",
+    "Official GGUF sizes",
+    "Independent numbers",
+    "Per-language quality and independent coding evidence: the Aider polyglot board is stale (mirrors: last update 2025-11-20, no entry for any model of this database), LiveCodeBench and swebench.com publish no per-language numbers for it that we could retrieve. Check: our own Exercism polyglot run per language."
+  ],
+  "last_checked": "2026-11-19"
+}

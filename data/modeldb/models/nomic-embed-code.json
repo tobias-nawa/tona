@@ -1,0 +1,195 @@
+{
+  "id": "nomic-embed-code",
+  "name": "Nomic Embed Code",
+  "vendor": "Nomic AI",
+  "release_date": "2025-03",
+  "lineage": {
+    "base_model": "Qwen2.5-Coder-7B-Instruct",
+    "how_derived": "contrastive fine-tune on CoRNStack with dual-consistency filtering and progressive hard negative mining"
+  },
+  "purpose": "Code retrieval: embeds code and natural-language queries for search.",
+  "tasks": [
+    "embeddings"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "embedding"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en"
+    ],
+    "programming": {
+      "python": {
+        "level": "strong",
+        "evidence": "CodeSearchNet 81.7",
+        "sources": [
+          "https://huggingface.co/nomic-ai/nomic-embed-code"
+        ]
+      },
+      "java": {
+        "level": "strong",
+        "evidence": "CodeSearchNet 80.5",
+        "sources": [
+          "https://huggingface.co/nomic-ai/nomic-embed-code"
+        ]
+      },
+      "go": {
+        "level": "strong",
+        "evidence": "CodeSearchNet 93.8",
+        "sources": [
+          "https://huggingface.co/nomic-ai/nomic-embed-code"
+        ]
+      },
+      "ruby": {
+        "level": "strong",
+        "evidence": "CodeSearchNet 81.8",
+        "sources": [
+          "https://huggingface.co/nomic-ai/nomic-embed-code"
+        ]
+      },
+      "php": {
+        "level": "good",
+        "evidence": "CodeSearchNet 72.3",
+        "sources": [
+          "https://huggingface.co/nomic-ai/nomic-embed-code"
+        ]
+      },
+      "javascript": {
+        "level": "good",
+        "evidence": "CodeSearchNet 77.1",
+        "sources": [
+          "https://huggingface.co/nomic-ai/nomic-embed-code"
+        ]
+      }
+    }
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card tag apache-2.0; the HF repo has no LICENSE file. The vendor's training-code repo (contrastors) carries Apache 2.0 text, but that is the code, not the weights, so verified stays false."
+  },
+  "architecture": {
+    "kind": "dense decoder transformer, last-token pooling",
+    "params_total_b": 7
+  },
+  "variants": [
+    {
+      "repo": "nomic-ai/nomic-embed-code",
+      "format": "safetensors F32",
+      "official": true,
+      "notes": "9 quants on the Hub, formats not read"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "notes": "7B at Q4 about 4-5 GB"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "Q4-Q8"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-16-24gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "unknown",
+    "other": [
+      "Transformers"
+    ],
+    "notes": "Qwen2 architecture, so llama.cpp probably works; not verified."
+  },
+  "benchmarks": [
+    {
+      "name": "CodeSearchNet Python",
+      "score": 81.7,
+      "kind": "vendor",
+      "variant": "F32",
+      "source": "https://huggingface.co/nomic-ai/nomic-embed-code"
+    },
+    {
+      "name": "CodeSearchNet Go",
+      "score": 93.8,
+      "kind": "vendor",
+      "variant": "F32",
+      "source": "https://huggingface.co/nomic-ai/nomic-embed-code"
+    },
+    {
+      "name": "CodeSearchNet JavaScript",
+      "score": 77.1,
+      "kind": "vendor",
+      "variant": "F32",
+      "source": "https://huggingface.co/nomic-ai/nomic-embed-code"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "beats OpenAI text-embedding-3-large on all six CodeSearchNet languages (vendor table)"
+    ],
+    "weaknesses": [
+      "7B: slow to index a large repository",
+      "only six languages evaluated",
+      "no MTEB Code or CoIR numbers on the card"
+    ],
+    "maturity": "Nomic; CoRNStack paper arXiv 2412.01007."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Apache-2.0 by tag and code-specific (7B, CodeSearchNet strong) but heavy: Qwen3-Embedding-4B/8B scores 80+ on MTEB Code at similar or smaller size, and nomic-embed-code is absent from the independent tables found.",
+    "blockers": [
+      "Tona has no embeddings route"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/nomic-ai/nomic-embed-code",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/nomic-ai/contrastors/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "Apache-2.0 text of the code repo, read through a summarizer"
+    }
+  ],
+  "open_questions": [
+    "Context length",
+    "CoIR / MTEB Code score: not on the card; not in the jina-code-embeddings paper table; no CoIR leaderboard entry found on 2026-11-19",
+    "Weights license text (no LICENSE file in the repo)"
+  ],
+  "last_checked": "2026-11-19"
+}

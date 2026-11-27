@@ -1,0 +1,9 @@
+ie-server on http://127.0.0.1:8097 (Anthropic: /v1/messages, OpenAI: /v1/chat/completions), without key, loading ...
+warning: --ctx 1048576 is beyond the native context of 262144 tokens and IE_ROPE_YARN is off; quality beyond 262144 is not measured
+Initialization: 512 MTP experts as Q2_0, converted on the GPU (708 MB) in 1.0 s
+loaded in 21.9 s: context 1048576 (KV int8 14.50 GB in RAM), VRAM 14.51 GB, 73 expert slots per layer, 25.1 GB pinned
+05:43:53 Request: 511946 prompt tokens (0 reused, 511946 computed in 366.2 s, new conversation (stashing 0 ms)), 200 tokens in 3.3 s = 60.6 tok/s, 2.86 tokens per pass, 1 of 70 passes from the history (3.00 per pass)
+05:43:53 POST /v1/chat/completions → 200
+Conversation of 511946 tokens not stashed: needs 8.7 GB, budget 12.0 GB (IE_PROMPT_RAM_GB), free RAM 14.8 GB; further skips are not logged
+05:59:05 Request: 998910 prompt tokens (0 reused, 998910 computed in 908.0 s, new conversation (stashing 0 ms), checkpoint at 998882 (before the fixed end)), 200 tokens in 3.2 s = 63.4 tok/s, 3.90 tokens per pass, 4 of 51 passes from the history (5.25 per pass)
+05:59:05 POST /v1/chat/completions → 200

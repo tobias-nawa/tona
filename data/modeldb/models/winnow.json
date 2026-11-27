@@ -1,0 +1,232 @@
+{
+  "id": "winnow",
+  "name": "Winnow (E2B, E4B, 12B decision models)",
+  "vendor": "EldanRing",
+  "release_date": "2026-09-20",
+  "lineage": {
+    "family": "Winnow",
+    "base_model": "google/gemma-4-12B-it, google/gemma-4-E4B-it, google/gemma-4-E2B-it",
+    "how_derived": "fine-tuned for local typed decisions (yes/no, choice, score) through a /v1/systemone endpoint, ordinary chat remains available"
+  },
+  "purpose": "Local typed decisions, chat and image input from one Gemma 4 fine-tune: the server scores answer options without generating an explanation (card).",
+  "tasks": [
+    "other",
+    "vision",
+    "general"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card tag apache-2.0 and LICENSE/NOTICE files present in the repos; the text was not read here."
+  },
+  "architecture": {
+    "kind": "Gemma 4 dense (12B) and effective-parameter (E2B, E4B) multimodal models",
+    "params_total_b": 12.0,
+    "context_native": 65536,
+    "drafter": "optional MTP assistant GGUF (Gemma-4-12B-IT-Assistant) for chat tokens"
+  },
+  "variants": [
+    {
+      "repo": "EldanRing/Winnow-12B",
+      "format": "GGUF Q8_0",
+      "size_gb": 12.67,
+      "official": true,
+      "notes": "NVFP4 8.16, BF16 23.83 GB, mmproj F16 0.18 GB (all in gguf/)"
+    },
+    {
+      "repo": "EldanRing/Winnow-E4B",
+      "format": "GGUF Q8_0",
+      "size_gb": 8.01,
+      "official": true,
+      "notes": "BF16 15.05 GB, mmproj 0.99 GB"
+    },
+    {
+      "repo": "EldanRing/Winnow-E2B",
+      "format": "GGUF Q8_0",
+      "size_gb": 4.95,
+      "official": true,
+      "notes": "BF16 9.31 GB, mmproj 0.99 GB"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "no",
+      "variant": "Winnow-12B Q8_0 plus mmproj",
+      "basis": "estimate",
+      "notes": "12.85 GB against a VRAM budget of 9.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "Winnow-12B Q8_0, 64K context with an image",
+      "basis": "estimate",
+      "notes": "vendor measurement on an RTX 5070 Ti 16 GB: peak device VRAM 15.01 GiB at 65,536 positions with Q8 KV cache (card); not our measurement"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "Winnow-12B Q8_0 plus mmproj",
+      "basis": "estimate",
+      "notes": "12.85 GB against a VRAM budget of 21.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "Winnow-12B Q8_0 plus mmproj",
+      "basis": "estimate",
+      "notes": "12.85 GB against a VRAM budget of 29.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "Winnow-12B Q8_0 plus mmproj",
+      "basis": "estimate",
+      "notes": "12.85 GB against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "Winnow-12B Q8_0 plus mmproj",
+      "basis": "estimate",
+      "notes": "12.85 GB against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "Winnow-12B Q8_0 plus mmproj",
+      "basis": "estimate",
+      "notes": "12.85 GB against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "partial",
+    "other": [
+      "Winnow inference server (github EldanRing/winnow-inference) on llama.cpp-style GGUF",
+      "Linux/CUDA presets"
+    ],
+    "notes": "Ships GGUFs, but decisions need the project's own server (/v1/systemone); plain llama.cpp serves it only as a chat model."
+  },
+  "benchmarks": [
+    {
+      "name": "JevBench public subset (231 items)",
+      "score": 85.71,
+      "unit": "%",
+      "kind": "vendor",
+      "variant": "Winnow-12B Q8 (BF16 85.28); hosted Jev 1.13 85.71",
+      "source": "https://huggingface.co/EldanRing/Winnow-12B"
+    },
+    {
+      "name": "Kev-v9 clean (1,046 items)",
+      "score": 81.55,
+      "unit": "%",
+      "kind": "vendor",
+      "variant": "Winnow-12B Q8 (BF16 81.45); hosted Jev 1.13 87.00; NVFP4 77.82",
+      "source": "https://huggingface.co/EldanRing/Winnow-12B"
+    },
+    {
+      "name": "Jev Decision Index 0.3 Vision board Full score",
+      "score": 59.84,
+      "kind": "independent",
+      "variant": "Winnow-12B, rank 6 of 20 as quoted on another model's card",
+      "date": "2026-10-07",
+      "source": "https://huggingface.co/autotrust/AutoTrust-Decider-Pro-Vision-27B"
+    },
+    {
+      "name": "Decision Index 0.2.1",
+      "score": 50.02,
+      "kind": "independent",
+      "variant": "Winnow-12B as listed in LiquidAI's table (d1-3B 48.57)",
+      "source": "https://huggingface.co/LiquidAI/d1-omni-600M"
+    },
+    {
+      "name": "generation speed, RTX 5070 Ti 16 GB, Q8, short prompt",
+      "score": 55.5,
+      "unit": "tok/s decode",
+      "kind": "vendor",
+      "source": "https://huggingface.co/EldanRing/Winnow-12B"
+    },
+    {
+      "name": "decisions per second, 4 concurrent requests",
+      "score": "3.43 (Q8) / 4.98 (NVFP4)",
+      "kind": "vendor",
+      "source": "https://huggingface.co/EldanRing/Winnow-12B"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "A decision model reads a state (text, JSON, images) and a schema of typed questions and returns calibrated probabilities for every option in one forward pass; it does not generate text.",
+      "the only decision model with a measured 16 GB card profile (64K context with an image)",
+      "NVFP4 cuts memory 13.5 to 9.2 GiB at a 2 to 4 point accuracy cost on Jev and Kev (vendor)"
+    ],
+    "weaknesses": [
+      "adaptive reasoning did not clearly help (paired change -2.3 to +5.5 points) and raised latency 198 to 743 ms",
+      "Q8 and NVFP4 comparisons use previously observed panels"
+    ],
+    "best_for": [
+      "local routing/judging with a 12B decision model on a 16 GB card"
+    ],
+    "maturity": "individual developer; 12B 14.6k downloads, E4B 20k, E2B 2.6k"
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Best fit of the decision models for our hardware (12B Q8 on 16 GB with 64K context), Gemma-4 base, still also a chat model. Same class caveat as the other decision models: a pipeline step, not a worker.",
+    "blockers": [
+      "decision decoding needs the project's server or a Tona implementation of the readout"
+    ]
+  },
+  "open_questions": [
+    "licence text",
+    "E2B/E4B benchmark numbers (only the 12B card was read in full)",
+    "independent evaluation outside the Jev/Kev panels"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/EldanRing/Winnow-12B",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README read"
+    },
+    {
+      "url": "https://huggingface.co/api/models/EldanRing/Winnow-12B?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "file sizes"
+    },
+    {
+      "url": "https://huggingface.co/api/models/EldanRing/Winnow-E4B?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "file sizes"
+    },
+    {
+      "url": "https://huggingface.co/api/models/EldanRing/Winnow-E2B?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "file sizes"
+    },
+    {
+      "url": "https://huggingface.co/autotrust/AutoTrust-Decider-Pro-Vision-27B",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "vision board table"
+    },
+    {
+      "url": "https://huggingface.co/LiquidAI/d1-omni-600M",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "Decision Index 0.2.1 table"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

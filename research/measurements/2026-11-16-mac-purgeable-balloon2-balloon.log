@@ -1,0 +1,4 @@
+     0.0 s  cycle to 6 GB at 1 GB/s
+     0.0 s  grow 1GB/s   held   0.1 GB  pressure 1  swap + 0.00 GB
+     1.1 s  grow 1GB/s   held   1.1 GB  pressure 2  swap + 0.00 GB
+     2.1 s  END: critical memory pressure, released

@@ -1,0 +1,186 @@
+{"run": 1, "kind": "check", "what": "mv", "tensor": "blk.47.ffn_down_shexp.weight", "type": "Q80", "B": 1, "rel_err": 9.92e-08}
+{"run": 1, "kind": "check", "what": "mv", "tensor": "blk.47.ffn_down_shexp.weight", "type": "Q80", "B": 2, "rel_err": 9.07e-08}
+{"run": 1, "kind": "check", "what": "mv", "tensor": "blk.47.ffn_down_shexp.weight", "type": "Q80", "B": 3, "rel_err": 1.19e-07}
+{"run": 1, "kind": "check", "what": "mv", "tensor": "blk.47.ffn_down_shexp.weight", "type": "Q80", "B": 4, "rel_err": 1.19e-07}
+{"run": 1, "kind": "check", "what": "mv", "tensor": "blk.0.attn_gate.weight", "type": "Q4K", "B": 1, "rel_err": 1.93e-07}
+{"run": 1, "kind": "check", "what": "mv", "tensor": "blk.0.attn_gate.weight", "type": "Q4K", "B": 2, "rel_err": 1.41e-07}
+{"run": 1, "kind": "check", "what": "mv", "tensor": "blk.0.attn_gate.weight", "type": "Q4K", "B": 3, "rel_err": 1.24e-07}
+{"run": 1, "kind": "check", "what": "mv", "tensor": "blk.0.attn_gate.weight", "type": "Q4K", "B": 4, "rel_err": 1.24e-07}
+{"run": 1, "kind": "check", "what": "mv", "tensor": "blk.1.attn_qkv.weight", "type": "Q5K", "B": 1, "rel_err": 2.38e-07}
+{"run": 1, "kind": "check", "what": "mv", "tensor": "blk.1.attn_qkv.weight", "type": "Q5K", "B": 2, "rel_err": 2.38e-07}
+{"run": 1, "kind": "check", "what": "mv", "tensor": "blk.1.attn_qkv.weight", "type": "Q5K", "B": 3, "rel_err": 1.80e-07}
+{"run": 1, "kind": "check", "what": "mv", "tensor": "blk.1.attn_qkv.weight", "type": "Q5K", "B": 4, "rel_err": 1.80e-07}
+{"run": 1, "kind": "check", "what": "mv", "tensor": "output.weight", "type": "Q6K", "B": 1, "rel_err": 9.80e-08}
+{"run": 1, "kind": "check", "what": "mv", "tensor": "output.weight", "type": "Q6K", "B": 2, "rel_err": 1.50e-07}
+{"run": 1, "kind": "check", "what": "mv", "tensor": "output.weight", "type": "Q6K", "B": 3, "rel_err": 1.50e-07}
+{"run": 1, "kind": "check", "what": "mv", "tensor": "output.weight", "type": "Q6K", "B": 4, "rel_err": 1.50e-07}
+{"run": 1, "kind": "check", "what": "mv", "tensor": "blk.0.ffn_down_shexp.weight", "type": "IQ4NL", "B": 1, "rel_err": 9.39e-08}
+{"run": 1, "kind": "check", "what": "mv", "tensor": "blk.0.ffn_down_shexp.weight", "type": "IQ4NL", "B": 2, "rel_err": 6.59e-08}
+{"run": 1, "kind": "check", "what": "mv", "tensor": "blk.0.ffn_down_shexp.weight", "type": "IQ4NL", "B": 3, "rel_err": 8.09e-08}
+{"run": 1, "kind": "check", "what": "mv", "tensor": "blk.0.ffn_down_shexp.weight", "type": "IQ4NL", "B": 4, "rel_err": 1.01e-07}
+{"run": 1, "kind": "check", "what": "mv", "tensor": "blk.0.ffn_up_shexp.weight", "type": "IQ4XS", "B": 1, "rel_err": 1.25e-07}
+{"run": 1, "kind": "check", "what": "mv", "tensor": "blk.0.ffn_up_shexp.weight", "type": "IQ4XS", "B": 2, "rel_err": 1.21e-07}
+{"run": 1, "kind": "check", "what": "mv", "tensor": "blk.0.ffn_up_shexp.weight", "type": "IQ4XS", "B": 3, "rel_err": 1.21e-07}
+{"run": 1, "kind": "check", "what": "mv", "tensor": "blk.0.ffn_up_shexp.weight", "type": "IQ4XS", "B": 4, "rel_err": 1.21e-07}
+{"run": 1, "kind": "check", "what": "mv", "tensor": "output_hc_down.weight", "type": "BF16", "B": 1, "rel_err": 1.38e-07}
+{"run": 1, "kind": "check", "what": "mv", "tensor": "output_hc_down.weight", "type": "BF16", "B": 2, "rel_err": 1.61e-07}
+{"run": 1, "kind": "check", "what": "mv", "tensor": "output_hc_down.weight", "type": "BF16", "B": 3, "rel_err": 1.99e-07}
+{"run": 1, "kind": "check", "what": "mv", "tensor": "output_hc_down.weight", "type": "BF16", "B": 4, "rel_err": 1.52e-07}
+{"run": 1, "kind": "check", "what": "dn_step", "B": 1, "rel_err": 8.03e-07}
+{"run": 1, "kind": "check", "what": "dn_step", "B": 2, "rel_err": 7.40e-07}
+{"run": 1, "kind": "check", "what": "dn_step", "B": 3, "rel_err": 1.10e-06}
+{"run": 1, "kind": "check", "what": "dn_step", "B": 4, "rel_err": 1.44e-06}
+{"run": 1, "kind": "role", "role": "attn_gate.weight", "count": 36, "B": 1, "us_median": 3017.7, "gbs": 125.7}
+{"run": 1, "kind": "role", "role": "attn_k.weight", "count": 12, "B": 1, "us_median": 232.6, "gbs": 53.8}
+{"run": 1, "kind": "role", "role": "attn_output.weight", "count": 12, "B": 1, "us_median": 1128.1, "gbs": 133.7}
+{"run": 1, "kind": "role", "role": "attn_q.weight", "count": 12, "B": 1, "us_median": 1908.8, "gbs": 137.1}
+{"run": 1, "kind": "role", "role": "attn_qkv.weight", "count": 36, "B": 1, "us_median": 5195.6, "gbs": 136.8}
+{"run": 1, "kind": "role", "role": "attn_v.weight", "count": 12, "B": 1, "us_median": 255.0, "gbs": 49.2}
+{"run": 1, "kind": "role", "role": "ffn_down_shexp.weight", "count": 48, "B": 1, "us_median": 525.6, "gbs": 85.7}
+{"run": 1, "kind": "role", "role": "ffn_gate_inp.weight", "count": 48, "B": 1, "us_median": 893.1, "gbs": 70.4}
+{"run": 1, "kind": "role", "role": "ffn_gate_shexp.weight", "count": 48, "B": 1, "us_median": 1168.8, "gbs": 42.6}
+{"run": 1, "kind": "role", "role": "ffn_up_shexp.weight", "count": 48, "B": 1, "us_median": 1315.9, "gbs": 38.5}
+{"run": 1, "kind": "role", "role": "hc_attn_down.weight", "count": 48, "B": 1, "us_median": 3041.1, "gbs": 103.4}
+{"run": 1, "kind": "role", "role": "hc_attn_inject.weight", "count": 48, "B": 1, "us_median": 981.0, "gbs": 4.0}
+{"run": 1, "kind": "role", "role": "hc_attn_up.weight", "count": 48, "B": 1, "us_median": 1111.3, "gbs": 283.1}
+{"run": 1, "kind": "role", "role": "hc_ffn_down.weight", "count": 48, "B": 1, "us_median": 3042.6, "gbs": 103.4}
+{"run": 1, "kind": "role", "role": "hc_ffn_inject.weight", "count": 48, "B": 1, "us_median": 999.0, "gbs": 3.9}
+{"run": 1, "kind": "role", "role": "hc_ffn_up.weight", "count": 48, "B": 1, "us_median": 1147.6, "gbs": 274.1}
+{"run": 1, "kind": "role", "role": "indexer.k_proj.weight", "count": 12, "B": 1, "us_median": 198.2, "gbs": 39.7}
+{"run": 1, "kind": "role", "role": "indexer.q_proj.weight", "count": 12, "B": 1, "us_median": 228.6, "gbs": 137.6}
+{"run": 1, "kind": "role", "role": "output.weight", "count": 1, "B": 1, "us_median": 3193.0, "gbs": 163.3}
+{"run": 1, "kind": "role", "role": "output_hc_down.weight", "count": 1, "B": 1, "us_median": 48.6, "gbs": 134.8}
+{"run": 1, "kind": "role", "role": "output_hc_up.weight", "count": 1, "B": 1, "us_median": 20.6, "gbs": 317.8}
+{"run": 1, "kind": "role", "role": "ple_key.weight", "count": 1, "B": 1, "us_median": 131.8, "gbs": 397.9}
+{"run": 1, "kind": "role", "role": "ple_value.weight", "count": 1, "B": 1, "us_median": 29.8, "gbs": 440.6}
+{"run": 1, "kind": "role", "role": "ssm_alpha.weight", "count": 36, "B": 1, "us_median": 578.8, "gbs": 15.3}
+{"run": 1, "kind": "role", "role": "ssm_beta.weight", "count": 36, "B": 1, "us_median": 580.2, "gbs": 15.2}
+{"run": 1, "kind": "role", "role": "ssm_out.weight", "count": 36, "B": 1, "us_median": 3549.0, "gbs": 125.1}
+{"run": 1, "kind": "token", "B": 1, "mv_ms_median": 34.932, "mv_ms_min": 34.178, "mv_ms_max": 35.382, "mv_bytes": 4103152640, "mv_gbs": 117.5, "n_mv": 737, "dn_ms_median": 0.901, "dn_ms_min": 0.829, "dn_ms_max": 0.912}
+{"run": 1, "kind": "token", "B": 2, "mv_ms_median": 39.441, "mv_ms_min": 38.245, "mv_ms_max": 39.747, "mv_bytes": 4103152640, "mv_gbs": 104.0, "n_mv": 737, "dn_ms_median": 1.004, "dn_ms_min": 0.953, "dn_ms_max": 1.008}
+{"run": 1, "kind": "token", "B": 3, "mv_ms_median": 50.219, "mv_ms_min": 49.244, "mv_ms_max": 51.077, "mv_bytes": 4103152640, "mv_gbs": 81.7, "n_mv": 737, "dn_ms_median": 1.185, "dn_ms_min": 1.108, "dn_ms_max": 1.194}
+{"run": 1, "kind": "token", "B": 4, "mv_ms_median": 56.772, "mv_ms_min": 55.392, "mv_ms_max": 57.452, "mv_bytes": 4103152640, "mv_gbs": 72.3, "n_mv": 737, "dn_ms_median": 1.375, "dn_ms_min": 1.318, "dn_ms_max": 1.406}
+{"run": 2, "kind": "check", "what": "mv", "tensor": "blk.47.ffn_down_shexp.weight", "type": "Q80", "B": 1, "rel_err": 9.92e-08}
+{"run": 2, "kind": "check", "what": "mv", "tensor": "blk.47.ffn_down_shexp.weight", "type": "Q80", "B": 2, "rel_err": 9.07e-08}
+{"run": 2, "kind": "check", "what": "mv", "tensor": "blk.47.ffn_down_shexp.weight", "type": "Q80", "B": 3, "rel_err": 1.19e-07}
+{"run": 2, "kind": "check", "what": "mv", "tensor": "blk.47.ffn_down_shexp.weight", "type": "Q80", "B": 4, "rel_err": 1.19e-07}
+{"run": 2, "kind": "check", "what": "mv", "tensor": "blk.0.attn_gate.weight", "type": "Q4K", "B": 1, "rel_err": 1.93e-07}
+{"run": 2, "kind": "check", "what": "mv", "tensor": "blk.0.attn_gate.weight", "type": "Q4K", "B": 2, "rel_err": 1.41e-07}
+{"run": 2, "kind": "check", "what": "mv", "tensor": "blk.0.attn_gate.weight", "type": "Q4K", "B": 3, "rel_err": 1.24e-07}
+{"run": 2, "kind": "check", "what": "mv", "tensor": "blk.0.attn_gate.weight", "type": "Q4K", "B": 4, "rel_err": 1.24e-07}
+{"run": 2, "kind": "check", "what": "mv", "tensor": "blk.1.attn_qkv.weight", "type": "Q5K", "B": 1, "rel_err": 2.38e-07}
+{"run": 2, "kind": "check", "what": "mv", "tensor": "blk.1.attn_qkv.weight", "type": "Q5K", "B": 2, "rel_err": 2.38e-07}
+{"run": 2, "kind": "check", "what": "mv", "tensor": "blk.1.attn_qkv.weight", "type": "Q5K", "B": 3, "rel_err": 1.80e-07}
+{"run": 2, "kind": "check", "what": "mv", "tensor": "blk.1.attn_qkv.weight", "type": "Q5K", "B": 4, "rel_err": 1.80e-07}
+{"run": 2, "kind": "check", "what": "mv", "tensor": "output.weight", "type": "Q6K", "B": 1, "rel_err": 9.80e-08}
+{"run": 2, "kind": "check", "what": "mv", "tensor": "output.weight", "type": "Q6K", "B": 2, "rel_err": 1.50e-07}
+{"run": 2, "kind": "check", "what": "mv", "tensor": "output.weight", "type": "Q6K", "B": 3, "rel_err": 1.50e-07}
+{"run": 2, "kind": "check", "what": "mv", "tensor": "output.weight", "type": "Q6K", "B": 4, "rel_err": 1.50e-07}
+{"run": 2, "kind": "check", "what": "mv", "tensor": "blk.0.ffn_down_shexp.weight", "type": "IQ4NL", "B": 1, "rel_err": 9.39e-08}
+{"run": 2, "kind": "check", "what": "mv", "tensor": "blk.0.ffn_down_shexp.weight", "type": "IQ4NL", "B": 2, "rel_err": 6.59e-08}
+{"run": 2, "kind": "check", "what": "mv", "tensor": "blk.0.ffn_down_shexp.weight", "type": "IQ4NL", "B": 3, "rel_err": 8.09e-08}
+{"run": 2, "kind": "check", "what": "mv", "tensor": "blk.0.ffn_down_shexp.weight", "type": "IQ4NL", "B": 4, "rel_err": 1.01e-07}
+{"run": 2, "kind": "check", "what": "mv", "tensor": "blk.0.ffn_up_shexp.weight", "type": "IQ4XS", "B": 1, "rel_err": 1.25e-07}
+{"run": 2, "kind": "check", "what": "mv", "tensor": "blk.0.ffn_up_shexp.weight", "type": "IQ4XS", "B": 2, "rel_err": 1.21e-07}
+{"run": 2, "kind": "check", "what": "mv", "tensor": "blk.0.ffn_up_shexp.weight", "type": "IQ4XS", "B": 3, "rel_err": 1.21e-07}
+{"run": 2, "kind": "check", "what": "mv", "tensor": "blk.0.ffn_up_shexp.weight", "type": "IQ4XS", "B": 4, "rel_err": 1.21e-07}
+{"run": 2, "kind": "check", "what": "mv", "tensor": "output_hc_down.weight", "type": "BF16", "B": 1, "rel_err": 1.38e-07}
+{"run": 2, "kind": "check", "what": "mv", "tensor": "output_hc_down.weight", "type": "BF16", "B": 2, "rel_err": 1.61e-07}
+{"run": 2, "kind": "check", "what": "mv", "tensor": "output_hc_down.weight", "type": "BF16", "B": 3, "rel_err": 1.99e-07}
+{"run": 2, "kind": "check", "what": "mv", "tensor": "output_hc_down.weight", "type": "BF16", "B": 4, "rel_err": 1.52e-07}
+{"run": 2, "kind": "check", "what": "dn_step", "B": 1, "rel_err": 8.03e-07}
+{"run": 2, "kind": "check", "what": "dn_step", "B": 2, "rel_err": 7.40e-07}
+{"run": 2, "kind": "check", "what": "dn_step", "B": 3, "rel_err": 1.10e-06}
+{"run": 2, "kind": "check", "what": "dn_step", "B": 4, "rel_err": 1.44e-06}
+{"run": 2, "kind": "role", "role": "attn_gate.weight", "count": 36, "B": 1, "us_median": 3027.9, "gbs": 125.2}
+{"run": 2, "kind": "role", "role": "attn_k.weight", "count": 12, "B": 1, "us_median": 231.7, "gbs": 54.1}
+{"run": 2, "kind": "role", "role": "attn_output.weight", "count": 12, "B": 1, "us_median": 1127.1, "gbs": 133.8}
+{"run": 2, "kind": "role", "role": "attn_q.weight", "count": 12, "B": 1, "us_median": 1912.1, "gbs": 136.9}
+{"run": 2, "kind": "role", "role": "attn_qkv.weight", "count": 36, "B": 1, "us_median": 5190.5, "gbs": 136.9}
+{"run": 2, "kind": "role", "role": "attn_v.weight", "count": 12, "B": 1, "us_median": 249.8, "gbs": 50.3}
+{"run": 2, "kind": "role", "role": "ffn_down_shexp.weight", "count": 48, "B": 1, "us_median": 449.4, "gbs": 100.3}
+{"run": 2, "kind": "role", "role": "ffn_gate_inp.weight", "count": 48, "B": 1, "us_median": 936.5, "gbs": 67.2}
+{"run": 2, "kind": "role", "role": "ffn_gate_shexp.weight", "count": 48, "B": 1, "us_median": 1242.6, "gbs": 40.1}
+{"run": 2, "kind": "role", "role": "ffn_up_shexp.weight", "count": 48, "B": 1, "us_median": 1240.3, "gbs": 40.9}
+{"run": 2, "kind": "role", "role": "hc_attn_down.weight", "count": 48, "B": 1, "us_median": 3046.6, "gbs": 103.3}
+{"run": 2, "kind": "role", "role": "hc_attn_inject.weight", "count": 48, "B": 1, "us_median": 978.3, "gbs": 4.0}
+{"run": 2, "kind": "role", "role": "hc_attn_up.weight", "count": 48, "B": 1, "us_median": 1150.6, "gbs": 273.4}
+{"run": 2, "kind": "role", "role": "hc_ffn_down.weight", "count": 48, "B": 1, "us_median": 3043.2, "gbs": 103.4}
+{"run": 2, "kind": "role", "role": "hc_ffn_inject.weight", "count": 48, "B": 1, "us_median": 986.3, "gbs": 4.0}
+{"run": 2, "kind": "role", "role": "hc_ffn_up.weight", "count": 48, "B": 1, "us_median": 1148.8, "gbs": 273.8}
+{"run": 2, "kind": "role", "role": "indexer.k_proj.weight", "count": 12, "B": 1, "us_median": 184.5, "gbs": 42.6}
+{"run": 2, "kind": "role", "role": "indexer.q_proj.weight", "count": 12, "B": 1, "us_median": 227.1, "gbs": 138.5}
+{"run": 2, "kind": "role", "role": "output.weight", "count": 1, "B": 1, "us_median": 3192.8, "gbs": 163.3}
+{"run": 2, "kind": "role", "role": "output_hc_down.weight", "count": 1, "B": 1, "us_median": 48.9, "gbs": 134.0}
+{"run": 2, "kind": "role", "role": "output_hc_up.weight", "count": 1, "B": 1, "us_median": 20.3, "gbs": 323.0}
+{"run": 2, "kind": "role", "role": "ple_key.weight", "count": 1, "B": 1, "us_median": 133.5, "gbs": 392.6}
+{"run": 2, "kind": "role", "role": "ple_value.weight", "count": 1, "B": 1, "us_median": 30.0, "gbs": 436.9}
+{"run": 2, "kind": "role", "role": "ssm_alpha.weight", "count": 36, "B": 1, "us_median": 580.4, "gbs": 15.2}
+{"run": 2, "kind": "role", "role": "ssm_beta.weight", "count": 36, "B": 1, "us_median": 582.1, "gbs": 15.2}
+{"run": 2, "kind": "role", "role": "ssm_out.weight", "count": 36, "B": 1, "us_median": 3555.1, "gbs": 124.9}
+{"run": 2, "kind": "token", "B": 1, "mv_ms_median": 35.270, "mv_ms_min": 33.903, "mv_ms_max": 35.365, "mv_bytes": 4103152640, "mv_gbs": 116.3, "n_mv": 737, "dn_ms_median": 0.907, "dn_ms_min": 0.842, "dn_ms_max": 0.945}
+{"run": 2, "kind": "token", "B": 2, "mv_ms_median": 39.446, "mv_ms_min": 38.267, "mv_ms_max": 39.725, "mv_bytes": 4103152640, "mv_gbs": 104.0, "n_mv": 737, "dn_ms_median": 0.995, "dn_ms_min": 0.928, "dn_ms_max": 1.010}
+{"run": 2, "kind": "token", "B": 3, "mv_ms_median": 50.763, "mv_ms_min": 49.568, "mv_ms_max": 51.126, "mv_bytes": 4103152640, "mv_gbs": 80.8, "n_mv": 737, "dn_ms_median": 1.179, "dn_ms_min": 1.116, "dn_ms_max": 1.198}
+{"run": 2, "kind": "token", "B": 4, "mv_ms_median": 56.745, "mv_ms_min": 55.362, "mv_ms_max": 57.445, "mv_bytes": 4103152640, "mv_gbs": 72.3, "n_mv": 737, "dn_ms_median": 1.372, "dn_ms_min": 1.304, "dn_ms_max": 1.398}
+{"run": 3, "kind": "check", "what": "mv", "tensor": "blk.47.ffn_down_shexp.weight", "type": "Q80", "B": 1, "rel_err": 9.92e-08}
+{"run": 3, "kind": "check", "what": "mv", "tensor": "blk.47.ffn_down_shexp.weight", "type": "Q80", "B": 2, "rel_err": 9.07e-08}
+{"run": 3, "kind": "check", "what": "mv", "tensor": "blk.47.ffn_down_shexp.weight", "type": "Q80", "B": 3, "rel_err": 1.19e-07}
+{"run": 3, "kind": "check", "what": "mv", "tensor": "blk.47.ffn_down_shexp.weight", "type": "Q80", "B": 4, "rel_err": 1.19e-07}
+{"run": 3, "kind": "check", "what": "mv", "tensor": "blk.0.attn_gate.weight", "type": "Q4K", "B": 1, "rel_err": 1.93e-07}
+{"run": 3, "kind": "check", "what": "mv", "tensor": "blk.0.attn_gate.weight", "type": "Q4K", "B": 2, "rel_err": 1.41e-07}
+{"run": 3, "kind": "check", "what": "mv", "tensor": "blk.0.attn_gate.weight", "type": "Q4K", "B": 3, "rel_err": 1.24e-07}
+{"run": 3, "kind": "check", "what": "mv", "tensor": "blk.0.attn_gate.weight", "type": "Q4K", "B": 4, "rel_err": 1.24e-07}
+{"run": 3, "kind": "check", "what": "mv", "tensor": "blk.1.attn_qkv.weight", "type": "Q5K", "B": 1, "rel_err": 2.38e-07}
+{"run": 3, "kind": "check", "what": "mv", "tensor": "blk.1.attn_qkv.weight", "type": "Q5K", "B": 2, "rel_err": 2.38e-07}
+{"run": 3, "kind": "check", "what": "mv", "tensor": "blk.1.attn_qkv.weight", "type": "Q5K", "B": 3, "rel_err": 1.80e-07}
+{"run": 3, "kind": "check", "what": "mv", "tensor": "blk.1.attn_qkv.weight", "type": "Q5K", "B": 4, "rel_err": 1.80e-07}
+{"run": 3, "kind": "check", "what": "mv", "tensor": "output.weight", "type": "Q6K", "B": 1, "rel_err": 9.80e-08}
+{"run": 3, "kind": "check", "what": "mv", "tensor": "output.weight", "type": "Q6K", "B": 2, "rel_err": 1.50e-07}
+{"run": 3, "kind": "check", "what": "mv", "tensor": "output.weight", "type": "Q6K", "B": 3, "rel_err": 1.50e-07}
+{"run": 3, "kind": "check", "what": "mv", "tensor": "output.weight", "type": "Q6K", "B": 4, "rel_err": 1.50e-07}
+{"run": 3, "kind": "check", "what": "mv", "tensor": "blk.0.ffn_down_shexp.weight", "type": "IQ4NL", "B": 1, "rel_err": 9.39e-08}
+{"run": 3, "kind": "check", "what": "mv", "tensor": "blk.0.ffn_down_shexp.weight", "type": "IQ4NL", "B": 2, "rel_err": 6.59e-08}
+{"run": 3, "kind": "check", "what": "mv", "tensor": "blk.0.ffn_down_shexp.weight", "type": "IQ4NL", "B": 3, "rel_err": 8.09e-08}
+{"run": 3, "kind": "check", "what": "mv", "tensor": "blk.0.ffn_down_shexp.weight", "type": "IQ4NL", "B": 4, "rel_err": 1.01e-07}
+{"run": 3, "kind": "check", "what": "mv", "tensor": "blk.0.ffn_up_shexp.weight", "type": "IQ4XS", "B": 1, "rel_err": 1.25e-07}
+{"run": 3, "kind": "check", "what": "mv", "tensor": "blk.0.ffn_up_shexp.weight", "type": "IQ4XS", "B": 2, "rel_err": 1.21e-07}
+{"run": 3, "kind": "check", "what": "mv", "tensor": "blk.0.ffn_up_shexp.weight", "type": "IQ4XS", "B": 3, "rel_err": 1.21e-07}
+{"run": 3, "kind": "check", "what": "mv", "tensor": "blk.0.ffn_up_shexp.weight", "type": "IQ4XS", "B": 4, "rel_err": 1.21e-07}
+{"run": 3, "kind": "check", "what": "mv", "tensor": "output_hc_down.weight", "type": "BF16", "B": 1, "rel_err": 1.38e-07}
+{"run": 3, "kind": "check", "what": "mv", "tensor": "output_hc_down.weight", "type": "BF16", "B": 2, "rel_err": 1.61e-07}
+{"run": 3, "kind": "check", "what": "mv", "tensor": "output_hc_down.weight", "type": "BF16", "B": 3, "rel_err": 1.99e-07}
+{"run": 3, "kind": "check", "what": "mv", "tensor": "output_hc_down.weight", "type": "BF16", "B": 4, "rel_err": 1.52e-07}
+{"run": 3, "kind": "check", "what": "dn_step", "B": 1, "rel_err": 8.03e-07}
+{"run": 3, "kind": "check", "what": "dn_step", "B": 2, "rel_err": 7.40e-07}
+{"run": 3, "kind": "check", "what": "dn_step", "B": 3, "rel_err": 1.10e-06}
+{"run": 3, "kind": "check", "what": "dn_step", "B": 4, "rel_err": 1.44e-06}
+{"run": 3, "kind": "role", "role": "attn_gate.weight", "count": 36, "B": 1, "us_median": 3022.1, "gbs": 125.5}
+{"run": 3, "kind": "role", "role": "attn_k.weight", "count": 12, "B": 1, "us_median": 231.6, "gbs": 54.1}
+{"run": 3, "kind": "role", "role": "attn_output.weight", "count": 12, "B": 1, "us_median": 1103.7, "gbs": 136.6}
+{"run": 3, "kind": "role", "role": "attn_q.weight", "count": 12, "B": 1, "us_median": 1909.7, "gbs": 137.1}
+{"run": 3, "kind": "role", "role": "attn_qkv.weight", "count": 36, "B": 1, "us_median": 5192.3, "gbs": 136.9}
+{"run": 3, "kind": "role", "role": "attn_v.weight", "count": 12, "B": 1, "us_median": 253.1, "gbs": 49.6}
+{"run": 3, "kind": "role", "role": "ffn_down_shexp.weight", "count": 48, "B": 1, "us_median": 540.7, "gbs": 83.3}
+{"run": 3, "kind": "role", "role": "ffn_gate_inp.weight", "count": 48, "B": 1, "us_median": 967.0, "gbs": 65.1}
+{"run": 3, "kind": "role", "role": "ffn_gate_shexp.weight", "count": 48, "B": 1, "us_median": 1273.7, "gbs": 39.1}
+{"run": 3, "kind": "role", "role": "ffn_up_shexp.weight", "count": 48, "B": 1, "us_median": 1278.8, "gbs": 39.6}
+{"run": 3, "kind": "role", "role": "hc_attn_down.weight", "count": 48, "B": 1, "us_median": 3036.0, "gbs": 103.6}
+{"run": 3, "kind": "role", "role": "hc_attn_inject.weight", "count": 48, "B": 1, "us_median": 988.5, "gbs": 4.0}
+{"run": 3, "kind": "role", "role": "hc_attn_up.weight", "count": 48, "B": 1, "us_median": 1113.6, "gbs": 282.5}
+{"run": 3, "kind": "role", "role": "hc_ffn_down.weight", "count": 48, "B": 1, "us_median": 3029.7, "gbs": 103.8}
+{"run": 3, "kind": "role", "role": "hc_ffn_inject.weight", "count": 48, "B": 1, "us_median": 993.6, "gbs": 4.0}
+{"run": 3, "kind": "role", "role": "hc_ffn_up.weight", "count": 48, "B": 1, "us_median": 1128.6, "gbs": 278.7}
+{"run": 3, "kind": "role", "role": "indexer.k_proj.weight", "count": 12, "B": 1, "us_median": 186.7, "gbs": 42.1}
+{"run": 3, "kind": "role", "role": "indexer.q_proj.weight", "count": 12, "B": 1, "us_median": 206.0, "gbs": 152.7}
+{"run": 3, "kind": "role", "role": "output.weight", "count": 1, "B": 1, "us_median": 3192.8, "gbs": 163.3}
+{"run": 3, "kind": "role", "role": "output_hc_down.weight", "count": 1, "B": 1, "us_median": 50.0, "gbs": 131.1}
+{"run": 3, "kind": "role", "role": "output_hc_up.weight", "count": 1, "B": 1, "us_median": 20.0, "gbs": 327.7}
+{"run": 3, "kind": "role", "role": "ple_key.weight", "count": 1, "B": 1, "us_median": 137.6, "gbs": 381.0}
+{"run": 3, "kind": "role", "role": "ple_value.weight", "count": 1, "B": 1, "us_median": 28.4, "gbs": 461.3}
+{"run": 3, "kind": "role", "role": "ssm_alpha.weight", "count": 36, "B": 1, "us_median": 507.6, "gbs": 17.4}
+{"run": 3, "kind": "role", "role": "ssm_beta.weight", "count": 36, "B": 1, "us_median": 607.4, "gbs": 14.6}
+{"run": 3, "kind": "role", "role": "ssm_out.weight", "count": 36, "B": 1, "us_median": 3528.8, "gbs": 125.8}
+{"run": 3, "kind": "token", "B": 1, "mv_ms_median": 34.697, "mv_ms_min": 34.000, "mv_ms_max": 35.193, "mv_bytes": 4103152640, "mv_gbs": 118.3, "n_mv": 737, "dn_ms_median": 0.892, "dn_ms_min": 0.831, "dn_ms_max": 0.908}
+{"run": 3, "kind": "token", "B": 2, "mv_ms_median": 38.555, "mv_ms_min": 38.223, "mv_ms_max": 39.663, "mv_bytes": 4103152640, "mv_gbs": 106.4, "n_mv": 737, "dn_ms_median": 0.979, "dn_ms_min": 0.924, "dn_ms_max": 1.011}
+{"run": 3, "kind": "token", "B": 3, "mv_ms_median": 49.609, "mv_ms_min": 49.420, "mv_ms_max": 50.920, "mv_bytes": 4103152640, "mv_gbs": 82.7, "n_mv": 737, "dn_ms_median": 1.137, "dn_ms_min": 1.106, "dn_ms_max": 1.187}
+{"run": 3, "kind": "token", "B": 4, "mv_ms_median": 56.112, "mv_ms_min": 55.334, "mv_ms_max": 56.863, "mv_bytes": 4103152640, "mv_gbs": 73.1, "n_mv": 737, "dn_ms_median": 1.332, "dn_ms_min": 1.300, "dn_ms_max": 1.394}

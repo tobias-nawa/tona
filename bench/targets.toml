@@ -1,0 +1,20 @@
+# Targets for bench/run. url without /v1. extra: additional fields in every request body.
+# Careful when comparing: extra switches something different on every server (e.g. reasoning).
+
+[llamacpp-hip]
+url = "http://127.0.0.1:8081"
+api = "openai"
+model = "default"
+note = "work/build/llama.cpp-hip/bin/llama-server --port 8081 … (after source toolchain/env.sh)"
+
+[llamacpp-vulkan]
+url = "http://127.0.0.1:8082"
+api = "openai"
+model = "default"
+note = "work/build/llama.cpp-vulkan/bin/llama-server --port 8082 … (GGML_VK_VISIBLE_DEVICES=0)"
+
+[tona]
+url = "http://127.0.0.1:8090"
+api = "openai"
+model = "qwen3.8-flash-next"
+note = "this engine"

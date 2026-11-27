@@ -1,0 +1,40 @@
+== hw_report
+### Test conditions
+
+- CPU: Apple M1 Max, 10 cores / 10 threads
+- GPU: Apple M1 Max, 32.0 GiB unified memory
+- RAM: 32.0 GiB
+- OS: macOS 27.0.1, kernel 27.0.0 (arm64)
+- Driver and toolkit: no toolkit found
+- TONA_* variables: none set
+- cgroup limits of this shell: none set
+- Load average (1, 5, 15 min): 1.4, 3.92, 3.69
+- CPU use by other programs over 0.5 s: 3.8 % of all threads
+- sandbox: no
+- Commit: `454ee0e` (dirty tree)
+== before
+- Quiet check (2026-11-14 18:29:23): ok
+== after
+- Quiet check (2026-11-14 18:51:43): do not measure
+  - do not measure: the GPU is 96 % busy
+- Quiet check (2026-11-14 18:52:03): ok
+== hw_report
+### Test conditions
+
+- CPU: Apple M1 Max, 10 cores / 10 threads
+- GPU: Apple M1 Max, 32.0 GiB unified memory
+- RAM: 32.0 GiB
+- OS: macOS 27.0.1, kernel 27.0.0 (arm64)
+- Driver and toolkit: no toolkit found
+- TONA_* variables: none set
+- cgroup limits of this shell: none set
+- Load average (1, 5, 15 min): 1.61, 3.61, 3.95
+- CPU use by other programs over 0.5 s: 2.4 % of all threads
+- sandbox: no
+- Commit: `7f085e5` (dirty tree)
+== before
+- Quiet check (2026-11-14 19:18:01): ok
+== after
+- Quiet check (2026-11-14 20:12:27): do not measure
+  - do not measure: the GPU is 97 % busy
+- Quiet check (2026-11-14 20:12:48): ok

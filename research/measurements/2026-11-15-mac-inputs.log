@@ -1,0 +1,40 @@
+== inputs split (A/A): hw_report
+### Test conditions
+
+- CPU: Apple M1 Max, 10 cores / 10 threads
+- GPU: Apple M1 Max, 32.0 GiB unified memory
+- RAM: 32.0 GiB
+- OS: macOS 27.0.1, kernel 27.0.0 (arm64)
+- Driver and toolkit: no toolkit found
+- TONA_* variables: none set
+- cgroup limits of this shell: none set
+- Load average (1, 5, 15 min): 1.71, 2.52, 1.82
+- CPU use by other programs over 0.5 s: 4.0 % of all threads
+- sandbox: no
+- Commit: `a3018cb` (dirty tree)
+== before the inputs run
+- Quiet check (2026-11-15 02:26:55): ok
+== after the inputs run
+- Quiet check (2026-11-15 02:55:59): do not measure
+  - do not measure: the GPU is 98 % busy
+- Quiet check (2026-11-15 02:56:19): ok
+== inputs rest split (A/A): hw_report
+### Test conditions
+
+- CPU: Apple M1 Max, 10 cores / 10 threads
+- GPU: Apple M1 Max, 32.0 GiB unified memory
+- RAM: 32.0 GiB
+- OS: macOS 27.0.1, kernel 27.0.0 (arm64)
+- Driver and toolkit: no toolkit found
+- TONA_* variables: none set
+- cgroup limits of this shell: none set
+- Load average (1, 5, 15 min): 1.5, 1.52, 1.47
+- CPU use by other programs over 0.5 s: 4.1 % of all threads
+- sandbox: no
+- Commit: `a3018cb` (dirty tree)
+== before the second inputs run
+- Quiet check (2026-11-15 03:00:16): ok
+== after the second inputs run
+- Quiet check (2026-11-15 03:29:26): do not measure
+  - do not measure: the GPU is 98 % busy
+- Quiet check (2026-11-15 03:29:47): ok

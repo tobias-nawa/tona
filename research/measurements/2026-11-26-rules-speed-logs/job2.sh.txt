@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# n3 job 2: q3 huge, q4 needle, q5 R8. Run inside one gpu_queue exclusive job.
+W=<worktree>
+S=/var/tmp/claude/n3
+cd "$W" || exit 1
+# shellcheck disable=SC1091
+source toolchain/env.sh
+export TONA_DIAG=1
+tc() { { echo "## $2 $1 $(date +%F' '%T)"; python3 tools/hw_report.py; python3 tools/quiet_check.py; echo "quiet_check exit $?"; } >> "$S/$1.tc.log" 2>&1; }
+"$S/blocks.sh" q3
+sleep 60
+tc q4-needle before
+python3 "$S/needle.py" > "$S/q4-needle.out" 2>&1
+tc q4-needle after
+sleep 60
+tc q5-r8 before
+python3 scripts/r8_pressure.py --build n3-pr --pressure-files "<repo>/work/models/ornith-1.5-35b-a3b/*.gguf" \
+  --port 8173 > "$S/q5-r8.out" 2>&1
+tc q5-r8 after

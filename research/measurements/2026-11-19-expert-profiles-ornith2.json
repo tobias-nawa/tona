@@ -1,0 +1,505 @@
+{
+  "config": {
+    "A": {
+      "build": "ep175",
+      "env": {
+        "TONA_EXPERT_PROFILE": "none"
+      },
+      "tooling": {
+        "ROCR_VISIBLE_DEVICES": "0"
+      },
+      "commit": "v0.0.2-1339-g5034f45806-dirty",
+      "model": "<worktree>/work/models/ornith-1.5-35b-a3b/Ornith-1.5-35B-Q4_K_M.gguf",
+      "drafter": ""
+    },
+    "B": {
+      "build": "ep175",
+      "env": {},
+      "tooling": {
+        "ROCR_VISIBLE_DEVICES": "0",
+        "TONA_EXPERT_PROFILE": "<worktree>/toolchain/profiles/ornith-1.5-35b-a3b.bin"
+      },
+      "commit": "v0.0.2-1339-g5034f45806-dirty",
+      "model": "<worktree>/work/models/ornith-1.5-35b-a3b/Ornith-1.5-35B-Q4_K_M.gguf",
+      "drafter": ""
+    },
+    "workload": "server",
+    "targets": "2000:300 16000:100 at --ctx 32768",
+    "deterministic": false,
+    "plan_info": {
+      "expect": [
+        [
+          "decode",
+          -1.2,
+          3.0
+        ],
+        [
+          "prefill@2000",
+          10.0,
+          40.0
+        ],
+        [
+          "prefill@16000",
+          -0.5,
+          0.5
+        ]
+      ],
+      "source": "run 1 of this file",
+      "workload": "server",
+      "targets": "2000:300 16000:100 at --ctx 32768",
+      "primary": "",
+      "why_size": "repeat of run 1 with 6 rounds, same sizes",
+      "decode_tokens": 200,
+      "noise": {},
+      "warmup": true,
+      "round_warmup": false,
+      "load_log": false,
+      "A": {
+        "build": "ep175",
+        "env": {
+          "TONA_EXPERT_PROFILE": "none"
+        },
+        "tooling": {
+          "ROCR_VISIBLE_DEVICES": "0"
+        },
+        "commit": "v0.0.2-1339-g5034f45806-dirty",
+        "model": "<worktree>/work/models/ornith-1.5-35b-a3b/Ornith-1.5-35B-Q4_K_M.gguf",
+        "drafter": ""
+      },
+      "B": {
+        "build": "ep175",
+        "env": {},
+        "tooling": {
+          "ROCR_VISIBLE_DEVICES": "0",
+          "TONA_EXPERT_PROFILE": "<worktree>/toolchain/profiles/ornith-1.5-35b-a3b.bin"
+        },
+        "commit": "v0.0.2-1339-g5034f45806-dirty",
+        "model": "<worktree>/work/models/ornith-1.5-35b-a3b/Ornith-1.5-35B-Q4_K_M.gguf",
+        "drafter": ""
+      }
+    },
+    "reference_sha": {},
+    "corpus_sha256": "e13a800340859f7d39c63712d90383faae7e5a47c3865f0811e40d912612d38e",
+    "corpus_is_reference": true,
+    "commit": "5034f45",
+    "noise": {}
+  },
+  "rounds": [
+    {
+      "order": "AB",
+      "sha": {
+        "A": {
+          "2000": "b82b2b4dad3975d4",
+          "16000": "e85b642df9178deb"
+        },
+        "B": {
+          "2000": "b82b2b4dad3975d4",
+          "16000": "e85b642df9178deb"
+        }
+      },
+      "A": {
+        "prefill@2000": 2291.601257338336,
+        "decode@2000": 121.84895802183578,
+        "prefill@16000": 4089.6872827196903,
+        "decode@16000": 149.10733131150255
+      },
+      "counters": {
+        "A": {
+          "2000": {
+            "expert_hits": 83699,
+            "expert_misses": 3842,
+            "passes": 121,
+            "gen_tokens": 299,
+            "mtp_passes": 312
+          },
+          "16000": {
+            "expert_hits": 21832,
+            "expert_misses": 1580,
+            "passes": 28,
+            "gen_tokens": 100,
+            "mtp_passes": 46
+          }
+        },
+        "B": {
+          "2000": {
+            "expert_hits": 83647,
+            "expert_misses": 3894,
+            "passes": 121,
+            "gen_tokens": 299,
+            "mtp_passes": 312
+          },
+          "16000": {
+            "expert_hits": 21740,
+            "expert_misses": 1672,
+            "passes": 28,
+            "gen_tokens": 100,
+            "mtp_passes": 46
+          }
+        }
+      },
+      "B": {
+        "prefill@2000": 2761.114205292847,
+        "decode@2000": 124.18388739742247,
+        "prefill@16000": 4090.148913605922,
+        "decode@16000": 148.11717476229325
+      },
+      "seconds": 29.672685227007605
+    },
+    {
+      "order": "BA",
+      "sha": {
+        "B": {
+          "2000": "b82b2b4dad3975d4",
+          "16000": "e85b642df9178deb"
+        },
+        "A": {
+          "2000": "b82b2b4dad3975d4",
+          "16000": "e85b642df9178deb"
+        }
+      },
+      "B": {
+        "prefill@2000": 2756.133001236693,
+        "decode@2000": 124.23091101725994,
+        "prefill@16000": 4090.3483948086778,
+        "decode@16000": 147.82311446506515
+      },
+      "counters": {
+        "B": {
+          "2000": {
+            "expert_hits": 83647,
+            "expert_misses": 3894,
+            "passes": 121,
+            "gen_tokens": 299,
+            "mtp_passes": 312
+          },
+          "16000": {
+            "expert_hits": 21740,
+            "expert_misses": 1672,
+            "passes": 28,
+            "gen_tokens": 100,
+            "mtp_passes": 46
+          }
+        },
+        "A": {
+          "2000": {
+            "expert_hits": 83699,
+            "expert_misses": 3842,
+            "passes": 121,
+            "gen_tokens": 299,
+            "mtp_passes": 312
+          },
+          "16000": {
+            "expert_hits": 21832,
+            "expert_misses": 1580,
+            "passes": 28,
+            "gen_tokens": 100,
+            "mtp_passes": 46
+          }
+        }
+      },
+      "A": {
+        "prefill@2000": 2290.5625766180747,
+        "decode@2000": 121.755230908905,
+        "prefill@16000": 4089.6625301411113,
+        "decode@16000": 148.69879388073713
+      },
+      "seconds": 29.669391431991244
+    },
+    {
+      "order": "AB",
+      "sha": {
+        "A": {
+          "2000": "b82b2b4dad3975d4",
+          "16000": "e85b642df9178deb"
+        },
+        "B": {
+          "2000": "b82b2b4dad3975d4",
+          "16000": "e85b642df9178deb"
+        }
+      },
+      "A": {
+        "prefill@2000": 2294.4907722379194,
+        "decode@2000": 121.75820177837869,
+        "prefill@16000": 4088.687277599137,
+        "decode@16000": 148.79017997905675
+      },
+      "counters": {
+        "A": {
+          "2000": {
+            "expert_hits": 83699,
+            "expert_misses": 3842,
+            "passes": 121,
+            "gen_tokens": 299,
+            "mtp_passes": 312
+          },
+          "16000": {
+            "expert_hits": 21832,
+            "expert_misses": 1580,
+            "passes": 28,
+            "gen_tokens": 100,
+            "mtp_passes": 46
+          }
+        },
+        "B": {
+          "2000": {
+            "expert_hits": 83647,
+            "expert_misses": 3894,
+            "passes": 121,
+            "gen_tokens": 299,
+            "mtp_passes": 312
+          },
+          "16000": {
+            "expert_hits": 21740,
+            "expert_misses": 1672,
+            "passes": 28,
+            "gen_tokens": 100,
+            "mtp_passes": 46
+          }
+        }
+      },
+      "B": {
+        "prefill@2000": 2752.0290721732913,
+        "decode@2000": 124.3224417084695,
+        "prefill@16000": 4085.973363514196,
+        "decode@16000": 148.0065512672611
+      },
+      "seconds": 29.672459078981774
+    },
+    {
+      "order": "BA",
+      "sha": {
+        "B": {
+          "2000": "b82b2b4dad3975d4",
+          "16000": "e85b642df9178deb"
+        },
+        "A": {
+          "2000": "b82b2b4dad3975d4",
+          "16000": "e85b642df9178deb"
+        }
+      },
+      "B": {
+        "prefill@2000": 2753.75936315382,
+        "decode@2000": 123.83380969922759,
+        "prefill@16000": 4089.9594605712946,
+        "decode@16000": 148.3147774935434
+      },
+      "counters": {
+        "B": {
+          "2000": {
+            "expert_hits": 83647,
+            "expert_misses": 3894,
+            "passes": 121,
+            "gen_tokens": 299,
+            "mtp_passes": 312
+          },
+          "16000": {
+            "expert_hits": 21740,
+            "expert_misses": 1672,
+            "passes": 28,
+            "gen_tokens": 100,
+            "mtp_passes": 46
+          }
+        },
+        "A": {
+          "2000": {
+            "expert_hits": 83699,
+            "expert_misses": 3842,
+            "passes": 121,
+            "gen_tokens": 299,
+            "mtp_passes": 312
+          },
+          "16000": {
+            "expert_hits": 21832,
+            "expert_misses": 1580,
+            "passes": 28,
+            "gen_tokens": 100,
+            "mtp_passes": 46
+          }
+        }
+      },
+      "A": {
+        "prefill@2000": 2290.8684412070807,
+        "decode@2000": 121.78801115091518,
+        "prefill@16000": 4089.3498701979047,
+        "decode@16000": 149.03683980985267
+      },
+      "seconds": 29.674718042981112
+    },
+    {
+      "order": "AB",
+      "sha": {
+        "A": {
+          "2000": "b82b2b4dad3975d4",
+          "16000": "e85b642df9178deb"
+        },
+        "B": {
+          "2000": "b82b2b4dad3975d4",
+          "16000": "e85b642df9178deb"
+        }
+      },
+      "A": {
+        "prefill@2000": 2291.0879887603533,
+        "decode@2000": 121.79804648697869,
+        "prefill@16000": 4090.629835733464,
+        "decode@16000": 149.23065427036076
+      },
+      "counters": {
+        "A": {
+          "2000": {
+            "expert_hits": 83699,
+            "expert_misses": 3842,
+            "passes": 121,
+            "gen_tokens": 299,
+            "mtp_passes": 312
+          },
+          "16000": {
+            "expert_hits": 21832,
+            "expert_misses": 1580,
+            "passes": 28,
+            "gen_tokens": 100,
+            "mtp_passes": 46
+          }
+        },
+        "B": {
+          "2000": {
+            "expert_hits": 83647,
+            "expert_misses": 3894,
+            "passes": 121,
+            "gen_tokens": 299,
+            "mtp_passes": 312
+          },
+          "16000": {
+            "expert_hits": 21740,
+            "expert_misses": 1672,
+            "passes": 28,
+            "gen_tokens": 100,
+            "mtp_passes": 46
+          }
+        }
+      },
+      "B": {
+        "prefill@2000": 2751.431536466961,
+        "decode@2000": 124.37683850914647,
+        "prefill@16000": 4088.9964654079213,
+        "decode@16000": 147.7532509892941
+      },
+      "seconds": 29.666146356990794
+    },
+    {
+      "order": "BA",
+      "sha": {
+        "B": {
+          "2000": "b82b2b4dad3975d4",
+          "16000": "e85b642df9178deb"
+        },
+        "A": {
+          "2000": "b82b2b4dad3975d4",
+          "16000": "e85b642df9178deb"
+        }
+      },
+      "B": {
+        "prefill@2000": 2749.736500172917,
+        "decode@2000": 124.00841619988377,
+        "prefill@16000": 4085.364500976325,
+        "decode@16000": 147.98070042216244
+      },
+      "counters": {
+        "B": {
+          "2000": {
+            "expert_hits": 83647,
+            "expert_misses": 3894,
+            "passes": 121,
+            "gen_tokens": 299,
+            "mtp_passes": 312
+          },
+          "16000": {
+            "expert_hits": 21740,
+            "expert_misses": 1672,
+            "passes": 28,
+            "gen_tokens": 100,
+            "mtp_passes": 46
+          }
+        },
+        "A": {
+          "2000": {
+            "expert_hits": 83699,
+            "expert_misses": 3842,
+            "passes": 121,
+            "gen_tokens": 299,
+            "mtp_passes": 312
+          },
+          "16000": {
+            "expert_hits": 21832,
+            "expert_misses": 1580,
+            "passes": 28,
+            "gen_tokens": 100,
+            "mtp_passes": 46
+          }
+        }
+      },
+      "A": {
+        "prefill@2000": 2287.6510937953035,
+        "decode@2000": 121.80934509796789,
+        "prefill@16000": 4087.093176633105,
+        "decode@16000": 148.38439346902058
+      },
+      "seconds": 29.681923897995148
+    }
+  ],
+  "discarded": [],
+  "stop_reason": "all metrics decided after round 6",
+  "wall_seconds": 193.1754274169798,
+  "loads": [],
+  "warmup": {
+    "prefill@2000": 2290.958288899127,
+    "decode@2000": 121.8154282394885,
+    "prefill@16000": 3873.6161970907665,
+    "decode@16000": 148.86835848995958
+  },
+  "plan": {
+    "alpha": 0.05,
+    "margin": 0.5,
+    "max_rounds": 6,
+    "min_rounds": 6,
+    "prior_sd": 0.5,
+    "prior_df": 4.0
+  },
+  "decisions": {
+    "prefill@2000": {
+      "decided_at_round": 6,
+      "decision": "B faster",
+      "mean_diff_percent": 20.208762815026915,
+      "ci_diff_percent": [
+        19.874752421378457,
+        20.542773208675374
+      ]
+    },
+    "decode@2000": {
+      "decided_at_round": 6,
+      "decision": "B faster",
+      "mean_diff_percent": 1.942999116640783,
+      "ci_diff_percent": [
+        1.6122975571837865,
+        2.2737006760977794
+      ]
+    },
+    "prefill@16000": {
+      "decided_at_round": 6,
+      "decision": "equal",
+      "mean_diff_percent": -0.017606090649829875,
+      "ci_diff_percent": [
+        -0.3264547781365139,
+        0.29124259683685416
+      ]
+    },
+    "decode@16000": {
+      "decided_at_round": 6,
+      "decision": "B slower",
+      "mean_diff_percent": -0.5876960001852264,
+      "ci_diff_percent": [
+        -0.936208422615481,
+        -0.23918357775497173
+      ]
+    }
+  }
+}

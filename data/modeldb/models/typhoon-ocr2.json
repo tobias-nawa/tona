@@ -1,0 +1,189 @@
+{
+  "id": "typhoon-ocr2",
+  "name": "Typhoon OCR V2 (2B and 0.8B)",
+  "vendor": "Typhoon (OpenTyphoon)",
+  "release_date": "2026-11-05",
+  "lineage": {
+    "family": "Typhoon OCR",
+    "base_model": "infly/Infinity-Parser2-Flash (2B); the 0.8B sibling is a separate repo",
+    "how_derived": "supervised fine-tuning on curated Thai plus public English and Chinese data, then GRPO with a reward that gives zero to outputs hitting the token limit (aimed at repetition loops on photographed pages)"
+  },
+  "purpose": "Raise Thai accuracy of an already strong English/Chinese parser while keeping its English ability; returns layout elements with category, bounding box and text (card).",
+  "tasks": [
+    "documents",
+    "vision"
+  ],
+  "modalities": {
+    "input": [
+      "image",
+      "document"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "th",
+      "en"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0 (card tag) plus OpenTyphoon Terms and Conditions",
+    "verified": false,
+    "commercial_use": "unknown",
+    "redistribution": "unknown",
+    "notes": "Card metadata says apache-2.0 while the card text says use is subject to the OpenTyphoon Terms and Conditions (https://opentyphoon.ai/tac); the terms page and any LICENSE file were not read, so the actual conditions are open."
+  },
+  "architecture": {
+    "kind": "vision-language, Qwen3.5 2B architecture (24 layers, 18 linear plus 6 full attention, 24-layer vision tower)",
+    "params_total_b": 2.0,
+    "layers": 24,
+    "attention": "3 linear : 1 full",
+    "recurrent": "gated linear attention",
+    "context_native": 262144,
+    "drafter": "optional draft head for vLLM (card)"
+  },
+  "variants": [
+    {
+      "repo": "typhoon-ai/typhoon-ocr2-2b",
+      "format": "safetensors BF16",
+      "size_gb": 4.43,
+      "official": true
+    },
+    {
+      "repo": "typhoon-ai/typhoon-ocr2-2b-GGUF",
+      "format": "GGUF Q4_K_M",
+      "size_gb": 1.27,
+      "official": true,
+      "notes": "Q8_0 2.01, f16 3.78 GB, mmproj f16 0.67 GB; MLX 4/8-bit and bf16 also official"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "variant": "GGUF Q4_K_M or Q8_0 plus mmproj (about 2 to 2.7 GB)",
+      "basis": "estimate",
+      "notes": "2 GB against a VRAM budget of 9.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "GGUF Q4_K_M or Q8_0 plus mmproj (about 2 to 2.7 GB)",
+      "basis": "estimate",
+      "notes": "2 GB against a VRAM budget of 13.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "GGUF Q4_K_M or Q8_0 plus mmproj (about 2 to 2.7 GB)",
+      "basis": "estimate",
+      "notes": "2 GB against a VRAM budget of 21.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "GGUF Q4_K_M or Q8_0 plus mmproj (about 2 to 2.7 GB)",
+      "basis": "estimate",
+      "notes": "2 GB against a VRAM budget of 29.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "variant": "GGUF Q4_K_M or Q8_0 plus mmproj (about 2 to 2.7 GB)",
+      "basis": "estimate",
+      "notes": "2 GB against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "GGUF Q4_K_M or Q8_0 plus mmproj (about 2 to 2.7 GB)",
+      "basis": "estimate",
+      "notes": "2 GB against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "GGUF Q4_K_M or Q8_0 plus mmproj (about 2 to 2.7 GB)",
+      "basis": "estimate",
+      "notes": "2 GB against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "vLLM >= 0.30.0",
+      "MLX",
+      "Ollama"
+    ],
+    "notes": "Images with a long side under 1,600 px must be enlarged to 1,600 px before sending (card)."
+  },
+  "benchmarks": [
+    {
+      "name": "MDPBench overall / Thai / English",
+      "score": "79.8 / 81.3 / 78.4",
+      "kind": "vendor",
+      "variant": "2B BF16",
+      "source": "https://huggingface.co/typhoon-ai/typhoon-ocr2-2b"
+    },
+    {
+      "name": "olmOCR-bench",
+      "score": 84.7,
+      "kind": "vendor",
+      "variant": "2B (0.8B: 81.7)",
+      "source": "https://huggingface.co/typhoon-ai/typhoon-ocr2-2b"
+    },
+    {
+      "name": "OmniDocBench v1.6",
+      "score": 90.97,
+      "kind": "vendor",
+      "variant": "2B (0.8B: 89.37); base Infinity-Parser2-Flash 91.03",
+      "source": "https://huggingface.co/typhoon-ai/typhoon-ocr2-2b"
+    },
+    {
+      "name": "ThaiOCRBench",
+      "score": 59.9,
+      "kind": "vendor",
+      "variant": "2B (base 35.0)",
+      "source": "https://huggingface.co/typhoon-ai/typhoon-ocr2-2b"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "Thai pages: +20 points on MDPBench Thai over its base",
+      "also answers document questions and extracts key fields as JSON"
+    ],
+    "weaknesses": [
+      "English and general parsing scores stay at the base model's level, so outside Thai it adds nothing over Infinity-Parser2-Flash"
+    ],
+    "best_for": [
+      "Thai and English document parsing"
+    ],
+    "avoid_for": [
+      "anything where the licence terms are not cleared"
+    ],
+    "maturity": "second generation after Typhoon OCR 1.5; 1.6k downloads at check time"
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Thai-specific gain; for German or English users it is the base parser plus tuning that does not move English benchmarks, and the licence terms are ambiguous. Keep as the Thai-language option if Tona offers regional models.",
+    "blockers": [
+      "licence terms unverified",
+      "no Tona module for the Qwen3.5 VLM path"
+    ]
+  },
+  "open_questions": [
+    "content of the OpenTyphoon Terms and Conditions",
+    "German quality (not evaluated)"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/typhoon-ai/typhoon-ocr2-2b",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README and config read"
+    },
+    {
+      "url": "https://huggingface.co/api/models/typhoon-ai/typhoon-ocr2-2b-GGUF?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "GGUF sizes"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

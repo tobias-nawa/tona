@@ -1,0 +1,142 @@
+{
+  "id": "hunyuanimage-3.0",
+  "name": "HunyuanImage 3.0 (Instruct, Instruct-Distil)",
+  "vendor": "Tencent Hunyuan",
+  "release_date": "2025-09-25",
+  "purpose": "Native multimodal autoregressive MoE for text-to-image; the Instruct variants (2026-01-26) add reasoning, prompt enhancement, image-to-image editing and fusion of up to three reference images.",
+  "tasks": [
+    "image-generation"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image"
+    ],
+    "output": [
+      "image"
+    ]
+  },
+  "license": {
+    "name": "Tencent Hunyuan Community License",
+    "verified": true,
+    "commercial_use": "limited",
+    "redistribution": "limited",
+    "notes": "research/52 read the LICENSE text: excludes EU, UK and South Korea. Text re-read 2026-11-19 in the HF repo LICENSE; HF createdAt 2025-09-25."
+  },
+  "architecture": {
+    "kind": "autoregressive multimodal MoE",
+    "params_total_b": 83,
+    "params_active_b": 13,
+    "experts": 64,
+    "why_this_design": "Card: unified design models text and image directly, beyond DiT architectures."
+  },
+  "variants": [
+    {
+      "repo": "tencent/HunyuanImage-3.0",
+      "format": "safetensors BF16",
+      "size_gb": 168.7,
+      "official": true,
+      "notes": "Instruct-Distil: 8 steps"
+    },
+    {
+      "repo": "Intel AutoRound MXFP4 community",
+      "format": "MXFP4",
+      "size_gb": 52.7,
+      "official": false,
+      "notes": "from research/52"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "no",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "pc-16gb": {
+      "fits": "no",
+      "basis": "estimate",
+      "notes": "at least 53 GB at 4 bit No consumer-GPU speed found."
+    },
+    "pc-24gb": {
+      "fits": "no",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "pc-32gb": {
+      "fits": "no",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-32gb": {
+      "fits": "no",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-64gb+": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "notes": "MXFP4 53 GB; no engine"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "PyTorch with CUDA 12.8"
+    ],
+    "notes": "Card requires CUDA 12.8, Python 3.12, PyTorch 2.8; not in stable-diffusion.cpp."
+  },
+  "benchmarks": [
+    {
+      "name": "SSAE / GSB human evaluation",
+      "score": "charts only, no numbers in the card text",
+      "kind": "vendor",
+      "source": "https://huggingface.co/tencent/HunyuanImage-3.0"
+    }
+  ],
+  "soft": {
+    "weaknesses": [
+      "EU/UK exclusion in license",
+      "needs multi-GPU class hardware",
+      "prompt enhancement needs an external API key"
+    ],
+    "maturity": "Tencent; largest open image MoE (card)."
+  },
+  "tona_fit": {
+    "verdict": "reject",
+    "reason": "Community license excludes the EU, UK and South Korea (text read), and 80B parameters (MoE) do not fit any PC class below 64 GB unified memory.",
+    "blockers": [
+      "Tona has no image engine",
+      "license excludes EU/UK/KR",
+      "80B size"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/tencent/HunyuanImage-3.0",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "research/52-purpose-models.md",
+      "kind": "own",
+      "checked": "2026-11-19",
+      "note": "our research note 52, facts fetched 2026-11-15, not a measurement"
+    },
+    {
+      "url": "https://huggingface.co/tencent/HunyuanImage-3.0/raw/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "license text re-read 2026-11-19"
+    }
+  ],
+  "open_questions": [
+    "VRAM requirement not given on the card"
+  ],
+  "last_checked": "2026-11-19"
+}

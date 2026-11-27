@@ -1,0 +1,246 @@
+{
+  "id": "ling-3.0-flash",
+  "name": "Ling-3.0-flash",
+  "vendor": "inclusionAI (Ant Group)",
+  "release_date": "2026-08-04",
+  "tasks": [
+    "coding",
+    "general"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/inclusionAI/Ling-3.0-flash/raw/main/README.md",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "raw card text"
+    },
+    {
+      "url": "https://huggingface.co/inclusionAI/Ling-3.0-flash/raw/main/config.json",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/inclusionAI/Ling-3.0-flash-GGUF/raw/main/README.md",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/inclusionAI/Ling-3.0-flash/discussions",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://benchlm.ai/benchmarks/aacodingindex",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "aggregator mirror of the Artificial Analysis Coding Index, read 2026-11-19; no per-row dates; upstream AA pages not reachable"
+    },
+    {
+      "url": "https://artificialanalysis.ai/models/comparisons/glm-5-3-vs-ling-3-0-flash",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "search snippet only"
+    },
+    {
+      "url": "research/49-moe-models-2026-11.md",
+      "kind": "own",
+      "checked": "2026-11-19"
+    }
+  ],
+  "last_checked": "2026-11-19",
+  "purpose": "inclusionAI states: a next-generation native hybrid reasoning model for real-world productivity workflows (coding, general and deep-research agents), trained in 10,000+ interactive environments, matching or beating the 1T-class Ring-2.6-1T with 12 % of its parameters.",
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "lineage": {
+    "family": "Ling-3.0",
+    "how_derived": "native hybrid linear attention from the start of pre-training (not converted)"
+  },
+  "license": {
+    "name": "MIT (card tag; no LICENSE file in the repository)",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card YAML says mit for both the model and the official GGUF repository; neither has a LICENSE file, the text could not be read."
+  },
+  "architecture": {
+    "kind": "hybrid linear attention MoE (KDA + MLA)",
+    "gguf_arch": "bailing hybrid (name not verified; llama.cpp support needs a turboquant build or PR 26608 per HF discussion 4)",
+    "params_total_b": 124,
+    "params_active_b": 5.1,
+    "layers": 42,
+    "attention": "35 Kimi Delta Attention layers and 7 gated MLA layers (5:1), 2 dense layers",
+    "recurrent": "Kimi Delta Attention",
+    "experts": 512,
+    "experts_active": 8,
+    "context_native": 262144,
+    "context_max": 262144,
+    "drafter": "MTP (num_nextn_predict_layers = 1)",
+    "why_this_design": "inclusionAI states: native hybrid linear attention (5:1 KDA to MLA, fine-grained diagonal gating, 1/64 sparse MoE) gives long-context efficiency and low compute per token; training schedule 8K, 32K, 256K."
+  },
+  "variants": [
+    {
+      "repo": "inclusionAI/Ling-3.0-flash",
+      "format": "safetensors BF16",
+      "size_gb": 255.0,
+      "official": true
+    },
+    {
+      "repo": "inclusionAI/Ling-3.0-flash-GGUF",
+      "format": "GGUF Q4_K_M",
+      "size_gb": 77.0,
+      "official": true
+    },
+    {
+      "repo": "inclusionAI/Ling-3.0-flash-GGUF",
+      "format": "GGUF Q5_K_M",
+      "size_gb": 90.5,
+      "official": true
+    },
+    {
+      "repo": "inclusionAI/Ling-3.0-flash-GGUF",
+      "format": "GGUF Q6_K",
+      "size_gb": 104.8,
+      "official": true
+    },
+    {
+      "repo": "inclusionAI/Ling-3.0-flash-GGUF",
+      "format": "GGUF Q8_0",
+      "size_gb": 135.6,
+      "official": true
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "no",
+      "variant": "Q4_K_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (77.0 GB) against the budget of docs/hardware: 9.6 GB VRAM plus 50 GB RAM = 60 GB; about 12% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that); no smaller official quant; a community 3-bit class file would be about 60 GB (HF discussion 14 reports a Q3_K_M of 62.7 GiB)"
+    },
+    "pc-16gb": {
+      "fits": "no",
+      "variant": "Q4_K_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (77.0 GB) against the budget of docs/hardware: 13.6 GB VRAM plus 50 GB RAM = 64 GB; about 18% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that); no smaller official quant; a community 3-bit class file would be about 60 GB (HF discussion 14 reports a Q3_K_M of 62.7 GiB)"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "Q4_K_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (77.0 GB) against the budget of docs/hardware: 21.6 GB VRAM plus 82 GB RAM = 104 GB; about 28% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that); no smaller official quant; a community 3-bit class file would be about 60 GB (HF discussion 14 reports a Q3_K_M of 62.7 GiB)"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "Q4_K_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (77.0 GB) against the budget of docs/hardware: 29.6 GB VRAM plus 114 GB RAM = 144 GB; about 38% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that); no smaller official quant; a community 3-bit class file would be about 60 GB (HF discussion 14 reports a Q3_K_M of 62.7 GiB)"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "Q4_K_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (77.0 GB) against the GPU share of docs/hardware (about 12 GB); no smaller official quant; a community 3-bit class file would be about 60 GB (HF discussion 14 reports a Q3_K_M of 62.7 GiB)"
+    },
+    "mac-32gb": {
+      "fits": "no",
+      "variant": "Q4_K_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (77.0 GB) against the GPU share of docs/hardware (about 22 GB); no smaller official quant; a community 3-bit class file would be about 60 GB (HF discussion 14 reports a Q3_K_M of 62.7 GiB)"
+    },
+    "mac-64gb+": {
+      "fits": "no",
+      "variant": "Q4_K_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (77.0 GB) against the GPU share of docs/hardware (about 52 GB); no smaller official quant; a community 3-bit class file would be about 60 GB (HF discussion 14 reports a Q3_K_M of 62.7 GiB)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "partial",
+    "other": [
+      "SGLang (dedicated image)",
+      "vLLM"
+    ],
+    "notes": "Official GGUFs exist, but mainline llama.cpp did not load the model on 2026-08-04 to 08-07; users needed a turboquant build or a PR (HF discussion 4). Tona would need a new module (KDA layers, gated MLA)."
+  },
+  "benchmarks": [
+    {
+      "name": "AA Coding Index (aggregator mirror)",
+      "score": 50.6,
+      "kind": "independent",
+      "source": "https://benchlm.ai/benchmarks/aacodingindex",
+      "variant": "API / full precision, not a quant",
+      "unit": "%",
+      "date": "2026-11-19",
+      "harness": "aggregator mirror of the Artificial Analysis Coding Index, read 2026-11-19; no per-row dates; upstream AA pages not reachable"
+    },
+    {
+      "name": "AA Intelligence Index",
+      "score": 38,
+      "kind": "independent",
+      "source": "https://artificialanalysis.ai/models/comparisons/glm-5-3-vs-ling-3-0-flash",
+      "variant": "Ling 3.0 Flash",
+      "date": "2026-11",
+      "harness": "from a search result snippet; GLM-5.3 (max) scored 60 on the same page; page not fetched"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "5.1 B active parameters: fast; users pair it with an agent harness and call it underrated",
+      "KDA layers keep the KV small"
+    ],
+    "weaknesses": [
+      "Independent Coding Index 50.6 against 73.0 (Qwen3.8-Flash-Next) and 68.1 (Qwen3.8-27B) on the same mirror",
+      "Chat template problems with multi-argument tool calls (HF discussion 4, 10)",
+      "Vendor benchmark values are in chart images, not readable as text"
+    ],
+    "behavior": "Thinking on by default (enable_thinking false to disable); recommended temperature 0.6, top_p 0.95, top_k 20.",
+    "best_for": [
+      "fast agent workers on 32 GB VRAM + 128 GB RAM or 24 GB + 96 GB machines"
+    ],
+    "avoid_for": [
+      "16 GB VRAM + 64 GB RAM machines at the official quants"
+    ],
+    "maturity": "inclusionAI: Ling / Ring family since 2025, 2.6 predecessor; main repo 8k downloads, 19 discussions.",
+    "user_reports": [
+      {
+        "summary": "\"Totally underrated\" when paired with an agent harness, feels better because it is fast",
+        "sentiment": "positive",
+        "source": "https://huggingface.co/inclusionAI/Ling-3.0-flash/discussions/17",
+        "date": "2026-09-01"
+      },
+      {
+        "summary": "Own GGUFs without imatrix: Q4_K_M with Q8_0 attention is +0.73 % perplexity against F16 (4.3849 against 4.3532): takes quantization well",
+        "sentiment": "positive",
+        "source": "https://huggingface.co/inclusionAI/Ling-3.0-flash/discussions/14",
+        "date": "2026-08-21"
+      },
+      {
+        "summary": "llama.cpp did not run it at release; needed a fork or PR and a modified Jinja template for multi-argument tool calls",
+        "sentiment": "negative",
+        "source": "https://huggingface.co/inclusionAI/Ling-3.0-flash/discussions/4",
+        "date": "2026-08-04"
+      }
+    ]
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "MIT by card and a real fit for 24 to 32 GB VRAM classes, but the only independent coding number (50.6) is clearly below the Qwen3.8 family that Tona already runs, and its smallest official quant (77 GB) does not reach the 16 GB + 64 GB class. Revisit if a 3-bit quant with measured quality appears.",
+    "blockers": [
+      "Tona has no KDA/MLA module (engine support, not a quality judgement)",
+      "no license text",
+      "mainline llama.cpp support unclear"
+    ]
+  },
+  "open_questions": [
+    "Vendor benchmark values (SWE-Bench Pro, Multilingual, Terminal-Bench 2.1) are only in images. Check: the HF eval-results YAML (.eval_results) or the model blog.",
+    "Does mainline llama.cpp load bailing_hybrid now? Check: current release notes.",
+    "Quality of a 3-bit quant on code. Check: own polyglot run.",
+    "Per-language coding quality: no public per-language numbers found (vendor tables are aggregates; swebench.com per-language view not retrievable). Check: run our Exercism polyglot set per language on the model."
+  ]
+}

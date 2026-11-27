@@ -1,0 +1,5 @@
+# Sandbox for the polyglot exercises (csharp): only the native libraries the .NET host needs. The SDK (~/.dotnet) and the
+# NuGet package cache are mounted read-only at run time, so no network is needed then (bench/polyglot/sandbox.py).
+FROM docker.io/library/debian:trixie-slim
+RUN apt-get update && apt-get install -y --no-install-recommends libstdc++6 zlib1g ca-certificates \
+    && rm -rf /var/lib/apt/lists/*

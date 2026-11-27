@@ -1,0 +1,31 @@
+STEP a 12:37:49
+VRAM-desktop a 12:37:49 2256 MiB
+STEP b 12:47:54
+VRAM-desktop b 12:47:54 2256 MiB
+SLOTS b: loaded in 9.4 s: context 140000 (KV int8 1.94 GB in RAM), VRAM 12.84 GB, 68 expert slots per layer, 27.4 GB pinned
+STEP c1 12:50:41
+VRAM-desktop c1 12:50:41 2256 MiB
+SLOTS c1: loaded in 9.1 s: context 32768 (KV int8 0.45 GB in RAM), VRAM 12.87 GB, 72 expert slots per layer, 25.8 GB pinned
+STEP c3 12:52:46
+VRAM-desktop c3 12:52:46 1974 MiB
+SLOTS c3: loaded in 9.3 s: context 140000 (KV int8 1.94 GB in RAM), VRAM 13.13 GB, 71 expert slots per layer, 27.4 GB pinned
+STEP c4 12:56:11
+VRAM-desktop c4 12:56:11 1974 MiB
+SLOTS c4: loaded in 18.1 s: context 1048576 (KV int8 14.50 GB in RAM), VRAM 13.19 GB, 60 expert slots per layer, 25.1 GB pinned
+HUGE c4: host memory: transparent huge pages enabled=madvise defrag=madvise, 5.1 of 11.3 GB of the registered memory on huge pages
+STEP e 13:19:11
+VRAM-desktop e 13:19:11 2045 MiB
+SLOTS e: loaded in 10.9 s: context 262144 (KV int8 3.62 GB in RAM), VRAM 13.05 GB, 66 expert slots per layer, 29.2 GB pinned
+HUGE e: host memory: transparent huge pages enabled=madvise defrag=madvise, 3.5 of 3.6 GB of the registered memory on huge pages
+STEP f 13:39:19
+VRAM-desktop f 13:39:19 2045 MiB
+SLOTS f: loaded in 10.7 s: context 262144 (KV int8 3.62 GB in RAM), VRAM 13.05 GB, 66 expert slots per layer, 29.2 GB pinned
+HUGE f: host memory: transparent huge pages enabled=madvise defrag=madvise, 3.6 of 3.6 GB of the registered memory on huge pages
+STEP f2 13:43:02
+VRAM-desktop f2 13:43:02 2045 MiB
+SLOTS f2: loaded in 11.6 s: context 1048576 (KV int8 14.50 GB in RAM), VRAM 13.09 GB, 59 expert slots per layer, 25.1 GB pinned
+HUGE f2: host memory: transparent huge pages enabled=madvise defrag=madvise, 10.9 of 11.3 GB of the registered memory on huge pages
+STEP i 14:00:44
+VRAM-desktop i 14:00:44 2045 MiB
+STEP finished 14:16:07
+VRAM-desktop finished 14:16:07 1947 MiB

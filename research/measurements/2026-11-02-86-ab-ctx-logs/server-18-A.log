@@ -1,0 +1,7 @@
+ie-server on http://127.0.0.1:8097 (Anthropic: /v1/messages, OpenAI: /v1/chat/completions), without key, loading ...
+Initialization: 512 MTP experts as Q2_0, converted on the GPU (708 MB) in 0.9 s
+loaded in 19.5 s: context 262144 (KV int8 3.62 GB in RAM), VRAM 14.47 GB, 80 expert slots per layer, 29.2 GB pinned
+03:13:10 Request: 1934 prompt tokens (0 reused, 1934 computed in 1.5 s, new conversation (stashing 0 ms), slot 0), 361 tokens in 5.5 s = 65.4 tok/s, 2.98 tokens per pass, 0 of 122 passes from the history (0.00 per pass)
+03:13:10 POST /v1/chat/completions → 200
+03:13:15 Request: 1816 prompt tokens (0 reused, 1816 computed in 1.2 s, new conversation (stashing 0 ms), slot 1), 400 tokens in 3.5 s = 115.5 tok/s, 7.82 tokens per pass, 48 of 51 passes from the history (8.00 per pass)
+03:13:15 POST /v1/chat/completions → 200

@@ -1,0 +1,18 @@
+Tona (tona-server) on http://127.0.0.1:8097 (Anthropic: /v1/messages, OpenAI: /v1/chat/completions), without key, loading ...
+host memory: GTT (probe 64 MB grew the GTT use by 64 MB; 0.1 of 32.5 GB in use)
+evicted_ms counter: /sys/class/kfd/kfd/proc/513564/stats_7773/evicted_ms (0 ms so far), evictions do not count against the pass deadline
+PCIe link: 32 GT/s x16, GPU-direct expert priced at 15.0 us (TONA_GD_US overrides)
+Initialization: 512 MTP experts as Q2_0, converted on the GPU (708 MB) in 0.8 s
+host memory: 3.6 GB of the pinned experts do not fit the GTT and are registered as userptr
+host memory: transparent huge pages enabled=madvise defrag=madvise, 0.3 of 3.6 GB of the registered memory on huge pages
+warning: the registered memory is mostly 4 KB pages (transparent_hugepage=madvise, defrag=madvise): page-cache pressure then stalls the GPU queues for seconds (research/measurements/2026-11-11-evict.md); 'madvise' or 'always' is needed, and free memory for 2 MB pages
+Releasing page cache: 8.25 GB of file mappings removed from the address space
+loaded in 17.3 s: context 262144 (KV int8 3.62 GB in RAM), VRAM 14.03 GB, 76 expert slots per layer, 29.2 GB pinned
+00:42:28 Request: 1934 prompt tokens (0 reused, 1934 computed in 1.8 s, new conversation (stashing 0 ms), slot 0), 200 tokens in 2.9 s = 70.1 tok/s, 3.33 tokens per pass, 0 of 60 passes from the history (0.00 per pass)
+00:42:28 POST /v1/chat/completions → 200
+Conversation of 15547 tokens stashed: 408 MB (state 149, KV 233, pool 26, drafter 0) in 0.14 s
+00:42:38 Request: 15575 prompt tokens (0 reused, 15575 computed in 8.2 s, new conversation (stashing 144 ms), checkpoint at 15547 (before the fixed end), slot 1), 100 tokens in 1.5 s = 67.6 tok/s, 3.00 tokens per pass, 0 of 33 passes from the history (0.00 per pass)
+00:42:38 POST /v1/chat/completions → 200
+Conversation of 1934 tokens stashed: 181 MB (state 149, KV 29, pool 3, drafter 0) in 0.02 s
+00:43:03 Request: 63883 prompt tokens (15547 reused, 48336 computed in 24.5 s, conversation from RAM in 43 ms, slot 0), 50 tokens in 0.7 s = 74.0 tok/s, 3.33 tokens per pass, 0 of 15 passes from the history (0.00 per pass)
+00:43:03 POST /v1/chat/completions → 200

@@ -1,0 +1,28 @@
+== hw_report
+### Test conditions
+
+- CPU: Apple M1 Max, 10 cores / 10 threads
+- GPU: Apple M1 Max, 32.0 GiB unified memory
+- RAM: 32.0 GiB
+- OS: macOS 27.0.1, kernel 27.0.0 (arm64)
+- Driver and toolkit: no toolkit found
+- TONA_* variables: none set
+- cgroup limits of this shell: none set
+- Load average (1, 5, 15 min): 2.82, 4.82, 3.89
+- CPU use by other programs over 0.5 s: 5.0 % of all threads
+- sandbox: no
+- Commit: `caffa68` (dirty tree)
+== before
+- Quiet check (2026-11-15 15:28:49): warning
+  - warning: load average 2.82 is high (it lags a minute)
+== after
+- Quiet check (2026-11-15 15:34:22): do not measure
+  - warning: other programs use 10.9 % of all CPU threads
+  - do not measure: the GPU is 99 % busy
+== A/B before
+- Quiet check (2026-11-15 15:47:24): do not measure
+  - do not measure: the GPU is 89 % busy
+== A/B after
+- Quiet check (2026-11-15 17:06:21): do not measure
+  - do not measure: the GPU is 98 % busy
+- Quiet check (2026-11-15 17:06:52): ok

@@ -1,0 +1,57 @@
+{
+ "ctx": 1048576,
+ "metrics": {
+  "prefill@512000": 1535.5815274113068,
+  "decode@512000": 60.83686736647715,
+  "prefill@1000000": 1164.0457074411504,
+  "decode@1000000": 57.188696824494954
+ },
+ "shas": {
+  "512000": "32e65dd9bc402413",
+  "1000000": "dc6c12a50914afe6"
+ },
+ "counters": {
+  "512000": {
+   "expert_hits": 75310,
+   "expert_misses": 9194,
+   "passes": 72,
+   "gen_tokens": 200,
+   "mtp_passes": 219
+  },
+  "1000000": {
+   "expert_hits": 69627,
+   "expert_misses": 12230,
+   "passes": 64,
+   "gen_tokens": 200,
+   "mtp_passes": 211
+  }
+ },
+ "peaks": {
+  "rss_gb": 11.62701416015625,
+  "gtt_gb": 29.205589294433594,
+  "vram_gb": 14.887348175048828,
+  "hwm_gb": 16.255115509033203,
+  "avail_min_gb": 10.849067687988281
+ },
+ "load": {
+  "cpu_own": 106.6,
+  "cpu_system": 5.5,
+  "cpu_other": 13.5,
+  "gpu_own": 0.0,
+  "gpu_system": 0.0,
+  "gpu_other": 0.2,
+  "pageins": 56935.6,
+  "swapins": 318.4,
+  "compressions": 348.1,
+  "level_min": 18,
+  "backup_share": 0.0,
+  "warning_share": 0.0,
+  "battery_share": 0.0,
+  "cpu_limit_min": null,
+  "power_mode": null,
+  "seconds": 1250,
+  "idle_before_s": null,
+  "ready_s": 47.0
+ }
+}
+wall 1252 s

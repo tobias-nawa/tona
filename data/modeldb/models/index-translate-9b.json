@@ -1,0 +1,78 @@
+{
+  "id": "index-translate-9b",
+  "name": "Index-Translate (2B / 9B / 35B-A3B preview)",
+  "vendor": "Bilibili (IndexTeam)",
+  "release_date": "2026-09-28",
+  "lineage": {
+    "base_model": "Qwen3.5 (9B card; Qwen3_5ForConditionalGeneration config)",
+    "how_derived": "multilingual mid-training (167.77B tokens), specialist SFT and RL, expert merging by parameter interpolation, multi-teacher on-policy distillation (card)",
+    "family": "qwen3.5"
+  },
+  "purpose": "Multilingual text translation across 150 languages that follows translation instructions (glossary, format, style, context, output length) and translates text inside images without external OCR (card).",
+  "tasks": ["translation", "vision"],
+  "modalities": {"input": ["text", "image"], "output": ["text"]},
+  "languages": {"natural": ["many"]},
+  "license": {
+    "name": "Apache-2.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "LICENSE in the bilibili/Index-Translate repo read: Apache License 2.0 text; HF cards state apache-2.0."
+  },
+  "architecture": {
+    "kind": "hybrid linear-attention plus full-attention dense transformer (Qwen3.5 architecture, with vision encoder via mmproj)",
+    "params_total_b": 9.65,
+    "layers": 32,
+    "attention": "full attention every 4th layer, linear attention in the others; 16 heads, 4 KV heads (9B config)",
+    "recurrent": "linear attention (type not named in the card read)",
+    "context_native": 262144,
+    "drafter": "MTP head present in the config (mtp_num_hidden_layers 1)"
+  },
+  "variants": [
+    {"repo": "IndexTeam/Index-Translate-9B", "format": "safetensors BF16", "size_gb": 19.33, "official": true},
+    {"repo": "IndexTeam/Index-Translate-9B-GGUF", "format": "GGUF Q4_K_M", "size_gb": 5.78, "official": true, "notes": "Q8_0 9.79 GB; vision needs mmproj Q8_0 0.62 GB"},
+    {"repo": "IndexTeam/Index-Translate-2B-GGUF", "format": "GGUF Q4_K_M", "size_gb": 1.31, "official": true, "notes": "Q8_0 2.08 GB"},
+    {"repo": "IndexTeam/Index-Translate-35B-A3B-preview-GGUF", "format": "GGUF Q4_K_M", "size_gb": 21.71, "official": true, "notes": "preview; Q3_K_M 17.17 GB, Q2_K 13.25 GB"}
+  ],
+  "hardware_fit": {
+    "pc-12gb": {"fits": "yes", "variant": "9B GGUF Q4_K_M", "basis": "estimate", "notes": "5.8 GB plus mmproj for images"},
+    "pc-16gb": {"fits": "yes", "variant": "9B GGUF Q8_0 or 35B-A3B Q4 with RAM offload", "basis": "estimate"},
+    "pc-24gb": {"fits": "yes", "variant": "35B-A3B preview Q4_K_M", "basis": "estimate", "notes": "21.7 GB"},
+    "pc-32gb": {"fits": "yes", "variant": "35B-A3B preview Q4_K_M", "basis": "estimate"},
+    "mac-16-24gb": {"fits": "yes", "variant": "9B GGUF Q4_K_M", "basis": "estimate"},
+    "mac-32gb": {"fits": "yes", "variant": "35B-A3B preview Q4_K_M", "basis": "estimate"},
+    "mac-64gb+": {"fits": "yes", "variant": "35B-A3B preview Q8_0 (37.8 GB)", "basis": "estimate"}
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": ["vLLM with Qwen3.5 support (card usage)"],
+    "notes": "Vendor publishes GGUF with mmproj files; Qwen3.5 base is a model Tona already targets (ornith, qwen3.5 records), so the 9B shares the backbone."
+  },
+  "benchmarks": [
+    {"name": "FLORES COMET-22 (21 languages, 420 directions)", "score": 0.8789, "kind": "vendor", "variant": "9B BF16", "harness": "greedy, 16384 context (card)", "source": "https://huggingface.co/IndexTeam/Index-Translate-9B", "date": "2026-11-19"},
+    {"name": "WMT24++ COMET-22 (en to 20 languages)", "score": 0.8601, "kind": "vendor", "variant": "9B BF16", "source": "https://huggingface.co/IndexTeam/Index-Translate-9B", "harness": "card table: Hy-MT2-7B 0.8593, Hy-MT2-30B-A3B 0.8624, TranslateGemma-12B 0.8524, Qwen3.5-9B base 0.8073"},
+    {"name": "WMT26 Judge", "score": 75.35, "kind": "vendor", "variant": "9B BF16", "unit": "0-100, reference-free judge", "source": "https://huggingface.co/IndexTeam/Index-Translate-9B", "harness": "card: Hy-MT2-7B 60.51, TranslateGemma-12B 71.19, DeepSeek-V4.1-Flash 83.55, GPT-5.6-Sol 89.10"},
+    {"name": "instTrans IFscore (instruction adherence)", "score": 0.8209, "kind": "vendor", "variant": "9B BF16", "source": "https://huggingface.co/IndexTeam/Index-Translate-9B", "harness": "card: Hy-MT2-7B 0.6079, TranslateGemma-12B 0.3068"},
+    {"name": "FLORES COMET-22", "score": 0.8655, "kind": "vendor", "variant": "2B BF16", "source": "https://huggingface.co/IndexTeam/Index-Translate-9B", "harness": "card: Hy-MT2-1.8B 0.8522"},
+    {"name": "FLORES COMET-22", "score": 0.8794, "kind": "vendor", "variant": "35B-A3B preview", "source": "https://huggingface.co/IndexTeam/Index-Translate-9B"}
+  ],
+  "soft": {
+    "strengths": ["Builder table puts the 9B ahead of Hy-MT2-7B and TranslateGemma-12B on COMET and judge scores and far ahead on instruction following", "Glossary, JSON/CSV/markdown preservation, placeholders, style control", "Image translation without separate OCR"],
+    "weaknesses": ["All numbers are the builder's own, on its own benchmarks (instTrans, IFMTBench, WMT26 Judge)", "TranslateGemma-12B instruction-following score is very low (0.3068), which says more about the benchmark's instruction focus than raw quality", "Builder's German-specific numbers not shown in the card text read"],
+    "best_for": ["instruction-heavy translation (glossary, formatting)", "multilingual document translation on small hardware"],
+    "maturity": "Bilibili; 2B/9B released 2026-09-28, 35B-A3B marked preview; GGUF 9B repo has 63k downloads per HF API."
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "Apache-2.0, Qwen3.5 backbone that Tona's work already touches, 5.8 GB at Q4 for the 9B, 150 languages and the strongest published instruction-following numbers among open translators; needs independent German evaluation before offering.",
+    "blockers": ["vendor-only benchmarks", "no independent German evidence yet"]
+  },
+  "sources": [
+    {"url": "https://huggingface.co/IndexTeam/Index-Translate-9B", "kind": "primary", "checked": "2026-11-19", "note": "README and config.json read"},
+    {"url": "https://github.com/bilibili/Index-Translate/blob/main/LICENSE", "kind": "primary", "checked": "2026-11-19", "note": "Apache-2.0 text read"},
+    {"url": "https://huggingface.co/api/models/IndexTeam/Index-Translate-9B-GGUF?blobs=true", "kind": "primary", "checked": "2026-11-19", "note": "GGUF sizes"}
+  ],
+  "open_questions": ["German-specific quality (card has aggregate 21-language FLORES)", "Independent evaluation", "Technical report not read here", "Exact linear-attention type in the Qwen3.5 backbone"],
+  "last_checked": "2026-11-19"
+}

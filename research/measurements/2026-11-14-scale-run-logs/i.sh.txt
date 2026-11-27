@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# Block i: ibench cases short-code,long-decode,needle-30k, 3 runs; llama.cpp-hip (baseline.sh) then tona (server on 8097, MTP, defaults)
+export S=/var/tmp/claude/scale1114; W=<worktree>
+cd "$W" || exit 1
+# shellcheck disable=SC1091
+source toolchain/env.sh
+vram() { echo "VRAM-desktop $1 $(date +%T) $(( $(cat /sys/class/drm/card1/device/mem_info_vram_used) / 1048576 )) MiB"; }
+vram i-llama
+python3 scripts/gpu_queue.py --label "scale1114 i-llama" -- scripts/baseline.sh llamacpp-hip -c short-code,long-decode,needle-30k -n 3 -l scale-1114
+sleep 30
+vram i-tona
+# shellcheck disable=SC2016  # the inner script expands $M, $S, $PID in the child shell on purpose
+python3 scripts/gpu_queue.py --label "scale1114 i-tona" -- bash -c '
+M=<repo>
+OMP_NUM_THREADS=6 ROCR_VISIBLE_DEVICES=0 TONA_DIAG=1 TONA_EXPERT_PROFILE=$M/work/profile/experts-coder.bin \
+ systemd-run --user --scope -q -p MemoryMax=54G -p MemorySwapMax=0 bash -c "ulimit -c unlimited; exec \"\$@\"" _ \
+ $M/work/build/scale1114/tona-server $M/work/models/coder-iq1_m/Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf \
+ --mtp $M/work/models/draft/mtp-Qwen3.8-Flash-Next-Q8_0.gguf --port 8097 --ctx 65536 > "$S/i-tona-server.log" 2>&1 &
+PID=$!
+for i in $(seq 1 600); do curl -sf -m 2 http://127.0.0.1:8097/status | grep -Eq "\"ready\": ?true" && break; kill -0 $PID 2>/dev/null || { echo server died; exit 1; }; sleep 2; done
+bench/run run --url http://127.0.0.1:8097 --api openai --model qwen3.8-flash-next -c short-code,long-decode,needle-30k -n 3 -l tona-scale-1114
+kill $PID; wait $PID
+'
+grep -h "expert slots" "$S/i-tona-server.log" | sed "s/^/SLOTS i-tona: /"

@@ -1,0 +1,20 @@
+Tona (tona-server) on http://127.0.0.1:8097 (Anthropic: /v1/messages, OpenAI: /v1/chat/completions), without key, loading ...
+host memory: GTT (probe 64 MB grew the GTT use by 64 MB; 0.1 of 32.5 GB in use)
+evicted_ms counter: /sys/class/kfd/kfd/proc/57938/stats_7773/evicted_ms (0 ms so far), evictions do not count against the pass deadline
+Initialization: 512 MTP experts as Q2_0, converted on the GPU (708 MB) in 0.8 s
+Releasing page cache: 8.25 GB of file mappings removed from the address space
+loaded in 8.8 s: context 65536 (KV int8 0.91 GB in RAM), VRAM 13.96 GB, 82 expert slots per layer, 26.3 GB pinned
+20:59:04 Request: 65 prompt tokens (0 reused, 65 computed in 0.4 s, new conversation (stashing 0 ms), slot 0), 62 tokens in 0.7 s = 91.2 tok/s, 6.40 tokens per pass, 0 of 10 passes from the history (0.00 per pass)
+20:59:05 Request: 65 prompt tokens (0 reused, 65 computed in 0.3 s, new conversation (stashing 0 ms), slot 1), 62 tokens in 0.6 s = 108.3 tok/s, 6.40 tokens per pass, 0 of 10 passes from the history (0.00 per pass)
+20:59:06 Request: 66 prompt tokens (0 reused, 66 computed in 0.3 s, new conversation (stashing 0 ms), slot 0), 62 tokens in 0.6 s = 109.3 tok/s, 6.40 tokens per pass, 0 of 10 passes from the history (0.00 per pass)
+20:59:07 Request: 64 prompt tokens (0 reused, 64 computed in 0.3 s, new conversation (stashing 0 ms), slot 1), 62 tokens in 0.6 s = 110.1 tok/s, 6.40 tokens per pass, 0 of 10 passes from the history (0.00 per pass)
+20:59:21 Request: 69 prompt tokens (0 reused, 69 computed in 0.3 s, new conversation (stashing 0 ms), slot 0), 1024 tokens in 13.8 s = 74.3 tok/s, 3.35 tokens per pass, 0 of 306 passes from the history (0.00 per pass)
+20:59:35 Request: 69 prompt tokens (0 reused, 69 computed in 0.3 s, new conversation (stashing 0 ms), slot 1), 1024 tokens in 14.1 s = 72.5 tok/s, 3.31 tokens per pass, 6 of 309 passes from the history (3.67 per pass)
+20:59:49 Request: 69 prompt tokens (0 reused, 69 computed in 0.3 s, new conversation (stashing 0 ms), slot 0), 1024 tokens in 13.1 s = 77.9 tok/s, 3.59 tokens per pass, 4 of 285 passes from the history (6.75 per pass)
+21:00:03 Request: 68 prompt tokens (0 reused, 68 computed in 0.3 s, new conversation (stashing 0 ms), slot 1), 1024 tokens in 13.9 s = 73.7 tok/s, 3.36 tokens per pass, 4 of 305 passes from the history (7.00 per pass)
+21:00:30 Request: 30909 prompt tokens (0 reused, 30909 computed in 16.0 s, new conversation (stashing 0 ms), slot 0), 678 tokens in 11.1 s = 60.9 tok/s, 2.65 tokens per pass, 2 of 258 passes from the history (1.00 per pass)
+21:00:57 Request: 30909 prompt tokens (0 reused, 30909 computed in 16.0 s, new conversation (stashing 0 ms), slot 1), 663 tokens in 11.0 s = 60.4 tok/s, 2.63 tokens per pass, 1 of 254 passes from the history (1.00 per pass)
+Conversation of 30909 tokens stashed: 664 MB (state 149, KV 463, pool 51, drafter 0) in 0.11 s
+21:01:23 Request: 30909 prompt tokens (0 reused, 30909 computed in 16.2 s, new conversation (stashing 108 ms), slot 0), 614 tokens in 10.1 s = 60.8 tok/s, 2.63 tokens per pass, 2 of 235 passes from the history (1.50 per pass)
+Conversation of 30909 tokens stashed: 664 MB (state 149, KV 463, pool 51, drafter 0) in 0.14 s
+21:01:52 Request: 30909 prompt tokens (0 reused, 30909 computed in 16.3 s, new conversation (stashing 144 ms), slot 1), 768 tokens in 11.8 s = 64.9 tok/s, 2.88 tokens per pass, 1 of 267 passes from the history (1.00 per pass)

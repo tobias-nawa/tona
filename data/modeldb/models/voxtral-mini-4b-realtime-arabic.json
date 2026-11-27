@@ -1,0 +1,150 @@
+{
+  "id": "voxtral-mini-4b-realtime-arabic",
+  "name": "Voxtral Mini 4B Realtime Arabic",
+  "vendor": "Mistral AI (with Morocco's MTNRA)",
+  "release_date": "2026-10-08",
+  "lineage": {
+    "base_model": "mistralai/Voxtral-Mini-4B-Realtime-2602",
+    "how_derived": "fine-tune for Arabic dialects and code-switching",
+    "family": "Voxtral"
+  },
+  "purpose": "Streaming speech-to-text for Arabic dialects and MSA, co-developed with Morocco's digital-transition ministry as a sovereign AI asset (card).",
+  "tasks": [
+    "audio-transcription"
+  ],
+  "modalities": {
+    "input": [
+      "audio"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "ar"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0 (card text)",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card section License: Apache 2.0 with a no-infringement note; no LICENSE file read."
+  },
+  "architecture": {
+    "kind": "streaming speech LLM: causal audio encoder (32 layers) + language decoder, about 4.4B parameters BF16, configurable transcription delay",
+    "params_total_b": 4.4
+  },
+  "variants": [
+    {
+      "repo": "mistralai/Voxtral-Mini-4B-Realtime-Arabic",
+      "format": "safetensors BF16",
+      "official": true,
+      "notes": "repo total 17.74 GB (several weight formats); BF16 weights about 8.9 GB for 4.4B parameters (my arithmetic, not a listed file)"
+    },
+    {
+      "repo": "onnx-community/Voxtral-Mini-4B-Realtime-Arabic-ONNX",
+      "format": "ONNX",
+      "official": false,
+      "notes": "used by the WebGPU demo space"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "marginal",
+      "variant": "BF16 (estimated from 4.4B x 2 bytes)",
+      "basis": "estimate",
+      "notes": "8.9 GB file against 9.6 GB VRAM plus 50 GB RAM budget; part streams from RAM (dense: decode is bandwidth bound)"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "BF16 (estimated from 4.4B x 2 bytes)",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (13.6 GB)"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "BF16 (estimated from 4.4B x 2 bytes)",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (21.6 GB)"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "BF16 (estimated from 4.4B x 2 bytes)",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (29.6 GB)"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "variant": "BF16 (estimated from 4.4B x 2 bytes)",
+      "basis": "estimate",
+      "notes": "8.9 GB file against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "BF16 (estimated from 4.4B x 2 bytes)",
+      "basis": "estimate",
+      "notes": "8.9 GB file against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "BF16 (estimated from 4.4B x 2 bytes)",
+      "basis": "estimate",
+      "notes": "8.9 GB file against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "vLLM /v1/realtime WebSocket",
+      "Transformers >= 5.2.0"
+    ],
+    "notes": "llama.cpp added mtmd_audio_stream and voxtral-realtime support in b11675 (2026-10-16); whether this Arabic fine-tune loads was not tested."
+  },
+  "benchmarks": [
+    {
+      "name": "Seven Arabic benchmarks, average CER at 480 ms delay",
+      "score": 8.82,
+      "kind": "vendor",
+      "source": "https://huggingface.co/mistralai/Voxtral-Mini-4B-Realtime-Arabic",
+      "unit": "% CER",
+      "variant": "BF16, delay 480 ms",
+      "harness": "MTNRA-co-developed normalisation; card says 0.91 points behind Voxtral Transcribe Arabic (7.91)"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "streaming with 480 ms delay",
+      "Arabic code-switching"
+    ],
+    "weaknesses": [
+      "Arabic only; card says use the base model for other languages"
+    ],
+    "maturity": "Mistral; 2.4k downloads, 56 likes in the first weeks."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Arabic specialist, not relevant for German-first users; noted because it shows Mistral's realtime Voxtral line being fine-tuned for languages. The German-capable member is the base Voxtral-Mini-4B-Realtime-2602 (see its record)."
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/mistralai/Voxtral-Mini-4B-Realtime-Arabic",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README, HF API"
+    },
+    {
+      "url": "https://github.com/ggml-org/llama.cpp/releases",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "b11675 'mtmd: add mtmd_audio_stream + support voxtral-realtime'"
+    }
+  ],
+  "open_questions": [
+    "Exact BF16 file size not listed",
+    "Benchmark tables are images in the card; only the average was in text"
+  ],
+  "last_checked": "2026-11-19"
+}

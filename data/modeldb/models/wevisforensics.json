@@ -1,0 +1,135 @@
+{
+  "id": "wevisforensics",
+  "name": "WeVisForensics (4B LoRA adapters)",
+  "vendor": "Tencent",
+  "release_date": "2026-11-14",
+  "lineage": {
+    "family": "WeVis",
+    "base_model": "Qwen/Qwen3.5-4B",
+    "how_derived": "five rank-64 LoRA adapters (main investigator plus visual-appearance, physical-consistency, common-sense and on-screen-text inspectors) trained with DTPO; the card also describes speech-content and voice-profile inspectors without releasing adapters for them"
+  },
+  "purpose": "Self-evolving multi-agent detector of AI-generated video: a main investigator coordinates forensic inspector sub-agents (paper arXiv 2611.21373).",
+  "tasks": [
+    "vision",
+    "other"
+  ],
+  "modalities": {
+    "input": [
+      "video",
+      "audio",
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0 (Tencent LICENSE file)",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "LICENSE read: Tencent states WeVisForensics (code, parameters, weights) is Apache-2.0 and includes the full Apache text."
+  },
+  "architecture": {
+    "kind": "agentic system: LoRA adapters (rank 64, alpha 128, BF16) on Qwen3.5-4B served from one vLLM process or merged",
+    "params_total_b": 4.0
+  },
+  "variants": [
+    {
+      "repo": "tencent/WeVisForensics",
+      "format": "five LoRA adapters, BF16",
+      "size_gb": 1.3,
+      "official": true,
+      "notes": "about 0.26 GB per adapter; base model downloaded separately; Transformers demo needs a GPU with at least 24 GB"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "marginal",
+      "variant": "Qwen3.5-4B BF16 (about 9 GB, estimate) plus adapters",
+      "basis": "estimate",
+      "notes": "9 GB against a VRAM budget of 9.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "Qwen3.5-4B BF16 (about 9 GB, estimate) plus adapters",
+      "basis": "estimate",
+      "notes": "9 GB against a VRAM budget of 13.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "Qwen3.5-4B BF16 (about 9 GB, estimate) plus adapters",
+      "basis": "estimate",
+      "notes": "9 GB against a VRAM budget of 21.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "Qwen3.5-4B BF16 (about 9 GB, estimate) plus adapters",
+      "basis": "estimate",
+      "notes": "9 GB against a VRAM budget of 29.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "variant": "Qwen3.5-4B BF16 (about 9 GB, estimate) plus adapters",
+      "basis": "estimate",
+      "notes": "9 GB against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "Qwen3.5-4B BF16 (about 9 GB, estimate) plus adapters",
+      "basis": "estimate",
+      "notes": "9 GB against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "Qwen3.5-4B BF16 (about 9 GB, estimate) plus adapters",
+      "basis": "estimate",
+      "notes": "9 GB against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "vLLM with LoRA serving",
+      "transformers (24 GB GPU)"
+    ]
+  },
+  "benchmarks": [],
+  "soft": {
+    "best_for": [
+      "checking whether a video is AI-generated"
+    ],
+    "maturity": "released 2026-11-14, 0 downloads and 7 likes at check time"
+  },
+  "tona_fit": {
+    "verdict": "reject",
+    "reason": "Purpose mismatch (AI-video forensics), no results read.",
+    "blockers": [
+      "purpose"
+    ]
+  },
+  "open_questions": [
+    "detection accuracy numbers (paper not opened)"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/tencent/WeVisForensics",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README read"
+    },
+    {
+      "url": "https://huggingface.co/tencent/WeVisForensics/raw/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "licence read"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

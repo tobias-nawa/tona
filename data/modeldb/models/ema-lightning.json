@@ -1,0 +1,131 @@
+{
+  "id": "ema-lightning",
+  "name": "EMA Lightning (Turkish TTS, 8.6M)",
+  "vendor": "canberkkkkkk (individual, with a Turkish text frontend by a third party)",
+  "release_date": "2026-10-01",
+  "purpose": "Tiny, fast, accurate Turkish text-to-speech: 5.6M-parameter DiT acoustic model plus 3M vocoder, about 34 MB, runs on GPU or CPU offline (card).",
+  "tasks": [
+    "speech-synthesis"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "audio"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "tr"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0 (card tag)",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card tag and config.json say apache-2.0; no LICENSE file in the repo (404)."
+  },
+  "architecture": {
+    "kind": "flow-matching DiT acoustic model (4 sampling steps, 25 Hz latents) + vocoder, 48 kHz output; letter-level text encoder with duration predictor and windowed aligner",
+    "params_total_b": 0.0086
+  },
+  "variants": [
+    {
+      "repo": "canberkkkkkk/ema-lightning",
+      "format": "PyTorch (ema.pt + decoder.pt)",
+      "official": true,
+      "size_gb": 0.04,
+      "notes": "about 34 MB"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "variant": "34 MB",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "34 MB",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "34 MB",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "34 MB",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "variant": "34 MB",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "34 MB",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "34 MB",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "ema-lightning pip package"
+    ]
+  },
+  "benchmarks": [
+    {
+      "name": "Freya-TR-Eval WER",
+      "score": 0.92,
+      "kind": "vendor",
+      "source": "https://huggingface.co/canberkkkkkk/ema-lightning",
+      "unit": "% WER",
+      "variant": "EMA Lightning",
+      "harness": "card says lowest of every system measured incl. ElevenLabs v4, Gemini 3.8 and the 2.38B Trendyol-TTS; first audio 3.86 ms and 440x real time on RTX 4090 (vendor)"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "Turkish quality for 8.6M parameters"
+    ],
+    "weaknesses": [
+      "Turkish only",
+      "benchmark is the author's against a Turkish eval set"
+    ],
+    "maturity": "79k downloads, 468 likes in 7 weeks; sibling 'oruk/orukeet' unrelated."
+  },
+  "tona_fit": {
+    "verdict": "reject",
+    "reason": "Turkish only. Listed as evidence that very small language-specific flow-matching TTS reaches commercial WER."
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/canberkkkkkk/ema-lightning",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README, config.json, HF API"
+    }
+  ],
+  "open_questions": [
+    "Benchmark independence unknown; arXiv 2405.14867 tagged (not read)"
+  ],
+  "last_checked": "2026-11-19"
+}

@@ -1,0 +1,149 @@
+{
+  "id": "sophon-realtime-v1",
+  "name": "Sophon-Realtime v1 (32B Tag/Flash/E2E, 4B builds)",
+  "vendor": "adventists-ai",
+  "release_date": "2026-10-29",
+  "lineage": {
+    "base_model": "DuplexJev (the vendor's own full-duplex thinker, not opened)",
+    "family": "Sophon-Realtime"
+  },
+  "purpose": "Full-duplex voice conversation: a 32B thinker listens, decides turn-taking, writes the reply with inline sound tags (laugh, sigh, stress) and a streaming voice (tag-tts) performs them (card).",
+  "tasks": [
+    "general",
+    "audio-transcription",
+    "speech-synthesis"
+  ],
+  "modalities": {
+    "input": [
+      "audio"
+    ],
+    "output": [
+      "text",
+      "audio"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "zh",
+      "en"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0 (card tag and text)",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card says Apache-2.0, free for commercial use; licence file not opened."
+  },
+  "architecture": {
+    "kind": "thinker (32B) -> tag-tts talker -> flow + HiFT vocoder, served as one vLLM-Omni model",
+    "params_total_b": 32.0
+  },
+  "variants": [
+    {
+      "repo": "adventists-ai/Sophon-Realtime-32B-Tag",
+      "format": "safetensors (thinker/talker/voices)",
+      "official": true,
+      "size_gb": 44.61,
+      "notes": "repo total per HF API; needs one 80 GB GPU per card"
+    },
+    {
+      "repo": "adventists-ai/Sophon-Realtime-4B-Tag",
+      "format": "safetensors",
+      "official": true,
+      "notes": "card says one 32 GB GPU; not opened"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "no",
+      "variant": "32B Tag",
+      "basis": "estimate",
+      "notes": "card requires one 80 GB GPU; no quantized build seen"
+    },
+    "pc-16gb": {
+      "fits": "no",
+      "variant": "32B Tag",
+      "basis": "estimate",
+      "notes": "card requires one 80 GB GPU; no quantized build seen"
+    },
+    "pc-24gb": {
+      "fits": "no",
+      "variant": "32B Tag",
+      "basis": "estimate",
+      "notes": "card requires one 80 GB GPU; no quantized build seen"
+    },
+    "pc-32gb": {
+      "fits": "no",
+      "variant": "32B Tag",
+      "basis": "estimate",
+      "notes": "card requires one 80 GB GPU; no quantized build seen"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "32B Tag",
+      "basis": "estimate",
+      "notes": "card requires one 80 GB GPU; no quantized build seen"
+    },
+    "mac-32gb": {
+      "fits": "no",
+      "variant": "32B Tag",
+      "basis": "estimate",
+      "notes": "card requires one 80 GB GPU; no quantized build seen"
+    },
+    "mac-64gb+": {
+      "fits": "no",
+      "variant": "32B Tag",
+      "basis": "estimate",
+      "notes": "card requires one 80 GB GPU; no quantized build seen"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "vLLM-Omni 0.30 with the vendor plugin"
+    ]
+  },
+  "benchmarks": [
+    {
+      "name": "VoiceBench",
+      "score": 82.8,
+      "kind": "vendor",
+      "source": "https://huggingface.co/adventists-ai/Sophon-Realtime-32B-Tag",
+      "unit": "score",
+      "variant": "32B Tag",
+      "harness": "card says #1 among open full-duplex models; Big Bench Audio 81.8%; Full-Duplex-Bench v3 tool calling Pass@1 48%"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "strongest open full-duplex model on the vendor's comparison",
+      "inline sound tags"
+    ],
+    "weaknesses": [
+      "80 GB GPU, Chinese and English only"
+    ],
+    "maturity": "Weeks old; fast versioning (v1.2.0 on 2026-11-13)."
+  },
+  "tona_fit": {
+    "verdict": "reject",
+    "reason": "Needs an 80 GB GPU and covers only Chinese and English; outside every hardware class we serve.",
+    "blockers": [
+      "80 GB GPU requirement"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/adventists-ai/Sophon-Realtime-32B-Tag",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README, HF API"
+    }
+  ],
+  "open_questions": [
+    "DuplexJev base model unknown",
+    "4B builds not opened"
+  ],
+  "last_checked": "2026-11-19"
+}

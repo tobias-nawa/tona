@@ -1,0 +1,560 @@
+== balloon run: driver
+     3.1 s  server up
+    13.3 s  before 18.2 tok/s answer 8a8a04d1d96f86a5
+    20.7 s  before 17.5 tok/s answer 8a8a04d1d96f86a5
+    28.3 s  before 16.8 tok/s answer 8a8a04d1d96f86a5
+    28.3 s  balloon started
+    36.5 s  during 15.6 tok/s answer 8a8a04d1d96f86a5
+    45.6 s  during 14.1 tok/s answer 8a8a04d1d96f86a5
+    55.8 s  during 12.5 tok/s answer 8a8a04d1d96f86a5
+    69.5 s  during 9.3 tok/s answer 8a8a04d1d96f86a5
+    84.3 s  during 8.7 tok/s answer 8a8a04d1d96f86a5
+   100.5 s  during 7.9 tok/s answer 8a8a04d1d96f86a5
+   118.1 s  during 7.3 tok/s answer 8a8a04d1d96f86a5
+   137.9 s  during 6.5 tok/s answer 8a8a04d1d96f86a5
+   158.7 s  during 6.2 tok/s answer 8a8a04d1d96f86a5
+   179.1 s  during 6.3 tok/s answer 8a8a04d1d96f86a5
+   199.3 s  during 6.3 tok/s answer 8a8a04d1d96f86a5
+   219.5 s  during 6.4 tok/s answer 8a8a04d1d96f86a5
+   240.5 s  during 6.1 tok/s answer 8a8a04d1d96f86a5
+   260.9 s  during 6.3 tok/s answer 8a8a04d1d96f86a5
+   281.5 s  during 6.2 tok/s answer 8a8a04d1d96f86a5
+   303.9 s  during 5.7 tok/s answer 8a8a04d1d96f86a5
+   327.2 s  during 5.5 tok/s answer 8a8a04d1d96f86a5
+   349.4 s  during 5.8 tok/s answer 8a8a04d1d96f86a5
+   349.4 s  balloon ended (exit 0)
+   371.9 s  after 5.7 tok/s answer 8a8a04d1d96f86a5
+   393.9 s  after 5.8 tok/s answer 8a8a04d1d96f86a5
+   415.2 s  after 6.0 tok/s answer 8a8a04d1d96f86a5
+   436.5 s  after 6.0 tok/s answer 8a8a04d1d96f86a5
+   457.7 s  after 6.0 tok/s answer 8a8a04d1d96f86a5
+   479.3 s  after 5.9 tok/s answer 8a8a04d1d96f86a5
+   501.6 s  after 5.8 tok/s answer 8a8a04d1d96f86a5
+   523.1 s  after 5.9 tok/s answer 8a8a04d1d96f86a5
+   544.6 s  after 6.0 tok/s answer 8a8a04d1d96f86a5
+   565.8 s  after 6.1 tok/s answer 8a8a04d1d96f86a5
+   587.0 s  after 6.0 tok/s answer 8a8a04d1d96f86a5
+   608.9 s  after 5.8 tok/s answer 8a8a04d1d96f86a5
+   608.9 s  SUMMARY reference 8a8a04d1d96f86a5; 30 requests, 0 failed, 0 answers differ
+== balloon run: balloon (every line)
+     0.0 s  cycle to 10 GB at 0.1 GB/s
+     0.0 s  grow 0.1GB/s held   0.1 GB  pressure 1  swap + 0.00 GB
+     1.1 s  grow 0.1GB/s held   0.1 GB  pressure 1  swap + 0.00 GB
+     2.1 s  grow 0.1GB/s held   0.3 GB  pressure 1  swap + 0.00 GB
+     3.2 s  grow 0.1GB/s held   0.3 GB  pressure 1  swap + 0.00 GB
+     4.2 s  grow 0.1GB/s held   0.5 GB  pressure 1  swap + 0.00 GB
+     5.3 s  grow 0.1GB/s held   0.5 GB  pressure 1  swap + 0.00 GB
+     6.3 s  grow 0.1GB/s held   0.7 GB  pressure 1  swap + 0.00 GB
+     7.4 s  grow 0.1GB/s held   0.7 GB  pressure 1  swap + 0.00 GB
+     8.4 s  grow 0.1GB/s held   0.9 GB  pressure 1  swap + 0.00 GB
+     9.4 s  grow 0.1GB/s held   1.0 GB  pressure 1  swap + 0.00 GB
+    10.5 s  grow 0.1GB/s held   1.1 GB  pressure 1  swap + 0.00 GB
+    11.5 s  grow 0.1GB/s held   1.2 GB  pressure 1  swap + 0.00 GB
+    12.5 s  grow 0.1GB/s held   1.3 GB  pressure 1  swap + 0.00 GB
+    13.6 s  grow 0.1GB/s held   1.4 GB  pressure 1  swap + 0.00 GB
+    14.7 s  grow 0.1GB/s held   1.5 GB  pressure 1  swap + 0.00 GB
+    15.7 s  grow 0.1GB/s held   1.6 GB  pressure 1  swap + 0.00 GB
+    16.8 s  grow 0.1GB/s held   1.7 GB  pressure 1  swap + 0.00 GB
+    17.8 s  grow 0.1GB/s held   1.8 GB  pressure 1  swap + 0.00 GB
+    18.8 s  grow 0.1GB/s held   1.9 GB  pressure 1  swap + 0.00 GB
+    19.9 s  grow 0.1GB/s held   2.0 GB  pressure 1  swap + 0.00 GB
+    20.9 s  grow 0.1GB/s held   2.1 GB  pressure 1  swap + 0.00 GB
+    21.9 s  grow 0.1GB/s held   2.2 GB  pressure 1  swap + 0.00 GB
+    22.9 s  grow 0.1GB/s held   2.3 GB  pressure 1  swap + 0.00 GB
+    23.9 s  grow 0.1GB/s held   2.4 GB  pressure 1  swap + 0.00 GB
+    25.0 s  grow 0.1GB/s held   2.6 GB  pressure 1  swap +-0.01 GB
+    26.0 s  grow 0.1GB/s held   2.6 GB  pressure 1  swap +-0.01 GB
+    27.0 s  grow 0.1GB/s held   2.8 GB  pressure 1  swap +-0.01 GB
+    28.1 s  grow 0.1GB/s held   2.8 GB  pressure 1  swap +-0.01 GB
+    29.1 s  grow 0.1GB/s held   3.0 GB  pressure 1  swap +-0.01 GB
+    30.1 s  grow 0.1GB/s held   3.0 GB  pressure 1  swap +-0.01 GB
+    31.2 s  grow 0.1GB/s held   3.2 GB  pressure 1  swap +-0.01 GB
+    32.2 s  grow 0.1GB/s held   3.2 GB  pressure 1  swap +-0.01 GB
+    33.3 s  grow 0.1GB/s held   3.4 GB  pressure 1  swap +-0.01 GB
+    34.3 s  grow 0.1GB/s held   3.5 GB  pressure 1  swap +-0.01 GB
+    35.3 s  grow 0.1GB/s held   3.6 GB  pressure 1  swap +-0.01 GB
+    36.3 s  grow 0.1GB/s held   3.7 GB  pressure 1  swap +-0.01 GB
+    37.4 s  grow 0.1GB/s held   3.8 GB  pressure 1  swap +-0.01 GB
+    38.4 s  grow 0.1GB/s held   3.9 GB  pressure 1  swap +-0.01 GB
+    39.4 s  grow 0.1GB/s held   4.0 GB  pressure 1  swap +-0.01 GB
+    40.4 s  grow 0.1GB/s held   4.1 GB  pressure 1  swap +-0.01 GB
+    41.4 s  grow 0.1GB/s held   4.2 GB  pressure 1  swap +-0.01 GB
+    42.5 s  grow 0.1GB/s held   4.3 GB  pressure 1  swap +-0.01 GB
+    43.6 s  grow 0.1GB/s held   4.4 GB  pressure 1  swap +-0.01 GB
+    44.6 s  grow 0.1GB/s held   4.5 GB  pressure 1  swap +-0.01 GB
+    45.6 s  grow 0.1GB/s held   4.6 GB  pressure 1  swap +-0.01 GB
+    46.7 s  grow 0.1GB/s held   4.7 GB  pressure 1  swap +-0.01 GB
+    47.7 s  grow 0.1GB/s held   4.8 GB  pressure 1  swap +-0.01 GB
+    48.7 s  grow 0.1GB/s held   4.9 GB  pressure 1  swap +-0.01 GB
+    49.8 s  grow 0.1GB/s held   5.0 GB  pressure 1  swap +-0.01 GB
+    50.8 s  grow 0.1GB/s held   5.1 GB  pressure 1  swap +-0.01 GB
+    51.8 s  grow 0.1GB/s held   5.2 GB  pressure 1  swap +-0.01 GB
+    52.8 s  grow 0.1GB/s held   5.3 GB  pressure 1  swap +-0.01 GB
+    53.8 s  grow 0.1GB/s held   5.4 GB  pressure 1  swap +-0.01 GB
+    54.9 s  grow 0.1GB/s held   5.5 GB  pressure 1  swap +-0.01 GB
+    55.9 s  grow 0.1GB/s held   5.6 GB  pressure 1  swap +-0.01 GB
+    56.9 s  grow 0.1GB/s held   5.7 GB  pressure 1  swap +-0.01 GB
+    58.0 s  grow 0.1GB/s held   5.8 GB  pressure 1  swap +-0.01 GB
+    59.0 s  grow 0.1GB/s held   5.9 GB  pressure 1  swap +-0.01 GB
+    60.0 s  grow 0.1GB/s held   6.0 GB  pressure 1  swap +-0.01 GB
+    61.1 s  grow 0.1GB/s held   6.2 GB  pressure 1  swap +-0.01 GB
+    62.1 s  grow 0.1GB/s held   6.2 GB  pressure 1  swap +-0.01 GB
+    63.2 s  grow 0.1GB/s held   6.4 GB  pressure 1  swap +-0.01 GB
+    64.2 s  grow 0.1GB/s held   6.4 GB  pressure 1  swap +-0.01 GB
+    65.2 s  grow 0.1GB/s held   6.6 GB  pressure 1  swap +-0.01 GB
+    66.3 s  grow 0.1GB/s held   6.6 GB  pressure 1  swap +-0.01 GB
+    67.3 s  grow 0.1GB/s held   6.8 GB  pressure 1  swap +-0.01 GB
+    68.3 s  grow 0.1GB/s held   6.8 GB  pressure 1  swap +-0.01 GB
+    69.4 s  grow 0.1GB/s held   7.0 GB  pressure 1  swap +-0.01 GB
+    70.4 s  grow 0.1GB/s held   7.0 GB  pressure 1  swap +-0.01 GB
+    71.4 s  grow 0.1GB/s held   7.2 GB  pressure 1  swap +-0.01 GB
+    72.4 s  grow 0.1GB/s held   7.2 GB  pressure 1  swap +-0.01 GB
+    73.4 s  grow 0.1GB/s held   7.4 GB  pressure 1  swap +-0.01 GB
+    74.5 s  grow 0.1GB/s held   7.4 GB  pressure 1  swap +-0.01 GB
+    75.5 s  grow 0.1GB/s held   7.6 GB  pressure 1  swap +-0.01 GB
+    76.5 s  grow 0.1GB/s held   7.7 GB  pressure 1  swap +-0.01 GB
+    77.5 s  grow 0.1GB/s held   7.8 GB  pressure 1  swap +-0.01 GB
+    78.5 s  grow 0.1GB/s held   7.9 GB  pressure 1  swap +-0.01 GB
+    79.6 s  grow 0.1GB/s held   8.0 GB  pressure 1  swap +-0.01 GB
+    80.6 s  grow 0.1GB/s held   8.1 GB  pressure 1  swap +-0.01 GB
+    81.6 s  grow 0.1GB/s held   8.2 GB  pressure 1  swap +-0.01 GB
+    82.6 s  grow 0.1GB/s held   8.3 GB  pressure 1  swap +-0.01 GB
+    83.6 s  grow 0.1GB/s held   8.4 GB  pressure 1  swap +-0.01 GB
+    84.6 s  grow 0.1GB/s held   8.5 GB  pressure 1  swap +-0.01 GB
+    85.7 s  grow 0.1GB/s held   8.6 GB  pressure 1  swap +-0.01 GB
+    86.7 s  grow 0.1GB/s held   8.7 GB  pressure 1  swap +-0.01 GB
+    87.7 s  grow 0.1GB/s held   8.8 GB  pressure 1  swap +-0.01 GB
+    88.8 s  grow 0.1GB/s held   8.9 GB  pressure 1  swap +-0.01 GB
+    89.8 s  grow 0.1GB/s held   9.0 GB  pressure 1  swap +-0.01 GB
+    90.8 s  grow 0.1GB/s held   9.1 GB  pressure 1  swap +-0.01 GB
+    91.9 s  grow 0.1GB/s held   9.2 GB  pressure 1  swap +-0.01 GB
+    92.9 s  grow 0.1GB/s held   9.3 GB  pressure 1  swap +-0.01 GB
+    93.9 s  grow 0.1GB/s held   9.4 GB  pressure 1  swap +-0.01 GB
+    94.9 s  grow 0.1GB/s held   9.5 GB  pressure 1  swap +-0.01 GB
+    95.9 s  grow 0.1GB/s held   9.6 GB  pressure 1  swap +-0.01 GB
+    97.0 s  grow 0.1GB/s held   9.7 GB  pressure 1  swap +-0.01 GB
+    98.0 s  grow 0.1GB/s held   9.8 GB  pressure 1  swap +-0.01 GB
+    99.1 s  grow 0.1GB/s held   9.9 GB  pressure 1  swap +-0.01 GB
+   100.1 s  hold         held  10.1 GB  pressure 1  swap +-0.01 GB
+   101.2 s  hold         held  10.1 GB  pressure 1  swap +-0.01 GB
+   102.2 s  hold         held  10.1 GB  pressure 1  swap +-0.01 GB
+   103.3 s  hold         held  10.1 GB  pressure 1  swap +-0.01 GB
+   104.4 s  hold         held  10.1 GB  pressure 1  swap +-0.01 GB
+   105.5 s  hold         held  10.1 GB  pressure 1  swap +-0.01 GB
+   106.5 s  hold         held  10.1 GB  pressure 1  swap +-0.01 GB
+   107.6 s  hold         held  10.1 GB  pressure 1  swap +-0.01 GB
+   108.7 s  hold         held  10.1 GB  pressure 1  swap +-0.01 GB
+   109.7 s  hold         held  10.1 GB  pressure 1  swap +-0.01 GB
+   110.8 s  hold         held  10.1 GB  pressure 1  swap +-0.01 GB
+   111.9 s  hold         held  10.1 GB  pressure 1  swap +-0.01 GB
+   112.9 s  hold         held  10.1 GB  pressure 1  swap +-0.01 GB
+   114.0 s  hold         held  10.1 GB  pressure 1  swap +-0.01 GB
+   115.1 s  hold         held  10.1 GB  pressure 1  swap +-0.01 GB
+   116.1 s  hold         held  10.1 GB  pressure 1  swap +-0.01 GB
+   117.2 s  hold         held  10.1 GB  pressure 1  swap +-0.01 GB
+   118.3 s  hold         held  10.1 GB  pressure 1  swap +-0.01 GB
+   119.3 s  hold         held  10.1 GB  pressure 1  swap +-0.01 GB
+   120.5 s  released     held   0.0 GB  pressure 1  swap +-0.01 GB
+   121.5 s  released     held   0.0 GB  pressure 1  swap +-0.01 GB
+   122.6 s  released     held   0.0 GB  pressure 1  swap +-0.01 GB
+   123.7 s  released     held   0.0 GB  pressure 1  swap +-0.01 GB
+   124.7 s  released     held   0.0 GB  pressure 1  swap +-0.01 GB
+   125.8 s  released     held   0.0 GB  pressure 1  swap +-0.01 GB
+   126.8 s  released     held   0.0 GB  pressure 1  swap +-0.01 GB
+   127.9 s  released     held   0.0 GB  pressure 1  swap +-0.01 GB
+   129.0 s  released     held   0.0 GB  pressure 1  swap +-0.01 GB
+   130.0 s  released     held   0.0 GB  pressure 1  swap +-0.01 GB
+   131.1 s  released     held   0.0 GB  pressure 1  swap +-0.01 GB
+   132.2 s  released     held   0.0 GB  pressure 1  swap +-0.01 GB
+   133.2 s  released     held   0.0 GB  pressure 1  swap +-0.01 GB
+   134.3 s  released     held   0.0 GB  pressure 1  swap +-0.01 GB
+   135.4 s  released     held   0.0 GB  pressure 1  swap +-0.01 GB
+   136.4 s  released     held   0.0 GB  pressure 1  swap +-0.01 GB
+   137.5 s  released     held   0.0 GB  pressure 1  swap +-0.01 GB
+   138.5 s  released     held   0.0 GB  pressure 1  swap +-0.01 GB
+   139.6 s  released     held   0.0 GB  pressure 1  swap +-0.01 GB
+   140.7 s  released     held   0.0 GB  pressure 1  swap +-0.01 GB
+   141.7 s  released     held   0.0 GB  pressure 1  swap +-0.01 GB
+   142.8 s  released     held   0.0 GB  pressure 1  swap +-0.01 GB
+   143.9 s  released     held   0.0 GB  pressure 1  swap +-0.01 GB
+   144.9 s  released     held   0.0 GB  pressure 1  swap +-0.01 GB
+   146.0 s  released     held   0.0 GB  pressure 1  swap +-0.01 GB
+   147.0 s  released     held   0.0 GB  pressure 1  swap +-0.01 GB
+   148.1 s  released     held   0.0 GB  pressure 1  swap +-0.01 GB
+   149.2 s  released     held   0.0 GB  pressure 1  swap +-0.01 GB
+   150.2 s  released     held   0.0 GB  pressure 1  swap +-0.01 GB
+   150.5 s  cycle to 20 GB at 0.1 GB/s
+   151.2 s  grow 0.1GB/s held   0.1 GB  pressure 1  swap +-0.01 GB
+   152.3 s  grow 0.1GB/s held   0.2 GB  pressure 1  swap +-0.01 GB
+   153.3 s  grow 0.1GB/s held   0.3 GB  pressure 1  swap +-0.01 GB
+   154.3 s  grow 0.1GB/s held   0.4 GB  pressure 1  swap +-0.01 GB
+   155.4 s  grow 0.1GB/s held   0.5 GB  pressure 1  swap +-0.01 GB
+   156.4 s  grow 0.1GB/s held   0.6 GB  pressure 1  swap +-0.01 GB
+   157.5 s  grow 0.1GB/s held   0.7 GB  pressure 1  swap +-0.01 GB
+   158.5 s  grow 0.1GB/s held   0.8 GB  pressure 1  swap +-0.01 GB
+   159.6 s  grow 0.1GB/s held   0.9 GB  pressure 1  swap +-0.01 GB
+   160.6 s  grow 0.1GB/s held   1.1 GB  pressure 1  swap +-0.01 GB
+   161.7 s  grow 0.1GB/s held   1.1 GB  pressure 1  swap +-0.01 GB
+   162.7 s  grow 0.1GB/s held   1.3 GB  pressure 1  swap +-0.01 GB
+   163.8 s  grow 0.1GB/s held   1.3 GB  pressure 1  swap +-0.01 GB
+   164.8 s  grow 0.1GB/s held   1.5 GB  pressure 1  swap +-0.01 GB
+   165.8 s  grow 0.1GB/s held   1.5 GB  pressure 1  swap +-0.01 GB
+   166.9 s  grow 0.1GB/s held   1.7 GB  pressure 1  swap +-0.01 GB
+   167.9 s  grow 0.1GB/s held   1.7 GB  pressure 1  swap +-0.01 GB
+   168.9 s  grow 0.1GB/s held   1.9 GB  pressure 1  swap +-0.01 GB
+   170.0 s  grow 0.1GB/s held   2.0 GB  pressure 1  swap +-0.01 GB
+   171.0 s  grow 0.1GB/s held   2.1 GB  pressure 1  swap +-0.01 GB
+   172.1 s  grow 0.1GB/s held   2.2 GB  pressure 1  swap +-0.01 GB
+   173.1 s  grow 0.1GB/s held   2.3 GB  pressure 1  swap +-0.01 GB
+   174.1 s  grow 0.1GB/s held   2.4 GB  pressure 1  swap +-0.01 GB
+   175.2 s  grow 0.1GB/s held   2.5 GB  pressure 1  swap +-0.01 GB
+   176.2 s  grow 0.1GB/s held   2.6 GB  pressure 1  swap +-0.01 GB
+   177.2 s  grow 0.1GB/s held   2.7 GB  pressure 1  swap +-0.01 GB
+   178.3 s  grow 0.1GB/s held   2.8 GB  pressure 1  swap +-0.01 GB
+   179.3 s  grow 0.1GB/s held   2.9 GB  pressure 1  swap +-0.01 GB
+   180.3 s  grow 0.1GB/s held   3.0 GB  pressure 1  swap +-0.01 GB
+   181.4 s  grow 0.1GB/s held   3.1 GB  pressure 1  swap +-0.01 GB
+   182.4 s  grow 0.1GB/s held   3.2 GB  pressure 1  swap +-0.01 GB
+   183.4 s  grow 0.1GB/s held   3.4 GB  pressure 1  swap +-0.01 GB
+   184.5 s  grow 0.1GB/s held   3.4 GB  pressure 1  swap +-0.01 GB
+   185.5 s  grow 0.1GB/s held   3.6 GB  pressure 1  swap +-0.01 GB
+   186.6 s  grow 0.1GB/s held   3.6 GB  pressure 1  swap +-0.01 GB
+   187.6 s  grow 0.1GB/s held   3.8 GB  pressure 1  swap +-0.01 GB
+   188.6 s  grow 0.1GB/s held   3.8 GB  pressure 1  swap +-0.01 GB
+   189.7 s  grow 0.1GB/s held   4.0 GB  pressure 1  swap +-0.01 GB
+   190.7 s  grow 0.1GB/s held   4.0 GB  pressure 1  swap +-0.01 GB
+   191.8 s  grow 0.1GB/s held   4.2 GB  pressure 1  swap +-0.01 GB
+   192.8 s  grow 0.1GB/s held   4.3 GB  pressure 1  swap +-0.01 GB
+   193.9 s  grow 0.1GB/s held   4.4 GB  pressure 1  swap +-0.01 GB
+   194.9 s  grow 0.1GB/s held   4.5 GB  pressure 1  swap +-0.01 GB
+   196.0 s  grow 0.1GB/s held   4.6 GB  pressure 1  swap +-0.01 GB
+   197.0 s  grow 0.1GB/s held   4.7 GB  pressure 1  swap +-0.01 GB
+   198.0 s  grow 0.1GB/s held   4.8 GB  pressure 1  swap +-0.01 GB
+   199.1 s  grow 0.1GB/s held   4.9 GB  pressure 1  swap +-0.01 GB
+   200.1 s  grow 0.1GB/s held   5.0 GB  pressure 1  swap +-0.01 GB
+   201.2 s  grow 0.1GB/s held   5.1 GB  pressure 1  swap +-0.01 GB
+   202.2 s  grow 0.1GB/s held   5.2 GB  pressure 1  swap +-0.01 GB
+   203.3 s  grow 0.1GB/s held   5.3 GB  pressure 1  swap +-0.01 GB
+   204.4 s  grow 0.1GB/s held   5.4 GB  pressure 1  swap +-0.01 GB
+   205.4 s  grow 0.1GB/s held   5.5 GB  pressure 1  swap +-0.01 GB
+   206.4 s  grow 0.1GB/s held   5.6 GB  pressure 1  swap +-0.01 GB
+   207.4 s  grow 0.1GB/s held   5.7 GB  pressure 1  swap +-0.01 GB
+   208.5 s  grow 0.1GB/s held   5.8 GB  pressure 1  swap +-0.01 GB
+   209.5 s  grow 0.1GB/s held   5.9 GB  pressure 1  swap +-0.01 GB
+   210.5 s  grow 0.1GB/s held   6.0 GB  pressure 1  swap +-0.01 GB
+   211.6 s  grow 0.1GB/s held   6.1 GB  pressure 1  swap +-0.01 GB
+   212.6 s  grow 0.1GB/s held   6.2 GB  pressure 1  swap +-0.01 GB
+   213.6 s  grow 0.1GB/s held   6.4 GB  pressure 1  swap +-0.01 GB
+   214.7 s  grow 0.1GB/s held   6.4 GB  pressure 1  swap +-0.01 GB
+   215.7 s  grow 0.1GB/s held   6.6 GB  pressure 1  swap +-0.01 GB
+   216.7 s  grow 0.1GB/s held   6.6 GB  pressure 1  swap +-0.01 GB
+   217.8 s  grow 0.1GB/s held   6.8 GB  pressure 1  swap +-0.01 GB
+   218.8 s  grow 0.1GB/s held   6.8 GB  pressure 1  swap +-0.01 GB
+   219.9 s  grow 0.1GB/s held   7.0 GB  pressure 1  swap +-0.01 GB
+   220.9 s  grow 0.1GB/s held   7.0 GB  pressure 1  swap +-0.01 GB
+   221.9 s  grow 0.1GB/s held   7.2 GB  pressure 1  swap +-0.01 GB
+   222.9 s  grow 0.1GB/s held   7.2 GB  pressure 1  swap +-0.01 GB
+   224.0 s  grow 0.1GB/s held   7.4 GB  pressure 1  swap +-0.01 GB
+   225.0 s  grow 0.1GB/s held   7.5 GB  pressure 1  swap +-0.01 GB
+   226.0 s  grow 0.1GB/s held   7.6 GB  pressure 1  swap +-0.01 GB
+   227.1 s  grow 0.1GB/s held   7.7 GB  pressure 1  swap +-0.01 GB
+   228.1 s  grow 0.1GB/s held   7.8 GB  pressure 1  swap +-0.01 GB
+   229.1 s  grow 0.1GB/s held   7.9 GB  pressure 1  swap +-0.01 GB
+   230.2 s  grow 0.1GB/s held   8.0 GB  pressure 1  swap +-0.01 GB
+   231.2 s  grow 0.1GB/s held   8.1 GB  pressure 1  swap +-0.01 GB
+   232.2 s  grow 0.1GB/s held   8.2 GB  pressure 1  swap +-0.01 GB
+   233.3 s  grow 0.1GB/s held   8.3 GB  pressure 1  swap +-0.01 GB
+   234.3 s  grow 0.1GB/s held   8.4 GB  pressure 1  swap +-0.01 GB
+   235.4 s  grow 0.1GB/s held   8.5 GB  pressure 1  swap +-0.01 GB
+   236.4 s  grow 0.1GB/s held   8.6 GB  pressure 1  swap +-0.01 GB
+   237.4 s  grow 0.1GB/s held   8.7 GB  pressure 1  swap +-0.01 GB
+   238.4 s  grow 0.1GB/s held   8.9 GB  pressure 1  swap +-0.01 GB
+   239.5 s  grow 0.1GB/s held   8.9 GB  pressure 1  swap +-0.01 GB
+   240.5 s  grow 0.1GB/s held   9.1 GB  pressure 1  swap +-0.01 GB
+   241.6 s  grow 0.1GB/s held   9.1 GB  pressure 1  swap +-0.01 GB
+   242.6 s  grow 0.1GB/s held   9.3 GB  pressure 1  swap +-0.01 GB
+   243.6 s  grow 0.1GB/s held   9.3 GB  pressure 1  swap +-0.01 GB
+   244.6 s  grow 0.1GB/s held   9.5 GB  pressure 1  swap +-0.01 GB
+   245.7 s  grow 0.1GB/s held   9.5 GB  pressure 1  swap +-0.01 GB
+   246.7 s  grow 0.1GB/s held   9.7 GB  pressure 1  swap +-0.01 GB
+   247.8 s  grow 0.1GB/s held   9.7 GB  pressure 1  swap +-0.01 GB
+   248.8 s  grow 0.1GB/s held   9.9 GB  pressure 1  swap +-0.01 GB
+   249.9 s  grow 0.1GB/s held  10.0 GB  pressure 1  swap +-0.01 GB
+   250.9 s  grow 0.1GB/s held  10.1 GB  pressure 1  swap +-0.01 GB
+   251.9 s  grow 0.1GB/s held  10.2 GB  pressure 1  swap +-0.01 GB
+   252.9 s  grow 0.1GB/s held  10.3 GB  pressure 1  swap +-0.01 GB
+   254.0 s  grow 0.1GB/s held  10.4 GB  pressure 1  swap +-0.01 GB
+   255.0 s  grow 0.1GB/s held  10.5 GB  pressure 1  swap +-0.01 GB
+   256.1 s  grow 0.1GB/s held  10.6 GB  pressure 1  swap +-0.01 GB
+   257.1 s  grow 0.1GB/s held  10.7 GB  pressure 1  swap +-0.01 GB
+   258.2 s  grow 0.1GB/s held  10.8 GB  pressure 1  swap +-0.01 GB
+   259.2 s  grow 0.1GB/s held  10.9 GB  pressure 1  swap +-0.01 GB
+   260.3 s  grow 0.1GB/s held  11.0 GB  pressure 1  swap +-0.01 GB
+   261.3 s  grow 0.1GB/s held  11.1 GB  pressure 1  swap +-0.01 GB
+   262.4 s  grow 0.1GB/s held  11.2 GB  pressure 1  swap +-0.01 GB
+   263.4 s  grow 0.1GB/s held  11.3 GB  pressure 1  swap +-0.01 GB
+   264.5 s  grow 0.1GB/s held  11.4 GB  pressure 1  swap +-0.01 GB
+   265.5 s  grow 0.1GB/s held  11.5 GB  pressure 1  swap +-0.01 GB
+   266.6 s  grow 0.1GB/s held  11.6 GB  pressure 1  swap +-0.01 GB
+   267.6 s  grow 0.1GB/s held  11.7 GB  pressure 1  swap +-0.01 GB
+   268.6 s  grow 0.1GB/s held  11.8 GB  pressure 1  swap +-0.01 GB
+   269.6 s  grow 0.1GB/s held  11.9 GB  pressure 1  swap +-0.01 GB
+   270.6 s  grow 0.1GB/s held  12.0 GB  pressure 2  swap +-0.01 GB
+   271.6 s  grow 0.1GB/s held  12.1 GB  pressure 2  swap + 0.12 GB
+   272.7 s  grow 0.1GB/s held  12.3 GB  pressure 2  swap + 0.28 GB
+   273.7 s  grow 0.1GB/s held  12.3 GB  pressure 2  swap + 0.31 GB
+   274.7 s  grow 0.1GB/s held  12.5 GB  pressure 2  swap + 0.45 GB
+   275.7 s  grow 0.1GB/s held  12.5 GB  pressure 2  swap + 0.56 GB
+   276.7 s  grow 0.1GB/s held  12.7 GB  pressure 2  swap + 0.67 GB
+   277.8 s  grow 0.1GB/s held  12.8 GB  pressure 2  swap + 0.72 GB
+   278.8 s  grow 0.1GB/s held  12.9 GB  pressure 2  swap + 0.79 GB
+   279.8 s  grow 0.1GB/s held  13.0 GB  pressure 2  swap + 0.83 GB
+   280.9 s  grow 0.1GB/s held  13.1 GB  pressure 2  swap + 0.86 GB
+   282.0 s  grow 0.1GB/s held  13.2 GB  pressure 2  swap + 0.89 GB
+   283.0 s  grow 0.1GB/s held  13.3 GB  pressure 2  swap + 0.91 GB
+   284.0 s  grow 0.1GB/s held  13.4 GB  pressure 2  swap + 0.98 GB
+   285.1 s  grow 0.1GB/s held  13.5 GB  pressure 2  swap + 1.05 GB
+   286.1 s  grow 0.1GB/s held  13.6 GB  pressure 2  swap + 1.08 GB
+   287.1 s  grow 0.1GB/s held  13.7 GB  pressure 2  swap + 1.07 GB
+   288.2 s  grow 0.1GB/s held  13.8 GB  pressure 2  swap + 1.10 GB
+   289.3 s  grow 0.1GB/s held  13.9 GB  pressure 2  swap + 1.12 GB
+   290.3 s  grow 0.1GB/s held  14.0 GB  pressure 2  swap + 1.25 GB
+   291.4 s  grow 0.1GB/s held  14.1 GB  pressure 2  swap + 1.25 GB
+   292.4 s  grow 0.1GB/s held  14.2 GB  pressure 2  swap + 1.52 GB
+   293.4 s  grow 0.1GB/s held  14.3 GB  pressure 2  swap + 1.52 GB
+   294.5 s  grow 0.1GB/s held  14.4 GB  pressure 2  swap + 1.63 GB
+   295.5 s  grow 0.1GB/s held  14.6 GB  pressure 2  swap + 1.68 GB
+   296.5 s  grow 0.1GB/s held  14.6 GB  pressure 2  swap + 1.78 GB
+   297.6 s  grow 0.1GB/s held  14.8 GB  pressure 2  swap + 1.93 GB
+   298.9 s  END: swap grew more than 2.0 GB, released
+== balloon run: server, arena lines
+Metal arena: budget 11.75 GB (RAM 34.4 GB, held by all processes 10.7, our weights mapped 5.9, kept 6.0; working set 26.8, our buffers 9.8)
+Metal arena: 3644 of 12288 experts (72.3 % of the profile's uses) in 7.77 GB, cache 32 per layer (3.27 GB), staging 705 MB, blocks of 32 MB
+Metal arena: resident experts read in 1.2 s
+Metal arena: freed 280 MB (free 4.00 GB, tight), holds 11.47 GB
+Metal arena: freed 292 MB (free 3.99 GB, tight), holds 11.18 GB
+Metal arena: freed 261 MB (free 3.97 GB, tight), holds 10.91 GB
+Metal arena: freed 261 MB (free 3.94 GB, tight), holds 10.65 GB
+Metal arena: freed 292 MB (free 3.95 GB, tight), holds 10.36 GB
+Metal arena: freed 261 MB (free 3.99 GB, tight), holds 10.10 GB
+Metal arena: freed 291 MB (free 3.94 GB, tight), holds 9.81 GB
+Metal arena: freed 262 MB (free 3.95 GB, tight), holds 9.55 GB
+Metal arena: freed 260 MB (free 3.94 GB, tight), holds 9.29 GB
+Metal arena: freed 292 MB (free 3.94 GB, tight), holds 9.00 GB
+Metal arena: freed 262 MB (free 3.93 GB, tight), holds 8.73 GB
+Metal arena: freed 276 MB (free 4.00 GB, tight), holds 8.46 GB
+Metal arena: freed 263 MB (free 3.98 GB, tight), holds 8.20 GB
+Metal arena: freed 292 MB (free 3.98 GB, tight), holds 7.90 GB
+Metal arena: freed 261 MB (free 3.97 GB, tight), holds 7.64 GB
+Metal arena: freed 292 MB (free 3.97 GB, tight), holds 7.35 GB
+Metal arena: freed 291 MB (free 4.00 GB, tight), holds 7.06 GB
+Metal arena: freed 260 MB (free 3.96 GB, tight), holds 6.80 GB
+Metal arena: freed 263 MB (free 3.96 GB, tight), holds 6.54 GB
+Metal arena: freed 290 MB (free 3.99 GB, tight), holds 6.25 GB
+Metal arena: freed 291 MB (free 4.00 GB, tight), holds 5.96 GB
+Metal arena: freed 292 MB (free 3.97 GB, tight), holds 5.66 GB
+Metal arena: freed 291 MB (free 3.99 GB, tight), holds 5.37 GB
+Metal arena: freed 291 MB (free 3.95 GB, tight), holds 5.08 GB
+Metal arena: freed 260 MB (free 3.94 GB, tight), holds 4.82 GB
+Metal arena: freed 261 MB (free 3.99 GB, tight), holds 4.56 GB
+Metal arena: freed 290 MB (free 4.00 GB, tight), holds 4.27 GB
+Metal arena: freed 289 MB (free 3.91 GB, tight), holds 3.98 GB
+Metal arena: freed 290 MB (free 3.91 GB, tight), holds 3.69 GB
+Metal arena: freed 263 MB (free 3.94 GB, tight), holds 3.43 GB
+Metal arena: freed 261 MB (free 3.98 GB, tight), holds 3.17 GB
+Metal arena: freed 290 MB (free 3.98 GB, tight), holds 2.88 GB
+Metal arena: freed 262 MB (free 3.96 GB, tight), holds 2.62 GB
+Metal arena: freed 261 MB (free 3.97 GB, tight), holds 2.36 GB
+Metal arena: freed 288 MB (free 3.97 GB, tight), holds 2.07 GB
+Metal arena: freed 261 MB (free 3.97 GB, tight), holds 1.81 GB
+Metal arena: freed 291 MB (free 3.99 GB, tight), holds 1.51 GB
+Metal arena: freed 291 MB (free 3.90 GB, tight), holds 1.22 GB
+Metal arena: freed 290 MB (free 3.95 GB, tight), holds 0.93 GB
+Metal arena: freed 228 MB (free 3.97 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 4.00 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 3.93 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 3.86 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 3.80 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 3.80 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 3.73 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 3.66 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 3.60 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 3.53 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 3.46 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 3.39 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 3.32 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 3.26 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 3.19 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 3.12 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 3.05 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 3.06 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 2.95 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 2.95 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 2.95 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 2.95 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 2.95 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 2.90 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 3.04 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 2.96 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 3.05 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 2.98 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 2.98 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 3.03 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 3.06 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 2.98 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 3.01 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 2.97 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 2.99 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 2.99 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 3.00 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 2.97 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 2.93 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 2.93 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 2.92 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 2.93 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 2.93 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 2.92 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 2.95 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 2.93 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 2.95 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 2.94 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 2.93 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 2.92 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 2.91 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 2.90 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 2.89 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 2.88 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 2.94 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 2.87 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 3.01 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 3.01 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 2.94 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 2.87 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 2.94 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 2.87 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 2.90 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 2.99 GB, tight), holds 0.70 GB
+Metal arena: freed 0 MB (free 2.92 GB, tight), holds 0.70 GB
+== churn run: vm_stat every 4 s (epoch s, GB)
+1794779725 free+file+purg 3.62 wired 25.34 anon 3.98
+1794779729 free+file+purg 3.61 wired 25.45 anon 3.88
+1794779733 free+file+purg 6.67 wired 22.38 anon 3.90
+1794779737 free+file+purg 6.67 wired 22.38 anon 3.90
+1794779741 free+file+purg 6.66 wired 22.37 anon 3.91
+1794779745 free+file+purg 3.58 wired 25.58 anon 3.77
+1794779749 free+file+purg 3.60 wired 25.46 anon 3.88
+1794779753 free+file+purg 6.67 wired 22.38 anon 3.89
+1794779757 free+file+purg 6.68 wired 22.38 anon 3.89
+1794779761 free+file+purg 6.71 wired 9.34 anon 16.90
+1794779766 free+file+purg 26.09 wired 3.41 anon 3.44
+1794779770 free+file+purg 26.09 wired 3.41 anon 3.44
+1794779774 free+file+purg 26.09 wired 3.41 anon 3.44
+1794779778 free+file+purg 26.09 wired 3.41 anon 3.44
+1794779782 free+file+purg 26.10 wired 3.40 anon 3.44
+1794779786 free+file+purg 26.08 wired 3.40 anon 3.46
+1794779790 free+file+purg 26.08 wired 3.40 anon 3.47
+1794779794 free+file+purg 26.07 wired 3.40 anon 3.47
+1794779798 free+file+purg 26.07 wired 3.40 anon 3.48
+1794779802 free+file+purg 26.08 wired 3.40 anon 3.47
+1794779806 free+file+purg 26.07 wired 3.40 anon 3.48
+1794779811 free+file+purg 26.07 wired 3.40 anon 3.48
+1794779815 free+file+purg 26.07 wired 3.40 anon 3.48
+1794779819 free+file+purg 24.13 wired 3.41 anon 5.41
+1794779823 free+file+purg 25.96 wired 3.35 anon 3.64
+1794779827 free+file+purg 25.96 wired 3.40 anon 3.58
+1794779831 free+file+purg 25.94 wired 3.41 anon 3.60
+1794779835 free+file+purg 8.66 wired 20.40 anon 3.89
+1794779839 free+file+purg 9.76 wired 19.18 anon 4.01
+1794779843 free+file+purg 9.74 wired 19.18 anon 4.02
+1794779847 free+file+purg 9.74 wired 19.18 anon 4.03
+1794779851 free+file+purg 9.74 wired 19.30 anon 3.90
+1794779855 free+file+purg 9.74 wired 19.18 anon 4.02
+1794779860 free+file+purg 9.74 wired 19.18 anon 4.02
+1794779864 free+file+purg 9.82 wired 19.18 anon 3.94
+1794779868 free+file+purg 9.81 wired 19.18 anon 3.95
+1794779872 free+file+purg 9.80 wired 19.18 anon 3.96
+Metal arena: budget 12.19 GB (RAM 34.4 GB, held by all processes 11.3, our weights mapped 5.9, kept 5.0; working set 26.8, our buffers 9.8)
+Metal arena: 3855 of 12288 experts (74.2 % of the profile's uses) in 8.21 GB, cache 32 per layer (3.27 GB), staging 705 MB, blocks of 32 MB
+Metal arena: resident experts read in 1.2 s
+Metal arena: churn freed 3078 MB, holds 9.11 GB
+Metal arena: churn read 3078 MB, holds 12.19 GB
+Metal arena: churn freed 3078 MB, holds 9.11 GB
+== bias run: driver
+     2.0 s  server up
+    19.0 s  before 8.3 tok/s answer 8a8a04d1d96f86a5
+    35.0 s  before 8.0 tok/s answer 8a8a04d1d96f86a5
+    50.9 s  before 8.0 tok/s answer 8a8a04d1d96f86a5
+    50.9 s  balloon started
+    66.9 s  during 8.0 tok/s answer 8a8a04d1d96f86a5
+    82.6 s  during 8.1 tok/s answer 8a8a04d1d96f86a5
+    98.4 s  during 8.1 tok/s answer 8a8a04d1d96f86a5
+   114.4 s  during 8.0 tok/s answer 8a8a04d1d96f86a5
+   130.4 s  during 8.0 tok/s answer 8a8a04d1d96f86a5
+   146.0 s  during 8.2 tok/s answer 8a8a04d1d96f86a5
+   161.3 s  during 8.3 tok/s answer 8a8a04d1d96f86a5
+   176.6 s  during 8.4 tok/s answer 8a8a04d1d96f86a5
+   192.3 s  during 8.2 tok/s answer 8a8a04d1d96f86a5
+   207.8 s  during 8.3 tok/s answer 8a8a04d1d96f86a5
+   207.8 s  balloon ended (exit 0)
+   223.1 s  after 8.3 tok/s answer 8a8a04d1d96f86a5
+   238.4 s  after 8.4 tok/s answer 8a8a04d1d96f86a5
+   254.1 s  after 8.2 tok/s answer 8a8a04d1d96f86a5
+   269.9 s  after 8.1 tok/s answer 8a8a04d1d96f86a5
+   285.5 s  after 8.2 tok/s answer 8a8a04d1d96f86a5
+   301.2 s  after 8.1 tok/s answer 8a8a04d1d96f86a5
+   316.9 s  after 8.2 tok/s answer 8a8a04d1d96f86a5
+   332.7 s  after 8.1 tok/s answer 8a8a04d1d96f86a5
+   348.7 s  after 8.0 tok/s answer 8a8a04d1d96f86a5
+   364.7 s  after 8.0 tok/s answer 8a8a04d1d96f86a5
+   380.4 s  after 8.2 tok/s answer 8a8a04d1d96f86a5
+   395.7 s  after 8.4 tok/s answer 8a8a04d1d96f86a5
+   411.0 s  after 8.3 tok/s answer 8a8a04d1d96f86a5
+   426.5 s  after 8.3 tok/s answer 8a8a04d1d96f86a5
+   442.0 s  after 8.3 tok/s answer 8a8a04d1d96f86a5
+   457.4 s  after 8.3 tok/s answer 8a8a04d1d96f86a5
+   472.7 s  after 8.3 tok/s answer 8a8a04d1d96f86a5
+   488.0 s  after 8.4 tok/s answer 8a8a04d1d96f86a5
+   503.3 s  after 8.4 tok/s answer 8a8a04d1d96f86a5
+   518.6 s  after 8.4 tok/s answer 8a8a04d1d96f86a5
+   518.6 s  SUMMARY reference 8a8a04d1d96f86a5; 30 requests, 0 failed, 0 answers differ
+== bias run: server, arena lines
+Metal arena: budget 11.07 GB (RAM 34.4 GB, held by all processes 11.4, our weights mapped 5.9, kept 6.0; working set 26.8, our buffers 9.8)
+Metal arena: 3324 of 12288 experts (69.3 % of the profile's uses) in 7.09 GB, cache 32 per layer (3.27 GB), staging 705 MB, blocks of 32 MB
+Metal arena: resident experts read in 1.1 s
+Metal arena: freed 280 MB (free 2.71 GB, tight), holds 10.79 GB
+Metal arena: freed 1073 MB (free -1.09 GB, short), holds 9.71 GB
+Metal arena: freed 1042 MB (free 0.27 GB, short), holds 8.67 GB
+Metal arena: freed 1063 MB (free 1.31 GB, short), holds 7.61 GB
+Metal arena: freed 290 MB (free 2.36 GB, tight), holds 7.32 GB
+Metal arena: freed 291 MB (free 2.36 GB, tight), holds 7.03 GB
+Metal arena: freed 261 MB (free 2.36 GB, tight), holds 6.77 GB
+Metal arena: freed 263 MB (free 3.21 GB, tight), holds 6.50 GB
+Metal arena: freed 290 MB (free 3.21 GB, tight), holds 6.21 GB
+Metal arena: freed 291 MB (free 3.47 GB, tight), holds 5.92 GB
+== bias run: vm_stat every 20 s
+1794779831 free+file+purg 25.94 wired 3.41
+1794779851 free+file+purg 9.73 wired 19.30
+1794779872 free+file+purg 9.81 wired 19.18
+1794779892 free+file+purg 9.79 wired 19.18
+1794779912 free+file+purg 9.76 wired 19.18
+1794779933 free+file+purg 9.76 wired 19.18
+1794779953 free+file+purg 9.69 wired 19.18
+1794779973 free+file+purg 9.71 wired 19.17
+1794779994 free+file+purg 9.70 wired 19.30
+1794780014 free+file+purg 9.66 wired 19.18
+1794780035 free+file+purg 9.65 wired 19.18
+1794780055 free+file+purg 9.58 wired 19.30
+1794780075 free+file+purg 9.55 wired 19.18
+1794780096 free+file+purg 9.54 wired 19.18
+1794780116 free+file+purg 9.59 wired 19.17
+1794780136 free+file+purg 9.59 wired 19.17
+1794780157 free+file+purg 9.58 wired 19.18
+1794780177 free+file+purg 9.58 wired 19.17
+1794780197 free+file+purg 9.57 wired 19.30
+1794780218 free+file+purg 9.56 wired 19.13
+1794780238 free+file+purg 9.56 wired 19.18
+1794780258 free+file+purg 9.56 wired 19.30
+1794780279 free+file+purg 9.54 wired 19.17
+1794780299 free+file+purg 9.54 wired 19.17
+1794780319 free+file+purg 9.49 wired 19.17
+1794780340 free+file+purg 9.43 wired 19.18

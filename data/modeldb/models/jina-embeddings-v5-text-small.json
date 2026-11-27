@@ -1,0 +1,138 @@
+{
+  "id": "jina-embeddings-v5-text-small",
+  "name": "jina-embeddings-v5-text (small 677M, nano 239M)",
+  "vendor": "Jina AI (Elastic)",
+  "release_date": "2026-02-18",
+  "lineage": {
+    "base_model": "Qwen3-0.6B-Base",
+    "how_derived": "distillation from Qwen3-Embedding-4B plus task-specific contrastive losses; adapters merged"
+  },
+  "purpose": "Multilingual text embeddings for retrieval, matching, clustering and classification.",
+  "tasks": [
+    "embeddings"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "embedding"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "many"
+    ]
+  },
+  "license": {
+    "name": "CC BY-NC 4.0",
+    "verified": true,
+    "commercial_use": "no",
+    "redistribution": "limited",
+    "notes": "Card section 'License' read: 'jina-embeddings-v5-text-small is licensed under CC BY-NC 4.0. For commercial use, please contact us' (the vendor's sales). Tag and text agree. Standard CC BY-NC 4.0 text itself not fetched. Verdict policy (README, 2026-11-19): this licence term does not lower tona_fit; kept here for an installer label."
+  },
+  "architecture": {
+    "kind": "dense decoder transformer, last-token pooling",
+    "params_total_b": 0.677,
+    "context_native": 32768,
+    "why_this_design": "Distillation from a 4B teacher; robust under truncation and binary quantization; adapters merged into base weights for vLLM/TEI/ONNX compatibility (card). 1024-d, MRL 32..1024."
+  },
+  "variants": [
+    {
+      "repo": "jinaai/jina-embeddings-v5-text-small",
+      "format": "safetensors + ONNX",
+      "official": true
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "unknown",
+    "other": [
+      "vLLM",
+      "TEI",
+      "ONNX"
+    ],
+    "notes": "A news report says llama.cpp and MLX work (secondary); no GGUF named on the card."
+  },
+  "benchmarks": [
+    {
+      "name": "MMTEB",
+      "score": 67.7,
+      "kind": "vendor",
+      "variant": "small",
+      "source": "https://huggingface.co/jinaai/jina-embeddings-v5-text-small"
+    },
+    {
+      "name": "MTEB English v2",
+      "score": 71.7,
+      "kind": "vendor",
+      "variant": "small",
+      "source": "https://huggingface.co/jinaai/jina-embeddings-v5-text-small"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "MMTEB 67.7 at 0.68B versus 64.33 for Qwen3-Embedding-0.6B (vendor numbers, protocols may differ)"
+    ],
+    "weaknesses": [
+      "CC BY-NC",
+      "no code benchmark"
+    ],
+    "maturity": "Jina AI"
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "Strong small multilingual embedder (0.68B, vendor MMTEB 67.7, MTEB English v2 71.7), fits every class. Compare with Qwen3-Embedding (MMTEB 70.58 at 8B) on our own retrieval before choosing the default.",
+    "blockers": [
+      "Tona has no embeddings route"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/jinaai/jina-embeddings-v5-text-small",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    }
+  ],
+  "open_questions": [
+    "Is the MMTEB number comparable to Qwen's MTEB multilingual v2 mean?"
+  ],
+  "last_checked": "2026-11-19"
+}

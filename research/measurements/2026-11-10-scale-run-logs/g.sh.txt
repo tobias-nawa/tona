@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+S=/var/tmp/claude/scale1110; cd <repo>; source toolchain/env.sh; export TONA_DIAG=1
+echo "VRAM-desktop g $(date +%T) $(( $(cat /sys/class/drm/card1/device/mem_info_vram_used) / 1048576 )) MiB"
+python3 scripts/ab.py --a merged --b merged --b-env TONA_EXPERT_POLICY=classlru --workload huge --env TONA_DIAG=1 \
+  --min-rounds 2 --max-rounds 2 --no-warmup --expect 'decode:-1.5..+3%' --expect 'prefill:-2..+2%' \
+  --why-size 'huge = 512K and 1M prompts, the sizes where expert misses dominate and the policy can matter; 2 rounds as the ticket sets (plan block g)' --expect-source 'plan 2026-11-10-scale-run.md block g, S4 2026-11-02-classlru.md' --out $S/g
+echo "g done $(date +%T)"

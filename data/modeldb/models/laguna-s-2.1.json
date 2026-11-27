@@ -1,0 +1,209 @@
+{
+  "id": "laguna-s-2.1",
+  "name": "Laguna S 2.1 (poolside)",
+  "vendor": "poolside",
+  "release_date": "2026-07-13",
+  "lineage": {
+    "family": "Laguna 2.1"
+  },
+  "purpose": "poolside states: designed for agentic coding and long-horizon work in software engineering.",
+  "tasks": [
+    "coding"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en"
+    ],
+    "programming": {}
+  },
+  "license": {
+    "name": "OpenMDW-1.1",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "LICENSE.md read (identical to the OpenMDW 1.1 text): permission \"to deal in the Model Materials without restriction, including under all copyright, patent, database, and trade secret rights\"; on distribution you must retain a copy of the agreement and the notices; patent-litigation termination clause; no restrictions on outputs."
+  },
+  "architecture": {
+    "kind": "sparse MoE with sliding-window and global attention",
+    "params_total_b": 118,
+    "params_active_b": 8,
+    "layers": 48,
+    "attention": "36 sliding-window (512) + 12 global GQA layers, softplus output gating",
+    "recurrent": "none",
+    "experts": 256,
+    "experts_active": 10,
+    "context_native": 1048576,
+    "context_max": 1048576,
+    "drafter": "DFlash draft model (poolside/Laguna-S-2.1-DFlash)",
+    "why_this_design": "The card says it shares the family recipe (token-choice router with softplus gating, interleaved full/SWA attention, per-head output gating) and gives no rationale."
+  },
+  "variants": [
+    {
+      "repo": "poolside/Laguna-S-2.1-GGUF",
+      "format": "GGUF Q4_K_M 96.0 GB, Q8_0 128.8 GB, F16 235.2 GB, plus DFlash drafter 2.2 GB",
+      "size_gb": 96.0,
+      "official": true,
+      "notes": "FP8, NVFP4, INT4 repos exist; a 3 bpw own quant would be about 44 GB (estimate, research/08)"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "no",
+      "variant": "Q4_K_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (96.0 GB) against the budget of docs/hardware: 9.6 GB VRAM plus 50 GB RAM = 60 GB; about 10% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that)"
+    },
+    "pc-16gb": {
+      "fits": "no",
+      "variant": "Q4_K_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (96.0 GB) against the budget of docs/hardware: 13.6 GB VRAM plus 50 GB RAM = 64 GB; about 14% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that)"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "Q4_K_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (96.0 GB) against the budget of docs/hardware: 21.6 GB VRAM plus 82 GB RAM = 104 GB; about 22% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that)"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "Q4_K_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (96.0 GB) against the budget of docs/hardware: 29.6 GB VRAM plus 114 GB RAM = 144 GB; about 31% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that)"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "Q4_K_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (96.0 GB) against the GPU share of docs/hardware (about 12 GB)"
+    },
+    "mac-32gb": {
+      "fits": "no",
+      "variant": "Q4_K_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (96.0 GB) against the GPU share of docs/hardware (about 22 GB)"
+    },
+    "mac-64gb+": {
+      "fits": "no",
+      "variant": "Q4_K_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (96.0 GB) against the GPU share of docs/hardware (about 52 GB)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "partial",
+    "other": [
+      "vLLM",
+      "Ollama"
+    ],
+    "notes": "llama.cpp support was in review as of research/08 (#25165), poolside fork needed then; not rechecked"
+  },
+  "benchmarks": [
+    {
+      "name": "Terminal-Bench 2.1",
+      "score": 70.2,
+      "kind": "vendor",
+      "source": "https://huggingface.co/poolside/Laguna-S-2.1",
+      "variant": "BF16",
+      "harness": "via Artificial Analysis",
+      "unit": "%"
+    },
+    {
+      "name": "SWE-bench Multilingual",
+      "score": 78.5,
+      "kind": "vendor",
+      "source": "https://huggingface.co/poolside/Laguna-S-2.1",
+      "variant": "BF16",
+      "unit": "%"
+    },
+    {
+      "name": "SWE-bench Pro",
+      "score": 59.4,
+      "kind": "vendor",
+      "source": "https://huggingface.co/poolside/Laguna-S-2.1",
+      "variant": "BF16",
+      "unit": "%"
+    },
+    {
+      "name": "DeepSWE",
+      "score": 40.4,
+      "kind": "vendor",
+      "source": "https://huggingface.co/poolside/Laguna-S-2.1"
+    },
+    {
+      "name": "SWE Atlas QnA",
+      "score": 46.2,
+      "kind": "vendor",
+      "source": "https://huggingface.co/poolside/Laguna-S-2.1",
+      "harness": "Scale AI leaderboard"
+    },
+    {
+      "name": "Toolathlon Verified",
+      "score": 49.7,
+      "kind": "vendor",
+      "source": "https://huggingface.co/poolside/Laguna-S-2.1"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "Close to Flash-Next on terminal and SWE benchmarks (vendor)",
+      "1M context with small KV from 36 SWA layers",
+      "Trajectories published by the vendor"
+    ],
+    "weaknesses": [
+      "Needs preserved reasoning between steps or it may stop thinking",
+      "Official GGUF is 96 GB; no small quant",
+      "No DeltaNet, so Tona's kernels are unused (new SWA and softplus work)"
+    ],
+    "behavior": "Thinking on, keep reasoning_content from earlier turns.",
+    "maturity": "poolside is a dedicated coding-model company; Laguna XS.2 predecessor, larger Laguna in pretraining (research/49)."
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "OpenMDW-1.1 text verified (no field-of-use limits, outputs unrestricted); vendor SWE-bench Multilingual 78.5; Q4_K_M 96 GB fits the 32 GB + 128 GB class and the 24 GB + 96 GB class marginally, a 3 bpw quant (about 72 GB, estimate) could reach 24 GB. Not for 16 GB + 64 GB.",
+    "blockers": [
+      "Tona has no Laguna module (SWA kernels): engine support, not quality",
+      "no independent score",
+      "quality of a 3 bpw quant unmeasured"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/poolside/Laguna-S-2.1",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "page text read through a summarizer (WebFetch)"
+    },
+    {
+      "url": "research/08-models.md",
+      "kind": "own",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "research/49-moe-models-2026-11.md",
+      "kind": "own",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/poolside/Laguna-S-2.1/raw/main/LICENSE.md",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    }
+  ],
+  "open_questions": [
+    "Programming languages",
+    "Quality of 2.5 to 3 bpw quants",
+    "Current llama.cpp status",
+    "Per-language quality and independent coding evidence: the Aider polyglot board is stale (mirrors: last update 2025-11-20, no entry for any model of this database), LiveCodeBench and swebench.com publish no per-language numbers for it that we could retrieve. Check: our own Exercism polyglot run per language."
+  ],
+  "last_checked": "2026-11-19"
+}

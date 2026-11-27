@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Question or idea
+    url: https://github.com/tobias-nawa/tona/discussions
+    about: Questions, open ideas and "would it be possible to ..." belong in Discussions. A concrete proposal (a model, a backend, a change) has its own issue form; a maintainer accepts it before a pull request follows.
+  - name: Security issue
+    url: https://github.com/tobias-nawa/tona/security/policy
+    about: Do not open a public issue for vulnerabilities; follow SECURITY.md (private report).

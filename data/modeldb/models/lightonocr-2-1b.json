@@ -1,0 +1,199 @@
+{
+  "id": "lightonocr-2-1b",
+  "name": "LightOnOCR-2-1B",
+  "vendor": "LightOn",
+  "release_date": "2026-01-19",
+  "lineage": {
+    "family": "LightOnOCR",
+    "base_model": "Pixtral vision encoder + Qwen3 decoder (secondary)"
+  },
+  "purpose": "End-to-end OCR that avoids multi-stage pipelines; fast and cheap bulk page conversion.",
+  "languages": {
+    "natural": [
+      "en",
+      "fr",
+      "de",
+      "es",
+      "it",
+      "nl",
+      "pt",
+      "sv",
+      "da",
+      "zh",
+      "ja"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "card section \"License\" says Apache License 2.0 and the lightonai/LightOnOCR GitHub LICENSE read is the unmodified Apache-2.0 text; HF repo has no LICENSE file; training data follows upstream licenses"
+  },
+  "architecture": {
+    "kind": "vision-language (mistral3 tag), 1B",
+    "params_total_b": 1.0,
+    "why_this_design": "Fully differentiable end-to-end OCR, 9x smaller than competing approaches for speed; trained with RLVR (card)."
+  },
+  "variants": [
+    {
+      "repo": "lightonai/LightOnOCR-2-1B",
+      "format": "safetensors BF16",
+      "official": true
+    },
+    {
+      "repo": "lightonai/LightOnOCR-2-1B-bbox",
+      "format": "BF16, with bounding boxes",
+      "official": true
+    },
+    {
+      "repo": "lightonai/LightOnOCR-2-1B-ocr-soup",
+      "format": "merged checkpoint",
+      "official": true
+    },
+    {
+      "repo": "lightonai/LightOnOCR-2-1B-base",
+      "format": "base for fine-tuning",
+      "official": true
+    }
+  ],
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "partial",
+    "other": [
+      "transformers v5",
+      "vLLM",
+      "SGLang"
+    ],
+    "notes": "community quantizations only; mistral3 vision path in llama.cpp unchecked"
+  },
+  "benchmarks": [
+    {
+      "name": "OlmOCR-Bench overall (excl. headers/footers)",
+      "score": 83.2,
+      "kind": "vendor",
+      "source": "https://huggingface.co/lightonai/LightOnOCR-2-1B"
+    },
+    {
+      "name": "ParseBench mean",
+      "score": 48,
+      "kind": "vendor",
+      "source": "https://huggingface.co/lightonai/LightOnOCR-2-1B"
+    },
+    {
+      "name": "throughput",
+      "score": 5.71,
+      "unit": "pages/s on one H100",
+      "kind": "vendor",
+      "source": "https://huggingface.co/lightonai/LightOnOCR-2-1B"
+    },
+    {
+      "name": "MDPBench German pages (DE column)",
+      "score": 72.4,
+      "kind": "independent",
+      "source": "https://huggingface.co/datasets/Delores-Lin/MDPBench",
+      "variant": "LightOnOCR-2-1B",
+      "date": "2026-07"
+    },
+    {
+      "name": "MDPBench overall (17 languages)",
+      "score": 63.9,
+      "kind": "independent",
+      "source": "https://huggingface.co/datasets/Delores-Lin/MDPBench",
+      "variant": "LightOnOCR-2-1B; photographed 58.5, digital 80.2",
+      "date": "2026-07"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "European-company model with stronger French coverage",
+      "fast",
+      "bbox variant for locating regions"
+    ],
+    "weaknesses": [
+      "OlmOCR-Bench score excludes headers and footers (metric rewards omission)",
+      "11 languages tagged but not listed",
+      "MDPBench (independent): lowest German score among the 1B-class parsers tested (72.4 vs 82.7 GLM-OCR, 84.8 PaddleOCR-VL-1.5) and weak on photographed pages (58.5)"
+    ],
+    "best_for": [
+      "bulk European-language page OCR"
+    ],
+    "maturity": "LightOn is a French company shipping several OCR releases"
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "European vendor, Apache-2.0, German listed on the card; third-party German score (72.4) is below GLM-OCR and PaddleOCR-VL, so not the first pick for German scans, but fast and permissive. Missing Tona support is a blocker only."
+  },
+  "open_questions": [
+    "llama.cpp support"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/lightonai/LightOnOCR-2-1B",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/blog/lightonai/lightonocr-2",
+      "kind": "secondary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/lightonai/LightOnOCR/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/datasets/Delores-Lin/MDPBench",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "MDPBench README table read directly; an earlier summarizer pass mislabeled the Latin-average column as DE, the DE values here come from the dataset README"
+    }
+  ],
+  "tasks": [
+    "documents",
+    "vision"
+  ],
+  "modalities": {
+    "input": [
+      "image",
+      "document"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "about 1B parameters, BF16 about 2 GB"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "BF16 about 2 GB; Tona runs one model at a time, so it replaces the resident model while it works"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate"
+    }
+  },
+  "last_checked": "2026-11-19"
+}

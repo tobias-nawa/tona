@@ -1,0 +1,187 @@
+{
+  "id": "apriel-voice-27b-preview",
+  "name": "Apriel Voice 27B Preview",
+  "vendor": "ServiceNow",
+  "release_date": "2026-10-13",
+  "lineage": {
+    "base_model": "Gemma 4 backbone (config: Gemma4ForConditionalGeneration; the text comparison column is Gemma 4 26B-A4B)",
+    "how_derived": "speech interface added to the Gemma 4 backbone, keeping text and image input",
+    "family": "Apriel"
+  },
+  "purpose": "Open model for speech, reasoning and tool use: understands spoken requests, reasons over conversation context, returns text and tool calls; pair it with an external synthesizer for voice assistants and support workflows (card).",
+  "tasks": [
+    "audio-transcription",
+    "general"
+  ],
+  "modalities": {
+    "input": [
+      "audio",
+      "text",
+      "image"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en",
+      "fr",
+      "de",
+      "es",
+      "pt",
+      "nl",
+      "pl",
+      "it",
+      "ar",
+      "ja",
+      "zh",
+      "tr",
+      "hi",
+      "ko",
+      "ru",
+      "sv",
+      "da",
+      "cs",
+      "ro",
+      "hu",
+      "el",
+      "ca",
+      "nb",
+      "vi"
+    ]
+  },
+  "license": {
+    "name": "MIT (card tag)",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "HF API cardData.license mit; no LICENSE file in the repo (404)."
+  },
+  "architecture": {
+    "kind": "speech-interface added to a Gemma 4 text/vision backbone (custom code); active-parameter count not stated in the card parts read",
+    "params_total_b": 27.0
+  },
+  "variants": [
+    {
+      "repo": "ServiceNow-AI/Apriel-Voice-27B-preview",
+      "format": "safetensors BF16",
+      "official": true,
+      "size_gb": 54.49,
+      "notes": "repo total per HF API"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "marginal",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "54.5 GB file against 9.6 GB VRAM plus 50 GB RAM budget; part streams from RAM (dense: decode is bandwidth bound)"
+    },
+    "pc-16gb": {
+      "fits": "marginal",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "54.5 GB file against 13.6 GB VRAM plus 50 GB RAM budget; part streams from RAM (dense: decode is bandwidth bound)"
+    },
+    "pc-24gb": {
+      "fits": "marginal",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "54.5 GB file against 21.6 GB VRAM plus 82 GB RAM budget; part streams from RAM (dense: decode is bandwidth bound)"
+    },
+    "pc-32gb": {
+      "fits": "marginal",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "54.5 GB file against 29.6 GB VRAM plus 114 GB RAM budget; part streams from RAM (dense: decode is bandwidth bound); BF16 does not fit VRAM; a 4-bit quant would, none seen yet"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "54.5 GB file against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "no",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "54.5 GB file against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "no",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "54.5 GB file against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "Transformers custom code",
+      "vLLM serving examples in the card (30-minute audio settings)"
+    ]
+  },
+  "benchmarks": [
+    {
+      "name": "LibriSpeech test-clean / test-other WER",
+      "score": "2.23 / 5.15",
+      "kind": "vendor",
+      "source": "https://huggingface.co/ServiceNow-AI/Apriel-Voice-27B-preview",
+      "unit": "% WER",
+      "variant": "BF16, thinking mode where applicable"
+    },
+    {
+      "name": "EVA-A / EVA-X / tau-Voice pass@1 (English)",
+      "score": "51.27 / 74.13 / 65.51",
+      "kind": "vendor",
+      "source": "https://huggingface.co/ServiceNow-AI/Apriel-Voice-27B-preview",
+      "unit": "score 0-100",
+      "variant": "2-stage with external TTS (Cartesia Sonic 3.5)",
+      "harness": "latency 1.91 s; GPT Realtime 2.1: 59.03 / 61.6 / 69.82"
+    },
+    {
+      "name": "GPQA Diamond / MMLU-Pro (text)",
+      "score": "80.40 / 84.42",
+      "kind": "vendor",
+      "source": "https://huggingface.co/ServiceNow-AI/Apriel-Voice-27B-preview",
+      "unit": "%",
+      "variant": "thinking mode",
+      "harness": "Gemma 4 26B-A4B: 77.80 / 85.27"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "spoken tool use and reasoning at near text-model level (card tables)",
+      "MIT"
+    ],
+    "weaknesses": [
+      "preview; needs external TTS and application-managed turn taking",
+      "54 GB BF16"
+    ],
+    "maturity": "ServiceNow Apriel line; 1.4k downloads, 97 likes."
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "An open speech-in, tool-calling model with 24+ languages including German and MIT licence, based on the same Gemma 4 family that Tona users run for text. Large in BF16, but a Gemma-4-sized MoE-class model quantizes well; needs a German speech-QA test.",
+    "blockers": [
+      "no 4-bit quant seen yet",
+      "audio front end not in Tona"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/ServiceNow-AI/Apriel-Voice-27B-preview",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README with benchmark tables, config.json, HF API"
+    }
+  ],
+  "open_questions": [
+    "Active parameter count and expert layout",
+    "German results not extracted",
+    "No independent evaluation"
+  ],
+  "last_checked": "2026-11-19"
+}

@@ -1,0 +1,82 @@
+{
+  "id": "nemotron-labs-sigma",
+  "name": "Nemotron-Labs-Sigma 3B and 8B (continuous diffusion language models)",
+  "vendor": "NVIDIA",
+  "release_date": "2026-10-05",
+  "lineage": {
+    "base_model": "autoregressive Ministral-style decoder, warm-started (about 1T tokens AR initialization, then about 0.3T tokens continuous-diffusion training)",
+    "family": "Nemotron-Labs (diffusion line, same corpus as Nemotron-Labs-Diffusion)",
+    "how_derived": "continuous-diffusion training in a 16-D token-embedding space; base, instruct and few-step distilled variants for 3B and 8B"
+  },
+  "purpose": "Research models for diffusion-based parallel text generation: sampling, few-step distillation, trajectory steering and fine-tuning into assistants. The base card says it is not an instruction-following assistant (use the instruct repos).",
+  "tasks": ["general", "coding", "math"],
+  "modalities": {"input": ["text"], "output": ["text"]},
+  "languages": {"natural": ["en"]},
+  "license": {
+    "name": "NVIDIA Nemotron Open Model License",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "unknown",
+    "notes": "The cards say 'ready for commercial or non-commercial use' under this license; the license page (nvidia.com) returned only script code to the fetch tool and no LICENSE file is in the repo, so the text was not read (2026-11-19). Terms on redistribution and derivative models unknown."
+  },
+  "architecture": {
+    "kind": "continuous diffusion language model on a Ministral-style transformer (GQA, SwiGLU, RoPE)",
+    "gguf_arch": "none (custom code)",
+    "params_total_b": 8,
+    "params_active_b": 8,
+    "context_native": 4096,
+    "context_max": 4096,
+    "drafter": "none; the paper reports one-step speculative decoding on the distilled 8B model",
+    "why_this_design": "Paper abstract: denoising smooth continuous embeddings allows few-step distillation (about 8x on math, 4x on code) and embedding-space steering that improves pass@k; masked (discrete) diffusion baselines are outperformed, largest gains on coding. Card: block-parallel decoding (default 64 tokens per block, DDIM or DDPM samplers, classifier-free guidance, self-conditioning, KV cache for committed blocks)."
+  },
+  "variants": [
+    {"repo": "nvidia/Nemotron-Labs-Sigma-8B", "format": "safetensors BF16 (base)", "size_gb": 17.01, "official": true},
+    {"repo": "nvidia/Nemotron-Labs-Sigma-8B-instruct", "format": "safetensors BF16", "size_gb": 17.01, "official": true},
+    {"repo": "nvidia/Nemotron-Labs-Sigma-3B", "format": "safetensors BF16 (base)", "size_gb": 7.69, "official": true},
+    {"repo": "nvidia/Nemotron-Labs-Sigma-3B-instruct", "format": "safetensors BF16", "size_gb": 7.69, "official": true, "notes": "the card also mentions -distill-* variants for fixed few-step decoding; their repos were not opened"}
+  ],
+  "hardware_fit": {
+    "pc-12gb": {"fits": "marginal", "basis": "estimate", "variant": "3B BF16", "notes": "3B 7.7 GB fits; 8B 17 GB does not without quantization (none exists)"},
+    "pc-16gb": {"fits": "marginal", "basis": "estimate", "variant": "3B BF16", "notes": "8B BF16 17 GB exceeds the 13.6 GB budget"},
+    "pc-24gb": {"fits": "yes", "basis": "estimate", "variant": "8B BF16"},
+    "pc-32gb": {"fits": "yes", "basis": "estimate", "variant": "8B BF16"},
+    "mac-16-24gb": {"fits": "marginal", "basis": "estimate", "variant": "3B BF16", "notes": "card requires CUDA; no MPS or CPU path (CPU output is unusable per the card)"},
+    "mac-32gb": {"fits": "marginal", "basis": "estimate", "variant": "8B BF16", "notes": "17 GB against about 22 GB GPU share, but the card supports only CUDA"},
+    "mac-64gb+": {"fits": "marginal", "basis": "estimate", "variant": "8B BF16", "notes": "memory fits; no Apple backend"}
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": ["PyTorch >= 2.4 + Transformers >= 4.55 with trust_remote_code, CUDA only"],
+    "notes": "Custom sampler in plain PyTorch; the card states CPU inference degrades the sampler numerically. No GGUF found."
+  },
+  "benchmarks": [
+    {"name": "Few-step distillation speed-up", "score": "about 8x (math), 4x (code), negligible accuracy loss", "kind": "vendor", "source": "https://arxiv.org/abs/2610.02665", "variant": "distilled models, size not attributed in the abstract"},
+    {"name": "Throughput, DDPM 32 steps per 64-token block", "score": "120-140", "kind": "vendor", "unit": "tok/s (decode), 256 generated tokens", "variant": "8B BF16 on one H100", "source": "https://huggingface.co/nvidia/Nemotron-Labs-Sigma-8B"}
+  ],
+  "soft": {
+    "strengths": ["Parallel block decoding with few-step distillation as a research direction", "Reported coding gains over masked-diffusion baselines (vendor abstract)"],
+    "weaknesses": ["4096-token context including generation", "English only; CUDA only", "Raw benchmark scores are only in the PDF, not on the card"],
+    "behavior": "DDIM sampler recommended; quality drops noticeably below about 16 steps for the pretrained models, the distilled variants need no guidance tuning.",
+    "best_for": ["diffusion-LM research"],
+    "avoid_for": ["long-context agents", "coding agents"],
+    "maturity": "Research release by NVIDIA labs, very few downloads (a few hundred per repo), no community reports found."
+  },
+  "tona_fit": {
+    "verdict": "reject",
+    "reason": "4K context, English only, CUDA-only custom sampler, no quantization or GGUF, research purpose; useful only as a technique reference for diffusion decoding (see also diffusiongemma-26b-a4b-it in the database).",
+    "blockers": ["4K context", "no engine support", "license text not read"]
+  },
+  "sources": [
+    {"url": "https://huggingface.co/nvidia/Nemotron-Labs-Sigma-8B", "kind": "primary", "checked": "2026-11-19", "note": "README and config read; 3B card assumed analogous (same repo layout, not read)"},
+    {"url": "https://arxiv.org/abs/2610.02665", "kind": "secondary", "checked": "2026-11-19", "note": "abstract read through a page summarizer (WebFetch); full PDF not read"},
+    {"url": "https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-nemotron-open-model-license/", "kind": "secondary", "checked": "2026-11-19", "note": "license URL named by the card; page content not readable"}
+  ],
+  "open_questions": [
+    "Actual GSM8K, HumanEval and MBPP scores of the 3B and 8B models (PDF not read)",
+    "Text of the NVIDIA Nemotron Open Model License",
+    "Whether the 3B card matches the 8B card in context length and settings",
+    "Any independent reproduction"
+  ],
+  "last_checked": "2026-11-19"
+}

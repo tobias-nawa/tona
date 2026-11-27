@@ -1,0 +1,266 @@
+{
+  "id": "paddleocr-vl-1.6",
+  "name": "PaddleOCR-VL-1.6",
+  "vendor": "PaddlePaddle (Baidu)",
+  "release_date": "2026-05-28",
+  "lineage": {
+    "family": "PaddleOCR-VL",
+    "base_model": "PaddleOCR-VL-1.5 (compatible); ERNIE4.5 tag on the card"
+  },
+  "purpose": "Compact document parsing: pages to structured output including text, tables, formulas, charts and seals, plus text spotting. Distributed through the PaddleOCR toolkit, which adds page-level layout parsing. The 1.6 report (arXiv 2606.03264) names under-optimised region refinement and progressive post-training as the focus (title only; paper not read).",
+  "languages": {
+    "natural": [
+      "de",
+      "en",
+      "zh",
+      "many"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "LICENSE file of the model repo is the unmodified Apache License 2.0 text (read 2026-11-19); card tag agrees"
+  },
+  "architecture": {
+    "kind": "vision-language encoder-decoder, ERNIE-4.5-based decoder (card tag)",
+    "gguf_arch": "paddleocr",
+    "params_total_b": 0.9
+  },
+  "variants": [
+    {
+      "repo": "PaddlePaddle/PaddleOCR-VL-1.6",
+      "format": "safetensors BF16",
+      "official": true
+    },
+    {
+      "repo": "PaddlePaddle/PaddleOCR-VL-1.6-GGUF",
+      "format": "GGUF + mmproj (two files)",
+      "size_gb": 1.82,
+      "official": true,
+      "notes": "model file 0.94 GB plus mmproj 0.88 GB (HF tree sizes; precision of the files not stated on the card tree); created 2026-05-29, 104,439 downloads"
+    },
+    {
+      "repo": "PaddlePaddle/PaddleOCR-VL-1.5-GGUF",
+      "format": "GGUF + mmproj (two files)",
+      "official": true,
+      "notes": "previous version"
+    }
+  ],
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "PaddleOCR pipeline (PaddlePaddle >= 3.2.1)",
+      "transformers >= 5.0",
+      "vLLM"
+    ],
+    "notes": "llama.cpp support merged 2026-02-19 (PR 18825, mtmd, needs mmproj); an official 1.6 GGUF repo now exists; spotting needs a metadata change on the mmproj (image_max_pixels 1605632); the GGUF path covers recognition only, layout needs PaddlePaddle"
+  },
+  "benchmarks": [
+    {
+      "name": "OmniDocBench v1.6 overall",
+      "score": 96.33,
+      "kind": "vendor",
+      "variant": "BF16",
+      "source": "https://huggingface.co/PaddlePaddle/PaddleOCR-VL-1.6"
+    },
+    {
+      "name": "ParseBench-2 overall",
+      "score": 70.28,
+      "kind": "vendor",
+      "source": "https://huggingface.co/PaddlePaddle/PaddleOCR-VL-1.6"
+    },
+    {
+      "name": "olmOCR-bench Old Scans",
+      "score": 38.6,
+      "kind": "vendor",
+      "source": "https://huggingface.co/PaddlePaddle/PaddleOCR-VL-1.6"
+    },
+    {
+      "name": "MDPBench German pages (DE column)",
+      "score": 84.1,
+      "kind": "independent",
+      "source": "https://huggingface.co/datasets/Delores-Lin/MDPBench",
+      "variant": "PaddleOCR-VL-1.6",
+      "date": "2026-07",
+      "harness": "MDPBench leaderboard (dots.mocr authors run it)"
+    },
+    {
+      "name": "MDPBench overall (17 languages)",
+      "score": 75.0,
+      "kind": "independent",
+      "source": "https://huggingface.co/datasets/Delores-Lin/MDPBench",
+      "variant": "PaddleOCR-VL-1.6",
+      "date": "2026-07"
+    },
+    {
+      "name": "MDPBench German pages (DE column)",
+      "score": 84.8,
+      "kind": "independent",
+      "source": "https://huggingface.co/datasets/Delores-Lin/MDPBench",
+      "variant": "PaddleOCR-VL-1.5 (predecessor)",
+      "date": "2026-07"
+    },
+    {
+      "name": "MDPBench overall (17 languages)",
+      "score": 78.3,
+      "kind": "independent",
+      "source": "https://huggingface.co/datasets/Delores-Lin/MDPBench",
+      "variant": "PaddleOCR-VL-1.5 (predecessor)",
+      "date": "2026-07"
+    },
+    {
+      "name": "MORE German overall (per-language, 149 languages)",
+      "score": 97.24,
+      "kind": "independent",
+      "source": "https://arxiv.org/html/2607.02956",
+      "variant": "PaddleOCR-VL (1.0, 0.9B)",
+      "date": "2026-07",
+      "harness": "read through a summarizer; MORE overall 87.96 over 149 languages, table 61.11, code 96.29"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "top-tier OmniDocBench at under 1B parameters",
+      "official GGUF path for llama.cpp",
+      "German is one of its stronger languages in third-party tests (MDPBench DE 84.1-84.8, among the top specialised open models)"
+    ],
+    "weaknesses": [
+      "old scans score low (38.6)",
+      "page-level parsing needs the PaddleOCR pipeline, the bare model does element-level recognition",
+      "GGUF path needs two files and special prompts",
+      "independent MDPBench puts 1.6 below 1.5 overall (75.0 vs 78.3) while the vendor OmniDocBench number rises: vendor numbers and a third-party multilingual/photo benchmark disagree"
+    ],
+    "best_for": [
+      "bulk PDF/scan parsing to Markdown on a small GPU or CPU"
+    ],
+    "maturity": "Baidu PaddlePaddle ecosystem, regular releases (1.0 to 1.6 within about a year); large community",
+    "user_reports": [
+      {
+        "summary": "guide on the 1.0 llama.cpp merge: Stage 2 (recognition) only, layout stage still needs PaddlePaddle, chat template crashes without --jinja in the first builds; one author reports accurate English and several European languages including German in an informal check",
+        "sentiment": "mixed",
+        "source": "https://insiderllm.com/guides/paddleocr-vl-local-document-ocr/",
+        "date": "2026-02"
+      }
+    ]
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "best-evidenced small page parser for German: third-party German scores 84.1 (1.6) and 84.8 (1.5), Apache-2.0 verified, 0.9B, official GGUF; Tona lacking an OCR module is only a blocker, not a quality issue. Choose between 1.5 and 1.6 on our own German pages (MDPBench prefers 1.5, the vendor benchmark 1.6).",
+    "blockers": [
+      "Tona engine has no vision/OCR architecture; would run through llama.cpp"
+    ]
+  },
+  "open_questions": [
+    "architecture details (card only has a diagram)",
+    "builder's stated reasons for the design (card has none)",
+    "builder's stated reasons for the architecture: read arXiv 2510.14528 (1.0) and 2606.03264 (1.6) sections on design",
+    "why MDPBench ranks 1.6 below 1.5: rerun on our own German sample pages (scan and photo) before choosing a version",
+    "whether the 109-language claim of the 1.0 paper still holds for 1.6 (card does not state it)"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/PaddlePaddle/PaddleOCR-VL-1.6",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/PaddlePaddle/PaddleOCR-VL-1.5-GGUF",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/ggml-org/llama.cpp/HEAD/docs/multimodal.md",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://github.com/ggml-org/llama.cpp/pull/18825",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "merge date taken from search summary"
+    },
+    {
+      "url": "https://huggingface.co/PaddlePaddle/PaddleOCR-VL-1.6/raw/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/PaddlePaddle/PaddleOCR-VL-1.6-GGUF",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/datasets/Delores-Lin/MDPBench",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "leaderboard table in the dataset README, opened directly; MDPBench README table read directly; an earlier summarizer pass mislabeled the Latin-average column as DE, the DE values here come from the dataset README"
+    },
+    {
+      "url": "https://arxiv.org/html/2607.02956",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "MORE benchmark (arXiv 2607.02956) read through a summarizer of the HTML version"
+    },
+    {
+      "url": "https://arxiv.org/pdf/2606.03264",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "PaddleOCR-VL-1.6 technical report; listed by search, not read"
+    },
+    {
+      "url": "https://insiderllm.com/guides/paddleocr-vl-local-document-ocr/",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "blog guide, via search summary"
+    }
+  ],
+  "tasks": [
+    "documents",
+    "vision"
+  ],
+  "modalities": {
+    "input": [
+      "image",
+      "document"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "about 1B parameters, BF16 about 2 GB"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "BF16 about 2 GB; Tona runs one model at a time, so it replaces the resident model while it works"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate"
+    }
+  },
+  "last_checked": "2026-11-19"
+}

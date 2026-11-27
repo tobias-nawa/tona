@@ -1,0 +1,430 @@
+{
+  "config": {
+    "A": {
+      "build": "work/build/mtl",
+      "env": {
+        "TONA_GPU_GAPS": "500"
+      },
+      "tooling": {
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0",
+        "TONA_GPU_GAPS": "500"
+      },
+      "commit": "stand-2026-10-25-1040-gaf228094be-dirty",
+      "model": "<repo>/work/models/coder-dmt/coder-DMT-164e-00001-of-00002.gguf"
+    },
+    "B": {
+      "build": "work/build/mtl",
+      "env": {
+        "TONA_GPU_GAPS": "500"
+      },
+      "tooling": {
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0",
+        "TONA_GPU_GAPS": "500"
+      },
+      "commit": "stand-2026-10-25-1040-gaf228094be-dirty",
+      "model": "<repo>/work/models/coder-dmt/coder-DMT-164e-00001-of-00002.gguf"
+    },
+    "workload": "set,server",
+    "targets": "8000:100 bench-set at --ctx 32768",
+    "deterministic": false,
+    "plan_info": {
+      "expect": [
+        [
+          "decode-code",
+          -1.0,
+          1.0
+        ],
+        [
+          "decode-text",
+          -1.0,
+          1.0
+        ],
+        [
+          "decode@8000",
+          -1.0,
+          1.0
+        ],
+        [
+          "prefill@8000",
+          -1.0,
+          1.0
+        ]
+      ],
+      "source": "research/measurements/2026-11-15-mac-early-commit.md",
+      "workload": "set,server",
+      "targets": "8000:100 bench-set at --ctx 32768",
+      "primary": "",
+      "why_size": "probe only, 2 rounds minimum",
+      "decode_tokens": 200,
+      "noise": {},
+      "warmup": true,
+      "round_warmup": true,
+      "load_log": true,
+      "A": {
+        "build": "work/build/mtl",
+        "env": {
+          "TONA_GPU_GAPS": "500"
+        },
+        "tooling": {
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0",
+          "TONA_GPU_GAPS": "500"
+        },
+        "commit": "stand-2026-10-25-1040-gaf228094be-dirty",
+        "model": "<repo>/work/models/coder-dmt/coder-DMT-164e-00001-of-00002.gguf"
+      },
+      "B": {
+        "build": "work/build/mtl",
+        "env": {
+          "TONA_GPU_GAPS": "500"
+        },
+        "tooling": {
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0",
+          "TONA_GPU_GAPS": "500"
+        },
+        "commit": "stand-2026-10-25-1040-gaf228094be-dirty",
+        "model": "<repo>/work/models/coder-dmt/coder-DMT-164e-00001-of-00002.gguf"
+      }
+    },
+    "reference_sha": {},
+    "corpus_sha256": "e13a800340859f7d39c63712d90383faae7e5a47c3865f0811e40d912612d38e",
+    "corpus_is_reference": true,
+    "commit": "af22809",
+    "noise": {}
+  },
+  "rounds": [
+    {
+      "order": "AB",
+      "sha": {
+        "A": {
+          "8000": "727ff658ae742fa7"
+        },
+        "B": {
+          "8000": "727ff658ae742fa7"
+        }
+      },
+      "A": {
+        "prefill@8000": 164.2616756480645,
+        "decode@8000": 25.196772620985296,
+        "decode-code": 39.0,
+        "decode-text": 27.4
+      },
+      "counters": {
+        "A": {
+          "8000": {
+            "expert_hits": 0,
+            "expert_misses": 0
+          }
+        },
+        "B": {
+          "8000": {
+            "expert_hits": 0,
+            "expert_misses": 0
+          }
+        }
+      },
+      "B": {
+        "prefill@8000": 174.53889989358322,
+        "decode@8000": 25.28124675985271,
+        "decode-code": 39.2,
+        "decode-text": 27.4
+      },
+      "seconds": 744.6273876659106
+    },
+    {
+      "order": "BA",
+      "sha": {
+        "B": {
+          "8000": "727ff658ae742fa7"
+        },
+        "A": {
+          "8000": "727ff658ae742fa7"
+        }
+      },
+      "B": {
+        "prefill@8000": 170.83600666730544,
+        "decode@8000": 25.16924825024173,
+        "decode-code": 39.1,
+        "decode-text": 27.6
+      },
+      "counters": {
+        "B": {
+          "8000": {
+            "expert_hits": 0,
+            "expert_misses": 0
+          }
+        },
+        "A": {
+          "8000": {
+            "expert_hits": 0,
+            "expert_misses": 0
+          }
+        }
+      },
+      "A": {
+        "prefill@8000": 170.78792649624273,
+        "decode@8000": 25.095505387657184,
+        "decode-code": 38.7,
+        "decode-text": 27.1
+      },
+      "seconds": 743.1757528749295
+    }
+  ],
+  "stop_reason": "2 rounds (undecided metrics stay open)",
+  "wall_seconds": 1683.8206630409695,
+  "loads": [
+    {
+      "start": 1,
+      "arm": "A",
+      "cpu_own": 6.1,
+      "cpu_system": 15.2,
+      "cpu_other": 7.8,
+      "gpu_own": 90.1,
+      "gpu_system": 0.2,
+      "gpu_other": 0.3,
+      "pageins": 23004.6,
+      "swapins": 5.8,
+      "compressions": 12865.8,
+      "level_min": 8,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 195,
+      "idle_before_s": null,
+      "ready_s": 2.0
+    },
+    {
+      "start": 2,
+      "arm": "A",
+      "cpu_own": 5.3,
+      "cpu_system": 14.7,
+      "cpu_other": 7.6,
+      "gpu_own": 94.1,
+      "gpu_system": 0.2,
+      "gpu_other": 0.3,
+      "pageins": 2660.1,
+      "swapins": 0.6,
+      "compressions": 12727.7,
+      "level_min": 8,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 187,
+      "idle_before_s": 0.1,
+      "ready_s": 2.0
+    },
+    {
+      "start": 3,
+      "arm": "A",
+      "cpu_own": 5.8,
+      "cpu_system": 43.1,
+      "cpu_other": 8.3,
+      "gpu_own": 93.7,
+      "gpu_system": 0.3,
+      "gpu_other": 0.3,
+      "pageins": 3038.4,
+      "swapins": 4.4,
+      "compressions": 14315.1,
+      "level_min": 7,
+      "backup_share": 0.77,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 186,
+      "idle_before_s": 0.1,
+      "ready_s": 2.0
+    },
+    {
+      "start": 4,
+      "arm": "B",
+      "cpu_own": 6.5,
+      "cpu_system": 51.6,
+      "cpu_other": 9.3,
+      "gpu_own": 93.0,
+      "gpu_system": 0.3,
+      "gpu_other": 0.3,
+      "pageins": 4631.4,
+      "swapins": 66.2,
+      "compressions": 21494.3,
+      "level_min": 5,
+      "backup_share": 1.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 185,
+      "idle_before_s": 0.1,
+      "ready_s": 2.0
+    },
+    {
+      "start": 5,
+      "arm": "B",
+      "cpu_own": 4.9,
+      "cpu_system": 57.3,
+      "cpu_other": 8.0,
+      "gpu_own": 95.0,
+      "gpu_system": 0.2,
+      "gpu_other": 0.3,
+      "pageins": 2574.8,
+      "swapins": 41.4,
+      "compressions": 4459.9,
+      "level_min": 9,
+      "backup_share": 1.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 182,
+      "idle_before_s": 0.1,
+      "ready_s": 2.0
+    },
+    {
+      "start": 6,
+      "arm": "B",
+      "cpu_own": 5.5,
+      "cpu_system": 52.2,
+      "cpu_other": 8.1,
+      "gpu_own": 94.5,
+      "gpu_system": 0.2,
+      "gpu_other": 0.3,
+      "pageins": 2443.1,
+      "swapins": 23.6,
+      "compressions": 12487.8,
+      "level_min": 9,
+      "backup_share": 0.55,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 184,
+      "idle_before_s": 0.1,
+      "ready_s": 2.0
+    },
+    {
+      "start": 7,
+      "arm": "B",
+      "cpu_own": 5.6,
+      "cpu_system": 24.5,
+      "cpu_other": 17.5,
+      "gpu_own": 94.6,
+      "gpu_system": 0.2,
+      "gpu_other": 0.3,
+      "pageins": 2539.6,
+      "swapins": 330.1,
+      "compressions": 14134.7,
+      "level_min": 8,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 183,
+      "idle_before_s": 0.1,
+      "ready_s": 2.0
+    },
+    {
+      "start": 8,
+      "arm": "A",
+      "cpu_own": 5.1,
+      "cpu_system": 17.1,
+      "cpu_other": 7.7,
+      "gpu_own": 94.4,
+      "gpu_system": 0.3,
+      "gpu_other": 0.3,
+      "pageins": 2751.8,
+      "swapins": 6.5,
+      "compressions": 8008.9,
+      "level_min": 8,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 185,
+      "idle_before_s": 0.1,
+      "ready_s": 2.0
+    },
+    {
+      "start": 9,
+      "arm": "A",
+      "cpu_own": 5.3,
+      "cpu_system": 28.1,
+      "cpu_other": 8.2,
+      "gpu_own": 94.6,
+      "gpu_system": 0.4,
+      "gpu_other": 0.3,
+      "pageins": 2974.8,
+      "swapins": 39.4,
+      "compressions": 13926.0,
+      "level_min": 8,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 185,
+      "idle_before_s": 0.1,
+      "ready_s": 2.0
+    }
+  ],
+  "warmup": {
+    "prefill@8000": 143.0205259827686,
+    "decode@8000": 24.847845769421305,
+    "decode-code": 38.7,
+    "decode-text": 27.0
+  },
+  "plan": {
+    "alpha": 0.05,
+    "margin": 0.5,
+    "max_rounds": 2,
+    "min_rounds": 2,
+    "prior_sd": 0.5,
+    "prior_df": 4.0
+  },
+  "decisions": {
+    "prefill@8000": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": 3.142384584679059,
+      "ci_diff_percent": [
+        -0.5288607372918182,
+        6.813629906649936
+      ]
+    },
+    "decode@8000": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": 0.3145533288561153,
+      "ci_diff_percent": [
+        -0.49868441228421656,
+        1.127791069996447
+      ]
+    },
+    "decode-code": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": 0.773206122043324,
+      "ci_diff_percent": [
+        -0.09304613825460462,
+        1.6394583823412525
+      ]
+    },
+    "decode-text": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": 0.9225092250922495,
+      "ci_diff_percent": [
+        -0.41371040308338847,
+        2.2587288532678875
+      ]
+    }
+  }
+}

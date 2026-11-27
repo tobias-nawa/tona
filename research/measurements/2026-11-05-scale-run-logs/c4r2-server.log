@@ -1,0 +1,13 @@
+Tona (tona-server) on http://127.0.0.1:8097 (Anthropic: /v1/messages, OpenAI: /v1/chat/completions), without key, loading ...
+warning: --ctx 1048576 is beyond the native context of 262144 tokens and TONA_ROPE_YARN is off; quality beyond 262144 is not measured
+host memory: GTT (probe 64 MB grew the GTT use by 64 MB; 0.1 of 32.5 GB in use)
+evicted_ms counter: /sys/class/kfd/kfd/proc/392914/stats_7773/evicted_ms (0 ms so far), evictions do not count against the pass deadline
+Initialization: 512 MTP experts as Q2_0, converted on the GPU (708 MB) in 1.0 s
+host memory: 11.3 GB of the pinned experts do not fit the GTT and are registered as userptr
+Releasing page cache: 8.25 GB of file mappings removed from the address space
+loaded in 24.4 s: context 1048576 (KV int8 14.50 GB in RAM), VRAM 14.31 GB, 71 expert slots per layer, 25.1 GB pinned
+11:34:45 Request: 511946 prompt tokens (0 reused, 511946 computed in 362.0 s, new conversation (stashing 0 ms)), 200 tokens in 3.4 s = 59.5 tok/s, 2.69 tokens per pass, 1 of 74 passes from the history (1.00 per pass)
+Conversation of 511946 tokens stashed: 8668 MB (state 149, KV 7667, pool 852, drafter 0) in 1.42 s
+Conversation of 511918 tokens stashed: 8668 MB (state 149, KV 7666, pool 852, drafter 0) in 1.36 s
+Conversation of 998882 tokens not stashed: needs 16.8 GB, budget 12.0 GB (TONA_PROMPT_RAM_GB), free RAM 8.9 GB; further skips are not logged
+11:49:36 Request: 998910 prompt tokens (0 reused, 998910 computed in 886.4 s, new conversation (stashing 3036 ms), checkpoint at 998882 (before the fixed end)), 26 tokens in 0.6 s = 42.4 tok/s, 2.17 tokens per pass, 0 of 12 passes from the history (0.00 per pass)

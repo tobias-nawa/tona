@@ -1,0 +1,2 @@
+- Quiet check (2026-11-18 14:28:35): do not measure
+  - do not measure: 14.89 GiB of 15.9 GiB VRAM are held by others

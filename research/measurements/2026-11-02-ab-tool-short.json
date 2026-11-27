@@ -1,0 +1,374 @@
+{
+  "config": {
+    "A": {
+      "build": "merged",
+      "env": {},
+      "tooling": {
+        "HIP_PATH": "./work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+        "IE_EXPERT_PROFILE": "./work/profile/experts-coder.bin",
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0"
+      },
+      "commit": "v0.0.2-108-gd5a3e1fcb0-dirty"
+    },
+    "B": {
+      "build": "merged",
+      "env": {},
+      "tooling": {
+        "HIP_PATH": "./work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+        "IE_EXPERT_PROFILE": "./work/profile/experts-coder.bin",
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0"
+      },
+      "commit": "v0.0.2-108-gd5a3e1fcb0-dirty"
+    },
+    "workload": "short",
+    "targets": "2000:400 2000:write:400 at --ctx 140000",
+    "deterministic": false,
+    "plan_info": {
+      "expect": [
+        [
+          "decode",
+          -1.0,
+          1.0
+        ],
+        [
+          "prefill",
+          -1.0,
+          1.0
+        ]
+      ],
+      "source": "A/A runs 1 and 4 of 2026-11-02-ab-tool.md",
+      "workload": "short",
+      "targets": "2000:400 2000:write:400 at --ctx 140000",
+      "primary": "",
+      "why_size": "cheap decode workload of the policy: 2K prompt, 400 tokens; 5 rounds fill the noise table",
+      "decode_tokens": 200,
+      "noise": {},
+      "warmup": true,
+      "A": {
+        "build": "merged",
+        "env": {},
+        "tooling": {
+          "HIP_PATH": "./work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+          "IE_EXPERT_PROFILE": "./work/profile/experts-coder.bin",
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0"
+        },
+        "commit": "v0.0.2-108-gd5a3e1fcb0-dirty"
+      },
+      "B": {
+        "build": "merged",
+        "env": {},
+        "tooling": {
+          "HIP_PATH": "./work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+          "IE_EXPERT_PROFILE": "./work/profile/experts-coder.bin",
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0"
+        },
+        "commit": "v0.0.2-108-gd5a3e1fcb0-dirty"
+      }
+    },
+    "reference_sha": {},
+    "corpus_sha256": "e13a800340859f7d39c63712d90383faae7e5a47c3865f0811e40d912612d38e",
+    "corpus_is_reference": true,
+    "commit": "eb71b72",
+    "noise": {}
+  },
+  "rounds": [
+    {
+      "order": "AB",
+      "sha": {
+        "A": {
+          "2000": "f6573f396c15300f",
+          "2000:write": "a6f07fd6fb86e448"
+        },
+        "B": {
+          "2000": "f6573f396c15300f",
+          "2000:write": "a6f07fd6fb86e448"
+        }
+      },
+      "A": {
+        "prefill@2000": 1328.7799986521609,
+        "decode@2000": 65.88345022086109,
+        "prefill@2000:write": 1541.2944072889889,
+        "decode@2000:write": 117.89347282551915
+      },
+      "counters": {
+        "A": {
+          "2000": {
+            "expert_hits": 131811,
+            "expert_misses": 19885
+          },
+          "2000:write": {
+            "expert_hits": 82992,
+            "expert_misses": 25567
+          }
+        },
+        "B": {
+          "2000": {
+            "expert_hits": 131811,
+            "expert_misses": 19885
+          },
+          "2000:write": {
+            "expert_hits": 82992,
+            "expert_misses": 25567
+          }
+        }
+      },
+      "B": {
+        "prefill@2000": 1329.2583532438628,
+        "decode@2000": 65.86611814103028,
+        "prefill@2000:write": 1541.4462440624684,
+        "decode@2000:write": 117.63281442384562
+      },
+      "seconds": 65.77484219404869
+    },
+    {
+      "order": "BA",
+      "sha": {
+        "B": {
+          "2000": "f6573f396c15300f",
+          "2000:write": "a6f07fd6fb86e448"
+        },
+        "A": {
+          "2000": "f6573f396c15300f",
+          "2000:write": "a6f07fd6fb86e448"
+        }
+      },
+      "B": {
+        "prefill@2000": 1325.0461702883208,
+        "decode@2000": 65.86048916815804,
+        "prefill@2000:write": 1541.2056169371103,
+        "decode@2000:write": 118.58102596784514
+      },
+      "counters": {
+        "B": {
+          "2000": {
+            "expert_hits": 131811,
+            "expert_misses": 19885
+          },
+          "2000:write": {
+            "expert_hits": 82992,
+            "expert_misses": 25567
+          }
+        },
+        "A": {
+          "2000": {
+            "expert_hits": 131811,
+            "expert_misses": 19885
+          },
+          "2000:write": {
+            "expert_hits": 82992,
+            "expert_misses": 25567
+          }
+        }
+      },
+      "A": {
+        "prefill@2000": 1326.8138876259477,
+        "decode@2000": 66.03595199651579,
+        "prefill@2000:write": 1540.0174466337737,
+        "decode@2000:write": 117.85959016944001
+      },
+      "seconds": 65.71427408792078
+    },
+    {
+      "order": "AB",
+      "sha": {
+        "A": {
+          "2000": "f6573f396c15300f",
+          "2000:write": "a6f07fd6fb86e448"
+        },
+        "B": {
+          "2000": "f6573f396c15300f",
+          "2000:write": "a6f07fd6fb86e448"
+        }
+      },
+      "A": {
+        "prefill@2000": 1328.5043277196241,
+        "decode@2000": 65.97591389532091,
+        "prefill@2000:write": 1540.7067570080549,
+        "decode@2000:write": 118.86565864831978
+      },
+      "counters": {
+        "A": {
+          "2000": {
+            "expert_hits": 131811,
+            "expert_misses": 19885
+          },
+          "2000:write": {
+            "expert_hits": 82992,
+            "expert_misses": 25567
+          }
+        },
+        "B": {
+          "2000": {
+            "expert_hits": 131811,
+            "expert_misses": 19885
+          },
+          "2000:write": {
+            "expert_hits": 82992,
+            "expert_misses": 25567
+          }
+        }
+      },
+      "B": {
+        "prefill@2000": 1327.895234784027,
+        "decode@2000": 66.12663789144953,
+        "prefill@2000:write": 1542.326415864886,
+        "decode@2000:write": 117.60765790597775
+      },
+      "seconds": 65.63194374600425
+    },
+    {
+      "order": "BA",
+      "sha": {
+        "B": {
+          "2000": "f6573f396c15300f",
+          "2000:write": "a6f07fd6fb86e448"
+        },
+        "A": {
+          "2000": "f6573f396c15300f",
+          "2000:write": "a6f07fd6fb86e448"
+        }
+      },
+      "B": {
+        "prefill@2000": 1326.7268710396024,
+        "decode@2000": 65.86636051242748,
+        "prefill@2000:write": 1542.7025354226123,
+        "decode@2000:write": 117.42844736013251
+      },
+      "counters": {
+        "B": {
+          "2000": {
+            "expert_hits": 131811,
+            "expert_misses": 19885
+          },
+          "2000:write": {
+            "expert_hits": 82992,
+            "expert_misses": 25567
+          }
+        },
+        "A": {
+          "2000": {
+            "expert_hits": 131811,
+            "expert_misses": 19885
+          },
+          "2000:write": {
+            "expert_hits": 82992,
+            "expert_misses": 25567
+          }
+        }
+      },
+      "A": {
+        "prefill@2000": 1327.7317698429017,
+        "decode@2000": 66.08825194826561,
+        "prefill@2000:write": 1543.1456338848404,
+        "decode@2000:write": 117.72608599053314
+      },
+      "seconds": 65.71238464501221
+    },
+    {
+      "order": "AB",
+      "sha": {
+        "A": {
+          "2000": "f6573f396c15300f",
+          "2000:write": "a6f07fd6fb86e448"
+        },
+        "B": {
+          "2000": "f6573f396c15300f",
+          "2000:write": "a6f07fd6fb86e448"
+        }
+      },
+      "A": {
+        "prefill@2000": 1328.1133078151768,
+        "decode@2000": 65.99494852105082,
+        "prefill@2000:write": 1542.0393296740428,
+        "decode@2000:write": 118.56684717343752
+      },
+      "counters": {
+        "A": {
+          "2000": {
+            "expert_hits": 131811,
+            "expert_misses": 19885
+          },
+          "2000:write": {
+            "expert_hits": 82992,
+            "expert_misses": 25567
+          }
+        },
+        "B": {
+          "2000": {
+            "expert_hits": 131811,
+            "expert_misses": 19885
+          },
+          "2000:write": {
+            "expert_hits": 82992,
+            "expert_misses": 25567
+          }
+        }
+      },
+      "B": {
+        "prefill@2000": 1325.4162360894286,
+        "decode@2000": 66.02419599391511,
+        "prefill@2000:write": 1537.3532713762697,
+        "decode@2000:write": 117.94883775903031
+      },
+      "seconds": 65.64968781196512
+    }
+  ],
+  "stop_reason": "5 rounds (undecided metrics stay open)",
+  "wall_seconds": 362.5370041979477,
+  "warmup": {
+    "prefill@2000": 1322.3370401487732,
+    "decode@2000": 65.29549932121014,
+    "prefill@2000:write": 1283.7519951501265,
+    "decode@2000:write": 117.28073881728558
+  },
+  "plan": {
+    "alpha": 0.05,
+    "margin": 0.5,
+    "max_rounds": 5,
+    "min_rounds": 2,
+    "prior_sd": 0.5,
+    "prior_df": 4.0
+  },
+  "decisions": {
+    "prefill@2000": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": -0.08436790592196264,
+      "ci_diff_percent": [
+        -0.6663767834535869,
+        0.4976409716096616
+      ]
+    },
+    "decode@2000": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": -0.07099892073330061,
+      "ci_diff_percent": [
+        -0.701817292620395,
+        0.5598194511537938
+      ]
+    },
+    "prefill@2000:write": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": -0.028094471174449076,
+      "ci_diff_percent": [
+        -0.6305438950566307,
+        0.5743549527077325
+      ]
+    },
+    "decode@2000:write": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": -0.2882752163085267,
+      "ci_diff_percent": [
+        -1.1873095472723953,
+        0.6107591146553419
+      ]
+    }
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "id": "step-5-preview",
+  "name": "Step 5 Preview",
+  "vendor": "StepFun",
+  "release_date": "2026-09-20",
+  "lineage": {
+    "family": "Step",
+    "how_derived": "the card does not say how it was derived; the smaller relative in this database is step-3.7-flash (198B, 11B active)"
+  },
+  "purpose": "The card calls it StepFun's flagship model for agentic work: repository-level software engineering, frontend and visual development, device programming, long-horizon tool-using execution and professional knowledge work, with particular strength in finance.",
+  "tasks": ["coding", "general", "research", "vision"],
+  "modalities": {"input": ["text", "image"], "output": ["text"]},
+  "license": {
+    "name": "StepFun Model License 1.0",
+    "verified": true,
+    "commercial_use": "limited",
+    "redistribution": "yes",
+    "notes": "LICENSE.txt read in full (the repository has no file named LICENSE). Perpetual, worldwide, royalty-free licence incl. patents; derivatives (fine-tuned, distilled, merged, quantised, pruned models, and any model trained to a material extent on the model's outputs) must carry the licence. Attribution 'Powered by StepFun AI' once a product has more than 100 million active users or more than US$20 million monthly revenue. A separate commercial licence is required (a) before hardware makers (phones, vehicles, glasses, robots, smart-home) ship the model's capabilities in devices, and (b) for commercial use by a company operating a MaaS business with more than US$20 million revenue over 12 months. Internal use that does not expose the model to third parties is exempt. No territory exclusion."
+  },
+  "architecture": {
+    "kind": "multimodal sparse MoE with GQA full and sliding-window attention",
+    "params_total_b": 600,
+    "params_active_b": 27,
+    "layers": 92,
+    "attention": "GQA, 64 heads with 4 KV groups, head dim 192, sliding window 512 for the sliding layers, head-wise attention gate, hidden 4096",
+    "recurrent": "none",
+    "experts": 352,
+    "experts_active": 8,
+    "context_native": 1048576,
+    "context_max": 1048576,
+    "drafter": "3 MTP layers in config (num_nextn_predict_layers 3); the card's serving commands use speculative decoding",
+    "why_this_design": "The card gives no reasons for the architecture; config.json shows 89 MoE layers (3 to 90), 352 routed experts with top-8 plus a shared expert."
+  },
+  "variants": [
+    {"repo": "stepfun-ai/Step-5-Preview", "format": "safetensors FP8", "size_gb": 650.32, "official": true},
+    {"repo": "stepfun-ai/Step-5-Preview-BF16", "format": "safetensors BF16", "size_gb": 1214.9, "official": true},
+    {"repo": "smalinin/Step-5-Preview-GGUF", "format": "GGUF IQ2_XXS/Q2_K mix (Q2_a)", "size_gb": 182.47, "official": false, "notes": "IQ3_M 271.61 GB, mmproj BF16 4.4 GB, imatrices with and without MTP; file sizes only"},
+    {"repo": "kefallrain/Step-5-Preview-EXL3-2.4bpw-2xSpark", "format": "EXL3 2.4 bpw", "official": false, "notes": "size not measured"}
+  ],
+  "hardware_fit": {
+    "pc-12gb": {"fits": "no", "basis": "estimate", "notes": "smallest GGUF 182.5 GB against about 60 GB"},
+    "pc-16gb": {"fits": "no", "basis": "estimate"},
+    "pc-24gb": {"fits": "no", "basis": "estimate"},
+    "pc-32gb": {"fits": "no", "basis": "estimate", "notes": "182.5 GB against about 158 GB (29.6 VRAM + 128 RAM); about 150 GB would need a quant below the smallest published (roughly 2 bits per weight of 600B is 150 GB before KV)"},
+    "mac-16-24gb": {"fits": "no", "basis": "estimate"},
+    "mac-32gb": {"fits": "no", "basis": "estimate"},
+    "mac-64gb+": {"fits": "no", "basis": "estimate"}
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "unknown",
+    "other": ["vLLM (vllm-openai:step-5-preview image)", "SGLang", "Transformers"],
+    "notes": "Card documents FP8 on 4 B300 or 8 H200 GPUs and BF16 on 8 B300 or 16 H200 GPUs; a community GGUF exists but its llama.cpp compatibility was not checked."
+  },
+  "benchmarks": [],
+  "soft": {
+    "strengths": ["Vendor positions it as frontier-level for software engineering and professional knowledge work; recommended sampling temperature 1.0, top_p 0.95, top_k 0 (card)"],
+    "weaknesses": ["The card's benchmark figure is an image; no numeric score was captured and no independent result found", "600B total: no GGUF below 182 GB"],
+    "behavior": "Results on the card use the High reasoning setting; GDPval-AA v2.1 numbers are from Artificial Analysis as of 2026-09-20; DeepSWE v1.1 with the SWE-agent harness.",
+    "maturity": "StepFun release line (Step-3.7-Flash is the smaller sibling); labelled Preview."
+  },
+  "tona_fit": {
+    "verdict": "reject",
+    "reason": "600B total / 27B active with a smallest quant of 182 GB: out of reach of every class including 32 GB VRAM + 128 GB RAM. It is a Preview with only image benchmarks. For StepFun users the practical model remains step-3.7-flash.",
+    "blockers": ["size"]
+  },
+  "sources": [
+    {"url": "https://huggingface.co/stepfun-ai/Step-5-Preview", "kind": "primary", "checked": "2026-11-19", "note": "README, config.json, file sizes via the HF API"},
+    {"url": "https://huggingface.co/stepfun-ai/Step-5-Preview/blob/main/LICENSE.txt", "kind": "primary", "checked": "2026-11-19", "note": "StepFun Model License 1.0 read in full"},
+    {"url": "https://huggingface.co/stepfun-ai/Step-5-Preview-BF16", "kind": "primary", "checked": "2026-11-19", "note": "file size via the HF API"},
+    {"url": "https://huggingface.co/smalinin/Step-5-Preview-GGUF", "kind": "primary", "checked": "2026-11-19", "note": "file sizes via the HF tree API"}
+  ],
+  "open_questions": [
+    "Numeric benchmark table (the card figure is an image; see the model page https://www.stepfun.com/step-5-preview)",
+    "Whether a final non-Preview release with smaller siblings follows",
+    "Whether llama.cpp loads the step5 architecture",
+    "Whether video input is supported (the card introduction says text, images and video, the specification table lists text and image only)"
+  ],
+  "last_checked": "2026-11-19"
+}

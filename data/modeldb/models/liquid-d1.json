@@ -1,0 +1,200 @@
+{
+  "id": "liquid-d1",
+  "name": "LiquidAI d1 (d1-2B, d1-3B, d1-omni-600M)",
+  "vendor": "Liquid AI",
+  "release_date": "2026-10-05",
+  "lineage": {
+    "family": "LFM3 / open d1",
+    "base_model": "d1-2B: LiquidAI/LFM3-VL-2B; d1-3B: LiquidAI/LFM2.5-VL-3B; d1-omni-600M: LiquidAI/LFM2.5-Encoder-350M",
+    "how_derived": "decision models returning calibrated answers in one forward pass without generating tokens"
+  },
+  "purpose": "Any pipeline step that needs a decision: routing and triage, moderation, intent and topic classification, extraction from documents and forms, judging and reranking, visual inspection; not a chat model (card). d1-2B also extracts spans, locates objects and estimates quantities with an interval.",
+  "tasks": [
+    "other",
+    "vision"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image",
+      "video"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "ar",
+      "zh",
+      "en",
+      "fr",
+      "de",
+      "hi",
+      "id",
+      "it",
+      "ja",
+      "ko",
+      "pl",
+      "pt",
+      "ru",
+      "es",
+      "th",
+      "vi"
+    ]
+  },
+  "license": {
+    "name": "LFM Open License v1.0",
+    "verified": false,
+    "commercial_use": "limited",
+    "redistribution": "yes",
+    "notes": "LICENSE read: Apache-2.0-style grant with a Commercial Use limitation (Threshold = annual revenue of 10M USD or more; non-profits qualified separately); only the definitions and the grant sections were read, not the full Commercial Use section 5, so verified stays false. Verdict policy (README, 2026-11-19): this licence term does not lower tona_fit; kept here for an installer label."
+  },
+  "architecture": {
+    "kind": "hybrid short-convolution plus attention LFM3 backbone as decision readout",
+    "params_total_b": 3.0,
+    "why_this_design": "not stated beyond edge-sized decision latency; the open-d1 blog post was not read"
+  },
+  "variants": [
+    {
+      "repo": "LiquidAI/d1-2B",
+      "format": "safetensors BF16",
+      "size_gb": 3.84,
+      "official": true,
+      "notes": "newest, leads the open d1 models on average per the card"
+    },
+    {
+      "repo": "LiquidAI/d1-3B",
+      "format": "safetensors BF16",
+      "size_gb": 6.25,
+      "official": true
+    },
+    {
+      "repo": "LiquidAI/d1-omni-600M",
+      "format": "safetensors BF16",
+      "size_gb": 2.35,
+      "official": true
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "variant": "d1-3B BF16 (6.25 GB); d1-2B 3.84 GB and d1-omni-600M 2.35 GB",
+      "basis": "estimate",
+      "notes": "6.25 GB against a VRAM budget of 9.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "d1-3B BF16 (6.25 GB); d1-2B 3.84 GB and d1-omni-600M 2.35 GB",
+      "basis": "estimate",
+      "notes": "6.25 GB against a VRAM budget of 13.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "d1-3B BF16 (6.25 GB); d1-2B 3.84 GB and d1-omni-600M 2.35 GB",
+      "basis": "estimate",
+      "notes": "6.25 GB against a VRAM budget of 21.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "d1-3B BF16 (6.25 GB); d1-2B 3.84 GB and d1-omni-600M 2.35 GB",
+      "basis": "estimate",
+      "notes": "6.25 GB against a VRAM budget of 29.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "variant": "d1-3B BF16 (6.25 GB); d1-2B 3.84 GB and d1-omni-600M 2.35 GB",
+      "basis": "estimate",
+      "notes": "6.25 GB against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "d1-3B BF16 (6.25 GB); d1-2B 3.84 GB and d1-omni-600M 2.35 GB",
+      "basis": "estimate",
+      "notes": "6.25 GB against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "d1-3B BF16 (6.25 GB); d1-2B 3.84 GB and d1-omni-600M 2.35 GB",
+      "basis": "estimate",
+      "notes": "6.25 GB against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "transformers >= 5.19 with trust_remote_code (CUDA, MPS or CPU)"
+    ]
+  },
+  "benchmarks": [
+    {
+      "name": "Decision Index 0.2.1",
+      "score": 48.57,
+      "kind": "vendor",
+      "variant": "d1-3B, official scorer, not a leaderboard submission; Winnow-12B 50.02, Decider 35B-A3B 47.11, JPT-9B 46.89",
+      "source": "https://huggingface.co/LiquidAI/d1-omni-600M"
+    },
+    {
+      "name": "latency per decision",
+      "score": "5.7 (NVIDIA H100) / 3.8 (AMD MI325X)",
+      "unit": "ms",
+      "kind": "vendor",
+      "variant": "d1-2B",
+      "source": "https://huggingface.co/LiquidAI/d1-2B"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "A decision model reads a state (text, JSON, images) and a schema of typed questions and returns calibrated probabilities for every option in one forward pass; it does not generate text.",
+      "milliseconds per decision, 16 languages including German",
+      "d1-3B tops the Tools column (74.5) of the Decision Index 0.2.1 table"
+    ],
+    "weaknesses": [
+      "knowledge-heavy questions favor larger models; answers get less reliable past about 64K tokens of state; free-quantity estimates are less reliable than counts and scores"
+    ],
+    "best_for": [
+      "on-device routing and classification, edge hardware"
+    ],
+    "maturity": "Liquid AI line with edge focus; d1-3B 20k downloads, 511 likes; d1-2B 16k, 329 likes"
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Small (2 to 6 GB), German listed, millisecond decisions; fits every class as a guardrail or router. A pipeline step, not a worker.",
+    "blockers": [
+      "custom decision readout code path"
+    ]
+  },
+  "open_questions": [
+    "d1-2B Decision Index number (card says best open d1 but no number was read)",
+    "open-d1 blog design rationale",
+    "Commercial Use section 5 details"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/LiquidAI/d1-2B",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README read"
+    },
+    {
+      "url": "https://huggingface.co/LiquidAI/d1-3B",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README header read"
+    },
+    {
+      "url": "https://huggingface.co/LiquidAI/d1-omni-600M",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README with the Decision Index 0.2.1 table"
+    },
+    {
+      "url": "https://huggingface.co/LiquidAI/d1-2B/raw/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "licence read"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

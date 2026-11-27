@@ -1,0 +1,207 @@
+{
+  "id": "arex-2",
+  "name": "AREX-2",
+  "vendor": "BAAI",
+  "release_date": "2026-09-29",
+  "lineage": {
+    "family": "Qwen3.8",
+    "base_model": "Qwen/Qwen3.8-27B",
+    "how_derived": "trained on machine-learning and algorithmic-programming tasks with verifiable feedback plus the earlier AREX deep-research data (card)"
+  },
+  "purpose": "Long-horizon agent that improves a solution over several test-time rounds (propose, measure, reflect, revise); for research on iterative problem solving, machine-learning engineering, algorithmic coding and tool-augmented deep research (card).",
+  "tasks": [
+    "coding",
+    "research",
+    "general"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "LICENSE file read: Apache License 2.0. The card adds: follow the terms and notices of the Qwen base model and any downstream data or tools."
+  },
+  "architecture": {
+    "kind": "dense hybrid linear-attention vision-language model, Qwen3.8-27B layout (config qwen3_5, hidden 5120)",
+    "gguf_arch": "qwen35",
+    "params_total_b": 27,
+    "params_active_b": 27,
+    "context_native": 262144,
+    "recurrent": "Gated DeltaNet (Qwen3.8 base)",
+    "why_this_design": "Unchanged Qwen3.8-27B architecture; the contribution is the long-horizon reflective training (arXiv 2609.38288)."
+  },
+  "variants": [
+    {
+      "repo": "BAAI/AREX-2",
+      "format": "safetensors BF16",
+      "size_gb": 54.73,
+      "official": true
+    },
+    {
+      "repo": "bartowski/BAAI_AREX-2-GGUF",
+      "format": "GGUF Q4_K_M",
+      "size_gb": 17.2,
+      "official": false,
+      "notes": "IQ4_XS 15.24, Q6_K 23.62, Q8_0 28.67 GB, mmproj 0.93 GB; 12.6k downloads"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "marginal",
+      "variant": "bartowski GGUF Q4_K_M plus mmproj (17.2 + 0.93 GB)",
+      "basis": "estimate",
+      "notes": "18.1 GB file against 9.6 GB VRAM plus 50 GB RAM budget; part streams from RAM (dense: decode is bandwidth bound)"
+    },
+    "pc-16gb": {
+      "fits": "marginal",
+      "variant": "bartowski GGUF Q4_K_M plus mmproj (17.2 + 0.93 GB)",
+      "basis": "estimate",
+      "notes": "18.1 GB file against 13.6 GB VRAM plus 50 GB RAM budget; part streams from RAM (dense: decode is bandwidth bound)"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "bartowski GGUF Q4_K_M plus mmproj (17.2 + 0.93 GB)",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (21.6 GB)"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "bartowski GGUF Q4_K_M plus mmproj (17.2 + 0.93 GB)",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (29.6 GB)"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "bartowski GGUF Q4_K_M plus mmproj (17.2 + 0.93 GB)",
+      "basis": "estimate",
+      "notes": "18.1 GB file against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "bartowski GGUF Q4_K_M plus mmproj (17.2 + 0.93 GB)",
+      "basis": "estimate",
+      "notes": "18.1 GB file against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "bartowski GGUF Q4_K_M plus mmproj (17.2 + 0.93 GB)",
+      "basis": "estimate",
+      "notes": "18.1 GB file against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "Transformers",
+      "MLX community"
+    ],
+    "notes": "Qwen3.8 dense layout, same as the Qwen3.8-27B record."
+  },
+  "benchmarks": [
+    {
+      "name": "Frontier-CS (188-task Agent Track)",
+      "score": 70.7,
+      "kind": "vendor",
+      "variant": "BF16; Qwen3.6-35B-A3B 23.4, DeepSeek-V4-Pro 44.7",
+      "source": "https://huggingface.co/BAAI/AREX-2"
+    },
+    {
+      "name": "MLE-Lite Any Medal, mean of 3 seeds",
+      "score": 81.8,
+      "kind": "vendor",
+      "variant": "Qwen3.6-35B-A3B 39.4, Kimi-K2.6 66.7",
+      "source": "https://huggingface.co/BAAI/AREX-2"
+    },
+    {
+      "name": "BrowseComp",
+      "score": 84.0,
+      "kind": "vendor",
+      "source": "https://huggingface.co/BAAI/AREX-2"
+    },
+    {
+      "name": "HLE (text-only unless starred)",
+      "score": 52.6,
+      "kind": "vendor",
+      "source": "https://huggingface.co/BAAI/AREX-2"
+    },
+    {
+      "name": "GAIA",
+      "score": 92.2,
+      "kind": "vendor",
+      "source": "https://huggingface.co/BAAI/AREX-2"
+    },
+    {
+      "name": "DeepSearchQA",
+      "score": 93.8,
+      "kind": "vendor",
+      "source": "https://huggingface.co/BAAI/AREX-2"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "largest gain over a same-size baseline in the card: algorithmic coding and ML engineering via test-time self-improvement",
+      "coding and ML-task training also lifted deep-research scores without new search trajectories (card claim)"
+    ],
+    "weaknesses": [
+      "vendor-only numbers; comparison tables mix closed and open models and the Frontier-CS protocol is the paper's",
+      "no SWE-bench or Terminal-Bench numbers in the card, so not comparable to our other coding records"
+    ],
+    "maturity": "BAAI AREX line (Base, Turbo, 2) with day-one community GGUFs"
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Same footprint as Qwen3.8-27B (Q4_K_M 17.2 GB) with Apache-2.0 text verified, but the benchmarks are not the ones that decide coding-agent fit (no SWE-bench, no Terminal-Bench); the reflective multi-round skill is useful for long autonomous tasks. Compare against Qwen3.8-27B with our own harness before offering.",
+    "blockers": [
+      "no dense Qwen3.8 module in Tona",
+      "no SWE-bench/Terminal-Bench evidence"
+    ]
+  },
+  "open_questions": [
+    "SWE-bench and Terminal-Bench results",
+    "independent evaluation",
+    "user reports (none found)",
+    "thinking length per task"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/BAAI/AREX-2",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README, config.json and LICENSE read"
+    },
+    {
+      "url": "https://huggingface.co/BAAI/AREX-2/raw/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "Apache-2.0 text"
+    },
+    {
+      "url": "https://huggingface.co/api/models/bartowski/BAAI_AREX-2-GGUF?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "GGUF sizes"
+    },
+    {
+      "url": "https://arxiv.org/abs/2609.38288",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "linked from card, not opened"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

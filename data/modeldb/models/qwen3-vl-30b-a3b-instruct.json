@@ -1,0 +1,267 @@
+{
+  "id": "qwen3-vl-30b-a3b-instruct",
+  "name": "Qwen3-VL-30B-A3B-Instruct",
+  "vendor": "Alibaba Qwen",
+  "release_date": "2025-10",
+  "lineage": {
+    "family": "Qwen3-VL"
+  },
+  "purpose": "General vision-language model: stronger text, visual perception and reasoning, long context and video, spatial perception and agent interaction; OCR in 32 languages. A Thinking edition exists separately.",
+  "tasks": [
+    "vision",
+    "documents",
+    "general"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image",
+      "video"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "many"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "HF repo has no LICENSE file; card tag apache-2.0 and the QwenLM/Qwen3-VL GitHub LICENSE read is the unmodified Apache-2.0 text"
+  },
+  "architecture": {
+    "kind": "MoE vision-language (qwen3_vl_moe)",
+    "gguf_arch": "qwen3vlmoe",
+    "params_total_b": 31,
+    "params_active_b": 3,
+    "context_native": 262144,
+    "context_max": 1000000,
+    "why_this_design": "Interleaved-MRoPE for time/width/height, DeepStack fusing multi-level ViT features for finer detail, text-timestamp alignment for video (card)."
+  },
+  "variants": [
+    {
+      "repo": "Qwen/Qwen3-VL-30B-A3B-Instruct",
+      "format": "safetensors BF16",
+      "official": true
+    },
+    {
+      "repo": "Qwen/Qwen3-VL-30B-A3B-Thinking",
+      "format": "BF16 reasoning edition",
+      "official": true
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "notes": "31B at Q4 about 18 GB needs expert offload to RAM"
+    },
+    "pc-16gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "notes": "experts partly in RAM; only 3B active"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "basis": "estimate"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "vLLM",
+      "SGLang",
+      "transformers"
+    ],
+    "notes": "Qwen3-VL is not named on the llama.cpp multimodal page, but the card links GGUF quantizations and research/52 lists it as supported"
+  },
+  "benchmarks": [
+    {
+      "name": "DocVQA test (flagship 235B-A22B Instruct, not this model)",
+      "score": 97.1,
+      "kind": "vendor",
+      "variant": "Qwen3-VL-235B-A22B",
+      "source": "https://arxiv.org/pdf/2511.21631"
+    },
+    {
+      "name": "OCRBench (flagship 235B-A22B Instruct, not this model)",
+      "score": 920,
+      "kind": "vendor",
+      "variant": "Qwen3-VL-235B-A22B",
+      "source": "https://arxiv.org/pdf/2511.21631"
+    },
+    {
+      "name": "DocVQA test",
+      "score": 95.0,
+      "kind": "vendor",
+      "source": "https://arxiv.org/pdf/2511.21631",
+      "variant": "Qwen3-VL-30B-A3B-Instruct",
+      "harness": "technical report table (Qwen), arXiv 2511.21631"
+    },
+    {
+      "name": "InfoVQA test",
+      "score": 81.8,
+      "kind": "vendor",
+      "source": "https://arxiv.org/pdf/2511.21631",
+      "variant": "Qwen3-VL-30B-A3B-Instruct",
+      "harness": "technical report table (Qwen), arXiv 2511.21631"
+    },
+    {
+      "name": "OCRBench",
+      "score": 903,
+      "kind": "vendor",
+      "source": "https://arxiv.org/pdf/2511.21631",
+      "variant": "Qwen3-VL-30B-A3B-Instruct",
+      "harness": "technical report table (Qwen), arXiv 2511.21631"
+    },
+    {
+      "name": "OCRBench v2 EN",
+      "score": 63.2,
+      "kind": "vendor",
+      "source": "https://arxiv.org/pdf/2511.21631",
+      "variant": "Qwen3-VL-30B-A3B-Instruct",
+      "harness": "technical report table (Qwen), arXiv 2511.21631"
+    },
+    {
+      "name": "OCRBench v2 ZH",
+      "score": 57.8,
+      "kind": "vendor",
+      "source": "https://arxiv.org/pdf/2511.21631",
+      "variant": "Qwen3-VL-30B-A3B-Instruct",
+      "harness": "technical report table (Qwen), arXiv 2511.21631"
+    },
+    {
+      "name": "CC-OCR",
+      "score": 80.7,
+      "kind": "vendor",
+      "source": "https://arxiv.org/pdf/2511.21631",
+      "variant": "Qwen3-VL-30B-A3B-Instruct",
+      "harness": "technical report table (Qwen), arXiv 2511.21631"
+    },
+    {
+      "name": "OmniDocBench EN (edit distance, lower is better)",
+      "score": 0.183,
+      "kind": "vendor",
+      "source": "https://arxiv.org/pdf/2511.21631",
+      "variant": "Qwen3-VL-30B-A3B-Instruct",
+      "harness": "technical report table (Qwen), arXiv 2511.21631"
+    },
+    {
+      "name": "OmniDocBench ZH (edit distance, lower is better)",
+      "score": 0.253,
+      "kind": "vendor",
+      "source": "https://arxiv.org/pdf/2511.21631",
+      "variant": "Qwen3-VL-30B-A3B-Instruct",
+      "harness": "technical report table (Qwen), arXiv 2511.21631"
+    },
+    {
+      "name": "CharXiv DQ",
+      "score": 85.5,
+      "kind": "vendor",
+      "source": "https://arxiv.org/pdf/2511.21631",
+      "variant": "Qwen3-VL-30B-A3B-Instruct",
+      "harness": "technical report table (Qwen), arXiv 2511.21631"
+    },
+    {
+      "name": "CharXiv RQ",
+      "score": 48.9,
+      "kind": "vendor",
+      "source": "https://arxiv.org/pdf/2511.21631",
+      "variant": "Qwen3-VL-30B-A3B-Instruct",
+      "harness": "technical report table (Qwen), arXiv 2511.21631"
+    },
+    {
+      "name": "MMLongBench-Doc",
+      "score": 47.1,
+      "kind": "vendor",
+      "source": "https://arxiv.org/pdf/2511.21631",
+      "variant": "Qwen3-VL-30B-A3B-Instruct",
+      "harness": "technical report table (Qwen), arXiv 2511.21631"
+    },
+    {
+      "name": "MMMU",
+      "score": 74.2,
+      "kind": "vendor",
+      "source": "https://arxiv.org/pdf/2511.21631",
+      "variant": "Qwen3-VL-30B-A3B-Instruct",
+      "harness": "technical report table (Qwen), arXiv 2511.21631"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "only 3B active parameters",
+      "32 OCR languages, robust to blur, tilt and low light",
+      "can answer questions about a page, not just transcribe"
+    ],
+    "weaknesses": [
+      "scores for this size not read (card tables are images)",
+      "bigger than the dedicated parsers",
+      "MDPBench (independent): the 8B Instruct scores German 73.7, below the dedicated 1B parsers (GLM-OCR 82.7, PaddleOCR-VL-1.5 84.8) and drops on photographed pages (65.0)"
+    ],
+    "best_for": [
+      "questions about charts, screenshots and pages; mixed-language documents"
+    ],
+    "maturity": "Qwen is the largest open VL family with frequent updates; Qwen3.5 (inbox) has a vision encoder too"
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "general reader for questions about documents and images (DocVQA 95.0, OCRBench 903 vendor), Apache-2.0 verified; 31B total needs 24 GB or expert offload on 16 GB; no third-party German score for this size"
+  },
+  "open_questions": [
+    "German OCR accuracy",
+    "German accuracy on our own scan/photo pages (third-party German score exists only for the 8B)"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/Qwen/Qwen3-VL-30B-A3B-Instruct",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://arxiv.org/pdf/2511.21631",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "flagship numbers via search summary, not opened"
+    },
+    {
+      "url": "research/52-purpose-models.md",
+      "kind": "own",
+      "checked": "2026-11-19",
+      "note": "size and engine notes"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/QwenLM/Qwen3-VL/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/datasets/Delores-Lin/MDPBench",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "MDPBench README table read directly; an earlier summarizer pass mislabeled the Latin-average column as DE, the DE values here come from the dataset README"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

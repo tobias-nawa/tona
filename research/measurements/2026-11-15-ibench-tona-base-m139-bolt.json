@@ -1,0 +1,1093 @@
+{
+ "tool": "ibench",
+ "suite": {
+  "name": "base",
+  "description": "Baseline measurement: short prompt, long decode, needle in 10K/30K/60K context, warm prefix at 30K. Context sizes are in characters (Qwen3.8 tokenizer: ~4.6 characters per token, counted with llama-tokenize); the real token counts are in the report.",
+  "file": "bench/suites/base.toml"
+ },
+ "env": {
+  "time": "2026-11-15T01:42:46+01:00",
+  "kernel": "7.2.15-200.fc44.x86_64",
+  "os": "Fedora Linux 44 (Workstation Edition)",
+  "python": "3.14.10",
+  "cpu": "AMD Ryzen 5 9600X 6-Core Processor",
+  "cpu_governor": "performance",
+  "cpu_epp": "performance",
+  "mem_total_gib": 60.5,
+  "mem_avail_gib": 56.9,
+  "swap_used_mib": 1081,
+  "gpu": {
+   "sysfs": "/sys/devices/pci0000:00/0000:00:01.1/0000:01:00.0/0000:02:00.0/0000:03:00.0",
+   "vram_total_mib": 16304,
+   "vram_used_mib": 16089,
+   "vbios_version": "113-R906XTGO-F2",
+   "current_link_speed": "32.0 GT/s PCIe",
+   "current_link_width": "16",
+   "power_dpm_force_performance_level": "auto",
+   "pci_id": "1002:7590"
+  },
+  "packages": {
+   "rocm-runtime": "7.1.1-6.fc44",
+   "rocm-hip": "7.1.1-4.fc44",
+   "hipblaslt": "7.1.1-7.fc44",
+   "rocblas": "7.1.1-7.fc44",
+   "kernel": "7.2.15-200.fc44"
+  },
+  "git": {
+   "commit": "4bd5b9c",
+   "dirty": true
+  },
+  "target": {
+   "name": "tona",
+   "url": "http://127.0.0.1:8091",
+   "api": "openai",
+   "model": "default",
+   "extra": {}
+  },
+  "server": {
+   "/v1/models": {
+    "models": [
+     {
+      "name": "<worktree>/work/models/nemotron-bolt-74b-a9b-24gb/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB.gguf",
+      "model": "<worktree>/work/models/nemotron-bolt-74b-a9b-24gb/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB.gguf",
+      "modified_at": "",
+      "size": "",
+      "digest": "",
+      "type": "model",
+      "description": "",
+      "tags": [
+       ""
+      ],
+      "capabilities": [
+       "completion"
+      ],
+      "parameters": "",
+      "details": {
+       "parent_model": "",
+       "format": "gguf",
+       "family": "",
+       "families": [
+        ""
+       ],
+       "parameter_size": "",
+       "quantization_level": ""
+      }
+     }
+    ],
+    "object": "list",
+    "data": [
+     {
+      "id": "<worktree>/work/models/nemotron-bolt-74b-a9b-24gb/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB.gguf",
+      "aliases": [
+       "<worktree>/work/models/nemotron-bolt-74b-a9b-24gb/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB.gguf"
+      ],
+      "tags": [],
+      "object": "model",
+      "architecture": {
+       "input_modalities": [
+        "text"
+       ],
+       "output_modalities": [
+        "text"
+       ]
+      },
+      "created": 1794703366,
+      "owned_by": "llamacpp",
+      "meta": {
+       "vocab_type": 2,
+       "n_vocab": 131072,
+       "n_ctx": 65536,
+       "n_ctx_train": 262144,
+       "n_embd": 4096,
+       "n_params": 74042720848,
+       "size": 22010399040,
+       "ftype": "IQ2_XXS - 2.0625 bpw"
+      }
+     }
+    ]
+   },
+   "/props": {
+    "default_generation_settings": {
+     "params": {
+      "seed": 4294967295,
+      "temperature": 1.0,
+      "dynatemp_range": 0.0,
+      "dynatemp_exponent": 1.0,
+      "top_k": 40,
+      "top_p": 0.949999988079071,
+      "min_p": 0.05000000074505806,
+      "top_n_sigma": -1.0,
+      "xtc_probability": 0.0,
+      "xtc_threshold": 0.10000000149011612,
+      "typical_p": 1.0,
+      "repeat_last_n": 64,
+      "repeat_penalty": 1.0,
+      "presence_penalty": 0.0,
+      "frequency_penalty": 0.0,
+      "dry_multiplier": 0.0,
+      "dry_base": 1.75,
+      "dry_allowed_length": 2,
+      "dry_penalty_last_n": 64,
+      "mirostat": 0,
+      "mirostat_tau": 5.0,
+      "mirostat_eta": 0.10000000149011612,
+      "adaptive_target": -1.0,
+      "adaptive_decay": 0.8999999761581421,
+      "max_tokens": -1,
+      "n_predict": -1,
+      "n_keep": 0,
+      "n_discard": 0,
+      "ignore_eos": false,
+      "stream": false,
+      "n_probs": 0,
+      "min_keep": 0,
+      "chat_format": "Content-only",
+      "reasoning_format": "none",
+      "reasoning_in_content": false,
+      "generation_prompt": "",
+      "samplers": [
+       "penalties",
+       "dry",
+       "top_n_sigma",
+       "top_k",
+       "typ_p",
+       "top_p",
+       "min_p",
+       "xtc",
+       "temperature"
+      ],
+      "speculative.types": "none",
+      "timings_per_token": false,
+      "post_sampling_probs": false,
+      "backend_sampling": false,
+      "lora": []
+     },
+     "n_ctx": 65536
+    },
+    "total_slots": 1,
+    "model_alias": "<worktree>/work/models/nemotron-bolt-74b-a9b-24gb/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB.gguf",
+    "model_ftype": "IQ2_XXS - 2.0625 bpw",
+    "model_path": "<worktree>/work/models/nemotron-bolt-74b-a9b-24gb/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB.gguf",
+    "modalities": {
+     "vision": false,
+     "video": false,
+     "audio": false
+    },
+    "media_marker": "<__media_OxiVk1A8fYPyF5Fycpa8TMmJQV3c9GCs__>",
+    "endpoint_slots": true,
+    "endpoint_props": false,
+    "endpoint_metrics": true,
+    "ui": true,
+    "ui_settings": {},
+    "chat_template": "{% macro render_extra_keys(json_dict, handled_keys) %}\n    {%- if json_dict is mapping %}\n        {%- for json_key in json_dict if json_key not in handled_keys %}\n            {%- if json_dict[json_key] is mapping or (json_dict[json_key] is sequence and json_dict[json_key] is not string) %}\n                {{- '\\n<' ~ json_key ~ '>' ~ (json_dict[json_key] | tojson | safe) ~ '</' ~ json_key ~ '>' }}\n            {%- else %}\n                {{-'\\n<' ~ json_key ~ '>' ~ (json_dict[json_key] | string) ~ '</' ~ json_key ~ '>' }}\n            {%- endif %}\n        {%- endfor %}\n    {%- endif %}\n{% endmacro %}\n{%- macro render_content(content) -%}\n    {%- if content is none -%}\n        {{- '' -}}\n    {%- elif content is string -%}\n        {{- content | string -}}\n    {%- else -%}\n        {%- set text_ns = namespace(val='') -%}\n        {%- set counters = namespace(images=0, videos=0) -%}\n        {%- for part in content -%}\n            {%- if part['type'] == 'image' or part['type'] == 'image_url' or part['type'] == 'input_image' -%}\n                {%- set counters.images = counters.images + 1 -%}\n            {%- elif part['type'] == 'video' or part['type'] == 'video_url' or part['type'] == 'input_video' -%}\n                {%- set counters.videos = counters.videos + 1 -%}\n            {%- elif part['type'] == 'text' or part['type'] == 'input_text' -%}\n                {%- set text_ns.val = text_ns.val + (part['text'] | default('', true)) -%}\n            {%- endif -%}\n        {%- endfor -%}\n        {%- if '<image>' in text_ns.val -%}\n            {%- set counters.images = 0 -%}\n        {%- endif -%}\n        {%- if '<video>' in text_ns.val -%}\n            {%- set counters.videos = 0 -%}\n        {%- endif -%}\n        {%- set content_ns = namespace(val='') -%}\n        {%- set render_ns = namespace(image_index=0) -%}\n        {%- for part in content -%}\n            {%- if part['type'] == 'image' or part['type'] == 'image_url' or part['type'] == 'input_image' -%}\n                {%- set render_ns.image_index = render_ns.image_index + 1 -%}\n                {%- if counters.images > 0 -%}\n                    {%- if counters.images > 1 -%}\n                        {%- set content_ns.val = content_ns.val\n                            + '<image ' + render_ns.image_index|string + '><image>' -%}\n                    {%- else -%}\n                        {%- set content_ns.val = content_ns.val + '<image>' -%}\n                    {%- endif -%}\n                {%- endif -%}\n            {%- elif part['type'] == 'video' or part['type'] == 'video_url' or part['type'] == 'input_video' -%}\n                {%- if counters.videos > 0 -%}\n                    {%- set content_ns.val = content_ns.val + '<video>' -%}\n                {%- endif -%}\n            {%- elif part['type'] == 'text' or part['type'] == 'input_text' -%}\n                {%- set content_ns.val = content_ns.val + (part['text'] | default('', true)) -%}\n            {%- endif -%}\n        {%- endfor -%}\n        {{- content_ns.val -}}\n    {%- endif -%}\n{%- endmacro %}\n{%- set enable_thinking = enable_thinking if enable_thinking is defined else True %}\n{%- set medium_effort = medium_effort if medium_effort is defined else False %}\n{%- set truncate_history_thinking = truncate_history_thinking if truncate_history_thinking is defined else True %}\n{%- set ns = namespace(last_user_idx = -1) %}\n{%- set loop_messages = messages %}\n{%- for m in loop_messages %}\n  {%- if m[\"role\"] == \"user\" %}\n    {%- set ns.last_user_idx = loop.index0 %}\n  {%- endif %}\n{%- endfor %}\n{%- if messages[0][\"role\"] == \"system\" %}\n    {%- set system_message = messages[0][\"content\"] %}\n    {%- set loop_messages = messages[1:] %}\n{%- else %}\n    {%- set system_message = \"\" %}\n    {%- set loop_messages = messages %}\n{%- endif %}\n{%- if not tools is defined %}\n    {%- set tools = [] %}\n{%- endif %}\n{%- set ns = namespace(last_user_idx = -1) %}\n{%- for m in loop_messages %}\n  {%- if m[\"role\"] == \"user\" %}\n    {%- set ns.last_user_idx = loop.index0 %}\n  {%- endif %}\n{%- endfor %}\n{%- if system_message is defined %}\n    {{- \"<|im_start|>system\\n\" ~ render_content(system_message) }}\n{%- else %}\n    {%- if tools is iterable and tools | length > 0 %}\n        {{- \"<|im_start|>system\\n\" }}\n    {%- endif %}\n{%- endif %}\n{%- if tools is iterable and tools | length > 0 %}\n    {%- if system_message is defined and system_message | length > 0 %}\n        {{- \"\\n\\n\" }}\n    {%- endif %}\n    {{- \"# Tools\\n\\nYou have access to the following functions:\\n\\n\" }}\n    {{- \"<tools>\" }}\n    {%- for tool in tools %}\n        {%- if tool.function is defined %}\n            {%- set tool = tool.function %}\n        {%- endif %}\n        {{- \"\\n<function>\\n<name>\" ~ tool.name ~ \"</name>\" }}\n        {%- if tool.description is defined %}\n            {{- '\\n<description>' ~ (tool.description | trim) ~ '</description>' }}\n        {%- endif %}\n        {{- '\\n<parameters>' }}\n        {%- if tool.parameters is defined and tool.parameters is mapping and tool.parameters.properties is defined and tool.parameters.properties is mapping %}\n            {%- for param_name, param_fields in tool.parameters.properties|items %}\n                {{- '\\n<parameter>' }}\n                {{- '\\n<name>' ~ param_name ~ '</name>' }}\n                {%- if param_fields.type is defined %}\n                    {{- '\\n<type>' ~ (param_fields.type | string) ~ '</type>' }}\n                {%- endif %}\n                {%- if param_fields.description is defined %}\n                    {{- '\\n<description>' ~ (param_fields.description | trim) ~ '</description>' }}\n                {%- endif %}\n                {%- if param_fields.enum is defined %}\n                    {{- '\\n<enum>' ~ (param_fields.enum | tojson | safe) ~ '</enum>' }}\n                {%- endif %}\n                {%- set handled_keys = ['name', 'type', 'description', 'enum'] %}\n                {{- render_extra_keys(param_fields, handled_keys) }}\n                {{- '\\n</parameter>' }}\n            {%- endfor %}\n        {%- endif %}\n        {% set handled_keys = ['type', 'properties', 'required'] %}\n        {{- render_extra_keys(tool.parameters, handled_keys) }}\n        {%- if tool.parameters is defined and tool.parameters.required is defined %}\n            {{- '\\n<required>' ~ (tool.parameters.required | tojson | safe) ~ '</required>' }}\n        {%- endif %}\n        {{- '\\n</parameters>' }}\n        {%- set handled_keys = ['type', 'name', 'description', 'parameters'] %}\n        {{- render_extra_keys(tool, handled_keys) }}\n        {{- '\\n</function>' }}\n    {%- endfor %}\n    {{- \"\\n</tools>\" }}\n    {{- '\\n\\nIf you choose to call a function ONLY reply in the following format with NO suffix:\\n\\n<tool_call>\\n<function=example_function_name>\\n<parameter=example_parameter_1>\\nvalue_1\\n</parameter>\\n<parameter=example_parameter_2>\\nThis is the value for the second parameter\\nthat can span\\nmultiple lines\\n</parameter>\\n</function>\\n</tool_call>\\n\\n<IMPORTANT>\\nReminder:\\n- Function calls MUST follow the specified format: an inner <function=...></function> block must be nested within <tool_call></tool_call> XML tags\\n- Required parameters MUST be specified\\n- You may provide optional reasoning for your function call in natural language BEFORE the function call, but NOT after\\n- If there is no function call available, answer the question like normal with your current knowledge and do not tell the user about function calls\\n</IMPORTANT>' }}\n{%- endif %}\n{%- if system_message is defined %}\n    {{- '<|im_end|>\\n' }}\n{%- else %}\n    {%- if tools is iterable and tools | length > 0 %}\n        {{- '<|im_end|>\\n' }}\n    {%- endif %}\n{%- endif %}\n{%- for message in loop_messages %}\n    {%- set content = render_content(message.content | default('', true)) %}\n    {%- if message.role == \"assistant\" %}\n        {%- if message.reasoning_content is defined and message.reasoning_content is string and message.reasoning_content | trim | length > 0 %}\n            {%- set content = \"<think>\\n\" ~ message.reasoning_content ~ \"</think>\" ~ content %}\n        {%- else %}\n            {%- if content is string -%}\n                {%- if '<think>' not in content and '</think>' not in content -%}\n                    {%- set content = \"<think></think>\" ~ content -%}\n                {%- endif -%}\n            {%- endif -%}\n        {%- endif %}\n        {%- if message.tool_calls is defined and message.tool_calls is iterable and message.tool_calls | length > 0 %}\n            {{- '<|im_start|>assistant\\n' }}\n                {%- set include_content = not (truncate_history_thinking and loop.index0 < ns.last_user_idx) %}\n                {%- if content is string and content | trim | length > 0 %}\n                    {%- if include_content %}\n                        {{- (content | trim) ~ '\\n' -}}\n                    {%- else %}\n                        {%- set c = (content | string) %}\n                        {%- if '</think>' in c %}\n                            {%- set c = c.split('</think>')[-1] %}\n                        {%- elif '<think>' in c %}\n                            {%- set c = c.split('<think>')[0] %}\n                        {%- endif %}\n                        {%- set c = \"<think></think>\" ~ c %}\n                        {%- if c | length > 0 %}\n                            {{- c ~ '\\n' -}}\n                        {%- endif %}\n                    {%- endif %}\n                {%- else %}\n                    {{- \"<think></think>\" -}}\n                {%- endif %}\n                {%- for tool_call in message.tool_calls %}\n                    {%- if tool_call.function is defined %}\n                        {%- set tool_call = tool_call.function %}\n                    {%- endif %}\n                    {{- '<tool_call>\\n<function=' ~ tool_call.name ~ '>\\n' -}}\n                        {%- if tool_call.arguments is defined %}\n                            {%- for args_name, args_value in tool_call.arguments|items %}\n                                {{- '<parameter=' ~ args_name ~ '>\\n' -}}\n                                    {%- set args_value = args_value | tojson | safe if args_value is mapping or (args_value is sequence and args_value is not string) else args_value | string %}\n                                {{- args_value ~ '\\n</parameter>\\n' -}}\n                            {%- endfor %}\n                        {%- endif %}\n                    {{- '</function>\\n</tool_call>\\n' -}}\n                {%- endfor %}\n                {{- '<|im_end|>\\n' }}\n        {%- else %}\n            {%- if not (truncate_history_thinking and loop.index0 < ns.last_user_idx) %}\n                {{- '<|im_start|>assistant\\n' ~ (content | default('', true) | string | trim) ~ '<|im_end|>\\n' }}\n            {%- else %}\n                {%- set c = (content | default('', true) | string) %}\n                {%- if '<think>' in c and '</think>' in c %}\n                    {%- set c = \"<think></think>\" ~ c.split('</think>')[-1] %}\n                {%- endif %}\n                {%- set c = c | trim %}\n                {%- if c | length > 0 %}\n                    {{- '<|im_start|>assistant\\n' ~ c ~ '<|im_end|>\\n' }}\n                {%- else %}\n                    {{- '<|im_start|>assistant\\n<|im_end|>\\n' }}\n                {%- endif %}\n            {%- endif %}\n        {%- endif %}\n    {%- elif message.role == \"user\" or message.role == \"system\" %}\n        {{- '<|im_start|>' + message.role + '\\n' }}\n        {#- Render structured image/video content in its original order. -#}\n        {%- if message.role == \"user\" and loop.index0 == ns.last_user_idx and medium_effort %}\n            {{- content + '\\n\\n{reasoning effort: efficient}' }}\n        {%- else %}\n            {{- content }}\n        {%- endif %}\n        {{- '<|im_end|>\\n' }}\n    {%- elif message.role == \"tool\" %}\n        {%- if loop.previtem and loop.previtem.role != \"tool\" %}\n            {{- '<|im_start|>user\\n' }}\n        {%- endif %}\n        {{- '<tool_response>\\n' }}\n        {{- content }}\n        {{- '\\n</tool_response>\\n' }}\n        {%- if not loop.last and loop.nextitem.role != \"tool\" %}\n            {{- '<|im_end|>\\n' }}\n        {%- elif loop.last %}\n            {{- '<|im_end|>\\n' }}\n        {%- endif %}\n    {%- else %}\n        {{- '<|im_start|>' ~ message.role ~ '\\n' ~ content ~ '<|im_end|>\\n' }}\n    {%- endif %}\n{%- endfor %}\n{%- if add_generation_prompt %}\n    {%- if enable_thinking %}\n        {{- '<|im_start|>assistant\\n<think>\\n' }}\n    {%- else %}\n        {{- '<|im_start|>assistant\\n<think></think>' }}\n    {%- endif %}\n{%- endif %}",
+    "chat_template_caps": {
+     "supports_object_arguments": true,
+     "supports_parallel_tool_calls": true,
+     "supports_preserve_reasoning": true,
+     "supports_reasoning_effort": false,
+     "supports_string_content": true,
+     "supports_system_role": true,
+     "supports_tool_calls": true,
+     "supports_tools": true,
+     "supports_typed_content": false
+    },
+    "bos_token": "<s>",
+    "eos_token": "<|im_end|>",
+    "build_info": "b11822-d9ee007",
+    "is_sleeping": false,
+    "cors_proxy_enabled": false
+   }
+  },
+  "warnings": [
+   "Swap in use before start: 1081 MiB",
+   "Repository has uncommitted changes"
+  ]
+ },
+ "cases": [
+  {
+   "case": {
+    "name": "short-code",
+    "description": "Short prompt, short answer. Matches the Fibonacci measurement of 22 Oct.",
+    "runs": 1,
+    "warmup": 1,
+    "cache": "cold",
+    "temperature": 0.0,
+    "max_tokens": 300,
+    "expect": "def\\s+fib\\s*\\(",
+    "min_decode_tokens": 32,
+    "pause_s": 0.0,
+    "extra": {},
+    "prompt": "Write a Python function `fib(n)` that returns the n-th Fibonacci number iteratively. Only the code, no explanation.",
+    "context_chars": 0,
+    "needle": null,
+    "needle_depth": 0.5,
+    "question": null,
+    "trace": null
+   },
+   "runs": [
+    {
+     "index": -1,
+     "warmup": true,
+     "nonce": "d55259b6ee5c",
+     "steps": [
+      {
+       "ok": true,
+       "error": null,
+       "finish": "stop",
+       "prompt_tokens": 63,
+       "cached_tokens": 0,
+       "completion_tokens": 279,
+       "tool_calls": 0,
+       "reasoning_tokens": null,
+       "reasoning_chars": 769,
+       "e2e_s": 10.927647605996754,
+       "prefill_tps_server": 30.17125780621432,
+       "decode_tps_server": 31.45514439834795,
+       "timings": {
+        "cache_n": 0,
+        "prompt_n": 63,
+        "prompt_ms": 2088.08,
+        "prompt_per_token_ms": 33.144126984126984,
+        "prompt_per_second": 30.17125780621432,
+        "predicted_n": 279,
+        "predicted_ms": 8837.982,
+        "predicted_per_token_ms": 31.791302158273382,
+        "predicted_per_second": 31.45514439834795
+       },
+       "ttft_s": 2.0897920959978364,
+       "prefill_tps_client": 30.14653951493614,
+       "decode_tps_client": 31.567414590606248,
+       "itl_p50_ms": 31.04403550059942,
+       "itl_p99_ms": 45.32598399964627,
+       "expect_ok": true,
+       "output_sha": "a9ce8f0a18a9",
+       "text_head": "```python\ndef fib(n):\n    if n < 0:\n        raise ValueError(\"n must be non-negative\")\n    a, b = 0, 1\n    for _ in range(n):\n        a, b = b, a + b\n    return a\n```",
+       "vram_peak_mib": 16144.23828125,
+       "gtt_peak_mib": 70.07421875,
+       "ram_avail_min_mib": 57563.41796875,
+       "swap_used_max_mib": 1081.3125,
+       "gpu_busy_mean": 88.78703703703704,
+       "power_mean_w": 103.02777777777777,
+       "temp_max_c": 66.0,
+       "sclk_mean_mhz": 2819.6481481481483,
+       "samples": 108
+      }
+     ]
+    },
+    {
+     "index": 0,
+     "warmup": false,
+     "nonce": "1ec2e2237b3b",
+     "steps": [
+      {
+       "ok": true,
+       "error": null,
+       "finish": "length",
+       "prompt_tokens": 64,
+       "cached_tokens": 0,
+       "completion_tokens": 300,
+       "tool_calls": 0,
+       "reasoning_tokens": null,
+       "reasoning_chars": 899,
+       "e2e_s": 9.916656213998067,
+       "prefill_tps_server": 81.81914644732318,
+       "decode_tps_server": 33.08472577796962,
+       "timings": {
+        "cache_n": 0,
+        "prompt_n": 64,
+        "prompt_ms": 782.213,
+        "prompt_per_token_ms": 12.222078125,
+        "prompt_per_second": 81.81914644732318,
+        "predicted_n": 300,
+        "predicted_ms": 9037.403,
+        "predicted_per_token_ms": 30.225428093645487,
+        "predicted_per_second": 33.08472577796962
+       },
+       "ttft_s": 0.8793499329985934,
+       "prefill_tps_client": 72.78103698917593,
+       "decode_tps_client": 33.08535076557956,
+       "itl_p50_ms": 29.99606500088703,
+       "itl_p99_ms": 36.21445846125422,
+       "expect_ok": false,
+       "output_sha": "c80270b68cc7",
+       "text_head": "",
+       "vram_peak_mib": 16155.19140625,
+       "gtt_peak_mib": 70.07421875,
+       "ram_avail_min_mib": 57091.85546875,
+       "swap_used_max_mib": 1081.28125,
+       "gpu_busy_mean": 97.03061224489795,
+       "power_mean_w": 123.03061224489795,
+       "temp_max_c": 67.0,
+       "sclk_mean_mhz": 3236.1326530612246,
+       "samples": 98
+      }
+     ]
+    }
+   ],
+   "summary": {
+    "steps": [
+     {
+      "n": 1,
+      "ok": 1,
+      "metrics": {
+       "ttft_s": {
+        "n": 1,
+        "median": 0.8793499329985934,
+        "mean": 0.8793499329985934,
+        "stdev": 0.0,
+        "min": 0.8793499329985934,
+        "max": 0.8793499329985934
+       },
+       "prefill_tps_client": {
+        "n": 1,
+        "median": 72.78103698917593,
+        "mean": 72.78103698917593,
+        "stdev": 0.0,
+        "min": 72.78103698917593,
+        "max": 72.78103698917593
+       },
+       "prefill_tps_server": {
+        "n": 1,
+        "median": 81.81914644732318,
+        "mean": 81.81914644732318,
+        "stdev": 0.0,
+        "min": 81.81914644732318,
+        "max": 81.81914644732318
+       },
+       "decode_tps_client": {
+        "n": 1,
+        "median": 33.08535076557956,
+        "mean": 33.08535076557956,
+        "stdev": 0.0,
+        "min": 33.08535076557956,
+        "max": 33.08535076557956
+       },
+       "decode_tps_server": {
+        "n": 1,
+        "median": 33.08472577796962,
+        "mean": 33.08472577796962,
+        "stdev": 0.0,
+        "min": 33.08472577796962,
+        "max": 33.08472577796962
+       },
+       "e2e_s": {
+        "n": 1,
+        "median": 9.916656213998067,
+        "mean": 9.916656213998067,
+        "stdev": 0.0,
+        "min": 9.916656213998067,
+        "max": 9.916656213998067
+       },
+       "prompt_tokens": {
+        "n": 1,
+        "median": 64.0,
+        "mean": 64.0,
+        "stdev": 0.0,
+        "min": 64.0,
+        "max": 64.0
+       },
+       "cached_tokens": {
+        "n": 1,
+        "median": 0.0,
+        "mean": 0.0,
+        "stdev": 0.0,
+        "min": 0.0,
+        "max": 0.0
+       },
+       "completion_tokens": {
+        "n": 1,
+        "median": 300.0,
+        "mean": 300.0,
+        "stdev": 0.0,
+        "min": 300.0,
+        "max": 300.0
+       },
+       "itl_p50_ms": {
+        "n": 1,
+        "median": 29.99606500088703,
+        "mean": 29.99606500088703,
+        "stdev": 0.0,
+        "min": 29.99606500088703,
+        "max": 29.99606500088703
+       },
+       "itl_p99_ms": {
+        "n": 1,
+        "median": 36.21445846125422,
+        "mean": 36.21445846125422,
+        "stdev": 0.0,
+        "min": 36.21445846125422,
+        "max": 36.21445846125422
+       },
+       "vram_peak_mib": {
+        "n": 1,
+        "median": 16155.19140625,
+        "mean": 16155.19140625,
+        "stdev": 0.0,
+        "min": 16155.19140625,
+        "max": 16155.19140625
+       },
+       "gtt_peak_mib": {
+        "n": 1,
+        "median": 70.07421875,
+        "mean": 70.07421875,
+        "stdev": 0.0,
+        "min": 70.07421875,
+        "max": 70.07421875
+       },
+       "ram_avail_min_mib": {
+        "n": 1,
+        "median": 57091.85546875,
+        "mean": 57091.85546875,
+        "stdev": 0.0,
+        "min": 57091.85546875,
+        "max": 57091.85546875
+       },
+       "swap_used_max_mib": {
+        "n": 1,
+        "median": 1081.28125,
+        "mean": 1081.28125,
+        "stdev": 0.0,
+        "min": 1081.28125,
+        "max": 1081.28125
+       },
+       "gpu_busy_mean": {
+        "n": 1,
+        "median": 97.03061224489795,
+        "mean": 97.03061224489795,
+        "stdev": 0.0,
+        "min": 97.03061224489795,
+        "max": 97.03061224489795
+       },
+       "power_mean_w": {
+        "n": 1,
+        "median": 123.03061224489795,
+        "mean": 123.03061224489795,
+        "stdev": 0.0,
+        "min": 123.03061224489795,
+        "max": 123.03061224489795
+       },
+       "temp_max_c": {
+        "n": 1,
+        "median": 67.0,
+        "mean": 67.0,
+        "stdev": 0.0,
+        "min": 67.0,
+        "max": 67.0
+       },
+       "sclk_mean_mhz": {
+        "n": 1,
+        "median": 3236.1326530612246,
+        "mean": 3236.1326530612246,
+        "stdev": 0.0,
+        "min": 3236.1326530612246,
+        "max": 3236.1326530612246
+       }
+      },
+      "expect_pass": 0,
+      "expect_n": 1,
+      "distinct_outputs": 1
+     }
+    ],
+    "warnings": [],
+    "run_e2e_s": {
+     "n": 1,
+     "median": 9.916656213998067,
+     "mean": 9.916656213998067,
+     "stdev": 0.0,
+     "min": 9.916656213998067,
+     "max": 9.916656213998067
+    }
+   }
+  },
+  {
+   "case": {
+    "name": "long-decode",
+    "description": "Short prompt, long answer: pure decode rate at small context.",
+    "runs": 1,
+    "warmup": 1,
+    "cache": "cold",
+    "temperature": 0.0,
+    "max_tokens": 1024,
+    "expect": "(?i)semaphore",
+    "min_decode_tokens": 64,
+    "pause_s": 0.0,
+    "extra": {},
+    "prompt": "Explain in detail how a mutex differs from a semaphore. Give a complete C example for each. Write at least 800 words.",
+    "context_chars": 0,
+    "needle": null,
+    "needle_depth": 0.5,
+    "question": null,
+    "trace": null
+   },
+   "runs": [
+    {
+     "index": -1,
+     "warmup": true,
+     "nonce": "c6e95a888ea0",
+     "steps": [
+      {
+       "ok": true,
+       "error": null,
+       "finish": "length",
+       "prompt_tokens": 67,
+       "cached_tokens": 0,
+       "completion_tokens": 1024,
+       "tool_calls": 0,
+       "reasoning_tokens": null,
+       "reasoning_chars": 4167,
+       "e2e_s": 31.46570677500131,
+       "prefill_tps_server": 91.26424130810264,
+       "decode_tps_server": 33.39153731798062,
+       "timings": {
+        "cache_n": 0,
+        "prompt_n": 67,
+        "prompt_ms": 734.132,
+        "prompt_per_token_ms": 10.957194029850745,
+        "prompt_per_second": 91.26424130810264,
+        "predicted_n": 1024,
+        "predicted_ms": 30636.505,
+        "predicted_per_token_ms": 29.947707722385143,
+        "predicted_per_second": 33.39153731798062
+       },
+       "ttft_s": 0.829223839999031,
+       "prefill_tps_client": 80.7984488242382,
+       "decode_tps_client": 33.39166330850364,
+       "itl_p50_ms": 29.75792600045679,
+       "itl_p99_ms": 33.55362619877269,
+       "expect_ok": false,
+       "output_sha": "3b540819aae4",
+       "text_head": "",
+       "vram_peak_mib": 16160.140625,
+       "gtt_peak_mib": 70.07421875,
+       "ram_avail_min_mib": 56707.32421875,
+       "swap_used_max_mib": 1081.26953125,
+       "gpu_busy_mean": 99.2555910543131,
+       "power_mean_w": 132.1405750798722,
+       "temp_max_c": 67.0,
+       "sclk_mean_mhz": 3395.038338658147,
+       "samples": 313
+      }
+     ]
+    },
+    {
+     "index": 0,
+     "warmup": false,
+     "nonce": "06ed3a86fc29",
+     "steps": [
+      {
+       "ok": true,
+       "error": null,
+       "finish": "length",
+       "prompt_tokens": 67,
+       "cached_tokens": 0,
+       "completion_tokens": 1024,
+       "tool_calls": 0,
+       "reasoning_tokens": null,
+       "reasoning_chars": 4699,
+       "e2e_s": 31.42631851900296,
+       "prefill_tps_server": 91.35346290981232,
+       "decode_tps_server": 33.43171451394258,
+       "timings": {
+        "cache_n": 0,
+        "prompt_n": 67,
+        "prompt_ms": 733.415,
+        "prompt_per_token_ms": 10.946492537313432,
+        "prompt_per_second": 91.35346290981232,
+        "predicted_n": 1024,
+        "predicted_ms": 30599.687,
+        "predicted_per_token_ms": 29.911717497556207,
+        "predicted_per_second": 33.43171451394258
+       },
+       "ttft_s": 0.8266833710003993,
+       "prefill_tps_client": 81.04674939683483,
+       "decode_tps_client": 33.43186591049449,
+       "itl_p50_ms": 29.743857001449214,
+       "itl_p99_ms": 33.44151469827919,
+       "expect_ok": false,
+       "output_sha": "5a4aad13819d",
+       "text_head": "",
+       "vram_peak_mib": 16148.84375,
+       "gtt_peak_mib": 70.07421875,
+       "ram_avail_min_mib": 56067.08984375,
+       "swap_used_max_mib": 1081.2578125,
+       "gpu_busy_mean": 99.34405144694534,
+       "power_mean_w": 132.85209003215434,
+       "temp_max_c": 68.0,
+       "sclk_mean_mhz": 3393.9774919614147,
+       "samples": 311
+      }
+     ]
+    }
+   ],
+   "summary": {
+    "steps": [
+     {
+      "n": 1,
+      "ok": 1,
+      "metrics": {
+       "ttft_s": {
+        "n": 1,
+        "median": 0.8266833710003993,
+        "mean": 0.8266833710003993,
+        "stdev": 0.0,
+        "min": 0.8266833710003993,
+        "max": 0.8266833710003993
+       },
+       "prefill_tps_client": {
+        "n": 1,
+        "median": 81.04674939683483,
+        "mean": 81.04674939683483,
+        "stdev": 0.0,
+        "min": 81.04674939683483,
+        "max": 81.04674939683483
+       },
+       "prefill_tps_server": {
+        "n": 1,
+        "median": 91.35346290981232,
+        "mean": 91.35346290981232,
+        "stdev": 0.0,
+        "min": 91.35346290981232,
+        "max": 91.35346290981232
+       },
+       "decode_tps_client": {
+        "n": 1,
+        "median": 33.43186591049449,
+        "mean": 33.43186591049449,
+        "stdev": 0.0,
+        "min": 33.43186591049449,
+        "max": 33.43186591049449
+       },
+       "decode_tps_server": {
+        "n": 1,
+        "median": 33.43171451394258,
+        "mean": 33.43171451394258,
+        "stdev": 0.0,
+        "min": 33.43171451394258,
+        "max": 33.43171451394258
+       },
+       "e2e_s": {
+        "n": 1,
+        "median": 31.42631851900296,
+        "mean": 31.42631851900296,
+        "stdev": 0.0,
+        "min": 31.42631851900296,
+        "max": 31.42631851900296
+       },
+       "prompt_tokens": {
+        "n": 1,
+        "median": 67.0,
+        "mean": 67.0,
+        "stdev": 0.0,
+        "min": 67.0,
+        "max": 67.0
+       },
+       "cached_tokens": {
+        "n": 1,
+        "median": 0.0,
+        "mean": 0.0,
+        "stdev": 0.0,
+        "min": 0.0,
+        "max": 0.0
+       },
+       "completion_tokens": {
+        "n": 1,
+        "median": 1024.0,
+        "mean": 1024.0,
+        "stdev": 0.0,
+        "min": 1024.0,
+        "max": 1024.0
+       },
+       "itl_p50_ms": {
+        "n": 1,
+        "median": 29.743857001449214,
+        "mean": 29.743857001449214,
+        "stdev": 0.0,
+        "min": 29.743857001449214,
+        "max": 29.743857001449214
+       },
+       "itl_p99_ms": {
+        "n": 1,
+        "median": 33.44151469827919,
+        "mean": 33.44151469827919,
+        "stdev": 0.0,
+        "min": 33.44151469827919,
+        "max": 33.44151469827919
+       },
+       "vram_peak_mib": {
+        "n": 1,
+        "median": 16148.84375,
+        "mean": 16148.84375,
+        "stdev": 0.0,
+        "min": 16148.84375,
+        "max": 16148.84375
+       },
+       "gtt_peak_mib": {
+        "n": 1,
+        "median": 70.07421875,
+        "mean": 70.07421875,
+        "stdev": 0.0,
+        "min": 70.07421875,
+        "max": 70.07421875
+       },
+       "ram_avail_min_mib": {
+        "n": 1,
+        "median": 56067.08984375,
+        "mean": 56067.08984375,
+        "stdev": 0.0,
+        "min": 56067.08984375,
+        "max": 56067.08984375
+       },
+       "swap_used_max_mib": {
+        "n": 1,
+        "median": 1081.2578125,
+        "mean": 1081.2578125,
+        "stdev": 0.0,
+        "min": 1081.2578125,
+        "max": 1081.2578125
+       },
+       "gpu_busy_mean": {
+        "n": 1,
+        "median": 99.34405144694534,
+        "mean": 99.34405144694534,
+        "stdev": 0.0,
+        "min": 99.34405144694534,
+        "max": 99.34405144694534
+       },
+       "power_mean_w": {
+        "n": 1,
+        "median": 132.85209003215434,
+        "mean": 132.85209003215434,
+        "stdev": 0.0,
+        "min": 132.85209003215434,
+        "max": 132.85209003215434
+       },
+       "temp_max_c": {
+        "n": 1,
+        "median": 68.0,
+        "mean": 68.0,
+        "stdev": 0.0,
+        "min": 68.0,
+        "max": 68.0
+       },
+       "sclk_mean_mhz": {
+        "n": 1,
+        "median": 3393.9774919614147,
+        "mean": 3393.9774919614147,
+        "stdev": 0.0,
+        "min": 3393.9774919614147,
+        "max": 3393.9774919614147
+       }
+      },
+      "expect_pass": 0,
+      "expect_n": 1,
+      "distinct_outputs": 1
+     }
+    ],
+    "warnings": [],
+    "run_e2e_s": {
+     "n": 1,
+     "median": 31.42631851900296,
+     "mean": 31.42631851900296,
+     "stdev": 0.0,
+     "min": 31.42631851900296,
+     "max": 31.42631851900296
+    }
+   }
+  },
+  {
+   "case": {
+    "name": "needle-30k",
+    "description": "",
+    "runs": 1,
+    "warmup": 1,
+    "cache": "cold",
+    "temperature": 0.0,
+    "max_tokens": 768,
+    "expect": "osprey-2093",
+    "min_decode_tokens": 64,
+    "pause_s": 0.0,
+    "extra": {},
+    "prompt": null,
+    "context_chars": 141000,
+    "needle": "osprey-2093",
+    "needle_depth": 0.3,
+    "question": "The file above defines a constant SECRET_DEPLOY_TOKEN. First state its exact value. Then explain in detail what the code around it does, in at least 400 words.",
+    "trace": null
+   },
+   "runs": [
+    {
+     "index": -1,
+     "warmup": true,
+     "nonce": "30fcc4e85c18",
+     "steps": [
+      {
+       "ok": true,
+       "error": null,
+       "finish": "length",
+       "prompt_tokens": 30201,
+       "cached_tokens": 0,
+       "completion_tokens": 768,
+       "tool_calls": 0,
+       "reasoning_tokens": null,
+       "reasoning_chars": 3336,
+       "e2e_s": 88.6133367279981,
+       "prefill_tps_server": 478.1740789559912,
+       "decode_tps_server": 30.289575848395422,
+       "timings": {
+        "cache_n": 0,
+        "prompt_n": 30201,
+        "prompt_ms": 63159.007,
+        "prompt_per_token_ms": 2.091288599715241,
+        "prompt_per_second": 478.1740789559912,
+        "predicted_n": 768,
+        "predicted_ms": 25322.243,
+        "predicted_per_token_ms": 33.01465840938722,
+        "predicted_per_second": 30.289575848395422
+       },
+       "ttft_s": 63.29061784000078,
+       "prefill_tps_client": 477.1797310676977,
+       "decode_tps_client": 30.289725569497215,
+       "itl_p50_ms": 32.798512002045754,
+       "itl_p99_ms": 36.98122585963575,
+       "expect_ok": false,
+       "output_sha": "c84e9757a5f4",
+       "text_head": "",
+       "vram_peak_mib": 16158.4921875,
+       "gtt_peak_mib": 195.02734375,
+       "ram_avail_min_mib": 55413.60546875,
+       "swap_used_max_mib": 1080.91796875,
+       "gpu_busy_mean": 99.5261958997722,
+       "power_mean_w": 124.71753986332574,
+       "temp_max_c": 74.0,
+       "sclk_mean_mhz": 3147.755125284738,
+       "samples": 878
+      }
+     ]
+    },
+    {
+     "index": 0,
+     "warmup": false,
+     "nonce": "d0fabac28186",
+     "steps": [
+      {
+       "ok": true,
+       "error": null,
+       "finish": "length",
+       "prompt_tokens": 30198,
+       "cached_tokens": 0,
+       "completion_tokens": 768,
+       "tool_calls": 0,
+       "reasoning_tokens": null,
+       "reasoning_chars": 3138,
+       "e2e_s": 88.75033736200203,
+       "prefill_tps_server": 478.04246691315456,
+       "decode_tps_server": 30.19181763165935,
+       "timings": {
+        "cache_n": 0,
+        "prompt_n": 30198,
+        "prompt_ms": 63170.12,
+        "prompt_per_token_ms": 2.09186436187827,
+        "prompt_per_second": 478.04246691315456,
+        "predicted_n": 768,
+        "predicted_ms": 25404.234,
+        "predicted_per_token_ms": 33.12155671447197,
+        "predicted_per_second": 30.19181763165935
+       },
+       "ttft_s": 63.3456295520009,
+       "prefill_tps_client": 476.7179711302772,
+       "decode_tps_client": 30.191987195591025,
+       "itl_p50_ms": 32.988119000947336,
+       "itl_p99_ms": 36.681059860493406,
+       "expect_ok": false,
+       "output_sha": "e6ae4e4acdf7",
+       "text_head": "",
+       "vram_peak_mib": 16050.4921875,
+       "gtt_peak_mib": 195.02734375,
+       "ram_avail_min_mib": 54627.46875,
+       "swap_used_max_mib": 1080.359375,
+       "gpu_busy_mean": 99.51308304891923,
+       "power_mean_w": 125.42775881683731,
+       "temp_max_c": 74.0,
+       "sclk_mean_mhz": 3142.071672354949,
+       "samples": 879
+      }
+     ]
+    }
+   ],
+   "summary": {
+    "steps": [
+     {
+      "n": 1,
+      "ok": 1,
+      "metrics": {
+       "ttft_s": {
+        "n": 1,
+        "median": 63.3456295520009,
+        "mean": 63.3456295520009,
+        "stdev": 0.0,
+        "min": 63.3456295520009,
+        "max": 63.3456295520009
+       },
+       "prefill_tps_client": {
+        "n": 1,
+        "median": 476.7179711302772,
+        "mean": 476.7179711302772,
+        "stdev": 0.0,
+        "min": 476.7179711302772,
+        "max": 476.7179711302772
+       },
+       "prefill_tps_server": {
+        "n": 1,
+        "median": 478.04246691315456,
+        "mean": 478.04246691315456,
+        "stdev": 0.0,
+        "min": 478.04246691315456,
+        "max": 478.04246691315456
+       },
+       "decode_tps_client": {
+        "n": 1,
+        "median": 30.191987195591025,
+        "mean": 30.191987195591025,
+        "stdev": 0.0,
+        "min": 30.191987195591025,
+        "max": 30.191987195591025
+       },
+       "decode_tps_server": {
+        "n": 1,
+        "median": 30.19181763165935,
+        "mean": 30.19181763165935,
+        "stdev": 0.0,
+        "min": 30.19181763165935,
+        "max": 30.19181763165935
+       },
+       "e2e_s": {
+        "n": 1,
+        "median": 88.75033736200203,
+        "mean": 88.75033736200203,
+        "stdev": 0.0,
+        "min": 88.75033736200203,
+        "max": 88.75033736200203
+       },
+       "prompt_tokens": {
+        "n": 1,
+        "median": 30198.0,
+        "mean": 30198.0,
+        "stdev": 0.0,
+        "min": 30198.0,
+        "max": 30198.0
+       },
+       "cached_tokens": {
+        "n": 1,
+        "median": 0.0,
+        "mean": 0.0,
+        "stdev": 0.0,
+        "min": 0.0,
+        "max": 0.0
+       },
+       "completion_tokens": {
+        "n": 1,
+        "median": 768.0,
+        "mean": 768.0,
+        "stdev": 0.0,
+        "min": 768.0,
+        "max": 768.0
+       },
+       "itl_p50_ms": {
+        "n": 1,
+        "median": 32.988119000947336,
+        "mean": 32.988119000947336,
+        "stdev": 0.0,
+        "min": 32.988119000947336,
+        "max": 32.988119000947336
+       },
+       "itl_p99_ms": {
+        "n": 1,
+        "median": 36.681059860493406,
+        "mean": 36.681059860493406,
+        "stdev": 0.0,
+        "min": 36.681059860493406,
+        "max": 36.681059860493406
+       },
+       "vram_peak_mib": {
+        "n": 1,
+        "median": 16050.4921875,
+        "mean": 16050.4921875,
+        "stdev": 0.0,
+        "min": 16050.4921875,
+        "max": 16050.4921875
+       },
+       "gtt_peak_mib": {
+        "n": 1,
+        "median": 195.02734375,
+        "mean": 195.02734375,
+        "stdev": 0.0,
+        "min": 195.02734375,
+        "max": 195.02734375
+       },
+       "ram_avail_min_mib": {
+        "n": 1,
+        "median": 54627.46875,
+        "mean": 54627.46875,
+        "stdev": 0.0,
+        "min": 54627.46875,
+        "max": 54627.46875
+       },
+       "swap_used_max_mib": {
+        "n": 1,
+        "median": 1080.359375,
+        "mean": 1080.359375,
+        "stdev": 0.0,
+        "min": 1080.359375,
+        "max": 1080.359375
+       },
+       "gpu_busy_mean": {
+        "n": 1,
+        "median": 99.51308304891923,
+        "mean": 99.51308304891923,
+        "stdev": 0.0,
+        "min": 99.51308304891923,
+        "max": 99.51308304891923
+       },
+       "power_mean_w": {
+        "n": 1,
+        "median": 125.42775881683731,
+        "mean": 125.42775881683731,
+        "stdev": 0.0,
+        "min": 125.42775881683731,
+        "max": 125.42775881683731
+       },
+       "temp_max_c": {
+        "n": 1,
+        "median": 74.0,
+        "mean": 74.0,
+        "stdev": 0.0,
+        "min": 74.0,
+        "max": 74.0
+       },
+       "sclk_mean_mhz": {
+        "n": 1,
+        "median": 3142.071672354949,
+        "mean": 3142.071672354949,
+        "stdev": 0.0,
+        "min": 3142.071672354949,
+        "max": 3142.071672354949
+       }
+      },
+      "expect_pass": 0,
+      "expect_n": 1,
+      "distinct_outputs": 1
+     }
+    ],
+    "warnings": [],
+    "run_e2e_s": {
+     "n": 1,
+     "median": 88.75033736200203,
+     "mean": 88.75033736200203,
+     "stdev": 0.0,
+     "min": 88.75033736200203,
+     "max": 88.75033736200203
+    }
+   }
+  }
+ ]
+}

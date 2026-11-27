@@ -1,0 +1,7 @@
+Based on the provided code, here is a summary of what the C++ and HIP code does:
+
+*   **Inference Engine Core (HIP/C++):**
+    *   Implements a high-performance inference engine for a specific LLM architecture (`qwen4exp` / Qwen3.8-Flash-Next) on AMD GPUs (specifically targeting `gfx1200` / RDNA4).
+    *   Utilizes a "megakernel" approach where the entire forward pass (including attention, MLP, and speculative decoding steps) is fused into a single persistent GPU kernel to minimize launch overhead and maximize occupancy.
+    *   Implements custom GEMM kernels using WMMA (Wave Matrix Multiply Accumulate) instructions for FP16 and FP8 operations, tailored for the specific tensor shapes of the model.
+    *   Supports speculative decoding via an MTP (Multi-Token Prediction) head or a DFlash2 drafter, with logic to dynamically adjust

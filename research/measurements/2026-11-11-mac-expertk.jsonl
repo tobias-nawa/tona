@@ -1,0 +1,312 @@
+{"run": 1, "kind": "check", "rows": 1, "gate": "IQ2S", "down": "IQ4NL", "B": 1, "rel_err": 1.13e-07}
+{"run": 1, "kind": "check", "rows": 1, "gate": "IQ2S", "down": "IQ4NL", "B": 2, "rel_err": 1.13e-07}
+{"run": 1, "kind": "check", "rows": 1, "gate": "IQ2S", "down": "IQ4NL", "B": 3, "rel_err": 1.00e-07}
+{"run": 1, "kind": "check", "rows": 1, "gate": "IQ2S", "down": "IQ4NL", "B": 4, "rel_err": 1.00e-07}
+{"run": 1, "kind": "check", "rows": 1, "gate": "IQ3XXS", "down": "IQ4NL", "B": 1, "rel_err": 1.23e-07}
+{"run": 1, "kind": "check", "rows": 1, "gate": "IQ3XXS", "down": "IQ4NL", "B": 2, "rel_err": 9.67e-08}
+{"run": 1, "kind": "check", "rows": 1, "gate": "IQ3XXS", "down": "IQ4NL", "B": 3, "rel_err": 1.12e-07}
+{"run": 1, "kind": "check", "rows": 1, "gate": "IQ3XXS", "down": "IQ4NL", "B": 4, "rel_err": 1.12e-07}
+{"run": 1, "kind": "check", "rows": 1, "gate": "IQ3S", "down": "IQ4NL", "B": 1, "rel_err": 1.17e-07}
+{"run": 1, "kind": "check", "rows": 1, "gate": "IQ3S", "down": "IQ4NL", "B": 2, "rel_err": 1.13e-07}
+{"run": 1, "kind": "check", "rows": 1, "gate": "IQ3S", "down": "IQ4NL", "B": 3, "rel_err": 9.10e-08}
+{"run": 1, "kind": "check", "rows": 1, "gate": "IQ3S", "down": "IQ4NL", "B": 4, "rel_err": 9.10e-08}
+{"run": 1, "kind": "check", "rows": 1, "gate": "IQ4XS", "down": "IQ4NL", "B": 1, "rel_err": 8.20e-08}
+{"run": 1, "kind": "check", "rows": 1, "gate": "IQ4XS", "down": "IQ4NL", "B": 2, "rel_err": 7.34e-08}
+{"run": 1, "kind": "check", "rows": 1, "gate": "IQ4XS", "down": "IQ4NL", "B": 3, "rel_err": 7.34e-08}
+{"run": 1, "kind": "check", "rows": 1, "gate": "IQ4XS", "down": "IQ4NL", "B": 4, "rel_err": 7.34e-08}
+{"run": 1, "kind": "check", "rows": 1, "gate": "IQ2S", "down": "Q20", "B": 1, "rel_err": 1.20e-07}
+{"run": 1, "kind": "check", "rows": 1, "gate": "IQ2S", "down": "Q20", "B": 2, "rel_err": 1.28e-07}
+{"run": 1, "kind": "check", "rows": 1, "gate": "IQ2S", "down": "Q20", "B": 3, "rel_err": 1.49e-07}
+{"run": 1, "kind": "check", "rows": 1, "gate": "IQ2S", "down": "Q20", "B": 4, "rel_err": 1.49e-07}
+{"run": 1, "kind": "check", "rows": 1, "gate": "IQ3XXS", "down": "Q20", "B": 1, "rel_err": 2.36e-07}
+{"run": 1, "kind": "check", "rows": 1, "gate": "IQ3XXS", "down": "Q20", "B": 2, "rel_err": 2.36e-07}
+{"run": 1, "kind": "check", "rows": 1, "gate": "IQ3XXS", "down": "Q20", "B": 3, "rel_err": 1.57e-07}
+{"run": 1, "kind": "check", "rows": 1, "gate": "IQ3XXS", "down": "Q20", "B": 4, "rel_err": 1.57e-07}
+{"run": 1, "kind": "type", "rows": 1, "kernel": "gate_up_IQ2S", "B": 1, "us_per_layer_median": 219.2, "us_min": 218.6, "us_max": 220.5, "gbs": 47.9}
+{"run": 1, "kind": "type", "rows": 1, "kernel": "gate_up_IQ3XXS", "B": 1, "us_per_layer_median": 158.7, "us_min": 158.3, "us_max": 159.5, "gbs": 79.1}
+{"run": 1, "kind": "type", "rows": 1, "kernel": "gate_up_IQ3S", "B": 1, "us_per_layer_median": 175.7, "us_min": 174.0, "us_max": 176.2, "gbs": 80.1}
+{"run": 1, "kind": "type", "rows": 1, "kernel": "gate_up_IQ4XS", "B": 1, "us_per_layer_median": 147.9, "us_min": 146.5, "us_max": 148.6, "gbs": 117.7}
+{"run": 1, "kind": "type", "rows": 1, "kernel": "down_IQ4NL", "B": 1, "us_per_layer_median": 82.0, "us_min": 80.5, "us_max": 82.9, "gbs": 112.4}
+{"run": 1, "kind": "type", "rows": 1, "kernel": "down_Q20", "B": 1, "us_per_layer_median": 78.7, "us_min": 78.3, "us_max": 79.1, "gbs": 58.5}
+{"run": 1, "kind": "type", "rows": 1, "kernel": "gate_up_IQ2S", "B": 2, "us_per_layer_median": 349.7, "us_min": 347.9, "us_max": 351.8, "gbs": 30.0}
+{"run": 1, "kind": "type", "rows": 1, "kernel": "gate_up_IQ3XXS", "B": 2, "us_per_layer_median": 223.1, "us_min": 222.3, "us_max": 224.7, "gbs": 56.2}
+{"run": 1, "kind": "type", "rows": 1, "kernel": "gate_up_IQ3S", "B": 2, "us_per_layer_median": 254.4, "us_min": 253.5, "us_max": 256.7, "gbs": 55.3}
+{"run": 1, "kind": "type", "rows": 1, "kernel": "gate_up_IQ4XS", "B": 2, "us_per_layer_median": 210.3, "us_min": 208.9, "us_max": 210.6, "gbs": 82.8}
+{"run": 1, "kind": "type", "rows": 1, "kernel": "down_IQ4NL", "B": 2, "us_per_layer_median": 111.9, "us_min": 110.9, "us_max": 112.6, "gbs": 82.3}
+{"run": 1, "kind": "type", "rows": 1, "kernel": "down_Q20", "B": 2, "us_per_layer_median": 94.6, "us_min": 93.4, "us_max": 95.7, "gbs": 48.7}
+{"run": 1, "kind": "type", "rows": 1, "kernel": "gate_up_IQ2S", "B": 3, "us_per_layer_median": 459.8, "us_min": 458.3, "us_max": 462.0, "gbs": 22.8}
+{"run": 1, "kind": "type", "rows": 1, "kernel": "gate_up_IQ3XXS", "B": 3, "us_per_layer_median": 338.3, "us_min": 336.4, "us_max": 340.4, "gbs": 37.1}
+{"run": 1, "kind": "type", "rows": 1, "kernel": "gate_up_IQ3S", "B": 3, "us_per_layer_median": 373.8, "us_min": 373.0, "us_max": 374.9, "gbs": 37.7}
+{"run": 1, "kind": "type", "rows": 1, "kernel": "gate_up_IQ4XS", "B": 3, "us_per_layer_median": 324.8, "us_min": 324.6, "us_max": 326.3, "gbs": 53.6}
+{"run": 1, "kind": "type", "rows": 1, "kernel": "down_IQ4NL", "B": 3, "us_per_layer_median": 157.7, "us_min": 156.9, "us_max": 158.1, "gbs": 58.4}
+{"run": 1, "kind": "type", "rows": 1, "kernel": "down_Q20", "B": 3, "us_per_layer_median": 126.8, "us_min": 126.1, "us_max": 127.7, "gbs": 36.3}
+{"run": 1, "kind": "type", "rows": 1, "kernel": "gate_up_IQ2S", "B": 4, "us_per_layer_median": 588.1, "us_min": 586.2, "us_max": 590.2, "gbs": 17.8}
+{"run": 1, "kind": "type", "rows": 1, "kernel": "gate_up_IQ3XXS", "B": 4, "us_per_layer_median": 466.5, "us_min": 465.4, "us_max": 468.2, "gbs": 26.9}
+{"run": 1, "kind": "type", "rows": 1, "kernel": "gate_up_IQ3S", "B": 4, "us_per_layer_median": 503.0, "us_min": 500.9, "us_max": 504.8, "gbs": 28.0}
+{"run": 1, "kind": "type", "rows": 1, "kernel": "gate_up_IQ4XS", "B": 4, "us_per_layer_median": 442.1, "us_min": 440.8, "us_max": 443.2, "gbs": 39.4}
+{"run": 1, "kind": "type", "rows": 1, "kernel": "down_IQ4NL", "B": 4, "us_per_layer_median": 203.8, "us_min": 202.7, "us_max": 204.3, "gbs": 45.2}
+{"run": 1, "kind": "type", "rows": 1, "kernel": "down_Q20", "B": 4, "us_per_layer_median": 161.4, "us_min": 161.0, "us_max": 162.4, "gbs": 28.5}
+{"run": 1, "kind": "token", "rows": 1, "layers": 48, "B": 1, "ms_median": 12.896, "ms_min": 12.746, "ms_max": 12.972, "expert_bytes": 982272000, "gbs": 76.2}
+{"run": 1, "kind": "token", "rows": 1, "layers": 48, "B": 2, "ms_median": 18.812, "ms_min": 18.688, "ms_max": 18.870, "expert_bytes": 982272000, "gbs": 52.2}
+{"run": 1, "kind": "token", "rows": 1, "layers": 48, "B": 3, "ms_median": 26.271, "ms_min": 26.071, "ms_max": 26.409, "expert_bytes": 982272000, "gbs": 37.4}
+{"run": 1, "kind": "token", "rows": 1, "layers": 48, "B": 4, "ms_median": 34.513, "ms_min": 34.370, "ms_max": 34.620, "expert_bytes": 982272000, "gbs": 28.5}
+{"run": 1, "kind": "check", "rows": 4, "gate": "IQ2S", "down": "IQ4NL", "B": 1, "rel_err": 1.13e-07}
+{"run": 1, "kind": "check", "rows": 4, "gate": "IQ2S", "down": "IQ4NL", "B": 2, "rel_err": 1.13e-07}
+{"run": 1, "kind": "check", "rows": 4, "gate": "IQ2S", "down": "IQ4NL", "B": 3, "rel_err": 1.00e-07}
+{"run": 1, "kind": "check", "rows": 4, "gate": "IQ2S", "down": "IQ4NL", "B": 4, "rel_err": 1.00e-07}
+{"run": 1, "kind": "check", "rows": 4, "gate": "IQ3XXS", "down": "IQ4NL", "B": 1, "rel_err": 1.23e-07}
+{"run": 1, "kind": "check", "rows": 4, "gate": "IQ3XXS", "down": "IQ4NL", "B": 2, "rel_err": 9.67e-08}
+{"run": 1, "kind": "check", "rows": 4, "gate": "IQ3XXS", "down": "IQ4NL", "B": 3, "rel_err": 1.12e-07}
+{"run": 1, "kind": "check", "rows": 4, "gate": "IQ3XXS", "down": "IQ4NL", "B": 4, "rel_err": 1.12e-07}
+{"run": 1, "kind": "check", "rows": 4, "gate": "IQ3S", "down": "IQ4NL", "B": 1, "rel_err": 1.17e-07}
+{"run": 1, "kind": "check", "rows": 4, "gate": "IQ3S", "down": "IQ4NL", "B": 2, "rel_err": 1.13e-07}
+{"run": 1, "kind": "check", "rows": 4, "gate": "IQ3S", "down": "IQ4NL", "B": 3, "rel_err": 9.10e-08}
+{"run": 1, "kind": "check", "rows": 4, "gate": "IQ3S", "down": "IQ4NL", "B": 4, "rel_err": 9.10e-08}
+{"run": 1, "kind": "check", "rows": 4, "gate": "IQ4XS", "down": "IQ4NL", "B": 1, "rel_err": 8.20e-08}
+{"run": 1, "kind": "check", "rows": 4, "gate": "IQ4XS", "down": "IQ4NL", "B": 2, "rel_err": 7.34e-08}
+{"run": 1, "kind": "check", "rows": 4, "gate": "IQ4XS", "down": "IQ4NL", "B": 3, "rel_err": 7.34e-08}
+{"run": 1, "kind": "check", "rows": 4, "gate": "IQ4XS", "down": "IQ4NL", "B": 4, "rel_err": 7.34e-08}
+{"run": 1, "kind": "check", "rows": 4, "gate": "IQ2S", "down": "Q20", "B": 1, "rel_err": 1.20e-07}
+{"run": 1, "kind": "check", "rows": 4, "gate": "IQ2S", "down": "Q20", "B": 2, "rel_err": 1.28e-07}
+{"run": 1, "kind": "check", "rows": 4, "gate": "IQ2S", "down": "Q20", "B": 3, "rel_err": 1.49e-07}
+{"run": 1, "kind": "check", "rows": 4, "gate": "IQ2S", "down": "Q20", "B": 4, "rel_err": 1.49e-07}
+{"run": 1, "kind": "check", "rows": 4, "gate": "IQ3XXS", "down": "Q20", "B": 1, "rel_err": 2.36e-07}
+{"run": 1, "kind": "check", "rows": 4, "gate": "IQ3XXS", "down": "Q20", "B": 2, "rel_err": 2.36e-07}
+{"run": 1, "kind": "check", "rows": 4, "gate": "IQ3XXS", "down": "Q20", "B": 3, "rel_err": 1.57e-07}
+{"run": 1, "kind": "check", "rows": 4, "gate": "IQ3XXS", "down": "Q20", "B": 4, "rel_err": 1.57e-07}
+{"run": 1, "kind": "type", "rows": 4, "kernel": "gate_up_IQ2S", "B": 1, "us_per_layer_median": 155.5, "us_min": 154.3, "us_max": 156.1, "gbs": 67.5}
+{"run": 1, "kind": "type", "rows": 4, "kernel": "gate_up_IQ3XXS", "B": 1, "us_per_layer_median": 147.0, "us_min": 146.1, "us_max": 148.4, "gbs": 85.3}
+{"run": 1, "kind": "type", "rows": 4, "kernel": "gate_up_IQ3S", "B": 1, "us_per_layer_median": 141.6, "us_min": 140.8, "us_max": 141.8, "gbs": 99.4}
+{"run": 1, "kind": "type", "rows": 4, "kernel": "gate_up_IQ4XS", "B": 1, "us_per_layer_median": 143.0, "us_min": 141.2, "us_max": 145.2, "gbs": 121.7}
+{"run": 1, "kind": "type", "rows": 4, "kernel": "down_IQ4NL", "B": 1, "us_per_layer_median": 66.2, "us_min": 64.5, "us_max": 67.9, "gbs": 139.1}
+{"run": 1, "kind": "type", "rows": 4, "kernel": "down_Q20", "B": 1, "us_per_layer_median": 53.9, "us_min": 53.6, "us_max": 54.6, "gbs": 85.5}
+{"run": 1, "kind": "type", "rows": 4, "kernel": "gate_up_IQ2S", "B": 2, "us_per_layer_median": 203.1, "us_min": 201.2, "us_max": 203.4, "gbs": 51.7}
+{"run": 1, "kind": "type", "rows": 4, "kernel": "gate_up_IQ3XXS", "B": 2, "us_per_layer_median": 172.8, "us_min": 171.6, "us_max": 173.3, "gbs": 72.6}
+{"run": 1, "kind": "type", "rows": 4, "kernel": "gate_up_IQ3S", "B": 2, "us_per_layer_median": 169.4, "us_min": 168.9, "us_max": 169.9, "gbs": 83.1}
+{"run": 1, "kind": "type", "rows": 4, "kernel": "gate_up_IQ4XS", "B": 2, "us_per_layer_median": 176.8, "us_min": 175.8, "us_max": 177.4, "gbs": 98.5}
+{"run": 1, "kind": "type", "rows": 4, "kernel": "down_IQ4NL", "B": 2, "us_per_layer_median": 83.5, "us_min": 82.9, "us_max": 84.3, "gbs": 110.4}
+{"run": 1, "kind": "type", "rows": 4, "kernel": "down_Q20", "B": 2, "us_per_layer_median": 68.4, "us_min": 66.3, "us_max": 69.4, "gbs": 67.3}
+{"run": 1, "kind": "type", "rows": 4, "kernel": "gate_up_IQ2S", "B": 3, "us_per_layer_median": 243.2, "us_min": 241.3, "us_max": 243.8, "gbs": 43.2}
+{"run": 1, "kind": "type", "rows": 4, "kernel": "gate_up_IQ3XXS", "B": 3, "us_per_layer_median": 236.5, "us_min": 235.2, "us_max": 237.7, "gbs": 53.0}
+{"run": 1, "kind": "type", "rows": 4, "kernel": "gate_up_IQ3S", "B": 3, "us_per_layer_median": 242.0, "us_min": 240.9, "us_max": 242.7, "gbs": 58.2}
+{"run": 1, "kind": "type", "rows": 4, "kernel": "gate_up_IQ4XS", "B": 3, "us_per_layer_median": 258.3, "us_min": 256.9, "us_max": 260.3, "gbs": 67.4}
+{"run": 1, "kind": "type", "rows": 4, "kernel": "down_IQ4NL", "B": 3, "us_per_layer_median": 120.5, "us_min": 119.7, "us_max": 121.2, "gbs": 76.5}
+{"run": 1, "kind": "type", "rows": 4, "kernel": "down_Q20", "B": 3, "us_per_layer_median": 103.1, "us_min": 101.6, "us_max": 104.5, "gbs": 44.7}
+{"run": 1, "kind": "type", "rows": 4, "kernel": "gate_up_IQ2S", "B": 4, "us_per_layer_median": 294.7, "us_min": 292.9, "us_max": 295.8, "gbs": 35.6}
+{"run": 1, "kind": "type", "rows": 4, "kernel": "gate_up_IQ3XXS", "B": 4, "us_per_layer_median": 283.6, "us_min": 282.9, "us_max": 286.2, "gbs": 44.2}
+{"run": 1, "kind": "type", "rows": 4, "kernel": "gate_up_IQ3S", "B": 4, "us_per_layer_median": 299.1, "us_min": 296.8, "us_max": 301.3, "gbs": 47.1}
+{"run": 1, "kind": "type", "rows": 4, "kernel": "gate_up_IQ4XS", "B": 4, "us_per_layer_median": 324.1, "us_min": 321.8, "us_max": 325.8, "gbs": 53.7}
+{"run": 1, "kind": "type", "rows": 4, "kernel": "down_IQ4NL", "B": 4, "us_per_layer_median": 222.5, "us_min": 220.3, "us_max": 224.2, "gbs": 41.4}
+{"run": 1, "kind": "type", "rows": 4, "kernel": "down_Q20", "B": 4, "us_per_layer_median": 127.5, "us_min": 126.0, "us_max": 129.2, "gbs": 36.1}
+{"run": 1, "kind": "token", "rows": 4, "layers": 48, "B": 1, "ms_median": 10.244, "ms_min": 10.168, "ms_max": 10.435, "expert_bytes": 982272000, "gbs": 95.9}
+{"run": 1, "kind": "token", "rows": 4, "layers": 48, "B": 2, "ms_median": 12.780, "ms_min": 12.734, "ms_max": 12.962, "expert_bytes": 982272000, "gbs": 76.9}
+{"run": 1, "kind": "token", "rows": 4, "layers": 48, "B": 3, "ms_median": 17.389, "ms_min": 17.236, "ms_max": 17.542, "expert_bytes": 982272000, "gbs": 56.5}
+{"run": 1, "kind": "token", "rows": 4, "layers": 48, "B": 4, "ms_median": 24.097, "ms_min": 23.975, "ms_max": 24.246, "expert_bytes": 982272000, "gbs": 40.8}
+{"run": 2, "kind": "check", "rows": 1, "gate": "IQ2S", "down": "IQ4NL", "B": 1, "rel_err": 1.13e-07}
+{"run": 2, "kind": "check", "rows": 1, "gate": "IQ2S", "down": "IQ4NL", "B": 2, "rel_err": 1.13e-07}
+{"run": 2, "kind": "check", "rows": 1, "gate": "IQ2S", "down": "IQ4NL", "B": 3, "rel_err": 1.00e-07}
+{"run": 2, "kind": "check", "rows": 1, "gate": "IQ2S", "down": "IQ4NL", "B": 4, "rel_err": 1.00e-07}
+{"run": 2, "kind": "check", "rows": 1, "gate": "IQ3XXS", "down": "IQ4NL", "B": 1, "rel_err": 1.23e-07}
+{"run": 2, "kind": "check", "rows": 1, "gate": "IQ3XXS", "down": "IQ4NL", "B": 2, "rel_err": 9.67e-08}
+{"run": 2, "kind": "check", "rows": 1, "gate": "IQ3XXS", "down": "IQ4NL", "B": 3, "rel_err": 1.12e-07}
+{"run": 2, "kind": "check", "rows": 1, "gate": "IQ3XXS", "down": "IQ4NL", "B": 4, "rel_err": 1.12e-07}
+{"run": 2, "kind": "check", "rows": 1, "gate": "IQ3S", "down": "IQ4NL", "B": 1, "rel_err": 1.17e-07}
+{"run": 2, "kind": "check", "rows": 1, "gate": "IQ3S", "down": "IQ4NL", "B": 2, "rel_err": 1.13e-07}
+{"run": 2, "kind": "check", "rows": 1, "gate": "IQ3S", "down": "IQ4NL", "B": 3, "rel_err": 9.10e-08}
+{"run": 2, "kind": "check", "rows": 1, "gate": "IQ3S", "down": "IQ4NL", "B": 4, "rel_err": 9.10e-08}
+{"run": 2, "kind": "check", "rows": 1, "gate": "IQ4XS", "down": "IQ4NL", "B": 1, "rel_err": 8.20e-08}
+{"run": 2, "kind": "check", "rows": 1, "gate": "IQ4XS", "down": "IQ4NL", "B": 2, "rel_err": 7.34e-08}
+{"run": 2, "kind": "check", "rows": 1, "gate": "IQ4XS", "down": "IQ4NL", "B": 3, "rel_err": 7.34e-08}
+{"run": 2, "kind": "check", "rows": 1, "gate": "IQ4XS", "down": "IQ4NL", "B": 4, "rel_err": 7.34e-08}
+{"run": 2, "kind": "check", "rows": 1, "gate": "IQ2S", "down": "Q20", "B": 1, "rel_err": 1.20e-07}
+{"run": 2, "kind": "check", "rows": 1, "gate": "IQ2S", "down": "Q20", "B": 2, "rel_err": 1.28e-07}
+{"run": 2, "kind": "check", "rows": 1, "gate": "IQ2S", "down": "Q20", "B": 3, "rel_err": 1.49e-07}
+{"run": 2, "kind": "check", "rows": 1, "gate": "IQ2S", "down": "Q20", "B": 4, "rel_err": 1.49e-07}
+{"run": 2, "kind": "check", "rows": 1, "gate": "IQ3XXS", "down": "Q20", "B": 1, "rel_err": 2.36e-07}
+{"run": 2, "kind": "check", "rows": 1, "gate": "IQ3XXS", "down": "Q20", "B": 2, "rel_err": 2.36e-07}
+{"run": 2, "kind": "check", "rows": 1, "gate": "IQ3XXS", "down": "Q20", "B": 3, "rel_err": 1.57e-07}
+{"run": 2, "kind": "check", "rows": 1, "gate": "IQ3XXS", "down": "Q20", "B": 4, "rel_err": 1.57e-07}
+{"run": 2, "kind": "type", "rows": 1, "kernel": "gate_up_IQ2S", "B": 1, "us_per_layer_median": 219.6, "us_min": 218.0, "us_max": 220.1, "gbs": 47.8}
+{"run": 2, "kind": "type", "rows": 1, "kernel": "gate_up_IQ3XXS", "B": 1, "us_per_layer_median": 158.7, "us_min": 157.8, "us_max": 159.4, "gbs": 79.0}
+{"run": 2, "kind": "type", "rows": 1, "kernel": "gate_up_IQ3S", "B": 1, "us_per_layer_median": 176.0, "us_min": 175.4, "us_max": 176.9, "gbs": 80.0}
+{"run": 2, "kind": "type", "rows": 1, "kernel": "gate_up_IQ4XS", "B": 1, "us_per_layer_median": 147.5, "us_min": 145.6, "us_max": 150.3, "gbs": 118.0}
+{"run": 2, "kind": "type", "rows": 1, "kernel": "down_IQ4NL", "B": 1, "us_per_layer_median": 82.0, "us_min": 81.0, "us_max": 82.8, "gbs": 112.4}
+{"run": 2, "kind": "type", "rows": 1, "kernel": "down_Q20", "B": 1, "us_per_layer_median": 78.4, "us_min": 77.3, "us_max": 79.1, "gbs": 58.8}
+{"run": 2, "kind": "type", "rows": 1, "kernel": "gate_up_IQ2S", "B": 2, "us_per_layer_median": 349.2, "us_min": 348.7, "us_max": 349.8, "gbs": 30.1}
+{"run": 2, "kind": "type", "rows": 1, "kernel": "gate_up_IQ3XXS", "B": 2, "us_per_layer_median": 223.6, "us_min": 222.7, "us_max": 224.6, "gbs": 56.1}
+{"run": 2, "kind": "type", "rows": 1, "kernel": "gate_up_IQ3S", "B": 2, "us_per_layer_median": 254.9, "us_min": 254.2, "us_max": 256.4, "gbs": 55.2}
+{"run": 2, "kind": "type", "rows": 1, "kernel": "gate_up_IQ4XS", "B": 2, "us_per_layer_median": 209.6, "us_min": 207.9, "us_max": 210.0, "gbs": 83.1}
+{"run": 2, "kind": "type", "rows": 1, "kernel": "down_IQ4NL", "B": 2, "us_per_layer_median": 112.0, "us_min": 111.3, "us_max": 112.8, "gbs": 82.3}
+{"run": 2, "kind": "type", "rows": 1, "kernel": "down_Q20", "B": 2, "us_per_layer_median": 94.4, "us_min": 92.7, "us_max": 94.9, "gbs": 48.8}
+{"run": 2, "kind": "type", "rows": 1, "kernel": "gate_up_IQ2S", "B": 3, "us_per_layer_median": 460.4, "us_min": 459.5, "us_max": 462.8, "gbs": 22.8}
+{"run": 2, "kind": "type", "rows": 1, "kernel": "gate_up_IQ3XXS", "B": 3, "us_per_layer_median": 338.2, "us_min": 336.9, "us_max": 339.2, "gbs": 37.1}
+{"run": 2, "kind": "type", "rows": 1, "kernel": "gate_up_IQ3S", "B": 3, "us_per_layer_median": 374.1, "us_min": 372.1, "us_max": 375.2, "gbs": 37.6}
+{"run": 2, "kind": "type", "rows": 1, "kernel": "gate_up_IQ4XS", "B": 3, "us_per_layer_median": 325.1, "us_min": 324.1, "us_max": 325.8, "gbs": 53.5}
+{"run": 2, "kind": "type", "rows": 1, "kernel": "down_IQ4NL", "B": 3, "us_per_layer_median": 157.6, "us_min": 157.0, "us_max": 157.9, "gbs": 58.5}
+{"run": 2, "kind": "type", "rows": 1, "kernel": "down_Q20", "B": 3, "us_per_layer_median": 127.1, "us_min": 125.6, "us_max": 128.0, "gbs": 36.2}
+{"run": 2, "kind": "type", "rows": 1, "kernel": "gate_up_IQ2S", "B": 4, "us_per_layer_median": 588.0, "us_min": 586.6, "us_max": 589.1, "gbs": 17.8}
+{"run": 2, "kind": "type", "rows": 1, "kernel": "gate_up_IQ3XXS", "B": 4, "us_per_layer_median": 466.8, "us_min": 464.6, "us_max": 467.2, "gbs": 26.9}
+{"run": 2, "kind": "type", "rows": 1, "kernel": "gate_up_IQ3S", "B": 4, "us_per_layer_median": 502.8, "us_min": 501.3, "us_max": 504.4, "gbs": 28.0}
+{"run": 2, "kind": "type", "rows": 1, "kernel": "gate_up_IQ4XS", "B": 4, "us_per_layer_median": 443.1, "us_min": 441.5, "us_max": 444.6, "gbs": 39.3}
+{"run": 2, "kind": "type", "rows": 1, "kernel": "down_IQ4NL", "B": 4, "us_per_layer_median": 203.8, "us_min": 203.2, "us_max": 205.2, "gbs": 45.2}
+{"run": 2, "kind": "type", "rows": 1, "kernel": "down_Q20", "B": 4, "us_per_layer_median": 161.2, "us_min": 159.1, "us_max": 162.3, "gbs": 28.6}
+{"run": 2, "kind": "token", "rows": 1, "layers": 48, "B": 1, "ms_median": 12.921, "ms_min": 12.785, "ms_max": 12.953, "expert_bytes": 982272000, "gbs": 76.0}
+{"run": 2, "kind": "token", "rows": 1, "layers": 48, "B": 2, "ms_median": 18.810, "ms_min": 18.626, "ms_max": 18.946, "expert_bytes": 982272000, "gbs": 52.2}
+{"run": 2, "kind": "token", "rows": 1, "layers": 48, "B": 3, "ms_median": 26.283, "ms_min": 26.108, "ms_max": 26.439, "expert_bytes": 982272000, "gbs": 37.4}
+{"run": 2, "kind": "token", "rows": 1, "layers": 48, "B": 4, "ms_median": 34.542, "ms_min": 34.389, "ms_max": 34.649, "expert_bytes": 982272000, "gbs": 28.4}
+{"run": 2, "kind": "check", "rows": 4, "gate": "IQ2S", "down": "IQ4NL", "B": 1, "rel_err": 1.13e-07}
+{"run": 2, "kind": "check", "rows": 4, "gate": "IQ2S", "down": "IQ4NL", "B": 2, "rel_err": 1.13e-07}
+{"run": 2, "kind": "check", "rows": 4, "gate": "IQ2S", "down": "IQ4NL", "B": 3, "rel_err": 1.00e-07}
+{"run": 2, "kind": "check", "rows": 4, "gate": "IQ2S", "down": "IQ4NL", "B": 4, "rel_err": 1.00e-07}
+{"run": 2, "kind": "check", "rows": 4, "gate": "IQ3XXS", "down": "IQ4NL", "B": 1, "rel_err": 1.23e-07}
+{"run": 2, "kind": "check", "rows": 4, "gate": "IQ3XXS", "down": "IQ4NL", "B": 2, "rel_err": 9.67e-08}
+{"run": 2, "kind": "check", "rows": 4, "gate": "IQ3XXS", "down": "IQ4NL", "B": 3, "rel_err": 1.12e-07}
+{"run": 2, "kind": "check", "rows": 4, "gate": "IQ3XXS", "down": "IQ4NL", "B": 4, "rel_err": 1.12e-07}
+{"run": 2, "kind": "check", "rows": 4, "gate": "IQ3S", "down": "IQ4NL", "B": 1, "rel_err": 1.17e-07}
+{"run": 2, "kind": "check", "rows": 4, "gate": "IQ3S", "down": "IQ4NL", "B": 2, "rel_err": 1.13e-07}
+{"run": 2, "kind": "check", "rows": 4, "gate": "IQ3S", "down": "IQ4NL", "B": 3, "rel_err": 9.10e-08}
+{"run": 2, "kind": "check", "rows": 4, "gate": "IQ3S", "down": "IQ4NL", "B": 4, "rel_err": 9.10e-08}
+{"run": 2, "kind": "check", "rows": 4, "gate": "IQ4XS", "down": "IQ4NL", "B": 1, "rel_err": 8.20e-08}
+{"run": 2, "kind": "check", "rows": 4, "gate": "IQ4XS", "down": "IQ4NL", "B": 2, "rel_err": 7.34e-08}
+{"run": 2, "kind": "check", "rows": 4, "gate": "IQ4XS", "down": "IQ4NL", "B": 3, "rel_err": 7.34e-08}
+{"run": 2, "kind": "check", "rows": 4, "gate": "IQ4XS", "down": "IQ4NL", "B": 4, "rel_err": 7.34e-08}
+{"run": 2, "kind": "check", "rows": 4, "gate": "IQ2S", "down": "Q20", "B": 1, "rel_err": 1.20e-07}
+{"run": 2, "kind": "check", "rows": 4, "gate": "IQ2S", "down": "Q20", "B": 2, "rel_err": 1.28e-07}
+{"run": 2, "kind": "check", "rows": 4, "gate": "IQ2S", "down": "Q20", "B": 3, "rel_err": 1.49e-07}
+{"run": 2, "kind": "check", "rows": 4, "gate": "IQ2S", "down": "Q20", "B": 4, "rel_err": 1.49e-07}
+{"run": 2, "kind": "check", "rows": 4, "gate": "IQ3XXS", "down": "Q20", "B": 1, "rel_err": 2.36e-07}
+{"run": 2, "kind": "check", "rows": 4, "gate": "IQ3XXS", "down": "Q20", "B": 2, "rel_err": 2.36e-07}
+{"run": 2, "kind": "check", "rows": 4, "gate": "IQ3XXS", "down": "Q20", "B": 3, "rel_err": 1.57e-07}
+{"run": 2, "kind": "check", "rows": 4, "gate": "IQ3XXS", "down": "Q20", "B": 4, "rel_err": 1.57e-07}
+{"run": 2, "kind": "type", "rows": 4, "kernel": "gate_up_IQ2S", "B": 1, "us_per_layer_median": 155.1, "us_min": 154.3, "us_max": 155.9, "gbs": 67.7}
+{"run": 2, "kind": "type", "rows": 4, "kernel": "gate_up_IQ3XXS", "B": 1, "us_per_layer_median": 145.0, "us_min": 144.9, "us_max": 147.3, "gbs": 86.5}
+{"run": 2, "kind": "type", "rows": 4, "kernel": "gate_up_IQ3S", "B": 1, "us_per_layer_median": 141.1, "us_min": 139.4, "us_max": 141.5, "gbs": 99.8}
+{"run": 2, "kind": "type", "rows": 4, "kernel": "gate_up_IQ4XS", "B": 1, "us_per_layer_median": 142.2, "us_min": 141.2, "us_max": 144.1, "gbs": 122.4}
+{"run": 2, "kind": "type", "rows": 4, "kernel": "down_IQ4NL", "B": 1, "us_per_layer_median": 66.6, "us_min": 64.5, "us_max": 67.6, "gbs": 138.4}
+{"run": 2, "kind": "type", "rows": 4, "kernel": "down_Q20", "B": 1, "us_per_layer_median": 51.9, "us_min": 51.8, "us_max": 53.8, "gbs": 88.8}
+{"run": 2, "kind": "type", "rows": 4, "kernel": "gate_up_IQ2S", "B": 2, "us_per_layer_median": 201.9, "us_min": 201.3, "us_max": 202.9, "gbs": 52.0}
+{"run": 2, "kind": "type", "rows": 4, "kernel": "gate_up_IQ3XXS", "B": 2, "us_per_layer_median": 173.2, "us_min": 171.3, "us_max": 174.1, "gbs": 72.4}
+{"run": 2, "kind": "type", "rows": 4, "kernel": "gate_up_IQ3S", "B": 2, "us_per_layer_median": 169.3, "us_min": 167.7, "us_max": 171.7, "gbs": 83.2}
+{"run": 2, "kind": "type", "rows": 4, "kernel": "gate_up_IQ4XS", "B": 2, "us_per_layer_median": 175.6, "us_min": 174.6, "us_max": 176.7, "gbs": 99.2}
+{"run": 2, "kind": "type", "rows": 4, "kernel": "down_IQ4NL", "B": 2, "us_per_layer_median": 83.3, "us_min": 81.5, "us_max": 84.0, "gbs": 110.7}
+{"run": 2, "kind": "type", "rows": 4, "kernel": "down_Q20", "B": 2, "us_per_layer_median": 67.6, "us_min": 66.3, "us_max": 69.1, "gbs": 68.2}
+{"run": 2, "kind": "type", "rows": 4, "kernel": "gate_up_IQ2S", "B": 3, "us_per_layer_median": 242.9, "us_min": 240.9, "us_max": 244.0, "gbs": 43.2}
+{"run": 2, "kind": "type", "rows": 4, "kernel": "gate_up_IQ3XXS", "B": 3, "us_per_layer_median": 235.6, "us_min": 234.8, "us_max": 237.8, "gbs": 53.2}
+{"run": 2, "kind": "type", "rows": 4, "kernel": "gate_up_IQ3S", "B": 3, "us_per_layer_median": 241.6, "us_min": 240.7, "us_max": 244.9, "gbs": 58.3}
+{"run": 2, "kind": "type", "rows": 4, "kernel": "gate_up_IQ4XS", "B": 3, "us_per_layer_median": 257.7, "us_min": 256.3, "us_max": 258.6, "gbs": 67.6}
+{"run": 2, "kind": "type", "rows": 4, "kernel": "down_IQ4NL", "B": 3, "us_per_layer_median": 119.2, "us_min": 118.2, "us_max": 120.4, "gbs": 77.3}
+{"run": 2, "kind": "type", "rows": 4, "kernel": "down_Q20", "B": 3, "us_per_layer_median": 103.4, "us_min": 101.6, "us_max": 105.1, "gbs": 44.6}
+{"run": 2, "kind": "type", "rows": 4, "kernel": "gate_up_IQ2S", "B": 4, "us_per_layer_median": 293.5, "us_min": 292.2, "us_max": 296.4, "gbs": 35.8}
+{"run": 2, "kind": "type", "rows": 4, "kernel": "gate_up_IQ3XXS", "B": 4, "us_per_layer_median": 284.4, "us_min": 281.8, "us_max": 285.8, "gbs": 44.1}
+{"run": 2, "kind": "type", "rows": 4, "kernel": "gate_up_IQ3S", "B": 4, "us_per_layer_median": 299.0, "us_min": 297.1, "us_max": 300.9, "gbs": 47.1}
+{"run": 2, "kind": "type", "rows": 4, "kernel": "gate_up_IQ4XS", "B": 4, "us_per_layer_median": 324.6, "us_min": 323.8, "us_max": 326.8, "gbs": 53.6}
+{"run": 2, "kind": "type", "rows": 4, "kernel": "down_IQ4NL", "B": 4, "us_per_layer_median": 221.1, "us_min": 219.8, "us_max": 224.2, "gbs": 41.7}
+{"run": 2, "kind": "type", "rows": 4, "kernel": "down_Q20", "B": 4, "us_per_layer_median": 127.5, "us_min": 126.3, "us_max": 129.5, "gbs": 36.1}
+{"run": 2, "kind": "token", "rows": 4, "layers": 48, "B": 1, "ms_median": 10.213, "ms_min": 10.160, "ms_max": 10.476, "expert_bytes": 982272000, "gbs": 96.2}
+{"run": 2, "kind": "token", "rows": 4, "layers": 48, "B": 2, "ms_median": 12.831, "ms_min": 12.763, "ms_max": 13.071, "expert_bytes": 982272000, "gbs": 76.6}
+{"run": 2, "kind": "token", "rows": 4, "layers": 48, "B": 3, "ms_median": 17.339, "ms_min": 17.197, "ms_max": 17.560, "expert_bytes": 982272000, "gbs": 56.7}
+{"run": 2, "kind": "token", "rows": 4, "layers": 48, "B": 4, "ms_median": 24.050, "ms_min": 23.981, "ms_max": 24.287, "expert_bytes": 982272000, "gbs": 40.8}
+{"run": 3, "kind": "check", "rows": 1, "gate": "IQ2S", "down": "IQ4NL", "B": 1, "rel_err": 1.13e-07}
+{"run": 3, "kind": "check", "rows": 1, "gate": "IQ2S", "down": "IQ4NL", "B": 2, "rel_err": 1.13e-07}
+{"run": 3, "kind": "check", "rows": 1, "gate": "IQ2S", "down": "IQ4NL", "B": 3, "rel_err": 1.00e-07}
+{"run": 3, "kind": "check", "rows": 1, "gate": "IQ2S", "down": "IQ4NL", "B": 4, "rel_err": 1.00e-07}
+{"run": 3, "kind": "check", "rows": 1, "gate": "IQ3XXS", "down": "IQ4NL", "B": 1, "rel_err": 1.23e-07}
+{"run": 3, "kind": "check", "rows": 1, "gate": "IQ3XXS", "down": "IQ4NL", "B": 2, "rel_err": 9.67e-08}
+{"run": 3, "kind": "check", "rows": 1, "gate": "IQ3XXS", "down": "IQ4NL", "B": 3, "rel_err": 1.12e-07}
+{"run": 3, "kind": "check", "rows": 1, "gate": "IQ3XXS", "down": "IQ4NL", "B": 4, "rel_err": 1.12e-07}
+{"run": 3, "kind": "check", "rows": 1, "gate": "IQ3S", "down": "IQ4NL", "B": 1, "rel_err": 1.17e-07}
+{"run": 3, "kind": "check", "rows": 1, "gate": "IQ3S", "down": "IQ4NL", "B": 2, "rel_err": 1.13e-07}
+{"run": 3, "kind": "check", "rows": 1, "gate": "IQ3S", "down": "IQ4NL", "B": 3, "rel_err": 9.10e-08}
+{"run": 3, "kind": "check", "rows": 1, "gate": "IQ3S", "down": "IQ4NL", "B": 4, "rel_err": 9.10e-08}
+{"run": 3, "kind": "check", "rows": 1, "gate": "IQ4XS", "down": "IQ4NL", "B": 1, "rel_err": 8.20e-08}
+{"run": 3, "kind": "check", "rows": 1, "gate": "IQ4XS", "down": "IQ4NL", "B": 2, "rel_err": 7.34e-08}
+{"run": 3, "kind": "check", "rows": 1, "gate": "IQ4XS", "down": "IQ4NL", "B": 3, "rel_err": 7.34e-08}
+{"run": 3, "kind": "check", "rows": 1, "gate": "IQ4XS", "down": "IQ4NL", "B": 4, "rel_err": 7.34e-08}
+{"run": 3, "kind": "check", "rows": 1, "gate": "IQ2S", "down": "Q20", "B": 1, "rel_err": 1.20e-07}
+{"run": 3, "kind": "check", "rows": 1, "gate": "IQ2S", "down": "Q20", "B": 2, "rel_err": 1.28e-07}
+{"run": 3, "kind": "check", "rows": 1, "gate": "IQ2S", "down": "Q20", "B": 3, "rel_err": 1.49e-07}
+{"run": 3, "kind": "check", "rows": 1, "gate": "IQ2S", "down": "Q20", "B": 4, "rel_err": 1.49e-07}
+{"run": 3, "kind": "check", "rows": 1, "gate": "IQ3XXS", "down": "Q20", "B": 1, "rel_err": 2.36e-07}
+{"run": 3, "kind": "check", "rows": 1, "gate": "IQ3XXS", "down": "Q20", "B": 2, "rel_err": 2.36e-07}
+{"run": 3, "kind": "check", "rows": 1, "gate": "IQ3XXS", "down": "Q20", "B": 3, "rel_err": 1.57e-07}
+{"run": 3, "kind": "check", "rows": 1, "gate": "IQ3XXS", "down": "Q20", "B": 4, "rel_err": 1.57e-07}
+{"run": 3, "kind": "type", "rows": 1, "kernel": "gate_up_IQ2S", "B": 1, "us_per_layer_median": 219.3, "us_min": 218.6, "us_max": 220.2, "gbs": 47.9}
+{"run": 3, "kind": "type", "rows": 1, "kernel": "gate_up_IQ3XXS", "B": 1, "us_per_layer_median": 157.7, "us_min": 156.3, "us_max": 157.9, "gbs": 79.5}
+{"run": 3, "kind": "type", "rows": 1, "kernel": "gate_up_IQ3S", "B": 1, "us_per_layer_median": 175.8, "us_min": 173.7, "us_max": 176.1, "gbs": 80.1}
+{"run": 3, "kind": "type", "rows": 1, "kernel": "gate_up_IQ4XS", "B": 1, "us_per_layer_median": 147.5, "us_min": 146.9, "us_max": 148.4, "gbs": 118.0}
+{"run": 3, "kind": "type", "rows": 1, "kernel": "down_IQ4NL", "B": 1, "us_per_layer_median": 82.3, "us_min": 81.2, "us_max": 82.8, "gbs": 112.0}
+{"run": 3, "kind": "type", "rows": 1, "kernel": "down_Q20", "B": 1, "us_per_layer_median": 78.4, "us_min": 77.6, "us_max": 79.0, "gbs": 58.8}
+{"run": 3, "kind": "type", "rows": 1, "kernel": "gate_up_IQ2S", "B": 2, "us_per_layer_median": 349.7, "us_min": 348.7, "us_max": 352.2, "gbs": 30.0}
+{"run": 3, "kind": "type", "rows": 1, "kernel": "gate_up_IQ3XXS", "B": 2, "us_per_layer_median": 222.9, "us_min": 220.9, "us_max": 223.3, "gbs": 56.3}
+{"run": 3, "kind": "type", "rows": 1, "kernel": "gate_up_IQ3S", "B": 2, "us_per_layer_median": 254.7, "us_min": 253.1, "us_max": 255.1, "gbs": 55.3}
+{"run": 3, "kind": "type", "rows": 1, "kernel": "gate_up_IQ4XS", "B": 2, "us_per_layer_median": 210.0, "us_min": 208.0, "us_max": 211.5, "gbs": 82.9}
+{"run": 3, "kind": "type", "rows": 1, "kernel": "down_IQ4NL", "B": 2, "us_per_layer_median": 112.1, "us_min": 111.5, "us_max": 112.6, "gbs": 82.2}
+{"run": 3, "kind": "type", "rows": 1, "kernel": "down_Q20", "B": 2, "us_per_layer_median": 94.5, "us_min": 93.5, "us_max": 95.1, "gbs": 48.7}
+{"run": 3, "kind": "type", "rows": 1, "kernel": "gate_up_IQ2S", "B": 3, "us_per_layer_median": 460.3, "us_min": 459.6, "us_max": 461.5, "gbs": 22.8}
+{"run": 3, "kind": "type", "rows": 1, "kernel": "gate_up_IQ3XXS", "B": 3, "us_per_layer_median": 338.0, "us_min": 336.6, "us_max": 339.7, "gbs": 37.1}
+{"run": 3, "kind": "type", "rows": 1, "kernel": "gate_up_IQ3S", "B": 3, "us_per_layer_median": 374.1, "us_min": 373.6, "us_max": 376.0, "gbs": 37.6}
+{"run": 3, "kind": "type", "rows": 1, "kernel": "gate_up_IQ4XS", "B": 3, "us_per_layer_median": 325.0, "us_min": 324.4, "us_max": 325.5, "gbs": 53.6}
+{"run": 3, "kind": "type", "rows": 1, "kernel": "down_IQ4NL", "B": 3, "us_per_layer_median": 157.5, "us_min": 156.6, "us_max": 157.9, "gbs": 58.5}
+{"run": 3, "kind": "type", "rows": 1, "kernel": "down_Q20", "B": 3, "us_per_layer_median": 127.4, "us_min": 126.3, "us_max": 128.0, "gbs": 36.2}
+{"run": 3, "kind": "type", "rows": 1, "kernel": "gate_up_IQ2S", "B": 4, "us_per_layer_median": 588.4, "us_min": 586.8, "us_max": 589.1, "gbs": 17.8}
+{"run": 3, "kind": "type", "rows": 1, "kernel": "gate_up_IQ3XXS", "B": 4, "us_per_layer_median": 466.6, "us_min": 465.0, "us_max": 467.2, "gbs": 26.9}
+{"run": 3, "kind": "type", "rows": 1, "kernel": "gate_up_IQ3S", "B": 4, "us_per_layer_median": 502.4, "us_min": 500.5, "us_max": 505.4, "gbs": 28.0}
+{"run": 3, "kind": "type", "rows": 1, "kernel": "gate_up_IQ4XS", "B": 4, "us_per_layer_median": 443.0, "us_min": 441.9, "us_max": 444.2, "gbs": 39.3}
+{"run": 3, "kind": "type", "rows": 1, "kernel": "down_IQ4NL", "B": 4, "us_per_layer_median": 203.9, "us_min": 202.1, "us_max": 205.1, "gbs": 45.2}
+{"run": 3, "kind": "type", "rows": 1, "kernel": "down_Q20", "B": 4, "us_per_layer_median": 160.9, "us_min": 160.4, "us_max": 161.7, "gbs": 28.6}
+{"run": 3, "kind": "token", "rows": 1, "layers": 48, "B": 1, "ms_median": 12.904, "ms_min": 12.749, "ms_max": 12.966, "expert_bytes": 982272000, "gbs": 76.1}
+{"run": 3, "kind": "token", "rows": 1, "layers": 48, "B": 2, "ms_median": 18.803, "ms_min": 18.760, "ms_max": 18.890, "expert_bytes": 982272000, "gbs": 52.2}
+{"run": 3, "kind": "token", "rows": 1, "layers": 48, "B": 3, "ms_median": 26.270, "ms_min": 26.121, "ms_max": 26.470, "expert_bytes": 982272000, "gbs": 37.4}
+{"run": 3, "kind": "token", "rows": 1, "layers": 48, "B": 4, "ms_median": 34.550, "ms_min": 34.456, "ms_max": 34.680, "expert_bytes": 982272000, "gbs": 28.4}
+{"run": 3, "kind": "check", "rows": 4, "gate": "IQ2S", "down": "IQ4NL", "B": 1, "rel_err": 1.13e-07}
+{"run": 3, "kind": "check", "rows": 4, "gate": "IQ2S", "down": "IQ4NL", "B": 2, "rel_err": 1.13e-07}
+{"run": 3, "kind": "check", "rows": 4, "gate": "IQ2S", "down": "IQ4NL", "B": 3, "rel_err": 1.00e-07}
+{"run": 3, "kind": "check", "rows": 4, "gate": "IQ2S", "down": "IQ4NL", "B": 4, "rel_err": 1.00e-07}
+{"run": 3, "kind": "check", "rows": 4, "gate": "IQ3XXS", "down": "IQ4NL", "B": 1, "rel_err": 1.23e-07}
+{"run": 3, "kind": "check", "rows": 4, "gate": "IQ3XXS", "down": "IQ4NL", "B": 2, "rel_err": 9.67e-08}
+{"run": 3, "kind": "check", "rows": 4, "gate": "IQ3XXS", "down": "IQ4NL", "B": 3, "rel_err": 1.12e-07}
+{"run": 3, "kind": "check", "rows": 4, "gate": "IQ3XXS", "down": "IQ4NL", "B": 4, "rel_err": 1.12e-07}
+{"run": 3, "kind": "check", "rows": 4, "gate": "IQ3S", "down": "IQ4NL", "B": 1, "rel_err": 1.17e-07}
+{"run": 3, "kind": "check", "rows": 4, "gate": "IQ3S", "down": "IQ4NL", "B": 2, "rel_err": 1.13e-07}
+{"run": 3, "kind": "check", "rows": 4, "gate": "IQ3S", "down": "IQ4NL", "B": 3, "rel_err": 9.10e-08}
+{"run": 3, "kind": "check", "rows": 4, "gate": "IQ3S", "down": "IQ4NL", "B": 4, "rel_err": 9.10e-08}
+{"run": 3, "kind": "check", "rows": 4, "gate": "IQ4XS", "down": "IQ4NL", "B": 1, "rel_err": 8.20e-08}
+{"run": 3, "kind": "check", "rows": 4, "gate": "IQ4XS", "down": "IQ4NL", "B": 2, "rel_err": 7.34e-08}
+{"run": 3, "kind": "check", "rows": 4, "gate": "IQ4XS", "down": "IQ4NL", "B": 3, "rel_err": 7.34e-08}
+{"run": 3, "kind": "check", "rows": 4, "gate": "IQ4XS", "down": "IQ4NL", "B": 4, "rel_err": 7.34e-08}
+{"run": 3, "kind": "check", "rows": 4, "gate": "IQ2S", "down": "Q20", "B": 1, "rel_err": 1.20e-07}
+{"run": 3, "kind": "check", "rows": 4, "gate": "IQ2S", "down": "Q20", "B": 2, "rel_err": 1.28e-07}
+{"run": 3, "kind": "check", "rows": 4, "gate": "IQ2S", "down": "Q20", "B": 3, "rel_err": 1.49e-07}
+{"run": 3, "kind": "check", "rows": 4, "gate": "IQ2S", "down": "Q20", "B": 4, "rel_err": 1.49e-07}
+{"run": 3, "kind": "check", "rows": 4, "gate": "IQ3XXS", "down": "Q20", "B": 1, "rel_err": 2.36e-07}
+{"run": 3, "kind": "check", "rows": 4, "gate": "IQ3XXS", "down": "Q20", "B": 2, "rel_err": 2.36e-07}
+{"run": 3, "kind": "check", "rows": 4, "gate": "IQ3XXS", "down": "Q20", "B": 3, "rel_err": 1.57e-07}
+{"run": 3, "kind": "check", "rows": 4, "gate": "IQ3XXS", "down": "Q20", "B": 4, "rel_err": 1.57e-07}
+{"run": 3, "kind": "type", "rows": 4, "kernel": "gate_up_IQ2S", "B": 1, "us_per_layer_median": 154.8, "us_min": 153.0, "us_max": 155.4, "gbs": 67.8}
+{"run": 3, "kind": "type", "rows": 4, "kernel": "gate_up_IQ3XXS", "B": 1, "us_per_layer_median": 147.1, "us_min": 146.5, "us_max": 147.9, "gbs": 85.3}
+{"run": 3, "kind": "type", "rows": 4, "kernel": "gate_up_IQ3S", "B": 1, "us_per_layer_median": 141.5, "us_min": 140.7, "us_max": 142.0, "gbs": 99.5}
+{"run": 3, "kind": "type", "rows": 4, "kernel": "gate_up_IQ4XS", "B": 1, "us_per_layer_median": 143.3, "us_min": 142.3, "us_max": 143.6, "gbs": 121.5}
+{"run": 3, "kind": "type", "rows": 4, "kernel": "down_IQ4NL", "B": 1, "us_per_layer_median": 67.1, "us_min": 66.2, "us_max": 67.7, "gbs": 137.4}
+{"run": 3, "kind": "type", "rows": 4, "kernel": "down_Q20", "B": 1, "us_per_layer_median": 54.2, "us_min": 52.7, "us_max": 55.0, "gbs": 85.0}
+{"run": 3, "kind": "type", "rows": 4, "kernel": "gate_up_IQ2S", "B": 2, "us_per_layer_median": 203.4, "us_min": 202.4, "us_max": 204.0, "gbs": 51.6}
+{"run": 3, "kind": "type", "rows": 4, "kernel": "gate_up_IQ3XXS", "B": 2, "us_per_layer_median": 173.2, "us_min": 171.3, "us_max": 173.8, "gbs": 72.4}
+{"run": 3, "kind": "type", "rows": 4, "kernel": "gate_up_IQ3S", "B": 2, "us_per_layer_median": 169.7, "us_min": 169.5, "us_max": 170.5, "gbs": 83.0}
+{"run": 3, "kind": "type", "rows": 4, "kernel": "gate_up_IQ4XS", "B": 2, "us_per_layer_median": 176.2, "us_min": 175.6, "us_max": 177.6, "gbs": 98.8}
+{"run": 3, "kind": "type", "rows": 4, "kernel": "down_IQ4NL", "B": 2, "us_per_layer_median": 83.6, "us_min": 81.5, "us_max": 84.6, "gbs": 110.2}
+{"run": 3, "kind": "type", "rows": 4, "kernel": "down_Q20", "B": 2, "us_per_layer_median": 69.0, "us_min": 68.1, "us_max": 69.1, "gbs": 66.8}
+{"run": 3, "kind": "type", "rows": 4, "kernel": "gate_up_IQ2S", "B": 3, "us_per_layer_median": 243.2, "us_min": 242.8, "us_max": 247.2, "gbs": 43.2}
+{"run": 3, "kind": "type", "rows": 4, "kernel": "gate_up_IQ3XXS", "B": 3, "us_per_layer_median": 236.0, "us_min": 234.3, "us_max": 237.6, "gbs": 53.1}
+{"run": 3, "kind": "type", "rows": 4, "kernel": "gate_up_IQ3S", "B": 3, "us_per_layer_median": 241.9, "us_min": 240.7, "us_max": 242.9, "gbs": 58.2}
+{"run": 3, "kind": "type", "rows": 4, "kernel": "gate_up_IQ4XS", "B": 3, "us_per_layer_median": 257.5, "us_min": 256.7, "us_max": 259.0, "gbs": 67.6}
+{"run": 3, "kind": "type", "rows": 4, "kernel": "down_IQ4NL", "B": 3, "us_per_layer_median": 120.3, "us_min": 119.6, "us_max": 120.8, "gbs": 76.6}
+{"run": 3, "kind": "type", "rows": 4, "kernel": "down_Q20", "B": 3, "us_per_layer_median": 103.8, "us_min": 102.4, "us_max": 104.2, "gbs": 44.4}
+{"run": 3, "kind": "type", "rows": 4, "kernel": "gate_up_IQ2S", "B": 4, "us_per_layer_median": 294.4, "us_min": 292.7, "us_max": 295.3, "gbs": 35.6}
+{"run": 3, "kind": "type", "rows": 4, "kernel": "gate_up_IQ3XXS", "B": 4, "us_per_layer_median": 283.3, "us_min": 281.2, "us_max": 285.0, "gbs": 44.3}
+{"run": 3, "kind": "type", "rows": 4, "kernel": "gate_up_IQ3S", "B": 4, "us_per_layer_median": 299.4, "us_min": 298.0, "us_max": 300.5, "gbs": 47.0}
+{"run": 3, "kind": "type", "rows": 4, "kernel": "gate_up_IQ4XS", "B": 4, "us_per_layer_median": 324.7, "us_min": 322.3, "us_max": 326.6, "gbs": 53.6}
+{"run": 3, "kind": "type", "rows": 4, "kernel": "down_IQ4NL", "B": 4, "us_per_layer_median": 221.7, "us_min": 220.8, "us_max": 222.9, "gbs": 41.6}
+{"run": 3, "kind": "type", "rows": 4, "kernel": "down_Q20", "B": 4, "us_per_layer_median": 128.1, "us_min": 126.0, "us_max": 128.7, "gbs": 36.0}
+{"run": 3, "kind": "token", "rows": 4, "layers": 48, "B": 1, "ms_median": 10.380, "ms_min": 10.292, "ms_max": 10.425, "expert_bytes": 982272000, "gbs": 94.6}
+{"run": 3, "kind": "token", "rows": 4, "layers": 48, "B": 2, "ms_median": 12.915, "ms_min": 12.774, "ms_max": 12.986, "expert_bytes": 982272000, "gbs": 76.1}
+{"run": 3, "kind": "token", "rows": 4, "layers": 48, "B": 3, "ms_median": 17.419, "ms_min": 17.301, "ms_max": 17.488, "expert_bytes": 982272000, "gbs": 56.4}
+{"run": 3, "kind": "token", "rows": 4, "layers": 48, "B": 4, "ms_median": 24.116, "ms_min": 23.905, "ms_max": 24.185, "expert_bytes": 982272000, "gbs": 40.7}

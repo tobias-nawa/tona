@@ -1,0 +1,30 @@
+line-length = 120
+target-version = "py311"
+extend-exclude = ["engine/third_party", "work", "research"]
+
+[lint]
+select = [
+    "E", "F", "W", "I", "B", "UP", "SIM",
+    "S",    # security: exec, hashes, pickle/yaml loads, shell=True, hardcoded secrets, ssl, ftp
+    "RUF",  # ruff's own: unused noqa, mutable class defaults, unused unpacked values, iterable unpacking
+    "PLE",  # pylint errors
+    "PLW",  # pylint warnings: subprocess.run without check, preexec_fn, envvar defaults, redundant lambdas
+    "PLC0206", "PLC0207", "PLR0124",  # dict iteration without items(), needless splits, x != x
+]
+# C90 (McCabe) stays off: lizard limits the cyclomatic complexity of Python functions to 15 (tools/gates/functions.py).
+# Left out, each with its reason (no per-file ignores anywhere):
+# S101   assert: pytest tests are built on it (about 1400 uses)
+# S108   fixed /tmp and /var/tmp paths: the bench sandboxes name their scratch folders on purpose
+# S310   urlopen schemes: every URL is a command-line argument of the developer or an https:// prefix in the code
+# S311   random: seeded sampling for benchmarks and simulations, never a secret
+# S314, S318  stdlib XML: expat has protected against entity expansion since 2.4.1 and resolves no external entities;
+#        the inputs are gcovr's own report, the arXiv API and a test document
+# S603, S607  subprocess with a list and a bare program name: the form of every call here (no shell; 100 and 59 uses)
+# RUF001 ambiguous unicode in strings: tokenizer and hidden-character tests contain such characters as test input
+# PLW0603 global statement: module-level caches and a failure counter in scripts
+# PLW2901 loop variable reassigned: `line = line.strip()` style
+
+ignore = ["S101", "S108", "S310", "S311", "S314", "S318", "S603", "S607", "RUF001", "PLW0603", "PLW2901"]
+
+[format]
+quote-style = "double"

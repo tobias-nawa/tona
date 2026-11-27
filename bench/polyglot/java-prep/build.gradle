@@ -1,0 +1,21 @@
+// Dependency union of the 47 Java exercises (Aider polyglot copy): the common set of every exercise plus the two
+// exercises with extra libraries (rxjava for react, org.json for rest-api). Resolved once at image build time.
+plugins {
+    id "java"
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform("org.junit:junit-bom:5.10.0")
+    testImplementation "org.junit.jupiter:junit-jupiter"
+    testImplementation "org.assertj:assertj-core:3.25.1"
+    implementation "io.reactivex.rxjava2:rxjava:2.2.12"
+    implementation "org.json:json:20190722"
+}
+
+test {
+    useJUnitPlatform()
+}

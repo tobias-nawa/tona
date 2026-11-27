@@ -1,0 +1,161 @@
+{
+  "id": "qwen3-coder-30b-a3b-instruct",
+  "name": "Qwen3-Coder-30B-A3B-Instruct",
+  "vendor": "Alibaba Qwen",
+  "release_date": "2025-07-31",
+  "lineage": {
+    "family": "Qwen3-Coder"
+  },
+  "purpose": "Qwen states: agentic coding and foundational coding tasks, repository-scale understanding, tool calling and browser use among open models.",
+  "tasks": [
+    "coding",
+    "autocomplete"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en"
+    ],
+    "programming": {}
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "LICENSE read: Apache License 2.0 full text (patent grant, NOTICE and modification-notice duties on redistribution)."
+  },
+  "architecture": {
+    "kind": "MoE transformer",
+    "gguf_arch": "qwen3moe",
+    "params_total_b": 30.5,
+    "params_active_b": 3.3,
+    "layers": 48,
+    "attention": "GQA 32 Q / 4 KV",
+    "recurrent": "none",
+    "experts": 128,
+    "experts_active": 8,
+    "context_native": 262144,
+    "context_max": 1000000,
+    "drafter": "none",
+    "why_this_design": "Not stated on the card; the record keeps the layout only (MoE, 30B total, 3B active). Check: the Qwen3-Coder technical report."
+  },
+  "variants": [
+    {
+      "repo": "unsloth/Qwen3-Coder-30B-A3B-Instruct-GGUF",
+      "format": "GGUF, Q4_K_M 18.6 GB, UD-Q4_K_XL 17.7 GB, UD-IQ3_XXS 12.8 GB, Q8_0 32.5 GB",
+      "official": false,
+      "size_gb": 18.6,
+      "notes": "size_gb is the Q4_K_M file"
+    },
+    {
+      "repo": "Qwen/Qwen3-Coder-30B-A3B-Instruct-FP8",
+      "format": "FP8",
+      "official": true
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "variant": "Q4_K_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (18.6 GB) against the budget of docs/hardware: 9.6 GB VRAM plus 50 GB RAM = 60 GB; about 52% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that)"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "Q4_K_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (18.6 GB) against the budget of docs/hardware: 13.6 GB VRAM plus 50 GB RAM = 64 GB; about 73% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that)"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "Q4_K_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (18.6 GB) against the budget of docs/hardware: 21.6 GB VRAM plus 82 GB RAM = 104 GB; about 100% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that)"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "Q4_K_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (18.6 GB) against the budget of docs/hardware: 29.6 GB VRAM plus 114 GB RAM = 144 GB; about 100% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that)"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "Q4_K_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (18.6 GB) against the GPU share of docs/hardware (about 12 GB)"
+    },
+    "mac-32gb": {
+      "fits": "marginal",
+      "variant": "Q4_K_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (18.6 GB) against the GPU share of docs/hardware (about 22 GB)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "Q4_K_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (18.6 GB) against the GPU share of docs/hardware (about 52 GB)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "vLLM",
+      "SGLang",
+      "Ollama"
+    ],
+    "notes": "very widely supported; plain attention MoE, not a Tona backend"
+  },
+  "benchmarks": [],
+  "soft": {
+    "strengths": [
+      "Widely supported, 1.96 million downloads, FIM tokens defined in its tokenizer (research/52), can also serve inline completion",
+      "Non-thinking"
+    ],
+    "weaknesses": [
+      "Eighteen months older than the newest hybrids; no numbers on the card"
+    ],
+    "behavior": "Sampling T 0.7, top_p 0.8, top_k 20, repetition_penalty 1.05; no think blocks.",
+    "maturity": "Qwen; a de facto standard local coder since mid-2025."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Apache-2.0 text verified and a FIM-capable coder that runs on 12 to 16 GB classes (UD-Q4_K_XL 17.7 GB), so it keeps a purpose as the editor-autocomplete fallback; behind the 2026 MoE coders on agent benchmarks.",
+    "blockers": [
+      "Tona engine support: none today (not a quality judgement)",
+      "dated agent quality"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/Qwen/Qwen3-Coder-30B-A3B-Instruct",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "page text read through a summarizer (WebFetch)"
+    },
+    {
+      "url": "research/52-purpose-models.md",
+      "kind": "own",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/Qwen/Qwen3-Coder-30B-A3B-Instruct/raw/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    }
+  ],
+  "open_questions": [
+    "Current head-to-head numbers against Ornith-1.5 under one harness",
+    "Per-language quality and independent coding evidence: the Aider polyglot board is stale (mirrors: last update 2025-11-20, no entry for any model of this database), LiveCodeBench and swebench.com publish no per-language numbers for it that we could retrieve. Check: our own Exercism polyglot run per language."
+  ],
+  "last_checked": "2026-11-19"
+}

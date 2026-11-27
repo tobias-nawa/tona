@@ -1,0 +1,186 @@
+{
+  "id": "dots-ocr",
+  "name": "dots.ocr",
+  "vendor": "rednote-hilab (Xiaohongshu)",
+  "release_date": "2025-07-30",
+  "lineage": {
+    "family": "dots",
+    "base_model": "Qwen2.5-VL / aimv2 credited in acknowledgements"
+  },
+  "purpose": "One VLM for layout detection and content recognition of document pages, switched by prompt; multilingual.",
+  "languages": {
+    "natural": [
+      "en",
+      "zh",
+      "many"
+    ]
+  },
+  "license": {
+    "name": "MIT (card tag) plus dots.ocr LICENSE AGREEMENT (custom, MIT prevails on conflict)",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Agreement text read (repo file \"dots.ocr LICENSE AGREEMENT\"): grants commercial use and redistribution, but section 3.3 prohibits extracting sensitive personal data (ID numbers, medical records) without legal basis, \"unauthorized digitization of publications/document scanning or bulk scraping\", and 5.2 prohibits processing GDPR/HIPAA-protected personal data without consent and safeguards; terminates automatically on breach. Card says plain MIT; the agreement adds use limits that matter for invoices and scans of personal documents."
+  },
+  "architecture": {
+    "kind": "vision-language, 1.7B LLM core (Hub metadata 3B total)",
+    "params_total_b": 3.0,
+    "why_this_design": "A single model replaces separate layout and recognition stages (card)."
+  },
+  "variants": [
+    {
+      "repo": "rednote-hilab/dots.ocr",
+      "format": "safetensors BF16",
+      "official": true
+    }
+  ],
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "vLLM",
+      "SGLang",
+      "transformers"
+    ],
+    "notes": "llama.cpp PR 17575 listed in docs/multimodal.md"
+  },
+  "benchmarks": [
+    {
+      "name": "OmniDocBench end-to-end overall edit (lower better)",
+      "score": "0.125 EN / 0.160 ZH",
+      "kind": "vendor",
+      "source": "https://huggingface.co/rednote-hilab/dots.ocr"
+    },
+    {
+      "name": "olmOCR-bench overall",
+      "score": 79.1,
+      "kind": "vendor",
+      "source": "https://huggingface.co/rednote-hilab/dots.ocr"
+    },
+    {
+      "name": "Table TEDS",
+      "score": "88.6 EN / 89.0 ZH",
+      "kind": "vendor",
+      "source": "https://huggingface.co/rednote-hilab/dots.ocr"
+    },
+    {
+      "name": "MDPBench German pages (DE column)",
+      "score": 79.7,
+      "kind": "independent",
+      "source": "https://huggingface.co/datasets/Delores-Lin/MDPBench",
+      "variant": "dots.ocr",
+      "date": "2026-07"
+    },
+    {
+      "name": "MDPBench overall (17 languages)",
+      "score": 76.5,
+      "kind": "independent",
+      "source": "https://huggingface.co/datasets/Delores-Lin/MDPBench",
+      "variant": "dots.ocr",
+      "date": "2026-07"
+    },
+    {
+      "name": "MORE German overall (per-language, 149 languages)",
+      "score": 94.2,
+      "kind": "independent",
+      "source": "https://arxiv.org/html/2607.02956",
+      "variant": "dots.ocr 3B",
+      "date": "2026-07",
+      "harness": "read through a summarizer; MORE overall 84.31, table 39.81"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "multilingual coverage (own bench with 100 languages)",
+      "MIT",
+      "layout detection built in"
+    ],
+    "weaknesses": [
+      "complex tables and formulas not yet handled well",
+      "does not parse pictures",
+      "can loop on long runs of dots or underscores",
+      "not tuned for high-throughput bulk PDFs",
+      "MORE (independent): table score only 39.81 over 149 languages"
+    ],
+    "best_for": [
+      "mixed-language pages with layout needs"
+    ],
+    "maturity": "from July 2025, overtaken on OmniDocBench by newer models; no newer version found on the card"
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "solid German evidence (MDPBench DE 79.7, MORE de 94.2) but superseded by dots.mocr (same license, higher scores) and its license agreement restricts personal-data and scanned-publication use, which collides with typical document-analysis jobs"
+  },
+  "open_questions": [
+    "a legal reading of the agreement clauses 3.3(b)/(c) and 5.2 for local, private use by an individual"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/rednote-hilab/dots.ocr",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/ggml-org/llama.cpp/HEAD/docs/multimodal.md",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/rednote-hilab/dots.ocr/raw/main/dots.ocr%20LICENSE%20AGREEMENT",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/datasets/Delores-Lin/MDPBench",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "MDPBench README table read directly; an earlier summarizer pass mislabeled the Latin-average column as DE, the DE values here come from the dataset README"
+    }
+  ],
+  "tasks": [
+    "documents",
+    "vision"
+  ],
+  "modalities": {
+    "input": [
+      "image",
+      "document"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "about 1B parameters, BF16 about 2 GB"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "BF16 about 2 GB; Tona runs one model at a time, so it replaces the resident model while it works"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate"
+    }
+  },
+  "last_checked": "2026-11-19"
+}

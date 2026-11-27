@@ -1,0 +1,153 @@
+{
+  "id": "qwen-image-2.1-pe",
+  "name": "Qwen-Image-2.1-PE (PE-T2I and PE-I2I prompt rewriters)",
+  "vendor": "Qwen (Alibaba)",
+  "release_date": "2026-09-20",
+  "lineage": {
+    "base_model": "Qwen3.5-VL 9B (card wording; config architecture Qwen3_5ForConditionalGeneration)",
+    "how_derived": "fine-tuned prompt-rewriting models",
+    "family": "qwen-image-2.1"
+  },
+  "purpose": "Prompt rewriting for Qwen-Image-2.1. PE-T2I turns a brief image request in any language into a detailed English prompt plus a recommended aspect ratio; PE-I2I takes a vague editing instruction plus input image(s) and produces a precise, actionable editing prompt (cards).",
+  "tasks": [
+    "other",
+    "vision"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "many"
+    ]
+  },
+  "license": {
+    "name": "Qwen Research License Agreement (release date 2026-09-20)",
+    "verified": true,
+    "commercial_use": "no",
+    "redistribution": "limited",
+    "notes": "LICENSE of Qwen-Image-2.1-PE-T2I read: grant FOR NON-COMMERCIAL PURPOSES ONLY, where Non-Commercial means for research or evaluation purposes only; commercial use needs a separate license from the vendor. Redistribution allowed with a copy of the agreement, modified-file notices and the Qwen attribution notice; models trained or improved with the materials or their outputs must display 'Built with Qwen' or 'Improved using Qwen'; Qwen may not be the primary name of derivatives; governed by Chinese law. PE-I2I carries the same license name; its LICENSE file was not read separately. Verdict policy (README, 2026-11-19): this licence term does not lower tona_fit; kept here for an installer label."
+  },
+  "architecture": {
+    "kind": "hybrid linear-attention plus full attention vision-language model: 32 layers, every 4th layer full attention, hidden 4096, 16 heads / 4 KV heads, vision tower depth 27 (config.json of PE-T2I)",
+    "gguf_arch": "qwen3_5",
+    "params_total_b": 9,
+    "layers": 32,
+    "attention": "3 linear-attention layers to 1 full-attention layer",
+    "recurrent": "linear attention (config keys linear_*, exact kind not stated on the card)",
+    "context_native": 262144
+  },
+  "variants": [
+    {
+      "repo": "Qwen/Qwen-Image-2.1-PE-T2I",
+      "format": "safetensors BF16",
+      "size_gb": 18.84,
+      "official": true,
+      "notes": "four shards plus system_prompt.txt; output is a JSON object (rewritten_prompt, wh_ratio) after a <think> block; card sampling: temperature 1.0, top_p 0.95, top_k 20, max_new_tokens 16256"
+    },
+    {
+      "repo": "Qwen/Qwen-Image-2.1-PE-I2I",
+      "format": "safetensors BF16",
+      "size_gb": 18.84,
+      "official": true,
+      "notes": "output JSON has rewritten_prompt plus either wh_ratio or ratio_follow"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "marginal",
+      "variant": "4-bit quantization (none seen)",
+      "basis": "estimate",
+      "notes": "BF16 18.84 GB does not fit; a 4-bit copy of 9B parameters would be about 5 GB (arithmetic, no quantized repo checked), but it must share the GPU with the image model"
+    },
+    "pc-16gb": {
+      "fits": "marginal",
+      "variant": "4-bit quantization",
+      "basis": "estimate",
+      "notes": "same; runs before the image model, or on CPU/RAM since it is a rewrite step"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "BF16 18.84 GB",
+      "basis": "estimate",
+      "notes": "alone; not together with the image model in BF16"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "BF16",
+      "basis": "estimate"
+    },
+    "mac-16-24gb": {
+      "fits": "marginal",
+      "variant": "4-bit quantization",
+      "basis": "estimate"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "BF16 or 8-bit",
+      "basis": "estimate"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "BF16",
+      "basis": "estimate"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "unknown",
+    "other": [
+      "Transformers >= 5.4.0",
+      "Diffusers QwenImage21Pipeline (consumer of the rewritten prompt)"
+    ],
+    "notes": "The architecture is the one of the Qwen3.5 family, so a Tona Qwen3.5 backend would run it; whether llama.cpp runs this fine-tune was not checked."
+  },
+  "soft": {
+    "strengths": [
+      "Official companion for Qwen-Image-2.1 and its Turbo record: expands short or non-English requests into detailed English prompts with an aspect ratio"
+    ],
+    "weaknesses": [
+      "Research-only license",
+      "Long thinking block before the answer (max_new_tokens 16256 in the card example), so slow as a pre-step",
+      "No benchmark on the cards for the effect of the rewriting on image quality"
+    ],
+    "avoid_for": [
+      "Commercial products"
+    ]
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Only useful in front of Qwen-Image-2.1; the rewriter step could be done by any instruction-following LLM already in Tona, and no measurement shows the fine-tune helps.",
+    "blockers": [
+      "no Tona image engine",
+      "no evidence of gain over a general LLM rewriter"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/Qwen/Qwen-Image-2.1-PE-T2I",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "card, config.json, LICENSE, file sizes"
+    },
+    {
+      "url": "https://huggingface.co/Qwen/Qwen-Image-2.1-PE-I2I",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "card and config.json, file sizes"
+    }
+  ],
+  "open_questions": [
+    "Qwen/Qwen-Image-2.1-Turbo-PE: HF API and raw README return 401 and the repo is absent from the Qwen author listing sorted by creation date (newest 25: Turbo, PE-I2I, PE-T2I, 2.1 present); probably does not exist, not proven",
+    "Whether the Turbo model needs its own rewriter or uses PE-T2I: not stated on the Turbo card",
+    "Quantized or GGUF versions: not searched",
+    "Measured effect of the rewriter on Qwen-Image-2.1 output quality"
+  ],
+  "last_checked": "2026-11-19"
+}

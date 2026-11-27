@@ -1,0 +1,142 @@
+{
+  "id": "haas-ja-v1.0",
+  "name": "Haas-ja-v1.0",
+  "vendor": "Third Intelligence",
+  "release_date": "2026-10-08",
+  "lineage": {
+    "base_model": "Parakeet-TDT architecture, trained for Japanese",
+    "how_derived": "FastConformer encoder + TDT decoder with the LSTM prediction network replaced by Kimi Delta Attention (KDA)",
+    "family": "Haas"
+  },
+  "purpose": "Fast and accurate Japanese speech recognition on the speed-accuracy Pareto frontier of five public Japanese datasets (card).",
+  "tasks": [
+    "audio-transcription"
+  ],
+  "modalities": {
+    "input": [
+      "audio"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "ja"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0 (card tag)",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Front matter and badge say Apache-2.0; no LICENSE file in the repo (404); text not read."
+  },
+  "architecture": {
+    "kind": "FastConformer (24 layers, hidden 1024) + TDT with 2-layer Kimi Delta Attention prediction network, 615.8M parameters, SentencePiece BPE 3072 tokens",
+    "params_total_b": 0.6158,
+    "layers": 24,
+    "recurrent": "KDA in the prediction network"
+  },
+  "variants": [
+    {
+      "repo": "third-intelligence/Haas-ja-v1.0",
+      "format": "NeMo checkpoint",
+      "official": true,
+      "size_gb": 1.23,
+      "notes": "repo total per HF API"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "variant": "1.2 GB",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "1.2 GB",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "1.2 GB",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "1.2 GB",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "variant": "1.2 GB",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "1.2 GB",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "1.2 GB",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "NeMo 2.7 + flash-linear-attention (Triton/CUDA): no CPU, no macOS"
+    ],
+    "notes": "The KDA prediction network needs CUDA kernels, so it is NVIDIA-only as shipped."
+  },
+  "benchmarks": [
+    {
+      "name": "asr-ja-bench (5 public Japanese datasets), CER strict",
+      "score": 6.12,
+      "kind": "vendor",
+      "source": "https://huggingface.co/third-intelligence/Haas-ja-v1.0",
+      "unit": "% CER",
+      "variant": "bf16",
+      "harness": "authors' own benchmark and metric (jacer); card calls it the most accurate of the open models they evaluated"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "Japanese-specific, 615.8M parameters"
+    ],
+    "weaknesses": [
+      "NVIDIA/Triton only as released"
+    ],
+    "maturity": "4.3k downloads, 79 likes in 6 weeks."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Japanese-only; no German relevance. Listed as a Japanese reference.",
+    "blockers": [
+      "NVIDIA-only inference code"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/third-intelligence/Haas-ja-v1.0",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README, HF API"
+    }
+  ],
+  "open_questions": [
+    "Blog with full results not read",
+    "Benchmark is the authors' own"
+  ],
+  "last_checked": "2026-11-19"
+}

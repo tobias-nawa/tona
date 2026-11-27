@@ -1,0 +1,95 @@
+{
+  "id": "minicpm5-2b",
+  "name": "MiniCPM5-2B",
+  "vendor": "OpenBMB",
+  "release_date": "2026-09-06",
+  "lineage": {
+    "family": "MiniCPM5 (1B, 2B)",
+    "how_derived": "base training (stable + decay), mid-training, then post-training: 400B tokens of deep-thinking SFT, RL teachers per domain (critic-based algorithm of JustRL II), and on-policy distillation (OPD) merging 16 expert models (5 agentic)"
+  },
+  "purpose": "The builder states it is built for on-device and local deployment in resource-constrained settings: local assistants, coding agents, tool-use workflows and reasoning where a compact model is preferred, with native long context. The open data (UltraData family) is released alongside.",
+  "tasks": ["general", "coding", "math"],
+  "modalities": {"input": ["text"], "output": ["text"]},
+  "languages": {"natural": ["en", "zh"]},
+  "license": {
+    "name": "Apache-2.0",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card tag apache-2.0; the LICENSE text itself was not opened (the repo has no LICENSE file in the sibling list checked)."
+  },
+  "architecture": {
+    "kind": "dense transformer (standard LlamaForCausalLM)",
+    "gguf_arch": "llama",
+    "params_total_b": 2.52,
+    "params_active_b": 2.52,
+    "layers": 42,
+    "attention": "GQA, 16 Q heads / 2 KV heads, head dim 128, full attention",
+    "recurrent": "none",
+    "context_native": 131072,
+    "context_max": 131072,
+    "drafter": "separate DSpark drafter (openbmb/MiniCPM5-2B-DSpark, 0.65 GB, with a GGUF variant)",
+    "why_this_design": "The card says it scales up the MiniCPM5-1B recipe to a plain Llama-architecture 2B for on-device use; it gives no reasoning for depth or GQA ratio. Emphasis is on data (UltraData tiered data management) and post-training."
+  },
+  "variants": [
+    {"repo": "openbmb/MiniCPM5-2B-GGUF", "format": "GGUF Q4_K_M", "size_gb": 1.56, "official": true, "notes": "Q8_0 2.68, F16 5.04"},
+    {"repo": "openbmb/MiniCPM5-2B", "format": "safetensors BF16", "size_gb": 5.04, "official": true, "notes": "also -SFT, -Midtrain, -Base checkpoints, MLX 4bit, GPTQ 4bit, LiteRT"},
+    {"repo": "openbmb/MiniCPM5-2B-DSpark", "format": "safetensors drafter", "size_gb": 0.65, "official": true}
+  ],
+  "hardware_fit": {
+    "pc-12gb": {"fits": "yes", "basis": "estimate", "variant": "F16/BF16", "notes": "5 GB in full precision"},
+    "pc-16gb": {"fits": "yes", "basis": "estimate", "variant": "BF16"},
+    "pc-24gb": {"fits": "yes", "basis": "estimate", "variant": "BF16"},
+    "pc-32gb": {"fits": "yes", "basis": "estimate", "variant": "BF16"},
+    "mac-16-24gb": {"fits": "yes", "basis": "estimate", "variant": "BF16"},
+    "mac-32gb": {"fits": "yes", "basis": "estimate", "variant": "BF16"},
+    "mac-64gb+": {"fits": "yes", "basis": "estimate", "variant": "BF16"}
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": ["Transformers", "vLLM", "Ollama", "LM Studio", "MLX", "LiteRT-LM"],
+    "notes": "Plain Llama architecture, so any Llama-capable engine (Tona's dense path included) loads it; official GGUF exists. The card does not list SGLang or vLLM versions."
+  },
+  "benchmarks": [
+    {"name": "Average over the card's 31 benchmarks", "score": 53.9, "kind": "vendor", "variant": "BF16", "source": "https://huggingface.co/openbmb/MiniCPM5-2B", "unit": "(Qwen3.5-4B 51.1, granite-4.2-3B 42.7, LFM2.5-2.6B 33.2)"},
+    {"name": "SWE-bench Verified", "score": 46.4, "kind": "vendor", "source": "https://huggingface.co/openbmb/MiniCPM5-2B", "unit": "% (Qwen3.5-4B 33.6, granite-4.2-3B 36.8)"},
+    {"name": "LiveCodeBench v6", "score": 69.1, "kind": "vendor", "source": "https://huggingface.co/openbmb/MiniCPM5-2B", "unit": "(Qwen3.5-4B 56.4)"},
+    {"name": "AIME 2026", "score": 86.5, "kind": "vendor", "source": "https://huggingface.co/openbmb/MiniCPM5-2B", "unit": "% (Qwen3.5-4B 82.7)"},
+    {"name": "Terminal-Bench 2.1", "score": 8.6, "kind": "vendor", "source": "https://huggingface.co/openbmb/MiniCPM5-2B", "unit": "% (Qwen3.5-4B 25.8)"},
+    {"name": "MMLU-Pro", "score": 70.8, "kind": "vendor", "source": "https://huggingface.co/openbmb/MiniCPM5-2B", "unit": "(Qwen3.5-4B 78.0)"},
+    {"name": "GPQA Diamond", "score": 70.2, "kind": "vendor", "source": "https://huggingface.co/openbmb/MiniCPM5-2B", "unit": "% (Qwen3.5-4B 77.1)"},
+    {"name": "BFCL v4", "score": 66.6, "kind": "vendor", "source": "https://huggingface.co/openbmb/MiniCPM5-2B"},
+    {"name": "AA-LCR / NoLiMa (long context)", "score": "59.0 / 68.1", "kind": "vendor", "source": "https://huggingface.co/openbmb/MiniCPM5-2B"}
+  ],
+  "soft": {
+    "strengths": ["Vendor numbers above same-size and several 4B models on coding, math, long context and tool use", "Tiny: 1.6 GB at Q4_K_M, runs CPU-only (a user measured Q3 to Q8 throughput on a 2016 i3 laptop CPU)", "Plain Llama architecture, simple to support and to speculate with (DSpark)"],
+    "weaknesses": ["Knowledge below Qwen3.5-4B (MMLU-Pro 70.8 vs 78.0)", "Terminal-Bench 8.6 against 25.8 for Qwen3.5-4B (vendor table): weak on long terminal agent work", "Two users report degraded answers and refusals once function tools are supplied; chat template bugs with string tool-call arguments (open discussions)"],
+    "behavior": "Deep-thinking (long chain of thought) model after SFT/RL/OPD. A user complains that with tools attached the model skips tools that do not match and gives up.",
+    "best_for": ["small local assistant or sub-agent", "draft model research", "CPU-only machines"],
+    "avoid_for": ["knowledge questions", "long terminal agent tasks"],
+    "user_reports": [
+      {"summary": "Several Chinese-language reports: answer quality and world knowledge collapse when function tools are added; the model gives up when no matching tool exists", "sentiment": "negative", "source": "https://huggingface.co/openbmb/MiniCPM5-2B/discussions/25", "date": "2026-11-02"},
+      {"summary": "'Exceptionally good for its size'; asks for a 48B-A4B MoE", "sentiment": "positive", "source": "https://huggingface.co/openbmb/MiniCPM5-2B/discussions/21", "date": "2026-09-27"},
+      {"summary": "Chat template crashes on string tool-call arguments and writes non-string values as Python repr", "sentiment": "negative", "source": "https://huggingface.co/openbmb/MiniCPM5-2B/discussions/30", "date": "2026-11-09"}
+    ],
+    "maturity": "OpenBMB has shipped MiniCPM since 2024 with a steady cadence; 949k downloads of the BF16 repo and 633k of the GGUF within 10 weeks; active discussion section (29 threads)."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Standard Llama architecture, permissive license and strong vendor numbers per size, but 2.5B parameters is below what a coding-agent worker needs, and terminal-agent results are weak. Useful as a draft or sub-agent model; no independent evidence yet.",
+    "blockers": ["no independent evaluation", "tool-use behavior reports and template bugs"]
+  },
+  "sources": [
+    {"url": "https://huggingface.co/openbmb/MiniCPM5-2B", "kind": "primary", "checked": "2026-11-19", "note": "README, config.json, benchmark table read"},
+    {"url": "https://huggingface.co/openbmb/MiniCPM5-2B-GGUF", "kind": "primary", "checked": "2026-11-19", "note": "sizes via the HF API"},
+    {"url": "https://huggingface.co/openbmb/MiniCPM5-2B/discussions", "kind": "primary", "checked": "2026-11-19", "note": "discussion text via the HF API; Chinese threads read in outline"}
+  ],
+  "open_questions": [
+    "Independent coding or agent evaluation (all numbers are vendor-run; some scores marked as taken from other reports)",
+    "License text (tag only)",
+    "Real DSpark speed-up and whether the template bugs are fixed",
+    "MiniCPM5-1B not recorded"
+  ],
+  "last_checked": "2026-11-19"
+}

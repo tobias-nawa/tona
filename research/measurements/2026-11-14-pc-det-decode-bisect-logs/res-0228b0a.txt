@@ -1,0 +1,45 @@
+engine/gpu/mega.hip:102:0: Function Name: _ZN4tona3gpu10k_q8_to_q2EPKhPhNS0_6Q2DimsE
+engine/gpu/mega.hip:102:0:     TotalSGPRs: 29
+engine/gpu/mega.hip:102:0:     VGPRs: 98
+engine/gpu/mega.hip:102:0:     ScratchSize [bytes/lane]: 272
+engine/gpu/mega.hip:102:0:     Dynamic Stack: False
+engine/gpu/mega.hip:102:0:     Occupancy [waves/SIMD]: 12
+engine/gpu/mega.hip:102:0:     SGPRs Spill: 0
+engine/gpu/mega.hip:102:0:     VGPRs Spill: 0
+engine/gpu/mega.hip:102:0:     LDS Size [bytes/block]: 0
+engine/gpu/mega.hip:126:0: Function Name: _ZN4tona3gpu10k_mtp_rowsEPKhPhPKili
+engine/gpu/mega.hip:126:0:     TotalSGPRs: 19
+engine/gpu/mega.hip:126:0:     VGPRs: 6
+engine/gpu/mega.hip:126:0:     ScratchSize [bytes/lane]: 0
+engine/gpu/mega.hip:126:0:     Dynamic Stack: False
+engine/gpu/mega.hip:126:0:     Occupancy [waves/SIMD]: 16
+engine/gpu/mega.hip:126:0:     SGPRs Spill: 0
+engine/gpu/mega.hip:126:0:     VGPRs Spill: 0
+engine/gpu/mega.hip:126:0:     LDS Size [bytes/block]: 0
+engine/gpu/mega_kernel.h:173:0: Function Name: _ZN4tona3gpu12_GLOBAL__N_16k_megaILi1EEEvPKNS0_6MegaOpEPKNS1_7DevTaskEPNS0_10MegaParamsEPjPyNS1_11MegaScalarsE
+engine/gpu/mega_kernel.h:173:0:     TotalSGPRs: 107
+engine/gpu/mega_kernel.h:173:0:     VGPRs: 192
+engine/gpu/mega_kernel.h:173:0:     ScratchSize [bytes/lane]: 512
+engine/gpu/mega_kernel.h:173:0:     Dynamic Stack: False
+engine/gpu/mega_kernel.h:173:0:     Occupancy [waves/SIMD]: 8
+engine/gpu/mega_kernel.h:173:0:     SGPRs Spill: 103
+engine/gpu/mega_kernel.h:173:0:     VGPRs Spill: 61
+engine/gpu/mega_kernel.h:173:0:     LDS Size [bytes/block]: 32024
+engine/gpu/mega_kernel.h:173:0: Function Name: _ZN4tona3gpu12_GLOBAL__N_16k_megaILi4EEEvPKNS0_6MegaOpEPKNS1_7DevTaskEPNS0_10MegaParamsEPjPyNS1_11MegaScalarsE
+engine/gpu/mega_kernel.h:173:0:     TotalSGPRs: 107
+engine/gpu/mega_kernel.h:173:0:     VGPRs: 192
+engine/gpu/mega_kernel.h:173:0:     ScratchSize [bytes/lane]: 480
+engine/gpu/mega_kernel.h:173:0:     Dynamic Stack: False
+engine/gpu/mega_kernel.h:173:0:     Occupancy [waves/SIMD]: 8
+engine/gpu/mega_kernel.h:173:0:     SGPRs Spill: 129
+engine/gpu/mega_kernel.h:173:0:     VGPRs Spill: 53
+engine/gpu/mega_kernel.h:173:0:     LDS Size [bytes/block]: 32024
+engine/gpu/mega_kernel.h:173:0: Function Name: _ZN4tona3gpu12_GLOBAL__N_16k_megaILi8EEEvPKNS0_6MegaOpEPKNS1_7DevTaskEPNS0_10MegaParamsEPjPyNS1_11MegaScalarsE
+engine/gpu/mega_kernel.h:173:0:     TotalSGPRs: 107
+engine/gpu/mega_kernel.h:173:0:     VGPRs: 192
+engine/gpu/mega_kernel.h:173:0:     ScratchSize [bytes/lane]: 496
+engine/gpu/mega_kernel.h:173:0:     Dynamic Stack: False
+engine/gpu/mega_kernel.h:173:0:     Occupancy [waves/SIMD]: 8
+engine/gpu/mega_kernel.h:173:0:     SGPRs Spill: 163
+engine/gpu/mega_kernel.h:173:0:     VGPRs Spill: 110
+engine/gpu/mega_kernel.h:173:0:     LDS Size [bytes/block]: 32024

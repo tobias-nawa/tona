@@ -1,0 +1,70 @@
+{
+  "id": "ling-3.1-flash-base",
+  "name": "Ling-3.1-flash-base",
+  "vendor": "inclusionAI",
+  "release_date": "2026-10-25",
+  "lineage": {
+    "family": "Ling-3.0",
+    "how_derived": "base checkpoint of Ling-3.1-flash after Warmup-Stable-and-Merge (WSM) checkpoint merging, trained in FP8, released in BF16"
+  },
+  "purpose": "The card releases the base checkpoint to support research and community-driven innovation: continued pre-training, mid-training, SFT, preference optimisation and RL post-training, distillation research, long-context and MoE systems research. It states it is not recommended as-is for end-user chat or production without post-training.",
+  "tasks": ["general", "research"],
+  "modalities": {"input": ["text"], "output": ["text"]},
+  "license": {
+    "name": "MIT (card tag; no LICENSE file in the repository)",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card YAML and the card's License section say MIT; raw/main/LICENSE returns 404 (2026-11-19), so no licence text was read."
+  },
+  "architecture": {
+    "kind": "hybrid linear attention MoE (KDA + gated MLA), same as ling-3.1-flash",
+    "params_total_b": 560,
+    "params_active_b": 25,
+    "layers": 72,
+    "attention": "63 KDA layers and 9 gated MLA layers (7:1), 4 dense layers",
+    "recurrent": "Kimi Delta Attention",
+    "experts": 512,
+    "experts_active": 8
+  },
+  "variants": [
+    {"repo": "inclusionAI/Ling-3.1-flash-base", "format": "safetensors BF16", "size_gb": 1144.28, "official": true, "notes": "no quantised repo found (HF API lists 0 derivatives, 2026-11-19)"}
+  ],
+  "hardware_fit": {
+    "pc-12gb": {"fits": "no", "basis": "estimate", "notes": "1144 GB BF16 and no quantised base"},
+    "pc-16gb": {"fits": "no", "basis": "estimate"},
+    "pc-24gb": {"fits": "no", "basis": "estimate"},
+    "pc-32gb": {"fits": "no", "basis": "estimate"},
+    "mac-16-24gb": {"fits": "no", "basis": "estimate"},
+    "mac-32gb": {"fits": "no", "basis": "estimate"},
+    "mac-64gb+": {"fits": "no", "basis": "estimate"}
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "unknown"
+  },
+  "benchmarks": [
+    {"name": "MMLU-Pro (5-shot)", "score": 76.71, "kind": "vendor", "variant": "base BF16 (DeepSeek-V4-Pro-Base 75.28)", "source": "https://huggingface.co/inclusionAI/Ling-3.1-flash-base"},
+    {"name": "GPQA-Diamond (0-shot)", "score": 56.57, "kind": "vendor", "variant": "base BF16 (DeepSeek-V4-Pro-Base 52.02)", "source": "https://huggingface.co/inclusionAI/Ling-3.1-flash-base"},
+    {"name": "HumanEval-Plus (0-shot)", "score": 79.88, "kind": "vendor", "variant": "base BF16 (DeepSeek-V4-Pro-Base 57.93, MiMo-V2.5-Pro-Base 82.93)", "source": "https://huggingface.co/inclusionAI/Ling-3.1-flash-base"},
+    {"name": "LCBench (3-shot, 2023-01 to 2025-02)", "score": 68.48, "kind": "vendor", "variant": "base BF16 (DeepSeek-V4-Pro-Base 59.14)", "source": "https://huggingface.co/inclusionAI/Ling-3.1-flash-base"},
+    {"name": "RULER 256k (1-shot)", "score": 86.64, "kind": "vendor", "variant": "base BF16 (DeepSeek-V4-Pro-Base 94.37)", "source": "https://huggingface.co/inclusionAI/Ling-3.1-flash-base"}
+  ],
+  "soft": {
+    "best_for": ["fine-tuning and distillation research"],
+    "avoid_for": ["direct end-user chat or production without post-training (card)"],
+    "maturity": "Released two weeks after the instruct model."
+  },
+  "tona_fit": {
+    "verdict": "reject",
+    "reason": "A research base checkpoint at 1.14 TB BF16 with no quantised release; the instruct model (ling-3.1-flash) is the usable form and is itself out of reach for most classes.",
+    "blockers": ["base model", "size"]
+  },
+  "sources": [
+    {"url": "https://huggingface.co/inclusionAI/Ling-3.1-flash-base", "kind": "primary", "checked": "2026-11-19", "note": "README with the 47-benchmark base table, file sizes via the HF API; LICENSE 404"}
+  ],
+  "open_questions": [
+    "Licence text (tag only)"
+  ],
+  "last_checked": "2026-11-19"
+}

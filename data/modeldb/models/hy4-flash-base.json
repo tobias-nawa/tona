@@ -1,0 +1,74 @@
+{
+  "id": "hy4-flash-base",
+  "name": "Hy4 flash Base",
+  "vendor": "Tencent",
+  "release_date": "2026-11-17",
+  "lineage": {
+    "family": "Hy4",
+    "how_derived": "pre-trained base checkpoint of Hy4 flash; the instruct model hy4-flash is post-trained from it"
+  },
+  "purpose": "The card says Hy4 flash-base is a pre-trained base model, not an instruction-tuned chat model; the same repository card as the instruct model is shipped, the chat examples apply to Hy4 flash.",
+  "tasks": ["general"],
+  "modalities": {"input": ["text", "image"], "output": ["text"]},
+  "license": {
+    "name": "Tencent Hy License, Version 1.0",
+    "verified": true,
+    "commercial_use": "limited",
+    "redistribution": "yes",
+    "notes": "Same LICENSE text as the instruct model (read in full): Apache-2.0 derived; a Model-as-a-Service operator above US$50 million annual revenue, or a product above 100 million monthly active users, needs a separate written licence; internal use exempt; no territory exclusion in the text."
+  },
+  "architecture": {
+    "kind": "sparse MoE with LatentMoE, hybrid sparse and sliding-window MLA attention, Engram tables (same as hy4-flash)",
+    "params_total_b": 220,
+    "params_active_b": 12,
+    "layers": 42,
+    "experts": 512,
+    "experts_active": 16,
+    "context_native": 1048576,
+    "context_max": 1048576,
+    "drafter": "none on the base (the DFly2 drafter belongs to the instruct model)"
+  },
+  "variants": [
+    {"repo": "tencent/Hy4-flash-base", "format": "safetensors BF16", "size_gb": 438.84, "official": true, "notes": "no GGUF or other quantised repo of the base found (HF API lists 0 derivatives, 2026-11-19)"}
+  ],
+  "hardware_fit": {
+    "pc-12gb": {"fits": "no", "basis": "estimate", "notes": "438.8 GB BF16 and no quantised base exists; also not an instruct model"},
+    "pc-16gb": {"fits": "no", "basis": "estimate"},
+    "pc-24gb": {"fits": "no", "basis": "estimate"},
+    "pc-32gb": {"fits": "no", "basis": "estimate", "notes": "no quantised base; the instruct model's GGUFs (see hy4-flash) are the usable form"},
+    "mac-16-24gb": {"fits": "no", "basis": "estimate"},
+    "mac-32gb": {"fits": "no", "basis": "estimate"},
+    "mac-64gb+": {"fits": "no", "basis": "estimate"}
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "partial",
+    "notes": "Only the instruct model's GGUFs exist (llama.cpp PR #32517 unmerged)."
+  },
+  "benchmarks": [
+    {"name": "MMLU (5-shot)", "score": 88.7, "kind": "vendor", "variant": "base BF16 (Hy4 Base 91.6, DeepSeek-V4-flash-Base 89.7)", "source": "https://huggingface.co/tencent/Hy4-flash-base"},
+    {"name": "MMLU-Pro (5-shot)", "score": 71.1, "kind": "vendor", "variant": "base BF16 (DeepSeek-V4-flash-Base 68.6)", "source": "https://huggingface.co/tencent/Hy4-flash-base"},
+    {"name": "SuperGPQA (5-shot)", "score": 57.8, "kind": "vendor", "variant": "base BF16 (DeepSeek-V4-flash-Base 52.5)", "source": "https://huggingface.co/tencent/Hy4-flash-base"},
+    {"name": "MBPP-plus (3-shot)", "score": 73.7, "kind": "vendor", "variant": "base BF16 (DeepSeek-V4-flash-Base 76.8)", "source": "https://huggingface.co/tencent/Hy4-flash-base"},
+    {"name": "U-MATH (5-shot)", "score": 69.8, "kind": "vendor", "variant": "base BF16 (DeepSeek-V4-flash-Base 57.4)", "source": "https://huggingface.co/tencent/Hy4-flash-base"}
+  ],
+  "soft": {
+    "weaknesses": ["Base model: the card warns that mid-training on synthetic instruction data makes it occasionally miss the expected answer format in few-shot evaluation"],
+    "best_for": ["continued pre-training, fine-tuning, research"],
+    "avoid_for": ["chat or agent use (use hy4-flash)"],
+    "maturity": "Released together with the instruct model; days old."
+  },
+  "tona_fit": {
+    "verdict": "reject",
+    "reason": "A base checkpoint, not an agent or chat model, 438.8 GB and without any quantised release. The useful artefact for our users is the instruct model, see hy4-flash.",
+    "blockers": ["base model", "size and no quantised base"]
+  },
+  "sources": [
+    {"url": "https://huggingface.co/tencent/Hy4-flash-base", "kind": "primary", "checked": "2026-11-19", "note": "README with the few-shot base table, config.json, file sizes via the HF API (0 derivatives)"},
+    {"url": "https://huggingface.co/tencent/Hy4-flash-base/blob/main/LICENSE", "kind": "primary", "checked": "2026-11-19", "note": "LICENSE file present and the same size as the instruct model's (13,942 bytes); the instruct text was read in full"}
+  ],
+  "open_questions": [
+    "Whether a quantised base ever appears (only useful for research)"
+  ],
+  "last_checked": "2026-11-19"
+}

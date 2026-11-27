@@ -1,0 +1,271 @@
+## main
+k_mega<1>
+VGPRs: 192
+ScratchSize [bytes/lane]: 512
+SGPRs Spill: 103
+VGPRs Spill: 61
+k_mega<4>
+VGPRs: 192
+ScratchSize [bytes/lane]: 480
+SGPRs Spill: 129
+VGPRs Spill: 53
+k_mega<8>
+VGPRs: 192
+ScratchSize [bytes/lane]: 496
+SGPRs Spill: 163
+VGPRs Spill: 110
+-rw-r--r--. 1 user user 2851056 14. Nov 22:57 /var/tmp/claude/136/mega-main.o
+## nocase
+k_mega<1>
+VGPRs: 192
+ScratchSize [bytes/lane]: 528
+SGPRs Spill: 103
+VGPRs Spill: 62
+k_mega<4>
+VGPRs: 192
+ScratchSize [bytes/lane]: 496
+SGPRs Spill: 121
+VGPRs Spill: 54
+k_mega<8>
+VGPRs: 192
+ScratchSize [bytes/lane]: 496
+SGPRs Spill: 147
+VGPRs Spill: 109
+-rw-r--r--. 1 user user 2721888 14. Nov 22:58 /var/tmp/claude/136/mega-nocase.o
+## candb
+k_mega<1>
+VGPRs: 192
+ScratchSize [bytes/lane]: 528
+SGPRs Spill: 103
+VGPRs Spill: 62
+k_mega<1>
+VGPRs: 192
+ScratchSize [bytes/lane]: 688
+SGPRs Spill: 110
+VGPRs Spill: 81
+k_mega<4>
+VGPRs: 192
+ScratchSize [bytes/lane]: 496
+SGPRs Spill: 121
+VGPRs Spill: 54
+k_mega<4>
+VGPRs: 192
+ScratchSize [bytes/lane]: 656
+SGPRs Spill: 139
+VGPRs Spill: 84
+k_mega<8>
+VGPRs: 192
+ScratchSize [bytes/lane]: 496
+SGPRs Spill: 147
+VGPRs Spill: 109
+k_mega<8>
+VGPRs: 192
+ScratchSize [bytes/lane]: 816
+SGPRs Spill: 207
+VGPRs Spill: 1207
+-rw-r--r--. 1 user user 4878080 14. Nov 23:01 /var/tmp/claude/136/mega-candb.o
+## candb-no14
+k_mega<1>
+VGPRs: 192
+ScratchSize [bytes/lane]: 528
+SGPRs Spill: 103
+VGPRs Spill: 62
+k_mega<1>
+VGPRs: 192
+ScratchSize [bytes/lane]: 512
+SGPRs Spill: 103
+VGPRs Spill: 58
+k_mega<4>
+VGPRs: 192
+ScratchSize [bytes/lane]: 496
+SGPRs Spill: 121
+VGPRs Spill: 54
+k_mega<4>
+VGPRs: 192
+ScratchSize [bytes/lane]: 480
+SGPRs Spill: 127
+VGPRs Spill: 52
+k_mega<8>
+VGPRs: 192
+ScratchSize [bytes/lane]: 496
+SGPRs Spill: 147
+VGPRs Spill: 109
+k_mega<8>
+VGPRs: 192
+ScratchSize [bytes/lane]: 480
+SGPRs Spill: 167
+VGPRs Spill: 108
+-rw-r--r--. 1 user user 4795000 14. Nov 23:03 /var/tmp/claude/136/mega-candb-no14.o
+## v3
+k_mega<1>
+VGPRs: 192
+ScratchSize [bytes/lane]: 512
+SGPRs Spill: 103
+VGPRs Spill: 61
+k_mega<1>
+VGPRs: 192
+ScratchSize [bytes/lane]: 528
+SGPRs Spill: 103
+VGPRs Spill: 62
+k_mega<1>
+VGPRs: 192
+ScratchSize [bytes/lane]: 512
+SGPRs Spill: 103
+VGPRs Spill: 58
+k_mega<4>
+VGPRs: 192
+ScratchSize [bytes/lane]: 480
+SGPRs Spill: 129
+VGPRs Spill: 53
+k_mega<4>
+VGPRs: 192
+ScratchSize [bytes/lane]: 496
+SGPRs Spill: 121
+VGPRs Spill: 54
+k_mega<4>
+VGPRs: 192
+ScratchSize [bytes/lane]: 480
+SGPRs Spill: 127
+VGPRs Spill: 52
+k_mega<8>
+VGPRs: 192
+ScratchSize [bytes/lane]: 496
+SGPRs Spill: 163
+VGPRs Spill: 110
+k_mega<8>
+VGPRs: 192
+ScratchSize [bytes/lane]: 496
+SGPRs Spill: 147
+VGPRs Spill: 109
+k_mega<8>
+VGPRs: 192
+ScratchSize [bytes/lane]: 480
+SGPRs Spill: 167
+VGPRs Spill: 108
+-rw-r--r--. 1 user user 6988064 14. Nov 23:06 /var/tmp/claude/136/mega-v3.o
+## v4
+k_mega<1>
+VGPRs: 192
+ScratchSize [bytes/lane]: 512
+SGPRs Spill: 103
+VGPRs Spill: 61
+k_mega<1>
+VGPRs: 192
+ScratchSize [bytes/lane]: 528
+SGPRs Spill: 103
+VGPRs Spill: 62
+k_mega<1>
+VGPRs: 192
+ScratchSize [bytes/lane]: 512
+SGPRs Spill: 102
+VGPRs Spill: 59
+k_mega<4>
+VGPRs: 192
+ScratchSize [bytes/lane]: 480
+SGPRs Spill: 129
+VGPRs Spill: 53
+k_mega<4>
+VGPRs: 192
+ScratchSize [bytes/lane]: 496
+SGPRs Spill: 121
+VGPRs Spill: 54
+k_mega<4>
+VGPRs: 192
+ScratchSize [bytes/lane]: 480
+SGPRs Spill: 99
+VGPRs Spill: 53
+k_mega<8>
+VGPRs: 192
+ScratchSize [bytes/lane]: 496
+SGPRs Spill: 163
+VGPRs Spill: 110
+k_mega<8>
+VGPRs: 192
+ScratchSize [bytes/lane]: 496
+SGPRs Spill: 147
+VGPRs Spill: 109
+k_mega<8>
+VGPRs: 192
+ScratchSize [bytes/lane]: 496
+SGPRs Spill: 254
+VGPRs Spill: 109
+-rw-r--r--. 1 user user 6999408 14. Nov 23:55 /var/tmp/claude/136/mega-v4.o
+## v5
+k_mega<1>
+VGPRs: 192
+ScratchSize [bytes/lane]: 512
+SGPRs Spill: 103
+VGPRs Spill: 61
+k_mega<1>
+VGPRs: 192
+ScratchSize [bytes/lane]: 528
+SGPRs Spill: 103
+VGPRs Spill: 62
+k_mega<1>
+VGPRs: 192
+ScratchSize [bytes/lane]: 704
+SGPRs Spill: 100
+VGPRs Spill: 83
+k_mega<4>
+VGPRs: 192
+ScratchSize [bytes/lane]: 480
+SGPRs Spill: 129
+VGPRs Spill: 53
+k_mega<4>
+VGPRs: 192
+ScratchSize [bytes/lane]: 496
+SGPRs Spill: 121
+VGPRs Spill: 54
+k_mega<4>
+VGPRs: 192
+ScratchSize [bytes/lane]: 656
+SGPRs Spill: 138
+VGPRs Spill: 78
+k_mega<8>
+VGPRs: 192
+ScratchSize [bytes/lane]: 496
+SGPRs Spill: 163
+VGPRs Spill: 110
+k_mega<8>
+VGPRs: 192
+ScratchSize [bytes/lane]: 496
+SGPRs Spill: 147
+VGPRs Spill: 109
+k_mega<8>
+VGPRs: 192
+ScratchSize [bytes/lane]: 848
+SGPRs Spill: 203
+VGPRs Spill: 1152
+-rw-r--r--. 1 user user 6942912 15. Nov 00:15 /var/tmp/claude/136/mega-v5.o
+## final
+k_mega<1>
+VGPRs: 192
+ScratchSize [bytes/lane]: 512
+SGPRs Spill: 103
+VGPRs Spill: 61
+k_mega<1>
+VGPRs: 192
+ScratchSize [bytes/lane]: 528
+SGPRs Spill: 103
+VGPRs Spill: 62
+k_mega<4>
+VGPRs: 192
+ScratchSize [bytes/lane]: 480
+SGPRs Spill: 129
+VGPRs Spill: 53
+k_mega<4>
+VGPRs: 192
+ScratchSize [bytes/lane]: 496
+SGPRs Spill: 121
+VGPRs Spill: 54
+k_mega<8>
+VGPRs: 192
+ScratchSize [bytes/lane]: 496
+SGPRs Spill: 163
+VGPRs Spill: 110
+k_mega<8>
+VGPRs: 192
+ScratchSize [bytes/lane]: 496
+SGPRs Spill: 147
+VGPRs Spill: 109
+-rw-r--r--. 1 user user 4919704 15. Nov 00:45 /var/tmp/claude/136/mega-final.o

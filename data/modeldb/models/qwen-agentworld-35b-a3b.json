@@ -1,0 +1,162 @@
+{
+  "id": "qwen-agentworld-35b-a3b",
+  "name": "Qwen-AgentWorld 35B-A3B",
+  "vendor": "Alibaba Qwen",
+  "release_date": "2026-06-22",
+  "lineage": {
+    "base_model": "Qwen/Qwen3.5-35B-A3B-Base",
+    "how_derived": "continual pre-training, SFT and RL (GSPO) into a language world model",
+    "family": "Qwen-AgentWorld"
+  },
+  "purpose": "A native language world model that simulates agentic environments: given an agent's action and the interaction history it predicts the next environment state with long chain-of-thought, covering MCP tool calling, search, terminal, software engineering, Android, web and OS in one model (card). It serves as a scalable, controllable simulator for training agents and as an agent foundation model after a 'LWM RL warm-up'.",
+  "tasks": [
+    "other",
+    "research"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "many"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "LICENSE file read: Apache License 2.0 with the vendor appendix, same md5 as the Qwen3.6-35B-A3B LICENSE."
+  },
+  "architecture": {
+    "kind": "hybrid Gated DeltaNet + gated attention MoE (qwen3_5_moe_text)",
+    "gguf_arch": "qwen35moe (as the sibling Qwen3.5-35B-A3B; not verified for this repo)",
+    "params_total_b": 35,
+    "params_active_b": 3,
+    "layers": 40,
+    "attention": "10 x (3 x (Gated DeltaNet -> MoE) + 1 x (Gated Attention -> MoE)); 16 Q and 2 KV heads, head dim 256",
+    "recurrent": "Gated DeltaNet",
+    "experts": 256,
+    "experts_active": 9,
+    "context_native": 262144,
+    "drafter": "none (community MTP GGUFs exist)",
+    "why_this_design": "Same layout as Qwen3.5-35B-A3B; card: environment modeling is trained in from continual pre-training onward ('native world model') rather than adapted onto a general LLM afterwards. No reasons given for the layer layout itself."
+  },
+  "variants": [
+    {
+      "repo": "Qwen/Qwen-AgentWorld-35B-A3B",
+      "format": "safetensors BF16",
+      "official": true
+    },
+    {
+      "repo": "unsloth/Qwen-AgentWorld-35B-A3B-GGUF",
+      "format": "GGUF",
+      "official": false,
+      "notes": "87,937 downloads, created 2026-06-24; sizes not collected"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "variant": "Q4 about 22 GB",
+      "notes": "same footprint as Qwen3.5-35B-A3B"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q4 about 22 GB"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q4"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q4-Q8"
+    },
+    "mac-16-24gb": {
+      "fits": "marginal",
+      "basis": "estimate"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q4"
+    },
+    "mac-64gb-plus": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q4-Q8"
+    }
+  },
+  "engine_support": {
+    "tona": "in-progress",
+    "llama_cpp": "yes",
+    "other": [
+      "SGLang",
+      "vLLM",
+      "Transformers"
+    ],
+    "notes": "Same architecture as Qwen3.5-35B-A3B, which Tona already handles (qwen35moe); card recommends at least 128K context."
+  },
+  "benchmarks": [
+    {
+      "name": "AgentWorldBench open-ended overall (5-dimension rubric mean, 0-100)",
+      "score": 56.39,
+      "kind": "vendor",
+      "source": "https://huggingface.co/Qwen/Qwen-AgentWorld-35B-A3B",
+      "harness": "vendor rubric benchmark; Qwen3.5-35B-A3B 47.73, GPT-5.4 58.25, Claude Opus 4.8 56.59, Qwen-AgentWorld-397B-A17B 58.71"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "Beats Qwen3.5-35B-A3B by 8.7 points on the vendor benchmark at the same size",
+      "Same footprint and engine path as the general Qwen3.5-35B-A3B"
+    ],
+    "weaknesses": [
+      "Not a worker: it predicts what an environment would answer, it does not carry out tasks",
+      "Vendor-only evidence"
+    ],
+    "best_for": [
+      "Simulating tool and environment responses for agent training, testing and fictional-world construction"
+    ],
+    "avoid_for": [
+      "coding, chat or research work for end users"
+    ],
+    "maturity": "Alibaba Qwen; technical report arXiv 2606.24597 (not read)."
+  },
+  "tona_fit": {
+    "verdict": "reject",
+    "reason": "Purpose mismatch for Tona users: it is an environment simulator for training agents, not a model that does their coding, research or chat. Quality, Apache-2.0 license (text read) and hardware fit are fine; revisit if Tona adds agent-training or tool-simulation features.",
+    "blockers": [
+      "purpose: environment simulator, not a worker"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/Qwen/Qwen-AgentWorld-35B-A3B",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "model card, config.json and LICENSE read"
+    },
+    {
+      "url": "https://huggingface.co/api/models?search=Qwen-AgentWorld",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "variant listing"
+    }
+  ],
+  "open_questions": [
+    "Technical report (arXiv 2606.24597) not read",
+    "Whether the agent-foundation warm-up gives a useful general agent model (card claims transfer to 7 benchmarks)"
+  ],
+  "last_checked": "2026-11-19"
+}

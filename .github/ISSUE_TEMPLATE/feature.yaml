@@ -1,0 +1,36 @@
+name: Feature or change
+description: Propose a change that is not a bug, a model or a backend; describe the problem first
+title: "Change: "
+labels: ["feature"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Describe the problem before the solution. A maintainer accepts a proposal (`accepted`) before a pull request
+        follows. Questions and open ideas go to Discussions.
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: What you cannot do, or what is wrong, and for whom. Include what you do today instead.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: What you would change, and which part of Tona (engine, installer, client, docs, tools). Alternatives you considered.
+    validations:
+      required: true
+  - type: textarea
+    id: effect
+    attributes:
+      label: Effect on speed, quality and the reference platform
+      description: Shared code must not make the reference backend slower or worse. Say how you would show that.
+  - type: checkboxes
+    id: ai
+    attributes:
+      label: AI use
+      options:
+        - label: I wrote or verified this proposal myself; it is not an unchecked AI text.
+          required: true

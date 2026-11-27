@@ -1,0 +1,164 @@
+{
+  "id": "zonos3-mini",
+  "name": "ZONOS3-Mini",
+  "vendor": "Zyphra",
+  "release_date": "2026-11-09",
+  "purpose": "Zyphra's compact open-source text-to-speech model with natural speech and voice cloning; runs on phones, laptops and in the browser (card).",
+  "tasks": [
+    "speech-synthesis"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "audio"
+    ],
+    "output": [
+      "audio"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "de",
+      "en",
+      "many"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card metadata: apache-2.0; no LICENSE file in the HF repo and none found in the zonos2.cpp GitHub repo root. Canonical Apache-2.0 text read in the Qwen repo (canonical Apache-2.0 text read in https://github.com/QwenLM/Qwen3-ASR/blob/main/LICENSE); the per-repo declaration, not a repo file, is the evidence."
+  },
+  "architecture": {
+    "kind": "AUTOREGRESSIVE latent-MoE LM over 15 Hz dual-codec frames (ZAC 1, 44.1 kHz, 10 codebooks) with iSTFT head; about 100M active, so memory-bound in theory but launch-bound in practice",
+    "params_total_b": 0.8,
+    "params_active_b": 0.1,
+    "layers": 11,
+    "experts": 64,
+    "experts_active": 2,
+    "recurrent": "Gated DeltaNet (9 of 11 layers) + 2 global attention",
+    "context_native": 32768
+  },
+  "variants": [
+    {
+      "repo": "AtomicChat/ZONOS3-Mini-GGUF",
+      "format": "GGUF",
+      "official": false
+    },
+    {
+      "repo": "Zyphra/ZONOS3-Mini-hf",
+      "format": "Transformers",
+      "official": true
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "partial",
+    "other": [
+      "zonos2.cpp (CPU, Vulkan, Metal)",
+      "SGLang-Omni (/v1/audio/speech)",
+      "MLX",
+      "WebGPU",
+      "Ollama, LM Studio, Jan (card)"
+    ],
+    "notes": "The card lists llama.cpp as an engine; not verified here"
+  },
+  "benchmarks": [
+    {
+      "name": "Median time to first audio, 8 concurrent, H100",
+      "score": 80,
+      "kind": "vendor",
+      "source": "https://huggingface.co/Zyphra/ZONOS3-Mini",
+      "unit": "ms"
+    },
+    {
+      "name": "Peak throughput",
+      "score": 457,
+      "kind": "vendor",
+      "source": "https://huggingface.co/Zyphra/ZONOS3-Mini",
+      "unit": "s audio per s"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "43 languages incl. German, 27 default voices, cloning from 5-10 s, voice design",
+      "Tiny active size, real time on laptops (vendor)"
+    ],
+    "weaknesses": [
+      "Text normalization only for 9 languages (German is one)",
+      "No WER or similarity numbers on the card (blog only)",
+      "Ten days old at check time: no user reports"
+    ],
+    "maturity": "Zyphra; 568 likes, 128k downloads in 10 days.",
+    "user_reports": [
+      {
+        "summary": "Apostrophes are not read; Urdu listed as supported but not working (both open, 5 comments each).",
+        "source": "https://huggingface.co/Zyphra/ZONOS3-Mini/discussions/4",
+        "date": "2026-11-13",
+        "sentiment": "mixed"
+      }
+    ]
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "Apache-2.0, 0.8B, German officially listed with NeMo text normalisation, fits every class; runs via zonos2.cpp on CPU/Vulkan. No independent German numbers; two weeks old. Low value for coding agents.",
+    "blockers": [
+      "no Tona audio module"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/Zyphra/ZONOS3-Mini",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://github.com/Zyphra/zonos2.cpp",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "as cited in research/52"
+    },
+    {
+      "url": "research/52-purpose-models.md",
+      "kind": "own",
+      "checked": "2026-11-19"
+    }
+  ],
+  "open_questions": [
+    "German MOS/WER (blog not read)",
+    "Own RTF on Zen 5 and gfx1200 Vulkan",
+    "Whether llama.cpp really runs it"
+  ],
+  "last_checked": "2026-11-19"
+}

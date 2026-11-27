@@ -1,0 +1,22 @@
+719 files, 3858673 characters
+main-hard-131072-t0.jsonl: 78 s
+main-hard-131072-t1.jsonl: 77 s
+main-hard-131072-t2.jsonl: 78 s
+main needle seconds 233
+pr-hard-131072-t0.jsonl: 78 s
+pr-hard-131072-t1.jsonl: 77 s
+pr-hard-131072-t2.jsonl: 78 s
+pr needle seconds 233
+pr minus main, paired over the needles both have; pairs: both right / only main / only pr / both wrong
+length  mode    pairs   both  only-a  only-b  none   diff pp [95 %]            McNemar p
+ 131072 single    60     39       0       0    21     +0.0 [  +0.0,   +0.0]   1.000
+ 131072 multi     60     27       0       0    33     +0.0 [  +0.0,   +0.0]   1.000
+ 131072 all      120     66       0       0    54     +0.0 [  +0.0,   +0.0]   1.000
+variant  length   all                      single                   multi                  texts
+main+hard  131072   66/120  55.0 % [46.1,  63.6]   39/60   65.0 % [52.4,  75.8]   27/60   45.0 % [33.1,  57.5]  3
+pr+hard   131072   66/120  55.0 % [46.1,  63.6]   39/60   65.0 % [52.4,  75.8]   27/60   45.0 % [33.1,  57.5]  3
+
+by depth (all needles):
+variant  length  0-10 %                       25 %                         50 %                         75 %                         90-100 %                   
+main+hard  131072   16/24   66.7 % [46.7,  82.0]   18/24   75.0 % [55.1,  88.0]   17/24   70.8 % [50.8,  85.1]    9/24   37.5 % [21.2,  57.3]    6/24   25.0 % [12.0,  44.9]
+pr+hard   131072   16/24   66.7 % [46.7,  82.0]   18/24   75.0 % [55.1,  88.0]   17/24   70.8 % [50.8,  85.1]    9/24   37.5 % [21.2,  57.3]    6/24   25.0 % [12.0,  44.9]

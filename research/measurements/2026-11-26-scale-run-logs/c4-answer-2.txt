@@ -1,0 +1,12 @@
+This is a large, comprehensive codebase for a specialized LLM inference engine. Here's a summary of what it does:
+
+## Overview
+
+**inference-engine** is a high-performance LLM inference engine optimized for one specific hardware platform: AMD Radeon RX 9060 XT (gfx1200) with Ryzen 5 9600X CPU, 64GB DDR5 RAM, and PCIe 5.0. It serves coding agents (like Claude Code) through OpenAI- and Anthropic-compatible APIs.
+
+## Key Components
+
+### Core Engine
+- **Megakernel**: A persistent GPU kernel that computes entire forward passes as a program of operations, avoiding kernel launch overhead
+- **MoE (Mixture of Experts)**: 256 experts per layer, 10 active per token, with sophisticated caching across VRAM, pinned RAM, and CPU computation
+- **Speculative Decoding**: Uses MTP head or DFlash

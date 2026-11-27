@@ -1,0 +1,222 @@
+{
+  "id": "mistral-small-4-119b-a6b",
+  "name": "Mistral Small 4 (119B A6B)",
+  "vendor": "Mistral AI",
+  "release_date": "2026-01-23",
+  "purpose": "A hybrid model that combines instruct, reasoning (formerly Magistral) and Devstral capabilities; reasoning is set per request with reasoning_effort.",
+  "tasks": [
+    "general",
+    "coding",
+    "research",
+    "vision"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en",
+      "fr",
+      "es",
+      "de",
+      "it",
+      "pt",
+      "nl",
+      "zh",
+      "ja",
+      "ko",
+      "ar"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Repo has no LICENSE file; the card links the apache.org text and says 'Open-source license for both commercial and non-commercial use'. Text read: standard Apache License 2.0 text (identical to https://www.apache.org/licenses/LICENSE-2.0.txt, read 2026-11-19)."
+  },
+  "architecture": {
+    "kind": "MoE",
+    "params_total_b": 119,
+    "params_active_b": 6.5,
+    "experts": 128,
+    "experts_active": 4,
+    "context_native": 262144,
+    "drafter": "EAGLE checkpoint (Mistral-Small-4-119B-2603-eagle)",
+    "attention": "not stated on the card",
+    "why_this_design": "Card: unifies three previously separate families (Instruct, Reasoning formerly Magistral, and Devstral) in one hybrid model with per-request reasoning effort; the efficient MoE design gives a 40 percent lower end-to-end completion time in a latency-optimized setup and 3x more requests per second in a throughput-optimized setup versus Mistral Small 3. An EAGLE head and an NVFP4 checkpoint are released for speed."
+  },
+  "variants": [
+    {
+      "repo": "mistralai/Mistral-Small-4-119B-2603",
+      "format": "safetensors BF16 / FP8",
+      "official": true
+    },
+    {
+      "repo": "mistralai/Mistral-Small-4-119B-2603-NVFP4",
+      "format": "NVFP4",
+      "official": true
+    },
+    {
+      "repo": "unsloth/Mistral-Small-4-119B-2603-GGUF",
+      "format": "GGUF UD-IQ2_XXS",
+      "size_gb": 34.9,
+      "official": false
+    },
+    {
+      "repo": "unsloth/Mistral-Small-4-119B-2603-GGUF",
+      "format": "GGUF UD-Q3_K_M",
+      "size_gb": 54.4,
+      "official": false
+    },
+    {
+      "repo": "unsloth/Mistral-Small-4-119B-2603-GGUF",
+      "format": "GGUF UD-IQ4_XS",
+      "size_gb": 58.1,
+      "official": false
+    },
+    {
+      "repo": "unsloth/Mistral-Small-4-119B-2603-GGUF",
+      "format": "GGUF UD-Q4_K_M",
+      "size_gb": 73.8,
+      "official": false,
+      "notes": "mmproj 0.86 GB extra"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "no",
+      "basis": "estimate"
+    },
+    "pc-16gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "variant": "UD-IQ2_XXS 34.9 GB or UD-Q3_K_S 49.6 GB with experts in RAM",
+      "notes": "6.5 B active but 2-3 bit quality unmeasured."
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "UD-IQ4_XS 58 GB, 96 GB RAM"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "UD-Q4_K_M 73.8 GB with 128 GB RAM"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "basis": "estimate"
+    },
+    "mac-32gb": {
+      "fits": "no",
+      "basis": "estimate",
+      "variant": "UD-IQ2_XXS 34.9 GB",
+      "notes": "Above the 26.8 GB working set (docs/hardware)."
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "UD-IQ3_XXS 42.8 GB to IQ4_XS 58 GB",
+      "notes": "64 GB working set 51-53 GB: IQ3 class."
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "vLLM",
+      "SGLang"
+    ],
+    "notes": "Unsloth GGUFs exist; Tona has no module."
+  },
+  "benchmarks": [
+    {
+      "name": "GPQA Diamond",
+      "score": 71.2,
+      "kind": "vendor",
+      "source": "https://huggingface.co/mistralai/Mistral-Small-4-119B-2603"
+    },
+    {
+      "name": "AA-LCR (long context)",
+      "score": 0.72,
+      "kind": "vendor",
+      "source": "https://huggingface.co/mistralai/Mistral-Small-4-119B-2603",
+      "variant": "with reasoning, about 1.6K characters of output"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "European-language focus (24 languages listed, German named)",
+      "Native function calling and JSON output; reasoning_effort per request",
+      "Vendor claims LiveCodeBench above gpt-oss-120b with about 20% less output"
+    ],
+    "weaknesses": [
+      "GPQA 71.2 is clearly below Qwen3.5-35B-A3B (84.2) and Gemma 4 26B-A4B (82.3) on vendor numbers",
+      "74 GB at Q4_K_M: the large file buys no visible quality gain on the card"
+    ],
+    "behavior": "reasoning_effort high: T=0.7; none: T 0.0-0.7 depending on task; example scripts use 0.1.",
+    "best_for": [
+      "German and French assistant work on 96 GB+ memory machines"
+    ],
+    "avoid_for": [
+      "16 GB machines"
+    ],
+    "maturity": "Mistral AI: European vendor with a regular release cadence (Large 3 and 4, Medium 3.5, Leanstral).",
+    "user_reports": [
+      {
+        "summary": "When used in Mistral Vibe or opencode the model often answers just \"Task completed\" without doing the task; the reporter finds it otherwise more concise and better at code than Devstral. A commenter got it stable in opencode with a Q5_K_M quant on ik_llama but calls the Vibe setup a disaster.",
+        "sentiment": "mixed",
+        "source": "https://huggingface.co/mistralai/Mistral-Small-4-119B-2603/discussions/16",
+        "date": "2026-03-21"
+      }
+    ]
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Apache-2.0 (text read), vendor claim of unified instruct, reasoning and coding in one model with Mistral German strength, but 119B total (about 70 GB at 4 bit) limits it to 64 GB+ machines, the independent German index lists no Small 4 entry (only Mistral Large 4 preview: INCLUDE DE 83.2, GermEval 79.9), and agent-loop reports are mixed. Missing Tona module is only a blocker.",
+    "blockers": [
+      "no Mistral Small 4 module in Tona",
+      "size 35-74 GB"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/mistralai/Mistral-Small-4-119B-2603",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "model card"
+    },
+    {
+      "url": "https://huggingface.co/api/models/unsloth/Mistral-Small-4-119B-2603-GGUF?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "GGUF sizes"
+    },
+    {
+      "url": "https://huggingface.co/api/models?author=mistralai&sort=createdAt&direction=-1&limit=20",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "repo dates"
+    },
+    {
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.txt",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "Apache-2.0 text linked from the card"
+    }
+  ],
+  "open_questions": [
+    "Attention layout and exact language list",
+    "Benchmark figures are images on the card: MMLU-Pro and others unavailable",
+    "Whether the 2603 revision is still the current one",
+    "German quality: no independent score (not in PeerBench)"
+  ],
+  "last_checked": "2026-11-19"
+}

@@ -1,0 +1,7 @@
+{
+  "arm": "priohigh",
+  "env": {},
+  "canary_priority": "high",
+  "build": "b164t",
+  "not_run": "canary priority not granted: {\"error\": \"vkCreateDevice\", \"code\": -1000174001}"
+}

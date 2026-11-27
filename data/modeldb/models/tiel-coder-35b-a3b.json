@@ -1,0 +1,168 @@
+{
+  "id": "tiel-coder-35b-a3b",
+  "name": "Tiel-Coder-35B-A3B (community requant of Ornith-1.5)",
+  "vendor": "peculiar-ragdoll (community)",
+  "release_date": "2026-08-19",
+  "lineage": {
+    "base_model": "ornith-ai/Ornith-1.5-35B-A3B",
+    "how_derived": "re-quantized with Unsloth-style dynamic recipes on an own importance matrix (49M characters, about three quarters code), Sharp chat template inside the GGUF; no MTP head in these tiers"
+  },
+  "purpose": "Publisher states: agentic coding and long useful multi-turn conversations; weak at trivia and exam-style knowledge.",
+  "tasks": [
+    "coding"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en",
+      "zh"
+    ],
+    "programming": {}
+  },
+  "license": {
+    "name": "MIT (inherited from Ornith-1.5)",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card says \"MIT, inheriting Ornith-1.5's license\"; the repository has no LICENSE file and the parent has none either, so no text was read."
+  },
+  "architecture": {
+    "kind": "hybrid Gated DeltaNet + gated attention MoE",
+    "gguf_arch": "qwen35moe",
+    "params_total_b": 35,
+    "params_active_b": 3,
+    "context_native": 262144,
+    "why_this_design": "Inherited from Ornith-1.5-35B-A3B (MIT per card); the card describes quantization tiers, not architecture reasons."
+  },
+  "variants": [
+    {
+      "repo": "peculiar-ragdoll/Tiel-Coder-35B-A3B-GGUF",
+      "format": "GGUF UD-IQ3_XXS",
+      "size_gb": 13.2,
+      "official": false,
+      "notes": "recommended for 16 GB"
+    },
+    {
+      "repo": "peculiar-ragdoll/Tiel-Coder-35B-A3B-GGUF",
+      "format": "GGUF UD-Q4_K_XL",
+      "size_gb": 22.4,
+      "official": false,
+      "notes": "recommended starting point; tiers from 12.3 GB (Q2_K_XL) to 38.5 GB (Q8_K_XL)"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "variant": "UD-Q4_K_XL",
+      "basis": "estimate",
+      "notes": "estimate from the file size (22.4 GB) against the budget of docs/hardware: 9.6 GB VRAM plus 50 GB RAM = 60 GB; about 43% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that); UD-IQ3_XXS (13.2 GB) fits 16 GB VRAM almost wholly"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "UD-Q4_K_XL",
+      "basis": "estimate",
+      "notes": "estimate from the file size (22.4 GB) against the budget of docs/hardware: 13.6 GB VRAM plus 50 GB RAM = 64 GB; about 61% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that); UD-IQ3_XXS (13.2 GB) fits 16 GB VRAM almost wholly"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "UD-Q4_K_XL",
+      "basis": "estimate",
+      "notes": "estimate from the file size (22.4 GB) against the budget of docs/hardware: 21.6 GB VRAM plus 82 GB RAM = 104 GB; about 96% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that); UD-IQ3_XXS (13.2 GB) fits 16 GB VRAM almost wholly"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "UD-Q4_K_XL",
+      "basis": "estimate",
+      "notes": "estimate from the file size (22.4 GB) against the budget of docs/hardware: 29.6 GB VRAM plus 114 GB RAM = 144 GB; about 100% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that); UD-IQ3_XXS (13.2 GB) fits 16 GB VRAM almost wholly"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "UD-Q4_K_XL",
+      "basis": "estimate",
+      "notes": "estimate from the file size (22.4 GB) against the GPU share of docs/hardware (about 12 GB); UD-IQ3_XXS (13.2 GB) fits 16 GB VRAM almost wholly"
+    },
+    "mac-32gb": {
+      "fits": "no",
+      "variant": "UD-Q4_K_XL",
+      "basis": "estimate",
+      "notes": "estimate from the file size (22.4 GB) against the GPU share of docs/hardware (about 22 GB); UD-IQ3_XXS (13.2 GB) fits 16 GB VRAM almost wholly"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "UD-Q4_K_XL",
+      "basis": "estimate",
+      "notes": "estimate from the file size (22.4 GB) against the GPU share of docs/hardware (about 52 GB); UD-IQ3_XXS (13.2 GB) fits 16 GB VRAM almost wholly"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "notes": "Tona runs Ornith's own Q4_K_M; whether the dynamic quant types load in Tona's qwen35moe path is unchecked"
+  },
+  "benchmarks": [
+    {
+      "name": "SWE-bench-Live (25 problems)",
+      "score": "12/25",
+      "kind": "vendor",
+      "source": "https://huggingface.co/peculiar-ragdoll/Tiel-Coder-35B-A3B-GGUF",
+      "variant": "Tiel, one run per problem (Ornith-1.5: 8, Qwen3.8-27B: 16)",
+      "harness": "publisher's own run"
+    },
+    {
+      "name": "Claw-Eval multi-turn",
+      "score": 67.2,
+      "kind": "vendor",
+      "source": "https://huggingface.co/peculiar-ragdoll/Tiel-Coder-35B-A3B-GGUF",
+      "variant": "Tiel vs Ornith 65.3",
+      "harness": "114 conversations"
+    },
+    {
+      "name": "MMLU-Pro (4-bit)",
+      "score": 73.7,
+      "kind": "vendor",
+      "source": "https://huggingface.co/peculiar-ragdoll/Tiel-Coder-35B-A3B-GGUF",
+      "variant": "Tiel vs Ornith 78.0"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "Code-weighted imatrix: slightly better multi-turn agent score than stock Ornith on the publisher's run"
+    ],
+    "weaknesses": [
+      "Self-reported, small samples (25 problems, one run)",
+      "Loses 4.3 points MMLU-Pro against Ornith; asks fewer clarifying questions"
+    ],
+    "behavior": "Asks 5.1 points fewer clarifying questions than Ornith-1.5 (publisher).",
+    "maturity": "Anonymous community publisher; 2.8M downloads of the MTP variant of the same line show wide use."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "An IQ3 tier at 13.2 GB fits 16 GB VRAM wholly, which could remove expert streaming; quality against Ornith Q4_K_M must be measured by us first.",
+    "blockers": [
+      "unmeasured",
+      "needs a loading check for the dynamic quant types"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/peculiar-ragdoll/Tiel-Coder-35B-A3B-GGUF",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "page text read through a summarizer (WebFetch)"
+    }
+  ],
+  "open_questions": [
+    "Independent quality of the IQ3 tier",
+    "Publisher identity and training data",
+    "Per-language quality and independent coding evidence: the Aider polyglot board is stale (mirrors: last update 2025-11-20, no entry for any model of this database), LiveCodeBench and swebench.com publish no per-language numbers for it that we could retrieve. Check: our own Exercism polyglot run per language."
+  ],
+  "last_checked": "2026-11-19"
+}

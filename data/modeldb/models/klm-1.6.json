@@ -1,0 +1,127 @@
+{
+  "id": "klm-1.6",
+  "name": "KLM 1.6",
+  "vendor": "MinimaLabs",
+  "release_date": "2026-11-09",
+  "lineage": {
+    "family": "KLM",
+    "how_derived": "continues the KLM 1.5 checkpoint from before its decay stage, decaying the learning rate over 100B tokens instead of 20B"
+  },
+  "purpose": "99M-parameter base language model, hybrid Gated-DeltaNet (card).",
+  "tasks": [
+    "general"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0 (card tag)",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card tag apache-2.0; LICENSE file present but text not read."
+  },
+  "architecture": {
+    "kind": "hybrid Gated-DeltaNet small LM (custom code)",
+    "params_total_b": 0.099,
+    "recurrent": "Gated DeltaNet",
+    "drafter": "none"
+  },
+  "variants": [
+    {
+      "repo": "MinimaLabs/KLM-1.6",
+      "format": "safetensors",
+      "official": true
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "variant": "safetensors (about 0.2 GB estimated)",
+      "basis": "estimate",
+      "notes": "0.2 GB file fits the VRAM budget (9.6 GB) with room for KV"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "safetensors (about 0.2 GB estimated)",
+      "basis": "estimate",
+      "notes": "0.2 GB file fits the VRAM budget (13.6 GB) with room for KV"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "safetensors (about 0.2 GB estimated)",
+      "basis": "estimate",
+      "notes": "0.2 GB file fits the VRAM budget (21.6 GB) with room for KV"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "safetensors (about 0.2 GB estimated)",
+      "basis": "estimate",
+      "notes": "0.2 GB file fits the VRAM budget (29.6 GB) with room for KV"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "variant": "safetensors (about 0.2 GB estimated)",
+      "basis": "estimate",
+      "notes": "0.2 GB file against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "safetensors (about 0.2 GB estimated)",
+      "basis": "estimate",
+      "notes": "0.2 GB file against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "safetensors (about 0.2 GB estimated)",
+      "basis": "estimate",
+      "notes": "0.2 GB file against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no"
+  },
+  "benchmarks": [
+    {
+      "name": "Open SLM leaderboard Intelligence Index",
+      "score": 33.95,
+      "kind": "vendor",
+      "variant": "first among models under 250M parameters on that leaderboard as of 2026-11-09 (card)",
+      "source": "https://huggingface.co/MinimaLabs/KLM-1.6"
+    }
+  ],
+  "soft": {
+    "weaknesses": [
+      "a 99M base model, not an assistant"
+    ],
+    "maturity": "2.9k downloads, 150 likes"
+  },
+  "tona_fit": {
+    "verdict": "reject",
+    "reason": "A 99M base model has no use as a coding worker; at most a draft-model research curiosity.",
+    "blockers": [
+      "size and purpose"
+    ]
+  },
+  "open_questions": [],
+  "sources": [
+    {
+      "url": "https://huggingface.co/MinimaLabs/KLM-1.6",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README, config.json read"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

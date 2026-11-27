@@ -1,0 +1,171 @@
+{
+  "id": "vibevoice-asr",
+  "name": "VibeVoice-ASR",
+  "vendor": "Microsoft",
+  "release_date": "2026-01",
+  "purpose": "Unified long-form speech-to-text that outputs who spoke, when and what in one pass, with custom hotwords; up to 60 minutes continuous audio within a 64K token window (card).",
+  "tasks": [
+    "audio-transcription"
+  ],
+  "modalities": {
+    "input": [
+      "audio"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "many"
+    ]
+  },
+  "license": {
+    "name": "MIT",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "LICENSE in https://github.com/microsoft/VibeVoice read: MIT License, Copyright (c) 2025 Microsoft."
+  },
+  "architecture": {
+    "kind": "AUTOREGRESSIVE: Qwen2-based 28-layer dense decoder (hidden 3584, 28 heads, 4 KV heads, full attention) with causal acoustic (64-dim) and semantic (128-dim) tokenizers at about 15 frames per second (assumes 24 kHz) and a diffusion head in the config",
+    "params_total_b": 9,
+    "layers": 28,
+    "attention": "GQA 28/4, full",
+    "context_native": 65536,
+    "context_max": 131072
+  },
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "no",
+      "basis": "estimate"
+    },
+    "pc-16gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "notes": "Q4 weights about 5-6 GB; a 60 min file is about 54k tokens, KV 28 layers x 4 heads x 128 x 2 x 2 B = 57 KB/token, about 3 GB; no quantized runtime known"
+    },
+    "pc-24gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "notes": "same arithmetic"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "basis": "estimate"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "unknown",
+    "other": [
+      "Transformers",
+      "vLLM (GitHub repo)"
+    ],
+    "notes": "Plain Qwen2 decoder: Tona's dense-transformer path could in principle serve it; the convolutional audio tokenizers would need ports."
+  },
+  "soft": {
+    "strengths": [
+      "ASR, diarization and timestamps in one 60-minute pass, no stitching",
+      "Hotword support for domain terms",
+      "MIT"
+    ],
+    "weaknesses": [
+      "German not named in the card text, the language chart is an image",
+      "No numeric benchmarks in card text, no VRAM or speed figures",
+      "9B BF16 is about 18 GB"
+    ],
+    "maturity": "Microsoft; 1333 likes, 717k downloads (HF listing 2026-11-19).",
+    "user_reports": [
+      {
+        "summary": "Inference can spiral into repeating one word or phrase until the token limit; still reproducible in October with noisy speech; a client script (PR 228) covers only the vLLM server.",
+        "source": "https://huggingface.co/microsoft/VibeVoice-ASR/discussions/22",
+        "date": "2026-10-07",
+        "sentiment": "negative"
+      }
+    ]
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Unique feature (one pass: who, when, what, hotwords, 60 min) and MIT, but the independent German WER is poor (14.12 on all 8 sets, rank 26 of 27) and long-form loops are reported. Dense Qwen2-7B-class decoder would suit Tona, and 16 GB is marginal at best. Revisit if a later checkpoint fixes German.",
+    "blockers": [
+      "German WER 14.12 on the leaderboard",
+      "instability on noisy audio",
+      "audio tokenizer not in Tona"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/microsoft/VibeVoice-ASR",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/microsoft/VibeVoice-ASR/raw/main/config.json",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/spaces/hf-audio/open_asr_leaderboard",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "Space /config JSON read directly"
+    },
+    {
+      "url": "https://github.com/microsoft/VibeVoice",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "LICENSE read"
+    }
+  ],
+  "open_questions": [
+    "Language list",
+    "Speed (tokens per audio second) and VRAM at 60 min",
+    "Whether the decoder equals Qwen2.5-7B (config: qwen2, 28 layers, hidden 3584)",
+    "German DER numbers (card charts only)"
+  ],
+  "last_checked": "2026-11-19",
+  "benchmarks": [
+    {
+      "name": "German WER, Open ASR multilingual track (8 of 8 datasets)",
+      "score": 14.12,
+      "kind": "independent",
+      "source": "https://huggingface.co/spaces/hf-audio/open_asr_leaderboard",
+      "date": "2026-11-19",
+      "variant": "microsoft/VibeVoice-ASR-HF",
+      "harness": "Open ASR Leaderboard multilingual track, German column (WER %), read from the Space config JSON 2026-11-19; rows differ in how many of the 8 datasets they cover",
+      "unit": "% WER"
+    },
+    {
+      "name": "Open ASR English avg WER (leaderboard rank 61 of 69)",
+      "score": 9.54,
+      "kind": "independent",
+      "source": "https://huggingface.co/spaces/hf-audio/open_asr_leaderboard",
+      "date": "2026-11-19",
+      "variant": "microsoft/VibeVoice-ASR-HF",
+      "harness": "Open ASR Leaderboard English track, read 2026-11-19",
+      "unit": "% WER"
+    },
+    {
+      "name": "RTFx on the leaderboard (English track, leaderboard GPU)",
+      "score": 217.89,
+      "kind": "independent",
+      "source": "https://huggingface.co/spaces/hf-audio/open_asr_leaderboard",
+      "date": "2026-11-19",
+      "variant": "microsoft/VibeVoice-ASR-HF",
+      "harness": "Open ASR Leaderboard, read 2026-11-19"
+    }
+  ]
+}

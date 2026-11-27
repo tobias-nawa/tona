@@ -1,0 +1,4 @@
+Based on the provided code, here is a summary of what the C++ and HIP code does:
+
+*   **Inference Engine Core (`engine/`)**: Implements a high-performance inference engine for a specific Large Language Model (Qwen4exp) on AMD GPUs (gfx1200 architecture).
+    *   **Megakernel (`mega.hip`)**: A persistent GPU kernel that executes the entire forward pass (attention, feed-forward, MoE routing) as a

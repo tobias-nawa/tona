@@ -1,0 +1,180 @@
+{
+  "id": "canary-1b-v2",
+  "name": "NVIDIA Canary-1B-v2",
+  "vendor": "NVIDIA",
+  "release_date": "2025-08",
+  "purpose": "High-quality speech transcription and translation across 25 European languages in one 1B model; card lists word- and segment-level timestamps and permissive CC BY 4.0 licensing.",
+  "tasks": [
+    "audio-transcription",
+    "translation"
+  ],
+  "modalities": {
+    "input": [
+      "audio"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "de",
+      "en",
+      "fr",
+      "es",
+      "it",
+      "pt",
+      "nl",
+      "pl",
+      "ru",
+      "uk",
+      "many"
+    ]
+  },
+  "license": {
+    "name": "CC-BY-4.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "HF tag cc-by-4.0, no LICENSE file in the repo; card: \"ready for commercial/non-commercial use\" and \"permissive CC BY 4.0 license\". CC BY 4.0 legal code read in the Fluid Speech Pro repo; attribution required."
+  },
+  "architecture": {
+    "kind": "AUTOREGRESSIVE encoder-decoder: FastConformer encoder (32 layers) + Transformer decoder (8 layers), 16,384-token SentencePiece vocabulary",
+    "params_total_b": 0.978,
+    "layers": 40,
+    "why_this_design": "Card: task-specific tokens (source and target language) steer one model for ASR and translation; widens the earlier 4-language Canary to 25 languages."
+  },
+  "variants": [
+    {
+      "repo": "nvidia/canary-1b-v2",
+      "format": "NeMo checkpoint (safetensors)",
+      "official": true
+    },
+    {
+      "repo": "handy-computer/canary-1b-v2-gguf",
+      "format": "GGUF (transcribe.cpp), community",
+      "official": false
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "about 1B parameters; small even at 16 bit"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "about 1B parameters; small even at 16 bit"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "about 1B parameters; small even at 16 bit"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "about 1B parameters; small even at 16 bit"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "about 1B parameters; small even at 16 bit"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "about 1B parameters; small even at 16 bit"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "about 1B parameters; small even at 16 bit"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "NeMo",
+      "transcribe.cpp GGUF (handy-computer)",
+      "ONNX community conversion"
+    ],
+    "notes": "Encoder-decoder; the 8-layer decoder is small, so Tona decode machinery adds little."
+  },
+  "benchmarks": [
+    {
+      "name": "German WER, Open ASR multilingual track (6 of 8 datasets)",
+      "score": 4.06,
+      "kind": "independent",
+      "source": "https://huggingface.co/spaces/hf-audio/open_asr_leaderboard",
+      "harness": "Open ASR Leaderboard multilingual track, German column (WER %), read from the Space config JSON 2026-11-19; rows differ in how many of the 8 datasets they cover",
+      "unit": "% WER",
+      "date": "2026-11-19"
+    },
+    {
+      "name": "Open ASR English avg WER (leaderboard rank 54 of 69)",
+      "score": 8.43,
+      "kind": "independent",
+      "source": "https://huggingface.co/spaces/hf-audio/open_asr_leaderboard",
+      "unit": "% WER",
+      "date": "2026-11-19"
+    },
+    {
+      "name": "RTFx on the leaderboard (English track)",
+      "score": 1853.68,
+      "kind": "independent",
+      "source": "https://huggingface.co/spaces/hf-audio/open_asr_leaderboard",
+      "date": "2026-11-19"
+    },
+    {
+      "name": "FLEURS German WER",
+      "score": 4.4,
+      "kind": "vendor",
+      "source": "https://huggingface.co/nvidia/canary-1b-v2",
+      "unit": "% WER"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "timestamps and translation in one model",
+      "permissive license"
+    ],
+    "weaknesses": [
+      "English average lower than Parakeet v2/v3 on the leaderboard (8.43 vs 7.04)",
+      "autoregressive decoder slower than TDT models"
+    ]
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "CC-BY-4.0, 1B, fits every class; independent German 4.06 on par with Parakeet v3 (4.12), plus translation and timestamps. Cohere, Qwen3-ASR and Fluid are ahead on German; Tona has no audio module (blocker only).",
+    "blockers": [
+      "no Tona audio module"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/nvidia/canary-1b-v2",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "card read as raw README"
+    },
+    {
+      "url": "https://huggingface.co/spaces/hf-audio/open_asr_leaderboard",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "Space /config JSON read directly"
+    },
+    {
+      "url": "https://arxiv.org/html/2509.14128v2",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "paper (search summary only)"
+    }
+  ],
+  "open_questions": [
+    "Own German comparison against parakeet-primeline and Cohere on German meeting audio"
+  ],
+  "last_checked": "2026-11-19"
+}

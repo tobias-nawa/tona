@@ -1,0 +1,66 @@
+{
+  "id": "meta-encoder-v1",
+  "name": "MetaEncoder v1",
+  "vendor": "Meta (facebook)",
+  "release_date": "2026-11-12",
+  "lineage": {
+    "family": "muse-glimmer",
+    "base_model": "muse_glimmer architecture (card: transformers >= 5.15 is the first release with muse_glimmer; MuseGlimmerModel loaded via AutoModel)"
+  },
+  "purpose": "Multimodal embedding model for image-text, video and document retrieval with task instructions, plus a 'decide' call that answers Jev-style yes/no, choice and score questions about a state with probabilities (card).",
+  "tasks": ["embeddings", "vision"],
+  "modalities": {"input": ["text", "image", "video", "document"], "output": ["embedding"]},
+  "license": {
+    "name": "not stated on the v1 card",
+    "verified": false,
+    "commercial_use": "unknown",
+    "redistribution": "unknown",
+    "notes": "HF metadata of facebook/meta-encoder-v1 carries no license field and the card read has no license section. The earlier facebook/meta-encoder (2026-09-30) is tagged apache-2.0 by the HF API, and its card (read through a summarizing page fetch, files gated, raw LICENSE 401) says Apache 2.0 inherited from the base Muse-Glimmer-30B plus the base model's Usage Policy; the license text itself was not read for either repo."
+  },
+  "architecture": {
+    "kind": "large multimodal decoder-style encoder (muse_glimmer), 6656-dimensional L2-normalised embeddings",
+    "params_total_b": 28.4,
+    "why_this_design": "Card gives no reasons."
+  },
+  "variants": [
+    {"repo": "facebook/meta-encoder-v1", "format": "safetensors BF16", "size_gb": 56.98, "official": true, "notes": "card says one 80 GB GPU holds the model in bf16"},
+    {"repo": "facebook/meta-encoder", "format": "safetensors BF16", "size_gb": 59.58, "official": true, "notes": "earlier release, 29.8B parameters, gated; card (page fetch): bi-encoder made by contrastive fine-tuning of meta-models/Muse-Glimmer-30B, paper arXiv 2610.11316, 85 downloads and 35 likes in the month shown"}
+  ],
+  "hardware_fit": {
+    "pc-12gb": {"fits": "no", "basis": "estimate"},
+    "pc-16gb": {"fits": "no", "basis": "estimate", "notes": "57 GB BF16 would need heavy offload for an embedding workload"},
+    "pc-24gb": {"fits": "no", "basis": "estimate"},
+    "pc-32gb": {"fits": "no", "basis": "estimate"},
+    "mac-16-24gb": {"fits": "no", "basis": "estimate"},
+    "mac-32gb": {"fits": "no", "basis": "estimate"},
+    "mac-64gb+": {"fits": "marginal", "basis": "estimate", "notes": "57 GB BF16 against about 52 GB GPU share on 64 GB; needs a quant"}
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": ["Transformers >= 5.15 with MetaEncoder wrapper (encode, retrieve, decide)"]
+  },
+  "benchmarks": [
+    {"name": "NanoBEIR (multilingual text retrieval)", "score": 0.6634, "kind": "vendor", "variant": "facebook/meta-encoder (first release, not v1); Qwen3-VL-Embedding-8B 0.6061, WeMM-Embedding-9B 0.6175", "source": "https://huggingface.co/facebook/meta-encoder"},
+    {"name": "MMEB V3 image / video / visdoc", "score": "0.7897 / 0.6486 / 0.8149", "kind": "vendor", "variant": "facebook/meta-encoder (first release, not v1); WeMM-Embedding-9B 0.8099 / 0.7431 / 0.8334", "source": "https://huggingface.co/facebook/meta-encoder"},
+    {"name": "MMLU (option list in prompt)", "score": 0.7767, "kind": "vendor", "variant": "facebook/meta-encoder (first release, not v1)", "source": "https://huggingface.co/facebook/meta-encoder"}
+  ],
+  "soft": {
+    "strengths": ["One model for text, image, video and document embeddings and for structured decisions"],
+    "weaknesses": ["57 GB in BF16 and 6656-dimensional vectors make it unsuitable for local retrieval on our hardware classes", "Benchmarks only as an image in the card", "License not stated on the v1 card"],
+    "maturity": "Meta; 687 downloads on the HF API 2026-11-19."
+  },
+  "tona_fit": {
+    "verdict": "reject",
+    "reason": "Too large for every hardware class except as a marginal 64 GB Mac case, and the vector size and cost are out of proportion for local document search; smaller visual retrievers (EVIE, ml-embed, Qwen3-VL embedding) cover the use case.",
+    "blockers": ["57 GB bf16", "license unstated on the card"]
+  },
+  "sources": [
+    {"url": "https://huggingface.co/facebook/meta-encoder-v1", "kind": "primary", "checked": "2026-11-19", "note": "README read"},
+    {"url": "https://huggingface.co/api/models/facebook/meta-encoder-v1?blobs=true", "kind": "primary", "checked": "2026-11-19", "note": "created 2026-11-12, 28.43B parameters, 56.98 GB"},
+    {"url": "https://huggingface.co/facebook/meta-encoder", "kind": "secondary", "checked": "2026-11-19", "note": "first-release card via a summarizing page fetch (raw README, config.json and LICENSE return HTTP 401, no mirror found); benchmark table and usage from there"},
+    {"url": "https://huggingface.co/api/models/facebook/meta-encoder?blobs=true", "kind": "primary", "checked": "2026-11-19", "note": "metadata: apache-2.0 tag, base_model meta-models/Muse-Glimmer-30B, 59.58 GB, created 2026-09-30"}
+  ],
+  "open_questions": ["Benchmark numbers of v1 (card image only; the table above is the first release)", "License of v1 (no field, no section) and the license text of both repos (gated)", "Difference between meta-encoder and meta-encoder-v1: the first card says only that v1 'significantly improves' it; the v1 card has no changelog", "Raw files of facebook/meta-encoder stay unreachable (401 on raw README, config.json, LICENSE)"],
+  "last_checked": "2026-11-19"
+}

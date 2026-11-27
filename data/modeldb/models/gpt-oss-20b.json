@@ -1,0 +1,178 @@
+{
+  "id": "gpt-oss-20b",
+  "name": "gpt-oss-20b",
+  "vendor": "OpenAI",
+  "release_date": "2025-08-04",
+  "purpose": "OpenAI: lower latency and local or specialized use cases; runs within 16 GB under MXFP4.",
+  "tasks": [
+    "general",
+    "research",
+    "math"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "LICENSE file in the repo read (11,357 bytes): standard Apache License 2.0, identical to the apache.org text apart from a trailing newline. The card adds no extra usage policy. File identical (same md5) to the gpt-oss-120b LICENSE."
+  },
+  "architecture": {
+    "kind": "MoE, MXFP4-quantized experts, harmony response format",
+    "gguf_arch": "gpt-oss",
+    "params_total_b": 21,
+    "params_active_b": 3.6,
+    "drafter": "none stated",
+    "attention": "not stated on the card",
+    "why_this_design": "Not stated on the card beyond the target: a model that runs in 16 GB of memory for lower-latency local use."
+  },
+  "variants": [
+    {
+      "repo": "openai/gpt-oss-20b",
+      "format": "safetensors, MoE weights MXFP4",
+      "official": true,
+      "notes": "card: runs within 16 GB"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "variant": "MXFP4 (about 12-13 GB, estimate from the 16 GB statement)",
+      "notes": "With experts in RAM."
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "MXFP4",
+      "notes": "Card: within 16 GB."
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "MXFP4"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "MXFP4"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "MXFP4",
+      "notes": "16 GB tight, 24 GB fine."
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "MXFP4"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "MXFP4"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "vLLM",
+      "Transformers"
+    ],
+    "notes": "A 2025-09 write-up found llama.cpp ran gpt-oss smoothly (20b tested)."
+  },
+  "benchmarks": [
+    {
+      "name": "GPQA Diamond",
+      "score": 58.59,
+      "kind": "vendor",
+      "source": "https://huggingface.co/openai/gpt-oss-20b"
+    },
+    {
+      "name": "MMLU-Pro",
+      "score": 73.6,
+      "kind": "vendor",
+      "source": "https://huggingface.co/openai/gpt-oss-20b"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "Runs on a 16 GB card, three reasoning levels, built-in tools"
+    ],
+    "weaknesses": [
+      "Weakest knowledge of this set (GPQA 58.6, MMLU-Pro 73.6)",
+      "SimpleQA-style hallucination reported higher than the 120b (about 9 in 10, unchecked)",
+      "Languages not stated"
+    ],
+    "behavior": "Harmony format only; Reasoning: low, medium or high in the system prompt.",
+    "best_for": [
+      "Low-latency tool-using helper on 16 GB"
+    ],
+    "avoid_for": [
+      "Knowledge questions",
+      "German"
+    ],
+    "user_reports": [
+      {
+        "summary": "llama.cpp ran gpt-oss-20b smoothly while vLLM caused problems (write-up).",
+        "sentiment": "positive",
+        "source": "https://visokio.com/2025/09/19/lessons-from-the-trenches-why-llama-cpp-works-best-today",
+        "date": "2025-09-19"
+      },
+      {
+        "summary": "Users call it still the best model for 16 GB consumer cards (July 2026) and an agentic-coding comparison found it perfect on console tasks (40/40) but weak on GUI work; a template bug keeps the commentary channel valid without tools (BFCL v4 about 3 percent vs 36-60 with a fixed template) and the template crashes on tool calls with null content.",
+        "sentiment": "mixed",
+        "source": "https://huggingface.co/openai/gpt-oss-20b/discussions/265",
+        "date": "2026-07-08"
+      },
+      {
+        "summary": "Agentic coding test through Ollama (MXFP4): console tasks 40/40, GUI application weak; the author links the template issues #272 and #274 as context for comparing harnesses.",
+        "sentiment": "mixed",
+        "source": "https://huggingface.co/openai/gpt-oss-20b/discussions/279",
+        "date": "2026-11-11"
+      }
+    ],
+    "maturity": "OpenAI; 5.5 M downloads."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Still liked by users on 16 GB cards, Apache-2.0 (text read), but older and weaker than Qwen3.5-9B and Gemma 4 12B on every vendor knowledge number and no independent German score exists; worth a re-check only if a refresh appears. Missing Tona module is only a blocker.",
+    "blockers": [
+      "no gpt-oss module in Tona"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/openai/gpt-oss-20b",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "model card"
+    },
+    {
+      "url": "https://visokio.com/2025/09/19/lessons-from-the-trenches-why-llama-cpp-works-best-today",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "search result, not opened"
+    },
+    {
+      "url": "https://huggingface.co/openai/gpt-oss-20b/raw/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "LICENSE file"
+    }
+  ],
+  "open_questions": [
+    "GGUF size not collected",
+    "No independent German score"
+  ],
+  "last_checked": "2026-11-19"
+}

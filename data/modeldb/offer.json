@@ -1,0 +1,216 @@
+{
+  "$schema": "./offer.schema.json",
+  "version": 1,
+  "updated": "2026-11-24",
+  "hw_classes": [
+    {
+      "id": "pc-16gb-vram-64gb-ram",
+      "label": "PC, 16 GB VRAM, 64 GB RAM",
+      "doc": "docs/hardware/pc-16gb-vram.md",
+      "measured": true
+    },
+    {
+      "id": "mac-32gb",
+      "label": "Mac, 32 GB",
+      "doc": "docs/hardware/mac-32gb.md",
+      "measured": false
+    },
+    {
+      "id": "mac-64gb",
+      "label": "Mac, 64 GB and larger",
+      "doc": "docs/hardware/mac-64gb-and-larger.md",
+      "measured": false
+    }
+  ],
+  "languages": [
+    {"id": "python", "label": "Python"},
+    {"id": "typescript", "label": "TypeScript"},
+    {"id": "javascript", "label": "JavaScript"},
+    {"id": "rust", "label": "Rust"},
+    {"id": "csharp", "label": "C#"},
+    {"id": "go", "label": "Go"},
+    {"id": "java", "label": "Java"},
+    {"id": "cpp", "label": "C++"},
+    {"id": "php", "label": "PHP"},
+    {"id": "dart", "label": "Dart/Flutter"},
+    {"id": "bash", "label": "Shell/Bash"}
+  ],
+  "tasks": [
+    {
+      "id": "coding",
+      "label": "Coding with agents",
+      "help": "like Claude Code, OpenCode, Junie",
+      "status": "available"
+    },
+    {
+      "id": "knowledge",
+      "label": "Knowledge and research",
+      "help": "questions, explanations, web search",
+      "status": "available"
+    },
+    {
+      "id": "documents",
+      "label": "Documents and images",
+      "help": "PDFs, scans, screenshots, photos of text",
+      "status": "coming",
+      "coming_note": "coming"
+    },
+    {
+      "id": "transcription",
+      "label": "Audio to text",
+      "help": "transcribe recordings, who speaks when",
+      "status": "coming",
+      "coming_note": "coming"
+    },
+    {
+      "id": "speech",
+      "label": "Read aloud",
+      "help": "text as speech, German too",
+      "status": "coming",
+      "coming_note": "coming"
+    },
+    {
+      "id": "images",
+      "label": "Generate images",
+      "help": "from a description",
+      "status": "coming",
+      "coming_note": "coming"
+    }
+  ],
+  "offers": [
+    {
+      "task": "coding",
+      "hw_class": "pc-16gb-vram-64gb-ram",
+      "recommended": "coder-iq1_m",
+      "alternative": "ornith-1.5-35b-a3b",
+      "reason": "Coder: best measured agent for C#, JavaScript and Python. Ornith: better at Rust.",
+      "source": "data/modeldb/models/qwen3.8-flash-next-gsq-rco-coder-iq1_m.json"
+    },
+    {
+      "task": "coding",
+      "hw_class": "mac-32gb",
+      "recommended": "coder-iq1_m",
+      "reason": "Coder: the model the Metal backend runs today; the speed is estimated from the M1 Max 32 GB measurement.",
+      "source": "data/modeldb/models/qwen3.8-flash-next-gsq-rco-coder-iq1_m.json"
+    },
+    {
+      "task": "coding",
+      "hw_class": "mac-64gb",
+      "recommended": "coder-iq1_m",
+      "reason": "Coder: the model the Metal backend runs today; the speed is estimated from the M1 Max 32 GB measurement.",
+      "source": "data/modeldb/models/qwen3.8-flash-next-gsq-rco-coder-iq1_m.json"
+    },
+    {
+      "task": "knowledge",
+      "hw_class": "pc-16gb-vram-64gb-ram",
+      "recommended": "nemotron-bolt-74b-a9b-24gb",
+      "reason": "Bolt: the largest model that fits this class; coding is not shown. There is no alternative yet.",
+      "source": "data/modeldb/models/nemotron-3.5-bolt-74b-a9b-24gb.json"
+    }
+  ],
+  "models": {
+    "coder-iq1_m": {
+      "name": "Coder",
+      "modeldb": "qwen3.8-flash-next-gsq-rco-coder-iq1_m",
+      "languages": {
+        "python": {"level": "strong", "basis": "measured", "detail": "13 of 18 exercises within 4 attempts", "source": "research/measurements/2026-11-18-agent-eval-shard.md"},
+        "typescript": {"level": "open", "basis": "none", "detail": "not measured yet", "source": "research/measurements/2026-11-19-polyglot-languages.md"},
+        "javascript": {"level": "strong", "basis": "measured", "detail": "18 of 27 exercises within 4 attempts", "source": "research/measurements/2026-11-18-agent-eval-shard.md"},
+        "rust": {"level": "weak", "basis": "measured", "detail": "2 of 22 exercises within 4 attempts", "source": "research/measurements/2026-11-19-rust-go-ornith-bolt.md"},
+        "csharp": {"level": "strong", "basis": "measured", "detail": "82 of 100 exercises within 4 attempts", "source": "research/measurements/2026-11-18-agent-eval-shard.md"},
+        "go": {"level": "weak", "basis": "measured", "detail": "7 of 39 exercises within 4 attempts", "source": "research/measurements/2026-11-19-rust-go-ornith-bolt.md"},
+        "java": {"level": "open", "basis": "none", "detail": "not measured yet", "source": "research/measurements/2026-11-19-polyglot-languages.md"},
+        "cpp": {"level": "open", "basis": "none", "detail": "not measured yet", "source": "research/measurements/2026-11-19-polyglot-languages.md"},
+        "php": {"level": "open", "basis": "none", "detail": "not measured yet", "source": "research/measurements/2026-11-19-polyglot-languages.md"},
+        "dart": {"level": "open", "basis": "none", "detail": "not measured yet", "source": "research/measurements/2026-11-19-polyglot-languages.md"},
+        "bash": {"level": "open", "basis": "none", "detail": "not measured yet", "source": "research/measurements/2026-11-19-polyglot-languages.md"}
+      },
+      "strengths": [
+        {"text": "C#, JavaScript, Python", "basis": "measured", "source": "research/measurements/2026-11-18-agent-eval-shard.md"}
+      ],
+      "weaknesses": [
+        {"text": "Rust and Go", "brief": "Rust, Go", "basis": "measured", "source": "research/measurements/2026-11-19-rust-go-ornith-bolt.md"},
+        {"text": "knowledge and languages other than English", "brief": "knowledge, non-English", "basis": "vendor", "source": "https://huggingface.co/ISTA-DASLab/Qwen3.8-Flash-Next-GSQ-RCO-Coder-GGUF/discussions/19"}
+      ],
+      "rates": [
+        {"context_tokens": 2000, "decode_tps": 70.6, "basis": "measured", "note": "code, with the MTP drafter", "source": "research/measurements/2026-11-20-coder-decode.md"},
+        {"context_tokens": 16000, "decode_tps": 67.8, "prefill_tps": 1835, "basis": "measured", "note": "code, with the MTP drafter", "source": "research/measurements/2026-11-20-coder-decode.md"},
+        {"context_tokens": 64000, "decode_tps": 74.1, "prefill_tps": 1869, "basis": "measured", "note": "code, with the MTP drafter", "source": "research/measurements/2026-11-20-coder-decode.md"}
+      ],
+      "license": {
+        "text": "Qwen Community License 1.0: free for private and own use; a coding product sold to others needs its own license",
+        "verified": true,
+        "source": "research/42-model-licenses.md"
+      }
+    },
+    "ornith-1.5-35b-a3b": {
+      "name": "Ornith",
+      "modeldb": "ornith-1.5-35b-a3b",
+      "languages": {
+        "python": {"level": "open", "basis": "none", "detail": "not measured yet", "source": "data/modeldb/models/ornith-1.5-35b-a3b.json"},
+        "typescript": {"level": "open", "basis": "none", "detail": "not measured yet", "source": "data/modeldb/models/ornith-1.5-35b-a3b.json"},
+        "javascript": {"level": "strong", "basis": "independent", "detail": "third-party test (MultiPL-E 0.90, base model), not measured by us", "source": "research/70-ornith-bolt-rust-go.md"},
+        "rust": {"level": "strong", "basis": "measured", "detail": "8 of 22 exercises within 4 attempts, the Coder 2 of 22", "source": "research/measurements/2026-11-19-rust-go-ornith-bolt.md"},
+        "csharp": {"level": "open", "basis": "none", "detail": "not measured yet", "source": "data/modeldb/models/ornith-1.5-35b-a3b.json"},
+        "go": {"level": "open", "basis": "provisional", "detail": "measurement incomplete: 7 of the first 9 exercises", "source": "research/measurements/2026-11-19-rust-go-ornith-bolt.md"},
+        "java": {"level": "open", "basis": "none", "detail": "not measured yet", "source": "data/modeldb/models/ornith-1.5-35b-a3b.json"},
+        "cpp": {"level": "open", "basis": "none", "detail": "not measured yet", "source": "data/modeldb/models/ornith-1.5-35b-a3b.json"},
+        "php": {"level": "open", "basis": "none", "detail": "not measured yet", "source": "data/modeldb/models/ornith-1.5-35b-a3b.json"},
+        "dart": {"level": "open", "basis": "none", "detail": "not measured yet", "source": "data/modeldb/models/ornith-1.5-35b-a3b.json"},
+        "bash": {"level": "open", "basis": "none", "detail": "not measured yet", "source": "data/modeldb/models/ornith-1.5-35b-a3b.json"}
+      },
+      "strengths": [
+        {"text": "Rust, better than the Coder", "brief": "Rust", "basis": "measured", "source": "research/measurements/2026-11-19-rust-go-ornith-bolt.md"},
+        {"text": "very fast writing", "brief": "speed", "basis": "measured", "source": "research/measurements/2026-11-20-ornith-bolt-clean-state.md"}
+      ],
+      "weaknesses": [
+        {"text": "Go and most languages still open", "brief": "Go, most languages open", "basis": "provisional", "source": "research/measurements/2026-11-19-rust-go-ornith-bolt.md"},
+        {"text": "weaker than the Coder on long agent tasks", "brief": "long agent tasks", "basis": "vendor", "source": "data/modeldb/models/ornith-1.5-35b-a3b.json"}
+      ],
+      "rates": [
+        {"context_tokens": 2000, "decode_tps": 114.3, "prefill_tps": 2582, "basis": "measured", "note": "code, with the MTP drafter", "source": "research/measurements/2026-11-20-ornith-bolt-clean-state.md"},
+        {"context_tokens": 16000, "decode_tps": 95.5, "prefill_tps": 4082, "basis": "measured", "note": "code, with the MTP drafter", "source": "research/measurements/2026-11-20-ornith-bolt-clean-state.md"},
+        {"context_tokens": 64000, "decode_tps": 64.7, "prefill_tps": 2964, "basis": "measured", "note": "code, with the MTP drafter", "source": "research/measurements/2026-11-20-ornith-bolt-clean-state.md"}
+      ],
+      "license": {
+        "text": "MIT",
+        "verified": false,
+        "source": "research/2026-11-25-ornith-license.md"
+      }
+    },
+    "nemotron-bolt-74b-a9b-24gb": {
+      "name": "Bolt",
+      "modeldb": "nemotron-3.5-bolt-74b-a9b-24gb",
+      "languages": {
+        "python": {"level": "open", "basis": "none", "detail": "not measured", "source": "data/modeldb/models/nemotron-3.5-bolt-74b-a9b-24gb.json"},
+        "typescript": {"level": "open", "basis": "none", "detail": "not measured", "source": "data/modeldb/models/nemotron-3.5-bolt-74b-a9b-24gb.json"},
+        "javascript": {"level": "open", "basis": "none", "detail": "not measured", "source": "data/modeldb/models/nemotron-3.5-bolt-74b-a9b-24gb.json"},
+        "rust": {"level": "open", "basis": "none", "detail": "not measured", "source": "data/modeldb/models/nemotron-3.5-bolt-74b-a9b-24gb.json"},
+        "csharp": {"level": "open", "basis": "none", "detail": "not measured", "source": "data/modeldb/models/nemotron-3.5-bolt-74b-a9b-24gb.json"},
+        "go": {"level": "open", "basis": "none", "detail": "not measured; one user report names errors (two tasks, uncontrolled)", "source": "data/modeldb/models/nemotron-3.5-bolt-74b-a9b-24gb.json"},
+        "java": {"level": "open", "basis": "none", "detail": "not measured", "source": "data/modeldb/models/nemotron-3.5-bolt-74b-a9b-24gb.json"},
+        "cpp": {"level": "open", "basis": "none", "detail": "not measured", "source": "data/modeldb/models/nemotron-3.5-bolt-74b-a9b-24gb.json"},
+        "php": {"level": "open", "basis": "none", "detail": "not measured", "source": "data/modeldb/models/nemotron-3.5-bolt-74b-a9b-24gb.json"},
+        "dart": {"level": "open", "basis": "none", "detail": "not measured", "source": "data/modeldb/models/nemotron-3.5-bolt-74b-a9b-24gb.json"},
+        "bash": {"level": "open", "basis": "none", "detail": "not measured", "source": "data/modeldb/models/nemotron-3.5-bolt-74b-a9b-24gb.json"}
+      },
+      "strengths": [
+        {"text": "vendor: strong on agent and browsing tasks, 256K context", "brief": "agents, browsing, 256K context", "basis": "vendor", "source": "data/modeldb/models/nemotron-3.5-bolt-74b-a9b-24gb.json"}
+      ],
+      "weaknesses": [
+        {"text": "coding not shown, user reports on it negative", "brief": "coding", "basis": "provisional", "source": "data/modeldb/models/nemotron-3.5-bolt-74b-a9b-24gb.json"},
+        {"text": "slower than the Coder and Ornith", "brief": "slower", "basis": "measured", "source": "research/measurements/2026-11-20-ornith-bolt-clean-state.md"}
+      ],
+      "rates": [
+        {"context_tokens": 2000, "decode_tps": 40.1, "prefill_tps": 1415, "basis": "measured", "note": "code, no drafter", "source": "research/measurements/2026-11-20-ornith-bolt-clean-state.md"},
+        {"context_tokens": 16000, "decode_tps": 38.6, "prefill_tps": 1578, "basis": "measured", "note": "code, no drafter", "source": "research/measurements/2026-11-20-ornith-bolt-clean-state.md"},
+        {"context_tokens": 64000, "decode_tps": 36.3, "prefill_tps": 1429, "basis": "measured", "note": "code, no drafter", "source": "research/measurements/2026-11-20-ornith-bolt-clean-state.md"}
+      ],
+      "license": {
+        "text": "OpenMDW-1.1: free to use, license text verified",
+        "verified": true,
+        "source": "data/modeldb/models/nemotron-3.5-bolt-74b-a9b-24gb.json"
+      }
+    }
+  }
+}

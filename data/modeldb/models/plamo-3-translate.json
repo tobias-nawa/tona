@@ -1,0 +1,285 @@
+{
+  "id": "plamo-3-translate",
+  "name": "PLaMo 3 Translate (0.8B / 2B / 8B / 31B)",
+  "vendor": "Preferred Networks (PFN)",
+  "release_date": "2026-10-26",
+  "lineage": {
+    "base_model": "PLaMo 3 NICT (PFN and NICT joint pretraining)",
+    "how_derived": "further training on tens of billions of tokens of translation-focused data (card)",
+    "family": "plamo-3"
+  },
+  "purpose": "Translation-specialized LLM that the builder says delivers world-class translation quality, strongest on Japanese-English; takes surrounding context, previous translation pairs and a glossary, and selects plain or polite Japanese (card).",
+  "tasks": [
+    "translation"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "ar",
+      "az",
+      "be",
+      "bg",
+      "bn",
+      "ca",
+      "ceb",
+      "de",
+      "en",
+      "es",
+      "et",
+      "eu",
+      "fa",
+      "fr",
+      "gu",
+      "he",
+      "hi",
+      "hr",
+      "hu",
+      "hy",
+      "id",
+      "it",
+      "ja",
+      "jv",
+      "ka",
+      "kk",
+      "km",
+      "ko",
+      "lt",
+      "lv",
+      "ml",
+      "mr",
+      "ms",
+      "my",
+      "ne",
+      "nl",
+      "pa",
+      "pl",
+      "ru",
+      "si",
+      "sk",
+      "sl",
+      "sr",
+      "sw",
+      "ta",
+      "te",
+      "th",
+      "tl",
+      "ur",
+      "uz",
+      "vi",
+      "zh"
+    ]
+  },
+  "license": {
+    "name": "PLaMo Community License",
+    "verified": false,
+    "commercial_use": "limited",
+    "redistribution": "unknown",
+    "notes": "License text page (plamo.preferredai.jp) is rendered by script and could not be read; only the card summary was read: personal and non-commercial use free without registration; commercial use free after a registration form when revenue/sales of the user and affiliates is 1 billion yen or less; above that a separate agreement with PFN is required. Verdict policy (README, 2026-11-19): this licence term does not lower tona_fit; kept here for an installer label."
+  },
+  "architecture": {
+    "kind": "dense transformer (Plamo3ForCausalLM, custom code), 31B config read",
+    "gguf_arch": "plamo3 (name from config model_type; llama.cpp GGUF repos are published by the vendor)",
+    "params_total_b": 31.8,
+    "layers": 64,
+    "attention": "GQA 64 heads / 8 KV heads, head_dim 128; sliding-window layers (window 2048, pattern 8) mixed with full attention (YaRN rope)",
+    "recurrent": "none",
+    "context_native": 32768,
+    "context_max": 262144
+  },
+  "variants": [
+    {
+      "repo": "pfnet/plamo-3-translate-31b",
+      "format": "safetensors BF16",
+      "size_gb": 63.51,
+      "official": true,
+      "notes": "size from card quantization table"
+    },
+    {
+      "repo": "pfnet/plamo-3-translate-31b-GGUF",
+      "format": "GGUF Q4_K_M",
+      "size_gb": 19.53,
+      "official": true,
+      "notes": "Q3_K_M 15.86 GB, Q2_K 12.61 GB (card)"
+    },
+    {
+      "repo": "pfnet/plamo-3-translate-8b-GGUF",
+      "format": "GGUF Q4_K_M",
+      "size_gb": 5.28,
+      "official": true,
+      "notes": "BF16 17.06 GB, Q3_K_M 4.31 GB (card)"
+    },
+    {
+      "repo": "pfnet/plamo-3-translate-2b-GGUF",
+      "format": "GGUF Q4_K_M",
+      "size_gb": 1.81,
+      "official": true
+    },
+    {
+      "repo": "pfnet/plamo-3-translate-0.8b",
+      "format": "safetensors BF16",
+      "size_gb": 1.78,
+      "official": true,
+      "notes": "GGUF Q4_K_M 0.57 GB (card)"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "variant": "8B GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "5.3 GB; 31B Q4 (19.5 GB) would need RAM offload"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "8B GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "31B Q4_K_M 19.5 GB only with partial RAM offload (dense, slow)"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "31B GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "19.5 GB plus KV cache is tight"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "31B GGUF Q4_K_M",
+      "basis": "estimate"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "variant": "8B GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "31B Q4 does not fit the 12/22 GB GPU share with context"
+    },
+    "mac-32gb": {
+      "fits": "marginal",
+      "variant": "31B Q3_K_M or 8B",
+      "basis": "estimate",
+      "notes": "31B Q4 19.5 GB against about 22 GB GPU share"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "31B GGUF Q4_K_M",
+      "basis": "estimate"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "vLLM (BF16, FP8, W4A16, W4AFP8, NVFP4)",
+      "mlx-lm (MLX 4bit)",
+      "Transformers"
+    ],
+    "notes": "Card lists llama.cpp as engine for the GGUF format and says llama.cpp adds BOS itself; not tested by us."
+  },
+  "benchmarks": [
+    {
+      "name": "FLORES+ chrF++ En<->14 languages (avg both directions)",
+      "score": 56.61,
+      "kind": "vendor",
+      "variant": "31B BF16",
+      "source": "https://huggingface.co/pfnet/plamo-3-translate-31b",
+      "date": "2026-11-19",
+      "unit": "chrF++"
+    },
+    {
+      "name": "FLORES+ chrF++ Ja<->14 languages (avg both directions)",
+      "score": 37.81,
+      "kind": "vendor",
+      "variant": "31B BF16",
+      "source": "https://huggingface.co/pfnet/plamo-3-translate-31b",
+      "unit": "chrF++"
+    },
+    {
+      "name": "WMT24++ COMET-22 En->Ja",
+      "score": 0.8799,
+      "kind": "vendor",
+      "variant": "31B BF16",
+      "source": "https://huggingface.co/pfnet/plamo-3-translate-31b"
+    },
+    {
+      "name": "FLORES+ chrF++ En<->14 languages",
+      "score": 56.22,
+      "kind": "vendor",
+      "variant": "8B BF16 (Q4_K_M 56.18)",
+      "source": "https://huggingface.co/pfnet/plamo-3-translate-31b",
+      "unit": "chrF++"
+    },
+    {
+      "name": "FLORES+ chrF++ En<->14 languages",
+      "score": 55.74,
+      "kind": "vendor",
+      "variant": "2B BF16 (Q4_K_M 55.76)",
+      "source": "https://huggingface.co/pfnet/plamo-3-translate-31b",
+      "unit": "chrF++"
+    },
+    {
+      "name": "WMT24++ COMET-22 En->Ja",
+      "score": 0.8805,
+      "kind": "vendor",
+      "variant": "8B BF16 (31B 0.8799)",
+      "source": "https://huggingface.co/pfnet/plamo-3-translate-31b"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "Card quantization tables show Q4_K_M within about 0.1 chrF++ of BF16 at every size",
+      "Context, history and glossary inputs; Japanese politeness control",
+      "Size spread of 8B vs 31B is small on the builder's metrics (56.22 vs 56.61 chrF++ En)"
+    ],
+    "weaknesses": [
+      "GGUF Q2_K loses 0.45 to 3.3 chrF++ depending on size (card)",
+      "Vendor benchmarks only; comparison figure is an image against TranslateGemma and HY-MT2 chosen by the builder",
+      "Prompt format PFML3 recommended for production instead of chat template"
+    ],
+    "best_for": [
+      "Japanese-English and Japanese-multilingual translation",
+      "document translation with previous-pair history"
+    ],
+    "maturity": "Preferred Networks with NICT; weights released 2026-10 with BF16, FP8, W4A16, W4AFP8, NVFP4, GGUF and MLX variants for every size."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Small gap between 8B and 31B on the builder's numbers makes the 8B (5.3 GB at Q4) a strong small-class translator for every hardware class. No German-specific numbers from the builder.",
+    "blockers": [
+      "PLaMo3 architecture not in Tona",
+      "vendor-only benchmarks, no German evidence"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/pfnet/plamo-3-translate-31b",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README and config.json read"
+    },
+    {
+      "url": "https://huggingface.co/api/models/pfnet/plamo-3-translate-31b",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "created 2026-10-26, safetensors total 31.76B parameters"
+    },
+    {
+      "url": "https://plamo.preferredai.jp/info/plamo-community-license-en",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "page did not render license text without script"
+    }
+  ],
+  "open_questions": [
+    "Full PLaMo Community License text (redistribution, derivative terms)",
+    "German and other European language quality (builder reports only En and Ja axes)",
+    "Independent evaluation against TranslateGemma and HY-MT2",
+    "Why this design: builder points to a tech blog not read here"
+  ],
+  "last_checked": "2026-11-19"
+}

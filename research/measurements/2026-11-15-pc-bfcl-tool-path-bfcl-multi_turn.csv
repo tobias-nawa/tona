@@ -1,0 +1,2 @@
+Rank,Model,Multi Turn Overall Acc,Base,Miss Func,Miss Param,Long Context
+1,MiniCPM-SALA (FC),48.08%,69.23%,30.77%,30.77%,61.54%

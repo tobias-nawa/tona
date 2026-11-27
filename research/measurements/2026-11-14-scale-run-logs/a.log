@@ -1,0 +1,93 @@
+=== prefill dflash 19:24:41
+long: identical
+=== rc=0 26 s
+=== gpu 19:25:07
+csv: identical
+rust: identical
+explain: identical
+=== rc=0 27 s
+=== cpu plan 19:25:34
+csv: identical
+rust: identical
+explain: identical
+=== rc=0 28 s
+=== server 19:26:02
+anthropic: done
+anthropic-stream: done
+anthropic-tool: done
+anthropic-tool-stream: done
+openai: done
+openai-stream: done
+openai-tool: done
+openai-tool-stream: done
+sampled-anthropic: done
+sampled-anthropic-stream: done
+sampled-openai: done
+sampled-openai-stream: done
+thinking-anthropic: done
+reuse-short-1: done
+reuse-short-2: done
+reuse-long-1: done
+reuse-other: done
+reuse-long-2: done
+hit-last-message-1: done
+hit-last-message-2: done
+hit-fork-1: done
+hit-fork-2: done
+hit-fork-3: done
+hit-warm-request: done
+hit-warm-exact: done
+hit-repeat: done
+cold-last-message-1: done
+cold-last-message-2: done
+cold-fork-1: done
+cold-fork-2: done
+cold-fork-3: done
+cold-warm-request: done
+cold-warm-exact: done
+cold-repeat: done
+ssd-1: done
+ssd-2: done
+Checkpoints on the SSD (work/tmp/golden-server.9fTKbE/cache): 0 matching
+Checkpoints on the SSD (work/tmp/golden-server.9fTKbE/cache): 1 matching
+anthropic: identical
+anthropic-stream: identical
+anthropic-tool: identical
+anthropic-tool-stream: identical
+cold-fork-1: identical
+cold-fork-2: identical
+cold-fork-3: identical
+cold-last-message-1: identical
+cold-last-message-2: identical
+cold-repeat: identical
+cold-warm-exact: identical
+cold-warm-request: identical
+hit-fork-1: identical
+hit-fork-2: identical
+hit-fork-3: identical
+hit-last-message-1: identical
+hit-last-message-2: identical
+hit-repeat: identical
+hit-warm-exact: identical
+hit-warm-request: identical
+openai: identical
+openai-stream: identical
+openai-tool: identical
+openai-tool-stream: identical
+reuse-long-1: identical
+reuse-long-2: identical
+reuse-other: identical
+reuse-short-1: identical
+reuse-short-2: identical
+sampled-anthropic: identical
+sampled-anthropic-stream: identical
+sampled-openai: identical
+sampled-openai-stream: identical
+ssd-1: identical
+ssd-2: identical
+thinking-anthropic: identical
+=== rc=0 189 s
+=== prefill NB=1 19:29:11
+long: identical
+=== rc=0 379 s
+ALLOK

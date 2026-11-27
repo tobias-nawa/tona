@@ -1,0 +1,38 @@
+Licences and notices of the ROCm runtime libraries shipped with this release (ROCm 10.1, AMD wheels).
+The libraries are unmodified binaries from AMD's wheels (pinned with SHA-256 in toolchain/rocm-10.1.lock).
+AMD, Radeon and ROCm are trademarks of Advanced Micro Devices, Inc. This file reproduces licence texts; it grants
+nothing and implies no endorsement by any of the named authors.
+
+Sources: the binaries are built by AMD TheRock (https://github.com/ROCm/TheRock, tag therock-10.1) from
+  ROCm/llvm-project  d6f6cb691863e9258034ab48c1dfce21689d5606
+  ROCm/rocm-systems  7da43026e4f2ef7600433c38c820732f7a205d22
+
+Library -> contained components -> licence -> where the text is in this file
+(section headers below are lines of the form "==== name ====")
+
+  libamdhip64.so.7
+    HIP, CLR, ROCclr (AMD)                         MIT                          hip/LICENSE.md
+    ELFIO (Serge Lamikhov-Center)                  MIT                          licenses/rocm-extra.txt
+    ROCm-Device-Libs bitcode (AMD)                 University of Illinois/NCSA  licenses/rocm-extra.txt
+  libhsa-runtime64.so.1
+    ROCr runtime (AMD)                             University of Illinois/NCSA  rocr/LICENSE.md
+    libhsakmt (AMD; Raptor Engineering; Red Hat)   MIT                          licenses/rocm-extra.txt
+    Nginx rbtree (Igor Sysoev, Nginx, Inc.)        BSD 2-Clause                 licenses/rocm-extra.txt
+  libamd_comgr.so.3
+    Comgr (AMD)                                    Apache-2.0 WITH LLVM-exception, legacy NCSA   amd_comgr/LICENSE.txt
+  libLLVM.so.24.0git, libclang-cpp.so.24.0git
+    LLVM and Clang                                 Apache-2.0 WITH LLVM-exception, legacy NCSA   licenses/llvm-LICENSE.TXT
+    xxHash (Yann Collet)                           BSD 2-Clause                 licenses/llvm-third-party.txt
+    OpenBSD regex (Henry Spencer, UC Berkeley)     Spencer licence, BSD 3-Clause  licenses/llvm-third-party.txt
+    ConvertUTF, Unicode name table (Unicode, Inc.) Unicode licence             licenses/llvm-third-party.txt
+    MD5 (Alexander Peslyak)                        public domain / permissive   licenses/llvm-third-party.txt
+    BLAKE3                                         CC0-1.0 or Apache-2.0        licenses/llvm-third-party.txt
+    SHA1, SHA256, rpmalloc, SipHash                public domain / MIT / LLVM   named in licenses/llvm-third-party.txt
+  librocprofiler-register.so.0
+    rocprofiler-register (AMD)                     MIT                          rocprofiler-register/LICENSE.md
+    glog (Google Inc.)                             BSD 3-Clause                 licenses/rocm-extra.txt
+    fmt (Victor Zverovich)                         MIT with optional exception  licenses/rocm-extra.txt
+  librocm_kpack.so.0
+    kpack (AMD)                                    MIT                          licenses/rocm-sysdeps.txt
+  librocm_sysdeps_* (zlib, zstd, xz/liblzma, bzip2, libelf, libnuma, libdrm)
+                                                   see the entries                licenses/rocm-sysdeps.txt

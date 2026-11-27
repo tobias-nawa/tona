@@ -1,0 +1,3 @@
+# Sandbox for the polyglot exercises (python): toolchain only, exercises are mounted at run time, no network then.
+FROM docker.io/library/python:3.13-slim
+RUN pip install --no-cache-dir pytest==9.2.0

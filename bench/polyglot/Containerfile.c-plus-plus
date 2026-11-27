@@ -1,0 +1,5 @@
+# Sandbox for the polyglot exercises (cpp): GCC and CMake as in Aider's benchmark image (Catch2 ships inside every
+# exercise as test/catch.hpp). Exercises are mounted at run time, no network then.
+FROM docker.io/library/debian:trixie-slim@sha256:7378260c0a098d27ac206225db5e7d92b8c7c84ea7afccc86eeb513756bbd392
+RUN apt-get update && apt-get install -y --no-install-recommends build-essential cmake libboost-all-dev libtbb-dev \
+    && rm -rf /var/lib/apt/lists/*

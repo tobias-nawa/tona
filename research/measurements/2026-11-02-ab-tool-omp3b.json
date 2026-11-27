@@ -1,0 +1,203 @@
+{
+  "config": {
+    "A": {
+      "build": "merged",
+      "env": {},
+      "tooling": {
+        "HIP_PATH": "./work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+        "IE_EXPERT_PROFILE": "./work/profile/experts-coder.bin",
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0"
+      },
+      "commit": "v0.0.2-108-gd5a3e1fcb0"
+    },
+    "B": {
+      "build": "merged",
+      "env": {
+        "OMP_NUM_THREADS": "3"
+      },
+      "tooling": {
+        "HIP_PATH": "./work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+        "IE_EXPERT_PROFILE": "./work/profile/experts-coder.bin",
+        "OMP_NUM_THREADS": "3",
+        "ROCR_VISIBLE_DEVICES": "0"
+      },
+      "commit": "v0.0.2-108-gd5a3e1fcb0"
+    },
+    "workload": "server",
+    "targets": "30000,130000",
+    "ctx": "140000",
+    "deterministic": false,
+    "plan_info": {
+      "expect": [
+        [
+          "decode",
+          -8.0,
+          -4.0
+        ],
+        [
+          "prefill",
+          -1.0,
+          1.0
+        ]
+      ],
+      "source": "first OMP=3 run of 2026-11-02-ab-tool.md",
+      "workload": "server",
+      "targets": "30000,130000",
+      "ctx": "140000",
+      "primary": "decode",
+      "why_size": "the two lengths of all earlier decode and prefill measurements, so rates and noise table are comparable",
+      "decode_tokens": 200,
+      "noise": {
+        "prefill@30000": [
+          0.04,
+          9,
+          "research/measurements/2026-11-02-ab-tool.md: first A/A run (rounds 2-6; round 1 had no warm-up); second A/A run with warm-up (6 rounds)"
+        ],
+        "decode@30000": [
+          0.279,
+          9,
+          "research/measurements/2026-11-02-ab-tool.md: first A/A run (rounds 2-6; round 1 had no warm-up); second A/A run with warm-up (6 rounds)"
+        ],
+        "prefill@130000": [
+          0.018,
+          9,
+          "research/measurements/2026-11-02-ab-tool.md: first A/A run (rounds 2-6; round 1 had no warm-up); second A/A run with warm-up (6 rounds)"
+        ],
+        "decode@130000": [
+          0.42,
+          9,
+          "research/measurements/2026-11-02-ab-tool.md: first A/A run (rounds 2-6; round 1 had no warm-up); second A/A run with warm-up (6 rounds)"
+        ]
+      },
+      "warmup": true,
+      "A": {
+        "build": "merged",
+        "env": {},
+        "tooling": {
+          "HIP_PATH": "./work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+          "IE_EXPERT_PROFILE": "./work/profile/experts-coder.bin",
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0"
+        },
+        "commit": "v0.0.2-108-gd5a3e1fcb0"
+      },
+      "B": {
+        "build": "merged",
+        "env": {
+          "OMP_NUM_THREADS": "3"
+        },
+        "tooling": {
+          "HIP_PATH": "./work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+          "IE_EXPERT_PROFILE": "./work/profile/experts-coder.bin",
+          "OMP_NUM_THREADS": "3",
+          "ROCR_VISIBLE_DEVICES": "0"
+        },
+        "commit": "v0.0.2-108-gd5a3e1fcb0"
+      }
+    },
+    "corpus_sha256": "3c3c2a1f39381406f8fcf3f7226407e9015094ea9cd182796e3a4d89ac4c048c",
+    "corpus_is_reference": true,
+    "commit": "639659a",
+    "noise": {
+      "prefill@30000": [
+        0.04,
+        9
+      ],
+      "decode@30000": [
+        0.279,
+        9
+      ],
+      "prefill@130000": [
+        0.018,
+        9
+      ],
+      "decode@130000": [
+        0.42,
+        9
+      ]
+    }
+  },
+  "rounds": [
+    {
+      "order": "AB",
+      "sha": {
+        "A": {
+          "30000": "1fad1ead2f1ac34c",
+          "130000": "971ebf40510eb261"
+        },
+        "B": {
+          "30000": "1fad1ead2f1ac34c",
+          "130000": "971ebf40510eb261"
+        }
+      },
+      "A": {
+        "prefill@30000": 1798.6838204506266,
+        "decode@30000": 65.36877012798809,
+        "prefill@130000": 1708.0806329352906,
+        "decode@130000": 65.69377734265753
+      },
+      "B": {
+        "prefill@30000": 1799.9421044086132,
+        "decode@30000": 62.262361028565664,
+        "prefill@130000": 1709.9766442079172,
+        "decode@130000": 50.09928416872763
+      },
+      "seconds": 240.93718985305168
+    }
+  ],
+  "stop_reason": "all metrics decided after round 1",
+  "wall_seconds": 362.35021730093285,
+  "warmup": {
+    "prefill@30000": 1796.7201251740155,
+    "decode@30000": 64.71883585839416,
+    "prefill@130000": 1697.6946921752692,
+    "decode@130000": 64.8253045604875
+  },
+  "plan": {
+    "alpha": 0.05,
+    "margin": 0.5,
+    "max_rounds": 6,
+    "min_rounds": 2,
+    "prior_sd": 0.5,
+    "prior_df": 4.0
+  },
+  "decisions": {
+    "prefill@30000": {
+      "decided_at_round": 1,
+      "decision": "equal",
+      "mean_diff_percent": 0.06995581678559404,
+      "ci_diff_percent": [
+        -0.05430047597417413,
+        0.19421210954536222
+      ]
+    },
+    "decode@30000": {
+      "decided_at_round": 1,
+      "decision": "B slower",
+      "mean_diff_percent": -4.752130250179498,
+      "ci_diff_percent": [
+        -5.618817892178881,
+        -3.8854426081801146
+      ]
+    },
+    "prefill@130000": {
+      "decided_at_round": 1,
+      "decision": "B faster",
+      "mean_diff_percent": 0.11100244543891247,
+      "ci_diff_percent": [
+        0.05508711369701679,
+        0.16691777718080814
+      ]
+    },
+    "decode@130000": {
+      "decided_at_round": 1,
+      "decision": "B slower",
+      "mean_diff_percent": -23.738158779619734,
+      "ci_diff_percent": [
+        -25.0428498535973,
+        -22.43346770564217
+      ]
+    }
+  }
+}

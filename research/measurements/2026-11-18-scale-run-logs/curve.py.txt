@@ -1,0 +1,124 @@
+#!/usr/bin/env python3
+"""Single-arm driver for the scale run 2026-11-18 (9950X; load log per server start, as ab.py --load-log on): the named workloads of scripts/ab.py on ONE build (no comparison arm),
+with SHAs, expert counters and host/GPU memory peaks per server start.
+Usage (under the GPU lock): curve.py LABEL BUILD WORKLOADS [--env K=V ...] [--ctx N] [--targets T:D,...]"""
+import argparse, json, os, sys, threading, time
+from pathlib import Path
+
+ROOT = Path("<repo>")
+sys.path.insert(0, str(ROOT / "scripts"))
+import ab, ab_load, ab_server, ab_workloads, make_corpus  # noqa: E402
+
+DEV = "/sys/class/drm/card1/device"
+OUT = Path("/var/tmp/claude/scale1118")
+
+
+def rd(p):
+    try:
+        return open(p).read().strip()
+    except OSError:
+        return None
+
+
+def status_kb(pid, key):
+    try:
+        for ln in open(f"/proc/{pid}/status"):
+            if ln.startswith(key):
+                return int(ln.split()[1])
+    except OSError:
+        pass
+    return 0
+
+
+class Peaks(threading.Thread):
+    def __init__(self, pid):
+        super().__init__(daemon=True)
+        self.pid, self.stop_, self.p = pid, False, {"rss_gb": 0, "gtt_gb": 0, "vram_gb": 0, "hwm_gb": 0, "avail_min_gb": 1e9}
+
+    def run(self):
+        while not self.stop_:
+            g = 1024 ** 3
+            self.p["rss_gb"] = max(self.p["rss_gb"], status_kb(self.pid, "VmRSS:") * 1024 / g)
+            self.p["hwm_gb"] = max(self.p["hwm_gb"], status_kb(self.pid, "VmHWM:") * 1024 / g)
+            self.p["gtt_gb"] = max(self.p["gtt_gb"], int(rd(DEV + "/mem_info_gtt_used") or 0) / g)
+            self.p["vram_gb"] = max(self.p["vram_gb"], int(rd(DEV + "/mem_info_vram_used") or 0) / g)
+            try:
+                mi = {l.split(":")[0]: int(l.split()[1]) for l in open("/proc/meminfo")}
+                self.p["avail_min_gb"] = min(self.p["avail_min_gb"], mi["MemAvailable"] * 1024 / g)
+            except OSError:
+                pass
+            time.sleep(1)
+
+
+_orig_parse = ab_server.parse_completion
+_label = [""]
+_n = [0]
+
+
+def _keep(resp):
+    """Store the answer text of every request next to the JSON (1M answers of #104)."""
+    _n[0] += 1
+    (OUT / f"{_label[0]}-answer-{_n[0]}.txt").write_text(resp["choices"][0]["message"]["content"])
+    return _orig_parse(resp)
+
+
+ab_server.parse_completion = _keep
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("label"); ap.add_argument("build"); ap.add_argument("workloads")
+    ap.add_argument("--env", action="append", default=[]); ap.add_argument("--ctx", default="")
+    ap.add_argument("--targets", default=""); ap.add_argument("--decode-tokens", type=int, default=200)
+    ap.add_argument("--port", type=int, default=8097)
+    a = ap.parse_args()
+    _label[0] = a.label
+    env = ab.parse_env(a.env)
+    cfg = ab_server.ServerConfig(ROOT, str(ROOT / ab.MODEL), str(ROOT / ab.DRAFTER), 0, a.port, ab.default_memory_max(), env)
+    arm = ab_server.Arm("A", a.build)
+    names = [w for w in a.workloads.split(",") if w]
+    jobs = ab_workloads.jobs_for(names, ab.parse_targets(a.targets, a.decode_tokens), ab.parse_ctxs(a.ctx) if a.ctx else [140000])
+    ab_workloads.check_ctx(jobs)
+    corpus = ab.load_corpus(ROOT / "work/corpus/code.txt")
+    result = {"label": a.label, "build": a.build, "env": env, "jobs": []}
+    prompts = {}
+    t0 = time.monotonic()
+    for n, job in enumerate(jobs, 1):
+        jcfg = ab_server.ServerConfig(ROOT, cfg.model, cfg.drafter, job.ctx, a.port, cfg.memory_max, {**env, **job.env})
+        log = OUT / f"{a.label}-server-{n}-ctx{job.ctx}.log"
+        ab_server.check_port(a.port, wait=60)
+        proc = ab_server.start_server(jcfg, arm, log)
+        pk = Peaks(proc.pid)
+        load = ab_load.LoadLog().start()  # ours, system, other, as `ab.py --load-log on` (Linux: /proc, /sys, DRM fdinfo)
+        rec = {"ctx": job.ctx, "env": job.env, "log": str(log)}
+        try:
+            ts = time.monotonic()
+            ab_server.wait_ready(proc, a.port, jcfg.ready_timeout)
+            load.ready()
+            pk.start()
+            rec["start_s"] = time.monotonic() - ts
+            url = f"http://127.0.0.1:{a.port}"
+            counters = {}
+            m, s = ab_server.run_context(url, corpus, job.requests, prompts, {}, counters)
+            if job.bench_set:
+                m.update(ab_server.run_bench_set(url, ROOT))
+            rec.update(metrics=m, shas=s, counters=counters)
+            try:
+                rec["status"] = json.load(__import__("urllib.request").request.urlopen(url + "/status", timeout=10))
+            except Exception as e:  # noqa: BLE001
+                rec["status_error"] = str(e)
+            rec["hwm_gb_final"] = status_kb(proc.pid, "VmHWM:") * 1024 / 1024 ** 3
+        finally:
+            pk.stop_ = True
+            rec["load"] = load.stop()
+            ab_server.stop_server(proc)
+        rec["peaks"] = pk.p
+        result["jobs"].append(rec)
+        print(json.dumps({k: rec[k] for k in ("ctx", "metrics", "shas", "counters", "peaks", "load") if k in rec}, indent=1), flush=True)
+        (OUT / f"{a.label}.json").write_text(json.dumps(result, indent=1))
+    result["wall_s"] = time.monotonic() - t0
+    (OUT / f"{a.label}.json").write_text(json.dumps(result, indent=1))
+    print("wall", round(result["wall_s"]), "s")
+
+
+main()

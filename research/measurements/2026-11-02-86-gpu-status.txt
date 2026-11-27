@@ -1,0 +1,153 @@
+  Change class C8 against main: stability: stalls, memory pressure, recovery (also C0, C1, C2, C3, C5, C7)
+  Changed files:
+    BENCHMARKS.md: C0, documentation or repository metadata: gates only
+    README.md: C0, documentation or repository metadata: gates only
+    docs/use/environment.md: C0, documentation or repository metadata: gates only
+    engine/CMakeLists.txt: C5, build commands of ie-gpu-gen, ie-server -> golden gpu, cpu plan, prefill, prefill dflash, server
+    research/measurements/2026-11-01-slow-decode.md: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-codepath-logs/server-01-A.log: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-codepath-logs/server-02-A.log: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-codepath-logs/server-03-B.log: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-codepath-logs/server-04-B.log: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-codepath-logs/server-05-A.log: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-codepath-logs/server-06-A.log: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-codepath-logs/server-07-B.log: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-codepath-logs/server-08-B.log: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-codepath-logs/server-09-A.log: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-codepath-logs/server-10-A.log: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-codepath-logs/server-11-B.log: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-codepath-logs/server-12-B.log: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-codepath-logs/server-13-A.log: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-codepath-noise.toml: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-codepath-plan.md: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-codepath.json: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-codepath.md: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-memmodel-logs/server-01-A.log: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-memmodel-logs/server-02-A.log: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-memmodel-logs/server-03-B.log: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-memmodel-logs/server-04-B.log: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-memmodel-logs/server-05-A.log: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-memmodel-logs/server-06-A.log: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-memmodel-logs/server-07-B.log: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-memmodel-logs/server-08-B.log: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-memmodel-logs/server-09-A.log: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-memmodel-logs/server-10-A.log: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-memmodel-logs/server-11-B.log: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-memmodel-logs/server-12-B.log: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-memmodel-logs/server-13-A.log: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-memmodel-noise.toml: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-memmodel-plan.md: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-memmodel.json: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-memmodel.md: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-prefill-logs/server-01-A.log: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-prefill-logs/server-02-A.log: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-prefill-logs/server-03-B.log: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-prefill-logs/server-04-B.log: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-prefill-logs/server-05-A.log: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-prefill-logs/server-06-A.log: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-prefill-logs/server-07-B.log: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-prefill-logs/server-08-B.log: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-prefill-logs/server-09-A.log: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-prefill-logs/server-10-A.log: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-prefill-logs/server-11-B.log: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-prefill-logs/server-12-B.log: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-prefill-logs/server-13-A.log: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-prefill-noise.toml: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-prefill-plan.md: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-prefill.json: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-prefill.md: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-repeat-logs/server-01-A.log: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-repeat-logs/server-02-A.log: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-repeat-logs/server-03-B.log: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-repeat-logs/server-04-B.log: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-repeat-logs/server-05-A.log: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-repeat-logs/server-06-A.log: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-repeat-logs/server-07-B.log: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-repeat-noise.toml: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-repeat-plan.md: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-repeat.json: C0, documentation or repository metadata: gates only
+    research/measurements/2026-11-02-86-ab-repeat.md: C0, documentation or repository metadata: gates only
+    engine/backend/omp_wait.h: C5, in no binary of the build graph -> golden gpu, cpu plan, prefill, prefill dflash, server
+    engine/backend/runtime_env.h: C3, in ie-gpu-gen, ie-server, 1 more -> golden gpu, cpu plan, prefill, prefill dflash, server
+    engine/gpu/gtt.cpp: C3, in ie-gpu-gen, ie-server, 8 more -> golden gpu, cpu plan, prefill, prefill dflash, server
+    engine/gpu/gtt.h: C3, in ie-gpu-gen, ie-server, 8 more -> golden gpu, cpu plan, prefill, prefill dflash, server
+    engine/gpu/gtt_budget.h: C3, in ie-gpu-gen, ie-server, 9 more -> golden gpu, cpu plan, prefill, prefill dflash, server
+    engine/gpu/mega.h: C5, in ie-gpu-gen, ie-server, 8 more -> golden gpu, cpu plan, prefill, prefill dflash, server
+    engine/gpu/mega_experts.cpp: C3, in ie-gpu-gen, ie-server, 8 more -> golden gpu, cpu plan, prefill, prefill dflash, server
+    engine/gpu/mega_init.cpp: C3, in ie-gpu-gen, ie-server, 8 more -> golden gpu, cpu plan, prefill, prefill dflash, server
+    engine/gpu/mega_mtp.cpp: C3, in ie-gpu-gen, ie-server, 8 more -> golden gpu, cpu plan, prefill, prefill dflash, server
+    engine/model/gguf.cpp: C3, in ie-gpu-gen, ie-server, 21 more -> golden gpu, cpu plan, prefill, prefill dflash, server
+    engine/model/gguf.h: C5, in ie-gpu-gen, ie-server, 24 more -> golden gpu, cpu plan, prefill, prefill dflash, server
+    engine/server/server_main.cpp: C2, in ie-server -> golden server
+    engine/tests/test_gtt_budget.cpp: C1, in 1 test or tool binaries
+    engine/tests/test_omp_wait.cpp: C5, in no binary of the build graph -> golden gpu, cpu plan, prefill, prefill dflash, server
+    engine/tests/test_runtime_env.cpp: C1, in 1 test or tool binaries
+    engine/tools/ie_gpu_gen.cpp: C3, in ie-gpu-gen -> golden gpu, cpu plan, prefill, prefill dflash
+  Required:
+    R0  gates (just check)
+    R1  unit tests (just test-cpu; just test-py when Python changed)
+    R3  golden checks (those the build graph reaches)
+    R4  bit-exact (scripts/ab.py, IE_DETERMINISTIC=1, workloads mid and long)
+    R5  speed (scripts/ab.py, workloads of the affected rates)
+    R7  long-context run (scripts/ab.py workload huge, bench/needle --hard)
+    R8  pressure series (20 requests, 10 under page-cache pressure, IE_DIAG=1)
+    R2  kernel identity (scripts/isa-diff.py base build against yours): identical means class C4, R3 to R5 fall away
+    golden: gpu, cpu plan, prefill, prefill dflash, server (631 s)
+    skipped: none (0 s saved)
+    unit tests: all (just test-cpu)
+    bit-exact (IE_DETERMINISTIC=1): yes; speed before and after: yes
+    long-context run needed, because of engine/gpu/gtt_budget.h
+    pressure series needed, because of engine/gpu/gtt_budget.h
+csv: identical
+rust: identical
+explain: identical
+csv: identical
+rust: identical
+explain: identical
+long: identical
+long: identical
+anthropic: done
+anthropic-stream: done
+anthropic-tool: done
+anthropic-tool-stream: done
+openai: done
+openai-stream: done
+openai-tool: done
+openai-tool-stream: done
+sampled-anthropic: done
+sampled-anthropic-stream: done
+sampled-openai: done
+sampled-openai-stream: done
+thinking-anthropic: done
+reuse-short-1: done
+reuse-short-2: done
+reuse-long-1: done
+reuse-other: done
+reuse-long-2: done
+ssd-1: done
+ssd-2: done
+Checkpoints on the SSD (/var/tmp/claude/golden-server.1iLg5Y/cache): 0 matching
+Checkpoints on the SSD (/var/tmp/claude/golden-server.1iLg5Y/cache): 1 matching
+anthropic: identical
+anthropic-stream: identical
+anthropic-tool: identical
+anthropic-tool-stream: identical
+openai: identical
+openai-stream: identical
+openai-tool: identical
+openai-tool-stream: identical
+reuse-long-1: identical
+reuse-long-2: identical
+reuse-other: identical
+reuse-short-1: identical
+reuse-short-2: identical
+sampled-anthropic: identical
+sampled-anthropic-stream: identical
+sampled-openai: identical
+sampled-openai-stream: identical
+ssd-1: identical
+ssd-2: identical
+thinking-anthropic: identical
+Status gpu-golden on b65e5c54e088b9fa1f5e8c2f38fa53dfa5cea912: success - C8: golden identical (gpu;cpu plan;prefill;prefill dflash;server); needs: long-context run; pressure series
+Dry run. With --post this would run:
+  gh api repos/{owner}/{repo}/statuses/b65e5c54e088b9fa1f5e8c2f38fa53dfa5cea912 -f state=success -f context=gpu-golden -f description="C8: golden identical (gpu;cpu plan;prefill;prefill dflash;server); needs: long-context run; pressure series"

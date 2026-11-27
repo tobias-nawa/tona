@@ -1,0 +1,39 @@
+# Test conditions of the cache-hit probe runs (2026-11-15)
+
+### Test conditions
+
+- CPU: Apple M1 Max, 10 cores / 10 threads
+- GPU: Apple M1 Max, 32.0 GiB unified memory
+- RAM: 32.0 GiB
+- OS: macOS 27.0.1, kernel 27.0.0 (arm64)
+- Driver and toolkit: no toolkit found
+- TONA_* variables: none set
+- cgroup limits of this shell: none set
+- Load average (1, 5, 15 min): 1.77, 1.6, 1.62
+- CPU use by other programs over 0.5 s: 4.2 % of all threads
+- sandbox: no
+- Commit: `b46bb92` (dirty tree)
+
+quiet_check before the keepalive runs: ok (10:24:11); after: do not measure (GPU 99 % busy, the last server ending), ok at 10:31:09
+
+== A/B: hw_report
+### Test conditions
+
+- CPU: Apple M1 Max, 10 cores / 10 threads
+- GPU: Apple M1 Max, 32.0 GiB unified memory
+- RAM: 32.0 GiB
+- OS: macOS 27.0.1, kernel 27.0.0 (arm64)
+- Driver and toolkit: no toolkit found
+- TONA_* variables: none set
+- cgroup limits of this shell: none set
+- Load average (1, 5, 15 min): 3.35, 5.07, 3.94
+- CPU use by other programs over 0.5 s: 6.0 % of all threads
+- sandbox: no
+- Commit: `4ad914d` (dirty tree)
+== before
+- Quiet check (2026-11-15 10:44:30): warning
+  - warning: load average 3.35 is high (it lags a minute)
+== after
+- Quiet check (2026-11-15 12:03:19): do not measure
+  - warning: other programs use 9.0 % of all CPU threads
+  - do not measure: the GPU is 98 % busy

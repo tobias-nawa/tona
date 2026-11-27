@@ -1,0 +1,146 @@
+{
+  "id": "xing-vl2.0-decision",
+  "name": "Xing-VL2.0-Decision",
+  "vendor": "RBDash-Team",
+  "release_date": "2026-10-22",
+  "lineage": {
+    "family": "RBDash-Decision",
+    "base_model": "Qwen/Qwen3.8-27B",
+    "how_derived": "255-way linear readout replacing the LM head, non-causal full attention layers, trained with soft-label cross-entropy on static image-text decision data (vision tower frozen); a rename of RBDash-Decision-v0.2, nothing retrained"
+  },
+  "purpose": "Typed decisions over a state with up to four images, one question and 1-255 options, returning a probability per option in one forward pass (card).",
+  "tasks": [
+    "other",
+    "vision"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card tag and LICENSE file present; text not read."
+  },
+  "architecture": {
+    "kind": "Qwen3.5-style hybrid vision-language backbone with 255-way readout, last-token pooling, temperature 0.9766",
+    "params_total_b": 27.0
+  },
+  "variants": [
+    {
+      "repo": "RBDash-Team/Xing-VL2.0-Decision",
+      "format": "safetensors BF16",
+      "size_gb": 52.2,
+      "official": true
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "no",
+      "variant": "BF16 (52.2 GB, no quantization)",
+      "basis": "estimate",
+      "notes": "52.2 GB against a VRAM budget of 9.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-16gb": {
+      "fits": "no",
+      "variant": "BF16 (52.2 GB, no quantization)",
+      "basis": "estimate",
+      "notes": "52.2 GB against a VRAM budget of 13.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-24gb": {
+      "fits": "no",
+      "variant": "BF16 (52.2 GB, no quantization)",
+      "basis": "estimate",
+      "notes": "52.2 GB against a VRAM budget of 21.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-32gb": {
+      "fits": "no",
+      "variant": "BF16 (52.2 GB, no quantization)",
+      "basis": "estimate",
+      "notes": "52.2 GB against a VRAM budget of 29.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "BF16 (52.2 GB, no quantization)",
+      "basis": "estimate",
+      "notes": "52.2 GB against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "no",
+      "variant": "BF16 (52.2 GB, no quantization)",
+      "basis": "estimate",
+      "notes": "52.2 GB against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "no",
+      "variant": "BF16 (52.2 GB, no quantization)",
+      "basis": "estimate",
+      "notes": "52.2 GB against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "transformers (cannot be loaded with AutoModelForCausalLM)"
+    ]
+  },
+  "benchmarks": [
+    {
+      "name": "Decision Index 0.3 public vision suite (11 benchmarks, 12,210 rows)",
+      "score": 77.78,
+      "kind": "vendor",
+      "variant": "BF16, images capped at 1,638,400 px; public half only, not a leaderboard rank",
+      "source": "https://huggingface.co/RBDash-Team/Xing-VL2.0-Decision"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "A decision model reads a state (text, JSON, images) and a schema of typed questions and returns calibrated probabilities for every option in one forward pass; it does not generate text."
+    ],
+    "weaknesses": [
+      "52 GB, vision-only decisions on static images",
+      "perceptual overlap between training and evaluation images was not checked (card)"
+    ],
+    "maturity": "3.9k downloads, 14 likes; renamed from an earlier checkpoint"
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Reported public vision index 77.78 is the highest vendor number among the 27B decision models, but it is the public half only and unverified; same class limits (pipeline step, 52 GB BF16).",
+    "blockers": [
+      "size",
+      "custom readout"
+    ]
+  },
+  "open_questions": [
+    "private-test score and board rank",
+    "licence text"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/RBDash-Team/Xing-VL2.0-Decision",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README read"
+    },
+    {
+      "url": "https://huggingface.co/api/models/RBDash-Team/Xing-VL2.0-Decision?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "size"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

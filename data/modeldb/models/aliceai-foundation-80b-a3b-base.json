@@ -1,0 +1,137 @@
+{
+  "id": "aliceai-foundation-80b-a3b-base",
+  "name": "AliceAI-Foundation-80B-A3B-Base",
+  "vendor": "Yandex",
+  "release_date": "2026-09-12",
+  "lineage": {
+    "family": "AliceAI Foundation",
+    "how_derived": "trained entirely from scratch on a newly assembled corpus; key choices validated in separate 2T-token from-scratch runs"
+  },
+  "purpose": "Base model with a hybrid MoE architecture, strong in Russian factual knowledge and on par with larger open models on math, programming and reasoning (card, translated from Russian); published with the WikiWebFacts and HardMultiQA benchmarks.",
+  "tasks": [
+    "general"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "ru",
+      "en"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "LICENSE read: short Apache-2.0 notice with 'Copyright 2026 YANDEX LLC' and the standard grant text referencing the full licence."
+  },
+  "architecture": {
+    "kind": "hybrid MoE (custom code)",
+    "params_total_b": 80,
+    "params_active_b": 3,
+    "context_native": 262144,
+    "drafter": "none stated"
+  },
+  "variants": [
+    {
+      "repo": "Yamada114514/AliceAI-Foundation-80B-A3B-Base-GGUF",
+      "format": "GGUF Q4_K_M",
+      "size_gb": 48.42,
+      "official": false,
+      "notes": "community GGUF, 4.1k downloads"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "marginal",
+      "variant": "community GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "48.42 GB file against 9.6 GB VRAM plus 50 GB RAM budget; experts stream from RAM (~3 B active, decode bound by RAM bandwidth)"
+    },
+    "pc-16gb": {
+      "fits": "marginal",
+      "variant": "community GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "48.42 GB file against 13.6 GB VRAM plus 50 GB RAM budget; experts stream from RAM (~3 B active, decode bound by RAM bandwidth)"
+    },
+    "pc-24gb": {
+      "fits": "marginal",
+      "variant": "community GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "48.42 GB file against 21.6 GB VRAM plus 82 GB RAM budget; experts stream from RAM (~3 B active, decode bound by RAM bandwidth)"
+    },
+    "pc-32gb": {
+      "fits": "marginal",
+      "variant": "community GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "48.42 GB file against 29.6 GB VRAM plus 82 GB RAM budget; experts stream from RAM (~3 B active, decode bound by RAM bandwidth)"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "community GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "48.42 GB file against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "no",
+      "variant": "community GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "48.42 GB file against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "community GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "48.42 GB file against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "partial",
+    "other": [
+      "vLLM"
+    ],
+    "notes": "Community GGUFs exist; llama.cpp support not verified."
+  },
+  "benchmarks": [],
+  "soft": {
+    "weaknesses": [
+      "base model only, not instruction-tuned",
+      "benchmark numbers not extracted"
+    ],
+    "maturity": "2k downloads, 413 likes"
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "For Russian-language users a 3B-active model that fits 64 GB machines is interesting, but it is a base model; wait for an instruct release.",
+    "blockers": [
+      "base model only"
+    ]
+  },
+  "open_questions": [
+    "instruct or reasoning release",
+    "benchmark numbers"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/yandex/AliceAI-Foundation-80B-A3B-Base",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README (Russian) and LICENSE read"
+    },
+    {
+      "url": "https://huggingface.co/api/models/Yamada114514/AliceAI-Foundation-80B-A3B-Base-GGUF?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "GGUF size"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

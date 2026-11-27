@@ -1,0 +1,287 @@
+{
+  "config": {
+    "A": {
+      "build": "merged",
+      "env": {
+        "IE_DETERMINISTIC": "1",
+        "IE_PREFILL_FP8": "0"
+      },
+      "tooling": {
+        "HIP_PATH": "./work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+        "IE_DETERMINISTIC": "1",
+        "IE_EXPERT_PROFILE": "./work/profile/experts-coder.bin",
+        "IE_PREFILL_FP8": "0",
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0"
+      },
+      "commit": "v0.0.2-279-g491bccba2a"
+    },
+    "B": {
+      "build": "merged",
+      "env": {
+        "IE_DETERMINISTIC": "1"
+      },
+      "tooling": {
+        "HIP_PATH": "./work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+        "IE_DETERMINISTIC": "1",
+        "IE_EXPERT_PROFILE": "./work/profile/experts-coder.bin",
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0"
+      },
+      "commit": "v0.0.2-279-g491bccba2a"
+    },
+    "workload": "mid,long",
+    "targets": "30000:200 130000:200 at --ctx 140000",
+    "deterministic": true,
+    "plan_info": {
+      "expect": [
+        [
+          "prefill",
+          2.0,
+          4.0
+        ],
+        [
+          "decode",
+          -2.0,
+          2.0
+        ]
+      ],
+      "source": "research/measurements/2026-11-02-prefill-int8-ab-fp8-dense2.md, 2026-11-03-prefill-fp8-quality.md",
+      "workload": "mid,long",
+      "targets": "30000:200 130000:200 at --ctx 140000",
+      "primary": "",
+      "why_size": "R4 of docs/contribute/measurement.md: mid and long are the workloads of bench/sha.toml; two rounds, the least ab.py runs",
+      "decode_tokens": 200,
+      "noise": {
+        "prefill@30000": [
+          0.04,
+          9,
+          "research/measurements/2026-11-02-ab-tool.md: first A/A run (rounds 2-6; round 1 had no warm-up); second A/A run with warm-up (6 rounds)"
+        ],
+        "decode@30000": [
+          0.279,
+          9,
+          "research/measurements/2026-11-02-ab-tool.md: first A/A run (rounds 2-6; round 1 had no warm-up); second A/A run with warm-up (6 rounds)"
+        ],
+        "prefill@130000": [
+          0.018,
+          9,
+          "research/measurements/2026-11-02-ab-tool.md: first A/A run (rounds 2-6; round 1 had no warm-up); second A/A run with warm-up (6 rounds)"
+        ],
+        "decode@130000": [
+          0.42,
+          9,
+          "research/measurements/2026-11-02-ab-tool.md: first A/A run (rounds 2-6; round 1 had no warm-up); second A/A run with warm-up (6 rounds)"
+        ]
+      },
+      "warmup": true,
+      "A": {
+        "build": "merged",
+        "env": {
+          "IE_DETERMINISTIC": "1",
+          "IE_PREFILL_FP8": "0"
+        },
+        "tooling": {
+          "HIP_PATH": "./work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+          "IE_DETERMINISTIC": "1",
+          "IE_EXPERT_PROFILE": "./work/profile/experts-coder.bin",
+          "IE_PREFILL_FP8": "0",
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0"
+        },
+        "commit": "v0.0.2-279-g491bccba2a"
+      },
+      "B": {
+        "build": "merged",
+        "env": {
+          "IE_DETERMINISTIC": "1"
+        },
+        "tooling": {
+          "HIP_PATH": "./work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+          "IE_DETERMINISTIC": "1",
+          "IE_EXPERT_PROFILE": "./work/profile/experts-coder.bin",
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0"
+        },
+        "commit": "v0.0.2-279-g491bccba2a"
+      }
+    },
+    "reference_sha": {
+      "30000": "08f0bd31e0c0277f",
+      "130000": "536592a9aa29bd56"
+    },
+    "corpus_sha256": "e13a800340859f7d39c63712d90383faae7e5a47c3865f0811e40d912612d38e",
+    "corpus_is_reference": true,
+    "commit": "491bccb",
+    "noise": {
+      "prefill@30000": [
+        0.04,
+        9
+      ],
+      "decode@30000": [
+        0.279,
+        9
+      ],
+      "prefill@130000": [
+        0.018,
+        9
+      ],
+      "decode@130000": [
+        0.42,
+        9
+      ]
+    }
+  },
+  "rounds": [
+    {
+      "order": "AB",
+      "sha": {
+        "A": {
+          "30000": "08f0bd31e0c0277f",
+          "130000": "536592a9aa29bd56"
+        },
+        "B": {
+          "30000": "6ef803431673370a",
+          "130000": "453d981764536e4f"
+        }
+      },
+      "A": {
+        "prefill@30000": 1806.3781948706423,
+        "decode@30000": 71.79297585651184,
+        "prefill@130000": 1721.272423865777,
+        "decode@130000": 65.91057449994912
+      },
+      "counters": {
+        "A": {
+          "30000": {
+            "expert_hits": 68086,
+            "expert_misses": 7996
+          },
+          "130000": {
+            "expert_hits": 72513,
+            "expert_misses": 7511
+          }
+        },
+        "B": {
+          "30000": {
+            "expert_hits": 74648,
+            "expert_misses": 7720
+          },
+          "130000": {
+            "expert_hits": 74599,
+            "expert_misses": 6852
+          }
+        }
+      },
+      "B": {
+        "prefill@30000": 1880.883410462288,
+        "decode@30000": 63.88983264553804,
+        "prefill@130000": 1791.8701580604304,
+        "decode@130000": 61.48866164436071
+      },
+      "seconds": 233.05633002903778
+    },
+    {
+      "order": "BA",
+      "sha": {
+        "B": {
+          "30000": "6ef803431673370a",
+          "130000": "453d981764536e4f"
+        },
+        "A": {
+          "30000": "08f0bd31e0c0277f",
+          "130000": "536592a9aa29bd56"
+        }
+      },
+      "B": {
+        "prefill@30000": 1881.4115019977926,
+        "decode@30000": 64.31788134192364,
+        "prefill@130000": 1792.2361550802802,
+        "decode@130000": 61.902155577877316
+      },
+      "counters": {
+        "B": {
+          "30000": {
+            "expert_hits": 74648,
+            "expert_misses": 7720
+          },
+          "130000": {
+            "expert_hits": 74599,
+            "expert_misses": 6852
+          }
+        },
+        "A": {
+          "30000": {
+            "expert_hits": 68086,
+            "expert_misses": 7996
+          },
+          "130000": {
+            "expert_hits": 72513,
+            "expert_misses": 7511
+          }
+        }
+      },
+      "A": {
+        "prefill@30000": 1807.9549075664627,
+        "decode@30000": 71.35521831511151,
+        "prefill@130000": 1721.5852319173184,
+        "decode@130000": 65.79984661878093
+      },
+      "seconds": 232.73461130505893
+    }
+  ],
+  "stop_reason": "2 rounds (undecided metrics stay open)",
+  "wall_seconds": 585.3879881909816,
+  "warmup": {
+    "prefill@30000": 1799.2681388769481,
+    "decode@30000": 71.72998206849795,
+    "prefill@130000": 1715.769819210783,
+    "decode@130000": 64.95417892537684
+  },
+  "plan": {
+    "alpha": 0.05,
+    "margin": 0.5,
+    "max_rounds": 2,
+    "min_rounds": 2,
+    "prior_sd": 0.5,
+    "prior_df": 4.0
+  },
+  "decisions": {
+    "prefill@30000": {
+      "decided_at_round": 2,
+      "decision": "B faster",
+      "mean_diff_percent": 4.093764781403808,
+      "ci_diff_percent": [
+        4.014012753908132,
+        4.173516808899484
+      ]
+    },
+    "decode@30000": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": -10.43532003283552,
+      "ci_diff_percent": [
+        -11.163071757530409,
+        -9.707568308140631
+      ]
+    },
+    "prefill@130000": {
+      "decided_at_round": 2,
+      "decision": "B faster",
+      "mean_diff_percent": 4.102657379801011,
+      "ci_diff_percent": [
+        4.06890654078298,
+        4.136408218819041
+      ]
+    },
+    "decode@130000": {
+      "decided_at_round": 2,
+      "decision": "B slower",
+      "mean_diff_percent": -6.316257283583354,
+      "ci_diff_percent": [
+        -7.176475524742469,
+        -5.45603904242424
+      ]
+    }
+  }
+}

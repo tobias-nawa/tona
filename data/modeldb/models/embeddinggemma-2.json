@@ -1,0 +1,216 @@
+{
+  "id": "embeddinggemma-2",
+  "name": "EmbeddingGemma 2",
+  "vendor": "Google",
+  "release_date": "2026-09-14",
+  "lineage": {
+    "family": "EmbeddingGemma",
+    "base_model": "Gemma 4"
+  },
+  "purpose": "On-device multimodal embeddings (text, image, video, audio in one 768-d space) for search and RAG on phones and laptops; encoders loadable separately.",
+  "tasks": [
+    "embeddings"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image",
+      "audio",
+      "video"
+    ],
+    "output": [
+      "embedding"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "many"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0 (Gemma 4 license page)",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card header and card metadata both say Apache 2.0 and link ai.google.dev/gemma/docs/gemma_4_license; that page (read through a summarizer after a redirect) is the standard Apache License 2.0 text. The card body additionally says 'Deployments must adhere to the Gemma Prohibited Use Policy': that is a policy reference, not a clause of the Apache text; the inconsistency is on the card itself. HF createdAt 2026-09-14."
+  },
+  "architecture": {
+    "kind": "encoder-style transformer, 24 layers, mean pooling, 5:1 local-global attention, 1024 sliding window",
+    "params_total_b": 0.74,
+    "layers": 24,
+    "context_native": 8192,
+    "why_this_design": "Runs on consumer hardware with low latency; selective encoder loading (text 270M, +image 440M, +audio 570M, full 740M); MRL to 512/256/128; task prefixes steer embeddings."
+  },
+  "variants": [
+    {
+      "repo": "google/embeddinggemma-2",
+      "format": "safetensors BF16",
+      "official": true,
+      "notes": "card: avoid float16 (NaN); 146 community quants"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "Transformers",
+      "Sentence Transformers"
+    ],
+    "notes": "A GGUF exists (ggml-org/embeddinggemma-2-GGUF, Q8_0 text 310 MB plus mmproj 555 MB) but llama.cpp build 9750 failed with \"unknown model architecture: 'gemma-embedding2'\" on 2026-10-07 (user report); re-check current llama.cpp."
+  },
+  "benchmarks": [
+    {
+      "name": "MTEB Code v1",
+      "score": 78.68,
+      "kind": "vendor",
+      "variant": "768d",
+      "source": "https://huggingface.co/google/embeddinggemma-2"
+    },
+    {
+      "name": "MTEB Multilingual v2",
+      "score": 61.36,
+      "kind": "vendor",
+      "variant": "768d",
+      "source": "https://huggingface.co/google/embeddinggemma-2"
+    },
+    {
+      "name": "MTEB English v2",
+      "score": 68.46,
+      "kind": "vendor",
+      "variant": "768d",
+      "source": "https://huggingface.co/google/embeddinggemma-2"
+    },
+    {
+      "name": "Note search, 60 queries over 813 notes: recall@5 (v1 vs v2)",
+      "score": "50.0% vs 58.3%",
+      "kind": "independent",
+      "variant": "EmbeddingGemma 2 vs 1, Apple M1 Max, float32 MPS; small personal test",
+      "source": "https://ai-muninn.com/en/blog/embeddinggemma-2-knowledge-base-test",
+      "harness": "sentence-transformers",
+      "date": "2026-10-07"
+    },
+    {
+      "name": "Code search, 10 questions over 424 files: correct file ranked first",
+      "score": "4 of 10 vs 1 of 10 (v1)",
+      "kind": "independent",
+      "variant": "EmbeddingGemma 2 vs 1, very small sample",
+      "source": "https://ai-muninn.com/en/blog/embeddinggemma-2-knowledge-base-test",
+      "date": "2026-10-07"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "highest MTEB Code number among small models read (vendor)",
+      "small, multimodal"
+    ],
+    "weaknesses": [
+      "trails Qwen3-Embedding-0.6B on multilingual text (61.36 vs 64.33, vendor numbers)",
+      "8K context",
+      "omitting the task prefix lowers quality"
+    ],
+    "maturity": "Google; second generation of the line.",
+    "user_reports": [
+      {
+        "summary": "Retrieval better than v1, but cost higher: indexing 813 notes took 138.8 s vs 81.8 s, peak RSS 2.75 GiB vs 1.03 GiB (float32 on MPS). The author could not switch because llama.cpp could not load the v2 GGUF.",
+        "sentiment": "mixed",
+        "source": "https://ai-muninn.com/en/blog/embeddinggemma-2-knowledge-base-test",
+        "date": "2026-10-07"
+      },
+      {
+        "summary": "Vendor-run comparison: nearly 3 points behind Qwen3-Embedding-0.6B and 9.22 behind the 8B on multilingual text, ahead of 0.6B on MTEB Code (78.68 vs 75.41); 542 MB resident versus 5.8 GB for Qwen3-0.6B under Ollama defaults.",
+        "sentiment": "mixed",
+        "source": "https://regolo.ai/embeddinggemma-2-vs-qwen3-embedding-benchmarks.md",
+        "date": "2026-10-15"
+      }
+    ]
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "Apache-2.0 (text read), 270M text core plus image/video/audio encoders, MTEB Code 78.68 (vendor) and the smallest memory footprint of the strong embedders; multilingual text trails Qwen3-Embedding. Best where memory is tight or multimodal retrieval is wanted.",
+    "blockers": [
+      "llama.cpp could not load the GGUF on 2026-10-07",
+      "Tona has no embeddings route",
+      "float16 gives NaN (card): bf16 or float32 only"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/google/embeddinggemma-2",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "research/52-purpose-models.md",
+      "kind": "own",
+      "checked": "2026-11-19",
+      "note": "our research note 52, facts fetched 2026-11-15, not a measurement"
+    },
+    {
+      "url": "https://ai.google.dev/gemma/docs/gemma_4_license",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "redirects to a mirror domain; read through a summarizer, standard Apache 2.0 text"
+    },
+    {
+      "url": "https://ai-muninn.com/en/blog/embeddinggemma-2-knowledge-base-test",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "user test 2026-10-07; read through a summarizer"
+    },
+    {
+      "url": "https://regolo.ai/embeddinggemma-2-vs-qwen3-embedding-benchmarks.md",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "vendor-run, small set"
+    },
+    {
+      "url": "https://huggingface.co/api/models/google/embeddinggemma-2",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "createdAt 2026-09-14"
+    }
+  ],
+  "open_questions": [
+    "Does current llama.cpp load gemma-embedding2? Check the llama.cpp release notes or run the GGUF",
+    "Official release date: HF createdAt is 2026-09-14, the card gives none",
+    "Independent MTEB Code numbers beyond vendor and the small tests above"
+  ],
+  "last_checked": "2026-11-19"
+}

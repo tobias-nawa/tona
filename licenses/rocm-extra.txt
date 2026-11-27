@@ -1,0 +1,276 @@
+Licences of code inside the AMD ROCm libraries that the AMD wheels do not carry texts for.
+Pinned sources: ROCm/rocm-systems commit 7da43026e4f2ef7600433c38c820732f7a205d22 and ROCm/llvm-project commit
+d6f6cb691863e9258034ab48c1dfce21689d5606 (both from TheRock tag therock-10.1); glog and fmt at the submodule commits
+named below. Texts are verbatim.
+
+==============================================================================
+libhsakmt (ROCT-Thunk Interface, AMD, MIT) and the Nginx code in it (Igor Sysoev, Nginx, Inc., BSD 2-Clause)
+Source: https://raw.githubusercontent.com/ROCm/rocm-systems/7da43026e4f2ef7600433c38c820732f7a205d22/projects/rocr-runtime/libhsakmt/LICENSE.md
+SHA-256 of the complete file: f45a5bc0bc68dd9a00e9609097788b1cbda79726fee02549cb0c04b90190b419
+Included in: libhsa-runtime64.so.1 (libhsakmt is linked in statically)
+==============================================================================
+
+ROCT-Thunk Interface LICENSE
+
+Copyright (c) 2016 Advanced Micro Devices, Inc. All rights reserved.
+
+MIT LICENSE:
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+This product contains software provided by Nginx, Inc. and its contributors.
+
+Copyright (C) 2002-2018 Igor Sysoev
+Copyright (C) 2011-2018 Nginx, Inc.
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+1. Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+SUCH DAMAGE.
+
+==============================================================================
+libhsakmt, source files by Raptor Engineering (MIT): notice of src/topology.c
+Source: https://raw.githubusercontent.com/ROCm/rocm-systems/7da43026e4f2ef7600433c38c820732f7a205d22/projects/rocr-runtime/libhsakmt/src/topology.c
+Lines: 1-23 (verbatim)
+Included in: libhsa-runtime64.so.1 (libhsakmt is linked in statically)
+==============================================================================
+
+/*
+ * Copyright © 2014 Advanced Micro Devices, Inc.
+ * Copyright 2016-2018 Raptor Engineering, LLC. All Rights Reserved.
+ *
+ * Permission is hereby granted, free of charge, to any person
+ * obtaining a copy of this software and associated documentation
+ * files (the "Software"), to deal in the Software without
+ * restriction, including without limitation the rights to use, copy,
+ * modify, merge, publish, distribute, sublicense, and/or sell copies
+ * of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice (including
+ * the next paragraph) shall be included in all copies or substantial
+ * portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT.  IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+
+==============================================================================
+libhsakmt, source file by Red Hat (MIT): notice of src/virtio/include/linux/virtgpu_drm.h
+Source: https://raw.githubusercontent.com/ROCm/rocm-systems/7da43026e4f2ef7600433c38c820732f7a205d22/projects/rocr-runtime/libhsakmt/src/virtio/include/linux/virtgpu_drm.h
+Lines: 1-22 (verbatim)
+Included in: libhsa-runtime64.so.1 (libhsakmt is linked in statically)
+==============================================================================
+
+/*
+ * Copyright 2013 Red Hat
+ * All Rights Reserved.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a
+ * copy of this software and associated documentation files (the "Software"),
+ * to deal in the Software without restriction, including without limitation
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice (including the next
+ * paragraph) shall be included in all copies or substantial portions of the
+ * Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
+ * THE AUTHORS AND/OR ITS SUPPLIERS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+ * OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE.
+
+==============================================================================
+ELFIO (Serge Lamikhov-Center, MIT)
+Source: https://raw.githubusercontent.com/ROCm/rocm-systems/7da43026e4f2ef7600433c38c820732f7a205d22/projects/clr/rocclr/elf/elfio/elfio.hpp
+Lines: 1-22 (verbatim)
+Included in: libamdhip64.so.7 (ROCclr)
+==============================================================================
+
+/*
+Copyright (C) 2001-2015 by Serge Lamikhov-Center
+Modifications Copyright (c) 2020 - 2021 Advanced Micro Devices, Inc.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+*/
+
+==============================================================================
+glog (Google Inc., BSD 3-Clause), submodule commit 7b134a5c82c0c0b5698bb6bf7a835b230c5638e4
+Source: https://raw.githubusercontent.com/google/glog/7b134a5c82c0c0b5698bb6bf7a835b230c5638e4/COPYING
+SHA-256 of the complete file: 136d48dea7a681413691f3db3098f6cf5ffaa3119d96d97bb83b8cff3ce38c4a
+Included in: librocprofiler-register.so.0 (linked in statically)
+==============================================================================
+
+Copyright (c) 2024, Google Inc.
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are
+met:
+
+    * Redistributions of source code must retain the above copyright
+notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above
+copyright notice, this list of conditions and the following disclaimer
+in the documentation and/or other materials provided with the
+distribution.
+    * Neither the name of Google Inc. nor the names of its
+contributors may be used to endorse or promote products derived from
+this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+==============================================================================
+fmt (Victor Zverovich, MIT with optional exception), submodule commit 123913715afeb8a437e6388b4473fcc4753e1c9a
+Source: https://raw.githubusercontent.com/fmtlib/fmt/123913715afeb8a437e6388b4473fcc4753e1c9a/LICENSE
+SHA-256 of the complete file: 07580f2a3b35709ce703d523f447b242f6dfec7582a8c0df102c7fa2849375f8
+Included in: librocprofiler-register.so.0 (linked in statically)
+==============================================================================
+
+Copyright (c) 2012 - present, Victor Zverovich and {fmt} contributors
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+--- Optional exception to the license ---
+
+As an exception, if, as a result of your compiling your source code, portions
+of this Software are embedded into a machine-executable object form of such
+source code, you may redistribute such embedded portions in such object form
+without including the above copyright and permission notices.
+
+==============================================================================
+ROCm-Device-Libs (AMD, University of Illinois/NCSA)
+Source: https://raw.githubusercontent.com/ROCm/llvm-project/d6f6cb691863e9258034ab48c1dfce21689d5606/amd/device-libs/LICENSE.TXT
+SHA-256 of the complete file: a4e8e3ba6e9255928a29d3085f929de402e61413cb0c49276e16b558effa8a2a
+Included in: libamdhip64.so.7 (device library bitcode embedded in it)
+==============================================================================
+
+==============================================================================
+ROCm-Device-Libs Release License
+==============================================================================
+University of Illinois/NCSA
+Open Source License
+
+Copyright (c) 2014-2016, Advanced Micro Devices, Inc.
+All rights reserved.
+
+Developed by:
+
+    AMD Research and AMD HSA Software Development
+
+    Advanced Micro Devices, Inc.
+
+    www.amd.com
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal with
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is furnished to do
+so, subject to the following conditions:
+
+    * Redistributions of source code must retain the above copyright notice,
+      this list of conditions and the following disclaimers.
+
+    * Redistributions in binary form must reproduce the above copyright notice,
+      this list of conditions and the following disclaimers in the
+      documentation and/or other materials provided with the distribution.
+
+    * Neither the names of the LLVM Team, University of Illinois at
+      Urbana-Champaign, nor the names of its contributors may be used to
+      endorse or promote products derived from this Software without specific
+      prior written permission.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE
+CONTRIBUTORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS WITH THE
+SOFTWARE.
+

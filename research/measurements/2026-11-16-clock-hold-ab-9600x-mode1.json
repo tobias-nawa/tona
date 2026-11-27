@@ -1,0 +1,378 @@
+{
+  "config": {
+    "A": {
+      "build": "/var/tmp/claude/161/build",
+      "env": {},
+      "tooling": {
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0",
+        "TONA_EXPERT_PROFILE": "/var/tmp/claude/161/wt/work/profile/experts-coder.bin"
+      },
+      "commit": "v0.0.2-952-gdc11332e8f",
+      "model": "/var/tmp/claude/161/wt/work/models/coder-iq1_m/Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf",
+      "drafter": "/var/tmp/claude/161/wt/work/models/draft/mtp-Qwen3.8-Flash-Next-Q8_0.gguf"
+    },
+    "B": {
+      "build": "/var/tmp/claude/161/build",
+      "env": {
+        "TONA_CLOCK_HOLD": "1"
+      },
+      "tooling": {
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0",
+        "TONA_CLOCK_HOLD": "1",
+        "TONA_EXPERT_PROFILE": "/var/tmp/claude/161/wt/work/profile/experts-coder.bin"
+      },
+      "commit": "v0.0.2-952-gdc11332e8f",
+      "model": "/var/tmp/claude/161/wt/work/models/coder-iq1_m/Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf",
+      "drafter": "/var/tmp/claude/161/wt/work/models/draft/mtp-Qwen3.8-Flash-Next-Q8_0.gguf"
+    },
+    "workload": "short",
+    "targets": "2000:400 2000:write:400 at --ctx 140000",
+    "deterministic": false,
+    "plan_info": {
+      "expect": [
+        [
+          "prefill",
+          -0.5,
+          0.5
+        ],
+        [
+          "decode",
+          -0.5,
+          0.5
+        ]
+      ],
+      "source": "A/A of 2026-11-12-prefill-bimodal.md (prefill 0.2 %, decode 0.1 to 0.5 %)",
+      "workload": "short",
+      "targets": "2000:400 2000:write:400 at --ctx 140000",
+      "primary": "",
+      "why_size": "prefill@2000 only: the effect to exclude is the 7 to 9 % queue effect of 2026-11-12 (A/A spread 0.2 %), so 1 to 2 rounds decide; 4 at most; decode must stay equal",
+      "decode_tokens": 200,
+      "noise": {
+        "prefill@2000": [
+          0.09,
+          4,
+          "research/measurements/2026-11-02-ab-tool.md: run 7, short, A/A merged against merged, 5 rounds with warm-up"
+        ],
+        "decode@2000": [
+          0.231,
+          4,
+          "research/measurements/2026-11-02-ab-tool.md: run 7, short, A/A merged against merged, 5 rounds with warm-up"
+        ],
+        "prefill@2000:write": [
+          0.163,
+          4,
+          "research/measurements/2026-11-02-ab-tool.md: run 7, short, A/A merged against merged, 5 rounds with warm-up"
+        ],
+        "decode@2000:write": [
+          0.605,
+          4,
+          "research/measurements/2026-11-02-ab-tool.md: run 7, short, A/A merged against merged, 5 rounds with warm-up"
+        ]
+      },
+      "warmup": true,
+      "round_warmup": false,
+      "load_log": false,
+      "A": {
+        "build": "/var/tmp/claude/161/build",
+        "env": {},
+        "tooling": {
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0",
+          "TONA_EXPERT_PROFILE": "/var/tmp/claude/161/wt/work/profile/experts-coder.bin"
+        },
+        "commit": "v0.0.2-952-gdc11332e8f",
+        "model": "/var/tmp/claude/161/wt/work/models/coder-iq1_m/Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf",
+        "drafter": "/var/tmp/claude/161/wt/work/models/draft/mtp-Qwen3.8-Flash-Next-Q8_0.gguf"
+      },
+      "B": {
+        "build": "/var/tmp/claude/161/build",
+        "env": {
+          "TONA_CLOCK_HOLD": "1"
+        },
+        "tooling": {
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0",
+          "TONA_CLOCK_HOLD": "1",
+          "TONA_EXPERT_PROFILE": "/var/tmp/claude/161/wt/work/profile/experts-coder.bin"
+        },
+        "commit": "v0.0.2-952-gdc11332e8f",
+        "model": "/var/tmp/claude/161/wt/work/models/coder-iq1_m/Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf",
+        "drafter": "/var/tmp/claude/161/wt/work/models/draft/mtp-Qwen3.8-Flash-Next-Q8_0.gguf"
+      }
+    },
+    "reference_sha": {},
+    "corpus_sha256": "e13a800340859f7d39c63712d90383faae7e5a47c3865f0811e40d912612d38e",
+    "corpus_is_reference": true,
+    "commit": "dc11332",
+    "noise": {
+      "prefill@2000": [
+        0.09,
+        4
+      ],
+      "decode@2000": [
+        0.231,
+        4
+      ],
+      "prefill@2000:write": [
+        0.163,
+        4
+      ],
+      "decode@2000:write": [
+        0.605,
+        4
+      ]
+    }
+  },
+  "rounds": [
+    {
+      "order": "AB",
+      "sha": {
+        "A": {
+          "2000": "75eff9b8784c7d4c",
+          "2000:write": "a6f07fd6fb86e448"
+        },
+        "B": {
+          "2000": "75eff9b8784c7d4c",
+          "2000:write": "a6f07fd6fb86e448"
+        }
+      },
+      "A": {
+        "prefill@2000": 1429.4752723339798,
+        "decode@2000": 70.48192660818334,
+        "prefill@2000:write": 1707.7941313872172,
+        "decode@2000:write": 118.33348894433658
+      },
+      "counters": {
+        "A": {
+          "2000": {
+            "expert_hits": 123067,
+            "expert_misses": 29782
+          },
+          "2000:write": {
+            "expert_hits": 76698,
+            "expert_misses": 33579
+          }
+        },
+        "B": {
+          "2000": {
+            "expert_hits": 123067,
+            "expert_misses": 29782
+          },
+          "2000:write": {
+            "expert_hits": 76698,
+            "expert_misses": 33579
+          }
+        }
+      },
+      "B": {
+        "prefill@2000": 1348.6636116679028,
+        "decode@2000": 72.7062450500975,
+        "prefill@2000:write": 1696.5863610837598,
+        "decode@2000:write": 117.77680067330382
+      },
+      "seconds": 85.21202129000449
+    },
+    {
+      "order": "BA",
+      "sha": {
+        "B": {
+          "2000": "75eff9b8784c7d4c",
+          "2000:write": "a6f07fd6fb86e448"
+        },
+        "A": {
+          "2000": "75eff9b8784c7d4c",
+          "2000:write": "a6f07fd6fb86e448"
+        }
+      },
+      "B": {
+        "prefill@2000": 1176.73211925731,
+        "decode@2000": 73.87119035181443,
+        "prefill@2000:write": 1742.9780078242993,
+        "decode@2000:write": 124.39658393135184
+      },
+      "counters": {
+        "B": {
+          "2000": {
+            "expert_hits": 132355,
+            "expert_misses": 20494
+          },
+          "2000:write": {
+            "expert_hits": 85766,
+            "expert_misses": 24511
+          }
+        },
+        "A": {
+          "2000": {
+            "expert_hits": 132355,
+            "expert_misses": 20494
+          },
+          "2000:write": {
+            "expert_hits": 85766,
+            "expert_misses": 24511
+          }
+        }
+      },
+      "A": {
+        "prefill@2000": 1280.077644876772,
+        "decode@2000": 75.13878622217345,
+        "prefill@2000:write": 1705.399270424933,
+        "decode@2000:write": 124.13959976178951
+      },
+      "seconds": 67.48539133399026
+    },
+    {
+      "order": "AB",
+      "sha": {
+        "A": {
+          "2000": "75eff9b8784c7d4c",
+          "2000:write": "a6f07fd6fb86e448"
+        },
+        "B": {
+          "2000": "75eff9b8784c7d4c",
+          "2000:write": "a6f07fd6fb86e448"
+        }
+      },
+      "A": {
+        "prefill@2000": 1386.1625164256138,
+        "decode@2000": 75.13021590150422,
+        "prefill@2000:write": 1701.781597684798,
+        "decode@2000:write": 124.176835752737
+      },
+      "counters": {
+        "A": {
+          "2000": {
+            "expert_hits": 132355,
+            "expert_misses": 20494
+          },
+          "2000:write": {
+            "expert_hits": 85766,
+            "expert_misses": 24511
+          }
+        },
+        "B": {
+          "2000": {
+            "expert_hits": 132355,
+            "expert_misses": 20494
+          },
+          "2000:write": {
+            "expert_hits": 85766,
+            "expert_misses": 24511
+          }
+        }
+      },
+      "B": {
+        "prefill@2000": 1443.2605060773562,
+        "decode@2000": 74.86749948070218,
+        "prefill@2000:write": 1730.0843947648,
+        "decode@2000:write": 123.15239287160614
+      },
+      "seconds": 64.27001031700638
+    },
+    {
+      "order": "BA",
+      "sha": {
+        "B": {
+          "2000": "75eff9b8784c7d4c",
+          "2000:write": "a6f07fd6fb86e448"
+        },
+        "A": {
+          "2000": "75eff9b8784c7d4c",
+          "2000:write": "a6f07fd6fb86e448"
+        }
+      },
+      "B": {
+        "prefill@2000": 1401.3926123876913,
+        "decode@2000": 75.33548291783293,
+        "prefill@2000:write": 1685.581887288009,
+        "decode@2000:write": 124.22065737471264
+      },
+      "counters": {
+        "B": {
+          "2000": {
+            "expert_hits": 132355,
+            "expert_misses": 20494
+          },
+          "2000:write": {
+            "expert_hits": 85766,
+            "expert_misses": 24511
+          }
+        },
+        "A": {
+          "2000": {
+            "expert_hits": 132355,
+            "expert_misses": 20494
+          },
+          "2000:write": {
+            "expert_hits": 85766,
+            "expert_misses": 24511
+          }
+        }
+      },
+      "A": {
+        "prefill@2000": 1377.0306483205115,
+        "decode@2000": 75.26523738728503,
+        "prefill@2000:write": 1674.8779402265502,
+        "decode@2000:write": 124.2528459319919
+      },
+      "seconds": 62.29216539199115
+    }
+  ],
+  "discarded": [],
+  "stop_reason": "4 rounds (undecided metrics stay open)",
+  "wall_seconds": 331.5100331720023,
+  "loads": [],
+  "warmup": {
+    "prefill@2000": 1228.4488982617945,
+    "decode@2000": 57.72961642000455,
+    "prefill@2000:write": 1286.46367954863,
+    "decode@2000:write": 93.43217557134048
+  },
+  "plan": {
+    "alpha": 0.05,
+    "margin": 0.5,
+    "max_rounds": 4,
+    "min_rounds": 2,
+    "prior_sd": 0.5,
+    "prior_df": 4.0
+  },
+  "decisions": {
+    "prefill@2000": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": -1.9595778586038808,
+      "ci_diff_percent": [
+        -8.850561027341456,
+        4.931405310133694
+      ]
+    },
+    "decode@2000": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": 0.30312845296076585,
+      "ci_diff_percent": [
+        -2.137390300003651,
+        2.743647205925183
+      ]
+    },
+    "prefill@2000:write": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": 0.9623648534422963,
+      "ci_diff_percent": [
+        -0.5428432673109972,
+        2.4675729741955896
+      ]
+    },
+    "decode@2000:write": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": -0.2785801813098482,
+      "ci_diff_percent": [
+        -1.2675754083483386,
+        0.7104150457286423
+      ]
+    }
+  }
+}

@@ -1,0 +1,1387 @@
+{
+ "tool": "ibench",
+ "suite": {
+  "name": "base",
+  "description": "Baseline measurement: short prompt, long decode, needle in 10K/30K/60K context, warm prefix at 30K. Context sizes are in characters (Qwen3.8 tokenizer: ~4.6 characters per token, counted with llama-tokenize); the real token counts are in the report.",
+  "file": "bench/suites/base.toml"
+ },
+ "env": {
+  "time": "2026-11-11T05:02:55+01:00",
+  "kernel": "7.2.15-200.fc44.x86_64",
+  "os": "Fedora Linux 44 (Workstation Edition)",
+  "python": "3.14.10",
+  "cpu": "AMD Ryzen 5 9600X 6-Core Processor",
+  "cpu_governor": "performance",
+  "cpu_epp": "performance",
+  "mem_total_gib": 60.5,
+  "mem_avail_gib": 54.8,
+  "swap_used_mib": 1961,
+  "gpu": {
+   "sysfs": "/sys/devices/pci0000:00/0000:00:01.1/0000:01:00.0/0000:02:00.0/0000:03:00.0",
+   "vram_total_mib": 16304,
+   "vram_used_mib": 16094,
+   "vbios_version": "113-R906XTGO-F2",
+   "current_link_speed": "32.0 GT/s PCIe",
+   "current_link_width": "16",
+   "power_dpm_force_performance_level": "auto",
+   "pci_id": "1002:7590"
+  },
+  "packages": {
+   "rocm-runtime": "7.1.1-6.fc44",
+   "rocm-hip": "7.1.1-4.fc44",
+   "hipblaslt": "7.1.1-7.fc44",
+   "rocblas": "7.1.1-7.fc44",
+   "kernel": "7.2.15-200.fc44"
+  },
+  "git": {
+   "commit": "25019f4",
+   "dirty": false
+  },
+  "target": {
+   "url": "http://127.0.0.1:8081",
+   "api": "openai",
+   "model": "default",
+   "note": "work/build/llama.cpp-hip/bin/llama-server --port 8081 … (after source toolchain/env.sh)",
+   "name": "llamacpp-hip",
+   "extra": {}
+  },
+  "server": {
+   "/v1/models": {
+    "models": [
+     {
+      "name": "work/models/coder-iq1_m/Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf",
+      "model": "work/models/coder-iq1_m/Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf",
+      "modified_at": "",
+      "size": "",
+      "digest": "",
+      "type": "model",
+      "description": "",
+      "tags": [
+       ""
+      ],
+      "capabilities": [
+       "completion"
+      ],
+      "parameters": "",
+      "details": {
+       "parent_model": "",
+       "format": "gguf",
+       "family": "",
+       "families": [
+        ""
+       ],
+       "parameter_size": "",
+       "quantization_level": ""
+      }
+     }
+    ],
+    "object": "list",
+    "data": [
+     {
+      "id": "work/models/coder-iq1_m/Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf",
+      "aliases": [
+       "work/models/coder-iq1_m/Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf"
+      ],
+      "tags": [],
+      "object": "model",
+      "architecture": {
+       "input_modalities": [
+        "text"
+       ],
+       "output_modalities": [
+        "text"
+       ]
+      },
+      "created": 1794369775,
+      "owned_by": "llamacpp",
+      "meta": {
+       "vocab_type": 2,
+       "n_vocab": 248320,
+       "n_ctx": 65536,
+       "n_ctx_train": 262144,
+       "n_embd": 2560,
+       "n_params": 116514464640,
+       "size": 58397560320,
+       "ftype": "IQ1_M - 1.75 bpw"
+      }
+     }
+    ]
+   },
+   "/props": {
+    "default_generation_settings": {
+     "params": {
+      "seed": 4294967295,
+      "temperature": 1.0,
+      "dynatemp_range": 0.0,
+      "dynatemp_exponent": 1.0,
+      "top_k": 20,
+      "top_p": 0.949999988079071,
+      "min_p": 0.05000000074505806,
+      "top_n_sigma": -1.0,
+      "xtc_probability": 0.0,
+      "xtc_threshold": 0.10000000149011612,
+      "typical_p": 1.0,
+      "repeat_last_n": 64,
+      "repeat_penalty": 1.0,
+      "presence_penalty": 0.0,
+      "frequency_penalty": 0.0,
+      "dry_multiplier": 0.0,
+      "dry_base": 1.75,
+      "dry_allowed_length": 2,
+      "dry_penalty_last_n": 64,
+      "mirostat": 0,
+      "mirostat_tau": 5.0,
+      "mirostat_eta": 0.10000000149011612,
+      "adaptive_target": -1.0,
+      "adaptive_decay": 0.8999999761581421,
+      "max_tokens": -1,
+      "n_predict": -1,
+      "n_keep": 0,
+      "n_discard": 0,
+      "ignore_eos": false,
+      "stream": false,
+      "n_probs": 0,
+      "min_keep": 0,
+      "chat_format": "Content-only",
+      "reasoning_format": "none",
+      "reasoning_in_content": false,
+      "generation_prompt": "",
+      "samplers": [
+       "penalties",
+       "dry",
+       "top_n_sigma",
+       "top_k",
+       "typ_p",
+       "top_p",
+       "min_p",
+       "xtc",
+       "temperature"
+      ],
+      "speculative.types": "none",
+      "timings_per_token": false,
+      "post_sampling_probs": false,
+      "backend_sampling": false,
+      "lora": []
+     },
+     "n_ctx": 65536
+    },
+    "total_slots": 1,
+    "model_alias": "work/models/coder-iq1_m/Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf",
+    "model_ftype": "IQ1_M - 1.75 bpw",
+    "model_path": "work/models/coder-iq1_m/Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf",
+    "modalities": {
+     "vision": false,
+     "video": false,
+     "audio": false
+    },
+    "media_marker": "<__media_E9rlml83kaARgssTit0cuGO48M9cTCBt__>",
+    "endpoint_slots": true,
+    "endpoint_props": false,
+    "endpoint_metrics": true,
+    "ui": true,
+    "ui_settings": {},
+    "chat_template": "{%- set image_count = namespace(value=0) %}\n{%- set video_count = namespace(value=0) %}\n{%- macro render_content(content, do_vision_count, is_system_content=false) %}\n    {%- if content is string %}\n        {{- content }}\n    {%- elif content is iterable and content is not mapping %}\n        {%- for item in content %}\n            {%- if 'image' in item or 'image_url' in item or item.type == 'image' %}\n                {%- if is_system_content %}\n                    {{- raise_exception('System message cannot contain images.') }}\n                {%- endif %}\n                {%- if do_vision_count %}\n                    {%- set image_count.value = image_count.value + 1 %}\n                {%- endif %}\n                {%- if add_vision_id %}\n                    {{- 'Picture ' ~ image_count.value ~ ': ' }}\n                {%- endif %}\n                {{- '<|vision_start|><|image_pad|><|vision_end|>' }}\n            {%- elif 'video' in item or item.type == 'video' %}\n                {%- if is_system_content %}\n                    {{- raise_exception('System message cannot contain videos.') }}\n                {%- endif %}\n                {%- if do_vision_count %}\n                    {%- set video_count.value = video_count.value + 1 %}\n                {%- endif %}\n                {%- if add_vision_id %}\n                    {{- 'Video ' ~ video_count.value ~ ': ' }}\n                {%- endif %}\n                {{- '<|vision_start|><|video_pad|><|vision_end|>' }}\n            {%- elif 'text' in item %}\n                {{- item.text }}\n            {%- else %}\n                {{- raise_exception('Unexpected item type in content.') }}\n            {%- endif %}\n        {%- endfor %}\n    {%- elif content is none or content is undefined %}\n        {{- '' }}\n    {%- else %}\n        {{- raise_exception('Unexpected content type.') }}\n    {%- endif %}\n{%- endmacro %}\n{%- if not messages %}\n    {{- raise_exception('No messages provided.') }}\n{%- endif %}\n{%- set sysns = namespace(count=0, text='') %}\n{%- for message in messages %}\n    {%- if sysns.count == loop.index0 and (message.role == 'system' or message.role == 'developer') %}\n        {%- set sys_content = render_content(message.content, false, true)|trim %}\n        {%- if sys_content %}\n            {%- set sysns.text = sysns.text + ('\\n' if sysns.text else '') + sys_content %}\n        {%- endif %}\n        {%- set sysns.count = sysns.count + 1 %}\n    {%- endif %}\n{%- endfor %}\n{%- set num_sys = sysns.count %}\n{%- set merged_system = sysns.text %}\n{%- set reasoning_instructions = '' %}\n{%- if enable_thinking is undefined or enable_thinking is true %}\n    {%- set resolved_reasoning_effort = reasoning_effort|default('xhigh') %}\n    {%- if resolved_reasoning_effort == 'high' %}\n        {%- set resolved_reasoning_effort = 'xhigh' %}\n    {%- endif %}\n    {%- if resolved_reasoning_effort not in ('xhigh', 'medium', 'low') %}\n        {{- raise_exception('Unexpected reasoning effort ' ~ reasoning_effort ~ '. Supported types are xhigh (default), medium, and low.') }}\n    {%- endif %}\n    {%- if resolved_reasoning_effort == 'xhigh' %}\n        {%- set reasoning_instructions = 'Reasoning effort is set to xhigh. Please think carefully through the task, validate key assumptions, consider plausible alternatives, and prioritize correctness, consistency, and clarity in the final answer.' %}\n    {%- elif resolved_reasoning_effort == 'low' %}\n        {%- set reasoning_instructions = 'Reasoning effort is set to low. Keep your thinking brief and focused, moving directly to the conclusion without unnecessary elaboration.' %}\n    {%- endif %}\n{%- endif %}\n{%- if tools and tools is iterable and tools is not mapping %}\n    {{- '<|im_start|>system\\n' }}\n    {%- if reasoning_instructions %}\n        {{- reasoning_instructions + '\\n\\n' }}\n    {%- endif %}\n    {{- \"# Tools\\n\\nYou have access to the following functions:\\n\\n<tools>\" }}\n    {%- for tool in tools %}\n        {{- \"\\n\" }}\n        {{- tool | tojson }}\n    {%- endfor %}\n    {{- \"\\n</tools>\" }}\n    {{- '\\n\\nIf you choose to call a function ONLY reply in the following format with NO suffix:\\n\\n<tool_call>\\n<function=example_function_name>\\n<parameter=example_parameter_1>\\nvalue_1\\n</parameter>\\n<parameter=example_parameter_2>\\nThis is the value for the second parameter\\nthat can span\\nmultiple lines\\n</parameter>\\n</function>\\n</tool_call>\\n\\n<IMPORTANT>\\nReminder:\\n- Function calls MUST follow the specified format: an inner <function=...></function> block must be nested within <tool_call></tool_call> XML tags\\n- Required parameters MUST be specified\\n- You may provide optional reasoning for your function call in natural language BEFORE the function call, but NOT after\\n- If there is no function call available, answer the question like normal with your current knowledge and do not tell the user about function calls\\n</IMPORTANT>' }}\n    {%- if merged_system %}\n        {{- '\\n\\n' + merged_system }}\n    {%- endif %}\n    {{- '<|im_end|>\\n' }}\n{%- else %}\n    {%- if merged_system %}\n        {{- '<|im_start|>system\\n' + (reasoning_instructions + '\\n\\n' if reasoning_instructions else '')  + merged_system + '<|im_end|>\\n' }}\n    {%- elif reasoning_instructions %}\n        {{- '<|im_start|>system\\n' + reasoning_instructions + '<|im_end|>\\n' }}\n    {%- endif %}\n{%- endif %}\n{%- set ns = namespace(multi_step_tool=true, last_query_index=messages|length - 1) %}\n{%- for message in messages[::-1] %}\n    {%- set index = (messages|length - 1) - loop.index0 %}\n    {%- if ns.multi_step_tool and message.role == \"user\" %}\n        {%- set content = render_content(message.content, false)|trim %}\n        {%- if not(content.startswith('<tool_response>') and content.endswith('</tool_response>')) %}\n            {%- set ns.multi_step_tool = false %}\n            {%- set ns.last_query_index = index %}\n        {%- endif %}\n    {%- endif %}\n{%- endfor %}\n{%- for message in messages %}\n    {%- if loop.index0 >= num_sys %}\n    {%- set content = render_content(message.content, true)|trim %}\n    {%- if message.role == \"system\" or message.role == \"developer\" %}\n        {{- raise_exception('System message must be at the beginning.') }}\n    {%- elif message.role == \"user\" %}\n        {{- '<|im_start|>' + message.role + '\\n' + content + '<|im_end|>' + '\\n' }}\n    {%- elif message.role == \"assistant\" %}\n        {%- set reasoning_content = '' %}\n        {%- if message.reasoning_content is string %}\n            {%- set reasoning_content = message.reasoning_content %}\n        {%- endif %}\n        {%- set reasoning_content = reasoning_content|trim %}\n        {%- if preserve_thinking is undefined or preserve_thinking is true or loop.index0 > ns.last_query_index %}\n            {{- '<|im_start|>' + message.role + '\\n<think>\\n' + reasoning_content + '\\n</think>\\n\\n' + content }}\n        {%- else %}\n            {{- '<|im_start|>' + message.role + '\\n' + content }}\n        {%- endif %}\n        {%- if message.tool_calls and message.tool_calls is iterable and message.tool_calls is not mapping %}\n            {%- for tool_call in message.tool_calls %}\n                {%- if tool_call.function is defined %}\n                    {%- set tool_call = tool_call.function %}\n                {%- endif %}\n                {%- if tool_call.name is not defined or tool_call.name is none %}\n                    {{- raise_exception('Tool call is missing a function name.') }}\n                {%- endif %}\n                {%- if loop.first %}\n                    {%- if content|trim %}\n                        {{- '\\n\\n<tool_call>\\n<function=' + tool_call.name + '>\\n' }}\n                    {%- else %}\n                        {{- '<tool_call>\\n<function=' + tool_call.name + '>\\n' }}\n                    {%- endif %}\n                {%- else %}\n                    {{- '\\n<tool_call>\\n<function=' + tool_call.name + '>\\n' }}\n                {%- endif %}\n                {%- if tool_call.arguments is mapping %}\n                    {%- for args_name, args_value in tool_call.arguments|items %}\n                        {{- '<parameter=' + args_name + '>\\n' }}\n                        {%- set args_value = args_value | string if args_value is string else args_value | tojson | safe %}\n                        {{- args_value }}\n                        {{- '\\n</parameter>\\n' }}\n                    {%- endfor %}\n                {%- elif tool_call.arguments is string %}\n                    {%- if tool_call.arguments|trim %}\n                        {{- raise_exception('Tool call arguments for function \"' + (tool_call.name | string) + '\" were passed as a JSON string. Parse them into an object before calling apply_chat_template.') }}\n                    {%- endif %}\n                {%- elif tool_call.arguments is defined and tool_call.arguments is not none %}\n                    {{- raise_exception('Tool call arguments for function \"' + (tool_call.name | string) + '\" must be an object/mapping or a JSON string.') }}\n                {%- endif %}\n                {{- '</function>\\n</tool_call>' }}\n            {%- endfor %}\n        {%- endif %}\n        {{- '<|im_end|>\\n' }}\n    {%- elif message.role == \"tool\" %}\n        {%- if loop.previtem and loop.previtem.role != \"tool\" %}\n            {{- '<|im_start|>user' }}\n        {%- endif %}\n        {{- '\\n<tool_response>\\n' }}\n        {{- content }}\n        {{- '\\n</tool_response>' }}\n        {%- if not loop.last and loop.nextitem.role != \"tool\" %}\n            {{- '<|im_end|>\\n' }}\n        {%- elif loop.last %}\n            {{- '<|im_end|>\\n' }}\n        {%- endif %}\n    {%- else %}\n        {{- raise_exception('Unexpected message role.') }}\n    {%- endif %}\n    {%- endif %}\n{%- endfor %}\n{%- if add_generation_prompt %}\n    {{- '<|im_start|>assistant\\n' }}\n    {%- if enable_thinking is defined and enable_thinking is false %}\n        {{- '<think>\\n\\n</think>\\n\\n' }}\n    {%- else %}\n        {{- '<think>\\n' }}\n    {%- endif %}\n{%- endif %}\n{#- Unsloth fixes - developer role, merged system messages, tool calling #}",
+    "chat_template_caps": {
+     "supports_object_arguments": true,
+     "supports_parallel_tool_calls": true,
+     "supports_preserve_reasoning": true,
+     "supports_reasoning_effort": true,
+     "supports_string_content": true,
+     "supports_system_role": true,
+     "supports_tool_calls": true,
+     "supports_tools": true,
+     "supports_typed_content": true
+    },
+    "bos_token": "<|endoftext|>",
+    "eos_token": "<|im_end|>",
+    "build_info": "b11822-d9ee007",
+    "is_sleeping": false,
+    "cors_proxy_enabled": false
+   }
+  },
+  "warnings": [
+   "Swap in use before start: 1961 MiB"
+  ]
+ },
+ "cases": [
+  {
+   "case": {
+    "name": "short-code",
+    "description": "Short prompt, short answer. Matches the Fibonacci measurement of 22 Oct.",
+    "runs": 3,
+    "warmup": 1,
+    "cache": "cold",
+    "temperature": 0.0,
+    "max_tokens": 300,
+    "expect": "def\\s+fib\\s*\\(",
+    "min_decode_tokens": 32,
+    "pause_s": 0.0,
+    "extra": {},
+    "prompt": "Write a Python function `fib(n)` that returns the n-th Fibonacci number iteratively. Only the code, no explanation.",
+    "context_chars": 0,
+    "needle": null,
+    "needle_depth": 0.5,
+    "question": null,
+    "trace": null
+   },
+   "runs": [
+    {
+     "index": -1,
+     "warmup": true,
+     "nonce": "8ccff33f7b9c",
+     "steps": [
+      {
+       "ok": true,
+       "error": null,
+       "finish": "stop",
+       "prompt_tokens": 100,
+       "cached_tokens": 0,
+       "completion_tokens": 165,
+       "tool_calls": 0,
+       "reasoning_tokens": null,
+       "reasoning_chars": 411,
+       "e2e_s": 9.692534186004195,
+       "prefill_tps_server": 54.1497967487379,
+       "decode_tps_server": 20.907129764690254,
+       "timings": {
+        "cache_n": 0,
+        "prompt_n": 100,
+        "prompt_ms": 1846.729,
+        "prompt_per_token_ms": 18.467290000000002,
+        "prompt_per_second": 54.1497967487379,
+        "predicted_n": 165,
+        "predicted_ms": 7844.214,
+        "predicted_per_token_ms": 47.830573170731704,
+        "predicted_per_second": 20.907129764690254
+       },
+       "ttft_s": 1.8484213629853912,
+       "prefill_tps_client": 54.100218706891425,
+       "decode_tps_client": 21.02177814459577,
+       "itl_p50_ms": 47.06571699352935,
+       "itl_p99_ms": 67.83913619583477,
+       "expect_ok": true,
+       "output_sha": "f642af5623af",
+       "text_head": "def fib(n):\n    a, b = 0, 1\n    for _ in range(n):\n        a, b = b, a + b\n    return a",
+       "vram_peak_mib": 16215.79296875,
+       "gtt_peak_mib": 1571.85546875,
+       "ram_avail_min_mib": 55254.90234375,
+       "swap_used_max_mib": 1960.2578125,
+       "gpu_busy_mean": 93.4375,
+       "power_mean_w": 92.9375,
+       "temp_max_c": 64.0,
+       "sclk_mean_mhz": 2983.9583333333335,
+       "samples": 96
+      }
+     ]
+    },
+    {
+     "index": 0,
+     "warmup": false,
+     "nonce": "a9f9c276faab",
+     "steps": [
+      {
+       "ok": true,
+       "error": null,
+       "finish": "stop",
+       "prompt_tokens": 99,
+       "cached_tokens": 0,
+       "completion_tokens": 171,
+       "tool_calls": 0,
+       "reasoning_tokens": null,
+       "reasoning_chars": 466,
+       "e2e_s": 9.113162101013586,
+       "prefill_tps_server": 90.69862678614454,
+       "decode_tps_server": 21.35615343014371,
+       "timings": {
+        "cache_n": 0,
+        "prompt_n": 99,
+        "prompt_ms": 1091.527,
+        "prompt_per_token_ms": 11.025525252525252,
+        "prompt_per_second": 90.69862678614454,
+        "predicted_n": 171,
+        "predicted_ms": 7960.235,
+        "predicted_per_token_ms": 46.82491176470588,
+        "predicted_per_second": 21.35615343014371
+       },
+       "ttft_s": 1.1530371599947102,
+       "prefill_tps_client": 85.86019898999108,
+       "decode_tps_client": 21.47027618781227,
+       "itl_p50_ms": 46.05215199990198,
+       "itl_p99_ms": 60.362597577041015,
+       "expect_ok": true,
+       "output_sha": "102240d58107",
+       "text_head": "def fib(n):\n    a, b = 0, 1\n    for _ in range(n):\n        a, b = b, a + b\n    return a",
+       "vram_peak_mib": 16222.92578125,
+       "gtt_peak_mib": 1571.85546875,
+       "ram_avail_min_mib": 54950.0703125,
+       "swap_used_max_mib": 1960.2578125,
+       "gpu_busy_mean": 97.43333333333334,
+       "power_mean_w": 109.47777777777777,
+       "temp_max_c": 65.0,
+       "sclk_mean_mhz": 3370.0666666666666,
+       "samples": 90
+      }
+     ]
+    },
+    {
+     "index": 1,
+     "warmup": false,
+     "nonce": "824410bcd997",
+     "steps": [
+      {
+       "ok": true,
+       "error": null,
+       "finish": "stop",
+       "prompt_tokens": 100,
+       "cached_tokens": 0,
+       "completion_tokens": 171,
+       "tool_calls": 0,
+       "reasoning_tokens": null,
+       "reasoning_chars": 466,
+       "e2e_s": 9.009669872000813,
+       "prefill_tps_server": 94.21394479439691,
+       "decode_tps_server": 21.555973572376402,
+       "timings": {
+        "cache_n": 0,
+        "prompt_n": 100,
+        "prompt_ms": 1061.414,
+        "prompt_per_token_ms": 10.614139999999999,
+        "prompt_per_second": 94.21394479439691,
+        "predicted_n": 171,
+        "predicted_ms": 7886.445,
+        "predicted_per_token_ms": 46.39085294117647,
+        "predicted_per_second": 21.555973572376402
+       },
+       "ttft_s": 1.1233475679764524,
+       "prefill_tps_client": 89.01964347520286,
+       "decode_tps_client": 21.671525371437063,
+       "itl_p50_ms": 45.60284496983513,
+       "itl_p99_ms": 60.707505574682735,
+       "expect_ok": true,
+       "output_sha": "102240d58107",
+       "text_head": "def fib(n):\n    a, b = 0, 1\n    for _ in range(n):\n        a, b = b, a + b\n    return a",
+       "vram_peak_mib": 16227.6875,
+       "gtt_peak_mib": 1571.85546875,
+       "ram_avail_min_mib": 54513.296875,
+       "swap_used_max_mib": 1960.2578125,
+       "gpu_busy_mean": 98.6,
+       "power_mean_w": 111.33333333333333,
+       "temp_max_c": 65.0,
+       "sclk_mean_mhz": 3385.633333333333,
+       "samples": 90
+      }
+     ]
+    },
+    {
+     "index": 2,
+     "warmup": false,
+     "nonce": "f4b944726427",
+     "steps": [
+      {
+       "ok": true,
+       "error": null,
+       "finish": "stop",
+       "prompt_tokens": 101,
+       "cached_tokens": 0,
+       "completion_tokens": 169,
+       "tool_calls": 0,
+       "reasoning_tokens": null,
+       "reasoning_chars": 435,
+       "e2e_s": 8.949119225959294,
+       "prefill_tps_server": 94.25835936326146,
+       "decode_tps_server": 21.4940845208815,
+       "timings": {
+        "cache_n": 0,
+        "prompt_n": 101,
+        "prompt_ms": 1071.523,
+        "prompt_per_token_ms": 10.609138613861385,
+        "prompt_per_second": 94.25835936326146,
+        "predicted_n": 169,
+        "predicted_ms": 7816.104,
+        "predicted_per_token_ms": 46.52442857142857,
+        "predicted_per_second": 21.4940845208815
+       },
+       "ttft_s": 1.133116673969198,
+       "prefill_tps_client": 89.13468693934824,
+       "decode_tps_client": 21.61108490211204,
+       "itl_p50_ms": 46.27434897702187,
+       "itl_p99_ms": 59.840643838979275,
+       "expect_ok": true,
+       "output_sha": "69984bdddaa1",
+       "text_head": "def fib(n):\n    a, b = 0, 1\n    for _ in range(n):\n        a, b = b, a + b\n    return a",
+       "vram_peak_mib": 16227.93359375,
+       "gtt_peak_mib": 1571.85546875,
+       "ram_avail_min_mib": 54276.4921875,
+       "swap_used_max_mib": 1960.2578125,
+       "gpu_busy_mean": 98.0909090909091,
+       "power_mean_w": 109.93181818181819,
+       "temp_max_c": 64.0,
+       "sclk_mean_mhz": 3381.8636363636365,
+       "samples": 88
+      }
+     ]
+    }
+   ],
+   "summary": {
+    "steps": [
+     {
+      "n": 3,
+      "ok": 3,
+      "metrics": {
+       "ttft_s": {
+        "n": 3,
+        "median": 1.133116673969198,
+        "mean": 1.1365004673134536,
+        "stdev": 0.015131275940915253,
+        "min": 1.1233475679764524,
+        "max": 1.1530371599947102
+       },
+       "prefill_tps_client": {
+        "n": 3,
+        "median": 89.01964347520286,
+        "mean": 88.00484313484738,
+        "stdev": 1.8582068320589338,
+        "min": 85.86019898999108,
+        "max": 89.13468693934824
+       },
+       "prefill_tps_server": {
+        "n": 3,
+        "median": 94.21394479439691,
+        "mean": 93.05697698126762,
+        "stdev": 2.0425119083152756,
+        "min": 90.69862678614454,
+        "max": 94.25835936326146
+       },
+       "decode_tps_client": {
+        "n": 3,
+        "median": 21.61108490211204,
+        "mean": 21.584295487120457,
+        "stdev": 0.1032645294576253,
+        "min": 21.47027618781227,
+        "max": 21.671525371437063
+       },
+       "decode_tps_server": {
+        "n": 3,
+        "median": 21.4940845208815,
+        "mean": 21.468737174467204,
+        "stdev": 0.10229314878406125,
+        "min": 21.35615343014371,
+        "max": 21.555973572376402
+       },
+       "e2e_s": {
+        "n": 3,
+        "median": 9.009669872000813,
+        "mean": 9.023983732991232,
+        "stdev": 0.08295288528049698,
+        "min": 8.949119225959294,
+        "max": 9.113162101013586
+       },
+       "prompt_tokens": {
+        "n": 3,
+        "median": 100.0,
+        "mean": 100.0,
+        "stdev": 1.0,
+        "min": 99.0,
+        "max": 101.0
+       },
+       "cached_tokens": {
+        "n": 3,
+        "median": 0.0,
+        "mean": 0.0,
+        "stdev": 0.0,
+        "min": 0.0,
+        "max": 0.0
+       },
+       "completion_tokens": {
+        "n": 3,
+        "median": 171.0,
+        "mean": 170.33333333333334,
+        "stdev": 1.1547005383792515,
+        "min": 169.0,
+        "max": 171.0
+       },
+       "itl_p50_ms": {
+        "n": 3,
+        "median": 46.05215199990198,
+        "mean": 45.976448648919664,
+        "stdev": 0.342093051565545,
+        "min": 45.60284496983513,
+        "max": 46.27434897702187
+       },
+       "itl_p99_ms": {
+        "n": 3,
+        "median": 60.362597577041015,
+        "mean": 60.30358233023434,
+        "stdev": 0.43643374837819643,
+        "min": 59.840643838979275,
+        "max": 60.707505574682735
+       },
+       "vram_peak_mib": {
+        "n": 3,
+        "median": 16227.6875,
+        "mean": 16226.182291666666,
+        "stdev": 2.82290375391035,
+        "min": 16222.92578125,
+        "max": 16227.93359375
+       },
+       "gtt_peak_mib": {
+        "n": 3,
+        "median": 1571.85546875,
+        "mean": 1571.85546875,
+        "stdev": 0.0,
+        "min": 1571.85546875,
+        "max": 1571.85546875
+       },
+       "ram_avail_min_mib": {
+        "n": 3,
+        "median": 54513.296875,
+        "mean": 54579.953125,
+        "stdev": 341.7004014742678,
+        "min": 54276.4921875,
+        "max": 54950.0703125
+       },
+       "swap_used_max_mib": {
+        "n": 3,
+        "median": 1960.2578125,
+        "mean": 1960.2578125,
+        "stdev": 0.0,
+        "min": 1960.2578125,
+        "max": 1960.2578125
+       },
+       "gpu_busy_mean": {
+        "n": 3,
+        "median": 98.0909090909091,
+        "mean": 98.04141414141414,
+        "stdev": 0.5849060525391263,
+        "min": 97.43333333333334,
+        "max": 98.6
+       },
+       "power_mean_w": {
+        "n": 3,
+        "median": 109.93181818181819,
+        "mean": 110.24764309764309,
+        "stdev": 0.9672541744702521,
+        "min": 109.47777777777777,
+        "max": 111.33333333333333
+       },
+       "temp_max_c": {
+        "n": 3,
+        "median": 65.0,
+        "mean": 64.66666666666667,
+        "stdev": 0.5773502691896257,
+        "min": 64.0,
+        "max": 65.0
+       },
+       "sclk_mean_mhz": {
+        "n": 3,
+        "median": 3381.8636363636365,
+        "mean": 3379.187878787879,
+        "stdev": 8.12096279581097,
+        "min": 3370.0666666666666,
+        "max": 3385.633333333333
+       }
+      },
+      "expect_pass": 3,
+      "expect_n": 3,
+      "distinct_outputs": 2
+     }
+    ],
+    "warnings": [],
+    "run_e2e_s": {
+     "n": 3,
+     "median": 9.009669872000813,
+     "mean": 9.023983732991232,
+     "stdev": 0.08295288528049698,
+     "min": 8.949119225959294,
+     "max": 9.113162101013586
+    }
+   }
+  },
+  {
+   "case": {
+    "name": "long-decode",
+    "description": "Short prompt, long answer: pure decode rate at small context.",
+    "runs": 3,
+    "warmup": 1,
+    "cache": "cold",
+    "temperature": 0.0,
+    "max_tokens": 1024,
+    "expect": "(?i)semaphore",
+    "min_decode_tokens": 64,
+    "pause_s": 0.0,
+    "extra": {},
+    "prompt": "Explain in detail how a mutex differs from a semaphore. Give a complete C example for each. Write at least 800 words.",
+    "context_chars": 0,
+    "needle": null,
+    "needle_depth": 0.5,
+    "question": null,
+    "trace": null
+   },
+   "runs": [
+    {
+     "index": -1,
+     "warmup": true,
+     "nonce": "656e1719d06a",
+     "steps": [
+      {
+       "ok": true,
+       "error": null,
+       "finish": "length",
+       "prompt_tokens": 106,
+       "cached_tokens": 0,
+       "completion_tokens": 1024,
+       "tool_calls": 0,
+       "reasoning_tokens": null,
+       "reasoning_chars": 4828,
+       "e2e_s": 46.587603729974944,
+       "prefill_tps_server": 100.49126958394719,
+       "decode_tps_server": 22.497939888055704,
+       "timings": {
+        "cache_n": 0,
+        "prompt_n": 106,
+        "prompt_ms": 1054.818,
+        "prompt_per_token_ms": 9.95111320754717,
+        "prompt_per_second": 100.49126958394719,
+        "predicted_n": 1024,
+        "predicted_ms": 45470.83,
+        "predicted_per_token_ms": 44.44851417399805,
+        "predicted_per_second": 22.497939888055704
+       },
+       "ttft_s": 1.1167816650122404,
+       "prefill_tps_client": 94.91559838497008,
+       "decode_tps_client": 22.49799115403816,
+       "itl_p50_ms": 43.422994029242545,
+       "itl_p99_ms": 57.837010390358046,
+       "expect_ok": false,
+       "output_sha": "ae67c929e639",
+       "text_head": "",
+       "vram_peak_mib": 16228.33203125,
+       "gtt_peak_mib": 1571.85546875,
+       "ram_avail_min_mib": 53984.63671875,
+       "swap_used_max_mib": 1960.25390625,
+       "gpu_busy_mean": 98.41774891774892,
+       "power_mean_w": 117.80952380952381,
+       "temp_max_c": 66.0,
+       "sclk_mean_mhz": 3422.255411255411,
+       "samples": 462
+      }
+     ]
+    },
+    {
+     "index": 0,
+     "warmup": false,
+     "nonce": "fdc0cab6093c",
+     "steps": [
+      {
+       "ok": true,
+       "error": null,
+       "finish": "length",
+       "prompt_tokens": 102,
+       "cached_tokens": 0,
+       "completion_tokens": 1024,
+       "tool_calls": 0,
+       "reasoning_tokens": null,
+       "reasoning_chars": 4927,
+       "e2e_s": 46.96884804102592,
+       "prefill_tps_server": 103.47650626793721,
+       "decode_tps_server": 22.278283064336676,
+       "timings": {
+        "cache_n": 0,
+        "prompt_n": 102,
+        "prompt_ms": 985.731,
+        "prompt_per_token_ms": 9.664029411764705,
+        "prompt_per_second": 103.47650626793721,
+        "predicted_n": 1024,
+        "predicted_ms": 45919.158,
+        "predicted_per_token_ms": 44.88676246334311,
+        "predicted_per_second": 22.278283064336676
+       },
+       "ttft_s": 1.0497553760069422,
+       "prefill_tps_client": 97.16549429638306,
+       "decode_tps_client": 22.278364797638947,
+       "itl_p50_ms": 44.09282800043002,
+       "itl_p99_ms": 57.316098406445235,
+       "expect_ok": false,
+       "output_sha": "231f37d9dad4",
+       "text_head": "",
+       "vram_peak_mib": 16224.4296875,
+       "gtt_peak_mib": 1571.85546875,
+       "ram_avail_min_mib": 53486.296875,
+       "swap_used_max_mib": 1960.0234375,
+       "gpu_busy_mean": 98.57510729613733,
+       "power_mean_w": 117.98497854077253,
+       "temp_max_c": 68.0,
+       "sclk_mean_mhz": 3420.796137339056,
+       "samples": 466
+      }
+     ]
+    },
+    {
+     "index": 1,
+     "warmup": false,
+     "nonce": "6fdca5674736",
+     "steps": [
+      {
+       "ok": true,
+       "error": null,
+       "finish": "length",
+       "prompt_tokens": 104,
+       "cached_tokens": 0,
+       "completion_tokens": 1024,
+       "tool_calls": 0,
+       "reasoning_tokens": null,
+       "reasoning_chars": 4951,
+       "e2e_s": 46.58941079402575,
+       "prefill_tps_server": 100.0394386248425,
+       "decode_tps_server": 22.490794109047638,
+       "timings": {
+        "cache_n": 0,
+        "prompt_n": 104,
+        "prompt_ms": 1039.59,
+        "prompt_per_token_ms": 9.99605769230769,
+        "prompt_per_second": 100.0394386248425,
+        "predicted_n": 1024,
+        "predicted_ms": 45485.277,
+        "predicted_per_token_ms": 44.46263636363636,
+        "predicted_per_second": 22.490794109047638
+       },
+       "ttft_s": 1.1041294950409792,
+       "prefill_tps_client": 94.19185020153826,
+       "decode_tps_client": 22.490845088329824,
+       "itl_p50_ms": 43.56707300757989,
+       "itl_p99_ms": 56.69206604594364,
+       "expect_ok": false,
+       "output_sha": "9950e55ab020",
+       "text_head": "",
+       "vram_peak_mib": 16229.37109375,
+       "gtt_peak_mib": 1571.85546875,
+       "ram_avail_min_mib": 53133.89453125,
+       "swap_used_max_mib": 1959.9765625,
+       "gpu_busy_mean": 98.4004329004329,
+       "power_mean_w": 119.008658008658,
+       "temp_max_c": 69.0,
+       "sclk_mean_mhz": 3417.7965367965367,
+       "samples": 462
+      }
+     ]
+    },
+    {
+     "index": 2,
+     "warmup": false,
+     "nonce": "007c5f77825f",
+     "steps": [
+      {
+       "ok": true,
+       "error": null,
+       "finish": "length",
+       "prompt_tokens": 106,
+       "cached_tokens": 0,
+       "completion_tokens": 1024,
+       "tool_calls": 0,
+       "reasoning_tokens": null,
+       "reasoning_chars": 4868,
+       "e2e_s": 47.11032931500813,
+       "prefill_tps_server": 102.93040933287502,
+       "decode_tps_server": 22.23135477680426,
+       "timings": {
+        "cache_n": 0,
+        "prompt_n": 106,
+        "prompt_ms": 1029.822,
+        "prompt_per_token_ms": 9.715301886792451,
+        "prompt_per_second": 102.93040933287502,
+        "predicted_n": 1024,
+        "predicted_ms": 46016.089,
+        "predicted_per_token_ms": 44.98151417399804,
+        "predicted_per_second": 22.23135477680426
+       },
+       "ttft_s": 1.0942696900456212,
+       "prefill_tps_client": 96.86825922737634,
+       "decode_tps_client": 22.231409342599694,
+       "itl_p50_ms": 44.354245997965336,
+       "itl_p99_ms": 56.15794119890779,
+       "expect_ok": false,
+       "output_sha": "23f4f1fa5c65",
+       "text_head": "",
+       "vram_peak_mib": 16232.69921875,
+       "gtt_peak_mib": 1571.85546875,
+       "ram_avail_min_mib": 52891.22265625,
+       "swap_used_max_mib": 1959.9609375,
+       "gpu_busy_mean": 98.58760683760684,
+       "power_mean_w": 118.69444444444444,
+       "temp_max_c": 70.0,
+       "sclk_mean_mhz": 3418.07905982906,
+       "samples": 468
+      }
+     ]
+    }
+   ],
+   "summary": {
+    "steps": [
+     {
+      "n": 3,
+      "ok": 3,
+      "metrics": {
+       "ttft_s": {
+        "n": 3,
+        "median": 1.0942696900456212,
+        "mean": 1.0827181870311808,
+        "stdev": 0.028969192629436088,
+        "min": 1.0497553760069422,
+        "max": 1.1041294950409792
+       },
+       "prefill_tps_client": {
+        "n": 3,
+        "median": 96.86825922737634,
+        "mean": 96.0752012417659,
+        "stdev": 1.6377867770582113,
+        "min": 94.19185020153826,
+        "max": 97.16549429638306
+       },
+       "prefill_tps_server": {
+        "n": 3,
+        "median": 102.93040933287502,
+        "mean": 102.14878474188491,
+        "stdev": 1.8470412141401957,
+        "min": 100.0394386248425,
+        "max": 103.47650626793721
+       },
+       "decode_tps_client": {
+        "n": 3,
+        "median": 22.278364797638947,
+        "mean": 22.333539742856157,
+        "stdev": 0.13823867937530576,
+        "min": 22.231409342599694,
+        "max": 22.490845088329824
+       },
+       "decode_tps_server": {
+        "n": 3,
+        "median": 22.278283064336676,
+        "mean": 22.333477316729525,
+        "stdev": 0.1382461424475437,
+        "min": 22.23135477680426,
+        "max": 22.490794109047638
+       },
+       "e2e_s": {
+        "n": 3,
+        "median": 46.96884804102592,
+        "mean": 46.88952938335327,
+        "stdev": 0.2693652046327821,
+        "min": 46.58941079402575,
+        "max": 47.11032931500813
+       },
+       "prompt_tokens": {
+        "n": 3,
+        "median": 104.0,
+        "mean": 104.0,
+        "stdev": 2.0,
+        "min": 102.0,
+        "max": 106.0
+       },
+       "cached_tokens": {
+        "n": 3,
+        "median": 0.0,
+        "mean": 0.0,
+        "stdev": 0.0,
+        "min": 0.0,
+        "max": 0.0
+       },
+       "completion_tokens": {
+        "n": 3,
+        "median": 1024.0,
+        "mean": 1024.0,
+        "stdev": 0.0,
+        "min": 1024.0,
+        "max": 1024.0
+       },
+       "itl_p50_ms": {
+        "n": 3,
+        "median": 44.09282800043002,
+        "mean": 44.00471566865841,
+        "stdev": 0.4009154105989964,
+        "min": 43.56707300757989,
+        "max": 44.354245997965336
+       },
+       "itl_p99_ms": {
+        "n": 3,
+        "median": 56.69206604594364,
+        "mean": 56.72203521709889,
+        "stdev": 0.5796599371679322,
+        "min": 56.15794119890779,
+        "max": 57.316098406445235
+       },
+       "vram_peak_mib": {
+        "n": 3,
+        "median": 16229.37109375,
+        "mean": 16228.833333333334,
+        "stdev": 4.160910534123723,
+        "min": 16224.4296875,
+        "max": 16232.69921875
+       },
+       "gtt_peak_mib": {
+        "n": 3,
+        "median": 1571.85546875,
+        "mean": 1571.85546875,
+        "stdev": 0.0,
+        "min": 1571.85546875,
+        "max": 1571.85546875
+       },
+       "ram_avail_min_mib": {
+        "n": 3,
+        "median": 53133.89453125,
+        "mean": 53170.471354166664,
+        "stdev": 299.2185312380211,
+        "min": 52891.22265625,
+        "max": 53486.296875
+       },
+       "swap_used_max_mib": {
+        "n": 3,
+        "median": 1959.9765625,
+        "mean": 1959.9869791666667,
+        "stdev": 0.03252603124165832,
+        "min": 1959.9609375,
+        "max": 1960.0234375
+       },
+       "gpu_busy_mean": {
+        "n": 3,
+        "median": 98.57510729613733,
+        "mean": 98.52104901139235,
+        "stdev": 0.10464341499337058,
+        "min": 98.4004329004329,
+        "max": 98.58760683760684
+       },
+       "power_mean_w": {
+        "n": 3,
+        "median": 118.69444444444444,
+        "mean": 118.56269366462499,
+        "stdev": 0.524403102803412,
+        "min": 117.98497854077253,
+        "max": 119.008658008658
+       },
+       "temp_max_c": {
+        "n": 3,
+        "median": 69.0,
+        "mean": 69.0,
+        "stdev": 1.0,
+        "min": 68.0,
+        "max": 70.0
+       },
+       "sclk_mean_mhz": {
+        "n": 3,
+        "median": 3418.07905982906,
+        "mean": 3418.8905779882175,
+        "stdev": 1.6562977225281759,
+        "min": 3417.7965367965367,
+        "max": 3420.796137339056
+       }
+      },
+      "expect_pass": 0,
+      "expect_n": 3,
+      "distinct_outputs": 3
+     }
+    ],
+    "warnings": [],
+    "run_e2e_s": {
+     "n": 3,
+     "median": 46.96884804102592,
+     "mean": 46.88952938335327,
+     "stdev": 0.2693652046327821,
+     "min": 46.58941079402575,
+     "max": 47.11032931500813
+    }
+   }
+  },
+  {
+   "case": {
+    "name": "needle-30k",
+    "description": "",
+    "runs": 3,
+    "warmup": 1,
+    "cache": "cold",
+    "temperature": 0.0,
+    "max_tokens": 768,
+    "expect": "osprey-2093",
+    "min_decode_tokens": 64,
+    "pause_s": 0.0,
+    "extra": {},
+    "prompt": null,
+    "context_chars": 141000,
+    "needle": "osprey-2093",
+    "needle_depth": 0.3,
+    "question": "The file above defines a constant SECRET_DEPLOY_TOKEN. First state its exact value. Then explain in detail what the code around it does, in at least 400 words.",
+    "trace": null
+   },
+   "runs": [
+    {
+     "index": -1,
+     "warmup": true,
+     "nonce": "8a8d5445c0a5",
+     "steps": [
+      {
+       "ok": true,
+       "error": null,
+       "finish": "length",
+       "prompt_tokens": 30946,
+       "cached_tokens": 0,
+       "completion_tokens": 768,
+       "tool_calls": 0,
+       "reasoning_tokens": null,
+       "reasoning_chars": 3305,
+       "e2e_s": 119.29235253704246,
+       "prefill_tps_server": 409.1143636462452,
+       "decode_tps_server": 17.609534403451196,
+       "timings": {
+        "cache_n": 0,
+        "prompt_n": 30946,
+        "prompt_ms": 75641.441,
+        "prompt_per_token_ms": 2.4443043042719577,
+        "prompt_per_second": 409.1143636462452,
+        "predicted_n": 768,
+        "predicted_ms": 43555.95,
+        "predicted_per_token_ms": 56.787418513689694,
+        "predicted_per_second": 17.609534403451196
+       },
+       "ttft_s": 75.73599726503016,
+       "prefill_tps_client": 408.6035850522668,
+       "decode_tps_client": 17.609608326615295,
+       "itl_p50_ms": 56.12076399847865,
+       "itl_p99_ms": 70.24467592476869,
+       "expect_ok": false,
+       "output_sha": "e42d7831af1f",
+       "text_head": "",
+       "vram_peak_mib": 16236.83984375,
+       "gtt_peak_mib": 1685.60546875,
+       "ram_avail_min_mib": 52289.7265625,
+       "swap_used_max_mib": 1959.94921875,
+       "gpu_busy_mean": 98.55207451312447,
+       "power_mean_w": 117.51481795088908,
+       "temp_max_c": 75.0,
+       "sclk_mean_mhz": 3263.8060965283657,
+       "samples": 1181
+      }
+     ]
+    },
+    {
+     "index": 0,
+     "warmup": false,
+     "nonce": "3089e3f74360",
+     "steps": [
+      {
+       "ok": true,
+       "error": null,
+       "finish": "length",
+       "prompt_tokens": 30946,
+       "cached_tokens": 0,
+       "completion_tokens": 768,
+       "tool_calls": 0,
+       "reasoning_tokens": null,
+       "reasoning_chars": 2866,
+       "e2e_s": 119.51792666502297,
+       "prefill_tps_server": 410.90342174891657,
+       "decode_tps_server": 17.42630711219395,
+       "timings": {
+        "cache_n": 0,
+        "prompt_n": 30946,
+        "prompt_ms": 75312.101,
+        "prompt_per_token_ms": 2.4336618949137203,
+        "prompt_per_second": 410.90342174891657,
+        "predicted_n": 768,
+        "predicted_ms": 44013.915,
+        "predicted_per_token_ms": 57.38450456323338,
+        "predicted_per_second": 17.42630711219395
+       },
+       "ttft_s": 75.5036049860064,
+       "prefill_tps_client": 409.86122458305715,
+       "decode_tps_client": 17.426383988120065,
+       "itl_p50_ms": 56.51623097946867,
+       "itl_p99_ms": 72.20944340107962,
+       "expect_ok": true,
+       "output_sha": "ad48d91b8425",
+       "text_head": "The exact value of the constant is:\n\n```python\nSECRET_DEPLOY_TOKEN = \"osprey-2093\"\n```\n\nIn the provided source, this line appears inside the `argparse.py` portion of the file, specifically near the implementation of `_VersionAction`, which is the internal action class used by `argparse` to support a `--version` option. The surrounding code is part of the standard library-style `argparse` implement",
+       "vram_peak_mib": 16137.30078125,
+       "gtt_peak_mib": 1685.60546875,
+       "ram_avail_min_mib": 51336.67578125,
+       "swap_used_max_mib": 1959.83203125,
+       "gpu_busy_mean": 98.77637130801688,
+       "power_mean_w": 117.67088607594937,
+       "temp_max_c": 74.0,
+       "sclk_mean_mhz": 3262.7915611814346,
+       "samples": 1185
+      }
+     ]
+    },
+    {
+     "index": 1,
+     "warmup": false,
+     "nonce": "2c74bc4bc518",
+     "steps": [
+      {
+       "ok": true,
+       "error": null,
+       "finish": "length",
+       "prompt_tokens": 30944,
+       "cached_tokens": 0,
+       "completion_tokens": 768,
+       "tool_calls": 0,
+       "reasoning_tokens": null,
+       "reasoning_chars": 3411,
+       "e2e_s": 119.14205461699748,
+       "prefill_tps_server": 410.38577323660905,
+       "decode_tps_server": 17.61286239555136,
+       "timings": {
+        "cache_n": 0,
+        "prompt_n": 30944,
+        "prompt_ms": 75402.224,
+        "prompt_per_token_ms": 2.4367316442606,
+        "prompt_per_second": 410.38577323660905,
+        "predicted_n": 768,
+        "predicted_ms": 43547.72,
+        "predicted_per_token_ms": 56.776688396349414,
+        "predicted_per_second": 17.61286239555136
+       },
+       "ttft_s": 75.59390706504928,
+       "prefill_tps_client": 409.3451602306042,
+       "decode_tps_client": 17.612927626668878,
+       "itl_p50_ms": 56.147773982957006,
+       "itl_p99_ms": 70.18209871486762,
+       "expect_ok": false,
+       "output_sha": "cb1033bea2d4",
+       "text_head": "",
+       "vram_peak_mib": 16138.06640625,
+       "gtt_peak_mib": 1685.60546875,
+       "ram_avail_min_mib": 50378.9765625,
+       "swap_used_max_mib": 1959.81640625,
+       "gpu_busy_mean": 98.85338983050848,
+       "power_mean_w": 117.96101694915254,
+       "temp_max_c": 75.0,
+       "sclk_mean_mhz": 3261.0686440677964,
+       "samples": 1180
+      }
+     ]
+    },
+    {
+     "index": 2,
+     "warmup": false,
+     "nonce": "169be8927424",
+     "steps": [
+      {
+       "ok": true,
+       "error": null,
+       "finish": "length",
+       "prompt_tokens": 30945,
+       "cached_tokens": 0,
+       "completion_tokens": 768,
+       "tool_calls": 0,
+       "reasoning_tokens": null,
+       "reasoning_chars": 3258,
+       "e2e_s": 119.4302252830239,
+       "prefill_tps_server": 410.72830018331,
+       "decode_tps_server": 17.47277277276365,
+       "timings": {
+        "cache_n": 0,
+        "prompt_n": 30945,
+        "prompt_ms": 75341.777,
+        "prompt_per_token_ms": 2.434699531426725,
+        "prompt_per_second": 410.72830018331,
+        "predicted_n": 768,
+        "predicted_ms": 43896.868,
+        "predicted_per_token_ms": 57.23190091264668,
+        "predicted_per_second": 17.47277277276365
+       },
+       "ttft_s": 75.53287174203433,
+       "prefill_tps_client": 409.6891761998106,
+       "decode_tps_client": 17.472822895889223,
+       "itl_p50_ms": 56.520401034504175,
+       "itl_p99_ms": 71.25327037065291,
+       "expect_ok": false,
+       "output_sha": "5964cb8ac812",
+       "text_head": "",
+       "vram_peak_mib": 16184.2578125,
+       "gtt_peak_mib": 1699.61328125,
+       "ram_avail_min_mib": 49397.73046875,
+       "swap_used_max_mib": 1959.78515625,
+       "gpu_busy_mean": 98.91554054054055,
+       "power_mean_w": 117.58108108108108,
+       "temp_max_c": 75.0,
+       "sclk_mean_mhz": 3260.970439189189,
+       "samples": 1184
+      }
+     ]
+    }
+   ],
+   "summary": {
+    "steps": [
+     {
+      "n": 3,
+      "ok": 3,
+      "metrics": {
+       "ttft_s": {
+        "n": 3,
+        "median": 75.53287174203433,
+        "mean": 75.54346126436333,
+        "stdev": 0.04607298402789032,
+        "min": 75.5036049860064,
+        "max": 75.59390706504928
+       },
+       "prefill_tps_client": {
+        "n": 3,
+        "median": 409.6891761998106,
+        "mean": 409.63185367115733,
+        "stdev": 0.26276416838406735,
+        "min": 409.3451602306042,
+        "max": 409.86122458305715
+       },
+       "prefill_tps_server": {
+        "n": 3,
+        "median": 410.72830018331,
+        "mean": 410.6724983896119,
+        "stdev": 0.26329712438325836,
+        "min": 410.38577323660905,
+        "max": 410.90342174891657
+       },
+       "decode_tps_client": {
+        "n": 3,
+        "median": 17.472822895889223,
+        "mean": 17.50404483689272,
+        "stdev": 0.09711199447430253,
+        "min": 17.426383988120065,
+        "max": 17.612927626668878
+       },
+       "decode_tps_server": {
+        "n": 3,
+        "median": 17.47277277276365,
+        "mean": 17.503980760169654,
+        "stdev": 0.09711422293150913,
+        "min": 17.42630711219395,
+        "max": 17.61286239555136
+       },
+       "e2e_s": {
+        "n": 3,
+        "median": 119.4302252830239,
+        "mean": 119.36340218834812,
+        "stdev": 0.19664420563101942,
+        "min": 119.14205461699748,
+        "max": 119.51792666502297
+       },
+       "prompt_tokens": {
+        "n": 3,
+        "median": 30945.0,
+        "mean": 30945.0,
+        "stdev": 1.0,
+        "min": 30944.0,
+        "max": 30946.0
+       },
+       "cached_tokens": {
+        "n": 3,
+        "median": 0.0,
+        "mean": 0.0,
+        "stdev": 0.0,
+        "min": 0.0,
+        "max": 0.0
+       },
+       "completion_tokens": {
+        "n": 3,
+        "median": 768.0,
+        "mean": 768.0,
+        "stdev": 0.0,
+        "min": 768.0,
+        "max": 768.0
+       },
+       "itl_p50_ms": {
+        "n": 3,
+        "median": 56.51623097946867,
+        "mean": 56.39480199897662,
+        "stdev": 0.2139426976171172,
+        "min": 56.147773982957006,
+        "max": 56.520401034504175
+       },
+       "itl_p99_ms": {
+        "n": 3,
+        "median": 71.25327037065291,
+        "mean": 71.21493749553339,
+        "stdev": 1.0142157936870284,
+        "min": 70.18209871486762,
+        "max": 72.20944340107962
+       },
+       "vram_peak_mib": {
+        "n": 3,
+        "median": 16138.06640625,
+        "mean": 16153.208333333334,
+        "stdev": 26.89236253662193,
+        "min": 16137.30078125,
+        "max": 16184.2578125
+       },
+       "gtt_peak_mib": {
+        "n": 3,
+        "median": 1685.60546875,
+        "mean": 1690.2747395833333,
+        "stdev": 8.087414317632804,
+        "min": 1685.60546875,
+        "max": 1699.61328125
+       },
+       "ram_avail_min_mib": {
+        "n": 3,
+        "median": 50378.9765625,
+        "mean": 50371.127604166664,
+        "stdev": 969.4964857216448,
+        "min": 49397.73046875,
+        "max": 51336.67578125
+       },
+       "swap_used_max_mib": {
+        "n": 3,
+        "median": 1959.81640625,
+        "mean": 1959.8111979166667,
+        "stdev": 0.023867581744561668,
+        "min": 1959.78515625,
+        "max": 1959.83203125
+       },
+       "gpu_busy_mean": {
+        "n": 3,
+        "median": 98.85338983050848,
+        "mean": 98.84843389302198,
+        "stdev": 0.06971685454453967,
+        "min": 98.77637130801688,
+        "max": 98.91554054054055
+       },
+       "power_mean_w": {
+        "n": 3,
+        "median": 117.67088607594937,
+        "mean": 117.73766136872767,
+        "stdev": 0.19857497515050285,
+        "min": 117.58108108108108,
+        "max": 117.96101694915254
+       },
+       "temp_max_c": {
+        "n": 3,
+        "median": 75.0,
+        "mean": 74.66666666666667,
+        "stdev": 0.5773502691896257,
+        "min": 74.0,
+        "max": 75.0
+       },
+       "sclk_mean_mhz": {
+        "n": 3,
+        "median": 3261.0686440677964,
+        "mean": 3261.6102148128066,
+        "stdev": 1.0242536216915799,
+        "min": 3260.970439189189,
+        "max": 3262.7915611814346
+       }
+      },
+      "expect_pass": 1,
+      "expect_n": 3,
+      "distinct_outputs": 3
+     }
+    ],
+    "warnings": [],
+    "run_e2e_s": {
+     "n": 3,
+     "median": 119.4302252830239,
+     "mean": 119.36340218834812,
+     "stdev": 0.19664420563101942,
+     "min": 119.14205461699748,
+     "max": 119.51792666502297
+    }
+   }
+  }
+ ]
+}

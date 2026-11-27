@@ -1,0 +1,230 @@
+{
+  "config": {
+    "A": {
+      "build": "mtl",
+      "env": {},
+      "tooling": {
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0"
+      },
+      "commit": "stand-2026-10-25-843-g20af2e778d-dirty",
+      "model": "<repo>/work/models/coder-dmix/coder-DM-164e-00001-of-00002.gguf"
+    },
+    "B": {
+      "build": "mtl",
+      "env": {},
+      "tooling": {
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0"
+      },
+      "commit": "stand-2026-10-25-843-g20af2e778d-dirty",
+      "model": "<repo>/work/models/coder-dmr/coder-DMR-164e-00001-of-00002.gguf"
+    },
+    "workload": "set",
+    "targets": "bench-set at --ctx 32768",
+    "deterministic": false,
+    "plan_info": {
+      "expect": [
+        [
+          "decode-code",
+          0.0,
+          2.0
+        ],
+        [
+          "decode-text",
+          0.0,
+          2.0
+        ]
+      ],
+      "source": "research/measurements/2026-11-12-mac-iq3xxs-repack.md (plan)",
+      "workload": "set",
+      "targets": "bench-set at --ctx 32768",
+      "primary": "",
+      "why_size": "bench-set: the production decode path (code and text) at the server's widths; the change touches only the routed experts of every pass",
+      "decode_tokens": 200,
+      "noise": {},
+      "warmup": true,
+      "A": {
+        "build": "mtl",
+        "env": {},
+        "tooling": {
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0"
+        },
+        "commit": "stand-2026-10-25-843-g20af2e778d-dirty",
+        "model": "<repo>/work/models/coder-dmix/coder-DM-164e-00001-of-00002.gguf"
+      },
+      "B": {
+        "build": "mtl",
+        "env": {},
+        "tooling": {
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0"
+        },
+        "commit": "stand-2026-10-25-843-g20af2e778d-dirty",
+        "model": "<repo>/work/models/coder-dmr/coder-DMR-164e-00001-of-00002.gguf"
+      }
+    },
+    "reference_sha": {},
+    "corpus_sha256": "e13a800340859f7d39c63712d90383faae7e5a47c3865f0811e40d912612d38e",
+    "corpus_is_reference": true,
+    "commit": "20af2e7",
+    "noise": {}
+  },
+  "rounds": [
+    {
+      "order": "AB",
+      "sha": {
+        "A": {},
+        "B": {}
+      },
+      "A": {
+        "decode-code": 31.1,
+        "decode-text": 23.1
+      },
+      "counters": {
+        "A": {},
+        "B": {}
+      },
+      "B": {
+        "decode-code": 30.5,
+        "decode-text": 23.5
+      },
+      "seconds": 359.6542650000192
+    },
+    {
+      "order": "BA",
+      "sha": {
+        "B": {},
+        "A": {}
+      },
+      "B": {
+        "decode-code": 32.6,
+        "decode-text": 25.3
+      },
+      "counters": {
+        "B": {},
+        "A": {}
+      },
+      "A": {
+        "decode-code": 31.0,
+        "decode-text": 23.6
+      },
+      "seconds": 346.6598300000187
+    },
+    {
+      "order": "AB",
+      "sha": {
+        "A": {},
+        "B": {}
+      },
+      "A": {
+        "decode-code": 32.5,
+        "decode-text": 24.7
+      },
+      "counters": {
+        "A": {},
+        "B": {}
+      },
+      "B": {
+        "decode-code": 30.9,
+        "decode-text": 23.3
+      },
+      "seconds": 349.4100135419285
+    },
+    {
+      "order": "BA",
+      "sha": {
+        "B": {},
+        "A": {}
+      },
+      "B": {
+        "decode-code": 32.4,
+        "decode-text": 25.2
+      },
+      "counters": {
+        "B": {},
+        "A": {}
+      },
+      "A": {
+        "decode-code": 31.0,
+        "decode-text": 23.6
+      },
+      "seconds": 347.29547770903446
+    },
+    {
+      "order": "AB",
+      "sha": {
+        "A": {},
+        "B": {}
+      },
+      "A": {
+        "decode-code": 31.6,
+        "decode-text": 23.6
+      },
+      "counters": {
+        "A": {},
+        "B": {}
+      },
+      "B": {
+        "decode-code": 31.3,
+        "decode-text": 24.0
+      },
+      "seconds": 352.9961230419576
+    },
+    {
+      "order": "BA",
+      "sha": {
+        "B": {},
+        "A": {}
+      },
+      "B": {
+        "decode-code": 31.3,
+        "decode-text": 23.5
+      },
+      "counters": {
+        "B": {},
+        "A": {}
+      },
+      "A": {
+        "decode-code": 31.4,
+        "decode-text": 23.8
+      },
+      "seconds": 354.6157182920724
+    }
+  ],
+  "stop_reason": "6 rounds (undecided metrics stay open)",
+  "wall_seconds": 2290.79935170908,
+  "warmup": {
+    "decode-code": 31.4,
+    "decode-text": 23.6
+  },
+  "plan": {
+    "alpha": 0.05,
+    "margin": 0.5,
+    "max_rounds": 6,
+    "min_rounds": 2,
+    "prior_sd": 0.5,
+    "prior_df": 4.0
+  },
+  "decisions": {
+    "decode-code": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": 0.2595405925689686,
+      "ci_diff_percent": [
+        -4.052445532085741,
+        4.571526717223678
+      ]
+    },
+    "decode-text": {
+      "decided_at_round": 2,
+      "decision": "B faster",
+      "mean_diff_percent": 1.7468412395473254,
+      "ci_diff_percent": [
+        -3.653399325889118,
+        7.1470818049837685
+      ]
+    }
+  }
+}

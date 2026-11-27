@@ -1,0 +1,76 @@
+== h1-0-1
+Metal: prefill chunk of 2048 tokens, 146 command buffers, longest 183 ms, GPU idle between them 46.97 ms (longest 39.81); GPU ms: layer starts 4278.6, attention 1270.4, experts 3629.0, ends 1.2; host: encoding 6548.3 ms, first committed 380.5 ms, until it starts 902.1 ms, after the last ends 0.0 ms
+Metal: prefill chunk: MTP 111.6 ms, whole chunk 10620.8 ms
+Metal: prefill chunk of 2048 tokens, 146 command buffers, longest 183 ms, GPU idle between them 7.33 ms (longest 0.14); GPU ms: layer starts 4364.7, attention 2918.7, experts 3636.9, ends 1.2; host: encoding 6835.3 ms, first committed 657.3 ms, until it starts 1.2 ms, after the last ends 0.1 ms
+Metal: prefill chunk: MTP 151.8 ms, whole chunk 11739.3 ms
+Metal: prefill chunk of 2048 tokens, 146 command buffers, longest 182 ms, GPU idle between them 14.64 ms (longest 7.49); GPU ms: layer starts 4373.0, attention 3966.1, experts 3623.9, ends 0.8; host: encoding 8076.9 ms, first committed 1302.1 ms, until it starts 10.9 ms, after the last ends 0.0 ms
+Metal: prefill chunk: MTP 145.1 ms, whole chunk 13436.8 ms
+Metal: prefill chunk of 1577 tokens, 146 command buffers, longest 141 ms, GPU idle between them 7.37 ms (longest 0.14); GPU ms: layer starts 3429.4, attention 3569.0, experts 2911.4, ends 0.9; host: encoding 5802.7 ms, first committed 167.9 ms, until it starts 0.5 ms, after the last ends 0.0 ms
+Metal: prefill chunk: MTP 135.2 ms, whole chunk 10221.8 ms
+=== step0 done prompt 7722 in 46360 ms answer 727ff658ae742fa7
+Metal: prefill chunk of 35 tokens, 110 command buffers, longest 19 ms, GPU idle between them 34.78 ms (longest 29.22); GPU ms: layer starts 245.8, attention 214.6, experts 419.3, ends 0.0; host: encoding 403.8 ms, first committed 4.0 ms, until it starts 0.5 ms, after the last ends 0.1 ms
+Metal: prefill chunk: MTP 27.1 ms, whole chunk 946.3 ms
+=== step1 done prompt 36 in 1054 ms answer dcc12be231c3594c
+Metal: prefill chunk of 35 tokens, 110 command buffers, longest 20 ms, GPU idle between them 6.54 ms (longest 0.95); GPU ms: layer starts 250.9, attention 221.3, experts 442.8, ends 0.0; host: encoding 389.8 ms, first committed 1.8 ms, until it starts 0.4 ms, after the last ends 0.0 ms
+Metal: prefill chunk: MTP 8.3 ms, whole chunk 932.2 ms
+=== step2 done prompt 36 in 1001 ms answer 73887dbb42d2b4d6
+Metal: prefill chunk of 35 tokens, 110 command buffers, longest 20 ms, GPU idle between them 5.62 ms (longest 0.13); GPU ms: layer starts 246.7, attention 221.1, experts 445.7, ends 0.0; host: encoding 389.9 ms, first committed 2.1 ms, until it starts 1.5 ms, after the last ends 0.0 ms
+Metal: prefill chunk: MTP 8.4 ms, whole chunk 931.3 ms
+=== step3 done prompt 36 in 1001 ms answer b344d80e24a36799
+== h1-1000000-1
+Metal: prefill chunk of 2048 tokens, 146 command buffers, longest 182 ms, GPU idle between them 63.09 ms (longest 56.35); GPU ms: layer starts 4281.7, attention 1242.0, experts 3636.9, ends 1.2; host: encoding 5836.9 ms, first committed 211.0 ms, until it starts 354.1 ms, after the last ends 0.0 ms
+Metal: prefill chunk: MTP 129.5 ms, whole chunk 9919.4 ms
+Metal: prefill chunk of 2048 tokens, 146 command buffers, longest 182 ms, GPU idle between them 7.70 ms (longest 1.00); GPU ms: layer starts 4370.3, attention 2846.0, experts 3642.9, ends 0.4; host: encoding 6170.8 ms, first committed 25.8 ms, until it starts 0.2 ms, after the last ends 0.0 ms
+Metal: prefill chunk: MTP 144.3 ms, whole chunk 11037.8 ms
+Metal: prefill chunk of 2048 tokens, 146 command buffers, longest 183 ms, GPU idle between them 7.84 ms (longest 0.62); GPU ms: layer starts 4370.6, attention 3813.6, experts 3628.0, ends 0.4; host: encoding 6692.2 ms, first committed 24.8 ms, until it starts 0.5 ms, after the last ends 0.0 ms
+Metal: prefill chunk: MTP 151.5 ms, whole chunk 11997.4 ms
+Metal: prefill chunk of 1577 tokens, 146 command buffers, longest 142 ms, GPU idle between them 7.87 ms (longest 0.62); GPU ms: layer starts 3422.5, attention 3379.7, experts 2911.4, ends 0.3; host: encoding 5541.8 ms, first committed 21.9 ms, until it starts 0.5 ms, after the last ends 0.0 ms
+Metal: prefill chunk: MTP 125.1 ms, whole chunk 9869.5 ms
+=== step0 done prompt 7722 in 43066 ms answer 727ff658ae742fa7
+Metal: prefill chunk of 35 tokens, 110 command buffers, longest 13 ms, GPU idle between them 25.27 ms (longest 19.89); GPU ms: layer starts 245.4, attention 146.2, experts 418.3, ends 0.0; host: encoding 362.5 ms, first committed 2.3 ms, until it starts 0.5 ms, after the last ends 0.0 ms
+Metal: prefill chunk: MTP 10.5 ms, whole chunk 848.6 ms
+=== step1 done prompt 36 in 960 ms answer dcc12be231c3594c
+Metal: prefill chunk of 35 tokens, 110 command buffers, longest 14 ms, GPU idle between them 6.38 ms (longest 0.85); GPU ms: layer starts 244.6, attention 150.4, experts 441.0, ends 0.0; host: encoding 351.9 ms, first committed 0.4 ms, until it starts 0.5 ms, after the last ends 0.0 ms
+Metal: prefill chunk: MTP 27.5 ms, whole chunk 870.8 ms
+=== step2 done prompt 36 in 938 ms answer 73887dbb42d2b4d6
+Metal: prefill chunk of 35 tokens, 110 command buffers, longest 14 ms, GPU idle between them 5.54 ms (longest 0.14); GPU ms: layer starts 249.2, attention 151.1, experts 446.9, ends 0.0; host: encoding 361.7 ms, first committed 0.4 ms, until it starts 0.4 ms, after the last ends 0.1 ms
+Metal: prefill chunk: MTP 47.8 ms, whole chunk 901.8 ms
+=== step3 done prompt 36 in 972 ms answer b344d80e24a36799
+== h1-0-2
+Metal: prefill chunk of 2048 tokens, 146 command buffers, longest 182 ms, GPU idle between them 47.70 ms (longest 40.68); GPU ms: layer starts 4284.6, attention 1260.8, experts 3628.1, ends 1.2; host: encoding 5640.3 ms, first committed 25.4 ms, until it starts 347.6 ms, after the last ends 0.0 ms
+Metal: prefill chunk: MTP 102.7 ms, whole chunk 9698.3 ms
+Metal: prefill chunk of 2048 tokens, 146 command buffers, longest 183 ms, GPU idle between them 7.22 ms (longest 0.15); GPU ms: layer starts 4359.7, attention 2860.1, experts 3637.9, ends 0.4; host: encoding 6158.0 ms, first committed 21.9 ms, until it starts 0.5 ms, after the last ends 0.1 ms
+Metal: prefill chunk: MTP 95.2 ms, whole chunk 10983.0 ms
+Metal: prefill chunk of 2048 tokens, 146 command buffers, longest 182 ms, GPU idle between them 7.28 ms (longest 0.13); GPU ms: layer starts 4375.1, attention 3921.2, experts 3625.0, ends 1.2; host: encoding 6949.9 ms, first committed 218.8 ms, until it starts 0.4 ms, after the last ends 0.0 ms
+Metal: prefill chunk: MTP 123.3 ms, whole chunk 12272.4 ms
+Metal: prefill chunk of 1577 tokens, 146 command buffers, longest 142 ms, GPU idle between them 7.73 ms (longest 0.58); GPU ms: layer starts 3425.1, attention 3528.9, experts 2911.1, ends 0.5; host: encoding 5720.3 ms, first committed 109.8 ms, until it starts 0.5 ms, after the last ends 0.0 ms
+Metal: prefill chunk: MTP 124.5 ms, whole chunk 10108.3 ms
+=== step0 done prompt 7722 in 43365 ms answer 727ff658ae742fa7
+Metal: prefill chunk of 35 tokens, 110 command buffers, longest 19 ms, GPU idle between them 22.22 ms (longest 16.75); GPU ms: layer starts 249.5, attention 214.0, experts 421.6, ends 0.0; host: encoding 395.7 ms, first committed 3.2 ms, until it starts 1.3 ms, after the last ends 0.0 ms
+Metal: prefill chunk: MTP 7.9 ms, whole chunk 920.0 ms
+=== step1 done prompt 36 in 1025 ms answer dcc12be231c3594c
+Metal: prefill chunk of 35 tokens, 110 command buffers, longest 20 ms, GPU idle between them 6.70 ms (longest 1.21); GPU ms: layer starts 251.2, attention 220.2, experts 442.9, ends 0.0; host: encoding 389.4 ms, first committed 0.4 ms, until it starts 0.4 ms, after the last ends 0.0 ms
+Metal: prefill chunk: MTP 8.0 ms, whole chunk 930.1 ms
+=== step2 done prompt 36 in 998 ms answer 73887dbb42d2b4d6
+Metal: prefill chunk of 35 tokens, 110 command buffers, longest 20 ms, GPU idle between them 5.59 ms (longest 0.16); GPU ms: layer starts 247.2, attention 220.0, experts 447.2, ends 0.0; host: encoding 387.7 ms, first committed 0.4 ms, until it starts 0.6 ms, after the last ends 0.1 ms
+Metal: prefill chunk: MTP 29.0 ms, whole chunk 950.1 ms
+=== step3 done prompt 36 in 1022 ms answer b344d80e24a36799
+== h1-1000000-2
+Metal: prefill chunk of 2048 tokens, 146 command buffers, longest 183 ms, GPU idle between them 30.11 ms (longest 22.99); GPU ms: layer starts 4282.5, attention 1233.7, experts 3629.8, ends 1.2; host: encoding 5627.3 ms, first committed 37.4 ms, until it starts 353.9 ms, after the last ends 0.0 ms
+Metal: prefill chunk: MTP 91.4 ms, whole chunk 9660.2 ms
+Metal: prefill chunk of 2048 tokens, 146 command buffers, longest 183 ms, GPU idle between them 7.20 ms (longest 0.13); GPU ms: layer starts 4359.9, attention 2837.8, experts 3635.5, ends 0.4; host: encoding 6148.2 ms, first committed 23.5 ms, until it starts 0.5 ms, after the last ends 0.0 ms
+Metal: prefill chunk: MTP 141.2 ms, whole chunk 11006.0 ms
+Metal: prefill chunk of 2048 tokens, 146 command buffers, longest 183 ms, GPU idle between them 8.15 ms (longest 0.86); GPU ms: layer starts 4370.2, attention 3817.6, experts 3624.4, ends 0.4; host: encoding 6695.7 ms, first committed 24.0 ms, until it starts 0.5 ms, after the last ends 0.0 ms
+Metal: prefill chunk: MTP 160.8 ms, whole chunk 12006.2 ms
+Metal: prefill chunk of 1577 tokens, 146 command buffers, longest 142 ms, GPU idle between them 8.01 ms (longest 0.70); GPU ms: layer starts 3421.6, attention 3370.0, experts 2912.1, ends 0.3; host: encoding 5533.8 ms, first committed 20.5 ms, until it starts 0.5 ms, after the last ends 0.1 ms
+Metal: prefill chunk: MTP 132.4 ms, whole chunk 9865.5 ms
+=== step0 done prompt 7722 in 42671 ms answer 727ff658ae742fa7
+Metal: prefill chunk of 35 tokens, 110 command buffers, longest 13 ms, GPU idle between them 36.44 ms (longest 31.11); GPU ms: layer starts 247.7, attention 146.2, experts 420.3, ends 0.0; host: encoding 376.9 ms, first committed 0.9 ms, until it starts 1.3 ms, after the last ends 0.0 ms
+Metal: prefill chunk: MTP 8.8 ms, whole chunk 862.0 ms
+=== step1 done prompt 36 in 971 ms answer dcc12be231c3594c
+Metal: prefill chunk of 35 tokens, 110 command buffers, longest 15 ms, GPU idle between them 6.69 ms (longest 1.10); GPU ms: layer starts 250.5, attention 150.3, experts 442.8, ends 0.1; host: encoding 361.5 ms, first committed 0.4 ms, until it starts 1.3 ms, after the last ends 0.1 ms
+Metal: prefill chunk: MTP 27.7 ms, whole chunk 879.9 ms
+=== step2 done prompt 36 in 950 ms answer 73887dbb42d2b4d6
+Metal: prefill chunk of 35 tokens, 110 command buffers, longest 13 ms, GPU idle between them 5.52 ms (longest 0.13); GPU ms: layer starts 245.4, attention 150.6, experts 445.2, ends 0.0; host: encoding 358.2 ms, first committed 0.4 ms, until it starts 1.4 ms, after the last ends 0.0 ms
+Metal: prefill chunk: MTP 8.3 ms, whole chunk 857.0 ms
+=== step3 done prompt 36 in 927 ms answer b344d80e24a36799

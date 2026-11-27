@@ -1,0 +1,330 @@
+{
+  "config": {
+    "A": {
+      "build": "/var/tmp/claude/161/build",
+      "env": {},
+      "tooling": {
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0",
+        "TONA_EXPERT_PROFILE": "/var/tmp/claude/161/wt/work/profile/experts-coder.bin"
+      },
+      "commit": "v0.0.2-952-gdc11332e8f",
+      "model": "/var/tmp/claude/161/wt/work/models/coder-iq1_m/Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf",
+      "drafter": "/var/tmp/claude/161/wt/work/models/draft/mtp-Qwen3.8-Flash-Next-Q8_0.gguf"
+    },
+    "B": {
+      "build": "/var/tmp/claude/161/build",
+      "env": {
+        "TONA_CLOCK_HOLD": "2"
+      },
+      "tooling": {
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0",
+        "TONA_CLOCK_HOLD": "2",
+        "TONA_EXPERT_PROFILE": "/var/tmp/claude/161/wt/work/profile/experts-coder.bin"
+      },
+      "commit": "v0.0.2-952-gdc11332e8f",
+      "model": "/var/tmp/claude/161/wt/work/models/coder-iq1_m/Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf",
+      "drafter": "/var/tmp/claude/161/wt/work/models/draft/mtp-Qwen3.8-Flash-Next-Q8_0.gguf"
+    },
+    "workload": "short",
+    "targets": "2000:400 2000:write:400 at --ctx 140000",
+    "deterministic": false,
+    "plan_info": {
+      "expect": [
+        [
+          "prefill",
+          -0.5,
+          0.5
+        ],
+        [
+          "decode",
+          -0.5,
+          0.5
+        ]
+      ],
+      "source": "A/A of 2026-11-12-prefill-bimodal.md (prefill 0.2 %, decode 0.1 to 0.5 %)",
+      "workload": "short",
+      "targets": "2000:400 2000:write:400 at --ctx 140000",
+      "primary": "",
+      "why_size": "prefill@2000 only: the effect to exclude is the 7 to 9 % queue effect of 2026-11-12 (A/A spread 0.2 %), so 1 to 2 rounds decide; 4 at most; decode must stay equal",
+      "decode_tokens": 200,
+      "noise": {
+        "prefill@2000": [
+          0.09,
+          4,
+          "research/measurements/2026-11-02-ab-tool.md: run 7, short, A/A merged against merged, 5 rounds with warm-up"
+        ],
+        "decode@2000": [
+          0.231,
+          4,
+          "research/measurements/2026-11-02-ab-tool.md: run 7, short, A/A merged against merged, 5 rounds with warm-up"
+        ],
+        "prefill@2000:write": [
+          0.163,
+          4,
+          "research/measurements/2026-11-02-ab-tool.md: run 7, short, A/A merged against merged, 5 rounds with warm-up"
+        ],
+        "decode@2000:write": [
+          0.605,
+          4,
+          "research/measurements/2026-11-02-ab-tool.md: run 7, short, A/A merged against merged, 5 rounds with warm-up"
+        ]
+      },
+      "warmup": true,
+      "round_warmup": false,
+      "load_log": false,
+      "A": {
+        "build": "/var/tmp/claude/161/build",
+        "env": {},
+        "tooling": {
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0",
+          "TONA_EXPERT_PROFILE": "/var/tmp/claude/161/wt/work/profile/experts-coder.bin"
+        },
+        "commit": "v0.0.2-952-gdc11332e8f",
+        "model": "/var/tmp/claude/161/wt/work/models/coder-iq1_m/Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf",
+        "drafter": "/var/tmp/claude/161/wt/work/models/draft/mtp-Qwen3.8-Flash-Next-Q8_0.gguf"
+      },
+      "B": {
+        "build": "/var/tmp/claude/161/build",
+        "env": {
+          "TONA_CLOCK_HOLD": "2"
+        },
+        "tooling": {
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0",
+          "TONA_CLOCK_HOLD": "2",
+          "TONA_EXPERT_PROFILE": "/var/tmp/claude/161/wt/work/profile/experts-coder.bin"
+        },
+        "commit": "v0.0.2-952-gdc11332e8f",
+        "model": "/var/tmp/claude/161/wt/work/models/coder-iq1_m/Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf",
+        "drafter": "/var/tmp/claude/161/wt/work/models/draft/mtp-Qwen3.8-Flash-Next-Q8_0.gguf"
+      }
+    },
+    "reference_sha": {},
+    "corpus_sha256": "e13a800340859f7d39c63712d90383faae7e5a47c3865f0811e40d912612d38e",
+    "corpus_is_reference": true,
+    "commit": "dc11332",
+    "noise": {
+      "prefill@2000": [
+        0.09,
+        4
+      ],
+      "decode@2000": [
+        0.231,
+        4
+      ],
+      "prefill@2000:write": [
+        0.163,
+        4
+      ],
+      "decode@2000:write": [
+        0.605,
+        4
+      ]
+    }
+  },
+  "rounds": [
+    {
+      "order": "AB",
+      "sha": {
+        "A": {
+          "2000": "75eff9b8784c7d4c",
+          "2000:write": "a6f07fd6fb86e448"
+        },
+        "B": {
+          "2000": "75eff9b8784c7d4c",
+          "2000:write": "a6f07fd6fb86e448"
+        }
+      },
+      "A": {
+        "prefill@2000": 1416.1278209389757,
+        "decode@2000": 75.13693965535418,
+        "prefill@2000:write": 1725.5139566604846,
+        "decode@2000:write": 124.3163493145992
+      },
+      "counters": {
+        "A": {
+          "2000": {
+            "expert_hits": 132355,
+            "expert_misses": 20494
+          },
+          "2000:write": {
+            "expert_hits": 85766,
+            "expert_misses": 24511
+          }
+        },
+        "B": {
+          "2000": {
+            "expert_hits": 132355,
+            "expert_misses": 20494
+          },
+          "2000:write": {
+            "expert_hits": 85766,
+            "expert_misses": 24511
+          }
+        }
+      },
+      "B": {
+        "prefill@2000": 1429.899287254353,
+        "decode@2000": 74.29599010148432,
+        "prefill@2000:write": 1708.6719484087657,
+        "decode@2000:write": 123.40702113831213
+      },
+      "seconds": 62.28090737701859
+    },
+    {
+      "order": "BA",
+      "sha": {
+        "B": {
+          "2000": "75eff9b8784c7d4c",
+          "2000:write": "a6f07fd6fb86e448"
+        },
+        "A": {
+          "2000": "75eff9b8784c7d4c",
+          "2000:write": "a6f07fd6fb86e448"
+        }
+      },
+      "B": {
+        "prefill@2000": 1405.240919832894,
+        "decode@2000": 75.01061403939188,
+        "prefill@2000:write": 1682.9965695349324,
+        "decode@2000:write": 123.68333619497923
+      },
+      "counters": {
+        "B": {
+          "2000": {
+            "expert_hits": 132355,
+            "expert_misses": 20494
+          },
+          "2000:write": {
+            "expert_hits": 85766,
+            "expert_misses": 24511
+          }
+        },
+        "A": {
+          "2000": {
+            "expert_hits": 132355,
+            "expert_misses": 20494
+          },
+          "2000:write": {
+            "expert_hits": 85766,
+            "expert_misses": 24511
+          }
+        }
+      },
+      "A": {
+        "prefill@2000": 1363.9593397063245,
+        "decode@2000": 75.1642312238716,
+        "prefill@2000:write": 1676.0548782526937,
+        "decode@2000:write": 124.71761165549188
+      },
+      "seconds": 62.342182072025025
+    },
+    {
+      "order": "AB",
+      "sha": {
+        "A": {
+          "2000": "75eff9b8784c7d4c",
+          "2000:write": "a6f07fd6fb86e448"
+        },
+        "B": {
+          "2000": "75eff9b8784c7d4c",
+          "2000:write": "a6f07fd6fb86e448"
+        }
+      },
+      "A": {
+        "prefill@2000": 1414.313789553159,
+        "decode@2000": 75.3364230511819,
+        "prefill@2000:write": 1739.0342216567522,
+        "decode@2000:write": 124.18814349124685
+      },
+      "counters": {
+        "A": {
+          "2000": {
+            "expert_hits": 132355,
+            "expert_misses": 20494
+          },
+          "2000:write": {
+            "expert_hits": 85766,
+            "expert_misses": 24511
+          }
+        },
+        "B": {
+          "2000": {
+            "expert_hits": 132355,
+            "expert_misses": 20494
+          },
+          "2000:write": {
+            "expert_hits": 85766,
+            "expert_misses": 24511
+          }
+        }
+      },
+      "B": {
+        "prefill@2000": 1439.3896399667196,
+        "decode@2000": 74.97670960044117,
+        "prefill@2000:write": 1742.3569671893333,
+        "decode@2000:write": 124.13868453061399
+      },
+      "seconds": 62.16527922899695
+    }
+  ],
+  "discarded": [],
+  "stop_reason": "error: server exited with 1 before it was ready (partial result)",
+  "wall_seconds": 227.0017295560101,
+  "loads": [],
+  "warmup": {
+    "prefill@2000": 1440.709597420923,
+    "decode@2000": 75.28203856780291,
+    "prefill@2000:write": 1423.6559874912316,
+    "decode@2000:write": 123.31937868919864
+  },
+  "plan": {
+    "alpha": 0.05,
+    "margin": 0.5,
+    "max_rounds": 4,
+    "min_rounds": 2,
+    "prior_sd": 0.5,
+    "prior_df": 4.0
+  },
+  "decisions": {
+    "prefill@2000": {
+      "decided_at_round": 3,
+      "decision": "B faster",
+      "mean_diff_percent": 1.9240257189463206,
+      "ci_diff_percent": [
+        0.6462071883486766,
+        3.2018442495439645
+      ]
+    },
+    "decode@2000": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": -0.6003580184909615,
+      "ci_diff_percent": [
+        -1.3011417548666169,
+        0.1004257178846939
+      ]
+    },
+    "prefill@2000:write": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": -0.12360685252086705,
+      "ci_diff_percent": [
+        -1.0807906397628968,
+        0.8335769347211628
+      ]
+    },
+    "decode@2000:write": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": -0.533527575307143,
+      "ci_diff_percent": [
+        -1.7067103239333021,
+        0.6396551733190162
+      ]
+    }
+  }
+}

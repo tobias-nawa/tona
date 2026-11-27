@@ -1,0 +1,153 @@
+{
+  "id": "embeddinggemma-300m",
+  "name": "EmbeddingGemma 300M",
+  "vendor": "Google",
+  "release_date": "2025-09",
+  "purpose": "Small on-device text embedding model for search and RAG.",
+  "tasks": [
+    "embeddings"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "embedding"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "many"
+    ]
+  },
+  "license": {
+    "name": "Gemma Terms of Use",
+    "verified": true,
+    "commercial_use": "limited",
+    "redistribution": "limited",
+    "notes": "Terms read through a summarizer on 2026-11-19 (gemma.ai/resources/terms, redirect of ai.google.dev/gemma/terms). Use, reproduction, modification and distribution are permitted (section 2.2); the Prohibited Use Policy is 'hereby incorporated by reference', redistributors must pass the use restrictions on, supply a copy of the agreement and flag modifications; 'Google reserves the right to restrict (remotely or otherwise) usage'. Outputs are not claimed by Google. Gated repo (manual approval). HF createdAt 2025-07-17 (private pre-release; public launch Sep 2025). Verdict policy (README, 2026-11-19): this licence term does not lower tona_fit; kept here for an installer label."
+  },
+  "architecture": {
+    "kind": "encoder-style transformer, Gemma 3 based",
+    "params_total_b": 0.3,
+    "context_native": 2048
+  },
+  "variants": [
+    {
+      "repo": "google/embeddinggemma-300m",
+      "format": "safetensors",
+      "official": true,
+      "notes": "QAT checkpoints Q4_0, Q8_0, mixed; 768d with MRL to 512/256/128"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "unknown",
+    "other": [
+      "Sentence Transformers"
+    ],
+    "notes": "llama.cpp support not verified this session."
+  },
+  "benchmarks": [
+    {
+      "name": "MTEB Multilingual v2",
+      "score": 61.15,
+      "kind": "vendor",
+      "variant": "768d full precision",
+      "source": "https://huggingface.co/google/embeddinggemma-300m"
+    },
+    {
+      "name": "MTEB English v2",
+      "score": 69.67,
+      "kind": "vendor",
+      "variant": "768d",
+      "source": "https://huggingface.co/google/embeddinggemma-300m"
+    },
+    {
+      "name": "MTEB Code v1",
+      "score": 68.76,
+      "kind": "vendor",
+      "variant": "768d",
+      "source": "https://huggingface.co/google/embeddinggemma-300m"
+    },
+    {
+      "name": "MTEB Multilingual v2",
+      "score": 60.62,
+      "kind": "vendor",
+      "variant": "QAT Q4_0",
+      "source": "https://huggingface.co/google/embeddinggemma-300m"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "QAT Q4_0 loses only about 0.5 point",
+      "tiny, CPU-friendly"
+    ],
+    "weaknesses": [
+      "2K context",
+      "float16 gives NaN"
+    ],
+    "maturity": "Google"
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Superseded by EmbeddingGemma 2 (+10 points MTEB Code).",
+    "blockers": [
+      "Tona has no embeddings route"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/google/embeddinggemma-300m",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://ai.google.dev/gemma/terms",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "redirects to a mirror domain; read through a summarizer"
+    }
+  ],
+  "open_questions": [
+    "None open for the license; revisit only if EmbeddingGemma 2 is dropped"
+  ],
+  "last_checked": "2026-11-19"
+}

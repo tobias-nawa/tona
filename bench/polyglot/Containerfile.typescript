@@ -1,0 +1,7 @@
+# Sandbox for the polyglot exercises (typescript): jest with the track's babel preset (types are stripped, not checked,
+# as in the track's own implementation tests) installed once at build time (network) from a lockfile into
+# /opt/node_modules; every exercise shares the same dev dependencies. Exercises are mounted at run time, no network then.
+FROM docker.io/library/node:22-slim@sha256:47725aca53d3295ec2d3be8f62726599b3033cc262edc2c7e429909b3ac599fc
+WORKDIR /opt
+COPY ts/package.json ts/package-lock.json /opt/
+RUN npm ci --no-audit --no-fund

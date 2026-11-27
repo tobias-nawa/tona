@@ -1,0 +1,778 @@
+[
+ {
+  "messages": [
+   {
+    "role": "user",
+    "content": "Hallo"
+   }
+  ],
+  "thinking": false
+ },
+ {
+  "messages": [
+   {
+    "role": "user",
+    "content": "  Hallo  \n"
+   }
+  ],
+  "thinking": true
+ },
+ {
+  "messages": [
+   {
+    "role": "user",
+    "content": "x"
+   }
+  ],
+  "thinking": true,
+  "effort": "medium"
+ },
+ {
+  "messages": [
+   {
+    "role": "user",
+    "content": "x"
+   }
+  ],
+  "thinking": true,
+  "effort": "low"
+ },
+ {
+  "messages": [
+   {
+    "role": "user",
+    "content": "x"
+   }
+  ],
+  "thinking": true,
+  "effort": "high"
+ },
+ {
+  "messages": [
+   {
+    "role": "system",
+    "content": "Du bist knapp. "
+   },
+   {
+    "role": "user",
+    "content": "Frage"
+   }
+  ],
+  "thinking": false
+ },
+ {
+  "messages": [
+   {
+    "role": "system",
+    "content": ""
+   },
+   {
+    "role": "user",
+    "content": "Frage"
+   }
+  ]
+ },
+ {
+  "messages": [
+   {
+    "role": "user",
+    "content": "Wetter?"
+   }
+  ],
+  "tools": [
+   {
+    "type": "function",
+    "function": {
+     "name": "get_weather",
+     "description": "  Weather of a city.\n  ",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string",
+        "description": "City name "
+       },
+       "unit": {
+        "type": "string",
+        "enum": [
+         "c",
+         "f"
+        ],
+        "default": "c"
+       },
+       "days": {
+        "type": "integer",
+        "minimum": 1,
+        "nullable": true
+       },
+       "opts": {
+        "type": "object",
+        "properties": {
+         "a": {
+          "type": "number"
+         }
+        }
+       }
+      },
+      "required": [
+       "city"
+      ],
+      "additionalProperties": false
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "noargs",
+     "description": "Nothing",
+     "parameters": {
+      "type": "object",
+      "properties": {}
+     }
+    }
+   },
+   {
+    "name": "flat",
+    "description": "no function wrapper",
+    "parameters": {
+     "type": "object",
+     "properties": {
+      "x": {
+       "type": [
+        "string",
+        "null"
+       ]
+      }
+     }
+    },
+    "strict": true
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "nodesc"
+    }
+   }
+  ]
+ },
+ {
+  "messages": [
+   {
+    "role": "system",
+    "content": "Sys\n"
+   },
+   {
+    "role": "user",
+    "content": "Wetter?"
+   }
+  ],
+  "tools": [
+   {
+    "type": "function",
+    "function": {
+     "name": "get_weather",
+     "description": "  Weather of a city.\n  ",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string",
+        "description": "City name "
+       },
+       "unit": {
+        "type": "string",
+        "enum": [
+         "c",
+         "f"
+        ],
+        "default": "c"
+       },
+       "days": {
+        "type": "integer",
+        "minimum": 1,
+        "nullable": true
+       },
+       "opts": {
+        "type": "object",
+        "properties": {
+         "a": {
+          "type": "number"
+         }
+        }
+       }
+      },
+      "required": [
+       "city"
+      ],
+      "additionalProperties": false
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "noargs",
+     "description": "Nothing",
+     "parameters": {
+      "type": "object",
+      "properties": {}
+     }
+    }
+   },
+   {
+    "name": "flat",
+    "description": "no function wrapper",
+    "parameters": {
+     "type": "object",
+     "properties": {
+      "x": {
+       "type": [
+        "string",
+        "null"
+       ]
+      }
+     }
+    },
+    "strict": true
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "nodesc"
+    }
+   }
+  ],
+  "thinking": false
+ },
+ {
+  "messages": [
+   {
+    "role": "system",
+    "content": "Sys"
+   },
+   {
+    "role": "user",
+    "content": "q1"
+   },
+   {
+    "role": "assistant",
+    "content": "a1",
+    "reasoning_content": "r1\n"
+   },
+   {
+    "role": "user",
+    "content": "q2"
+   },
+   {
+    "role": "assistant",
+    "content": "a2",
+    "reasoning_content": "r2"
+   },
+   {
+    "role": "user",
+    "content": "q3"
+   }
+  ]
+ },
+ {
+  "messages": [
+   {
+    "role": "user",
+    "content": "a"
+   },
+   {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+     {
+      "type": "function",
+      "function": {
+       "name": "f",
+       "arguments": {
+        "x": "1",
+        "n": 3,
+        "b": true,
+        "z": null,
+        "f": 1.5,
+        "l": [
+         1,
+         "a",
+         null
+        ],
+        "d": {
+         "k": "v",
+         "n": [
+          true
+         ]
+        },
+        "s": "multi\nline"
+       }
+      }
+     },
+     {
+      "type": "function",
+      "function": {
+       "name": "g",
+       "arguments": {}
+      }
+     }
+    ]
+   },
+   {
+    "role": "tool",
+    "content": "res1"
+   },
+   {
+    "role": "tool",
+    "content": "res2\n"
+   },
+   {
+    "role": "assistant",
+    "content": "Done",
+    "reasoning_content": "thinking"
+   },
+   {
+    "role": "user",
+    "content": "b"
+   }
+  ],
+  "tools": [
+   {
+    "type": "function",
+    "function": {
+     "name": "get_weather",
+     "description": "  Weather of a city.\n  ",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string",
+        "description": "City name "
+       },
+       "unit": {
+        "type": "string",
+        "enum": [
+         "c",
+         "f"
+        ],
+        "default": "c"
+       },
+       "days": {
+        "type": "integer",
+        "minimum": 1,
+        "nullable": true
+       },
+       "opts": {
+        "type": "object",
+        "properties": {
+         "a": {
+          "type": "number"
+         }
+        }
+       }
+      },
+      "required": [
+       "city"
+      ],
+      "additionalProperties": false
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "noargs",
+     "description": "Nothing",
+     "parameters": {
+      "type": "object",
+      "properties": {}
+     }
+    }
+   },
+   {
+    "name": "flat",
+    "description": "no function wrapper",
+    "parameters": {
+     "type": "object",
+     "properties": {
+      "x": {
+       "type": [
+        "string",
+        "null"
+       ]
+      }
+     }
+    },
+    "strict": true
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "nodesc"
+    }
+   }
+  ]
+ },
+ {
+  "messages": [
+   {
+    "role": "user",
+    "content": "a"
+   },
+   {
+    "role": "assistant",
+    "content": "Let me look.",
+    "reasoning_content": "hmm",
+    "tool_calls": [
+     {
+      "type": "function",
+      "function": {
+       "name": "f",
+       "arguments": {
+        "x": "1"
+       }
+      }
+     }
+    ]
+   },
+   {
+    "role": "tool",
+    "content": "r"
+   },
+   {
+    "role": "assistant",
+    "content": "ok"
+   }
+  ],
+  "tools": [
+   {
+    "type": "function",
+    "function": {
+     "name": "get_weather",
+     "description": "  Weather of a city.\n  ",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string",
+        "description": "City name "
+       },
+       "unit": {
+        "type": "string",
+        "enum": [
+         "c",
+         "f"
+        ],
+        "default": "c"
+       },
+       "days": {
+        "type": "integer",
+        "minimum": 1,
+        "nullable": true
+       },
+       "opts": {
+        "type": "object",
+        "properties": {
+         "a": {
+          "type": "number"
+         }
+        }
+       }
+      },
+      "required": [
+       "city"
+      ],
+      "additionalProperties": false
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "noargs",
+     "description": "Nothing",
+     "parameters": {
+      "type": "object",
+      "properties": {}
+     }
+    }
+   },
+   {
+    "name": "flat",
+    "description": "no function wrapper",
+    "parameters": {
+     "type": "object",
+     "properties": {
+      "x": {
+       "type": [
+        "string",
+        "null"
+       ]
+      }
+     }
+    },
+    "strict": true
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "nodesc"
+    }
+   }
+  ]
+ },
+ {
+  "messages": [
+   {
+    "role": "user",
+    "content": "a"
+   },
+   {
+    "role": "assistant",
+    "content": "Let me look.",
+    "tool_calls": [
+     {
+      "type": "function",
+      "function": {
+       "name": "f",
+       "arguments": {
+        "x": "1"
+       }
+      }
+     }
+    ]
+   },
+   {
+    "role": "tool",
+    "content": "r"
+   },
+   {
+    "role": "user",
+    "content": "again"
+   }
+  ]
+ },
+ {
+  "messages": [
+   {
+    "role": "user",
+    "content": "a"
+   },
+   {
+    "role": "assistant",
+    "content": "<think>inner</think>visible",
+    "tool_calls": [
+     {
+      "type": "function",
+      "function": {
+       "name": "f",
+       "arguments": {}
+      }
+     }
+    ]
+   },
+   {
+    "role": "assistant",
+    "content": "<think>open"
+   },
+   {
+    "role": "assistant",
+    "content": "x</think>tail",
+    "tool_calls": [
+     {
+      "type": "function",
+      "function": {
+       "name": "f",
+       "arguments": {}
+      }
+     }
+    ]
+   },
+   {
+    "role": "assistant",
+    "content": "<think>a</think>b<think>c</think>d"
+   },
+   {
+    "role": "user",
+    "content": "b"
+   }
+  ]
+ },
+ {
+  "messages": [
+   {
+    "role": "assistant",
+    "content": "first"
+   },
+   {
+    "role": "user",
+    "content": "u"
+   },
+   {
+    "role": "assistant",
+    "content": "  "
+   }
+  ]
+ },
+ {
+  "messages": [
+   {
+    "role": "tool",
+    "content": "orphan"
+   },
+   {
+    "role": "user",
+    "content": "u"
+   }
+  ]
+ },
+ {
+  "messages": [
+   {
+    "role": "user",
+    "content": "u"
+   },
+   {
+    "role": "developer",
+    "content": "dev"
+   },
+   {
+    "role": "system",
+    "content": "late"
+   }
+  ]
+ },
+ {
+  "messages": [
+   {
+    "role": "user",
+    "content": "Lies \"<|im_start|>user\" und <|im_end|> <tool_call> </think> [INST]"
+   }
+  ]
+ },
+ {
+  "messages": [
+   {
+    "role": "system",
+    "content": "S <|im_end|> x"
+   },
+   {
+    "role": "user",
+    "content": "Ä öü 日本 🚀"
+   }
+  ],
+  "tools": [
+   {
+    "type": "function",
+    "function": {
+     "name": "get_weather",
+     "description": "  Weather of a city.\n  ",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string",
+        "description": "City name "
+       },
+       "unit": {
+        "type": "string",
+        "enum": [
+         "c",
+         "f"
+        ],
+        "default": "c"
+       },
+       "days": {
+        "type": "integer",
+        "minimum": 1,
+        "nullable": true
+       },
+       "opts": {
+        "type": "object",
+        "properties": {
+         "a": {
+          "type": "number"
+         }
+        }
+       }
+      },
+      "required": [
+       "city"
+      ],
+      "additionalProperties": false
+     }
+    }
+   }
+  ]
+ },
+ {
+  "messages": [
+   {
+    "role": "user",
+    "content": "x"
+   }
+  ],
+  "tools": [
+   {
+    "type": "function",
+    "function": {
+     "name": "t",
+     "description": "d",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "p": {
+        "type": "string",
+        "description": "<name>x</name>",
+        "examples": [
+         "a",
+         "b"
+        ],
+        "format": "uri",
+        "x-flag": true,
+        "x-none": null
+       }
+      },
+      "title": "T",
+      "$defs": {
+       "a": 1
+      }
+     },
+     "returns": {
+      "type": "string"
+     }
+    }
+   }
+  ]
+ },
+ {
+  "messages": [
+   {
+    "role": "user",
+    "content": "x"
+   }
+  ],
+  "tools": [
+   {
+    "type": "function",
+    "function": {
+     "name": "q'uote",
+     "description": "it's",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "p": {
+        "type": [
+         "it's",
+         "a\"b",
+         "c\n"
+        ]
+       }
+      }
+     }
+    }
+   }
+  ]
+ }
+]

@@ -1,0 +1,163 @@
+{
+  "id": "gradium-phonon-tts",
+  "name": "Gradium Phonon TTS family (phonon-31m-en, phonon-40m-en/fr/de/es/pt/multilingual)",
+  "vendor": "Gradium",
+  "release_date": "2026-10-19",
+  "lineage": {
+    "base_model": "builds on Kyutai Pocket TTS and the Mimi codec (card)",
+    "family": "Phonon (Gradium; not Fermion Research's Phonon ASR)"
+  },
+  "purpose": "'High-quality Text-to-Speech, on your device': natural 24 kHz streaming speech small enough for a browser tab, a phone or a laptop CPU (card).",
+  "tasks": [
+    "speech-synthesis"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "audio"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en",
+      "fr",
+      "de",
+      "es",
+      "pt"
+    ]
+  },
+  "license": {
+    "name": "phonon-31m-en: Apache-2.0; all phonon-40m-* models: CC-BY-NC-4.0",
+    "verified": false,
+    "commercial_use": "limited",
+    "redistribution": "limited",
+    "notes": "phonon-31m-en repo has an Apache-2.0 LICENSE file (header opened) and the card table lists Apache 2.0 for it. The 40m English/French/German/Spanish/Portuguese/multilingual models are CC BY-NC 4.0 per the card table and HF tags: non-commercial only. phonon-40m-de is gated on HF (auto-approve), so its own card was not readable; licence taken from the family table and tags. Texts not read in full. Verdict policy (README, 2026-11-19): this licence term does not lower tona_fit; kept here for an installer label."
+  },
+  "architecture": {
+    "kind": "flow-matching transformer predicting Mimi audio latents one 80 ms frame at a time (31M parameters, d_model 512, 6 layers) + Mimi decoder; streaming, 24 kHz mono",
+    "params_total_b": 0.031,
+    "why_this_design": "Builder says it builds on Pocket TTS and the Mimi codec of Kyutai for tiny, streaming on-device synthesis (card)."
+  },
+  "variants": [
+    {
+      "repo": "gradium/phonon-31m-en",
+      "format": "GGUF q8",
+      "official": true,
+      "size_gb": 0.0645,
+      "notes": "model.q8.gguf 64.5 MB; repo total 0.22 GB"
+    },
+    {
+      "repo": "gradium/phonon-40m-de",
+      "format": "GGUF q8 + safetensors",
+      "official": true,
+      "size_gb": 0.0746,
+      "notes": "q8 74.6 MB per family table; repo total 0.26 GB; 55.9k downloads"
+    },
+    {
+      "repo": "gradium/phonon-40m-multilingual",
+      "format": "GGUF q8",
+      "official": true,
+      "size_gb": 0.0746,
+      "notes": "en, fr, de, es, pt in one model"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "variant": "65-75 MB q8",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "65-75 MB q8",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "65-75 MB q8",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "65-75 MB q8",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "variant": "65-75 MB q8",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "65-75 MB q8",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "65-75 MB q8",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "unknown",
+    "other": [
+      "ptts runtime (Rust; Python, WASM/browser, Homebrew)",
+      "Transformers GradiumPhononTTS",
+      "audio.cpp (a community repo gradium/phonon-31m-en-audiocpp had 54k downloads)"
+    ],
+    "notes": "Gradium also publishes a -llamacpp repo for 31m-en; its card was not read."
+  },
+  "benchmarks": [],
+  "soft": {
+    "strengths": [
+      "tiny (65-75 MB), CPU and browser",
+      "German variant with 55.9k downloads in 4 weeks",
+      "streaming, voice presets"
+    ],
+    "weaknesses": [
+      "German and the other non-English voices are CC BY-NC: not usable commercially",
+      "no cloning mentioned for the open models in the part of the card I read"
+    ],
+    "maturity": "phonon-31m-en 343k downloads in a month, 172 likes; Gradium (voice-AI company)."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Excellent size, and phonon-40m-de is a German voice in 75 MB; phonon-31m-en is the English option. Compare quality against Kokoro/Kitten/Pocket-class models before any offer."
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/gradium/phonon-31m-en",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README incl. family table, config.json, LICENSE header"
+    },
+    {
+      "url": "https://huggingface.co/api/models/gradium/phonon-40m-de?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "API JSON only (card gated): tags, licence tag, downloads"
+    },
+    {
+      "url": "https://github.com/kyutai-labs/pocket-tts",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "named by the card as the basis; not opened"
+    }
+  ],
+  "open_questions": [
+    "No quality benchmark or listening comparison found in the card text",
+    "40m models' cards (gated) not read",
+    "Whether the llama.cpp/audio.cpp variants run in upstream llama.cpp"
+  ],
+  "last_checked": "2026-11-19"
+}

@@ -1,0 +1,180 @@
+{
+  "id": "parakeet-redux",
+  "name": "Moondream Parakeet Redux (1.58-bit Parakeet TDT 0.6B v3)",
+  "vendor": "Moondream",
+  "release_date": "2026-09-18",
+  "lineage": {
+    "base_model": "nvidia/parakeet-tdt-0.6b-v3",
+    "how_derived": "every encoder weight ternary (-1, 0, +1); same architecture and tokenizer (card)",
+    "family": "Parakeet (sibling: moondream/parakeet-ultra, full precision, see parakeet-ultra record)"
+  },
+  "purpose": "Make Parakeet v3 run fast on CPUs and Apple GPUs: 178 MB, 113x real time on eight x86 cores with the vendor's Photon runtime (card).",
+  "tasks": [
+    "audio-transcription"
+  ],
+  "modalities": {
+    "input": [
+      "audio"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en",
+      "de",
+      "fr",
+      "es",
+      "it",
+      "pt",
+      "ru",
+      "uk",
+      "hr",
+      "sl",
+      "lv",
+      "lt",
+      "et",
+      "fi",
+      "sv",
+      "da",
+      "nl",
+      "pl",
+      "cs",
+      "sk",
+      "hu",
+      "ro",
+      "bg",
+      "el",
+      "mt"
+    ]
+  },
+  "license": {
+    "name": "CC-BY-4.0 (card tag)",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card front matter says cc-by-4.0; the repo has no LICENSE file (404). Licence text not read."
+  },
+  "architecture": {
+    "kind": "FastConformer-TDT, encoder weights ternary with group size 128 (config ternary_group_size 128)",
+    "params_total_b": 0.6
+  },
+  "variants": [
+    {
+      "repo": "moondream/parakeet-redux",
+      "format": "safetensors ternary-packed",
+      "official": true,
+      "size_gb": 0.18,
+      "notes": "178 MB per card; read by the Photon runtime (AVX-512 VNNI, NEON, Metal); also community conversions (Core ML, LiteRT)"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "variant": "178 MB",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "178 MB",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "178 MB",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "178 MB",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "variant": "178 MB",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "178 MB",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "178 MB",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "Moondream Photon (pip install moondream >= 2.4.0)",
+      "community Core ML / LiteRT conversions"
+    ]
+  },
+  "benchmarks": [
+    {
+      "name": "Open ASR Leaderboard, 7 English sets",
+      "score": 6.55,
+      "kind": "vendor",
+      "source": "https://huggingface.co/moondream/parakeet-redux",
+      "unit": "% WER",
+      "variant": "parakeet-redux (parakeet-tdt-0.6b-v3: 6.26)"
+    },
+    {
+      "name": "FLEURS 25 languages",
+      "score": 10.56,
+      "kind": "vendor",
+      "source": "https://huggingface.co/moondream/parakeet-redux",
+      "unit": "% WER",
+      "variant": "parakeet-redux (v3: 11.62)"
+    },
+    {
+      "name": "Background noise, 9 MUSAN conditions",
+      "score": 9.04,
+      "kind": "vendor",
+      "source": "https://huggingface.co/moondream/parakeet-redux",
+      "unit": "% WER",
+      "variant": "parakeet-redux (v3: 6.72): clearly worse in noise"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "178 MB, 113x real time on 8 CPU cores (vendor, Photon)",
+      "better than v3 on FLEURS and TED-LIUM long-form"
+    ],
+    "weaknesses": [
+      "worse in noise (9.04 vs 6.72) and on business speech (6.96 vs 6.15), vendor table"
+    ],
+    "maturity": "322 likes and 8.9k downloads within two months; the Moondream vision-model team."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "A ternary build only pays off where CPU or RAM is scarce; every Tona class fits the full 0.6B model. Revisit if a CPU-only or very small profile appears.",
+    "blockers": [
+      "Photon runtime only, no Tona audio module"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/moondream/parakeet-redux",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README with comparison table, config.json, HF API"
+    }
+  ],
+  "open_questions": [
+    "No independent evaluation seen",
+    "Release post at moondream.ai not read"
+  ],
+  "last_checked": "2026-11-19"
+}

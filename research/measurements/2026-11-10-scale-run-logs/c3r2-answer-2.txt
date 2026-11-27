@@ -1,0 +1,9 @@
+Based on the provided code, here is a summary of what the C++ and HIP code does:
+
+*   **GPU Micro-Benchmarks (`gpubench.hip`, `gpubench_common.h`, `gpubench_persist.h`)**:
+    *   Measures GPU memory bandwidth (VRAM read/write/copy) using random data to prevent compression artifacts.
+    *   Measures PCIe transfer rates (Host-to-Device, Device-to-Host, bidirectional) for pinned and pageable memory.
+    *   Measures kernel launch overhead and synchronization costs, including cooperative grid synchronization and persistent kernel barriers.
+    *   Measures peak compute throughput for various WMMA (Wave Matrix Multiply Accumulate) instruction types (f16, bf16, fp8, int8, int4) and standard FMA operations.
+
+*   **GEMM Implementations (`gemm.hip`, `gemm2.hip`, `gemm_f16.h

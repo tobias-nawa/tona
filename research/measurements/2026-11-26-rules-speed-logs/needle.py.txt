@@ -1,0 +1,46 @@
+#!/usr/bin/env python3
+"""n3: hard needle at 128K, texts 0,1,2, arm main then arm pr, one server each. Run inside a gpu_queue job."""
+
+import os
+import subprocess
+import sys
+import time
+from pathlib import Path
+
+W = Path("<worktree>")
+sys.path.insert(0, str(W / "scripts"))
+import ab_server as S  # noqa: E402
+
+PORT = 8172
+M = "<repo>/work/models"
+MODEL = f"{M}/coder-iq1_m/Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf"
+MTP = f"{M}/draft/mtp-Qwen3.8-Flash-Next-Q8_0.gguf"
+OUT = W / "work/needle/n3"
+OUT.mkdir(parents=True, exist_ok=True)
+POOL = W / "work/needle-pool-n3.txt"
+if not POOL.exists():
+    subprocess.run([sys.executable, str(W / "bench/needle/corpus.py"), str(POOL), "engine", "docs", "bench", "--max-mb", "8"],
+                   cwd=W, check=True)
+
+for label, build in (("main", "n3-main"), ("pr", "n3-pr")):
+    env = {k: v for k, v in os.environ.items() if not k.startswith("TONA_")}
+    env.update(ROCR_VISIBLE_DEVICES="0", TONA_DIAG="1", TONA_SEQS="1", TONA_PROMPT_RAM_GB="0",
+               TONA_EXPERT_PROFILE=str(W / "toolchain/profiles/coder-iq1_m.bin"))
+    cmd = ["systemd-run", "--user", "--scope", "-q", "-p", "MemoryMax=54G", "-p", "MemorySwapMax=0",
+           f"{W}/work/build/{build}/tona-server", MODEL, "--mtp", MTP, "--port", str(PORT), "--ctx", "140000"]
+    S.wait_gpu_memory_free()
+    log = open(f"/var/tmp/claude/n3/needle-{label}-server.log", "ab")
+    proc = subprocess.Popen(cmd, env=env, stdout=log, stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL, start_new_session=True)
+    try:
+        S.wait_ready(proc, PORT, 600)
+        t = time.time()
+        subprocess.run([sys.executable, str(W / "bench/needle/run.py"), "--url", f"http://127.0.0.1:{PORT}", "--pool", str(POOL),
+                        "--length", "131072", "--texts", "0,1,2", "--label", label, "--out", str(OUT), "--hard",
+                        "--require-cache"], check=False)
+        print(label, "needle seconds", round(time.time() - t), flush=True)
+    finally:
+        S.stop_server(proc)
+        time.sleep(15)
+subprocess.run([sys.executable, str(W / "bench/needle/report.py"), "compare", "--a", "main", "--b", "pr",
+                *map(str, sorted(OUT.glob("*.jsonl")))], check=False)
+subprocess.run([sys.executable, str(W / "bench/needle/report.py"), "summary", *map(str, sorted(OUT.glob("*.jsonl")))], check=False)

@@ -1,0 +1,72 @@
+== W1 A
+Backend metal-apple-m1-max, prefill 512, decode 64 in passes of 1, 3 rounds
+  warmup: prefill 45.94 tok/s, decode 21.03 tok/s (not counted)
+  round 1: prefill 203.46 tok/s, decode 22.24 tok/s, pass 44.95 ms, MTP fill 0.00 ms, step 0.00 ms
+  round 2: prefill 203.56 tok/s, decode 22.15 tok/s, pass 45.15 ms, MTP fill 0.00 ms, step 0.00 ms
+  round 3: prefill 203.80 tok/s, decode 22.14 tok/s, pass 45.18 ms, MTP fill 0.00 ms, step 0.00 ms
+prefill: median 203.56 tok/s, range 203.46 ... 203.80 (3 rounds)
+decode: median 22.15 tok/s, range 22.14 ... 22.24 (3 rounds)
+pass: median 45.15 ms, range 44.95 ... 45.18 (3 rounds)
+== W1 B
+Backend metal-apple-m1-max, prefill 512, decode 64 in passes of 1, 3 rounds
+  warmup: prefill 44.53 tok/s, decode 20.74 tok/s (not counted)
+  round 1: prefill 203.19 tok/s, decode 22.00 tok/s, pass 45.45 ms, MTP fill 0.00 ms, step 0.00 ms
+  round 2: prefill 203.14 tok/s, decode 21.89 tok/s, pass 45.69 ms, MTP fill 0.00 ms, step 0.00 ms
+  round 3: prefill 203.12 tok/s, decode 22.05 tok/s, pass 45.36 ms, MTP fill 0.00 ms, step 0.00 ms
+prefill: median 203.14 tok/s, range 203.12 ... 203.19 (3 rounds)
+decode: median 22.00 tok/s, range 21.89 ... 22.05 (3 rounds)
+pass: median 45.45 ms, range 45.36 ... 45.69 (3 rounds)
+== W1 B
+Backend metal-apple-m1-max, prefill 512, decode 64 in passes of 1, 3 rounds
+  warmup: prefill 181.92 tok/s, decode 22.00 tok/s (not counted)
+  round 1: prefill 203.10 tok/s, decode 22.07 tok/s, pass 45.32 ms, MTP fill 0.00 ms, step 0.00 ms
+  round 2: prefill 203.22 tok/s, decode 21.81 tok/s, pass 45.85 ms, MTP fill 0.00 ms, step 0.00 ms
+  round 3: prefill 203.07 tok/s, decode 21.88 tok/s, pass 45.71 ms, MTP fill 0.00 ms, step 0.00 ms
+prefill: median 203.10 tok/s, range 203.07 ... 203.22 (3 rounds)
+decode: median 21.88 tok/s, range 21.81 ... 22.07 (3 rounds)
+pass: median 45.71 ms, range 45.32 ... 45.85 (3 rounds)
+== W1 A
+Backend metal-apple-m1-max, prefill 512, decode 64 in passes of 1, 3 rounds
+  warmup: prefill 46.08 tok/s, decode 20.98 tok/s (not counted)
+  round 1: prefill 203.43 tok/s, decode 22.24 tok/s, pass 44.97 ms, MTP fill 0.00 ms, step 0.00 ms
+  round 2: prefill 203.44 tok/s, decode 22.26 tok/s, pass 44.93 ms, MTP fill 0.00 ms, step 0.00 ms
+  round 3: prefill 203.46 tok/s, decode 22.15 tok/s, pass 45.15 ms, MTP fill 0.00 ms, step 0.00 ms
+prefill: median 203.44 tok/s, range 203.43 ... 203.46 (3 rounds)
+decode: median 22.24 tok/s, range 22.15 ... 22.26 (3 rounds)
+pass: median 44.97 ms, range 44.93 ... 45.15 (3 rounds)
+== W4 A
+Backend metal-apple-m1-max, prefill 512, decode 64 in passes of 4, 3 rounds
+  warmup: prefill 182.79 tok/s, decode 41.97 tok/s (not counted)
+  round 1: prefill 203.65 tok/s, decode 43.15 tok/s, pass 92.69 ms, MTP fill 0.00 ms, step 0.00 ms
+  round 2: prefill 203.68 tok/s, decode 42.24 tok/s, pass 94.70 ms, MTP fill 0.00 ms, step 0.00 ms
+  round 3: prefill 203.42 tok/s, decode 43.13 tok/s, pass 92.74 ms, MTP fill 0.00 ms, step 0.00 ms
+prefill: median 203.65 tok/s, range 203.42 ... 203.68 (3 rounds)
+decode: median 43.13 tok/s, range 42.24 ... 43.15 (3 rounds)
+pass: median 92.74 ms, range 92.69 ... 94.70 (3 rounds)
+== W4 B
+Backend metal-apple-m1-max, prefill 512, decode 64 in passes of 4, 3 rounds
+  warmup: prefill 45.62 tok/s, decode 40.96 tok/s (not counted)
+  round 1: prefill 203.07 tok/s, decode 42.57 tok/s, pass 93.96 ms, MTP fill 0.00 ms, step 0.00 ms
+  round 2: prefill 203.08 tok/s, decode 42.62 tok/s, pass 93.86 ms, MTP fill 0.00 ms, step 0.00 ms
+  round 3: prefill 203.03 tok/s, decode 42.55 tok/s, pass 94.01 ms, MTP fill 0.00 ms, step 0.00 ms
+prefill: median 203.07 tok/s, range 203.03 ... 203.08 (3 rounds)
+decode: median 42.57 tok/s, range 42.55 ... 42.62 (3 rounds)
+pass: median 93.96 ms, range 93.86 ... 94.01 (3 rounds)
+== W4 B
+Backend metal-apple-m1-max, prefill 512, decode 64 in passes of 4, 3 rounds
+  warmup: prefill 181.81 tok/s, decode 42.34 tok/s (not counted)
+  round 1: prefill 203.03 tok/s, decode 42.68 tok/s, pass 93.73 ms, MTP fill 0.00 ms, step 0.00 ms
+  round 2: prefill 203.04 tok/s, decode 42.69 tok/s, pass 93.69 ms, MTP fill 0.00 ms, step 0.00 ms
+  round 3: prefill 202.82 tok/s, decode 42.77 tok/s, pass 93.52 ms, MTP fill 0.00 ms, step 0.00 ms
+prefill: median 203.03 tok/s, range 202.82 ... 203.04 (3 rounds)
+decode: median 42.69 tok/s, range 42.68 ... 42.77 (3 rounds)
+pass: median 93.69 ms, range 93.52 ... 93.73 (3 rounds)
+== W4 A
+Backend metal-apple-m1-max, prefill 512, decode 64 in passes of 4, 3 rounds
+  warmup: prefill 46.24 tok/s, decode 41.44 tok/s (not counted)
+  round 1: prefill 203.70 tok/s, decode 43.06 tok/s, pass 92.89 ms, MTP fill 0.00 ms, step 0.00 ms
+  round 2: prefill 203.43 tok/s, decode 43.01 tok/s, pass 93.01 ms, MTP fill 0.00 ms, step 0.00 ms
+  round 3: prefill 203.49 tok/s, decode 43.07 tok/s, pass 92.88 ms, MTP fill 0.00 ms, step 0.00 ms
+prefill: median 203.49 tok/s, range 203.43 ... 203.70 (3 rounds)
+decode: median 43.06 tok/s, range 43.01 ... 43.07 (3 rounds)
+pass: median 92.89 ms, range 92.88 ... 93.01 (3 rounds)

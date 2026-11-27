@@ -1,0 +1,90 @@
+{
+  "id": "sage-s2.1-flash",
+  "name": "Sage S2.1 Flash",
+  "vendor": "Shanghai Artificial Intelligence Laboratory (InternLM)",
+  "release_date": "2026-11-15",
+  "lineage": {
+    "family": "Sage S2.1",
+    "base_model": "GLM-5.3-Flash architecture (zai-org/GLM-5.3-Flash)",
+    "how_derived": "the deployment guide states it uses the GLM-5.3-Flash architecture and tells users to follow the official GLM-5.3-Flash serving recipes; whether it was fine-tuned from the GLM-5.3-Flash weights is not stated on the card or in the guide. Scientific encoders and trainable projectors (Sage SciPerception) map more than ten scientific input types into the language model's embedding space."
+  },
+  "purpose": "The card says: a scientific multimodal model for research tasks that need several rounds of analysis and verification, combining scientific data understanding (molecular graphs, crystal structures, protein sequences and 3D structures) with retrieval, programming and tool use, using specialised software and checking results against intermediate outputs.",
+  "tasks": ["research", "general", "coding", "documents", "vision"],
+  "modalities": {"input": ["text", "image"], "output": ["text"]},
+  "license": {
+    "name": "MIT (card statement; no LICENSE file in the repository)",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "The card's License section says the code and model weights in the repository are released under the MIT License; there is no YAML licence tag and no LICENSE file (404, 2026-11-19), so no licence text was read."
+  },
+  "architecture": {
+    "kind": "GLM-5.3-Flash style sparse MoE with mHC, compressed top-k indexed MLA attention, vision tower and scientific projectors (config model_type glm5_next)",
+    "params_total_b": 320,
+    "params_active_b": 18,
+    "layers": 45,
+    "attention": "MLA (q_lora 1536, kv_lora 512, 64 heads) with an indexer (32 index heads, top-k 2048, key pooling 4), hyper-connections multiplicity 4",
+    "recurrent": "none",
+    "experts": 288,
+    "experts_active": 8,
+    "context_native": 1048576,
+    "context_max": 1048576,
+    "drafter": "1 MTP layer (num_nextn_predict_layers 1)",
+    "why_this_design": "The card gives no architecture reasons; it explains the scientific input design (unified representation through Sage SciPerception, encoders plus projectors into a shared space)."
+  },
+  "variants": [
+    {"repo": "internlm/Sage-S2.1-Flash", "format": "safetensors BF16 (about 645 GB per the deployment guide)", "size_gb": 642.85, "official": true},
+    {"repo": "internlm/Sage-S2.1-Flash-FP8", "format": "safetensors FP8", "size_gb": 328.34, "official": true, "notes": "nine scientific projectors (about 0.02 GB each) ship in projectors/sage-s2.1-flash"},
+    {"repo": "Baekpica/Sage-S2.1-Flash-VQ-GGUF", "format": "vector-quantised GVQ1, 88 GiB (about 94.7 GB), 56 parts", "size_gb": 94.68, "official": false, "notes": "runs in the custom engine ds4-dfm-rs on DGX Spark, not in llama.cpp; routed experts at 1.6 to 2.6 index bits per weight; mean next-token KL 0.72 and top-1 agreement 78.5 % against the source (author's own paired test); MIT tag in the card"},
+    {"repo": "androidli/Sage-S2.1-Flash-EXL3-3.0bpw", "format": "EXL3 3.0 bpw", "official": false, "notes": "also Mia-AiLab 4 bpw, SourceHat 4.25 bpw, Bizuayeu Mixed-NVFP4 and Hygaard/rdbell oQ3e and oQ4e MTP repos; sizes not measured"}
+  ],
+  "hardware_fit": {
+    "pc-12gb": {"fits": "no", "basis": "estimate", "notes": "smallest quantisation 94.7 GB against about 60 GB"},
+    "pc-16gb": {"fits": "no", "basis": "estimate", "notes": "94.7 GB against about 64 GB"},
+    "pc-24gb": {"fits": "marginal", "variant": "Baekpica GVQ1 94.7 GB (custom engine only)", "basis": "estimate", "notes": "94.7 GB against 21.6 GB VRAM + about 82 GB RAM = 104 GB leaves about 9 GB; no llama.cpp-compatible GGUF found; 1.6 to 2.6 bit weights with KL 0.72"},
+    "pc-32gb": {"fits": "marginal", "variant": "Baekpica GVQ1 94.7 GB (custom engine only)", "basis": "estimate", "notes": "94.7 GB against about 158 GB; the same-size sibling glm-5.3-flash has 1-bit llama.cpp-class GGUFs (see its record), none exist for Sage; quality of 2-bit builds measured only by KL"},
+    "mac-16-24gb": {"fits": "no", "basis": "estimate"},
+    "mac-32gb": {"fits": "no", "basis": "estimate"},
+    "mac-64gb+": {"fits": "no", "basis": "estimate", "notes": "94.7 GB against about 52 GB GPU share on a 64 GB Mac"}
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "unknown",
+    "other": ["vLLM 0.33 (needs the repository's patch folder for parallel tool-call images)", "SGLang", "LMDeploy"],
+    "notes": "Follows the GLM-5.3-Flash recipes plus --trust-remote-code and a vLLM patch; do not use FP8 KV cache on Hopper (guide). llama.cpp support for the glm5_next architecture was not checked."
+  },
+  "benchmarks": [
+    {"name": "Terminal-Bench 2.1", "score": 87.9, "kind": "vendor", "variant": "BF16 (GLM-5.3-Flash 84.3, DeepSeek-V4.1-Flash-1017 87.6, Opus 5 90.2)", "source": "https://huggingface.co/internlm/Sage-S2.1-Flash"},
+    {"name": "DeepSWE", "score": 67.9, "kind": "vendor", "variant": "BF16 (GLM-5.3-Flash 63.7, DeepSeek-V4.1-Flash-1017 73.9)", "source": "https://huggingface.co/internlm/Sage-S2.1-Flash"},
+    {"name": "SWE-bench Pro", "score": 60.6, "kind": "vendor", "variant": "BF16 (GLM-5.3-Flash 60.3, DeepSeek-V4.1-Flash-1017 61.8)", "source": "https://huggingface.co/internlm/Sage-S2.1-Flash"},
+    {"name": "NL2Repo-Bench", "score": 57.2, "kind": "vendor", "variant": "BF16 (GLM-5.3-Flash 53.0, DeepSeek-V4.1-Flash-1017 62.7)", "source": "https://huggingface.co/internlm/Sage-S2.1-Flash"},
+    {"name": "MLE-bench Lite", "score": 90.3, "kind": "vendor", "variant": "BF16 (DeepSeek-V4.1-Flash-1017 89.2)", "source": "https://huggingface.co/internlm/Sage-S2.1-Flash"},
+    {"name": "OfficeQA Pro", "score": 72.2, "kind": "vendor", "variant": "BF16, first of six", "source": "https://huggingface.co/internlm/Sage-S2.1-Flash"},
+    {"name": "SpreadsheetBench 2", "score": 37.1, "kind": "vendor", "variant": "BF16, first of six", "source": "https://huggingface.co/internlm/Sage-S2.1-Flash"}
+  ],
+  "soft": {
+    "strengths": ["Vendor: first of six on MLE-bench Lite, OfficeQA Pro, Harvey LAB and SpreadsheetBench 2; second on seven agent benchmarks", "Scientific modalities (crystals, molecules, proteins, spectra, EEG, ECG) through projectors, rare among open models"],
+    "weaknesses": ["Below DeepSeek-V4.1-Flash-1017 on DeepSWE, NL2Repo and SWE-bench Pro in the vendor's own table", "Scientific inputs need separate encoders and a prompt-embeds server mode, not a plain chat engine"],
+    "best_for": ["scientific research agents", "office and spreadsheet agents"],
+    "avoid_for": ["plain coding on small machines"],
+    "maturity": "Shanghai AI Laboratory (InternLM, Intern-S line); repo created 2026-11-15, about 13 derivatives so far."
+  },
+  "tona_fit": {
+    "verdict": "reject",
+    "reason": "A 320B/18B science-oriented agent model whose coding numbers trail DeepSeek-V4.1-Flash-1017 in its own table; the only quant that fits 128 GB RAM is a custom-format file for another engine, and the scientific input path is outside what Tona serves. The same-size general sibling for our users is glm-5.3-flash.",
+    "blockers": ["no llama.cpp-compatible GGUF", "scientific projector inputs", "no licence text"]
+  },
+  "sources": [
+    {"url": "https://huggingface.co/internlm/Sage-S2.1-Flash", "kind": "primary", "checked": "2026-11-19", "note": "README with benchmark table and licence statement, config.json, file sizes via the HF API; LICENSE 404"},
+    {"url": "https://huggingface.co/internlm/Sage-S2.1-Flash/blob/main/deployment_guide.md", "kind": "primary", "checked": "2026-11-19", "note": "states 320B-A18B, 645 GB BF16 and GLM-5.3-Flash architecture"},
+    {"url": "https://huggingface.co/internlm/Sage-S2.1-Flash-FP8", "kind": "primary", "checked": "2026-11-19", "note": "file sizes via the HF tree API"},
+    {"url": "https://huggingface.co/Baekpica/Sage-S2.1-Flash-VQ-GGUF", "kind": "primary", "checked": "2026-11-19", "note": "card with KL table and file sizes (summed from the tree API)"}
+  ],
+  "open_questions": [
+    "Licence text (statement only)",
+    "Whether Sage S2.1 Flash was trained from the GLM-5.3-Flash weights or only shares its architecture",
+    "Whether llama.cpp supports glm5_next with the indexer and mHC layers",
+    "Independent benchmarks (the vendor table compares against self-chosen baselines)"
+  ],
+  "last_checked": "2026-11-19"
+}

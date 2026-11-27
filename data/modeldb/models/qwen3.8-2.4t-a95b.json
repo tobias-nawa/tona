@@ -1,0 +1,141 @@
+{
+  "id": "qwen3.8-2.4t-a95b",
+  "name": "Qwen3.8-2.4T-A95B",
+  "vendor": "Alibaba Qwen",
+  "release_date": "2026-08-08",
+  "lineage": {
+    "family": "Qwen3.8",
+    "how_derived": "the open release of the Qwen3.8-Max base (the hosted Qwen3.8-Max adds vision input, non-thinking mode, 1M default context and built-in tools)"
+  },
+  "purpose": "First Qwen-Max-class open model: gains in coding, professional work, research and long-horizon agentic tasks, with reasoning_effort control and preserve_thinking (card).",
+  "tasks": [
+    "coding",
+    "general",
+    "research"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "many"
+    ]
+  },
+  "license": {
+    "name": "Qwen3.8-Max License (MIT-style with commercial conditions)",
+    "verified": true,
+    "commercial_use": "limited",
+    "redistribution": "yes",
+    "notes": "LICENSE read: permission to use, copy, modify, sell, host, fine-tune and derive; model name must be shown in products with over 100M monthly active users or US$20M monthly revenue; a separate licence from Qwen is needed for commercial 'Model as a Service' or 'AI Work Assistant' businesses (AI-assisted coding or office products) above US$50M revenue in 12 months, except internal use."
+  },
+  "architecture": {
+    "kind": "hybrid Gated-DeltaNet plus gated-attention MoE (Qwen3.5 layout), 23 x (3 x (GDN, MoE) + 1 x (gated attention, MoE))",
+    "gguf_arch": "qwen35moe",
+    "params_total_b": 2400,
+    "params_active_b": 95,
+    "layers": 92,
+    "attention": "gated attention every 4th layer, hidden 8192",
+    "recurrent": "Gated DeltaNet",
+    "drafter": "not stated"
+  },
+  "variants": [
+    {
+      "repo": "Qwen/Qwen3.8-2.4T-A95B",
+      "format": "safetensors BF16",
+      "size_gb": 4892.39,
+      "official": true,
+      "notes": "an FP8 repo (Qwen) exists; NVFP4 (nvidia), MXFP4 (amd) and unsloth GGUF repos exist; unsloth UD-IQ1_M is about 600 GB in 13 parts"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "no",
+      "variant": "unsloth GGUF UD-IQ1_M (about 600 GB)",
+      "basis": "estimate",
+      "notes": "600 GB file exceeds the 9.6 GB VRAM plus 50 GB RAM budget"
+    },
+    "pc-16gb": {
+      "fits": "no",
+      "variant": "unsloth GGUF UD-IQ1_M (about 600 GB)",
+      "basis": "estimate",
+      "notes": "600 GB file exceeds the 13.6 GB VRAM plus 50 GB RAM budget"
+    },
+    "pc-24gb": {
+      "fits": "no",
+      "variant": "unsloth GGUF UD-IQ1_M (about 600 GB)",
+      "basis": "estimate",
+      "notes": "600 GB file exceeds the 21.6 GB VRAM plus 82 GB RAM budget"
+    },
+    "pc-32gb": {
+      "fits": "no",
+      "variant": "unsloth GGUF UD-IQ1_M (about 600 GB)",
+      "basis": "estimate",
+      "notes": "600 GB file exceeds the 29.6 GB VRAM plus 82 GB RAM budget"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "unsloth GGUF UD-IQ1_M (about 600 GB)",
+      "basis": "estimate",
+      "notes": "600 GB file against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "no",
+      "variant": "unsloth GGUF UD-IQ1_M (about 600 GB)",
+      "basis": "estimate",
+      "notes": "600 GB file against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "no",
+      "variant": "unsloth GGUF UD-IQ1_M (about 600 GB)",
+      "basis": "estimate",
+      "notes": "600 GB file against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "vLLM",
+      "SGLang",
+      "TokenSpeed"
+    ],
+    "notes": "unsloth publishes GGUFs, so the Qwen3.5 MoE layout is supported."
+  },
+  "benchmarks": [],
+  "soft": {
+    "weaknesses": [
+      "frontier size: no class we serve can run even the 1-bit quant"
+    ],
+    "maturity": "30k downloads, 1.4k likes; confirmed to be a real official Qwen release (the meshllm layer repos are community splits of it)"
+  },
+  "tona_fit": {
+    "verdict": "reject",
+    "reason": "2.4T parameters (4.9 TB BF16, about 600 GB at IQ1_M). Real and licensed for broad use, but a reference only; its smaller siblings (Qwen3.8-27B and Flash-Next) are the ones that matter for us.",
+    "blockers": [
+      "size"
+    ]
+  },
+  "open_questions": [
+    "benchmark table (not extracted)"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/Qwen/Qwen3.8-2.4T-A95B",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README, config.json, LICENSE read"
+    },
+    {
+      "url": "https://huggingface.co/api/models/unsloth/Qwen3.8-2.4T-A95B-GGUF?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "GGUF part sizes (only the first parts of IQ1_M were listed in the output read; total estimated at 13 parts of about 50 GB)"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

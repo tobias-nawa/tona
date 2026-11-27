@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Rerun of the needle blocks h1/h2 (needle.py had a duplicate TONA_DIAG kwarg, all 8 runs failed at start), then c3 long recheck.
+S=/var/tmp/claude/scale1105; R=$S/run.sh; W=<worktree>
+cd $W; source toolchain/env.sh; export TONA_DIAG=1
+step() { echo "STEP $1 $(date +%T)"; }
+nd() { sleep 60; step $1; local l=$1 t=$2 len=$3 ctx=$4; shift 4; NEEDLE_TEXTS=$t $R python3 -I $S/needle.py $l $len $ctx TONA_DIAG=1 "$@" > $S/$l.out 2>&1; }
+for spec in "0 on off" "1 off on" "2 on off"; do
+  set -- $spec; t=$1; shift
+  for arm in "$@"; do
+    if [ $arm = off ]; then nd n128-t$t-off $t 131072 140000 TONA_PREFILL_FP8=0; else nd n128-t$t-on $t 131072 140000; fi
+  done
+done
+nd n1m-t0-on 0 1000000 1048576 TONA_SEQS=1 TONA_PROMPT_RAM_GB=0
+nd n1m-t0-off 0 1000000 1048576 TONA_SEQS=1 TONA_PROMPT_RAM_GB=0 TONA_PREFILL_FP8=0
+sleep 60; step c3r; $R python3 -I $S/curve.py c3r merged long --env TONA_DIAG=1 > $S/c3r.out 2>&1
+step done

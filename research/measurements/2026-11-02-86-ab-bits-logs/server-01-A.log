@@ -1,0 +1,33 @@
+ie-server on http://127.0.0.1:8097 (Anthropic: /v1/messages, OpenAI: /v1/chat/completions), without key, loading ...
+Initialization: 512 MTP experts as Q2_0, converted on the GPU (708 MB) in 0.9 s
+loaded in 19.1 s: context 140000 (KV int8 1.94 GB in RAM), VRAM 14.45 GB, 84 expert slots per layer, 27.4 GB pinned
+03:36:35 POST /v1/messages/count_tokens → 200
+03:36:35 POST /v1/messages/count_tokens → 200
+03:36:35 POST /v1/messages/count_tokens → 200
+03:36:35 POST /v1/messages/count_tokens → 200
+03:36:35 POST /v1/messages/count_tokens → 200
+03:36:35 POST /v1/messages/count_tokens → 200
+03:36:35 POST /v1/messages/count_tokens → 200
+03:36:35 POST /v1/messages/count_tokens → 200
+03:36:35 POST /v1/messages/count_tokens → 200
+03:36:35 POST /v1/messages/count_tokens → 200
+03:36:35 POST /v1/messages/count_tokens → 200
+03:36:35 POST /v1/messages/count_tokens → 200
+03:36:54 Request: 29642 prompt tokens (0 reused, 29642 computed in 16.6 s, new conversation (stashing 0 ms), slot 0), 200 tokens in 2.8 s = 70.5 tok/s, 2.97 tokens per pass, 0 of 67 passes from the history (0.00 per pass)
+03:36:54 POST /v1/chat/completions → 200
+03:36:55 POST /v1/messages/count_tokens → 200
+03:36:55 POST /v1/messages/count_tokens → 200
+03:36:55 POST /v1/messages/count_tokens → 200
+03:36:55 POST /v1/messages/count_tokens → 200
+03:36:55 POST /v1/messages/count_tokens → 200
+03:36:55 POST /v1/messages/count_tokens → 200
+03:36:55 POST /v1/messages/count_tokens → 200
+03:36:55 POST /v1/messages/count_tokens → 200
+03:36:55 POST /v1/messages/count_tokens → 200
+03:36:55 POST /v1/messages/count_tokens → 200
+03:36:55 POST /v1/messages/count_tokens → 200
+03:36:55 POST /v1/messages/count_tokens → 200
+Conversation of 29615 tokens stashed: 642 MB (state 149, KV 444, pool 49, drafter 0) in 0.11 s
+Conversation of 129770 tokens stashed: 2309 MB (state 149, KV 1943, pool 216, drafter 0) in 0.36 s
+03:38:14 Request: 129797 prompt tokens (0 reused, 129797 computed in 76.0 s, new conversation (stashing 465 ms), checkpoint at 129770 (before the fixed end), slot 1), 200 tokens in 3.1 s = 63.8 tok/s, 2.80 tokens per pass, 0 of 71 passes from the history (0.00 per pass)
+03:38:14 POST /v1/chat/completions → 200

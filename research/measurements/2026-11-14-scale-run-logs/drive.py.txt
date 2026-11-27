@@ -1,0 +1,362 @@
+#!/usr/bin/env python3
+"""#83 driver (ctx via DRIVE_CTX, default 262144): 30K prompt, then an independent 130K prompt, 200 tokens each, greedy, with GPU/CPU sampling.
+Usage: drive.py MODE(fresh|same) N TAG BUILD [ENV=VAL ...]
+Output: /var/tmp/claude/scale1114/<TAG>.jsonl (one line per decode) and <TAG>.server.log."""
+
+import glob
+import hashlib
+import json
+import os
+import re
+import subprocess
+import sys
+import threading
+import time
+import urllib.request
+
+MODE, N, TAG, BUILD = sys.argv[1], int(sys.argv[2]), sys.argv[3], sys.argv[4]
+EXTRA = dict(a.split("=", 1) for a in sys.argv[5:])
+ROOT = "<repo>"
+URL = "http://127.0.0.1:8097"
+OUT = f"/var/tmp/claude/scale1114/{TAG}"
+CODE = open("/var/tmp/claude/w75/code.txt").read()
+HEAD = "Summarize what the following C++ and HIP code does, as a bullet list.\n\n```cpp\n"
+HW = glob.glob("/sys/class/drm/card1/device/hwmon/hwmon*")[0]
+DEV = "/sys/class/drm/card1/device"
+
+
+def rd(path):
+    try:
+        return open(path).read().strip()
+    except OSError:
+        return None
+
+
+def proc_ticks():
+    out = {}
+    for d in os.listdir("/proc"):
+        if d.isdigit():
+            try:
+                f = open(f"/proc/{d}/stat").read()
+                name = f[f.index("(") + 1:f.rindex(")")]
+                v = f[f.rindex(")") + 2:].split()
+                out[(int(d), name)] = int(v[11]) + int(v[12])
+            except (OSError, ValueError):
+                pass
+    return out
+
+
+def psi():
+    r = {}
+    for k in ("cpu", "memory", "io"):
+        for ln in open(f"/proc/pressure/{k}"):
+            p = ln.split()
+            r[f"{k}_{p[0]}"] = int(p[4].split("=")[1])
+    return r
+
+
+VM = ("allocstall_normal", "pgscan_direct", "pgscan_kswapd", "pgsteal_kswapd", "compact_stall", "compact_isolated", "compact_migrate_scanned", "compact_daemon_wake", "compact_daemon_migrate_scanned", "pgmigrate_success", "pgmigrate_fail", "pgmajfault", "numa_pages_migrated", "thp_fault_alloc")
+
+
+def vmstat():
+    d = dict(ln.split() for ln in open("/proc/vmstat"))
+    return {k: int(d.get(k, 0)) for k in VM}
+
+
+def evicted():
+    tot = 0
+    for f in glob.glob("/sys/class/kfd/kfd/proc/*/stats_*/evicted_ms"):
+        try:
+            tot += int(open(f).read())
+        except (OSError, ValueError):
+            pass
+    return tot
+
+
+def cpu_times():
+    f = open("/proc/stat").readline().split()[1:]
+    v = list(map(int, f))
+    return sum(v) - v[3] - v[4], sum(v)
+
+
+class Sampler(threading.Thread):
+    def __init__(self):
+        super().__init__(daemon=True)
+        self.stop = False
+        self.rows = []
+        self.snap = None
+
+    def run(self):
+        b0, t0 = cpu_times()
+        while not self.stop:
+            b1, t1 = cpu_times()
+            cpu = 100.0 * (b1 - b0) / max(t1 - t0, 1)
+            b0, t0 = b1, t1
+            if self.snap is None:
+                try:
+                    with urllib.request.urlopen(URL + "/status", timeout=1) as r:
+                        if json.load(r)["engine"]["state"] == "decode":
+                            self.snap = (proc_ticks(), psi(), vmstat(), time.time(), evicted())
+                except Exception:
+                    pass
+            f = rd(HW + "/freq1_input")
+            self.rows.append({
+                "t": time.time(),
+                "sclk": int(f) // 1000000 if f else None,
+                "busy": int(rd(DEV + "/gpu_busy_percent") or -1),
+                "pw": int(rd(HW + "/power1_average") or 0) // 1000000,
+                "temp": int(rd(HW + "/temp1_input") or 0) // 1000,
+                "cpu": round(cpu, 1),
+                "load": float(rd("/proc/loadavg").split()[0]),
+            })
+            time.sleep(0.1)
+
+
+def post(path, body, timeout=3600):
+    req = urllib.request.Request(URL + path, json.dumps(body).encode(), {"content-type": "application/json"})
+    with urllib.request.urlopen(req, timeout=timeout) as r:
+        return json.load(r)
+
+
+def count(text):
+    return post("/v1/messages/count_tokens", {"model": "x", "messages": [{"role": "user", "content": text}]})["input_tokens"]
+
+
+def prompt_for(target, salt):
+    pre = f"Session {salt}.\n" if salt else ""
+    lo, hi = 1000, len(CODE)
+    while hi - lo > 2000:
+        mid = (lo + hi) // 2
+        if count(pre + HEAD + CODE[:mid] + "\n```") < target:
+            lo = mid
+        else:
+            hi = mid
+    return pre + HEAD + CODE[:lo] + "\n```"
+
+
+def wait_vram_free():
+    """The driver frees the VRAM of a killed server a moment after the process is gone; below 3 GB = desktop only"""
+    for _ in range(120):
+        if int(rd(DEV + "/mem_info_vram_used") or 0) < 3 * 1024**3:
+            return
+        time.sleep(1)
+    raise SystemExit("VRAM not free")
+
+
+def dump_smaps(pid):
+    """What kind of memory is the 27 GB of the server: the biggest mappings with their flags (VmFlags: lo locked, pf
+    pfnmap, io device, ht hugetlb, hg THP advised, nh no THP)"""
+    try:
+        txt = open(f"/proc/{pid}/smaps").read().split("\n")
+        vmas, cur = [], None
+        for ln in txt:
+            if re.match(r"^[0-9a-f]+-[0-9a-f]+ ", ln):
+                cur = {"hdr": ln, "kb": 0, "anonhuge": 0, "locked": 0, "flags": ""}
+                vmas.append(cur)
+            elif cur is not None:
+                for k, key in (("Rss:", "kb"), ("AnonHugePages:", "anonhuge"), ("Locked:", "locked")):
+                    if ln.startswith(k):
+                        cur[key] = int(ln.split()[1])
+                if ln.startswith("VmFlags:"):
+                    cur["flags"] = ln.split(":", 1)[1].strip()
+        vmas.sort(key=lambda v: -v["kb"])
+        with open(OUT + ".smaps", "a") as f:
+            f.write(f"mem_info_gtt_used_mb {int(rd(DEV + '/mem_info_gtt_used') or 0) // 1048576}\n")
+            f.write(open(f"/proc/{pid}/smaps_rollup").read())
+            for v in vmas[:25]:
+                f.write(f"{v['kb']//1024} MB rss, {v['anonhuge']//1024} MB thp, {v['locked']//1024} MB locked | {v['hdr']} | {v['flags']}\n")
+            f.write("\n")
+    except OSError:
+        pass
+
+
+def start_server():
+    wait_vram_free()
+    log = open(OUT + ".server.log", "ab")
+    env = dict(os.environ, OMP_NUM_THREADS="6", TONA_DECODE_DIAG="1",
+               TONA_EXPERT_PROFILE=f"{ROOT}/work/profile/experts-coder.bin", **EXTRA)
+    lim = env.pop("DRIVE_ULIMIT_C", None)
+    # 262144 = the service default: 4.1 GB of the pinned experts are registered as userptr there (#103, 2026-11-11-evict.md);
+    # at 140000 the overflow comes and goes with 0.1 GB of desktop GTT use and R8 would not test the huge-page fix
+    ctx = env.pop("DRIVE_CTX", "262144")
+    if "TONA_ALLOC_TRACE" in env:
+        env["TONA_ALLOC_TRACE"] = f"{OUT}.trace{int(time.time())}.txt"
+    wrap = ["bash", "-c", f'ulimit -c {lim}; exec "$@"', "_"] if lim else []
+    cmd = ["systemd-run", "--user", "--scope", "-q", "-p", "MemoryMax=54G", "-p", "MemorySwapMax=0", *wrap,
+           f"{ROOT}/work/build/{BUILD}/tona-server",
+           f"{ROOT}/work/models/coder-iq1_m/Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf",
+           "--mtp", f"{ROOT}/work/models/draft/mtp-Qwen3.8-Flash-Next-Q8_0.gguf", "--port", "8097", "--ctx", ctx]
+    p = subprocess.Popen(cmd, stdout=log, stderr=log, env=env)
+    for _ in range(400):
+        if p.poll() is not None:
+            raise SystemExit("server exited while loading")
+        try:
+            with urllib.request.urlopen(URL + "/status", timeout=2) as r:
+                if json.load(r).get("ready"):
+                    dump_smaps(p.pid)
+                    return p
+        except Exception:
+            pass
+        time.sleep(2)
+    raise SystemExit("server not ready")
+
+
+def stop_server(p):
+    p.terminate()
+    p.wait()
+
+
+def server_lines():
+    return open(OUT + ".server.log", errors="replace").read()
+
+
+class EvSampler(threading.Thread):
+    """evicted_ms of all KFD processes every 10 ms (as in #75); an episode is a run of samples where it grows"""
+
+    def __init__(self):
+        super().__init__(daemon=True)
+        self.stop = False
+        self.episodes = []  # (epoch s, ms)
+
+    def run(self):
+        prev, cur, quiet, t_start = evicted(), 0, 0, 0.0
+        while not self.stop:
+            time.sleep(0.01)
+            v = evicted()
+            if v > prev:
+                if not cur:
+                    t_start = time.time()
+                cur += v - prev
+                quiet = 0
+            elif cur:
+                quiet += 1
+                if quiet >= 3:
+                    self.episodes.append((round(t_start, 3), cur))
+                    cur = 0
+            prev = v
+        if cur:
+            self.episodes.append((round(t_start, 3), cur))
+
+
+PRESS = [False]
+READ = "~/.local/share/other-engine/models/coder-IQ1_M/"
+
+
+def evict_cache():
+    """Drop the page cache of the pressure files (posix_fadvise needs no root) so that a round without pressure starts clean"""
+    for f in glob.glob(READ + "*.gguf"):
+        fd = os.open(f, os.O_RDONLY)
+        os.posix_fadvise(fd, 0, 0, os.POSIX_FADV_DONTNEED)
+        os.close(fd)
+
+
+def stop_reader(proc):
+    try:
+        os.killpg(os.getpgid(proc.pid), 15)
+    except ProcessLookupError:
+        pass
+    proc.wait()
+    evict_cache()
+
+
+def reader():
+    """Pressure: read two big files nobody uses into the page cache (cat to /dev/null) until stopped. Own scope with a
+    run-time limit (block length 3550 s + 5 min), so that it ends even if this script dies."""
+    return subprocess.Popen(["systemd-run", "--user", "--scope", "-q", "-p", "RuntimeMaxSec=3850", "bash", "-c",
+                             f"while true; do cat {READ}*.gguf > /dev/null; done"], preexec_fn=os.setsid)
+
+
+def one(target, salt, idx):
+    p = prompt_for(target, salt)
+    body = {"model": "x", "messages": [{"role": "user", "content": p}], "max_tokens": 200, "temperature": 0,
+            "chat_template_kwargs": {"enable_thinking": False}}
+    before = len([ln for ln in server_lines().split("\n") if " Request" in ln and "Warm" not in ln])
+    smp = Sampler()
+    rd_proc = reader() if PRESS[0] else None
+    evs = EvSampler()
+    ev0 = evicted()
+    evs.start()
+    smp.start()
+    t0 = time.time()
+    try:
+        resp = post("/v1/chat/completions", body)
+    except Exception as e:
+        evs.stop = True
+        smp.stop = True
+        if rd_proc:
+            stop_reader(rd_proc)
+        time.sleep(0.2)
+        fail = [ln for ln in server_lines().split("\n") if "Pass failed" in ln][-1:] or [""]
+        m = re.search(r"pass deadline (-?[\d.]+) ms", fail[0])
+        err = {"idx": idx, "target": target, "pressure": PRESS[0], "error": str(e), "t_fail": time.time(),
+               "t_request": t0, "deadline_ms": float(m.group(1)) if m else None, "log": fail[0][:600],
+               "evicted_ms_request": evicted() - ev0, "episodes": evs.episodes}
+        open(OUT + ".jsonl", "a").write(json.dumps(err) + "\n")
+        print(idx, target, "ERROR", err["error"], err["deadline_ms"], err["evicted_ms_request"], flush=True)
+        raise
+    t1 = time.time()
+    evs.stop = True
+    evs.join()
+    post_ = (proc_ticks(), psi(), vmstat(), time.time(), evicted())
+    smp.stop = True
+    smp.join()
+    if rd_proc:
+        stop_reader(rd_proc)
+    pre = smp.snap or post_
+    tm = resp["timings"]
+    txt = resp["choices"][0]["message"]["content"]
+    time.sleep(0.3)
+    lines = server_lines().split("\n")
+    req = [i for i, ln in enumerate(lines) if " Request" in ln and "Warm" not in ln][before:]
+    diag = ""
+    if req:
+        i = req[0]
+        diag = lines[i] + (lines[i + 1] if i + 1 < len(lines) and "DIAG" in lines[i + 1] else "")
+    dec_s = tm["predicted_n"] / max(tm["predicted_per_second"], 1e-9)
+    dec_t0 = t1 - dec_s
+    rows = [r for r in smp.rows if r["t"] >= dec_t0]
+    def avg(k):
+        v = [r[k] for r in rows if r[k] is not None]
+        return round(sum(v) / len(v), 1) if v else None
+    tk = {k: post_[0].get(k, 0) - v for k, v in pre[0].items() if post_[0].get(k, 0) - v > 0}
+    top = sorted(tk.items(), key=lambda kv: -kv[1])[:5]
+    mi = dict(ln.split(":")[0:2] for ln in open("/proc/meminfo"))
+    rec = {"gtt_used_mb": int(rd(DEV + "/mem_info_gtt_used") or 0) // 1048576, "episodes": evs.episodes, "evicted_request": evicted() - ev0, "evicted_ms": post_[4] - (smp.snap[4] if smp.snap else post_[4]), "pressure": PRESS[0], "meminfo_mb": {k: int(mi[k].split()[0]) // 1024 for k in ("MemFree", "MemAvailable", "Cached", "Dirty")}, "top5_cpu_pct_incl_server": sum(v for k, v in top),
+           "psi": {k: post_[1][k] - pre[1][k] for k in pre[1]},
+           "vm": {k: post_[2][k] - pre[2][k] for k in pre[2]}, "idx": idx, "target": target, "salt": salt, "prompt_n": tm["prompt_n"], "prefill_s": tm["prompt_ms"] / 1000,
+           "decode_tok_s": round(tm["predicted_per_second"], 2), "sha": hashlib.sha256(txt.encode()).hexdigest()[:16],
+           "wall": round(t1 - t0, 1), "dec_samples": len(rows), "sclk_avg": avg("sclk"),
+           "sclk_min": min([r["sclk"] for r in rows if r["sclk"]] or [0]), "busy_avg": avg("busy"), "pw_avg": avg("pw"),
+           "temp": avg("temp"), "cpu_avg": avg("cpu"), "load": avg("load"), "log": diag}
+    open(OUT + ".jsonl", "a").write(json.dumps(rec) + "\n")
+    print(idx, target, rec["decode_tok_s"], rec["sclk_avg"], rec["busy_avg"], rec["cpu_avg"], flush=True)
+
+
+def main():
+    open(OUT + ".server.log", "wb").close()
+    if MODE == "press":
+        srv = start_server()
+        for i in range(N):
+            PRESS[0] = i % 2 == 1
+            try:
+                one(30000, f"{TAG}-{i}", f"{i}")
+                one(130000, f"{TAG}-{i}", f"{i}")
+            except Exception as e:  # a failed pass (barrier abort) ends the request with a 500: record it, restart
+                stop_server(srv)
+                srv = start_server()
+        stop_server(srv)
+    elif MODE == "same":
+        srv = start_server()
+        for i in range(N):
+            one(30000, f"{TAG}-{i}", f"{i}")
+            one(130000, f"{TAG}-{i}", f"{i}")
+        stop_server(srv)
+    else:
+        for i in range(N):
+            srv = start_server()
+            one(30000, "", f"{i}")
+            one(130000, "", f"{i}")
+            stop_server(srv)
+
+
+main()

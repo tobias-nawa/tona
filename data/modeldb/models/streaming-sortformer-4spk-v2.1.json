@@ -1,0 +1,125 @@
+{
+  "id": "streaming-sortformer-4spk-v2.1",
+  "name": "Streaming Sortformer Diarizer 4spk v2.1",
+  "vendor": "NVIDIA",
+  "release_date": "2026",
+  "purpose": "Streaming speaker diarization for up to 4 concurrent speakers; segments only, no transcript.",
+  "tasks": [
+    "audio-transcription"
+  ],
+  "modalities": {
+    "input": [
+      "audio"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "license": {
+    "name": "NVIDIA Open Model License",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "NVIDIA Open Model License text read (nvidia.com agreement page): \"Models are commercially usable. You are free to create and distribute Derivative Models. NVIDIA does not claim ownership to any outputs\"; redistribution needs a copy of the agreement and the Notice \"Licensed by NVIDIA Corporation under the NVIDIA Open Model License\"; revocable on guardrail circumvention or IP litigation."
+  },
+  "architecture": {
+    "kind": "NON-AUTOREGRESSIVE FastConformer encoder + 18-layer Transformer head (end-to-end diarizer)"
+  },
+  "variants": [
+    {
+      "repo": "transcribe.cpp GGUF",
+      "format": "GGUF F16",
+      "size_gb": 0.237,
+      "official": false
+    },
+    {
+      "repo": "transcribe.cpp GGUF",
+      "format": "GGUF Q8_0",
+      "size_gb": 0.139,
+      "official": false
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "NeMo",
+      "transcribe.cpp (CPU, Metal, Vulkan)"
+    ]
+  },
+  "benchmarks": [
+    {
+      "name": "AMI IHM DER (16 meetings)",
+      "score": 14.73,
+      "unit": "% DER",
+      "kind": "independent",
+      "source": "https://github.com/handy-computer/transcribe.cpp/blob/main/docs/models/diar_streaming_sortformer_4spk-v2.1.md",
+      "variant": "GGUF Q8_0, offline preset; NeMo reference 14.83 (measured by the transcribe.cpp authors)"
+    }
+  ],
+  "soft": {
+    "weaknesses": [
+      "Hard cap of 4 speakers",
+      "Labels are arrival order, unstable across recordings",
+      "Low-latency mode about 1.2x real time on an Apple M4",
+      "k-quants withdrawn: they permuted speaker labels"
+    ],
+    "maturity": "NVIDIA model; port by a small project."
+  },
+  "tona_fit": {
+    "verdict": "offer",
+    "reason": "139-237 MB; pair with Parakeet for up to 4 speakers in meetings."
+  },
+  "sources": [
+    {
+      "url": "https://github.com/handy-computer/transcribe.cpp/blob/main/docs/models/diar_streaming_sortformer_4spk-v2.1.md",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "research/52-purpose-models.md",
+      "kind": "own",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-open-model-license/",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "agreement text read"
+    }
+  ],
+  "open_questions": [
+    "Release date"
+  ],
+  "last_checked": "2026-11-19"
+}

@@ -1,0 +1,172 @@
+{
+  "id": "translategemma-12b-it",
+  "name": "TranslateGemma 12B (4B / 12B / 27B family)",
+  "vendor": "Google",
+  "release_date": "2026-01-13",
+  "lineage": {
+    "base_model": "Gemma 3",
+    "how_derived": "SFT (4.3 B tokens) on parallel data incl. Gemini-generated translations, then RL (10.2 M tokens)"
+  },
+  "purpose": "Open translation models for text and for extracting and translating text from images across 55 languages.",
+  "tasks": [
+    "translation"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "many"
+    ]
+  },
+  "license": {
+    "name": "Gemma Terms of Use",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "limited",
+    "notes": "Terms read at ai.google.dev/gemma/terms (redirects to gemma.ai/resources/terms, Google DeepMind, summarizer): no clause bars commercial use, but use is only allowed 'in accordance with' the agreement; Section 3.2 incorporates the Gemma Prohibited Use Policy and Google 'reserves the right to restrict (remotely or otherwise) usage of any of the Gemma Services' it believes violate the agreement; Section 3.1 allows redistribution of the model or Model Derivatives only if the use restrictions and a copy of the agreement pass to recipients; Model Derivatives include models trained on Gemma outputs ('methods based on the generation of synthetic data Outputs'), while Outputs themselves are not derivatives. The weights sit behind a manual access gate on Hugging Face. Verdict policy (README, 2026-11-19): this licence term does not lower tona_fit; kept here for an installer label."
+  },
+  "architecture": {
+    "kind": "dense transformer (Gemma 3)",
+    "params_total_b": 12,
+    "params_active_b": 12,
+    "context_native": 2048,
+    "drafter": "none",
+    "why_this_design": "Fine-tuned from Gemma 3 checkpoints for translation; the card gives no architectural reasons. Context is limited to a total input of 2K tokens."
+  },
+  "variants": [
+    {
+      "repo": "google/translategemma-12b-it",
+      "format": "safetensors BF16",
+      "official": true
+    },
+    {
+      "repo": "google/translategemma-4b-it",
+      "format": "safetensors BF16",
+      "official": true
+    },
+    {
+      "repo": "google/translategemma-27b-it",
+      "format": "safetensors BF16",
+      "official": true
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "4B BF16 or 12B Q4"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "12B Q6-Q8"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "27B Q4 (about 16 GB, estimate)"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "27B Q6-Q8"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "12B Q4"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "27B Q4"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "27B Q8"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "Transformers"
+    ],
+    "notes": "Gemma 3 architecture; community GGUFs found in a Hub listing (a 4B and a Uzbek 4B)."
+  },
+  "benchmarks": [
+    {
+      "name": "WMT24++ MetricX (lower is better), 55 languages",
+      "score": "3.60 (12B); 5.32 (4B); 3.09 (27B)",
+      "kind": "vendor",
+      "source": "https://huggingface.co/google/translategemma-12b-it"
+    },
+    {
+      "name": "WMT24++ Comet",
+      "score": 83.5,
+      "kind": "vendor",
+      "source": "https://huggingface.co/google/translategemma-12b-it",
+      "variant": "12B"
+    },
+    {
+      "name": "WMT24++ MetricX (lower is better): 4B / 12B / 27B",
+      "score": "5.32 / 3.60 / 3.09",
+      "kind": "vendor",
+      "source": "https://huggingface.co/google/translategemma-12b-it",
+      "date": "2026-01-13"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "Dedicated translation quality per size; German is among the 55 languages (assumed, list not read)"
+    ],
+    "weaknesses": [
+      "Input context only 2K tokens: sentence or paragraph translation, not documents in one call",
+      "Gated license",
+      "Card (page text) does not list the 55 languages; German is only implied by de-DE examples. Strict prompt format: a user message with exactly one entry naming source and target language codes."
+    ],
+    "best_for": [
+      "Translation of short texts and image text"
+    ],
+    "avoid_for": [
+      "Chat and long documents"
+    ],
+    "maturity": "Google; technical report arXiv 2601.09012."
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "Google's own translation specialist (55 languages, MetricX 3.60 for the 12B on WMT24++, vendor) that fits every class, but only 2K context and no independent German evidence; general models (Qwen3.8-27B, Gemma 4) cover German-English well, so use it where a dedicated translator is wanted.",
+    "blockers": [
+      "no Gemma 3 module in Tona",
+      "2K context"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/google/translategemma-12b-it",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "model card"
+    },
+    {
+      "url": "https://gemma.ai/resources/terms/",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "Gemma Terms of Use, summarizer read"
+    }
+  ],
+  "open_questions": [
+    "Release date on the card; the report is 2026-01-13",
+    "Explicit German coverage (languages not listed in the page text)",
+    "Own comparison against general models on German-English"
+  ],
+  "last_checked": "2026-11-19"
+}

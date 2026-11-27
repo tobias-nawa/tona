@@ -1,0 +1,85 @@
+{
+  "id": "ling-3.1-flash",
+  "name": "Ling-3.1-flash",
+  "vendor": "inclusionAI",
+  "release_date": "2026-10-13",
+  "lineage": {
+    "family": "Ling-3.0",
+    "base_model": "inclusionAI/Ling-3.1-flash-base",
+    "how_derived": "post-trained from the Ling-3.1-flash base; the card says it builds upon Ling-3.0-flash with improvements in architecture and performance (it is far larger: 560B total against 124B for Ling-3.0-flash, so not a continuation of those weights; the card does not say how the two relate)"
+  },
+  "purpose": "The card presents an upgraded native hybrid reasoning model for complex real-world tasks: general-purpose agents, search, office productivity and software engineering, plus finance and materials science. inclusionAI also ships LingCode, a harness built on the open-source coding agent Pi for hours-long, hundreds-of-tool-call coding tasks.",
+  "tasks": ["general", "coding", "research", "documents"],
+  "modalities": {"input": ["text"], "output": ["text"]},
+  "license": {
+    "name": "MIT (card tag; no LICENSE file in the repository)",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card YAML says mit; raw/main/LICENSE returns 404 (2026-11-19), so no licence text was read. The card links a training-content summary PDF that it says does not replace the licence."
+  },
+  "architecture": {
+    "kind": "hybrid linear attention MoE (Kimi Delta Attention + gated MLA)",
+    "gguf_arch": "bailing hybrid (config model_type bailing_hybrid, class BailingMoeV3ForCausalLM; llama.cpp support status per the quant repos not verified here)",
+    "params_total_b": 560,
+    "params_active_b": 25,
+    "layers": 72,
+    "attention": "63 KDA layers and 9 gated MLA layers (7:1), 64 heads, hidden 4096, 4 dense layers",
+    "recurrent": "Kimi Delta Attention",
+    "experts": 512,
+    "experts_active": 8,
+    "context_native": 262144,
+    "context_max": 1000000,
+    "drafter": "MTP (num_nextn_predict_layers = 1; SGLang NEXTN and vLLM mtp with 3 speculative tokens in the card commands)",
+    "why_this_design": "The card gives no reasons for the 7:1 ratio or the expert count. Note: config.json max_position_embeddings is 262144 with rope_scaling null, while the card text says a 1M-token window; the source of the 1M claim is not shown."
+  },
+  "variants": [
+    {"repo": "inclusionAI/Ling-3.1-flash", "format": "safetensors, config says FP8 e4m3 block quantisation with BF16 modules (card repo 573.81 GB)", "size_gb": 573.81, "official": true},
+    {"repo": "bartowski/Ling-3.1-flash-GGUF", "format": "GGUF IQ1_S", "size_gb": 131.01, "official": false, "notes": "IQ1_M 145.09, IQ2_XXS 170.79, IQ2_XS 177.38, IQ2_S 188.47, IQ2_M 213.03, Q2_K 219.17, IQ3_XXS 247.37, Q3_K_M 275.06, IQ4_XS 317.08, Q4_K_M 357.97, Q5_K_M 436.32, Q6_K 501.58, Q8_0 608.38 GB; imatrix 2.67 GB"},
+    {"repo": "AtomicChat/Ling-3.1-flash-GGUF", "format": "GGUF AD-IQ1_S", "size_gb": 141.81, "official": false, "notes": "AD-IQ1_M 160.93, AD-IQ2_XXS 174.14, AD-IQ2_XS 198.22, AD-IQ2_M 218.08, AD-IQ3_XXS 256.39, AD-Q4_K_M 354.39, AD-Q8_0 600.85 GB (file sizes only, card not read)"},
+    {"repo": "Baekpica/Ling-3.1-flash-VQ-GGUF", "format": "GGUF vector-quantised, per-layer expert files", "official": false, "notes": "non-expert body 9.79 GB plus about 1.5 GB per expert layer file; total not summed, card not read"},
+    {"repo": "turboderp/Ling-3.1-flash-exl3", "format": "EXL3", "official": false, "notes": "also bertholomus 3.03 bpw and boxwrench 2.10 bpw EXL3 repos; sizes not measured"}
+  ],
+  "hardware_fit": {
+    "pc-12gb": {"fits": "no", "basis": "estimate", "notes": "smallest quant 131.0 GB (IQ1_S) against about 60 GB (9.6 VRAM + 50 RAM)"},
+    "pc-16gb": {"fits": "no", "basis": "estimate", "notes": "131.0 GB against about 64 GB"},
+    "pc-24gb": {"fits": "no", "basis": "estimate", "notes": "131.0 GB against 21.6 GB VRAM + about 82 GB RAM = 104 GB"},
+    "pc-32gb": {"fits": "marginal", "variant": "bartowski IQ1_S 131.0 GB or IQ1_M 145.1 GB", "basis": "estimate", "notes": "29.6 GB VRAM + 128 GB RAM = about 158 GB: IQ1_S 131.0 GB leaves about 27 GB for KV, states and the OS, IQ1_M 145.1 GB leaves about 13 GB; 1-bit quality of a 560B/25B model is unmeasured and 25B active parameters stream from RAM on every token"},
+    "mac-16-24gb": {"fits": "no", "basis": "estimate"},
+    "mac-32gb": {"fits": "no", "basis": "estimate"},
+    "mac-64gb+": {"fits": "no", "basis": "estimate", "notes": "131 GB against about 52 GB GPU share on a 64 GB Mac; larger Macs not assessed"}
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "unknown",
+    "other": ["SGLang (day-0 image, MTP NEXTN)", "vLLM (custom branch, tool and reasoning parser ling3)", "EXL3 (community)", "NVFP4 (community)"],
+    "notes": "The card documents only SGLang on 8 H200 and vLLM on 8 GPUs; llama.cpp support was not checked."
+  },
+  "benchmarks": [],
+  "soft": {
+    "strengths": ["Vendor claims strong results on GDPVal-AA V2.1, HealthBench Professional, FrontierSWE and Terminal-Bench 4.0 (card text; the score table is an image)"],
+    "weaknesses": ["560B total parameters: the smallest public quant is 131 GB", "25B active parameters is heavy for CPU expert offload"],
+    "behavior": "Recommended sampling temperature 1.0, top_p 0.95, top_k 20 with enable_thinking true (card).",
+    "best_for": ["agentic coding and office tasks on large servers"],
+    "maturity": "inclusionAI (Ant Group) with an established Ling/Ring line (see ling-3.0-flash); repo created 2026-10-13."
+  },
+  "tona_fit": {
+    "verdict": "reject",
+    "reason": "Out of reach for every class except a 1-bit file on the 32 GB VRAM + 128 GB RAM class (131 GB IQ1_S, quality unmeasured). The 3.0 generation (124B, 5.1B active, 77 GB Q4_K_M) is the practical Ling for our users; 3.1 gets 4.5 times the parameters. Revisit only if a measured 2-bit build under about 150 GB appears.",
+    "blockers": ["size", "no licence text", "no independent benchmark"]
+  },
+  "sources": [
+    {"url": "https://huggingface.co/inclusionAI/Ling-3.1-flash", "kind": "primary", "checked": "2026-11-19", "note": "README, config.json, file sizes via the HF API; LICENSE 404"},
+    {"url": "https://huggingface.co/bartowski/Ling-3.1-flash-GGUF", "kind": "primary", "checked": "2026-11-19", "note": "file sizes via the HF tree API"},
+    {"url": "https://huggingface.co/AtomicChat/Ling-3.1-flash-GGUF", "kind": "primary", "checked": "2026-11-19", "note": "file sizes via the HF tree API"},
+    {"url": "https://huggingface.co/Baekpica/Ling-3.1-flash-VQ-GGUF", "kind": "primary", "checked": "2026-11-19", "note": "file list via the HF tree API"}
+  ],
+  "open_questions": [
+    "Licence text (tag only)",
+    "Benchmark numbers (the card figures are images) and any independent evaluation",
+    "How the 1M-token claim relates to max_position_embeddings 262144 with no rope scaling in config.json",
+    "Quality of the 1-bit GGUFs",
+    "Whether llama.cpp loads the bailing_hybrid architecture of this size"
+  ],
+  "last_checked": "2026-11-19"
+}

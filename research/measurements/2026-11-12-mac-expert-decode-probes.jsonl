@@ -1,0 +1,532 @@
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ2S", "B": 1, "us_per_layer_median": 219.8, "us_min": 219.2, "us_max": 220.1, "gbs": 47.8, "variant": "base"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3XXS", "B": 1, "us_per_layer_median": 159.3, "us_min": 158.5, "us_max": 165.3, "gbs": 78.7, "variant": "base"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3S", "B": 1, "us_per_layer_median": 176.7, "us_min": 175.4, "us_max": 178.9, "gbs": 79.7, "variant": "base"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ4XS", "B": 1, "us_per_layer_median": 130.3, "us_min": 129.9, "us_max": 137.4, "gbs": 133.6, "variant": "base"}
+{"kind": "type", "rows": 1, "kernel": "down_IQ4NL", "B": 1, "us_per_layer_median": 72.2, "us_min": 72.1, "us_max": 72.4, "gbs": 127.6, "variant": "base"}
+{"kind": "type", "rows": 1, "kernel": "down_Q20", "B": 1, "us_per_layer_median": 79.0, "us_min": 78.3, "us_max": 79.2, "gbs": 58.3, "variant": "base"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ2S", "B": 2, "us_per_layer_median": 350.0, "us_min": 348.7, "us_max": 357.7, "gbs": 30.0, "variant": "base"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3XXS", "B": 2, "us_per_layer_median": 223.6, "us_min": 223.1, "us_max": 231.9, "gbs": 56.1, "variant": "base"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3S", "B": 2, "us_per_layer_median": 254.8, "us_min": 253.7, "us_max": 261.1, "gbs": 55.3, "variant": "base"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ4XS", "B": 2, "us_per_layer_median": 209.0, "us_min": 208.0, "us_max": 216.6, "gbs": 83.3, "variant": "base"}
+{"kind": "type", "rows": 1, "kernel": "down_IQ4NL", "B": 2, "us_per_layer_median": 106.3, "us_min": 104.4, "us_max": 112.1, "gbs": 86.7, "variant": "base"}
+{"kind": "type", "rows": 1, "kernel": "down_Q20", "B": 2, "us_per_layer_median": 95.2, "us_min": 94.9, "us_max": 101.5, "gbs": 48.4, "variant": "base"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ2S", "B": 3, "us_per_layer_median": 460.5, "us_min": 458.3, "us_max": 467.4, "gbs": 22.8, "variant": "base"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3XXS", "B": 3, "us_per_layer_median": 339.1, "us_min": 338.7, "us_max": 345.3, "gbs": 37.0, "variant": "base"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3S", "B": 3, "us_per_layer_median": 374.8, "us_min": 374.3, "us_max": 381.3, "gbs": 37.6, "variant": "base"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ4XS", "B": 3, "us_per_layer_median": 321.2, "us_min": 320.4, "us_max": 328.6, "gbs": 54.2, "variant": "base"}
+{"kind": "type", "rows": 1, "kernel": "down_IQ4NL", "B": 3, "us_per_layer_median": 154.1, "us_min": 153.2, "us_max": 161.3, "gbs": 59.8, "variant": "base"}
+{"kind": "type", "rows": 1, "kernel": "down_Q20", "B": 3, "us_per_layer_median": 127.7, "us_min": 126.8, "us_max": 133.4, "gbs": 36.1, "variant": "base"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ2S", "B": 4, "us_per_layer_median": 586.5, "us_min": 585.7, "us_max": 598.5, "gbs": 17.9, "variant": "base"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3XXS", "B": 4, "us_per_layer_median": 466.3, "us_min": 464.2, "us_max": 473.2, "gbs": 26.9, "variant": "base"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3S", "B": 4, "us_per_layer_median": 503.8, "us_min": 502.5, "us_max": 511.8, "gbs": 27.9, "variant": "base"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ4XS", "B": 4, "us_per_layer_median": 433.0, "us_min": 430.6, "us_max": 440.4, "gbs": 40.2, "variant": "base"}
+{"kind": "type", "rows": 1, "kernel": "down_IQ4NL", "B": 4, "us_per_layer_median": 198.6, "us_min": 196.5, "us_max": 205.4, "gbs": 46.4, "variant": "base"}
+{"kind": "type", "rows": 1, "kernel": "down_Q20", "B": 4, "us_per_layer_median": 161.6, "us_min": 161.1, "us_max": 168.8, "gbs": 28.5, "variant": "base"}
+{"kind": "token", "rows": 1, "layers": 48, "B": 1, "ms_median": 12.496, "ms_min": 12.383, "ms_max": 12.75, "expert_bytes": 982272000, "gbs": 78.6, "variant": "base"}
+{"kind": "token", "rows": 1, "layers": 48, "B": 2, "ms_median": 18.637, "ms_min": 18.611, "ms_max": 18.994, "expert_bytes": 982272000, "gbs": 52.7, "variant": "base"}
+{"kind": "token", "rows": 1, "layers": 48, "B": 3, "ms_median": 26.142, "ms_min": 26.007, "ms_max": 26.711, "expert_bytes": 982272000, "gbs": 37.6, "variant": "base"}
+{"kind": "token", "rows": 1, "layers": 48, "B": 4, "ms_median": 34.332, "ms_min": 34.148, "ms_max": 34.98, "expert_bytes": 982272000, "gbs": 28.6, "variant": "base"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ2S", "B": 1, "us_per_layer_median": 156.0, "us_min": 155.8, "us_max": 163.8, "gbs": 67.3, "variant": "base"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3XXS", "B": 1, "us_per_layer_median": 147.6, "us_min": 145.7, "us_max": 148.2, "gbs": 85.0, "variant": "base"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3S", "B": 1, "us_per_layer_median": 141.6, "us_min": 140.4, "us_max": 148.8, "gbs": 99.5, "variant": "base"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ4XS", "B": 1, "us_per_layer_median": 115.7, "us_min": 114.3, "us_max": 119.6, "gbs": 150.4, "variant": "base"}
+{"kind": "type", "rows": 4, "kernel": "down_IQ4NL", "B": 1, "us_per_layer_median": 59.1, "us_min": 58.8, "us_max": 64.5, "gbs": 156.1, "variant": "base"}
+{"kind": "type", "rows": 4, "kernel": "down_Q20", "B": 1, "us_per_layer_median": 54.5, "us_min": 51.8, "us_max": 54.7, "gbs": 84.5, "variant": "base"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ2S", "B": 2, "us_per_layer_median": 203.8, "us_min": 203.3, "us_max": 211.0, "gbs": 51.5, "variant": "base"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3XXS", "B": 2, "us_per_layer_median": 173.9, "us_min": 173.5, "us_max": 179.1, "gbs": 72.1, "variant": "base"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3S", "B": 2, "us_per_layer_median": 170.5, "us_min": 169.4, "us_max": 174.8, "gbs": 82.6, "variant": "base"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ4XS", "B": 2, "us_per_layer_median": 151.0, "us_min": 150.9, "us_max": 151.3, "gbs": 115.3, "variant": "base"}
+{"kind": "type", "rows": 4, "kernel": "down_IQ4NL", "B": 2, "us_per_layer_median": 76.8, "us_min": 75.7, "us_max": 82.9, "gbs": 120.0, "variant": "base"}
+{"kind": "type", "rows": 4, "kernel": "down_Q20", "B": 2, "us_per_layer_median": 69.2, "us_min": 68.5, "us_max": 69.3, "gbs": 66.6, "variant": "base"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ2S", "B": 3, "us_per_layer_median": 243.2, "us_min": 242.5, "us_max": 249.8, "gbs": 43.1, "variant": "base"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3XXS", "B": 3, "us_per_layer_median": 237.0, "us_min": 235.1, "us_max": 241.9, "gbs": 52.9, "variant": "base"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3S", "B": 3, "us_per_layer_median": 243.3, "us_min": 242.5, "us_max": 252.3, "gbs": 57.9, "variant": "base"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ4XS", "B": 3, "us_per_layer_median": 215.5, "us_min": 214.0, "us_max": 224.0, "gbs": 80.8, "variant": "base"}
+{"kind": "type", "rows": 4, "kernel": "down_IQ4NL", "B": 3, "us_per_layer_median": 110.8, "us_min": 109.7, "us_max": 115.8, "gbs": 83.1, "variant": "base"}
+{"kind": "type", "rows": 4, "kernel": "down_Q20", "B": 3, "us_per_layer_median": 104.3, "us_min": 103.0, "us_max": 104.6, "gbs": 44.2, "variant": "base"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ2S", "B": 4, "us_per_layer_median": 294.7, "us_min": 293.7, "us_max": 303.4, "gbs": 35.6, "variant": "base"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3XXS", "B": 4, "us_per_layer_median": 285.0, "us_min": 283.8, "us_max": 291.4, "gbs": 44.0, "variant": "base"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3S", "B": 4, "us_per_layer_median": 300.9, "us_min": 300.2, "us_max": 307.3, "gbs": 46.8, "variant": "base"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ4XS", "B": 4, "us_per_layer_median": 265.1, "us_min": 264.0, "us_max": 272.4, "gbs": 65.7, "variant": "base"}
+{"kind": "type", "rows": 4, "kernel": "down_IQ4NL", "B": 4, "us_per_layer_median": 135.3, "us_min": 132.7, "us_max": 141.4, "gbs": 68.1, "variant": "base"}
+{"kind": "type", "rows": 4, "kernel": "down_Q20", "B": 4, "us_per_layer_median": 128.8, "us_min": 128.4, "us_max": 134.9, "gbs": 35.8, "variant": "base"}
+{"kind": "token", "rows": 4, "layers": 48, "B": 1, "ms_median": 10.015, "ms_min": 9.944, "ms_max": 10.225, "expert_bytes": 982272000, "gbs": 98.1, "variant": "base"}
+{"kind": "token", "rows": 4, "layers": 48, "B": 2, "ms_median": 12.64, "ms_min": 12.48, "ms_max": 12.941, "expert_bytes": 982272000, "gbs": 77.7, "variant": "base"}
+{"kind": "token", "rows": 4, "layers": 48, "B": 3, "ms_median": 17.028, "ms_min": 16.974, "ms_max": 17.366, "expert_bytes": 982272000, "gbs": 57.7, "variant": "base"}
+{"kind": "token", "rows": 4, "layers": 48, "B": 4, "ms_median": 20.637, "ms_min": 20.504, "ms_max": 21.069, "expert_bytes": 982272000, "gbs": 47.6, "variant": "base"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ2S", "B": 1, "us_per_layer_median": 140.2, "us_min": 139.5, "us_max": 140.4, "gbs": 74.9, "variant": "nox"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3XXS", "B": 1, "us_per_layer_median": 147.3, "us_min": 147.1, "us_max": 153.8, "gbs": 85.2, "variant": "nox"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3S", "B": 1, "us_per_layer_median": 163.4, "us_min": 161.1, "us_max": 172.3, "gbs": 86.2, "variant": "nox"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ4XS", "B": 1, "us_per_layer_median": 120.6, "us_min": 119.9, "us_max": 120.8, "gbs": 144.3, "variant": "nox"}
+{"kind": "type", "rows": 1, "kernel": "down_IQ4NL", "B": 1, "us_per_layer_median": 69.4, "us_min": 68.2, "us_max": 74.5, "gbs": 132.8, "variant": "nox"}
+{"kind": "type", "rows": 1, "kernel": "down_Q20", "B": 1, "us_per_layer_median": 69.0, "us_min": 67.9, "us_max": 69.5, "gbs": 66.8, "variant": "nox"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ2S", "B": 2, "us_per_layer_median": 151.1, "us_min": 149.0, "us_max": 151.5, "gbs": 69.5, "variant": "nox"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3XXS", "B": 2, "us_per_layer_median": 162.2, "us_min": 161.8, "us_max": 165.1, "gbs": 77.3, "variant": "nox"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3S", "B": 2, "us_per_layer_median": 174.9, "us_min": 172.3, "us_max": 181.5, "gbs": 80.5, "variant": "nox"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ4XS", "B": 2, "us_per_layer_median": 132.0, "us_min": 131.3, "us_max": 137.5, "gbs": 131.8, "variant": "nox"}
+{"kind": "type", "rows": 1, "kernel": "down_IQ4NL", "B": 2, "us_per_layer_median": 79.8, "us_min": 79.6, "us_max": 80.0, "gbs": 115.5, "variant": "nox"}
+{"kind": "type", "rows": 1, "kernel": "down_Q20", "B": 2, "us_per_layer_median": 79.0, "us_min": 78.6, "us_max": 79.3, "gbs": 58.3, "variant": "nox"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ2S", "B": 3, "us_per_layer_median": 171.9, "us_min": 170.2, "us_max": 179.6, "gbs": 61.1, "variant": "nox"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3XXS", "B": 3, "us_per_layer_median": 179.9, "us_min": 178.8, "us_max": 180.2, "gbs": 69.7, "variant": "nox"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3S", "B": 3, "us_per_layer_median": 192.7, "us_min": 191.9, "us_max": 199.4, "gbs": 73.1, "variant": "nox"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ4XS", "B": 3, "us_per_layer_median": 147.6, "us_min": 146.8, "us_max": 148.4, "gbs": 117.9, "variant": "nox"}
+{"kind": "type", "rows": 1, "kernel": "down_IQ4NL", "B": 3, "us_per_layer_median": 91.6, "us_min": 91.2, "us_max": 97.4, "gbs": 100.7, "variant": "nox"}
+{"kind": "type", "rows": 1, "kernel": "down_Q20", "B": 3, "us_per_layer_median": 92.8, "us_min": 90.4, "us_max": 93.0, "gbs": 49.7, "variant": "nox"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ2S", "B": 4, "us_per_layer_median": 183.3, "us_min": 182.6, "us_max": 189.2, "gbs": 57.3, "variant": "nox"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3XXS", "B": 4, "us_per_layer_median": 190.2, "us_min": 188.6, "us_max": 199.0, "gbs": 66.0, "variant": "nox"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3S", "B": 4, "us_per_layer_median": 207.1, "us_min": 204.6, "us_max": 212.8, "gbs": 68.0, "variant": "nox"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ4XS", "B": 4, "us_per_layer_median": 163.3, "us_min": 163.1, "us_max": 169.0, "gbs": 106.6, "variant": "nox"}
+{"kind": "type", "rows": 1, "kernel": "down_IQ4NL", "B": 4, "us_per_layer_median": 102.3, "us_min": 100.6, "us_max": 108.8, "gbs": 90.1, "variant": "nox"}
+{"kind": "type", "rows": 1, "kernel": "down_Q20", "B": 4, "us_per_layer_median": 104.1, "us_min": 102.1, "us_max": 110.8, "gbs": 44.3, "variant": "nox"}
+{"kind": "token", "rows": 1, "layers": 48, "B": 1, "ms_median": 10.373, "ms_min": 10.3, "ms_max": 10.719, "expert_bytes": 982272000, "gbs": 94.7, "variant": "nox"}
+{"kind": "token", "rows": 1, "layers": 48, "B": 2, "ms_median": 11.514, "ms_min": 11.403, "ms_max": 11.801, "expert_bytes": 982272000, "gbs": 85.3, "variant": "nox"}
+{"kind": "token", "rows": 1, "layers": 48, "B": 3, "ms_median": 13.046, "ms_min": 12.903, "ms_max": 13.383, "expert_bytes": 982272000, "gbs": 75.3, "variant": "nox"}
+{"kind": "token", "rows": 1, "layers": 48, "B": 4, "ms_median": 14.148, "ms_min": 13.98, "ms_max": 14.437, "expert_bytes": 982272000, "gbs": 69.4, "variant": "nox"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ2S", "B": 1, "us_per_layer_median": 125.8, "us_min": 124.9, "us_max": 130.2, "gbs": 83.4, "variant": "nox"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3XXS", "B": 1, "us_per_layer_median": 143.2, "us_min": 142.8, "us_max": 146.4, "gbs": 87.6, "variant": "nox"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3S", "B": 1, "us_per_layer_median": 140.4, "us_min": 138.8, "us_max": 145.1, "gbs": 100.3, "variant": "nox"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ4XS", "B": 1, "us_per_layer_median": 114.5, "us_min": 113.6, "us_max": 118.6, "gbs": 152.1, "variant": "nox"}
+{"kind": "type", "rows": 4, "kernel": "down_IQ4NL", "B": 1, "us_per_layer_median": 56.4, "us_min": 55.7, "us_max": 56.5, "gbs": 163.4, "variant": "nox"}
+{"kind": "type", "rows": 4, "kernel": "down_Q20", "B": 1, "us_per_layer_median": 53.5, "us_min": 53.0, "us_max": 53.8, "gbs": 86.2, "variant": "nox"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ2S", "B": 2, "us_per_layer_median": 145.2, "us_min": 144.9, "us_max": 149.1, "gbs": 72.3, "variant": "nox"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3XXS", "B": 2, "us_per_layer_median": 158.2, "us_min": 157.8, "us_max": 162.1, "gbs": 79.3, "variant": "nox"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3S", "B": 2, "us_per_layer_median": 159.0, "us_min": 158.3, "us_max": 159.2, "gbs": 88.6, "variant": "nox"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ4XS", "B": 2, "us_per_layer_median": 129.6, "us_min": 128.8, "us_max": 135.1, "gbs": 134.3, "variant": "nox"}
+{"kind": "type", "rows": 4, "kernel": "down_IQ4NL", "B": 2, "us_per_layer_median": 68.5, "us_min": 67.1, "us_max": 68.9, "gbs": 134.6, "variant": "nox"}
+{"kind": "type", "rows": 4, "kernel": "down_Q20", "B": 2, "us_per_layer_median": 64.0, "us_min": 62.4, "us_max": 66.9, "gbs": 72.0, "variant": "nox"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ2S", "B": 3, "us_per_layer_median": 202.7, "us_min": 200.0, "us_max": 203.0, "gbs": 51.8, "variant": "nox"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3XXS", "B": 3, "us_per_layer_median": 216.0, "us_min": 215.6, "us_max": 222.9, "gbs": 58.1, "variant": "nox"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3S", "B": 3, "us_per_layer_median": 215.7, "us_min": 215.0, "us_max": 222.2, "gbs": 65.3, "variant": "nox"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ4XS", "B": 3, "us_per_layer_median": 185.8, "us_min": 185.7, "us_max": 186.8, "gbs": 93.7, "variant": "nox"}
+{"kind": "type", "rows": 4, "kernel": "down_IQ4NL", "B": 3, "us_per_layer_median": 99.0, "us_min": 98.1, "us_max": 105.8, "gbs": 93.1, "variant": "nox"}
+{"kind": "type", "rows": 4, "kernel": "down_Q20", "B": 3, "us_per_layer_median": 94.7, "us_min": 94.2, "us_max": 95.1, "gbs": 48.7, "variant": "nox"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ2S", "B": 4, "us_per_layer_median": 232.7, "us_min": 232.5, "us_max": 238.0, "gbs": 45.1, "variant": "nox"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3XXS", "B": 4, "us_per_layer_median": 245.4, "us_min": 244.4, "us_max": 251.5, "gbs": 51.1, "variant": "nox"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3S", "B": 4, "us_per_layer_median": 249.6, "us_min": 248.1, "us_max": 257.0, "gbs": 56.4, "variant": "nox"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ4XS", "B": 4, "us_per_layer_median": 215.8, "us_min": 215.1, "us_max": 221.3, "gbs": 80.6, "variant": "nox"}
+{"kind": "type", "rows": 4, "kernel": "down_IQ4NL", "B": 4, "us_per_layer_median": 116.5, "us_min": 114.7, "us_max": 123.8, "gbs": 79.1, "variant": "nox"}
+{"kind": "type", "rows": 4, "kernel": "down_Q20", "B": 4, "us_per_layer_median": 118.7, "us_min": 118.4, "us_max": 125.0, "gbs": 38.8, "variant": "nox"}
+{"kind": "token", "rows": 4, "layers": 48, "B": 1, "ms_median": 9.263, "ms_min": 9.218, "ms_max": 9.438, "expert_bytes": 982272000, "gbs": 106.0, "variant": "nox"}
+{"kind": "token", "rows": 4, "layers": 48, "B": 2, "ms_median": 10.684, "ms_min": 10.535, "ms_max": 10.915, "expert_bytes": 982272000, "gbs": 91.9, "variant": "nox"}
+{"kind": "token", "rows": 4, "layers": 48, "B": 3, "ms_median": 14.91, "ms_min": 14.614, "ms_max": 15.244, "expert_bytes": 982272000, "gbs": 65.9, "variant": "nox"}
+{"kind": "token", "rows": 4, "layers": 48, "B": 4, "ms_median": 17.332, "ms_min": 17.056, "ms_max": 17.593, "expert_bytes": 982272000, "gbs": 56.7, "variant": "nox"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ2S", "B": 1, "us_per_layer_median": 96.2, "us_min": 95.6, "us_max": 96.4, "gbs": 109.1, "variant": "nodec"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3XXS", "B": 1, "us_per_layer_median": 97.3, "us_min": 95.9, "us_max": 103.1, "gbs": 129.0, "variant": "nodec"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3S", "B": 1, "us_per_layer_median": 97.1, "us_min": 96.7, "us_max": 97.4, "gbs": 145.0, "variant": "nodec"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ4XS", "B": 1, "us_per_layer_median": 97.0, "us_min": 94.5, "us_max": 104.7, "gbs": 179.5, "variant": "nodec"}
+{"kind": "type", "rows": 1, "kernel": "down_IQ4NL", "B": 1, "us_per_layer_median": 59.7, "us_min": 58.9, "us_max": 60.1, "gbs": 154.3, "variant": "nodec"}
+{"kind": "type", "rows": 1, "kernel": "down_Q20", "B": 1, "us_per_layer_median": 59.4, "us_min": 57.5, "us_max": 59.8, "gbs": 77.6, "variant": "nodec"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ2S", "B": 2, "us_per_layer_median": 193.7, "us_min": 193.1, "us_max": 200.9, "gbs": 54.2, "variant": "nodec"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3XXS", "B": 2, "us_per_layer_median": 193.7, "us_min": 193.2, "us_max": 199.5, "gbs": 64.8, "variant": "nodec"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3S", "B": 2, "us_per_layer_median": 193.7, "us_min": 193.2, "us_max": 199.1, "gbs": 72.7, "variant": "nodec"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ4XS", "B": 2, "us_per_layer_median": 193.6, "us_min": 192.6, "us_max": 193.9, "gbs": 89.9, "variant": "nodec"}
+{"kind": "type", "rows": 1, "kernel": "down_IQ4NL", "B": 2, "us_per_layer_median": 98.7, "us_min": 97.4, "us_max": 110.0, "gbs": 93.4, "variant": "nodec"}
+{"kind": "type", "rows": 1, "kernel": "down_Q20", "B": 2, "us_per_layer_median": 97.9, "us_min": 97.5, "us_max": 98.0, "gbs": 47.1, "variant": "nodec"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ2S", "B": 3, "us_per_layer_median": 303.7, "us_min": 302.9, "us_max": 310.9, "gbs": 34.6, "variant": "nodec"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3XXS", "B": 3, "us_per_layer_median": 304.6, "us_min": 303.7, "us_max": 310.9, "gbs": 41.2, "variant": "nodec"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3S", "B": 3, "us_per_layer_median": 304.8, "us_min": 304.1, "us_max": 313.9, "gbs": 46.2, "variant": "nodec"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ4XS", "B": 3, "us_per_layer_median": 304.5, "us_min": 304.0, "us_max": 307.9, "gbs": 57.2, "variant": "nodec"}
+{"kind": "type", "rows": 1, "kernel": "down_IQ4NL", "B": 3, "us_per_layer_median": 132.8, "us_min": 132.4, "us_max": 132.9, "gbs": 69.4, "variant": "nodec"}
+{"kind": "type", "rows": 1, "kernel": "down_Q20", "B": 3, "us_per_layer_median": 132.7, "us_min": 132.5, "us_max": 138.7, "gbs": 34.7, "variant": "nodec"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ2S", "B": 4, "us_per_layer_median": 430.9, "us_min": 430.6, "us_max": 437.9, "gbs": 24.4, "variant": "nodec"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3XXS", "B": 4, "us_per_layer_median": 431.9, "us_min": 431.3, "us_max": 441.6, "gbs": 29.0, "variant": "nodec"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3S", "B": 4, "us_per_layer_median": 431.8, "us_min": 430.0, "us_max": 440.7, "gbs": 32.6, "variant": "nodec"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ4XS", "B": 4, "us_per_layer_median": 431.5, "us_min": 429.4, "us_max": 439.0, "gbs": 40.3, "variant": "nodec"}
+{"kind": "type", "rows": 1, "kernel": "down_IQ4NL", "B": 4, "us_per_layer_median": 166.8, "us_min": 165.0, "us_max": 167.1, "gbs": 55.2, "variant": "nodec"}
+{"kind": "type", "rows": 1, "kernel": "down_Q20", "B": 4, "us_per_layer_median": 165.7, "us_min": 165.3, "us_max": 172.8, "gbs": 27.8, "variant": "nodec"}
+{"kind": "token", "rows": 1, "layers": 48, "B": 1, "ms_median": 7.497, "ms_min": 7.453, "ms_max": 7.7, "expert_bytes": 982272000, "gbs": 131.0, "variant": "nodec"}
+{"kind": "token", "rows": 1, "layers": 48, "B": 2, "ms_median": 14.053, "ms_min": 13.945, "ms_max": 14.341, "expert_bytes": 982272000, "gbs": 69.9, "variant": "nodec"}
+{"kind": "token", "rows": 1, "layers": 48, "B": 3, "ms_median": 21.029, "ms_min": 20.898, "ms_max": 21.605, "expert_bytes": 982272000, "gbs": 46.7, "variant": "nodec"}
+{"kind": "token", "rows": 1, "layers": 48, "B": 4, "ms_median": 28.743, "ms_min": 28.702, "ms_max": 29.094, "expert_bytes": 982272000, "gbs": 34.2, "variant": "nodec"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ2S", "B": 1, "us_per_layer_median": 70.4, "us_min": 69.9, "us_max": 70.5, "gbs": 149.0, "variant": "nodec"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3XXS", "B": 1, "us_per_layer_median": 70.7, "us_min": 70.1, "us_max": 71.4, "gbs": 177.4, "variant": "nodec"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3S", "B": 1, "us_per_layer_median": 70.8, "us_min": 70.3, "us_max": 72.7, "gbs": 198.8, "variant": "nodec"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ4XS", "B": 1, "us_per_layer_median": 70.9, "us_min": 69.7, "us_max": 71.3, "gbs": 245.4, "variant": "nodec"}
+{"kind": "type", "rows": 4, "kernel": "down_IQ4NL", "B": 1, "us_per_layer_median": 44.0, "us_min": 42.5, "us_max": 44.2, "gbs": 209.6, "variant": "nodec"}
+{"kind": "type", "rows": 4, "kernel": "down_Q20", "B": 1, "us_per_layer_median": 43.9, "us_min": 43.0, "us_max": 44.0, "gbs": 104.9, "variant": "nodec"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ2S", "B": 2, "us_per_layer_median": 88.6, "us_min": 87.6, "us_max": 92.3, "gbs": 118.5, "variant": "nodec"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3XXS", "B": 2, "us_per_layer_median": 88.7, "us_min": 88.4, "us_max": 88.7, "gbs": 141.5, "variant": "nodec"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3S", "B": 2, "us_per_layer_median": 88.5, "us_min": 87.4, "us_max": 92.9, "gbs": 159.0, "variant": "nodec"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ4XS", "B": 2, "us_per_layer_median": 88.7, "us_min": 87.8, "us_max": 88.9, "gbs": 196.2, "variant": "nodec"}
+{"kind": "type", "rows": 4, "kernel": "down_IQ4NL", "B": 2, "us_per_layer_median": 56.5, "us_min": 56.1, "us_max": 56.6, "gbs": 163.2, "variant": "nodec"}
+{"kind": "type", "rows": 4, "kernel": "down_Q20", "B": 2, "us_per_layer_median": 56.4, "us_min": 54.9, "us_max": 58.5, "gbs": 81.7, "variant": "nodec"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ2S", "B": 3, "us_per_layer_median": 115.5, "us_min": 114.8, "us_max": 115.8, "gbs": 90.9, "variant": "nodec"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3XXS", "B": 3, "us_per_layer_median": 116.0, "us_min": 115.5, "us_max": 121.4, "gbs": 108.2, "variant": "nodec"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3S", "B": 3, "us_per_layer_median": 116.5, "us_min": 115.1, "us_max": 121.5, "gbs": 120.9, "variant": "nodec"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ4XS", "B": 3, "us_per_layer_median": 116.2, "us_min": 115.3, "us_max": 121.3, "gbs": 149.8, "variant": "nodec"}
+{"kind": "type", "rows": 4, "kernel": "down_IQ4NL", "B": 3, "us_per_layer_median": 71.2, "us_min": 69.6, "us_max": 76.5, "gbs": 129.4, "variant": "nodec"}
+{"kind": "type", "rows": 4, "kernel": "down_Q20", "B": 3, "us_per_layer_median": 70.9, "us_min": 69.0, "us_max": 72.0, "gbs": 65.0, "variant": "nodec"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ2S", "B": 4, "us_per_layer_median": 197.4, "us_min": 196.6, "us_max": 203.5, "gbs": 53.2, "variant": "nodec"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3XXS", "B": 4, "us_per_layer_median": 198.3, "us_min": 197.4, "us_max": 208.0, "gbs": 63.2, "variant": "nodec"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3S", "B": 4, "us_per_layer_median": 198.5, "us_min": 198.1, "us_max": 205.2, "gbs": 70.9, "variant": "nodec"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ4XS", "B": 4, "us_per_layer_median": 198.5, "us_min": 196.6, "us_max": 206.4, "gbs": 87.7, "variant": "nodec"}
+{"kind": "type", "rows": 4, "kernel": "down_IQ4NL", "B": 4, "us_per_layer_median": 117.4, "us_min": 116.6, "us_max": 117.6, "gbs": 78.5, "variant": "nodec"}
+{"kind": "type", "rows": 4, "kernel": "down_Q20", "B": 4, "us_per_layer_median": 115.6, "us_min": 114.9, "us_max": 122.0, "gbs": 39.9, "variant": "nodec"}
+{"kind": "token", "rows": 4, "layers": 48, "B": 1, "ms_median": 5.537, "ms_min": 5.448, "ms_max": 5.781, "expert_bytes": 982272000, "gbs": 177.4, "variant": "nodec"}
+{"kind": "token", "rows": 4, "layers": 48, "B": 2, "ms_median": 7.0, "ms_min": 6.923, "ms_max": 7.104, "expert_bytes": 982272000, "gbs": 140.3, "variant": "nodec"}
+{"kind": "token", "rows": 4, "layers": 48, "B": 3, "ms_median": 9.041, "ms_min": 8.913, "ms_max": 9.415, "expert_bytes": 982272000, "gbs": 108.6, "variant": "nodec"}
+{"kind": "token", "rows": 4, "layers": 48, "B": 4, "ms_median": 15.372, "ms_min": 15.209, "ms_max": 15.575, "expert_bytes": 982272000, "gbs": 63.9, "variant": "nodec"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ2S", "B": 1, "us_per_layer_median": 219.8, "us_min": 219.4, "us_max": 226.6, "gbs": 47.8, "variant": "u16"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3XXS", "B": 1, "us_per_layer_median": 154.4, "us_min": 154.1, "us_max": 161.2, "gbs": 81.2, "variant": "u16"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3S", "B": 1, "us_per_layer_median": 176.6, "us_min": 175.2, "us_max": 176.9, "gbs": 79.7, "variant": "u16"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ4XS", "B": 1, "us_per_layer_median": 130.4, "us_min": 130.0, "us_max": 135.5, "gbs": 133.5, "variant": "u16"}
+{"kind": "type", "rows": 1, "kernel": "down_IQ4NL", "B": 1, "us_per_layer_median": 71.7, "us_min": 70.8, "us_max": 72.0, "gbs": 128.5, "variant": "u16"}
+{"kind": "type", "rows": 1, "kernel": "down_Q20", "B": 1, "us_per_layer_median": 78.9, "us_min": 76.6, "us_max": 85.1, "gbs": 58.4, "variant": "u16"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ2S", "B": 2, "us_per_layer_median": 350.3, "us_min": 349.4, "us_max": 356.4, "gbs": 30.0, "variant": "u16"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3XXS", "B": 2, "us_per_layer_median": 223.6, "us_min": 223.2, "us_max": 229.8, "gbs": 56.1, "variant": "u16"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3S", "B": 2, "us_per_layer_median": 254.7, "us_min": 252.8, "us_max": 262.2, "gbs": 55.3, "variant": "u16"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ4XS", "B": 2, "us_per_layer_median": 209.6, "us_min": 208.8, "us_max": 215.6, "gbs": 83.1, "variant": "u16"}
+{"kind": "type", "rows": 1, "kernel": "down_IQ4NL", "B": 2, "us_per_layer_median": 106.8, "us_min": 105.7, "us_max": 114.2, "gbs": 86.3, "variant": "u16"}
+{"kind": "type", "rows": 1, "kernel": "down_Q20", "B": 2, "us_per_layer_median": 95.1, "us_min": 94.6, "us_max": 95.2, "gbs": 48.4, "variant": "u16"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ2S", "B": 3, "us_per_layer_median": 460.7, "us_min": 459.6, "us_max": 466.1, "gbs": 22.8, "variant": "u16"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3XXS", "B": 3, "us_per_layer_median": 339.2, "us_min": 338.3, "us_max": 348.2, "gbs": 37.0, "variant": "u16"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3S", "B": 3, "us_per_layer_median": 374.5, "us_min": 373.8, "us_max": 381.5, "gbs": 37.6, "variant": "u16"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ4XS", "B": 3, "us_per_layer_median": 320.9, "us_min": 320.2, "us_max": 328.0, "gbs": 54.2, "variant": "u16"}
+{"kind": "type", "rows": 1, "kernel": "down_IQ4NL", "B": 3, "us_per_layer_median": 153.8, "us_min": 152.0, "us_max": 154.1, "gbs": 59.9, "variant": "u16"}
+{"kind": "type", "rows": 1, "kernel": "down_Q20", "B": 3, "us_per_layer_median": 127.7, "us_min": 126.3, "us_max": 133.5, "gbs": 36.1, "variant": "u16"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ2S", "B": 4, "us_per_layer_median": 588.9, "us_min": 588.2, "us_max": 598.0, "gbs": 17.8, "variant": "u16"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3XXS", "B": 4, "us_per_layer_median": 469.9, "us_min": 469.5, "us_max": 475.8, "gbs": 26.7, "variant": "u16"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3S", "B": 4, "us_per_layer_median": 503.8, "us_min": 502.4, "us_max": 510.4, "gbs": 27.9, "variant": "u16"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ4XS", "B": 4, "us_per_layer_median": 433.9, "us_min": 431.2, "us_max": 440.9, "gbs": 40.1, "variant": "u16"}
+{"kind": "type", "rows": 1, "kernel": "down_IQ4NL", "B": 4, "us_per_layer_median": 198.8, "us_min": 198.2, "us_max": 206.4, "gbs": 46.4, "variant": "u16"}
+{"kind": "type", "rows": 1, "kernel": "down_Q20", "B": 4, "us_per_layer_median": 161.4, "us_min": 161.1, "us_max": 163.0, "gbs": 28.5, "variant": "u16"}
+{"kind": "token", "rows": 1, "layers": 48, "B": 1, "ms_median": 12.411, "ms_min": 12.322, "ms_max": 12.783, "expert_bytes": 982272000, "gbs": 79.1, "variant": "u16"}
+{"kind": "token", "rows": 1, "layers": 48, "B": 2, "ms_median": 18.625, "ms_min": 18.587, "ms_max": 18.963, "expert_bytes": 982272000, "gbs": 52.7, "variant": "u16"}
+{"kind": "token", "rows": 1, "layers": 48, "B": 3, "ms_median": 26.169, "ms_min": 26.095, "ms_max": 26.698, "expert_bytes": 982272000, "gbs": 37.5, "variant": "u16"}
+{"kind": "token", "rows": 1, "layers": 48, "B": 4, "ms_median": 34.387, "ms_min": 34.329, "ms_max": 34.765, "expert_bytes": 982272000, "gbs": 28.6, "variant": "u16"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ2S", "B": 1, "us_per_layer_median": 156.2, "us_min": 155.8, "us_max": 158.0, "gbs": 67.2, "variant": "u16"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3XXS", "B": 1, "us_per_layer_median": 144.1, "us_min": 143.1, "us_max": 144.2, "gbs": 87.1, "variant": "u16"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3S", "B": 1, "us_per_layer_median": 142.1, "us_min": 141.1, "us_max": 142.3, "gbs": 99.1, "variant": "u16"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ4XS", "B": 1, "us_per_layer_median": 116.6, "us_min": 114.9, "us_max": 120.7, "gbs": 149.3, "variant": "u16"}
+{"kind": "type", "rows": 4, "kernel": "down_IQ4NL", "B": 1, "us_per_layer_median": 58.4, "us_min": 58.0, "us_max": 59.4, "gbs": 157.8, "variant": "u16"}
+{"kind": "type", "rows": 4, "kernel": "down_Q20", "B": 1, "us_per_layer_median": 54.4, "us_min": 54.0, "us_max": 55.7, "gbs": 84.7, "variant": "u16"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ2S", "B": 2, "us_per_layer_median": 203.8, "us_min": 203.5, "us_max": 207.7, "gbs": 51.5, "variant": "u16"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3XXS", "B": 2, "us_per_layer_median": 166.7, "us_min": 166.3, "us_max": 168.3, "gbs": 75.3, "variant": "u16"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3S", "B": 2, "us_per_layer_median": 170.5, "us_min": 169.7, "us_max": 172.7, "gbs": 82.6, "variant": "u16"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ4XS", "B": 2, "us_per_layer_median": 151.2, "us_min": 150.2, "us_max": 155.0, "gbs": 115.2, "variant": "u16"}
+{"kind": "type", "rows": 4, "kernel": "down_IQ4NL", "B": 2, "us_per_layer_median": 76.1, "us_min": 75.7, "us_max": 76.8, "gbs": 121.1, "variant": "u16"}
+{"kind": "type", "rows": 4, "kernel": "down_Q20", "B": 2, "us_per_layer_median": 68.5, "us_min": 66.3, "us_max": 69.0, "gbs": 67.3, "variant": "u16"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ2S", "B": 3, "us_per_layer_median": 243.9, "us_min": 242.8, "us_max": 250.9, "gbs": 43.0, "variant": "u16"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3XXS", "B": 3, "us_per_layer_median": 231.8, "us_min": 230.9, "us_max": 239.5, "gbs": 54.1, "variant": "u16"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3S", "B": 3, "us_per_layer_median": 243.7, "us_min": 242.9, "us_max": 252.9, "gbs": 57.8, "variant": "u16"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ4XS", "B": 3, "us_per_layer_median": 217.3, "us_min": 216.5, "us_max": 217.8, "gbs": 80.1, "variant": "u16"}
+{"kind": "type", "rows": 4, "kernel": "down_IQ4NL", "B": 3, "us_per_layer_median": 110.9, "us_min": 110.6, "us_max": 115.7, "gbs": 83.1, "variant": "u16"}
+{"kind": "type", "rows": 4, "kernel": "down_Q20", "B": 3, "us_per_layer_median": 104.5, "us_min": 103.8, "us_max": 104.6, "gbs": 44.1, "variant": "u16"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ2S", "B": 4, "us_per_layer_median": 295.4, "us_min": 294.0, "us_max": 301.0, "gbs": 35.5, "variant": "u16"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3XXS", "B": 4, "us_per_layer_median": 284.3, "us_min": 283.7, "us_max": 291.7, "gbs": 44.1, "variant": "u16"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3S", "B": 4, "us_per_layer_median": 301.4, "us_min": 298.7, "us_max": 308.7, "gbs": 46.7, "variant": "u16"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ4XS", "B": 4, "us_per_layer_median": 265.5, "us_min": 264.4, "us_max": 274.7, "gbs": 65.6, "variant": "u16"}
+{"kind": "type", "rows": 4, "kernel": "down_IQ4NL", "B": 4, "us_per_layer_median": 135.3, "us_min": 135.0, "us_max": 140.7, "gbs": 68.1, "variant": "u16"}
+{"kind": "type", "rows": 4, "kernel": "down_Q20", "B": 4, "us_per_layer_median": 128.7, "us_min": 127.2, "us_max": 135.5, "gbs": 35.8, "variant": "u16"}
+{"kind": "token", "rows": 4, "layers": 48, "B": 1, "ms_median": 9.972, "ms_min": 9.944, "ms_max": 10.122, "expert_bytes": 982272000, "gbs": 98.5, "variant": "u16"}
+{"kind": "token", "rows": 4, "layers": 48, "B": 2, "ms_median": 12.49, "ms_min": 12.43, "ms_max": 12.786, "expert_bytes": 982272000, "gbs": 78.6, "variant": "u16"}
+{"kind": "token", "rows": 4, "layers": 48, "B": 3, "ms_median": 16.943, "ms_min": 16.796, "ms_max": 17.334, "expert_bytes": 982272000, "gbs": 58.0, "variant": "u16"}
+{"kind": "token", "rows": 4, "layers": 48, "B": 4, "ms_median": 20.651, "ms_min": 20.598, "ms_max": 21.006, "expert_bytes": 982272000, "gbs": 47.6, "variant": "u16"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ2S", "B": 1, "us_per_layer_median": 223.2, "us_min": 222.8, "us_max": 224.2, "gbs": 47.0, "variant": "un2"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3XXS", "B": 1, "us_per_layer_median": 151.4, "us_min": 150.8, "us_max": 151.6, "gbs": 82.8, "variant": "un2"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3S", "B": 1, "us_per_layer_median": 161.9, "us_min": 159.3, "us_max": 168.5, "gbs": 87.0, "variant": "un2"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ4XS", "B": 1, "us_per_layer_median": 141.1, "us_min": 138.6, "us_max": 147.6, "gbs": 123.4, "variant": "un2"}
+{"kind": "type", "rows": 1, "kernel": "down_IQ4NL", "B": 1, "us_per_layer_median": 76.4, "us_min": 75.3, "us_max": 76.8, "gbs": 120.6, "variant": "un2"}
+{"kind": "type", "rows": 1, "kernel": "down_Q20", "B": 1, "us_per_layer_median": 77.1, "us_min": 76.7, "us_max": 77.5, "gbs": 59.8, "variant": "un2"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ2S", "B": 2, "us_per_layer_median": 335.1, "us_min": 334.3, "us_max": 349.1, "gbs": 31.3, "variant": "un2"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3XXS", "B": 2, "us_per_layer_median": 232.1, "us_min": 231.1, "us_max": 238.9, "gbs": 54.0, "variant": "un2"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3S", "B": 2, "us_per_layer_median": 260.5, "us_min": 259.1, "us_max": 267.5, "gbs": 54.1, "variant": "un2"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ4XS", "B": 2, "us_per_layer_median": 231.9, "us_min": 231.4, "us_max": 239.1, "gbs": 75.1, "variant": "un2"}
+{"kind": "type", "rows": 1, "kernel": "down_IQ4NL", "B": 2, "us_per_layer_median": 115.2, "us_min": 113.2, "us_max": 121.6, "gbs": 80.0, "variant": "un2"}
+{"kind": "type", "rows": 1, "kernel": "down_Q20", "B": 2, "us_per_layer_median": 95.9, "us_min": 94.5, "us_max": 101.7, "gbs": 48.1, "variant": "un2"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ2S", "B": 3, "us_per_layer_median": 478.8, "us_min": 477.9, "us_max": 485.5, "gbs": 21.9, "variant": "un2"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3XXS", "B": 3, "us_per_layer_median": 361.6, "us_min": 361.1, "us_max": 368.9, "gbs": 34.7, "variant": "un2"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3S", "B": 3, "us_per_layer_median": 400.1, "us_min": 398.9, "us_max": 406.3, "gbs": 35.2, "variant": "un2"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ4XS", "B": 3, "us_per_layer_median": 389.9, "us_min": 388.0, "us_max": 397.0, "gbs": 44.6, "variant": "un2"}
+{"kind": "type", "rows": 1, "kernel": "down_IQ4NL", "B": 3, "us_per_layer_median": 155.4, "us_min": 155.1, "us_max": 161.7, "gbs": 59.3, "variant": "un2"}
+{"kind": "type", "rows": 1, "kernel": "down_Q20", "B": 3, "us_per_layer_median": 134.5, "us_min": 132.8, "us_max": 141.0, "gbs": 34.3, "variant": "un2"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ2S", "B": 4, "us_per_layer_median": 691.6, "us_min": 689.7, "us_max": 697.2, "gbs": 15.2, "variant": "un2"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3XXS", "B": 4, "us_per_layer_median": 565.0, "us_min": 564.0, "us_max": 578.2, "gbs": 22.2, "variant": "un2"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3S", "B": 4, "us_per_layer_median": 677.3, "us_min": 675.1, "us_max": 689.1, "gbs": 20.8, "variant": "un2"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ4XS", "B": 4, "us_per_layer_median": 618.1, "us_min": 615.3, "us_max": 624.8, "gbs": 28.2, "variant": "un2"}
+{"kind": "type", "rows": 1, "kernel": "down_IQ4NL", "B": 4, "us_per_layer_median": 199.3, "us_min": 198.3, "us_max": 206.1, "gbs": 46.2, "variant": "un2"}
+{"kind": "type", "rows": 1, "kernel": "down_Q20", "B": 4, "us_per_layer_median": 174.5, "us_min": 174.0, "us_max": 183.6, "gbs": 26.4, "variant": "un2"}
+{"kind": "token", "rows": 1, "layers": 48, "B": 1, "ms_median": 12.46, "ms_min": 12.406, "ms_max": 12.776, "expert_bytes": 982272000, "gbs": 78.8, "variant": "un2"}
+{"kind": "token", "rows": 1, "layers": 48, "B": 2, "ms_median": 18.819, "ms_min": 18.765, "ms_max": 19.31, "expert_bytes": 982272000, "gbs": 52.2, "variant": "un2"}
+{"kind": "token", "rows": 1, "layers": 48, "B": 3, "ms_median": 27.342, "ms_min": 27.191, "ms_max": 27.792, "expert_bytes": 982272000, "gbs": 35.9, "variant": "un2"}
+{"kind": "token", "rows": 1, "layers": 48, "B": 4, "ms_median": 40.042, "ms_min": 39.847, "ms_max": 40.669, "expert_bytes": 982272000, "gbs": 24.5, "variant": "un2"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ2S", "B": 1, "us_per_layer_median": 167.8, "us_min": 166.9, "us_max": 174.6, "gbs": 62.6, "variant": "un2"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3XXS", "B": 1, "us_per_layer_median": 158.7, "us_min": 156.8, "us_max": 160.8, "gbs": 79.0, "variant": "un2"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3S", "B": 1, "us_per_layer_median": 165.3, "us_min": 164.4, "us_max": 170.6, "gbs": 85.2, "variant": "un2"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ4XS", "B": 1, "us_per_layer_median": 160.0, "us_min": 159.2, "us_max": 166.5, "gbs": 108.8, "variant": "un2"}
+{"kind": "type", "rows": 4, "kernel": "down_IQ4NL", "B": 1, "us_per_layer_median": 69.0, "us_min": 68.5, "us_max": 69.6, "gbs": 133.5, "variant": "un2"}
+{"kind": "type", "rows": 4, "kernel": "down_Q20", "B": 1, "us_per_layer_median": 56.1, "us_min": 53.3, "us_max": 56.4, "gbs": 82.2, "variant": "un2"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ2S", "B": 2, "us_per_layer_median": 314.7, "us_min": 310.5, "us_max": 318.6, "gbs": 33.4, "variant": "un2"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3XXS", "B": 2, "us_per_layer_median": 334.7, "us_min": 332.1, "us_max": 342.7, "gbs": 37.5, "variant": "un2"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3S", "B": 2, "us_per_layer_median": 323.3, "us_min": 322.2, "us_max": 331.5, "gbs": 43.6, "variant": "un2"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ4XS", "B": 2, "us_per_layer_median": 305.7, "us_min": 305.3, "us_max": 314.0, "gbs": 56.9, "variant": "un2"}
+{"kind": "type", "rows": 4, "kernel": "down_IQ4NL", "B": 2, "us_per_layer_median": 140.9, "us_min": 139.7, "us_max": 148.1, "gbs": 65.4, "variant": "un2"}
+{"kind": "type", "rows": 4, "kernel": "down_Q20", "B": 2, "us_per_layer_median": 118.8, "us_min": 117.2, "us_max": 123.8, "gbs": 38.8, "variant": "un2"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ2S", "B": 3, "us_per_layer_median": 461.9, "us_min": 460.6, "us_max": 469.8, "gbs": 22.7, "variant": "un2"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3XXS", "B": 3, "us_per_layer_median": 446.2, "us_min": 445.4, "us_max": 458.0, "gbs": 28.1, "variant": "un2"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3S", "B": 3, "us_per_layer_median": 450.2, "us_min": 448.3, "us_max": 456.6, "gbs": 31.3, "variant": "un2"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ4XS", "B": 3, "us_per_layer_median": 387.4, "us_min": 386.7, "us_max": 396.5, "gbs": 44.9, "variant": "un2"}
+{"kind": "type", "rows": 4, "kernel": "down_IQ4NL", "B": 3, "us_per_layer_median": 201.5, "us_min": 200.6, "us_max": 208.5, "gbs": 45.7, "variant": "un2"}
+{"kind": "type", "rows": 4, "kernel": "down_Q20", "B": 3, "us_per_layer_median": 184.4, "us_min": 183.5, "us_max": 190.8, "gbs": 25.0, "variant": "un2"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ2S", "B": 4, "us_per_layer_median": 1002.6, "us_min": 995.5, "us_max": 1018.7, "gbs": 10.5, "variant": "un2"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3XXS", "B": 4, "us_per_layer_median": 996.2, "us_min": 986.8, "us_max": 1003.5, "gbs": 12.6, "variant": "un2"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3S", "B": 4, "us_per_layer_median": 1012.1, "us_min": 1000.6, "us_max": 1019.9, "gbs": 13.9, "variant": "un2"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ4XS", "B": 4, "us_per_layer_median": 953.8, "us_min": 946.6, "us_max": 956.4, "gbs": 18.3, "variant": "un2"}
+{"kind": "type", "rows": 4, "kernel": "down_IQ4NL", "B": 4, "us_per_layer_median": 451.9, "us_min": 451.5, "us_max": 460.8, "gbs": 20.4, "variant": "un2"}
+{"kind": "type", "rows": 4, "kernel": "down_Q20", "B": 4, "us_per_layer_median": 403.3, "us_min": 402.7, "us_max": 417.3, "gbs": 11.4, "variant": "un2"}
+{"kind": "token", "rows": 4, "layers": 48, "B": 1, "ms_median": 11.333, "ms_min": 11.096, "ms_max": 11.579, "expert_bytes": 982272000, "gbs": 86.7, "variant": "un2"}
+{"kind": "token", "rows": 4, "layers": 48, "B": 2, "ms_median": 22.53, "ms_min": 22.301, "ms_max": 22.908, "expert_bytes": 982272000, "gbs": 43.6, "variant": "un2"}
+{"kind": "token", "rows": 4, "layers": 48, "B": 3, "ms_median": 31.92, "ms_min": 31.716, "ms_max": 32.482, "expert_bytes": 982272000, "gbs": 30.8, "variant": "un2"}
+{"kind": "token", "rows": 4, "layers": 48, "B": 4, "ms_median": 70.467, "ms_min": 69.913, "ms_max": 70.694, "expert_bytes": 982272000, "gbs": 13.9, "variant": "un2"}
+{"kind": "type", "rows": 2, "kernel": "gate_up_IQ2S", "B": 1, "us_per_layer_median": 177.3, "us_min": 176.3, "us_max": 180.8, "gbs": 59.2, "variant": "r2"}
+{"kind": "type", "rows": 2, "kernel": "gate_up_IQ3XXS", "B": 1, "us_per_layer_median": 145.4, "us_min": 145.0, "us_max": 145.9, "gbs": 86.3, "variant": "r2"}
+{"kind": "type", "rows": 2, "kernel": "gate_up_IQ3S", "B": 1, "us_per_layer_median": 143.1, "us_min": 140.5, "us_max": 150.6, "gbs": 98.4, "variant": "r2"}
+{"kind": "type", "rows": 2, "kernel": "gate_up_IQ4XS", "B": 1, "us_per_layer_median": 121.2, "us_min": 121.1, "us_max": 121.4, "gbs": 143.6, "variant": "r2"}
+{"kind": "type", "rows": 2, "kernel": "down_IQ4NL", "B": 1, "us_per_layer_median": 64.0, "us_min": 62.8, "us_max": 69.7, "gbs": 144.1, "variant": "r2"}
+{"kind": "type", "rows": 2, "kernel": "down_Q20", "B": 1, "us_per_layer_median": 61.8, "us_min": 61.5, "us_max": 62.0, "gbs": 74.6, "variant": "r2"}
+{"kind": "type", "rows": 2, "kernel": "gate_up_IQ2S", "B": 2, "us_per_layer_median": 250.4, "us_min": 249.6, "us_max": 255.2, "gbs": 41.9, "variant": "r2"}
+{"kind": "type", "rows": 2, "kernel": "gate_up_IQ3XXS", "B": 2, "us_per_layer_median": 165.9, "us_min": 165.5, "us_max": 172.2, "gbs": 75.6, "variant": "r2"}
+{"kind": "type", "rows": 2, "kernel": "gate_up_IQ3S", "B": 2, "us_per_layer_median": 170.3, "us_min": 169.0, "us_max": 170.7, "gbs": 82.7, "variant": "r2"}
+{"kind": "type", "rows": 2, "kernel": "gate_up_IQ4XS", "B": 2, "us_per_layer_median": 145.9, "us_min": 145.2, "us_max": 146.4, "gbs": 119.3, "variant": "r2"}
+{"kind": "type", "rows": 2, "kernel": "down_IQ4NL", "B": 2, "us_per_layer_median": 82.6, "us_min": 81.6, "us_max": 88.5, "gbs": 111.5, "variant": "r2"}
+{"kind": "type", "rows": 2, "kernel": "down_Q20", "B": 2, "us_per_layer_median": 78.5, "us_min": 77.7, "us_max": 78.7, "gbs": 58.7, "variant": "r2"}
+{"kind": "type", "rows": 2, "kernel": "gate_up_IQ2S", "B": 3, "us_per_layer_median": 301.5, "us_min": 299.9, "us_max": 314.6, "gbs": 34.8, "variant": "r2"}
+{"kind": "type", "rows": 2, "kernel": "gate_up_IQ3XXS", "B": 3, "us_per_layer_median": 209.7, "us_min": 209.1, "us_max": 214.8, "gbs": 59.8, "variant": "r2"}
+{"kind": "type", "rows": 2, "kernel": "gate_up_IQ3S", "B": 3, "us_per_layer_median": 226.4, "us_min": 225.2, "us_max": 234.6, "gbs": 62.2, "variant": "r2"}
+{"kind": "type", "rows": 2, "kernel": "gate_up_IQ4XS", "B": 3, "us_per_layer_median": 198.1, "us_min": 197.7, "us_max": 204.7, "gbs": 87.9, "variant": "r2"}
+{"kind": "type", "rows": 2, "kernel": "down_IQ4NL", "B": 3, "us_per_layer_median": 113.1, "us_min": 112.6, "us_max": 117.8, "gbs": 81.5, "variant": "r2"}
+{"kind": "type", "rows": 2, "kernel": "down_Q20", "B": 3, "us_per_layer_median": 90.3, "us_min": 90.0, "us_max": 90.3, "gbs": 51.1, "variant": "r2"}
+{"kind": "type", "rows": 2, "kernel": "gate_up_IQ2S", "B": 4, "us_per_layer_median": 366.5, "us_min": 365.4, "us_max": 372.5, "gbs": 28.6, "variant": "r2"}
+{"kind": "type", "rows": 2, "kernel": "gate_up_IQ3XXS", "B": 4, "us_per_layer_median": 267.6, "us_min": 265.6, "us_max": 272.6, "gbs": 46.9, "variant": "r2"}
+{"kind": "type", "rows": 2, "kernel": "gate_up_IQ3S", "B": 4, "us_per_layer_median": 288.5, "us_min": 287.3, "us_max": 296.4, "gbs": 48.8, "variant": "r2"}
+{"kind": "type", "rows": 2, "kernel": "gate_up_IQ4XS", "B": 4, "us_per_layer_median": 254.7, "us_min": 253.3, "us_max": 262.7, "gbs": 68.4, "variant": "r2"}
+{"kind": "type", "rows": 2, "kernel": "down_IQ4NL", "B": 4, "us_per_layer_median": 126.7, "us_min": 126.3, "us_max": 127.0, "gbs": 72.7, "variant": "r2"}
+{"kind": "type", "rows": 2, "kernel": "down_Q20", "B": 4, "us_per_layer_median": 108.1, "us_min": 107.3, "us_max": 108.2, "gbs": 42.6, "variant": "r2"}
+{"kind": "token", "rows": 2, "layers": 48, "B": 1, "ms_median": 10.607, "ms_min": 10.533, "ms_max": 10.881, "expert_bytes": 982272000, "gbs": 92.6, "variant": "r2"}
+{"kind": "token", "rows": 2, "layers": 48, "B": 2, "ms_median": 13.617, "ms_min": 13.47, "ms_max": 13.987, "expert_bytes": 982272000, "gbs": 72.1, "variant": "r2"}
+{"kind": "token", "rows": 2, "layers": 48, "B": 3, "ms_median": 17.329, "ms_min": 17.111, "ms_max": 17.667, "expert_bytes": 982272000, "gbs": 56.7, "variant": "r2"}
+{"kind": "token", "rows": 2, "layers": 48, "B": 4, "ms_median": 20.945, "ms_min": 20.909, "ms_max": 21.33, "expert_bytes": 982272000, "gbs": 46.9, "variant": "r2"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ2S", "B": 1, "us_per_layer_median": 156.0, "us_min": 153.7, "us_max": 156.2, "gbs": 67.3, "variant": "r2"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3XXS", "B": 1, "us_per_layer_median": 147.7, "us_min": 146.5, "us_max": 151.5, "gbs": 84.9, "variant": "r2"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3S", "B": 1, "us_per_layer_median": 142.1, "us_min": 141.9, "us_max": 146.1, "gbs": 99.1, "variant": "r2"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ4XS", "B": 1, "us_per_layer_median": 116.5, "us_min": 115.7, "us_max": 116.9, "gbs": 149.5, "variant": "r2"}
+{"kind": "type", "rows": 4, "kernel": "down_IQ4NL", "B": 1, "us_per_layer_median": 59.3, "us_min": 58.7, "us_max": 59.5, "gbs": 155.3, "variant": "r2"}
+{"kind": "type", "rows": 4, "kernel": "down_Q20", "B": 1, "us_per_layer_median": 54.1, "us_min": 53.0, "us_max": 56.3, "gbs": 85.2, "variant": "r2"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ2S", "B": 2, "us_per_layer_median": 203.4, "us_min": 202.9, "us_max": 209.5, "gbs": 51.6, "variant": "r2"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3XXS", "B": 2, "us_per_layer_median": 173.9, "us_min": 170.8, "us_max": 185.7, "gbs": 72.1, "variant": "r2"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3S", "B": 2, "us_per_layer_median": 170.4, "us_min": 169.7, "us_max": 177.8, "gbs": 82.6, "variant": "r2"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ4XS", "B": 2, "us_per_layer_median": 151.3, "us_min": 150.1, "us_max": 153.9, "gbs": 115.1, "variant": "r2"}
+{"kind": "type", "rows": 4, "kernel": "down_IQ4NL", "B": 2, "us_per_layer_median": 76.7, "us_min": 76.0, "us_max": 82.0, "gbs": 120.1, "variant": "r2"}
+{"kind": "type", "rows": 4, "kernel": "down_Q20", "B": 2, "us_per_layer_median": 69.1, "us_min": 68.7, "us_max": 70.6, "gbs": 66.7, "variant": "r2"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ2S", "B": 3, "us_per_layer_median": 243.5, "us_min": 243.2, "us_max": 245.7, "gbs": 43.1, "variant": "r2"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3XXS", "B": 3, "us_per_layer_median": 237.1, "us_min": 236.5, "us_max": 242.2, "gbs": 52.9, "variant": "r2"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3S", "B": 3, "us_per_layer_median": 243.6, "us_min": 242.2, "us_max": 249.6, "gbs": 57.8, "variant": "r2"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ4XS", "B": 3, "us_per_layer_median": 216.6, "us_min": 216.0, "us_max": 216.9, "gbs": 80.4, "variant": "r2"}
+{"kind": "type", "rows": 4, "kernel": "down_IQ4NL", "B": 3, "us_per_layer_median": 111.0, "us_min": 110.3, "us_max": 116.6, "gbs": 83.0, "variant": "r2"}
+{"kind": "type", "rows": 4, "kernel": "down_Q20", "B": 3, "us_per_layer_median": 104.6, "us_min": 103.7, "us_max": 104.8, "gbs": 44.1, "variant": "r2"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ2S", "B": 4, "us_per_layer_median": 294.5, "us_min": 291.4, "us_max": 299.9, "gbs": 35.6, "variant": "r2"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3XXS", "B": 4, "us_per_layer_median": 284.9, "us_min": 284.1, "us_max": 292.0, "gbs": 44.0, "variant": "r2"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3S", "B": 4, "us_per_layer_median": 300.6, "us_min": 298.7, "us_max": 306.2, "gbs": 46.8, "variant": "r2"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ4XS", "B": 4, "us_per_layer_median": 265.6, "us_min": 264.7, "us_max": 272.7, "gbs": 65.5, "variant": "r2"}
+{"kind": "type", "rows": 4, "kernel": "down_IQ4NL", "B": 4, "us_per_layer_median": 135.1, "us_min": 134.7, "us_max": 135.5, "gbs": 68.2, "variant": "r2"}
+{"kind": "type", "rows": 4, "kernel": "down_Q20", "B": 4, "us_per_layer_median": 128.9, "us_min": 126.1, "us_max": 135.2, "gbs": 35.8, "variant": "r2"}
+{"kind": "token", "rows": 4, "layers": 48, "B": 1, "ms_median": 10.033, "ms_min": 9.93, "ms_max": 10.319, "expert_bytes": 982272000, "gbs": 97.9, "variant": "r2"}
+{"kind": "token", "rows": 4, "layers": 48, "B": 2, "ms_median": 12.617, "ms_min": 12.507, "ms_max": 12.917, "expert_bytes": 982272000, "gbs": 77.8, "variant": "r2"}
+{"kind": "token", "rows": 4, "layers": 48, "B": 3, "ms_median": 17.027, "ms_min": 16.906, "ms_max": 17.352, "expert_bytes": 982272000, "gbs": 57.7, "variant": "r2"}
+{"kind": "token", "rows": 4, "layers": 48, "B": 4, "ms_median": 20.662, "ms_min": 20.529, "ms_max": 21.033, "expert_bytes": 982272000, "gbs": 47.5, "variant": "r2"}
+{"kind": "type", "rows": 8, "kernel": "gate_up_IQ2S", "B": 1, "us_per_layer_median": 180.3, "us_min": 179.3, "us_max": 181.5, "gbs": 58.2, "variant": "r2"}
+{"kind": "type", "rows": 8, "kernel": "gate_up_IQ3XXS", "B": 1, "us_per_layer_median": 175.4, "us_min": 175.1, "us_max": 176.1, "gbs": 71.5, "variant": "r2"}
+{"kind": "type", "rows": 8, "kernel": "gate_up_IQ3S", "B": 1, "us_per_layer_median": 168.1, "us_min": 167.2, "us_max": 170.7, "gbs": 83.7, "variant": "r2"}
+{"kind": "type", "rows": 8, "kernel": "gate_up_IQ4XS", "B": 1, "us_per_layer_median": 148.5, "us_min": 147.5, "us_max": 152.7, "gbs": 117.3, "variant": "r2"}
+{"kind": "type", "rows": 8, "kernel": "down_IQ4NL", "B": 1, "us_per_layer_median": 64.0, "us_min": 61.7, "us_max": 69.3, "gbs": 143.9, "variant": "r2"}
+{"kind": "type", "rows": 8, "kernel": "down_Q20", "B": 1, "us_per_layer_median": 51.6, "us_min": 48.9, "us_max": 51.8, "gbs": 89.3, "variant": "r2"}
+{"kind": "type", "rows": 8, "kernel": "gate_up_IQ2S", "B": 2, "us_per_layer_median": 225.5, "us_min": 224.9, "us_max": 225.8, "gbs": 46.6, "variant": "r2"}
+{"kind": "type", "rows": 8, "kernel": "gate_up_IQ3XXS", "B": 2, "us_per_layer_median": 244.5, "us_min": 243.9, "us_max": 253.3, "gbs": 51.3, "variant": "r2"}
+{"kind": "type", "rows": 8, "kernel": "gate_up_IQ3S", "B": 2, "us_per_layer_median": 241.4, "us_min": 240.7, "us_max": 247.9, "gbs": 58.3, "variant": "r2"}
+{"kind": "type", "rows": 8, "kernel": "gate_up_IQ4XS", "B": 2, "us_per_layer_median": 213.9, "us_min": 212.2, "us_max": 218.7, "gbs": 81.4, "variant": "r2"}
+{"kind": "type", "rows": 8, "kernel": "down_IQ4NL", "B": 2, "us_per_layer_median": 98.8, "us_min": 97.7, "us_max": 104.0, "gbs": 93.3, "variant": "r2"}
+{"kind": "type", "rows": 8, "kernel": "down_Q20", "B": 2, "us_per_layer_median": 81.0, "us_min": 80.4, "us_max": 81.1, "gbs": 56.9, "variant": "r2"}
+{"kind": "type", "rows": 8, "kernel": "gate_up_IQ2S", "B": 3, "us_per_layer_median": 296.6, "us_min": 292.8, "us_max": 302.9, "gbs": 35.4, "variant": "r2"}
+{"kind": "type", "rows": 8, "kernel": "gate_up_IQ3XXS", "B": 3, "us_per_layer_median": 304.6, "us_min": 302.6, "us_max": 309.4, "gbs": 41.2, "variant": "r2"}
+{"kind": "type", "rows": 8, "kernel": "gate_up_IQ3S", "B": 3, "us_per_layer_median": 313.8, "us_min": 311.7, "us_max": 319.1, "gbs": 44.9, "variant": "r2"}
+{"kind": "type", "rows": 8, "kernel": "gate_up_IQ4XS", "B": 3, "us_per_layer_median": 283.4, "us_min": 280.6, "us_max": 284.2, "gbs": 61.4, "variant": "r2"}
+{"kind": "type", "rows": 8, "kernel": "down_IQ4NL", "B": 3, "us_per_layer_median": 130.3, "us_min": 129.0, "us_max": 136.3, "gbs": 70.7, "variant": "r2"}
+{"kind": "type", "rows": 8, "kernel": "down_Q20", "B": 3, "us_per_layer_median": 117.1, "us_min": 116.9, "us_max": 123.3, "gbs": 39.3, "variant": "r2"}
+{"kind": "type", "rows": 8, "kernel": "gate_up_IQ2S", "B": 4, "us_per_layer_median": 389.4, "us_min": 388.6, "us_max": 395.5, "gbs": 27.0, "variant": "r2"}
+{"kind": "type", "rows": 8, "kernel": "gate_up_IQ3XXS", "B": 4, "us_per_layer_median": 389.9, "us_min": 388.4, "us_max": 395.2, "gbs": 32.2, "variant": "r2"}
+{"kind": "type", "rows": 8, "kernel": "gate_up_IQ3S", "B": 4, "us_per_layer_median": 399.0, "us_min": 398.3, "us_max": 404.6, "gbs": 35.3, "variant": "r2"}
+{"kind": "type", "rows": 8, "kernel": "gate_up_IQ4XS", "B": 4, "us_per_layer_median": 358.5, "us_min": 357.8, "us_max": 362.6, "gbs": 48.6, "variant": "r2"}
+{"kind": "type", "rows": 8, "kernel": "down_IQ4NL", "B": 4, "us_per_layer_median": 163.1, "us_min": 162.2, "us_max": 168.9, "gbs": 56.5, "variant": "r2"}
+{"kind": "type", "rows": 8, "kernel": "down_Q20", "B": 4, "us_per_layer_median": 149.2, "us_min": 148.9, "us_max": 149.4, "gbs": 30.9, "variant": "r2"}
+{"kind": "token", "rows": 8, "layers": 48, "B": 1, "ms_median": 11.724, "ms_min": 11.644, "ms_max": 11.832, "expert_bytes": 982272000, "gbs": 83.8, "variant": "r2"}
+{"kind": "token", "rows": 8, "layers": 48, "B": 2, "ms_median": 16.02, "ms_min": 15.851, "ms_max": 16.219, "expert_bytes": 982272000, "gbs": 61.3, "variant": "r2"}
+{"kind": "token", "rows": 8, "layers": 48, "B": 3, "ms_median": 20.922, "ms_min": 20.74, "ms_max": 21.258, "expert_bytes": 982272000, "gbs": 46.9, "variant": "r2"}
+{"kind": "token", "rows": 8, "layers": 48, "B": 4, "ms_median": 26.81, "ms_min": 26.717, "ms_max": 27.124, "expert_bytes": 982272000, "gbs": 36.6, "variant": "r2"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ2S", "B": 1, "us_per_layer_median": 219.8, "us_min": 219.0, "us_max": 220.0, "gbs": 47.8, "variant": "sb"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3XXS", "B": 1, "us_per_layer_median": 159.1, "us_min": 158.7, "us_max": 165.9, "gbs": 78.8, "variant": "sb"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3S", "B": 1, "us_per_layer_median": 176.2, "us_min": 174.7, "us_max": 184.0, "gbs": 79.9, "variant": "sb"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ4XS", "B": 1, "us_per_layer_median": 130.4, "us_min": 129.8, "us_max": 136.6, "gbs": 133.5, "variant": "sb"}
+{"kind": "type", "rows": 1, "kernel": "down_IQ4NL", "B": 1, "us_per_layer_median": 72.1, "us_min": 71.7, "us_max": 72.4, "gbs": 127.8, "variant": "sb"}
+{"kind": "type", "rows": 1, "kernel": "down_Q20", "B": 1, "us_per_layer_median": 79.2, "us_min": 79.0, "us_max": 79.4, "gbs": 58.2, "variant": "sb"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ2S", "B": 2, "us_per_layer_median": 350.2, "us_min": 349.2, "us_max": 356.2, "gbs": 30.0, "variant": "sb"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3XXS", "B": 2, "us_per_layer_median": 223.6, "us_min": 221.3, "us_max": 229.0, "gbs": 56.1, "variant": "sb"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3S", "B": 2, "us_per_layer_median": 255.0, "us_min": 254.7, "us_max": 261.1, "gbs": 55.2, "variant": "sb"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ4XS", "B": 2, "us_per_layer_median": 210.0, "us_min": 208.7, "us_max": 215.4, "gbs": 82.9, "variant": "sb"}
+{"kind": "type", "rows": 1, "kernel": "down_IQ4NL", "B": 2, "us_per_layer_median": 104.6, "us_min": 104.5, "us_max": 106.8, "gbs": 88.1, "variant": "sb"}
+{"kind": "type", "rows": 1, "kernel": "down_Q20", "B": 2, "us_per_layer_median": 95.0, "us_min": 93.4, "us_max": 102.1, "gbs": 48.5, "variant": "sb"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ2S", "B": 3, "us_per_layer_median": 460.6, "us_min": 460.1, "us_max": 469.7, "gbs": 22.8, "variant": "sb"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3XXS", "B": 3, "us_per_layer_median": 338.9, "us_min": 338.4, "us_max": 345.3, "gbs": 37.0, "variant": "sb"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3S", "B": 3, "us_per_layer_median": 374.9, "us_min": 374.0, "us_max": 382.5, "gbs": 37.6, "variant": "sb"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ4XS", "B": 3, "us_per_layer_median": 321.1, "us_min": 318.1, "us_max": 327.7, "gbs": 54.2, "variant": "sb"}
+{"kind": "type", "rows": 1, "kernel": "down_IQ4NL", "B": 3, "us_per_layer_median": 154.1, "us_min": 153.4, "us_max": 161.8, "gbs": 59.8, "variant": "sb"}
+{"kind": "type", "rows": 1, "kernel": "down_Q20", "B": 3, "us_per_layer_median": 128.0, "us_min": 126.6, "us_max": 135.2, "gbs": 36.0, "variant": "sb"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ2S", "B": 4, "us_per_layer_median": 588.8, "us_min": 588.0, "us_max": 596.1, "gbs": 17.8, "variant": "sb"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3XXS", "B": 4, "us_per_layer_median": 467.6, "us_min": 465.2, "us_max": 475.3, "gbs": 26.8, "variant": "sb"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3S", "B": 4, "us_per_layer_median": 503.8, "us_min": 502.4, "us_max": 514.4, "gbs": 28.0, "variant": "sb"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ4XS", "B": 4, "us_per_layer_median": 433.9, "us_min": 433.2, "us_max": 440.3, "gbs": 40.1, "variant": "sb"}
+{"kind": "type", "rows": 1, "kernel": "down_IQ4NL", "B": 4, "us_per_layer_median": 198.6, "us_min": 197.8, "us_max": 205.7, "gbs": 46.4, "variant": "sb"}
+{"kind": "type", "rows": 1, "kernel": "down_Q20", "B": 4, "us_per_layer_median": 161.6, "us_min": 161.1, "us_max": 164.6, "gbs": 28.5, "variant": "sb"}
+{"kind": "token", "rows": 1, "layers": 48, "B": 1, "ms_median": 12.481, "ms_min": 12.429, "ms_max": 12.943, "expert_bytes": 982272000, "gbs": 78.7, "variant": "sb"}
+{"kind": "token", "rows": 1, "layers": 48, "B": 2, "ms_median": 18.63, "ms_min": 18.556, "ms_max": 19.283, "expert_bytes": 982272000, "gbs": 52.7, "variant": "sb"}
+{"kind": "token", "rows": 1, "layers": 48, "B": 3, "ms_median": 26.157, "ms_min": 26.116, "ms_max": 26.498, "expert_bytes": 982272000, "gbs": 37.6, "variant": "sb"}
+{"kind": "token", "rows": 1, "layers": 48, "B": 4, "ms_median": 34.359, "ms_min": 34.183, "ms_max": 34.812, "expert_bytes": 982272000, "gbs": 28.6, "variant": "sb"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ2S", "B": 1, "us_per_layer_median": 156.1, "us_min": 155.8, "us_max": 162.2, "gbs": 67.2, "variant": "sb"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3XXS", "B": 1, "us_per_layer_median": 137.9, "us_min": 137.5, "us_max": 144.7, "gbs": 91.0, "variant": "sb"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3S", "B": 1, "us_per_layer_median": 141.8, "us_min": 140.8, "us_max": 142.1, "gbs": 99.3, "variant": "sb"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ4XS", "B": 1, "us_per_layer_median": 116.0, "us_min": 115.5, "us_max": 120.1, "gbs": 150.0, "variant": "sb"}
+{"kind": "type", "rows": 4, "kernel": "down_IQ4NL", "B": 1, "us_per_layer_median": 59.0, "us_min": 57.8, "us_max": 59.2, "gbs": 156.2, "variant": "sb"}
+{"kind": "type", "rows": 4, "kernel": "down_Q20", "B": 1, "us_per_layer_median": 54.7, "us_min": 53.4, "us_max": 55.0, "gbs": 84.2, "variant": "sb"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ2S", "B": 2, "us_per_layer_median": 203.9, "us_min": 203.3, "us_max": 211.3, "gbs": 51.5, "variant": "sb"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3XXS", "B": 2, "us_per_layer_median": 212.8, "us_min": 210.4, "us_max": 216.5, "gbs": 59.0, "variant": "sb"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3S", "B": 2, "us_per_layer_median": 170.3, "us_min": 169.8, "us_max": 174.7, "gbs": 82.7, "variant": "sb"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ4XS", "B": 2, "us_per_layer_median": 149.8, "us_min": 148.4, "us_max": 150.3, "gbs": 116.2, "variant": "sb"}
+{"kind": "type", "rows": 4, "kernel": "down_IQ4NL", "B": 2, "us_per_layer_median": 76.2, "us_min": 73.9, "us_max": 89.1, "gbs": 121.0, "variant": "sb"}
+{"kind": "type", "rows": 4, "kernel": "down_Q20", "B": 2, "us_per_layer_median": 69.3, "us_min": 68.6, "us_max": 69.4, "gbs": 66.5, "variant": "sb"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ2S", "B": 3, "us_per_layer_median": 242.4, "us_min": 240.5, "us_max": 250.9, "gbs": 43.3, "variant": "sb"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3XXS", "B": 3, "us_per_layer_median": 266.4, "us_min": 265.8, "us_max": 275.7, "gbs": 47.1, "variant": "sb"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3S", "B": 3, "us_per_layer_median": 243.7, "us_min": 243.0, "us_max": 250.8, "gbs": 57.8, "variant": "sb"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ4XS", "B": 3, "us_per_layer_median": 216.6, "us_min": 215.6, "us_max": 223.7, "gbs": 80.4, "variant": "sb"}
+{"kind": "type", "rows": 4, "kernel": "down_IQ4NL", "B": 3, "us_per_layer_median": 111.0, "us_min": 108.3, "us_max": 111.2, "gbs": 83.1, "variant": "sb"}
+{"kind": "type", "rows": 4, "kernel": "down_Q20", "B": 3, "us_per_layer_median": 104.2, "us_min": 101.7, "us_max": 110.3, "gbs": 44.2, "variant": "sb"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ2S", "B": 4, "us_per_layer_median": 294.4, "us_min": 292.7, "us_max": 300.9, "gbs": 35.7, "variant": "sb"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3XXS", "B": 4, "us_per_layer_median": 341.5, "us_min": 339.9, "us_max": 349.3, "gbs": 36.7, "variant": "sb"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3S", "B": 4, "us_per_layer_median": 299.8, "us_min": 297.4, "us_max": 312.4, "gbs": 47.0, "variant": "sb"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ4XS", "B": 4, "us_per_layer_median": 265.3, "us_min": 263.3, "us_max": 272.7, "gbs": 65.6, "variant": "sb"}
+{"kind": "type", "rows": 4, "kernel": "down_IQ4NL", "B": 4, "us_per_layer_median": 135.5, "us_min": 135.0, "us_max": 143.6, "gbs": 68.0, "variant": "sb"}
+{"kind": "type", "rows": 4, "kernel": "down_Q20", "B": 4, "us_per_layer_median": 128.9, "us_min": 128.6, "us_max": 129.0, "gbs": 35.8, "variant": "sb"}
+{"kind": "token", "rows": 4, "layers": 48, "B": 1, "ms_median": 9.842, "ms_min": 9.628, "ms_max": 9.97, "expert_bytes": 982272000, "gbs": 99.8, "variant": "sb"}
+{"kind": "token", "rows": 4, "layers": 48, "B": 2, "ms_median": 13.246, "ms_min": 13.066, "ms_max": 13.451, "expert_bytes": 982272000, "gbs": 74.2, "variant": "sb"}
+{"kind": "token", "rows": 4, "layers": 48, "B": 3, "ms_median": 17.455, "ms_min": 17.307, "ms_max": 17.956, "expert_bytes": 982272000, "gbs": 56.3, "variant": "sb"}
+{"kind": "token", "rows": 4, "layers": 48, "B": 4, "ms_median": 21.49, "ms_min": 21.274, "ms_max": 21.761, "expert_bytes": 982272000, "gbs": 45.7, "variant": "sb"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ2S", "B": 1, "us_per_layer_median": 219.6, "us_min": 218.2, "us_max": 224.0, "gbs": 47.8, "variant": "xs"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3XXS", "B": 1, "us_per_layer_median": 157.4, "us_min": 156.8, "us_max": 164.1, "gbs": 79.7, "variant": "xs"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3S", "B": 1, "us_per_layer_median": 176.7, "us_min": 176.3, "us_max": 177.0, "gbs": 79.7, "variant": "xs"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ4XS", "B": 1, "us_per_layer_median": 130.3, "us_min": 129.3, "us_max": 137.6, "gbs": 133.6, "variant": "xs"}
+{"kind": "type", "rows": 1, "kernel": "down_IQ4NL", "B": 1, "us_per_layer_median": 72.2, "us_min": 71.5, "us_max": 72.3, "gbs": 127.6, "variant": "xs"}
+{"kind": "type", "rows": 1, "kernel": "down_Q20", "B": 1, "us_per_layer_median": 79.3, "us_min": 77.8, "us_max": 84.8, "gbs": 58.1, "variant": "xs"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ2S", "B": 2, "us_per_layer_median": 349.4, "us_min": 347.3, "us_max": 356.2, "gbs": 30.0, "variant": "xs"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3XXS", "B": 2, "us_per_layer_median": 224.9, "us_min": 224.2, "us_max": 231.7, "gbs": 55.8, "variant": "xs"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3S", "B": 2, "us_per_layer_median": 255.2, "us_min": 253.3, "us_max": 260.8, "gbs": 55.2, "variant": "xs"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ4XS", "B": 2, "us_per_layer_median": 209.7, "us_min": 208.7, "us_max": 218.0, "gbs": 83.0, "variant": "xs"}
+{"kind": "type", "rows": 1, "kernel": "down_IQ4NL", "B": 2, "us_per_layer_median": 107.0, "us_min": 106.5, "us_max": 113.3, "gbs": 86.1, "variant": "xs"}
+{"kind": "type", "rows": 1, "kernel": "down_Q20", "B": 2, "us_per_layer_median": 95.1, "us_min": 94.9, "us_max": 95.3, "gbs": 48.4, "variant": "xs"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ2S", "B": 3, "us_per_layer_median": 460.6, "us_min": 460.2, "us_max": 467.3, "gbs": 22.8, "variant": "xs"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3XXS", "B": 3, "us_per_layer_median": 340.7, "us_min": 340.3, "us_max": 349.0, "gbs": 36.8, "variant": "xs"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3S", "B": 3, "us_per_layer_median": 374.1, "us_min": 373.4, "us_max": 380.1, "gbs": 37.6, "variant": "xs"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ4XS", "B": 3, "us_per_layer_median": 321.2, "us_min": 320.2, "us_max": 327.4, "gbs": 54.2, "variant": "xs"}
+{"kind": "type", "rows": 1, "kernel": "down_IQ4NL", "B": 3, "us_per_layer_median": 154.2, "us_min": 154.0, "us_max": 154.7, "gbs": 59.8, "variant": "xs"}
+{"kind": "type", "rows": 1, "kernel": "down_Q20", "B": 3, "us_per_layer_median": 127.9, "us_min": 126.2, "us_max": 133.9, "gbs": 36.0, "variant": "xs"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ2S", "B": 4, "us_per_layer_median": 588.6, "us_min": 587.4, "us_max": 598.7, "gbs": 17.8, "variant": "xs"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3XXS", "B": 4, "us_per_layer_median": 474.2, "us_min": 473.1, "us_max": 480.7, "gbs": 26.5, "variant": "xs"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3S", "B": 4, "us_per_layer_median": 503.7, "us_min": 502.9, "us_max": 508.7, "gbs": 28.0, "variant": "xs"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ4XS", "B": 4, "us_per_layer_median": 433.8, "us_min": 431.1, "us_max": 441.6, "gbs": 40.1, "variant": "xs"}
+{"kind": "type", "rows": 1, "kernel": "down_IQ4NL", "B": 4, "us_per_layer_median": 199.4, "us_min": 197.6, "us_max": 208.0, "gbs": 46.2, "variant": "xs"}
+{"kind": "type", "rows": 1, "kernel": "down_Q20", "B": 4, "us_per_layer_median": 161.5, "us_min": 160.5, "us_max": 161.7, "gbs": 28.5, "variant": "xs"}
+{"kind": "token", "rows": 1, "layers": 48, "B": 1, "ms_median": 12.465, "ms_min": 12.257, "ms_max": 12.783, "expert_bytes": 982272000, "gbs": 78.8, "variant": "xs"}
+{"kind": "token", "rows": 1, "layers": 48, "B": 2, "ms_median": 18.635, "ms_min": 18.452, "ms_max": 18.99, "expert_bytes": 982272000, "gbs": 52.7, "variant": "xs"}
+{"kind": "token", "rows": 1, "layers": 48, "B": 3, "ms_median": 26.197, "ms_min": 26.089, "ms_max": 26.839, "expert_bytes": 982272000, "gbs": 37.5, "variant": "xs"}
+{"kind": "token", "rows": 1, "layers": 48, "B": 4, "ms_median": 34.454, "ms_min": 34.214, "ms_max": 35.073, "expert_bytes": 982272000, "gbs": 28.5, "variant": "xs"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ2S", "B": 1, "us_per_layer_median": 156.1, "us_min": 155.5, "us_max": 162.4, "gbs": 67.2, "variant": "xs"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3XXS", "B": 1, "us_per_layer_median": 152.0, "us_min": 149.2, "us_max": 157.2, "gbs": 82.5, "variant": "xs"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3S", "B": 1, "us_per_layer_median": 142.0, "us_min": 141.7, "us_max": 145.7, "gbs": 99.1, "variant": "xs"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ4XS", "B": 1, "us_per_layer_median": 116.3, "us_min": 115.8, "us_max": 116.4, "gbs": 149.7, "variant": "xs"}
+{"kind": "type", "rows": 4, "kernel": "down_IQ4NL", "B": 1, "us_per_layer_median": 59.2, "us_min": 57.0, "us_max": 59.4, "gbs": 155.6, "variant": "xs"}
+{"kind": "type", "rows": 4, "kernel": "down_Q20", "B": 1, "us_per_layer_median": 54.7, "us_min": 53.6, "us_max": 54.9, "gbs": 84.2, "variant": "xs"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ2S", "B": 2, "us_per_layer_median": 203.7, "us_min": 202.1, "us_max": 205.3, "gbs": 51.5, "variant": "xs"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3XXS", "B": 2, "us_per_layer_median": 169.7, "us_min": 167.4, "us_max": 176.4, "gbs": 73.9, "variant": "xs"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3S", "B": 2, "us_per_layer_median": 170.4, "us_min": 169.9, "us_max": 173.3, "gbs": 82.6, "variant": "xs"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ4XS", "B": 2, "us_per_layer_median": 151.1, "us_min": 150.8, "us_max": 155.5, "gbs": 115.2, "variant": "xs"}
+{"kind": "type", "rows": 4, "kernel": "down_IQ4NL", "B": 2, "us_per_layer_median": 76.2, "us_min": 75.6, "us_max": 77.5, "gbs": 121.0, "variant": "xs"}
+{"kind": "type", "rows": 4, "kernel": "down_Q20", "B": 2, "us_per_layer_median": 69.2, "us_min": 68.3, "us_max": 69.4, "gbs": 66.6, "variant": "xs"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ2S", "B": 3, "us_per_layer_median": 243.8, "us_min": 243.2, "us_max": 252.2, "gbs": 43.0, "variant": "xs"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3XXS", "B": 3, "us_per_layer_median": 237.0, "us_min": 236.7, "us_max": 238.7, "gbs": 52.9, "variant": "xs"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3S", "B": 3, "us_per_layer_median": 243.4, "us_min": 241.5, "us_max": 246.9, "gbs": 57.9, "variant": "xs"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ4XS", "B": 3, "us_per_layer_median": 216.6, "us_min": 216.0, "us_max": 222.2, "gbs": 80.4, "variant": "xs"}
+{"kind": "type", "rows": 4, "kernel": "down_IQ4NL", "B": 3, "us_per_layer_median": 110.9, "us_min": 110.1, "us_max": 111.3, "gbs": 83.1, "variant": "xs"}
+{"kind": "type", "rows": 4, "kernel": "down_Q20", "B": 3, "us_per_layer_median": 104.3, "us_min": 101.7, "us_max": 111.0, "gbs": 44.2, "variant": "xs"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ2S", "B": 4, "us_per_layer_median": 294.5, "us_min": 293.9, "us_max": 301.8, "gbs": 35.6, "variant": "xs"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3XXS", "B": 4, "us_per_layer_median": 282.6, "us_min": 280.2, "us_max": 287.9, "gbs": 44.4, "variant": "xs"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3S", "B": 4, "us_per_layer_median": 301.1, "us_min": 300.2, "us_max": 309.7, "gbs": 46.8, "variant": "xs"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ4XS", "B": 4, "us_per_layer_median": 265.5, "us_min": 264.1, "us_max": 273.4, "gbs": 65.6, "variant": "xs"}
+{"kind": "type", "rows": 4, "kernel": "down_IQ4NL", "B": 4, "us_per_layer_median": 135.2, "us_min": 135.0, "us_max": 136.0, "gbs": 68.1, "variant": "xs"}
+{"kind": "type", "rows": 4, "kernel": "down_Q20", "B": 4, "us_per_layer_median": 128.8, "us_min": 128.0, "us_max": 130.7, "gbs": 35.8, "variant": "xs"}
+{"kind": "token", "rows": 4, "layers": 48, "B": 1, "ms_median": 10.104, "ms_min": 10.036, "ms_max": 10.299, "expert_bytes": 982272000, "gbs": 97.2, "variant": "xs"}
+{"kind": "token", "rows": 4, "layers": 48, "B": 2, "ms_median": 12.567, "ms_min": 12.412, "ms_max": 12.841, "expert_bytes": 982272000, "gbs": 78.2, "variant": "xs"}
+{"kind": "token", "rows": 4, "layers": 48, "B": 3, "ms_median": 17.036, "ms_min": 16.836, "ms_max": 17.349, "expert_bytes": 982272000, "gbs": 57.7, "variant": "xs"}
+{"kind": "token", "rows": 4, "layers": 48, "B": 4, "ms_median": 20.628, "ms_min": 20.601, "ms_max": 21.018, "expert_bytes": 982272000, "gbs": 47.6, "variant": "xs"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ2S", "B": 1, "us_per_layer_median": 219.7, "us_min": 217.6, "us_max": 220.1, "gbs": 47.8, "variant": "pk"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3XXS", "B": 1, "us_per_layer_median": 137.3, "us_min": 136.7, "us_max": 137.6, "gbs": 91.3, "variant": "pk"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3S", "B": 1, "us_per_layer_median": 176.6, "us_min": 174.9, "us_max": 184.2, "gbs": 79.7, "variant": "pk"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ4XS", "B": 1, "us_per_layer_median": 130.3, "us_min": 128.9, "us_max": 136.4, "gbs": 133.6, "variant": "pk"}
+{"kind": "type", "rows": 1, "kernel": "down_IQ4NL", "B": 1, "us_per_layer_median": 72.4, "us_min": 71.8, "us_max": 73.0, "gbs": 127.4, "variant": "pk"}
+{"kind": "type", "rows": 1, "kernel": "down_Q20", "B": 1, "us_per_layer_median": 79.2, "us_min": 78.8, "us_max": 79.4, "gbs": 58.2, "variant": "pk"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ2S", "B": 2, "us_per_layer_median": 349.7, "us_min": 349.0, "us_max": 357.6, "gbs": 30.0, "variant": "pk"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3XXS", "B": 2, "us_per_layer_median": 238.8, "us_min": 236.5, "us_max": 239.4, "gbs": 52.5, "variant": "pk"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3S", "B": 2, "us_per_layer_median": 255.1, "us_min": 254.4, "us_max": 261.7, "gbs": 55.2, "variant": "pk"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ4XS", "B": 2, "us_per_layer_median": 209.6, "us_min": 207.2, "us_max": 216.5, "gbs": 83.0, "variant": "pk"}
+{"kind": "type", "rows": 1, "kernel": "down_IQ4NL", "B": 2, "us_per_layer_median": 105.7, "us_min": 104.5, "us_max": 113.9, "gbs": 87.2, "variant": "pk"}
+{"kind": "type", "rows": 1, "kernel": "down_Q20", "B": 2, "us_per_layer_median": 95.0, "us_min": 94.7, "us_max": 95.3, "gbs": 48.5, "variant": "pk"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ2S", "B": 3, "us_per_layer_median": 460.8, "us_min": 460.2, "us_max": 467.1, "gbs": 22.8, "variant": "pk"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3XXS", "B": 3, "us_per_layer_median": 357.0, "us_min": 356.3, "us_max": 363.2, "gbs": 35.1, "variant": "pk"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3S", "B": 3, "us_per_layer_median": 374.2, "us_min": 373.3, "us_max": 381.3, "gbs": 37.6, "variant": "pk"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ4XS", "B": 3, "us_per_layer_median": 321.4, "us_min": 319.8, "us_max": 329.4, "gbs": 54.2, "variant": "pk"}
+{"kind": "type", "rows": 1, "kernel": "down_IQ4NL", "B": 3, "us_per_layer_median": 154.1, "us_min": 153.9, "us_max": 154.2, "gbs": 59.8, "variant": "pk"}
+{"kind": "type", "rows": 1, "kernel": "down_Q20", "B": 3, "us_per_layer_median": 128.0, "us_min": 127.4, "us_max": 134.8, "gbs": 36.0, "variant": "pk"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ2S", "B": 4, "us_per_layer_median": 588.9, "us_min": 588.5, "us_max": 599.8, "gbs": 17.8, "variant": "pk"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3XXS", "B": 4, "us_per_layer_median": 483.7, "us_min": 483.0, "us_max": 494.4, "gbs": 25.9, "variant": "pk"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ3S", "B": 4, "us_per_layer_median": 501.2, "us_min": 498.6, "us_max": 509.7, "gbs": 28.1, "variant": "pk"}
+{"kind": "type", "rows": 1, "kernel": "gate_up_IQ4XS", "B": 4, "us_per_layer_median": 434.3, "us_min": 433.6, "us_max": 440.6, "gbs": 40.1, "variant": "pk"}
+{"kind": "type", "rows": 1, "kernel": "down_IQ4NL", "B": 4, "us_per_layer_median": 198.8, "us_min": 198.4, "us_max": 206.0, "gbs": 46.4, "variant": "pk"}
+{"kind": "type", "rows": 1, "kernel": "down_Q20", "B": 4, "us_per_layer_median": 161.5, "us_min": 161.2, "us_max": 167.2, "gbs": 28.5, "variant": "pk"}
+{"kind": "token", "rows": 1, "layers": 48, "B": 1, "ms_median": 12.113, "ms_min": 12.04, "ms_max": 12.472, "expert_bytes": 982272000, "gbs": 81.1, "variant": "pk"}
+{"kind": "token", "rows": 1, "layers": 48, "B": 2, "ms_median": 18.926, "ms_min": 18.822, "ms_max": 19.216, "expert_bytes": 982272000, "gbs": 51.9, "variant": "pk"}
+{"kind": "token", "rows": 1, "layers": 48, "B": 3, "ms_median": 26.467, "ms_min": 26.326, "ms_max": 26.898, "expert_bytes": 982272000, "gbs": 37.1, "variant": "pk"}
+{"kind": "token", "rows": 1, "layers": 48, "B": 4, "ms_median": 34.599, "ms_min": 34.542, "ms_max": 34.951, "expert_bytes": 982272000, "gbs": 28.4, "variant": "pk"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ2S", "B": 1, "us_per_layer_median": 156.0, "us_min": 155.3, "us_max": 162.1, "gbs": 67.3, "variant": "pk"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3XXS", "B": 1, "us_per_layer_median": 125.9, "us_min": 125.5, "us_max": 126.0, "gbs": 99.6, "variant": "pk"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3S", "B": 1, "us_per_layer_median": 142.1, "us_min": 141.3, "us_max": 146.0, "gbs": 99.1, "variant": "pk"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ4XS", "B": 1, "us_per_layer_median": 116.1, "us_min": 114.9, "us_max": 116.6, "gbs": 149.9, "variant": "pk"}
+{"kind": "type", "rows": 4, "kernel": "down_IQ4NL", "B": 1, "us_per_layer_median": 59.1, "us_min": 57.7, "us_max": 60.2, "gbs": 156.0, "variant": "pk"}
+{"kind": "type", "rows": 4, "kernel": "down_Q20", "B": 1, "us_per_layer_median": 54.6, "us_min": 54.2, "us_max": 54.8, "gbs": 84.4, "variant": "pk"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ2S", "B": 2, "us_per_layer_median": 203.7, "us_min": 203.1, "us_max": 210.7, "gbs": 51.5, "variant": "pk"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3XXS", "B": 2, "us_per_layer_median": 153.4, "us_min": 153.2, "us_max": 160.0, "gbs": 81.8, "variant": "pk"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3S", "B": 2, "us_per_layer_median": 170.4, "us_min": 170.2, "us_max": 175.7, "gbs": 82.6, "variant": "pk"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ4XS", "B": 2, "us_per_layer_median": 151.0, "us_min": 148.6, "us_max": 156.3, "gbs": 115.3, "variant": "pk"}
+{"kind": "type", "rows": 4, "kernel": "down_IQ4NL", "B": 2, "us_per_layer_median": 76.9, "us_min": 76.1, "us_max": 77.0, "gbs": 119.9, "variant": "pk"}
+{"kind": "type", "rows": 4, "kernel": "down_Q20", "B": 2, "us_per_layer_median": 69.3, "us_min": 67.6, "us_max": 70.2, "gbs": 66.5, "variant": "pk"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ2S", "B": 3, "us_per_layer_median": 243.7, "us_min": 243.2, "us_max": 244.1, "gbs": 43.1, "variant": "pk"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3XXS", "B": 3, "us_per_layer_median": 223.6, "us_min": 223.1, "us_max": 229.7, "gbs": 56.1, "variant": "pk"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3S", "B": 3, "us_per_layer_median": 243.7, "us_min": 242.4, "us_max": 249.7, "gbs": 57.8, "variant": "pk"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ4XS", "B": 3, "us_per_layer_median": 216.5, "us_min": 215.6, "us_max": 217.9, "gbs": 80.4, "variant": "pk"}
+{"kind": "type", "rows": 4, "kernel": "down_IQ4NL", "B": 3, "us_per_layer_median": 110.9, "us_min": 110.0, "us_max": 111.2, "gbs": 83.1, "variant": "pk"}
+{"kind": "type", "rows": 4, "kernel": "down_Q20", "B": 3, "us_per_layer_median": 104.6, "us_min": 104.0, "us_max": 110.7, "gbs": 44.1, "variant": "pk"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ2S", "B": 4, "us_per_layer_median": 295.0, "us_min": 293.6, "us_max": 300.7, "gbs": 35.6, "variant": "pk"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3XXS", "B": 4, "us_per_layer_median": 266.1, "us_min": 264.6, "us_max": 272.0, "gbs": 47.1, "variant": "pk"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ3S", "B": 4, "us_per_layer_median": 300.6, "us_min": 298.5, "us_max": 305.9, "gbs": 46.8, "variant": "pk"}
+{"kind": "type", "rows": 4, "kernel": "gate_up_IQ4XS", "B": 4, "us_per_layer_median": 265.3, "us_min": 264.3, "us_max": 269.5, "gbs": 65.6, "variant": "pk"}
+{"kind": "type", "rows": 4, "kernel": "down_IQ4NL", "B": 4, "us_per_layer_median": 135.3, "us_min": 133.8, "us_max": 142.2, "gbs": 68.1, "variant": "pk"}
+{"kind": "type", "rows": 4, "kernel": "down_Q20", "B": 4, "us_per_layer_median": 128.9, "us_min": 128.5, "us_max": 134.4, "gbs": 35.8, "variant": "pk"}
+{"kind": "token", "rows": 4, "layers": 48, "B": 1, "ms_median": 9.665, "ms_min": 9.604, "ms_max": 9.878, "expert_bytes": 982272000, "gbs": 101.6, "variant": "pk"}
+{"kind": "token", "rows": 4, "layers": 48, "B": 2, "ms_median": 12.229, "ms_min": 12.028, "ms_max": 12.603, "expert_bytes": 982272000, "gbs": 80.3, "variant": "pk"}
+{"kind": "token", "rows": 4, "layers": 48, "B": 3, "ms_median": 16.781, "ms_min": 16.616, "ms_max": 17.105, "expert_bytes": 982272000, "gbs": 58.5, "variant": "pk"}
+{"kind": "token", "rows": 4, "layers": 48, "B": 4, "ms_median": 20.33, "ms_min": 20.129, "ms_max": 20.852, "expert_bytes": 982272000, "gbs": 48.3, "variant": "pk"}

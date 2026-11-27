@@ -1,0 +1,144 @@
+{
+  "id": "sensenova-loop-9b-preview",
+  "name": "SenseNova-Loop-9B-Preview",
+  "vendor": "SenseTime (SenseNova)",
+  "release_date": "2026-10-28",
+  "purpose": "Multimodal model for long-context and agentic workflows (document understanding, coding, tool interaction) that buys a deeper execution path without extra parameters by looping a block of layers (card).",
+  "tasks": [
+    "general",
+    "vision",
+    "coding"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en",
+      "zh"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0 (card tag)",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card tag and badge say Apache 2.0; the GitHub LICENSE and any file in the HF repo were not read."
+  },
+  "architecture": {
+    "kind": "looped hybrid-attention decoder with two-stream manifold-constrained hyper-connections (mHC); layers 4 to 27 run twice with shared weights: 56 layer executions from 32 distinct layers",
+    "params_total_b": 9.0,
+    "layers": 32,
+    "attention": "3 linear-attention layers then 1 full-attention layer, repeated; 16 heads / 4 KV heads",
+    "recurrent": "linear attention",
+    "context_native": 262144,
+    "drafter": "MTP supported; Dspark and Dflash2 drafters under development",
+    "why_this_design": "card: the loop gives a deeper execution path without duplicating the repeated block's parameters; mHC with Sinkhorn normalization (20 iterations) manages information flow between the two residual streams"
+  },
+  "variants": [
+    {
+      "repo": "sensenova/SenseNova-Loop-9B-Preview",
+      "format": "safetensors BF16 (FP32 mHC routing)",
+      "size_gb": 19.3,
+      "official": true,
+      "notes": "includes mtp.safetensors 0.49 GB; about 14.6B inference parameters per the card"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "no",
+      "variant": "BF16 (19.3 GB, no quantization found)",
+      "basis": "estimate",
+      "notes": "19.3 GB against a VRAM budget of 9.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-16gb": {
+      "fits": "no",
+      "variant": "BF16 (19.3 GB, no quantization found)",
+      "basis": "estimate",
+      "notes": "19.3 GB against a VRAM budget of 13.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-24gb": {
+      "fits": "marginal",
+      "variant": "BF16 (19.3 GB, no quantization found)",
+      "basis": "estimate",
+      "notes": "19.3 GB against a VRAM budget of 21.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "BF16 (19.3 GB, no quantization found)",
+      "basis": "estimate",
+      "notes": "19.3 GB against a VRAM budget of 29.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "BF16 (19.3 GB, no quantization found)",
+      "basis": "estimate",
+      "notes": "19.3 GB against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "marginal",
+      "variant": "BF16 (19.3 GB, no quantization found)",
+      "basis": "estimate",
+      "notes": "19.3 GB against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "BF16 (19.3 GB, no quantization found)",
+      "basis": "estimate",
+      "notes": "19.3 GB against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "transformers with custom code (sensenova_loop)"
+    ],
+    "notes": "A compatible runtime must load the loop range, pass count and mHC parameters and reproduce the execution order."
+  },
+  "benchmarks": [],
+  "soft": {
+    "strengths": [
+      "new architecture idea: 9B memory footprint with 14.6B-class compute per token"
+    ],
+    "weaknesses": [
+      "preview; benchmark figures are images only; a custom architecture needs its own runtime",
+      "loop doubles per-token compute on the repeated block"
+    ],
+    "maturity": "5.5k downloads, 321 likes; technical report marked TBD"
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "The looped block with shared weights is interesting for memory-bound decode (extra compute without extra weights to read) but no numbers are readable and the runtime does not exist outside the vendor's code. Revisit when the report and benchmarks are out.",
+    "blockers": [
+      "custom looped-mHC architecture",
+      "no benchmarks readable"
+    ]
+  },
+  "open_questions": [
+    "benchmark values (only in images)",
+    "decode speed against a plain 9B and a plain 14.6B",
+    "licence file"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/sensenova/SenseNova-Loop-9B-Preview",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README and config read"
+    },
+    {
+      "url": "https://huggingface.co/api/models/sensenova/SenseNova-Loop-9B-Preview?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "sizes"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

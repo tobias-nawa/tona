@@ -1,0 +1,105 @@
+host memory: GTT (probe 64 MB grew the GTT use by 64 MB; 0.1 of 32.5 GB in use)
+evicted_ms counter: /sys/class/kfd/kfd/proc/266167/stats_7773/evicted_ms (0 ms so far), evictions do not count against the pass deadline
+loaded in 10.3 s, VRAM 13.12 GB (expert cache 82 per layer), megakernel: 1076 steps, 32 blocks (at most 32, LDS 32024 B, 192 VGPRs), verify pass 32 blocks (max 32, 192 VGPRs)
+CPU selection 0.138 ms per pass
+per pass: 458.7 hits, 7.0 GPU direct, 14.3 CPU (1.4 ms), 0.2 refilled
+B = 1: 536 passes, 23.33 ms per pass, 42.9 passes/s, 42.9 tokens/s
+logits hash B = 1: 810d28ee4a7b6cef
+Profile B = 1: 22.89 ms
+  dn.in (36x)                 3885 µs  17.0 %
+  moe.gate_up (48x)           2826 µs  12.3 %
+  moe.down (48x)              2065 µs   9.0 %
+  dn.out (36x)                1855 µs   8.1 %
+  gr.down (97x)               1817 µs   7.9 %
+  gr.up (97x)                 1646 µs   7.2 %
+  head.out (1x)               1601 µs   7.0 %
+  qsa.in (12x)                1182 µs   5.2 %
+  dn.recur (36x)               930 µs   4.1 %
+  combine (97x)                711 µs   3.1 %
+  host.wait (48x)              653 µs   2.9 %
+  router (48x)                 613 µs   2.7 %
+  qsa.out (12x)                603 µs   2.6 %
+  moe.shared (48x)             438 µs   1.9 %
+  dn.conv (36x)                382 µs   1.7 %
+  mix (97x)                    314 µs   1.4 %
+  moe.sum (48x)                274 µs   1.2 %
+  qsa.prep (12x)               234 µs   1.0 %
+  moe.act (48x)                182 µs   0.8 %
+  qsa.attn (12x)               142 µs   0.6 %
+  host.y (48x)                 138 µs   0.6 %
+  dn.norm (36x)                134 µs   0.6 %
+  moe.copy (48x)               106 µs   0.5 %
+  qsa.merge (12x)               98 µs   0.4 %
+  qsa.topk (6x)                 23 µs   0.1 %
+  qsa.score (6x)                22 µs   0.1 %
+  ple.gate (1x)                  8 µs   0.0 %
+  embed (1x)                     7 µs   0.0 %
+  ple.conv (1x)                  4 µs   0.0 %
+CPU selection 0.461 ms per pass
+per pass: 1301.9 hits, 4.3 GPU direct, 65.7 CPU (5.5 ms), 0.0 refilled
+B = 4: 134 passes, 36.13 ms per pass, 27.7 passes/s, 110.7 tokens/s
+logits hash B = 4: 810d28ee4a7b6cef
+Profile B = 4: 35.03 ms
+  moe.gate_up (48x)           6939 µs  19.8 %
+  moe.down (48x)              5254 µs  15.0 %
+  dn.in (36x)                 4169 µs  11.9 %
+  gr.down (97x)               2326 µs   6.6 %
+  gr.up (97x)                 2181 µs   6.2 %
+  dn.out (36x)                2129 µs   6.1 %
+  head.out (1x)               1687 µs   4.8 %
+  combine (97x)               1330 µs   3.8 %
+  qsa.in (12x)                1272 µs   3.6 %
+  dn.recur (36x)              1186 µs   3.4 %
+  host.wait (48x)             1144 µs   3.3 %
+  router (48x)                 914 µs   2.6 %
+  host.y (48x)                 734 µs   2.1 %
+  qsa.out (12x)                700 µs   2.0 %
+  moe.sum (48x)                468 µs   1.3 %
+  moe.shared (48x)             427 µs   1.2 %
+  moe.act (48x)                386 µs   1.1 %
+  dn.conv (36x)                368 µs   1.1 %
+  mix (97x)                    365 µs   1.0 %
+  qsa.attn (12x)               287 µs   0.8 %
+  qsa.prep (12x)               258 µs   0.7 %
+  dn.norm (36x)                179 µs   0.5 %
+  qsa.merge (12x)              143 µs   0.4 %
+  moe.copy (48x)               105 µs   0.3 %
+  qsa.topk (6x)                 27 µs   0.1 %
+  qsa.score (6x)                22 µs   0.1 %
+  embed (1x)                    12 µs   0.0 %
+  ple.gate (1x)                  9 µs   0.0 %
+  ple.conv (1x)                  8 µs   0.0 %
+CPU selection 0.771 ms per pass
+per pass: 1470.1 hits, 6.3 GPU direct, 88.9 CPU (9.2 ms), 0.0 refilled
+B = 8: 67 passes, 50.07 ms per pass, 20.0 passes/s, 159.8 tokens/s
+logits hash B = 8: 47d61a17e7270946
+Profile B = 8: 47.75 ms
+  moe.gate_up (48x)           9622 µs  20.2 %
+  moe.down (48x)              7509 µs  15.7 %
+  dn.in (36x)                 4956 µs  10.4 %
+  gr.down (97x)               2995 µs   6.3 %
+  dn.out (36x)                2609 µs   5.5 %
+  gr.up (97x)                 2597 µs   5.4 %
+  combine (97x)               2062 µs   4.3 %
+  head.out (1x)               1829 µs   3.8 %
+  host.wait (48x)             1825 µs   3.8 %
+  qsa.in (12x)                1777 µs   3.7 %
+  dn.recur (36x)              1648 µs   3.5 %
+  router (48x)                1333 µs   2.8 %
+  host.y (48x)                1287 µs   2.7 %
+  qsa.out (12x)                870 µs   1.8 %
+  moe.sum (48x)                818 µs   1.7 %
+  dn.conv (36x)                765 µs   1.6 %
+  moe.shared (48x)             689 µs   1.4 %
+  moe.act (48x)                680 µs   1.4 %
+  qsa.attn (12x)               500 µs   1.0 %
+  mix (97x)                    482 µs   1.0 %
+  qsa.prep (12x)               273 µs   0.6 %
+  dn.norm (36x)                215 µs   0.5 %
+  qsa.merge (12x)              187 µs   0.4 %
+  moe.copy (48x)               124 µs   0.3 %
+  qsa.topk (6x)                 31 µs   0.1 %
+  qsa.score (6x)                24 µs   0.0 %
+  embed (1x)                    17 µs   0.0 %
+  ple.conv (1x)                 12 µs   0.0 %
+  ple.gate (1x)                  9 µs   0.0 %

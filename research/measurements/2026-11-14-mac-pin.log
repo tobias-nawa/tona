@@ -1,0 +1,176 @@
+== hw_report
+### Test conditions
+
+- CPU: Apple M1 Max, 10 cores / 10 threads
+- GPU: Apple M1 Max, 32.0 GiB unified memory
+- RAM: 32.0 GiB
+- OS: macOS 27.0.1, kernel 27.0.0 (arm64)
+- Driver and toolkit: no toolkit found
+- TONA_* variables: none set
+- cgroup limits of this shell: none set
+- Load average (1, 5, 15 min): 1.81, 1.82, 1.65
+- CPU use by other programs over 0.5 s: 4.0 % of all threads
+- sandbox: no
+- Commit: `ec28d44` (dirty tree)
+== before
+- Quiet check (2026-11-14 14:12:21): ok
+== cal G0 1794661941
+Backend metal-apple-m1-max, prefill 512, decode 128 in passes of 4, 3 rounds
+  warmup: prefill 132.53 tok/s, decode 46.80 tok/s (not counted)
+  round 1: prefill 204.20 tok/s, decode 47.49 tok/s, pass 84.23 ms, MTP fill 0.00 ms, step 0.00 ms
+  round 2: prefill 204.24 tok/s, decode 47.45 tok/s, pass 84.31 ms, MTP fill 0.00 ms, step 0.00 ms
+  round 3: prefill 204.30 tok/s, decode 47.49 tok/s, pass 84.23 ms, MTP fill 0.00 ms, step 0.00 ms
+prefill: median 204.24 tok/s, range 204.20 ... 204.30 (3 rounds)
+decode: median 47.49 tok/s, range 47.45 ... 47.49 (3 rounds)
+pass: median 84.23 ms, range 84.23 ... 84.31 (3 rounds)
+page-ins: 7390 major faults over the whole run
+== end 1794661964
+== cal G6 1794661995
+Backend metal-apple-m1-max, prefill 512, decode 128 in passes of 4, 3 rounds
+  warmup: prefill 89.07 tok/s, decode 46.46 tok/s (not counted)
+  round 1: prefill 204.04 tok/s, decode 47.46 tok/s, pass 84.28 ms, MTP fill 0.00 ms, step 0.00 ms
+  round 2: prefill 204.49 tok/s, decode 47.39 tok/s, pass 84.41 ms, MTP fill 0.00 ms, step 0.00 ms
+  round 3: prefill 203.99 tok/s, decode 47.44 tok/s, pass 84.33 ms, MTP fill 0.00 ms, step 0.00 ms
+prefill: median 204.04 tok/s, range 203.99 ... 204.49 (3 rounds)
+decode: median 47.44 tok/s, range 47.39 ... 47.46 (3 rounds)
+pass: median 84.33 ms, range 84.28 ... 84.41 (3 rounds)
+page-ins: 12149 major faults over the whole run
+== end 1794662019
+== cal G9 1794662050
+Backend metal-apple-m1-max, prefill 512, decode 128 in passes of 4, 3 rounds
+  warmup: prefill 75.81 tok/s, decode 46.45 tok/s (not counted)
+  round 1: prefill 204.38 tok/s, decode 47.47 tok/s, pass 84.27 ms, MTP fill 0.00 ms, step 0.00 ms
+  round 2: prefill 204.10 tok/s, decode 47.61 tok/s, pass 84.01 ms, MTP fill 0.00 ms, step 0.00 ms
+  round 3: prefill 204.24 tok/s, decode 47.37 tok/s, pass 84.44 ms, MTP fill 0.00 ms, step 0.00 ms
+prefill: median 204.24 tok/s, range 204.10 ... 204.38 (3 rounds)
+decode: median 47.47 tok/s, range 47.37 ... 47.61 (3 rounds)
+pass: median 84.27 ms, range 84.01 ... 84.44 (3 rounds)
+page-ins: 14547 major faults over the whole run
+== end 1794662076
+== cal G12 1794662106
+Backend metal-apple-m1-max, prefill 512, decode 128 in passes of 4, 3 rounds
+  warmup: prefill 61.16 tok/s, decode 46.61 tok/s (not counted)
+  round 1: prefill 204.26 tok/s, decode 47.41 tok/s, pass 84.38 ms, MTP fill 0.00 ms, step 0.00 ms
+  round 2: prefill 204.26 tok/s, decode 47.51 tok/s, pass 84.19 ms, MTP fill 0.00 ms, step 0.00 ms
+  round 3: prefill 204.62 tok/s, decode 47.39 tok/s, pass 84.40 ms, MTP fill 0.00 ms, step 0.00 ms
+prefill: median 204.26 tok/s, range 204.26 ... 204.62 (3 rounds)
+decode: median 47.41 tok/s, range 47.39 ... 47.51 (3 rounds)
+pass: median 84.38 ms, range 84.19 ... 84.40 (3 rounds)
+page-ins: 18050 major faults over the whole run
+== end 1794662134
+== after
+- Quiet check (2026-11-14 14:16:45): ok
+== hw_report
+### Test conditions
+
+- CPU: Apple M1 Max, 10 cores / 10 threads
+- GPU: Apple M1 Max, 32.0 GiB unified memory
+- RAM: 32.0 GiB
+- OS: macOS 27.0.1, kernel 27.0.0 (arm64)
+- Driver and toolkit: no toolkit found
+- TONA_* variables: none set
+- cgroup limits of this shell: none set
+- Load average (1, 5, 15 min): 1.39, 1.6, 1.59
+- CPU use by other programs over 0.5 s: 3.2 % of all threads
+- sandbox: no
+- Commit: `ec28d44` (dirty tree)
+== before
+- Quiet check (2026-11-14 14:18:15): ok
+== cal2 G0 1794662295
+Backend metal-apple-m1-max, prefill 512, decode 384 in passes of 4, 3 rounds
+  warmup: prefill 183.38 tok/s, decode 47.71 tok/s (not counted)
+  round 1: prefill 204.29 tok/s, decode 47.75 tok/s, pass 83.78 ms, MTP fill 0.00 ms, step 0.00 ms
+  round 2: prefill 204.26 tok/s, decode 47.68 tok/s, pass 83.90 ms, MTP fill 0.00 ms, step 0.00 ms
+  round 3: prefill 204.33 tok/s, decode 47.62 tok/s, pass 84.00 ms, MTP fill 0.00 ms, step 0.00 ms
+prefill: median 204.29 tok/s, range 204.26 ... 204.33 (3 rounds)
+decode: median 47.68 tok/s, range 47.62 ... 47.75 (3 rounds)
+pass: median 83.90 ms, range 83.78 ... 84.00 (3 rounds)
+page-ins: 8 major faults over the whole run
+== end 1794662338
+== cal2 G10 1794662411
+Backend metal-apple-m1-max, prefill 512, decode 384 in passes of 4, 3 rounds
+  warmup: prefill 43.03 tok/s, decode 45.07 tok/s (not counted)
+  round 1: prefill 202.92 tok/s, decode 47.77 tok/s, pass 83.73 ms, MTP fill 0.00 ms, step 0.00 ms
+  round 2: prefill 204.25 tok/s, decode 48.02 tok/s, pass 83.30 ms, MTP fill 0.00 ms, step 0.00 ms
+  round 3: prefill 204.42 tok/s, decode 48.44 tok/s, pass 82.58 ms, MTP fill 0.00 ms, step 0.00 ms
+prefill: median 204.25 tok/s, range 202.92 ... 204.42 (3 rounds)
+decode: median 48.02 tok/s, range 47.77 ... 48.44 (3 rounds)
+pass: median 83.30 ms, range 82.58 ... 83.73 (3 rounds)
+page-ins: 20888 major faults over the whole run
+== end 1794662464
+== cal2 G13 1794662552
+Backend metal-apple-m1-max, prefill 512, decode 384 in passes of 4, 3 rounds
+  warmup: prefill 37.09 tok/s, decode 47.31 tok/s (not counted)
+  round 1: prefill 203.32 tok/s, decode 47.69 tok/s, pass 83.88 ms, MTP fill 0.00 ms, step 0.00 ms
+  round 2: prefill 204.41 tok/s, decode 47.63 tok/s, pass 83.97 ms, MTP fill 0.00 ms, step 0.00 ms
+  round 3: prefill 204.43 tok/s, decode 47.58 tok/s, pass 84.07 ms, MTP fill 0.00 ms, step 0.00 ms
+prefill: median 204.41 tok/s, range 203.32 ... 204.43 (3 rounds)
+decode: median 47.63 tok/s, range 47.58 ... 47.69 (3 rounds)
+pass: median 83.97 ms, range 83.88 ... 84.07 (3 rounds)
+page-ins: 20796 major faults over the whole run
+== end 1794662607
+== cal2 G16 1794662708
+Backend metal-apple-m1-max, prefill 512, decode 384 in passes of 4, 3 rounds
+  warmup: prefill 27.84 tok/s, decode 44.75 tok/s (not counted)
+  round 1: prefill 203.26 tok/s, decode 47.82 tok/s, pass 83.64 ms, MTP fill 0.00 ms, step 0.00 ms
+  round 2: prefill 204.28 tok/s, decode 48.74 tok/s, pass 82.07 ms, MTP fill 0.00 ms, step 0.00 ms
+  round 3: prefill 203.62 tok/s, decode 48.24 tok/s, pass 82.92 ms, MTP fill 0.00 ms, step 0.00 ms
+prefill: median 203.62 tok/s, range 203.26 ... 204.28 (3 rounds)
+decode: median 48.24 tok/s, range 47.82 ... 48.74 (3 rounds)
+pass: median 82.92 ms, range 82.07 ... 83.64 (3 rounds)
+page-ins: 23136 major faults over the whole run
+== end 1794662769
+== after
+- Quiet check (2026-11-14 14:27:20): warning
+  - warning: other programs use 6.9 % of all CPU threads
+  - warning: load average 2.82 is high (it lags a minute)
+== hw_report
+### Test conditions
+
+- CPU: Apple M1 Max, 10 cores / 10 threads
+- GPU: Apple M1 Max, 32.0 GiB unified memory
+- RAM: 32.0 GiB
+- OS: macOS 27.0.1, kernel 27.0.0 (arm64)
+- Driver and toolkit: no toolkit found
+- TONA_* variables: none set
+- cgroup limits of this shell: none set
+- Load average (1, 5, 15 min): 2.49, 2.65, 2.23
+- CPU use by other programs over 0.5 s: 8.6 % of all threads
+- sandbox: no
+- Commit: `ec28d44` (dirty tree)
+== before
+- Quiet check (2026-11-14 14:28:53): warning
+  - warning: other programs use 9.9 % of all CPU threads
+== cal3 G10 1794662999
+Backend metal-apple-m1-max, prefill 512, decode 384 in passes of 4, 3 rounds
+  warmup: prefill 36.02 tok/s, decode 47.49 tok/s (not counted)
+  round 1: prefill 189.42 tok/s, decode 47.83 tok/s, pass 83.62 ms, MTP fill 0.00 ms, step 0.00 ms
+  round 2: prefill 199.97 tok/s, decode 47.85 tok/s, pass 83.60 ms, MTP fill 0.00 ms, step 0.00 ms
+  round 3: prefill 202.96 tok/s, decode 47.72 tok/s, pass 83.81 ms, MTP fill 0.00 ms, step 0.00 ms
+prefill: median 199.97 tok/s, range 189.42 ... 202.96 (3 rounds)
+decode: median 47.83 tok/s, range 47.72 ... 47.85 (3 rounds)
+pass: median 83.62 ms, range 83.60 ... 83.81 (3 rounds)
+page-ins: 22501 major faults over the whole run
+== end 1794663054
+== cal3 G13 1794663145
+Backend metal-apple-m1-max, prefill 512, decode 384 in passes of 4, 3 rounds
+  warmup: prefill 29.47 tok/s, decode 47.34 tok/s (not counted)
+  round 1: prefill 146.54 tok/s, decode 48.16 tok/s, pass 83.05 ms, MTP fill 0.00 ms, step 0.00 ms
+  round 2: prefill 201.86 tok/s, decode 48.06 tok/s, pass 83.23 ms, MTP fill 0.00 ms, step 0.00 ms
+  round 3: prefill 196.29 tok/s, decode 47.51 tok/s, pass 84.20 ms, MTP fill 0.00 ms, step 0.00 ms
+prefill: median 196.29 tok/s, range 146.54 ... 201.86 (3 rounds)
+decode: median 48.06 tok/s, range 47.51 ... 48.16 (3 rounds)
+pass: median 83.23 ms, range 83.05 ... 84.20 (3 rounds)
+page-ins: 28280 major faults over the whole run
+== end 1794663204
+== after
+- Quiet check (2026-11-14 14:34:36): warning
+  - warning: load average 6.15 is high (it lags a minute)
+== server A/B before
+- Quiet check (2026-11-14 14:36:41): warning
+  - warning: other programs use 5.0 % of all CPU threads
+  - warning: load average 3.13 is high (it lags a minute)
+== server A/B after
+- Quiet check (2026-11-14 15:37:25): do not measure
+  - do not measure: the GPU is 96 % busy
+- Quiet check (2026-11-14 15:37:46): ok

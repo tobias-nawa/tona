@@ -1,0 +1,283 @@
+{
+  "id": "granite-4.2-30b",
+  "name": "Granite 4.2 30B",
+  "vendor": "IBM",
+  "release_date": "2026-08-25",
+  "lineage": {
+    "base_model": "ibm-granite/granite-4.1-30b-base",
+    "family": "Granite 4.2",
+    "how_derived": "reasoning post-training (built-in thinking) of the 4.1 base"
+  },
+  "purpose": "Flagship reasoning model of the Granite 4.2 family for enterprise and research use: reasoning, code generation, tool calling, agentic workflows and multilingual dialog, with switchable thinking (full, non-thinking, low effort) and long context (card).",
+  "tasks": [
+    "general",
+    "coding",
+    "math"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en",
+      "de",
+      "es",
+      "fr",
+      "ja",
+      "pt",
+      "ar",
+      "cs",
+      "it",
+      "ko",
+      "nl",
+      "zh"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "HF repo has no LICENSE file; card links the apache.org text and says all Granite models are Apache 2.0 for commercial and research use. Text read: standard Apache License 2.0 text, identical to https://www.apache.org/licenses/LICENSE-2.0.txt (read 2026-11-19)."
+  },
+  "architecture": {
+    "kind": "dense transformer (GraniteForCausalLM) with built-in thinking",
+    "gguf_arch": "granite",
+    "params_total_b": 30,
+    "params_active_b": 30,
+    "layers": 64,
+    "attention": "GQA, 32 heads and 8 KV heads, head dim 128, full attention, rope theta 50,000,000 in config",
+    "recurrent": "none",
+    "context_native": 131072,
+    "context_max": 524288,
+    "drafter": "none",
+    "why_this_design": "Not stated beyond the card's design list (GQA, RoPE, SwiGLU, RMSNorm, untied embeddings); the 512K long-context extension is described as support for long documents and agentic workflows."
+  },
+  "variants": [
+    {
+      "repo": "ibm-granite/granite-4.2-30b",
+      "format": "safetensors BF16",
+      "size_gb": 58.6,
+      "official": true
+    },
+    {
+      "repo": "ibm-granite/granite-4.2-30b-GGUF",
+      "format": "GGUF",
+      "official": true,
+      "notes": "243,528 downloads, created 2026-08-12; sizes not collected"
+    },
+    {
+      "repo": "ibm-granite/granite-4.2-30b-fp8",
+      "format": "FP8",
+      "official": true
+    },
+    {
+      "repo": "ibm-granite/granite-4.2-30b-nvfp4",
+      "format": "NVFP4",
+      "official": true
+    },
+    {
+      "repo": "ibm-granite/granite-4.2-30b-q4-mlx",
+      "format": "MLX 4bit",
+      "official": true
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "no",
+      "basis": "estimate",
+      "notes": "dense 30B"
+    },
+    "pc-16gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "variant": "Q4 about 17-18 GB",
+      "notes": "needs heavy offload or IQ3"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q4"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q4-Q8"
+    },
+    "mac-16-24gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "variant": "IQ3-Q3"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q4"
+    },
+    "mac-64gb-plus": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q8"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "vLLM >= 0.20 (granite_thinking_parser, tool parser qwen3_coder)",
+      "SGLang",
+      "MLX"
+    ],
+    "notes": "Official GGUF repo exists; plain dense llama-like layout with Granite multipliers."
+  },
+  "benchmarks": [
+    {
+      "name": "AIME25",
+      "score": 89.17,
+      "unit": "%",
+      "kind": "vendor",
+      "source": "https://huggingface.co/ibm-granite/granite-4.2-30b",
+      "harness": "NeMo Evaluator SDK based framework, thinking mode"
+    },
+    {
+      "name": "GPQA",
+      "score": 66.41,
+      "unit": "%",
+      "kind": "vendor",
+      "source": "https://huggingface.co/ibm-granite/granite-4.2-30b"
+    },
+    {
+      "name": "MMLU-Pro",
+      "score": 77.6,
+      "unit": "%",
+      "kind": "vendor",
+      "source": "https://huggingface.co/ibm-granite/granite-4.2-30b"
+    },
+    {
+      "name": "MMLU-ProX lite (IBM, multilingual)",
+      "score": 66.64,
+      "unit": "%",
+      "kind": "vendor",
+      "source": "https://huggingface.co/ibm-granite/granite-4.2-30b"
+    },
+    {
+      "name": "LiveCodeBench v6",
+      "score": 75.77,
+      "unit": "%",
+      "kind": "vendor",
+      "source": "https://huggingface.co/ibm-granite/granite-4.2-30b"
+    },
+    {
+      "name": "SWE-bench Verified",
+      "score": 57.0,
+      "unit": "%",
+      "kind": "vendor",
+      "source": "https://huggingface.co/ibm-granite/granite-4.2-30b"
+    },
+    {
+      "name": "Terminal-Bench 2.1",
+      "score": 29.24,
+      "unit": "%",
+      "kind": "vendor",
+      "source": "https://huggingface.co/ibm-granite/granite-4.2-30b"
+    },
+    {
+      "name": "BFCL v4",
+      "score": 61.39,
+      "kind": "vendor",
+      "source": "https://huggingface.co/ibm-granite/granite-4.2-30b"
+    },
+    {
+      "name": "tau3-bench",
+      "score": 68.05,
+      "kind": "vendor",
+      "source": "https://huggingface.co/ibm-granite/granite-4.2-30b"
+    },
+    {
+      "name": "Arena-Hard-V2",
+      "score": 67.93,
+      "kind": "vendor",
+      "source": "https://huggingface.co/ibm-granite/granite-4.2-30b"
+    },
+    {
+      "name": "RULER 128K",
+      "score": 81.38,
+      "kind": "vendor",
+      "source": "https://huggingface.co/ibm-granite/granite-4.2-30b"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "Strong reasoning for 30B (AIME25 89.2, HMMT Feb25 89.2) and Apache-2.0",
+      "German is a tested language; thinking can be switched per request"
+    ],
+    "weaknesses": [
+      "Very long thinking on trivial questions: IBM is investigating whether quantization makes it worse",
+      "Requires temperature 1.0 and top_p 0.95 on all tasks per the card",
+      "Coding numbers (SWE-bench Verified 57) trail Mistral Medium 3.5 (77.6) and the larger 2026 agent models"
+    ],
+    "behavior": "Thinking is on by default inside <think> tags; history thinking is stripped between turns by default; low-effort and non-thinking modes exist.",
+    "best_for": [
+      "reasoning and math on 24 GB machines",
+      "tool calling with reasoning"
+    ],
+    "avoid_for": [
+      "simple chat where long deliberation hurts latency"
+    ],
+    "user_reports": [
+      {
+        "summary": "A user waited nearly 7 minutes of deliberation for the question about the knowledge cutoff; an IBM staff reply says several signals show very long thinking on simple questions and suspects high sensitivity of the 30B and 8B to quantization (unquantized models stop at the right time more often, not yet rigorously investigated).",
+        "sentiment": "negative",
+        "source": "https://huggingface.co/ibm-granite/granite-4.2-30b/discussions/5",
+        "date": "2026-09-03"
+      }
+    ],
+    "maturity": "IBM; regular releases, official quantized formats for every size, 35.8K downloads of the BF16 repo, 243K of the GGUF."
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "Apache-2.0 (text read) dense 30B reasoning model with official GGUF, German among its tested languages and good reasoning numbers; worth a head-to-head against Qwen3.8-27B and Gemma 4 31B on the 24 GB class. Concerns are overthinking (worse when quantized, per IBM) and lower coding numbers. Missing dense Granite module in Tona is only a blocker.",
+    "blockers": [
+      "no Granite module in Tona",
+      "overthinking reports with quantized builds"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/ibm-granite/granite-4.2-30b",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "model card and config.json read"
+    },
+    {
+      "url": "https://huggingface.co/ibm-granite/granite-4.2-30b/discussions/5",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "user report and IBM reply"
+    },
+    {
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.txt",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "license text linked from the card"
+    },
+    {
+      "url": "https://huggingface.co/api/models?author=ibm-granite&search=4.2",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "variant listing"
+    }
+  ],
+  "open_questions": [
+    "Independent German score (not in PeerBench)",
+    "GGUF sizes",
+    "Whether overthinking persists at Q4_K_M on llama.cpp",
+    "Granite 4.2 8B and 3B siblings are not recorded separately"
+  ],
+  "last_checked": "2026-11-19"
+}

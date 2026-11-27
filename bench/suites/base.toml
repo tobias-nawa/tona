@@ -1,0 +1,65 @@
+name = "base"
+description = """Baseline measurement: short prompt, long decode, needle in 10K/30K/60K context, \
+warm prefix at 30K. Context sizes are in characters (Qwen3.8 tokenizer: ~4.6 characters per token, counted with llama-tokenize); the real token counts are in the report."""
+
+[defaults]
+runs = 5
+warmup = 1
+temperature = 0.0
+cache = "cold"
+
+[[case]]
+name = "short-code"
+description = "Short prompt, short answer. Matches the Fibonacci measurement of 22 Oct."
+prompt = "Write a Python function `fib(n)` that returns the n-th Fibonacci number iteratively. Only the code, no explanation."
+expect = 'def\s+fib\s*\('
+max_tokens = 300
+min_decode_tokens = 32
+
+[[case]]
+name = "long-decode"
+description = "Short prompt, long answer: pure decode rate at small context."
+prompt = "Explain in detail how a mutex differs from a semaphore. Give a complete C example for each. Write at least 800 words."
+expect = '(?i)semaphore'
+max_tokens = 1024
+
+[[case]]
+name = "needle-10k"
+description = "~10K tokens of code, needle in the middle, then a longer answer: prefill and decode after 10K."
+context_chars = 46000
+needle = "kestrel-4711"
+question = "The file above defines a constant SECRET_DEPLOY_TOKEN. First state its exact value. Then explain in detail what the code around it does, in at least 400 words."
+expect = 'kestrel-4711'
+max_tokens = 768
+
+[[case]]
+name = "needle-30k"
+context_chars = 141000
+needle = "osprey-2093"
+needle_depth = 0.3
+question = "The file above defines a constant SECRET_DEPLOY_TOKEN. First state its exact value. Then explain in detail what the code around it does, in at least 400 words."
+expect = 'osprey-2093'
+max_tokens = 768
+
+[[case]]
+name = "needle-60k"
+description = "Close to a 65536-token context limit."
+runs = 3
+context_chars = 276000
+needle = "heron-5521"
+needle_depth = 0.7
+question = "The file above defines a constant SECRET_DEPLOY_TOKEN. First state its exact value. Then explain in detail what the code around it does, in at least 400 words."
+expect = 'heron-5521'
+max_tokens = 768
+
+[[case]]
+name = "warm-30k"
+description = "Same 30K prefix as in an agent session, only the end of the question differs: prefix-cache hit, TTFT is what counts."
+cache = "warm"
+context_chars = 141000
+needle = "osprey-2093"
+needle_depth = 0.3
+question = "What is the exact value of SECRET_DEPLOY_TOKEN in the file above? Answer with the value only."
+expect = 'osprey-2093'
+max_tokens = 64
+min_decode_tokens = 1000

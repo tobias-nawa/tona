@@ -1,0 +1,21 @@
+## hw_report 04:20:26
+### Test conditions
+
+- CPU: AMD Ryzen 9 9950X 16-Core Processor, 16 cores / 32 threads
+- GPU: AMD 1002:13c0, gfx1036, 2.0 GiB VRAM, 0.02 GiB held by others before the run, 0 % busy before the run, integrated
+- GPU: AMD Radeon RX 9060 XT, gfx1200, 15.9 GiB VRAM, 2.06 GiB held by others before the run, 2 % busy before the run
+- RAM: 60.5 GiB, 57.1 GiB available before the run
+- OS: Fedora Linux 44 (Workstation Edition), kernel 7.3.4-200.fc44.x86_64 (x86_64)
+- Driver and toolkit: rocm 10.1.0
+- TONA_* variables: `TONA_GPU_ARCH=gfx1200` `TONA_GPU_LOCK_HELD=1` `TONA_HIPCXX=<repo>/work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel/lib/llvm/bin/amdclang++` `TONA_HIPFLAGS=-x hip --offload-arch=gfx1200 -isystem <repo>/work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel/include` `TONA_HIPLDFLAGS=-L<repo>/work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel/lib -lamdhip64 -Wl,-rpath,<repo>/work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel/lib`
+- cgroup limits of this shell: none set
+- Load average (1, 5, 15 min): 3.0, 5.19, 4.7
+- CPU use by other programs over 0.5 s: 0.4 % of all threads, swap in use 1.28 GiB
+- sandbox: no
+- Commit: `847bbca` (clean tree)
+## quiet before 04:20:26
+- Quiet check (2026-11-18 04:20:27): warning
+  - warning: 2.06 GiB of 15.9 GiB VRAM are held by others
+## quiet after 04:24:47
+- Quiet check (2026-11-18 04:24:48): warning
+  - warning: 2.06 GiB of 15.9 GiB VRAM are held by others

@@ -1,0 +1,71 @@
+{
+  "id": "ming-3.0-tts-0.5b",
+  "name": "Ming-3.0-tts-0.5B",
+  "vendor": "Ant Group (inclusionAI)",
+  "release_date": "2026-09-22",
+  "lineage": {
+    "base_model": "Qwen2.5-0.5B (backbone, card)",
+    "family": "ming-3.0-tts"
+  },
+  "purpose": "Dense 0.5B multilingual speech synthesis with paralinguistic and free-form control: zero-shot voice cloning, voice design from a text description, 14 inline sound tags, emotion/speed/pitch/volume control (card).",
+  "tasks": ["speech-synthesis"],
+  "modalities": {"input": ["text", "audio"], "output": ["audio"]},
+  "languages": {"natural": ["zh", "en", "de", "es", "fr", "ko", "ja"]},
+  "license": {
+    "name": "MIT",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "LICENSE of the sibling Ming-3.0-asr-tiny repo (same inclusionAI MIT notice, Copyright 2026 inclusionAI) read; this repo's card header says license: mit. This repo's own LICENSE file was not opened separately."
+  },
+  "architecture": {
+    "kind": "dense autoregressive backbone with DiT head, audio tokenizer and speaker encoder (44.1 kHz output)",
+    "params_total_b": 1.48,
+    "params_active_b": 1.48,
+    "recurrent": "none",
+    "why_this_design": "Card gives no reasons; the 0.5B name refers to the Qwen2.5-0.5B backbone, the HF API counts 1.48B parameters in total (backbone plus DiT head, tokenizer, speaker encoder)."
+  },
+  "variants": [
+    {"repo": "inclusionAI/Ming-3.0-tts-0.5B", "format": "safetensors", "size_gb": 3.0, "official": true, "notes": "HF API sum of files; inference needs the GitHub repo inclusionAI/Ming-3.0-tts"}
+  ],
+  "hardware_fit": {
+    "pc-12gb": {"fits": "yes", "basis": "estimate", "notes": "3 GB weights"},
+    "pc-16gb": {"fits": "yes", "basis": "estimate"},
+    "pc-24gb": {"fits": "yes", "basis": "estimate"},
+    "pc-32gb": {"fits": "yes", "basis": "estimate"},
+    "mac-16-24gb": {"fits": "yes", "basis": "estimate"},
+    "mac-32gb": {"fits": "yes", "basis": "estimate"},
+    "mac-64gb+": {"fits": "yes", "basis": "estimate"}
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": ["Python reference (ming_tts.MingTTS, CLI infer.py; tested on NVIDIA H800 and H20 with CUDA 12.4, SDPA fallback without flash-attn)"],
+    "notes": "Card says the HF repo is checkpoint distribution only; a DiT head needs a diffusion step loop that is not in llama.cpp."
+  },
+  "benchmarks": [
+    {"name": "Seed-TTS en WER (SIM 0.691)", "score": 1.584, "unit": "%", "kind": "vendor", "variant": "0.5B", "source": "https://huggingface.co/inclusionAI/Ming-3.0-tts-0.5B", "date": "2026-11-19"},
+    {"name": "Seed-TTS zh WER (SIM 0.758)", "score": 0.8, "unit": "%", "kind": "vendor", "variant": "0.5B", "source": "https://huggingface.co/inclusionAI/Ming-3.0-tts-0.5B"},
+    {"name": "German WER on MiniMax TTS-Multilingual-Test-Set (SIM 0.753)", "score": 0.365, "unit": "% WER", "kind": "vendor", "variant": "0.5B", "harness": "ASR-based WER, unified protocol, recommended settings per model (card)", "source": "https://huggingface.co/inclusionAI/Ming-3.0-tts-0.5B", "date": "2026-11-19"},
+    {"name": "Spanish WER on MiniMax test set (SIM 0.763)", "score": 1.099, "unit": "% WER", "kind": "vendor", "variant": "0.5B", "source": "https://huggingface.co/inclusionAI/Ming-3.0-tts-0.5B"},
+    {"name": "French WER on MiniMax test set (SIM 0.675)", "score": 4.264, "unit": "% WER", "kind": "vendor", "variant": "0.5B", "source": "https://huggingface.co/inclusionAI/Ming-3.0-tts-0.5B"}
+  ],
+  "soft": {
+    "strengths": ["German WER 0.365% on the builder's multilingual set, close to the larger tiny sibling (0.325%)", "Voice cloning, voice design and free-form style from one small checkpoint", "3 GB, MIT"],
+    "weaknesses": ["German speaker similarity 0.753 is below the tiny sibling (0.791)", "French WER 4.3% is weaker than the tiny sibling (3.5%)", "Inline sound tags are documented for Chinese and English only", "Vendor-only numbers"],
+    "best_for": ["small local TTS with German and cloning where a diffusion head is acceptable"],
+    "maturity": "Ant Group Ming family; 18k downloads on the HF API on 2026-11-19."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "MIT, German officially supported, 3 GB, so it fits every hardware class easily and is the smallest Ming option; the 0.5B vs tiny trade is quality for size and needs a listening test. A Qwen2.5 backbone plus DiT head is a modest port compared with Ling MoE.",
+    "blockers": ["DiT head and audio tokenizer not in Tona", "vendor-only numbers, no listening test"]
+  },
+  "sources": [
+    {"url": "https://huggingface.co/inclusionAI/Ming-3.0-tts-0.5B", "kind": "primary", "checked": "2026-11-19", "note": "README read"},
+    {"url": "https://huggingface.co/api/models/inclusionAI/Ming-3.0-tts-0.5B?blobs=true", "kind": "primary", "checked": "2026-11-19", "note": "created 2026-09-22, 1.48B parameters, 2.96 GB"},
+    {"url": "https://huggingface.co/inclusionAI/Ming-3.0-asr-tiny/raw/main/LICENSE", "kind": "primary", "checked": "2026-11-19", "note": "MIT text of the sibling repo"}
+  ],
+  "open_questions": ["Why this design (builder gives none)", "German naturalness (listening test)", "Latency and RTF (not on the card)", "Own LICENSE file of this repo not opened"],
+  "last_checked": "2026-11-19"
+}

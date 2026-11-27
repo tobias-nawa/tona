@@ -1,0 +1,437 @@
+{
+  "config": {
+    "A": {
+      "build": "scale1126",
+      "env": {},
+      "tooling": {
+        "HIP_PATH": "<repo>/work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+        "HSA_COREDUMP_PATTERN": "<worktree>/work/diag/gpucore-%p.core",
+        "ROCR_VISIBLE_DEVICES": "0",
+        "TONA_EXPERT_PROFILE": "<worktree>/toolchain/profiles/coder-iq1_m.bin"
+      },
+      "commit": "v0.0.2-1468-g0f0736635d",
+      "model": "<worktree>/work/models/coder-iq1_m/Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf",
+      "drafter": "<worktree>/work/models/draft/mtp-Qwen3.8-Flash-Next-Q8_0.gguf"
+    },
+    "B": {
+      "build": "scale1126",
+      "env": {},
+      "tooling": {
+        "HIP_PATH": "<repo>/work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+        "HSA_COREDUMP_PATTERN": "<worktree>/work/diag/gpucore-%p.core",
+        "ROCR_VISIBLE_DEVICES": "0",
+        "TONA_EXPERT_PROFILE": "<worktree>/toolchain/profiles/coder-iq1_m.bin"
+      },
+      "commit": "v0.0.2-1468-g0f0736635d",
+      "model": "<worktree>/work/models/coder-iq1_m/Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf",
+      "drafter": "<worktree>/work/models/draft/mtp-Qwen3.8-Flash-Next-Q8_0.gguf"
+    },
+    "workload": "server",
+    "targets": "2000:200 16000:100 64000:50 at --ctx 262144",
+    "deterministic": false,
+    "plan_info": {
+      "expect": [
+        [
+          "decode",
+          -3.0,
+          3.0
+        ],
+        [
+          "prefill",
+          -3.0,
+          3.0
+        ]
+      ],
+      "source": "A/A, same build: B against A is 0 within the known noise",
+      "workload": "server",
+      "targets": "2000:200 16000:100 64000:50 at --ctx 262144",
+      "primary": "",
+      "why_size": "the offer.json rows of the Coder (2K, 16K, 64K code summary, MTP); same targets as 2026-11-20-coder-decode.md; A/A gives the spread; 2 rounds is the minimum",
+      "decode_tokens": 200,
+      "noise": {},
+      "warmup": true,
+      "round_warmup": false,
+      "load_log": true,
+      "A": {
+        "build": "scale1126",
+        "env": {},
+        "tooling": {
+          "HIP_PATH": "<repo>/work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+          "HSA_COREDUMP_PATTERN": "<worktree>/work/diag/gpucore-%p.core",
+          "ROCR_VISIBLE_DEVICES": "0",
+          "TONA_EXPERT_PROFILE": "<worktree>/toolchain/profiles/coder-iq1_m.bin"
+        },
+        "commit": "v0.0.2-1468-g0f0736635d",
+        "model": "<worktree>/work/models/coder-iq1_m/Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf",
+        "drafter": "<worktree>/work/models/draft/mtp-Qwen3.8-Flash-Next-Q8_0.gguf"
+      },
+      "B": {
+        "build": "scale1126",
+        "env": {},
+        "tooling": {
+          "HIP_PATH": "<repo>/work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+          "HSA_COREDUMP_PATTERN": "<worktree>/work/diag/gpucore-%p.core",
+          "ROCR_VISIBLE_DEVICES": "0",
+          "TONA_EXPERT_PROFILE": "<worktree>/toolchain/profiles/coder-iq1_m.bin"
+        },
+        "commit": "v0.0.2-1468-g0f0736635d",
+        "model": "<worktree>/work/models/coder-iq1_m/Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf",
+        "drafter": "<worktree>/work/models/draft/mtp-Qwen3.8-Flash-Next-Q8_0.gguf"
+      }
+    },
+    "reference_sha": {},
+    "corpus_sha256": "e13a800340859f7d39c63712d90383faae7e5a47c3865f0811e40d912612d38e",
+    "corpus_is_reference": true,
+    "commit": "1f09a01d",
+    "noise": {}
+  },
+  "rounds": [
+    {
+      "order": "AB",
+      "sha": {
+        "A": {
+          "2000": "c84123c5356cbe1b",
+          "16000": "f8ad4e0401b3f627",
+          "64000": "038e48a132b20f47"
+        },
+        "B": {
+          "2000": "c84123c5356cbe1b",
+          "16000": "f8ad4e0401b3f627",
+          "64000": "038e48a132b20f47"
+        }
+      },
+      "A": {
+        "prefill@2000": 1134.2246866168273,
+        "decode@2000": 71.53894511118887,
+        "prefill@16000": 1911.6918142702,
+        "decode@16000": 68.08540264429502,
+        "prefill@64000": 1982.7781505580872,
+        "decode@64000": 73.945003563321
+      },
+      "counters": {
+        "A": {
+          "2000": {
+            "expert_hits": 69867,
+            "expert_misses": 10833,
+            "passes": 60,
+            "gen_tokens": 200,
+            "mtp_passes": 231
+          },
+          "16000": {
+            "expert_hits": 35866,
+            "expert_misses": 4503,
+            "passes": 33,
+            "gen_tokens": 99,
+            "mtp_passes": 105
+          },
+          "64000": {
+            "expert_hits": 16383,
+            "expert_misses": 1790,
+            "passes": 15,
+            "gen_tokens": 50,
+            "mtp_passes": 54
+          }
+        },
+        "B": {
+          "2000": {
+            "expert_hits": 69867,
+            "expert_misses": 10833,
+            "passes": 60,
+            "gen_tokens": 200,
+            "mtp_passes": 231
+          },
+          "16000": {
+            "expert_hits": 35866,
+            "expert_misses": 4503,
+            "passes": 33,
+            "gen_tokens": 99,
+            "mtp_passes": 105
+          },
+          "64000": {
+            "expert_hits": 16383,
+            "expert_misses": 1790,
+            "passes": 15,
+            "gen_tokens": 50,
+            "mtp_passes": 54
+          }
+        }
+      },
+      "B": {
+        "prefill@2000": 1063.480148450479,
+        "decode@2000": 70.07721119743631,
+        "prefill@16000": 1904.7282757891016,
+        "decode@16000": 67.6413481907717,
+        "prefill@64000": 1976.2470922247635,
+        "decode@64000": 73.97588878113348
+      },
+      "seconds": 115.47843986505177
+    },
+    {
+      "order": "BA",
+      "sha": {
+        "B": {
+          "2000": "c84123c5356cbe1b",
+          "16000": "f8ad4e0401b3f627",
+          "64000": "038e48a132b20f47"
+        },
+        "A": {
+          "2000": "c84123c5356cbe1b",
+          "16000": "f8ad4e0401b3f627",
+          "64000": "038e48a132b20f47"
+        }
+      },
+      "B": {
+        "prefill@2000": 1124.4730664120916,
+        "decode@2000": 71.70542019145162,
+        "prefill@16000": 1901.8586479187884,
+        "decode@16000": 68.000258542423,
+        "prefill@64000": 1975.4250712933263,
+        "decode@64000": 73.85008937876923
+      },
+      "counters": {
+        "B": {
+          "2000": {
+            "expert_hits": 69867,
+            "expert_misses": 10833,
+            "passes": 60,
+            "gen_tokens": 200,
+            "mtp_passes": 231
+          },
+          "16000": {
+            "expert_hits": 35866,
+            "expert_misses": 4503,
+            "passes": 33,
+            "gen_tokens": 99,
+            "mtp_passes": 105
+          },
+          "64000": {
+            "expert_hits": 16383,
+            "expert_misses": 1790,
+            "passes": 15,
+            "gen_tokens": 50,
+            "mtp_passes": 54
+          }
+        },
+        "A": {
+          "2000": {
+            "expert_hits": 69867,
+            "expert_misses": 10833,
+            "passes": 60,
+            "gen_tokens": 200,
+            "mtp_passes": 231
+          },
+          "16000": {
+            "expert_hits": 35866,
+            "expert_misses": 4503,
+            "passes": 33,
+            "gen_tokens": 99,
+            "mtp_passes": 105
+          },
+          "64000": {
+            "expert_hits": 16383,
+            "expert_misses": 1790,
+            "passes": 15,
+            "gen_tokens": 50,
+            "mtp_passes": 54
+          }
+        }
+      },
+      "A": {
+        "prefill@2000": 1188.1471445927161,
+        "decode@2000": 70.5686577800819,
+        "prefill@16000": 1929.024767385969,
+        "decode@16000": 67.85240610005941,
+        "prefill@64000": 1990.6416573473914,
+        "decode@64000": 74.03264814612143
+      },
+      "seconds": 116.643656595028
+    }
+  ],
+  "discarded": [],
+  "stop_reason": "2 rounds (undecided metrics stay open)",
+  "wall_seconds": 292.5764105889248,
+  "loads": [
+    {
+      "start": 1,
+      "arm": "A",
+      "cpu_own": 148.9,
+      "cpu_system": 36.4,
+      "cpu_other": 15.3,
+      "gpu_own": 0.0,
+      "gpu_system": 0.0,
+      "gpu_other": 0.3,
+      "pageins": 33776.4,
+      "swapins": 18.9,
+      "compressions": 1012.7,
+      "level_min": 30,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": null,
+      "seconds": 59,
+      "idle_before_s": null,
+      "ready_s": 19.3
+    },
+    {
+      "start": 2,
+      "arm": "A",
+      "cpu_own": 154.4,
+      "cpu_system": 36.5,
+      "cpu_other": 12.9,
+      "gpu_own": 0.0,
+      "gpu_system": 0.0,
+      "gpu_other": 0.3,
+      "pageins": 32575.2,
+      "swapins": 1.6,
+      "compressions": 1.2,
+      "level_min": 31,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": null,
+      "seconds": 55,
+      "idle_before_s": 1.2,
+      "ready_s": 16.2
+    },
+    {
+      "start": 3,
+      "arm": "B",
+      "cpu_own": 152.3,
+      "cpu_system": 38.4,
+      "cpu_other": 13.5,
+      "gpu_own": 0.0,
+      "gpu_system": 0.0,
+      "gpu_other": 0.3,
+      "pageins": 34487.7,
+      "swapins": 4.0,
+      "compressions": 24.5,
+      "level_min": 31,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": null,
+      "seconds": 57,
+      "idle_before_s": 1.2,
+      "ready_s": 18.2
+    },
+    {
+      "start": 4,
+      "arm": "B",
+      "cpu_own": 151.1,
+      "cpu_system": 38.2,
+      "cpu_other": 13.5,
+      "gpu_own": 0.0,
+      "gpu_system": 0.0,
+      "gpu_other": 0.2,
+      "pageins": 34120.5,
+      "swapins": 7.7,
+      "compressions": 52.5,
+      "level_min": 31,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": null,
+      "seconds": 57,
+      "idle_before_s": 1.2,
+      "ready_s": 19.5
+    },
+    {
+      "start": 5,
+      "arm": "A",
+      "cpu_own": 157.0,
+      "cpu_system": 35.3,
+      "cpu_other": 12.6,
+      "gpu_own": 0.0,
+      "gpu_system": 0.0,
+      "gpu_other": 0.4,
+      "pageins": 32523.9,
+      "swapins": 48.2,
+      "compressions": 84.9,
+      "level_min": 31,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": null,
+      "seconds": 55,
+      "idle_before_s": 1.2,
+      "ready_s": 16.3
+    }
+  ],
+  "warmup": {
+    "prefill@2000": 1174.8434575613069,
+    "decode@2000": 72.10075538944801,
+    "prefill@16000": 1880.54801531835,
+    "decode@16000": 67.51342458369935,
+    "prefill@64000": 1977.2271733758187,
+    "decode@64000": 73.96704759153751
+  },
+  "plan": {
+    "alpha": 0.05,
+    "margin": 0.5,
+    "max_rounds": 2,
+    "min_rounds": 2,
+    "prior_sd": 0.5,
+    "prior_df": 4.0
+  },
+  "decisions": {
+    "prefill@2000": {
+      "decided_at_round": 2,
+      "decision": "B slower",
+      "mean_diff_percent": -5.798183358912256,
+      "ci_diff_percent": [
+        -6.755039379349551,
+        -4.8413273384749616
+      ]
+    },
+    "decode@2000": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": -0.21620498429474888,
+      "ci_diff_percent": [
+        -2.4684123440285948,
+        2.0360023754390975
+      ]
+    },
+    "prefill@16000": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": -0.8862715407018606,
+      "ci_diff_percent": [
+        -1.8966740448625934,
+        0.12413096345887209
+      ]
+    },
+    "decode@16000": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": -0.21714956008782038,
+      "ci_diff_percent": [
+        -1.1715735699744694,
+        0.7372744497988287
+      ]
+    },
+    "prefill@64000": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": -0.5468976762861344,
+      "ci_diff_percent": [
+        -1.3973756846623484,
+        0.30358033209007973
+      ]
+    },
+    "decode@64000": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": -0.10241221008782109,
+      "ci_diff_percent": [
+        -0.9320277286601543,
+        0.7272033084845121
+      ]
+    }
+  }
+}

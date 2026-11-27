@@ -1,0 +1,345 @@
+Tona (tona-server) on http://127.0.0.1:8097 (Anthropic: /v1/messages, OpenAI: /v1/chat/completions), without key, loading ...
+host memory: GTT (probe 64 MB grew the GTT use by 64 MB; 1.8 of 32.5 GB in use)
+evicted_ms counter: /sys/class/kfd/kfd/proc/3939678/stats_7773/evicted_ms (0 ms so far), evictions do not count against the pass deadline
+Initialization: 512 MTP experts as Q2_0, converted on the GPU (708 MB) in 0.8 s
+host memory: 1.8 GB of the pinned experts do not fit the GTT and are registered as userptr
+Releasing page cache: 8.25 GB of file mappings removed from the address space
+loaded in 20.5 s: context 140000 (KV int8 1.94 GB in RAM), VRAM 13.67 GB, 76 expert slots per layer, 27.4 GB pinned
+06:51:34 POST /v1/messages/count_tokens → 200
+06:51:34 POST /v1/messages/count_tokens → 200
+06:51:34 POST /v1/messages/count_tokens → 200
+06:51:34 POST /v1/messages/count_tokens → 200
+06:51:34 POST /v1/messages/count_tokens → 200
+06:51:34 POST /v1/messages/count_tokens → 200
+06:51:34 POST /v1/messages/count_tokens → 200
+06:51:34 POST /v1/messages/count_tokens → 200
+06:51:34 POST /v1/messages/count_tokens → 200
+06:51:34 POST /v1/messages/count_tokens → 200
+06:51:34 POST /v1/messages/count_tokens → 200
+06:51:34 POST /v1/messages/count_tokens → 200
+06:51:53 Request: 29722 prompt tokens (0 reused, 29722 computed in 15.8 s, new conversation (stashing 0 ms), slot 0), 200 tokens in 2.6 s = 75.9 tok/s, 3.62 tokens per pass, 1 of 55 passes from the history (3.00 per pass)
+  DIAG hits 61835 misses 8981 cpu_experts 6377 (115.9/pass) gpu_direct 2604 fills 0 yields 0 launches 255 wait 1604 ms read 0 ms cpu 530 ms select 29 ms fill 0 ms prefetch_wait 1 ms prefetched 17290 used 7904 mtp_stale 0 mtp_dyn 4 early 8873/1393
+06:51:53 POST /v1/chat/completions → 200
+06:51:53 POST /v1/messages/count_tokens → 200
+06:51:53 POST /v1/messages/count_tokens → 200
+06:51:53 POST /v1/messages/count_tokens → 200
+06:51:54 POST /v1/messages/count_tokens → 200
+06:51:54 POST /v1/messages/count_tokens → 200
+06:51:54 POST /v1/messages/count_tokens → 200
+06:51:54 POST /v1/messages/count_tokens → 200
+06:51:54 POST /v1/messages/count_tokens → 200
+06:51:54 POST /v1/messages/count_tokens → 200
+06:51:54 POST /v1/messages/count_tokens → 200
+06:51:54 POST /v1/messages/count_tokens → 200
+06:51:54 POST /v1/messages/count_tokens → 200
+Conversation of 29695 tokens stashed: 643 MB (state 149, KV 445, pool 49, drafter 0) in 0.17 s
+Conversation of 129883 tokens stashed: 2311 MB (state 149, KV 1945, pool 216, drafter 0) in 0.34 s
+06:53:11 Request: 129910 prompt tokens (0 reused, 129910 computed in 73.5 s, new conversation (stashing 514 ms), checkpoint at 129883 (before the fixed end), slot 1), 200 tokens in 3.1 s = 64.5 tok/s, 3.08 tokens per pass, 0 of 65 passes from the history (0.00 per pass)
+  DIAG hits 69551 misses 9113 cpu_experts 6265 (96.4/pass) gpu_direct 2848 fills 0 yields 0 launches 285 wait 1988 ms read 0 ms cpu 522 ms select 32 ms fill 0 ms prefetch_wait 1 ms prefetched 18634 used 8342 mtp_stale 0 mtp_dyn 1 early 8704/1149
+06:53:11 POST /v1/chat/completions → 200
+06:53:11 POST /v1/messages/count_tokens → 200
+06:53:11 POST /v1/messages/count_tokens → 200
+06:53:12 POST /v1/messages/count_tokens → 200
+06:53:12 POST /v1/messages/count_tokens → 200
+06:53:12 POST /v1/messages/count_tokens → 200
+06:53:12 POST /v1/messages/count_tokens → 200
+06:53:12 POST /v1/messages/count_tokens → 200
+06:53:12 POST /v1/messages/count_tokens → 200
+06:53:12 POST /v1/messages/count_tokens → 200
+06:53:12 POST /v1/messages/count_tokens → 200
+06:53:12 POST /v1/messages/count_tokens → 200
+06:53:12 POST /v1/messages/count_tokens → 200
+Conversation of 29722 tokens stashed: 644 MB (state 149, KV 445, pool 49, drafter 0) in 0.11 s
+06:53:31 Request: 29722 prompt tokens (0 reused, 29722 computed in 16.1 s, new conversation (stashing 109 ms), slot 0), 200 tokens in 2.9 s = 69.5 tok/s, 3.57 tokens per pass, 0 of 56 passes from the history (0.00 per pass)
+  DIAG hits 63441 misses 9125 cpu_experts 6344 (113.3/pass) gpu_direct 2781 fills 0 yields 0 launches 270 wait 1577 ms read 0 ms cpu 734 ms select 37 ms fill 0 ms prefetch_wait 2 ms prefetched 16530 used 7344 mtp_stale 0 mtp_dyn 0 early 8283/876
+06:53:31 POST /v1/chat/completions → 200
+06:53:33 POST /v1/messages/count_tokens → 200
+06:53:33 POST /v1/messages/count_tokens → 200
+06:53:33 POST /v1/messages/count_tokens → 200
+06:53:33 POST /v1/messages/count_tokens → 200
+06:53:33 POST /v1/messages/count_tokens → 200
+06:53:33 POST /v1/messages/count_tokens → 200
+06:53:33 POST /v1/messages/count_tokens → 200
+06:53:33 POST /v1/messages/count_tokens → 200
+06:53:33 POST /v1/messages/count_tokens → 200
+06:53:34 POST /v1/messages/count_tokens → 200
+06:53:34 POST /v1/messages/count_tokens → 200
+06:53:34 POST /v1/messages/count_tokens → 200
+Conversation of 129910 tokens stashed: 2311 MB (state 149, KV 1946, pool 216, drafter 0) in 0.57 s
+Conversation of 29695 tokens stashed: 643 MB (state 149, KV 445, pool 49, drafter 0) in 0.21 s
+Conversation of 129883 tokens stashed: 2311 MB (state 149, KV 1945, pool 216, drafter 0) in 0.45 s
+06:55:18 Request: 129910 prompt tokens (0 reused, 129910 computed in 101.3 s, new conversation (stashing 1230 ms), checkpoint at 129883 (before the fixed end), slot 1), 200 tokens in 3.3 s = 60.9 tok/s, 3.12 tokens per pass, 0 of 64 passes from the history (0.00 per pass)
+  DIAG hits 66247 misses 8436 cpu_experts 5176 (80.9/pass) gpu_direct 3260 fills 0 yields 0 launches 277 wait 1846 ms read 0 ms cpu 757 ms select 58 ms fill 0 ms prefetch_wait 17 ms prefetched 18439 used 8043 mtp_stale 0 mtp_dyn 0 early 8644/1040
+06:55:18 POST /v1/chat/completions → 200
+06:55:20 POST /v1/messages/count_tokens → 200
+06:55:20 POST /v1/messages/count_tokens → 200
+06:55:20 POST /v1/messages/count_tokens → 200
+06:55:20 POST /v1/messages/count_tokens → 200
+06:55:20 POST /v1/messages/count_tokens → 200
+06:55:20 POST /v1/messages/count_tokens → 200
+06:55:20 POST /v1/messages/count_tokens → 200
+06:55:20 POST /v1/messages/count_tokens → 200
+06:55:20 POST /v1/messages/count_tokens → 200
+06:55:20 POST /v1/messages/count_tokens → 200
+06:55:20 POST /v1/messages/count_tokens → 200
+06:55:20 POST /v1/messages/count_tokens → 200
+Conversation of 29722 tokens stashed: 644 MB (state 149, KV 445, pool 49, drafter 0) in 0.10 s
+06:55:39 Request: 29722 prompt tokens (0 reused, 29722 computed in 16.1 s, new conversation (stashing 96 ms), slot 0), 200 tokens in 2.7 s = 72.7 tok/s, 3.55 tokens per pass, 0 of 56 passes from the history (0.00 per pass)
+  DIAG hits 62986 misses 9321 cpu_experts 6484 (115.8/pass) gpu_direct 2837 fills 0 yields 0 launches 269 wait 1641 ms read 0 ms cpu 563 ms select 30 ms fill 0 ms prefetch_wait 1 ms prefetched 17378 used 7849 mtp_stale 0 mtp_dyn 0 early 8618/1094
+06:55:39 POST /v1/chat/completions → 200
+06:55:40 POST /v1/messages/count_tokens → 200
+06:55:40 POST /v1/messages/count_tokens → 200
+06:55:40 POST /v1/messages/count_tokens → 200
+06:55:40 POST /v1/messages/count_tokens → 200
+06:55:40 POST /v1/messages/count_tokens → 200
+06:55:40 POST /v1/messages/count_tokens → 200
+06:55:40 POST /v1/messages/count_tokens → 200
+06:55:40 POST /v1/messages/count_tokens → 200
+06:55:41 POST /v1/messages/count_tokens → 200
+06:55:41 POST /v1/messages/count_tokens → 200
+06:55:41 POST /v1/messages/count_tokens → 200
+06:55:41 POST /v1/messages/count_tokens → 200
+Conversation of 129910 tokens stashed: 2311 MB (state 149, KV 1946, pool 216, drafter 0) in 0.35 s
+Conversation of 29695 tokens stashed: 643 MB (state 149, KV 445, pool 49, drafter 0) in 0.10 s
+Conversation of 129883 tokens stashed: 2311 MB (state 149, KV 1945, pool 216, drafter 0) in 0.36 s
+06:56:58 Request: 129910 prompt tokens (0 reused, 129910 computed in 74.1 s, new conversation (stashing 892 ms), checkpoint at 129883 (before the fixed end), slot 1), 200 tokens in 3.1 s = 64.5 tok/s, 2.94 tokens per pass, 0 of 68 passes from the history (0.00 per pass)
+  DIAG hits 66591 misses 8830 cpu_experts 5921 (87.1/pass) gpu_direct 2909 fills 0 yields 0 launches 275 wait 1982 ms read 0 ms cpu 526 ms select 31 ms fill 0 ms prefetch_wait 1 ms prefetched 18306 used 8026 mtp_stale 0 mtp_dyn 0 early 8161/1165
+06:56:58 POST /v1/chat/completions → 200
+06:56:59 POST /v1/messages/count_tokens → 200
+06:56:59 POST /v1/messages/count_tokens → 200
+06:56:59 POST /v1/messages/count_tokens → 200
+06:56:59 POST /v1/messages/count_tokens → 200
+06:56:59 POST /v1/messages/count_tokens → 200
+06:56:59 POST /v1/messages/count_tokens → 200
+06:56:59 POST /v1/messages/count_tokens → 200
+06:56:59 POST /v1/messages/count_tokens → 200
+06:56:59 POST /v1/messages/count_tokens → 200
+06:56:59 POST /v1/messages/count_tokens → 200
+06:56:59 POST /v1/messages/count_tokens → 200
+06:56:59 POST /v1/messages/count_tokens → 200
+Conversation of 29722 tokens stashed: 644 MB (state 149, KV 445, pool 49, drafter 0) in 0.13 s
+06:57:24 Request: 29722 prompt tokens (0 reused, 29722 computed in 21.5 s, new conversation (stashing 158 ms), slot 0), 200 tokens in 3.3 s = 59.7 tok/s, 3.17 tokens per pass, 0 of 63 passes from the history (0.00 per pass)
+  DIAG hits 66869 misses 9327 cpu_experts 5859 (93.0/pass) gpu_direct 3468 fills 0 yields 0 launches 282 wait 1921 ms read 0 ms cpu 787 ms select 51 ms fill 0 ms prefetch_wait 11 ms prefetched 18538 used 8423 mtp_stale 0 mtp_dyn 0 early 9051/1035
+06:57:24 POST /v1/chat/completions → 200
+06:57:25 POST /v1/messages/count_tokens → 200
+06:57:26 POST /v1/messages/count_tokens → 200
+06:57:26 POST /v1/messages/count_tokens → 200
+06:57:26 POST /v1/messages/count_tokens → 200
+06:57:26 POST /v1/messages/count_tokens → 200
+06:57:26 POST /v1/messages/count_tokens → 200
+06:57:26 POST /v1/messages/count_tokens → 200
+06:57:26 POST /v1/messages/count_tokens → 200
+06:57:26 POST /v1/messages/count_tokens → 200
+06:57:26 POST /v1/messages/count_tokens → 200
+06:57:26 POST /v1/messages/count_tokens → 200
+06:57:26 POST /v1/messages/count_tokens → 200
+Conversation of 129910 tokens stashed: 2311 MB (state 149, KV 1946, pool 216, drafter 0) in 0.56 s
+Conversation of 29695 tokens stashed: 643 MB (state 149, KV 445, pool 49, drafter 0) in 0.12 s
+Conversation of 129883 tokens stashed: 2311 MB (state 149, KV 1945, pool 216, drafter 0) in 0.49 s
+06:59:04 Request: 129910 prompt tokens (0 reused, 129910 computed in 94.9 s, new conversation (stashing 1438 ms), checkpoint at 129883 (before the fixed end), slot 1), 200 tokens in 3.2 s = 62.1 tok/s, 3.17 tokens per pass, 0 of 63 passes from the history (0.00 per pass)
+  DIAG hits 66560 misses 8643 cpu_experts 5824 (92.4/pass) gpu_direct 2819 fills 0 yields 0 launches 283 wait 1849 ms read 0 ms cpu 721 ms select 41 ms fill 0 ms prefetch_wait 3 ms prefetched 18173 used 8149 mtp_stale 0 mtp_dyn 1 early 8530/1051
+06:59:04 POST /v1/chat/completions → 200
+06:59:06 POST /v1/messages/count_tokens → 200
+06:59:06 POST /v1/messages/count_tokens → 200
+06:59:06 POST /v1/messages/count_tokens → 200
+06:59:06 POST /v1/messages/count_tokens → 200
+06:59:06 POST /v1/messages/count_tokens → 200
+06:59:06 POST /v1/messages/count_tokens → 200
+06:59:06 POST /v1/messages/count_tokens → 200
+06:59:06 POST /v1/messages/count_tokens → 200
+06:59:06 POST /v1/messages/count_tokens → 200
+06:59:06 POST /v1/messages/count_tokens → 200
+06:59:06 POST /v1/messages/count_tokens → 200
+06:59:06 POST /v1/messages/count_tokens → 200
+Conversation of 29722 tokens stashed: 644 MB (state 149, KV 445, pool 49, drafter 0) in 0.10 s
+06:59:25 Request: 29722 prompt tokens (0 reused, 29722 computed in 16.1 s, new conversation (stashing 123 ms), slot 0), 200 tokens in 2.6 s = 76.0 tok/s, 3.57 tokens per pass, 1 of 56 passes from the history (4.00 per pass)
+  DIAG hits 60003 misses 8879 cpu_experts 6099 (108.9/pass) gpu_direct 2780 fills 0 yields 0 launches 253 wait 1598 ms read 0 ms cpu 526 ms select 29 ms fill 0 ms prefetch_wait 1 ms prefetched 16269 used 7312 mtp_stale 0 mtp_dyn 0 early 8430/1144
+06:59:25 POST /v1/chat/completions → 200
+06:59:26 POST /v1/messages/count_tokens → 200
+06:59:26 POST /v1/messages/count_tokens → 200
+06:59:26 POST /v1/messages/count_tokens → 200
+06:59:26 POST /v1/messages/count_tokens → 200
+06:59:26 POST /v1/messages/count_tokens → 200
+06:59:26 POST /v1/messages/count_tokens → 200
+06:59:26 POST /v1/messages/count_tokens → 200
+06:59:26 POST /v1/messages/count_tokens → 200
+06:59:26 POST /v1/messages/count_tokens → 200
+06:59:26 POST /v1/messages/count_tokens → 200
+06:59:26 POST /v1/messages/count_tokens → 200
+06:59:27 POST /v1/messages/count_tokens → 200
+Conversation of 129910 tokens stashed: 2311 MB (state 149, KV 1946, pool 216, drafter 0) in 0.36 s
+Conversation of 29695 tokens stashed: 643 MB (state 149, KV 445, pool 49, drafter 0) in 0.10 s
+Conversation of 129883 tokens stashed: 2311 MB (state 149, KV 1945, pool 216, drafter 0) in 0.36 s
+07:00:44 Request: 129910 prompt tokens (0 reused, 129910 computed in 74.2 s, new conversation (stashing 967 ms), checkpoint at 129883 (before the fixed end), slot 1), 200 tokens in 3.1 s = 64.7 tok/s, 3.11 tokens per pass, 0 of 64 passes from the history (0.00 per pass)
+  DIAG hits 66746 misses 8838 cpu_experts 6060 (94.7/pass) gpu_direct 2778 fills 0 yields 0 launches 290 wait 1951 ms read 0 ms cpu 533 ms select 32 ms fill 0 ms prefetch_wait 1 ms prefetched 17627 used 7769 mtp_stale 0 mtp_dyn 0 early 8381/1088
+07:00:44 POST /v1/chat/completions → 200
+07:00:45 POST /v1/messages/count_tokens → 200
+07:00:45 POST /v1/messages/count_tokens → 200
+07:00:45 POST /v1/messages/count_tokens → 200
+07:00:45 POST /v1/messages/count_tokens → 200
+07:00:45 POST /v1/messages/count_tokens → 200
+07:00:45 POST /v1/messages/count_tokens → 200
+07:00:45 POST /v1/messages/count_tokens → 200
+07:00:45 POST /v1/messages/count_tokens → 200
+07:00:45 POST /v1/messages/count_tokens → 200
+07:00:45 POST /v1/messages/count_tokens → 200
+07:00:45 POST /v1/messages/count_tokens → 200
+07:00:45 POST /v1/messages/count_tokens → 200
+Conversation of 29722 tokens stashed: 644 MB (state 149, KV 445, pool 49, drafter 0) in 0.13 s
+07:01:10 Request: 29722 prompt tokens (0 reused, 29722 computed in 22.3 s, new conversation (stashing 150 ms), slot 0), 200 tokens in 2.9 s = 68.5 tok/s, 3.64 tokens per pass, 1 of 55 passes from the history (2.00 per pass)
+  DIAG hits 63015 misses 8977 cpu_experts 5920 (107.6/pass) gpu_direct 3057 fills 0 yields 0 launches 258 wait 1559 ms read 0 ms cpu 787 ms select 45 ms fill 0 ms prefetch_wait 7 ms prefetched 16594 used 7427 mtp_stale 0 mtp_dyn 0 early 9013/1128
+07:01:10 POST /v1/chat/completions → 200
+07:01:12 POST /v1/messages/count_tokens → 200
+07:01:12 POST /v1/messages/count_tokens → 200
+07:01:12 POST /v1/messages/count_tokens → 200
+07:01:12 POST /v1/messages/count_tokens → 200
+07:01:12 POST /v1/messages/count_tokens → 200
+07:01:12 POST /v1/messages/count_tokens → 200
+07:01:12 POST /v1/messages/count_tokens → 200
+07:01:12 POST /v1/messages/count_tokens → 200
+07:01:12 POST /v1/messages/count_tokens → 200
+07:01:12 POST /v1/messages/count_tokens → 200
+07:01:12 POST /v1/messages/count_tokens → 200
+07:01:12 POST /v1/messages/count_tokens → 200
+Conversation of 129910 tokens stashed: 2311 MB (state 149, KV 1946, pool 216, drafter 0) in 0.58 s
+Conversation of 29695 tokens stashed: 643 MB (state 149, KV 445, pool 49, drafter 0) in 0.13 s
+Conversation of 129883 tokens stashed: 2311 MB (state 149, KV 1945, pool 216, drafter 0) in 0.42 s
+07:02:47 Request: 129910 prompt tokens (0 reused, 129910 computed in 90.7 s, new conversation (stashing 1352 ms), checkpoint at 129883 (before the fixed end), slot 1), 200 tokens in 3.6 s = 55.9 tok/s, 2.93 tokens per pass, 0 of 68 passes from the history (0.00 per pass)
+  DIAG hits 70200 misses 9142 cpu_experts 5862 (86.2/pass) gpu_direct 3280 fills 0 yields 0 launches 300 wait 2023 ms read 0 ms cpu 797 ms select 59 ms fill 0 ms prefetch_wait 15 ms prefetched 19188 used 8568 mtp_stale 0 mtp_dyn 1 early 8033/1010
+07:02:47 POST /v1/chat/completions → 200
+07:02:48 POST /v1/messages/count_tokens → 200
+07:02:49 POST /v1/messages/count_tokens → 200
+07:02:49 POST /v1/messages/count_tokens → 200
+07:02:49 POST /v1/messages/count_tokens → 200
+07:02:49 POST /v1/messages/count_tokens → 200
+07:02:49 POST /v1/messages/count_tokens → 200
+07:02:49 POST /v1/messages/count_tokens → 200
+07:02:49 POST /v1/messages/count_tokens → 200
+07:02:49 POST /v1/messages/count_tokens → 200
+07:02:49 POST /v1/messages/count_tokens → 200
+07:02:49 POST /v1/messages/count_tokens → 200
+07:02:49 POST /v1/messages/count_tokens → 200
+Conversation of 29722 tokens stashed: 644 MB (state 149, KV 445, pool 49, drafter 0) in 0.10 s
+07:03:08 Request: 29722 prompt tokens (0 reused, 29722 computed in 16.1 s, new conversation (stashing 124 ms), slot 0), 200 tokens in 2.6 s = 75.7 tok/s, 3.70 tokens per pass, 1 of 54 passes from the history (2.00 per pass)
+  DIAG hits 62229 misses 9057 cpu_experts 6393 (118.4/pass) gpu_direct 2664 fills 0 yields 0 launches 254 wait 1579 ms read 0 ms cpu 550 ms select 30 ms fill 0 ms prefetch_wait 1 ms prefetched 16634 used 7554 mtp_stale 0 mtp_dyn 0 early 9520/1128
+07:03:08 POST /v1/chat/completions → 200
+07:03:08 POST /v1/messages/count_tokens → 200
+07:03:08 POST /v1/messages/count_tokens → 200
+07:03:08 POST /v1/messages/count_tokens → 200
+07:03:09 POST /v1/messages/count_tokens → 200
+07:03:09 POST /v1/messages/count_tokens → 200
+07:03:09 POST /v1/messages/count_tokens → 200
+07:03:09 POST /v1/messages/count_tokens → 200
+07:03:09 POST /v1/messages/count_tokens → 200
+07:03:09 POST /v1/messages/count_tokens → 200
+07:03:09 POST /v1/messages/count_tokens → 200
+07:03:09 POST /v1/messages/count_tokens → 200
+07:03:09 POST /v1/messages/count_tokens → 200
+Conversation of 129910 tokens stashed: 2311 MB (state 149, KV 1946, pool 216, drafter 0) in 0.36 s
+Conversation of 29695 tokens stashed: 643 MB (state 149, KV 445, pool 49, drafter 0) in 0.10 s
+Conversation of 129883 tokens stashed: 2311 MB (state 149, KV 1945, pool 216, drafter 0) in 0.36 s
+07:04:28 Request: 129910 prompt tokens (0 reused, 129910 computed in 75.5 s, new conversation (stashing 977 ms), checkpoint at 129883 (before the fixed end), slot 1), 200 tokens in 3.0 s = 67.0 tok/s, 3.17 tokens per pass, 0 of 63 passes from the history (0.00 per pass)
+  DIAG hits 65390 misses 8906 cpu_experts 6016 (95.5/pass) gpu_direct 2890 fills 0 yields 0 launches 272 wait 1887 ms read 0 ms cpu 522 ms select 31 ms fill 0 ms prefetch_wait 1 ms prefetched 17454 used 7914 mtp_stale 0 mtp_dyn 0 early 8544/1093
+07:04:28 POST /v1/chat/completions → 200
+07:04:28 POST /v1/messages/count_tokens → 200
+07:04:28 POST /v1/messages/count_tokens → 200
+07:04:28 POST /v1/messages/count_tokens → 200
+07:04:29 POST /v1/messages/count_tokens → 200
+07:04:29 POST /v1/messages/count_tokens → 200
+07:04:29 POST /v1/messages/count_tokens → 200
+07:04:29 POST /v1/messages/count_tokens → 200
+07:04:29 POST /v1/messages/count_tokens → 200
+07:04:29 POST /v1/messages/count_tokens → 200
+07:04:29 POST /v1/messages/count_tokens → 200
+07:04:29 POST /v1/messages/count_tokens → 200
+07:04:29 POST /v1/messages/count_tokens → 200
+Conversation of 29722 tokens stashed: 644 MB (state 149, KV 445, pool 49, drafter 0) in 0.12 s
+07:04:52 Request: 29722 prompt tokens (0 reused, 29722 computed in 20.8 s, new conversation (stashing 146 ms), slot 0), 200 tokens in 3.0 s = 66.2 tok/s, 3.85 tokens per pass, 0 of 52 passes from the history (0.00 per pass)
+  DIAG hits 60389 misses 8923 cpu_experts 5672 (109.1/pass) gpu_direct 3251 fills 0 yields 0 launches 257 wait 1606 ms read 0 ms cpu 794 ms select 57 ms fill 0 ms prefetch_wait 19 ms prefetched 16144 used 7413 mtp_stale 0 mtp_dyn 0 early 8760/885
+07:04:52 POST /v1/chat/completions → 200
+07:04:54 POST /v1/messages/count_tokens → 200
+07:04:54 POST /v1/messages/count_tokens → 200
+07:04:54 POST /v1/messages/count_tokens → 200
+07:04:54 POST /v1/messages/count_tokens → 200
+07:04:54 POST /v1/messages/count_tokens → 200
+07:04:54 POST /v1/messages/count_tokens → 200
+07:04:54 POST /v1/messages/count_tokens → 200
+07:04:54 POST /v1/messages/count_tokens → 200
+07:04:54 POST /v1/messages/count_tokens → 200
+07:04:55 POST /v1/messages/count_tokens → 200
+07:04:55 POST /v1/messages/count_tokens → 200
+07:04:55 POST /v1/messages/count_tokens → 200
+Conversation of 129910 tokens stashed: 2311 MB (state 149, KV 1946, pool 216, drafter 0) in 0.57 s
+Conversation of 29695 tokens stashed: 643 MB (state 149, KV 445, pool 49, drafter 0) in 0.15 s
+Conversation of 129883 tokens stashed: 2311 MB (state 149, KV 1945, pool 216, drafter 0) in 0.41 s
+07:06:20 Request: 129910 prompt tokens (0 reused, 129910 computed in 81.6 s, new conversation (stashing 1370 ms), checkpoint at 129883 (before the fixed end), slot 1), 200 tokens in 3.3 s = 60.2 tok/s, 3.21 tokens per pass, 0 of 62 passes from the history (0.00 per pass)
+  DIAG hits 67443 misses 9853 cpu_experts 6064 (97.8/pass) gpu_direct 3789 fills 0 yields 0 launches 281 wait 1804 ms read 0 ms cpu 840 ms select 56 ms fill 0 ms prefetch_wait 14 ms prefetched 18133 used 8341 mtp_stale 0 mtp_dyn 1 early 9134/1147
+07:06:20 POST /v1/chat/completions → 200
+07:06:21 POST /v1/messages/count_tokens → 200
+07:06:21 POST /v1/messages/count_tokens → 200
+07:06:21 POST /v1/messages/count_tokens → 200
+07:06:21 POST /v1/messages/count_tokens → 200
+07:06:22 POST /v1/messages/count_tokens → 200
+07:06:22 POST /v1/messages/count_tokens → 200
+07:06:22 POST /v1/messages/count_tokens → 200
+07:06:22 POST /v1/messages/count_tokens → 200
+07:06:22 POST /v1/messages/count_tokens → 200
+07:06:22 POST /v1/messages/count_tokens → 200
+07:06:22 POST /v1/messages/count_tokens → 200
+07:06:22 POST /v1/messages/count_tokens → 200
+Conversation of 29722 tokens stashed: 644 MB (state 149, KV 445, pool 49, drafter 0) in 0.10 s
+07:06:41 Request: 29722 prompt tokens (0 reused, 29722 computed in 16.1 s, new conversation (stashing 130 ms), slot 0), 200 tokens in 2.8 s = 72.7 tok/s, 3.57 tokens per pass, 1 of 56 passes from the history (1.00 per pass)
+  DIAG hits 63804 misses 9558 cpu_experts 6530 (116.6/pass) gpu_direct 3028 fills 0 yields 0 launches 267 wait 1653 ms read 0 ms cpu 566 ms select 31 ms fill 0 ms prefetch_wait 1 ms prefetched 16799 used 7639 mtp_stale 0 mtp_dyn 0 early 8824/1028
+07:06:41 POST /v1/chat/completions → 200
+07:06:41 POST /v1/messages/count_tokens → 200
+07:06:41 POST /v1/messages/count_tokens → 200
+07:06:41 POST /v1/messages/count_tokens → 200
+07:06:42 POST /v1/messages/count_tokens → 200
+07:06:42 POST /v1/messages/count_tokens → 200
+07:06:42 POST /v1/messages/count_tokens → 200
+07:06:42 POST /v1/messages/count_tokens → 200
+07:06:42 POST /v1/messages/count_tokens → 200
+07:06:42 POST /v1/messages/count_tokens → 200
+07:06:42 POST /v1/messages/count_tokens → 200
+07:06:42 POST /v1/messages/count_tokens → 200
+07:06:42 POST /v1/messages/count_tokens → 200
+Conversation of 129910 tokens stashed: 2311 MB (state 149, KV 1946, pool 216, drafter 0) in 0.37 s
+Conversation of 29695 tokens stashed: 643 MB (state 149, KV 445, pool 49, drafter 0) in 0.10 s
+Conversation of 129883 tokens stashed: 2311 MB (state 149, KV 1945, pool 216, drafter 0) in 0.36 s
+07:08:01 Request: 129910 prompt tokens (0 reused, 129910 computed in 76.0 s, new conversation (stashing 976 ms), checkpoint at 129883 (before the fixed end), slot 1), 200 tokens in 3.0 s = 67.1 tok/s, 3.17 tokens per pass, 0 of 63 passes from the history (0.00 per pass)
+  DIAG hits 65581 misses 8813 cpu_experts 5966 (94.7/pass) gpu_direct 2847 fills 0 yields 0 launches 265 wait 1890 ms read 0 ms cpu 518 ms select 30 ms fill 0 ms prefetch_wait 1 ms prefetched 17549 used 7828 mtp_stale 0 mtp_dyn 0 early 8529/1111
+07:08:01 POST /v1/chat/completions → 200
+07:08:02 POST /v1/messages/count_tokens → 200
+07:08:02 POST /v1/messages/count_tokens → 200
+07:08:02 POST /v1/messages/count_tokens → 200
+07:08:02 POST /v1/messages/count_tokens → 200
+07:08:02 POST /v1/messages/count_tokens → 200
+07:08:02 POST /v1/messages/count_tokens → 200
+07:08:02 POST /v1/messages/count_tokens → 200
+07:08:02 POST /v1/messages/count_tokens → 200
+07:08:02 POST /v1/messages/count_tokens → 200
+07:08:02 POST /v1/messages/count_tokens → 200
+07:08:02 POST /v1/messages/count_tokens → 200
+07:08:02 POST /v1/messages/count_tokens → 200
+Conversation of 29722 tokens stashed: 644 MB (state 149, KV 445, pool 49, drafter 0) in 0.13 s
+07:08:26 Request: 29722 prompt tokens (0 reused, 29722 computed in 21.0 s, new conversation (stashing 144 ms), slot 0), 200 tokens in 3.0 s = 67.4 tok/s, 3.83 tokens per pass, 0 of 52 passes from the history (0.00 per pass)
+  DIAG hits 59819 misses 8933 cpu_experts 5731 (110.2/pass) gpu_direct 3202 fills 0 yields 0 launches 258 wait 1530 ms read 0 ms cpu 803 ms select 84 ms fill 0 ms prefetch_wait 47 ms prefetched 15929 used 7204 mtp_stale 0 mtp_dyn 0 early 9011/1127
+07:08:26 POST /v1/chat/completions → 200
+07:08:28 POST /v1/messages/count_tokens → 200
+07:08:28 POST /v1/messages/count_tokens → 200
+07:08:28 POST /v1/messages/count_tokens → 200
+07:08:28 POST /v1/messages/count_tokens → 200
+07:08:28 POST /v1/messages/count_tokens → 200
+07:08:28 POST /v1/messages/count_tokens → 200
+07:08:28 POST /v1/messages/count_tokens → 200
+07:08:28 POST /v1/messages/count_tokens → 200
+07:08:28 POST /v1/messages/count_tokens → 200
+07:08:28 POST /v1/messages/count_tokens → 200
+07:08:28 POST /v1/messages/count_tokens → 200
+07:08:28 POST /v1/messages/count_tokens → 200
+Conversation of 129910 tokens stashed: 2311 MB (state 149, KV 1946, pool 216, drafter 0) in 0.57 s
+Conversation of 29695 tokens stashed: 643 MB (state 149, KV 445, pool 49, drafter 0) in 0.23 s
+Conversation of 129883 tokens stashed: 2311 MB (state 149, KV 1945, pool 216, drafter 0) in 0.52 s
+07:09:57 Request: 129910 prompt tokens (0 reused, 129910 computed in 85.0 s, new conversation (stashing 1551 ms), checkpoint at 129883 (before the fixed end), slot 1), 200 tokens in 3.3 s = 60.5 tok/s, 3.03 tokens per pass, 0 of 66 passes from the history (0.00 per pass)
+  DIAG hits 68597 misses 9398 cpu_experts 6184 (93.7/pass) gpu_direct 3214 fills 0 yields 0 launches 288 wait 1882 ms read 0 ms cpu 769 ms select 43 ms fill 0 ms prefetch_wait 4 ms prefetched 18426 used 8280 mtp_stale 0 mtp_dyn 0 early 8500/1114
+07:09:57 POST /v1/chat/completions → 200

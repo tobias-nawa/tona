@@ -1,0 +1,131 @@
+{
+  "id": "naive-n0.5-flash",
+  "name": "Naive-N0.5-Flash",
+  "vendor": "Naive AI",
+  "release_date": "2026-09-27",
+  "purpose": "Open-weight 309B MoE built for coding and AI R&D with native 1M context without full-attention layers; the vendor also sells API access at $0.10 / $0.40 / $0.01 per million input / output / cache-read tokens (card).",
+  "tasks": [
+    "coding",
+    "research"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en"
+    ]
+  },
+  "license": {
+    "name": "MIT",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "MIT licence text read in the repo LICENSE file: use, copy, modify, sell allowed with notice."
+  },
+  "architecture": {
+    "kind": "MoE, 39 sliding-window layers plus 9 DeepSeek-sparse-attention layers, no full attention",
+    "params_total_b": 309,
+    "params_active_b": 15.5,
+    "layers": 48,
+    "attention": "SWA window 128 and DSA top-2048, GQA4",
+    "recurrent": "none",
+    "context_native": 1048576,
+    "drafter": "speculative decoding in the vendor runtime"
+  },
+  "variants": [
+    {
+      "repo": "NaiveAI/Naive-N0.5-Flash",
+      "format": "safetensors",
+      "size_gb": 617.83,
+      "official": true
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "no",
+      "variant": "safetensors (no quant checked)",
+      "basis": "estimate",
+      "notes": "617.83 GB file exceeds the 9.6 GB VRAM plus 50 GB RAM budget"
+    },
+    "pc-16gb": {
+      "fits": "no",
+      "variant": "safetensors (no quant checked)",
+      "basis": "estimate",
+      "notes": "617.83 GB file exceeds the 13.6 GB VRAM plus 50 GB RAM budget"
+    },
+    "pc-24gb": {
+      "fits": "no",
+      "variant": "safetensors (no quant checked)",
+      "basis": "estimate",
+      "notes": "617.83 GB file exceeds the 21.6 GB VRAM plus 82 GB RAM budget"
+    },
+    "pc-32gb": {
+      "fits": "no",
+      "variant": "safetensors (no quant checked)",
+      "basis": "estimate",
+      "notes": "617.83 GB file exceeds the 29.6 GB VRAM plus 82 GB RAM budget"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "safetensors (no quant checked)",
+      "basis": "estimate",
+      "notes": "617.83 GB file against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "no",
+      "variant": "safetensors (no quant checked)",
+      "basis": "estimate",
+      "notes": "617.83 GB file against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "no",
+      "variant": "safetensors (no quant checked)",
+      "basis": "estimate",
+      "notes": "617.83 GB file against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "unknown",
+    "other": [
+      "vendor runtime NaiveRT"
+    ],
+    "notes": "Custom code; no GGUF checked."
+  },
+  "benchmarks": [],
+  "soft": {
+    "strengths": [
+      "1M context with only local or sparse attention"
+    ],
+    "weaknesses": [
+      "scores are in figures only; run with Claude Code harness by the vendor"
+    ],
+    "maturity": "23k downloads, 412 likes"
+  },
+  "tona_fit": {
+    "verdict": "reject",
+    "reason": "309B total parameters (618 GB BF16) exceed every class we serve; recorded for completeness.",
+    "blockers": [
+      "size"
+    ]
+  },
+  "open_questions": [
+    "benchmark numbers (figures)",
+    "any quantized release"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/NaiveAI/Naive-N0.5-Flash",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README, config.json read"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

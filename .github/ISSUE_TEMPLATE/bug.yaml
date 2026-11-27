@@ -1,0 +1,59 @@
+name: Bug
+description: Something in Tona does not work as documented
+title: "Bug: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Questions and ideas go to Discussions. Security problems follow SECURITY.md, not this form.
+        A bug needs a reproduction you ran yourself; without one it will wait for `needs-repro`.
+  - type: dropdown
+    id: backend
+    attributes:
+      label: Backend
+      options:
+        - Reference (AMD gfx1200, hip-gfx1200)
+        - Another backend (name it under Platform)
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: Commands, request body, model, settings (work/tona.conf).
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Release or commit.
+    validations:
+      required: true
+  - type: textarea
+    id: platform
+    attributes:
+      label: Hardware and status
+      description: Output of `tona status` and of `tona setup --print`.
+    validations:
+      required: true
+  - type: textarea
+    id: log
+    attributes:
+      label: Log
+      description: The relevant part of the server log.
+      render: text
+  - type: checkboxes
+    id: ai
+    attributes:
+      label: AI use
+      options:
+        - label: I verified this report myself; it is not pasted from an AI tool.
+          required: true

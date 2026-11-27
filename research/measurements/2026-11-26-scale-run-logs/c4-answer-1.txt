@@ -1,0 +1,15 @@
+This is a large, complex C++ codebase for an **inference engine** (likely for a Qwen3.8-Flash-Next model) with GPU acceleration, benchmarking infrastructure, and a server API. Here's a summary of what it does:
+
+## Core Engine Components
+
+- **GPU Backend (Mega)**: Implements a megakernel-based forward pass for the Qwen4exp architecture with:
+  - Quantized self-attention (QSA) with indexer-based block selection
+  - Gated DeltaNet layers with delta rule computation
+  - Mixture of Experts (MoE) with dynamic expert routing
+  - Hyper-connection residual streams
+  - Speculative decoding with MTP head or DFlash2 drafter
+  - Multi-sequence support with slot-based state management
+
+- **CPU Reference Implementation**: Provides bit-exact CPU reference for GPU kernels (experts, attention, DeltaNet) for validation and fallback computation
+
+- **Model

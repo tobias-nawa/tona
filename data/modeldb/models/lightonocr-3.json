@@ -1,0 +1,180 @@
+{
+  "id": "lightonocr-3",
+  "name": "LightOnOCR-3 (0.8B, 1B, 4B)",
+  "vendor": "LightOn",
+  "release_date": "2026-10-06",
+  "lineage": {
+    "family": "LightOnOCR",
+    "base_model": "LightOnOCR-2-1B (the 1B keeps that architecture); 0.8B and 4B use the Qwen3.5 VLM architecture"
+  },
+  "purpose": "End-to-end lightweight OCR with layout and visual understanding in one model: transcription, grounding (labelled boxes) and chart/figure descriptions (card).",
+  "tasks": [
+    "documents",
+    "vision"
+  ],
+  "modalities": {
+    "input": [
+      "image",
+      "document"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0 (card tag)",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card says Apache 2.0 for research and commercial use; the repos list no LICENSE file."
+  },
+  "architecture": {
+    "kind": "vision-language OCR; 0.8B and 4B Qwen3.5-based, 1B LightOnOCR-2 architecture",
+    "params_total_b": 4.0,
+    "recurrent": "gated linear attention in the Qwen3.5-based sizes"
+  },
+  "variants": [
+    {
+      "repo": "lightonai/LightOnOCR-3-4B",
+      "format": "safetensors BF16",
+      "size_gb": 9.08,
+      "official": true,
+      "notes": "recommended for most tasks"
+    },
+    {
+      "repo": "lightonai/LightOnOCR-3-1B",
+      "format": "safetensors BF16",
+      "size_gb": 2.01,
+      "official": true
+    },
+    {
+      "repo": "lightonai/LightOnOCR-3-0.8B",
+      "format": "safetensors BF16",
+      "size_gb": 1.71,
+      "official": true
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "marginal",
+      "variant": "4B BF16 (9.1 GB; a Q8/Q4 GGUF would be smaller but none was checked)",
+      "basis": "estimate",
+      "notes": "9.1 GB against a VRAM budget of 9.6 GB (VRAM minus about 2.4 GB), KV cache not included; the 0.8B (1.7 GB) and 1B (2.0 GB) fit every class easily"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "4B BF16 (9.1 GB; a Q8/Q4 GGUF would be smaller but none was checked)",
+      "basis": "estimate",
+      "notes": "9.1 GB against a VRAM budget of 13.6 GB (VRAM minus about 2.4 GB), KV cache not included; the 0.8B (1.7 GB) and 1B (2.0 GB) fit every class easily"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "4B BF16 (9.1 GB; a Q8/Q4 GGUF would be smaller but none was checked)",
+      "basis": "estimate",
+      "notes": "9.1 GB against a VRAM budget of 21.6 GB (VRAM minus about 2.4 GB), KV cache not included; the 0.8B (1.7 GB) and 1B (2.0 GB) fit every class easily"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "4B BF16 (9.1 GB; a Q8/Q4 GGUF would be smaller but none was checked)",
+      "basis": "estimate",
+      "notes": "9.1 GB against a VRAM budget of 29.6 GB (VRAM minus about 2.4 GB), KV cache not included; the 0.8B (1.7 GB) and 1B (2.0 GB) fit every class easily"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "variant": "4B BF16 (9.1 GB; a Q8/Q4 GGUF would be smaller but none was checked)",
+      "basis": "estimate",
+      "notes": "9.1 GB against a GPU share of about 12 GB (KV cache not included); the 0.8B (1.7 GB) and 1B (2.0 GB) fit every class easily"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "4B BF16 (9.1 GB; a Q8/Q4 GGUF would be smaller but none was checked)",
+      "basis": "estimate",
+      "notes": "9.1 GB against a GPU share of about 22 GB (KV cache not included); the 0.8B (1.7 GB) and 1B (2.0 GB) fit every class easily"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "4B BF16 (9.1 GB; a Q8/Q4 GGUF would be smaller but none was checked)",
+      "basis": "estimate",
+      "notes": "9.1 GB against a GPU share of about 52 GB (KV cache not included); the 0.8B (1.7 GB) and 1B (2.0 GB) fit every class easily"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "unknown",
+    "other": [
+      "vLLM",
+      "transformers"
+    ],
+    "notes": "Card shows OpenAI-compatible vLLM serving; GGUF availability not checked."
+  },
+  "benchmarks": [
+    {
+      "name": "ParseBench overall",
+      "score": "75.10 (4B) / 74.60 (0.8B) / 71.40 (1B)",
+      "kind": "independent",
+      "variant": "BF16",
+      "source": "https://huggingface.co/nvidia/Nemotron-3.5-Parse",
+      "date": "2026-09"
+    },
+    {
+      "name": "throughput (H200, NVIDIA's measurement)",
+      "score": "2.76 (4B) / 5.69 (0.8B) / 2.44 (1B)",
+      "unit": "pages/s",
+      "kind": "independent",
+      "source": "https://huggingface.co/nvidia/Nemotron-3.5-Parse"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "grounding mode gives block type plus box (0-1000 normalized)",
+      "chart to data table and short image descriptions",
+      "the 0.8B nearly equals the 4B on ParseBench (74.60 against 75.10) in NVIDIA's table"
+    ],
+    "weaknesses": [
+      "card gives no benchmark table of its own and lists English only"
+    ],
+    "best_for": [
+      "receipts, forms, tables and multi-column pages to Markdown"
+    ],
+    "maturity": "third generation; 4B 13k, 0.8B 15k downloads"
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "Apache by tag, three sizes from 1.7 to 9 GB, third-party ParseBench numbers close to the leader; the 0.8B is the cheap pick. No vendor benchmark or German evidence on the cards.",
+    "blockers": [
+      "no Tona module",
+      "licence file absent from repos"
+    ]
+  },
+  "open_questions": [
+    "vendor benchmark table (blog not opened)",
+    "German quality",
+    "GGUF conversions"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/lightonai/LightOnOCR-3-4B",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README read; 1B and 0.8B cards skimmed"
+    },
+    {
+      "url": "https://huggingface.co/api/models/lightonai/LightOnOCR-3-0.8B?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "sizes"
+    },
+    {
+      "url": "https://huggingface.co/nvidia/Nemotron-3.5-Parse",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "third-party ParseBench table"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

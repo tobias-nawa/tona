@@ -1,0 +1,198 @@
+{
+  "id": "aescode-8b-32b",
+  "name": "AesCode-8B and AesCode-32B (Microsoft)",
+  "vendor": "Microsoft",
+  "release_date": "2026-09-29",
+  "tasks": [
+    "coding",
+    "vision",
+    "documents"
+  ],
+  "purpose": "Microsoft states: generate information-rich visual artifacts (slides, posters, dashboards, reports) as structured, editable HTML/CSS, using an image generated from the same prompt as an aesthetic reference while following the prompt for the content; also research on multimodal code generation and verifiable visual design.",
+  "lineage": {
+    "base_model": "Qwen3-VL-8B-Instruct (8B) and Qwen3-VL-32B (32B)",
+    "how_derived": "cold-start SFT then GDPO reinforcement learning with seven decoupled cross-modal reward channels and graph-structured supervision",
+    "family": "AesCode"
+  },
+  "modalities": {
+    "input": [
+      "text",
+      "image"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0 (card, \"following the Qwen3-VL backbone\")",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card tag and License section say Apache 2.0; neither repository has a LICENSE file (checked 2026-11-19), so the text was not read."
+  },
+  "architecture": {
+    "kind": "dense vision-language transformer (Qwen3-VL)",
+    "gguf_arch": "qwen3vl",
+    "params_total_b": 32,
+    "params_active_b": 32,
+    "layers": 64,
+    "context_native": 262144,
+    "drafter": "none",
+    "why_this_design": "The card reasons about the training design, not the architecture: separating semantic requirements from visual cues through graph-structured supervision and decoupled cross-modal rewards, because off-the-shelf VLMs copy hallucinated content from the reference or ignore its layout. The 32B entry here is the large size; the 8B has the same recipe."
+  },
+  "variants": [
+    {
+      "repo": "microsoft/AesCode-32B",
+      "format": "safetensors BF16",
+      "size_gb": 66.7,
+      "official": true
+    },
+    {
+      "repo": "microsoft/AesCode-8B",
+      "format": "safetensors BF16",
+      "size_gb": 17.5,
+      "official": true
+    },
+    {
+      "repo": "bartowski/AesCode-32B-GGUF",
+      "format": "GGUF Q4_K_M",
+      "size_gb": 20.5,
+      "official": false
+    },
+    {
+      "repo": "bartowski/AesCode-32B-GGUF",
+      "format": "GGUF IQ3_M",
+      "size_gb": 15.5,
+      "official": false
+    },
+    {
+      "repo": "bartowski/AesCode-8B-GGUF",
+      "format": "GGUF Q4_K_M",
+      "size_gb": 5.2,
+      "official": false
+    }
+  ],
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "notes": "GGUFs and mmproj files exist (bartowski, prithivMLmods)."
+  },
+  "benchmarks": [
+    {
+      "name": "Infographic Overall (300 samples, with image reference), AesCode-32B",
+      "score": 85.89,
+      "kind": "vendor",
+      "source": "https://huggingface.co/microsoft/AesCode-32B/raw/main/README.md",
+      "variant": "AesCode-32B",
+      "date": "2026-09-29",
+      "unit": "%"
+    },
+    {
+      "name": "Infographic Overall (300 samples, with image reference), AesCode-8B",
+      "score": 82.94,
+      "kind": "vendor",
+      "source": "https://huggingface.co/microsoft/AesCode-8B/raw/main/README.md",
+      "variant": "AesCode-8B",
+      "date": "2026-09-29",
+      "unit": "%"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "Vendor table: AesCode-8B Overall 82.94 and AesCode-32B 85.89 on 300 infographic samples, above reference-conditioned GPT-5.5 (81.28) and Claude Opus 4.8 (80.39)"
+    ],
+    "weaknesses": [
+      "Narrow purpose: HTML/CSS infographics, not software engineering",
+      "Style score is the shared ceiling (about 53 to 58 for every system)",
+      "vendor numbers only; needs an image-generator reference for its best results"
+    ],
+    "best_for": [
+      "generating slides, posters and dashboards as editable HTML"
+    ],
+    "avoid_for": [
+      "coding agents, code review, general programming"
+    ],
+    "maturity": "Microsoft research release with a paper (arXiv 2610.18860) and project page; 2k downloads per repo."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Not a software-engineering model: a document/visual-design generator. It fits a document or presentation role (see the documents area) rather than the coding worker; 8B at 5.2 GB (Q4_K_M) runs on every PC class and the 32B at 20.5 GB on 16 GB with streaming, both estimated.",
+    "blockers": [
+      "needs a reference image generator for best results",
+      "vendor numbers only",
+      "no license text"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/microsoft/AesCode-8B/raw/main/README.md",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/microsoft/AesCode-32B/raw/main/README.md",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/microsoft/AesCode-32B/raw/main/config.json",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/api/models/bartowski/AesCode-32B-GGUF/tree/main",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "file sizes"
+    }
+  ],
+  "open_questions": [
+    "Evaluation of its HTML output by our own harness (the vendor judges with its own checklist). Check: a small render-and-judge test.",
+    "Per-language quality: no public per-language numbers found. Check: our own polyglot run per language."
+  ],
+  "last_checked": "2026-11-19",
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "variant": "AesCode-32B Q4_K_M (8B Q4_K_M is 5.2 GB)",
+      "basis": "estimate",
+      "notes": "estimate from the file size (20.5 GB) against the budget of docs/hardware: 9.6 GB VRAM plus 50 GB RAM = 60 GB; about 47% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that)"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "AesCode-32B Q4_K_M (8B Q4_K_M is 5.2 GB)",
+      "basis": "estimate",
+      "notes": "estimate from the file size (20.5 GB) against the budget of docs/hardware: 13.6 GB VRAM plus 50 GB RAM = 64 GB; about 66% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that)"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "AesCode-32B Q4_K_M (8B Q4_K_M is 5.2 GB)",
+      "basis": "estimate",
+      "notes": "estimate from the file size (20.5 GB) against the budget of docs/hardware: 21.6 GB VRAM plus 82 GB RAM = 104 GB; about 100% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that)"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "AesCode-32B Q4_K_M (8B Q4_K_M is 5.2 GB)",
+      "basis": "estimate",
+      "notes": "estimate from the file size (20.5 GB) against the budget of docs/hardware: 29.6 GB VRAM plus 114 GB RAM = 144 GB; about 100% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that)"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "AesCode-32B Q4_K_M (8B Q4_K_M is 5.2 GB)",
+      "basis": "estimate",
+      "notes": "estimate from the file size (20.5 GB) against the GPU share of docs/hardware (about 12 GB)"
+    },
+    "mac-32gb": {
+      "fits": "marginal",
+      "variant": "AesCode-32B Q4_K_M (8B Q4_K_M is 5.2 GB)",
+      "basis": "estimate",
+      "notes": "estimate from the file size (20.5 GB) against the GPU share of docs/hardware (about 22 GB)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "AesCode-32B Q4_K_M (8B Q4_K_M is 5.2 GB)",
+      "basis": "estimate",
+      "notes": "estimate from the file size (20.5 GB) against the GPU share of docs/hardware (about 52 GB)"
+    }
+  }
+}

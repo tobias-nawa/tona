@@ -1,0 +1,152 @@
+{
+  "id": "lfm3-omni-2b",
+  "name": "LFM3-Omni-2B",
+  "vendor": "Liquid AI",
+  "release_date": "2026-10-21",
+  "lineage": {
+    "family": "lfm3",
+    "base_model": "LFM3 backbone plus LFM3 vision encoder, LFM3 causal audio encoder and LiquidCodec tokenizer (card); audio-only sibling is lfm3-audio-2b"
+  },
+  "purpose": "First omni-modal LFM3 model: one end-to-end model that understands text, images, video and audio and answers in text and speech; built for on-device use so that one model replaces a separate ASR model, VLM, LLM and TTS model (card).",
+  "tasks": [
+    "general",
+    "vision",
+    "audio-transcription",
+    "speech-synthesis"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image",
+      "video",
+      "audio"
+    ],
+    "output": [
+      "text",
+      "audio"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en",
+      "ar",
+      "zh",
+      "fr",
+      "de",
+      "it",
+      "ja",
+      "ko",
+      "pt",
+      "es",
+      "vi"
+    ]
+  },
+  "license": {
+    "name": "LFM Open License v1.0",
+    "verified": true,
+    "commercial_use": "limited",
+    "redistribution": "yes",
+    "notes": "Card header names lfm1.0 with a LICENSE file; the identically named LICENSE of LFM3-Audio-2B was read: commercial use only below USD 10,000,000 annual revenue, otherwise a separate agreement. The Omni repo's own LICENSE file was not opened. Verdict policy (README, 2026-11-19): this licence term does not lower tona_fit; kept here for an installer label."
+  },
+  "architecture": {
+    "kind": "LFM3 backbone with LFM3 vision encoder, causal audio encoder and LiquidCodec audio tokenizer",
+    "params_total_b": 2.17
+  },
+  "variants": [
+    {
+      "repo": "LiquidAI/LFM3-Omni-2B",
+      "format": "safetensors BF16",
+      "size_gb": 4.33,
+      "official": true
+    },
+    {
+      "repo": "LiquidAI/LFM3-Omni-2B-GGUF",
+      "format": "GGUF Q4_K_M",
+      "size_gb": 1.1,
+      "official": true,
+      "notes": "Q8_0 1.85 GB; mmproj Q8_0 0.51 GB, BF16 0.95 GB; 521k downloads on the HF API"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "Transformers (custom code)"
+    ],
+    "notes": "GGUF with mmproj published by the vendor."
+  },
+  "benchmarks": [],
+  "soft": {
+    "strengths": [
+      "Image, video with soundtrack and audio in one 2.2B model",
+      "1.1 GB at Q4_K_M"
+    ],
+    "weaknesses": [
+      "No benchmark numbers read from the card",
+      "License limits commercial use above USD 10M revenue",
+      "German is a speech language of the card list but no German quality numbers read"
+    ],
+    "best_for": [
+      "on-device multimodal assistant"
+    ],
+    "maturity": "Liquid AI; 26k downloads (safetensors) and 521k (GGUF) on the HF API 2026-11-19."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Small, convenient all-in-one model; unlikely to beat dedicated ASR, VLM and TTS models in quality. Keep as the reference for omni on-device models.",
+    "blockers": [
+      "LFM3 architecture and vision/audio towers not in Tona",
+      "no benchmark evidence read"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/LiquidAI/LFM3-Omni-2B",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "card header and intro read"
+    },
+    {
+      "url": "https://huggingface.co/LiquidAI/LFM3-Audio-2B/raw/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "LFM Open License text"
+    }
+  ],
+  "open_questions": [
+    "Benchmarks (vision, audio, text)",
+    "Context length and layer layout",
+    "German speech quality"
+  ],
+  "last_checked": "2026-11-19"
+}

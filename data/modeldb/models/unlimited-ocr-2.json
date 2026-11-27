@@ -1,0 +1,204 @@
+{
+  "id": "unlimited-ocr-2",
+  "name": "Unlimited OCR 2",
+  "vendor": "Baidu",
+  "release_date": "2026-10-27",
+  "lineage": {
+    "family": "Unlimited-OCR",
+    "base_model": "Unlimited-OCR (v1, 2026-06-22), which builds on DeepSeek-OCR",
+    "how_derived": "all decoder attention modules replaced by Sparse Reference Sliding Window Attention (SR-SWA)"
+  },
+  "purpose": "Parse documents of arbitrary length (dozens to hundreds of pages) in one pass with constant per-step cost: the model looks only at what it transcribes, inspired by human book transcription without re-scanning earlier pages (paper abstract).",
+  "tasks": [
+    "documents",
+    "vision"
+  ],
+  "modalities": {
+    "input": [
+      "image",
+      "document"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "many"
+    ]
+  },
+  "license": {
+    "name": "MIT",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card tag mit; the HF repo has no LICENSE file, the MIT text was read in the GitHub repo baidu/Unlimited-OCR (Copyright 2026 Baidu)."
+  },
+  "architecture": {
+    "kind": "vision-language, DeepSeek-V2-style MoE decoder (12 layers, 64 routed + 2 shared experts, 6 active) with SAM-based vision encoder (the README names a SAM attention bias)",
+    "params_total_b": 3.0,
+    "params_active_b": 0.5,
+    "layers": 12,
+    "experts": 64,
+    "experts_active": 6,
+    "attention": "sliding window 128 over generated tokens plus a fixed set of reference tokens (SR-SWA, e.g. 512)",
+    "recurrent": "none",
+    "context_native": 131072,
+    "why_this_design": "Card and paper: SR-SWA compresses text-visual attention interactions from ultra-long sequences to a fixed-size set of working references, so per-step decoding latency and memory stay nearly constant regardless of document length; at the hundred-page scale 7.0x per-step speedup over full attention and 5.6x over R-SWA (arXiv abstract)."
+  },
+  "variants": [
+    {
+      "repo": "baidu/Unlimited-OCR-2",
+      "format": "safetensors BF16",
+      "size_gb": 6.87,
+      "official": true
+    },
+    {
+      "repo": "AtomicChat/Unlimited-OCR-2-GGUF",
+      "format": "GGUF Q4_K (AD)",
+      "size_gb": 2.02,
+      "official": false,
+      "notes": "also Q5_K 2.28, Q6_K 2.74, Q8_0 3.13, BF16 5.88 GB plus mmproj F16 0.83 GB; 15.8k downloads; llama.cpp support of SR-SWA not verified"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "variant": "GGUF Q4_K / Q8_0 (3.0 GB with mmproj)",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (9.6 GB)"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "GGUF Q4_K / Q8_0 (3.0 GB with mmproj)",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (13.6 GB)"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "GGUF Q4_K / Q8_0 (3.0 GB with mmproj)",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (21.6 GB)"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "GGUF Q4_K / Q8_0 (3.0 GB with mmproj)",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (29.6 GB)"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "variant": "GGUF Q4_K / Q8_0 (3.0 GB with mmproj)",
+      "basis": "estimate",
+      "notes": "3.0 GB file against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "GGUF Q4_K / Q8_0 (3.0 GB with mmproj)",
+      "basis": "estimate",
+      "notes": "3.0 GB file against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "GGUF Q4_K / Q8_0 (3.0 GB with mmproj)",
+      "basis": "estimate",
+      "notes": "3.0 GB file against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "unknown",
+    "other": [
+      "SGLang (customized wheel, recommended)",
+      "Transformers",
+      "vLLM (v1 only per release notes)",
+      "MLX (mlx-community 4/6/8bit, bf16)"
+    ],
+    "notes": "The SR-SWA page-window scheduling lives in a customized SGLang build; whether the community GGUFs implement SR-SWA or fall back to plain attention is not stated."
+  },
+  "benchmarks": [
+    {
+      "name": "MPDocBench / MarathonDocBench",
+      "score": "state of the art (numbers only in a leaderboard image)",
+      "kind": "vendor",
+      "source": "https://huggingface.co/baidu/Unlimited-OCR-2"
+    },
+    {
+      "name": "per-step decode speedup at hundred-page scale vs full attention",
+      "score": 7.0,
+      "unit": "x",
+      "kind": "vendor",
+      "source": "https://arxiv.org/abs/2610.39308"
+    },
+    {
+      "name": "OmniDocBench v1.6 Overall (v1 model, not v2)",
+      "score": 93.92,
+      "kind": "independent",
+      "variant": "Unlimited-OCR (v1, 3B-A0.5B), listed in the WeVisDoc comparison table",
+      "source": "https://huggingface.co/tencent/WeVisDoc-4B",
+      "date": "2026-09"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "constant decode cost over hundreds of pages",
+      "multi-page requests keep cross-page context (tables and paragraphs that continue over a page break)",
+      "tiny: 6.9 GB BF16, about 3 GB quantized"
+    ],
+    "weaknesses": [
+      "serving the full long-document mode needs a customized SGLang wheel",
+      "no per-language results in the card"
+    ],
+    "best_for": [
+      "long scanned reports and books to Markdown"
+    ],
+    "maturity": "second generation within five months; 604k downloads of the HF repo"
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "MIT, about 3B total and 0.5B active, fits every class; the unbounded-length decoding is exactly what long German reports and contracts need. Quality of v2 on OmniDocBench is not in readable text (v1 93.92 as quoted by another vendor), and German is not evidenced.",
+    "blockers": [
+      "no Tona module for the DeepSeek-OCR-style encoder and the SR-SWA decoder",
+      "llama.cpp path does not say whether SR-SWA is implemented"
+    ]
+  },
+  "open_questions": [
+    "actual MPDocBench and MarathonDocBench numbers (card shows them only as images)",
+    "German page quality (no language breakdown found)",
+    "does a community GGUF reproduce the SR-SWA behaviour",
+    "builder's reasons for the vision encoder choice (inherited from DeepSeek-OCR, not restated)"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/baidu/Unlimited-OCR-2",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README and config.json read"
+    },
+    {
+      "url": "https://arxiv.org/abs/2610.39308",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "abstract read"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/baidu/Unlimited-OCR/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "MIT text"
+    },
+    {
+      "url": "https://huggingface.co/api/models/AtomicChat/Unlimited-OCR-2-GGUF?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "file sizes"
+    },
+    {
+      "url": "https://huggingface.co/tencent/WeVisDoc-4B",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "comparison table with the v1 model"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

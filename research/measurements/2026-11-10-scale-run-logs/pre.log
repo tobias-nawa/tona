@@ -1,0 +1,84 @@
+pre 03:45:40 VRAM 2833 MiB
+--- prefill dflash compare with the OLD reference (expected: differs with #106)
+long: DIFFERS (diff work/golden/prefill-dflash/long.txt work/tmp/golden.kt7SBa/long.txt)
+rc=1
+--- record prefill dflash (new)
+long: recorded
+rc=0
+--- record server (new)
+anthropic: done
+anthropic-stream: done
+anthropic-tool: done
+anthropic-tool-stream: done
+openai: done
+openai-stream: done
+openai-tool: done
+openai-tool-stream: done
+sampled-anthropic: done
+sampled-anthropic-stream: done
+sampled-openai: done
+sampled-openai-stream: done
+thinking-anthropic: done
+reuse-short-1: done
+reuse-short-2: done
+reuse-long-1: done
+reuse-other: done
+reuse-long-2: done
+hit-last-message-1: done
+hit-last-message-2: done
+hit-fork-1: done
+hit-fork-2: done
+hit-fork-3: done
+hit-warm-request: done
+hit-warm-exact: done
+hit-repeat: done
+cold-last-message-1: done
+cold-last-message-2: done
+cold-fork-1: done
+cold-fork-2: done
+cold-fork-3: done
+cold-warm-request: done
+cold-warm-exact: done
+cold-repeat: done
+ssd-1: done
+ssd-2: done
+Checkpoints on the SSD (work/tmp/golden-server.teVbSx/cache): 0 matching
+Checkpoints on the SSD (work/tmp/golden-server.teVbSx/cache): 1 matching
+anthropic: recorded
+anthropic-stream: recorded
+anthropic-tool: recorded
+anthropic-tool-stream: recorded
+cold-fork-1: recorded
+cold-fork-2: recorded
+cold-fork-3: recorded
+cold-last-message-1: recorded
+cold-last-message-2: recorded
+cold-repeat: recorded
+cold-warm-exact: recorded
+cold-warm-request: recorded
+hit-fork-1: recorded
+hit-fork-2: recorded
+hit-fork-3: recorded
+hit-last-message-1: recorded
+hit-last-message-2: recorded
+hit-repeat: recorded
+hit-warm-exact: recorded
+hit-warm-request: recorded
+openai: recorded
+openai-stream: recorded
+openai-tool: recorded
+openai-tool-stream: recorded
+reuse-long-1: recorded
+reuse-long-2: recorded
+reuse-other: recorded
+reuse-short-1: recorded
+reuse-short-2: recorded
+sampled-anthropic: recorded
+sampled-anthropic-stream: recorded
+sampled-openai: recorded
+sampled-openai-stream: recorded
+ssd-1: recorded
+ssd-2: recorded
+thinking-anthropic: recorded
+rc=0
+pre done 03:49:45

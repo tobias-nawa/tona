@@ -1,0 +1,158 @@
+{
+  "id": "maya2-native",
+  "name": "Maya 2 Native",
+  "vendor": "Maya Research",
+  "release_date": "2026-10-26",
+  "lineage": {
+    "base_model": "Qwen/Qwen3-1.7B-Base",
+    "how_derived": "Qwen3-1.7B backbone predicting Mimi codec tokens (32 codebooks, 12.5 Hz) with ECAPA speaker encoder",
+    "family": "Maya"
+  },
+  "purpose": "Open-weight streaming TTS for 11 Indian languages plus English: voice agents, IVR, accessibility, narration; 20 built-in voices, zero-shot cloning, cross-lingual synthesis (card).",
+  "tasks": [
+    "speech-synthesis"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "audio"
+    ],
+    "output": [
+      "audio"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "as",
+      "bn",
+      "en",
+      "gu",
+      "hi",
+      "kn",
+      "ml",
+      "mr",
+      "or",
+      "pa",
+      "ta",
+      "te"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0 (components have own licences per card)",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "LICENSE file in repo is the Apache License 2.0 (header opened); the card points to a component-licences section (Mimi codec, ECAPA encoder) that I did not read."
+  },
+  "architecture": {
+    "kind": "LLM-backbone TTS: Qwen3-1.7B-Base predicting Mimi tokens, 24 kHz, streaming; NVIDIA GPU for the shipped engine",
+    "params_total_b": 1.7
+  },
+  "variants": [
+    {
+      "repo": "maya-research/maya2-native",
+      "format": "safetensors",
+      "official": true,
+      "size_gb": 5.06,
+      "notes": "repo total per HF API"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "variant": "safetensors",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (9.6 GB)"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "safetensors",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (13.6 GB)"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "safetensors",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (21.6 GB)"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "safetensors",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (29.6 GB)"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "variant": "safetensors",
+      "basis": "estimate",
+      "notes": "5.1 GB file against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "safetensors",
+      "basis": "estimate",
+      "notes": "5.1 GB file against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "safetensors",
+      "basis": "estimate",
+      "notes": "5.1 GB file against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "unknown",
+    "other": [
+      "maya2-native inference engine: Python API, OpenAI-compatible speech endpoint, WebSocket streaming, continuous batching (NVIDIA GPU)"
+    ]
+  },
+  "benchmarks": [
+    {
+      "name": "VoiceArena Hindi TTS leaderboard (real-time only filter), Elo",
+      "score": 1049,
+      "kind": "independent",
+      "source": "https://huggingface.co/maya-research/maya2-native",
+      "unit": "Elo +-10, 2171 samples, rank #2",
+      "variant": "Maya-2-Native",
+      "harness": "card reproduces the leaderboard snapshot; all-model Hindi view places it #7 (interval 5-10); live check 2026-11-03 per card",
+      "date": "2026-11-03"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "Indian-language coverage with number/date/currency text normalisation"
+    ],
+    "weaknesses": [
+      "no German"
+    ],
+    "maturity": "7.3k downloads, 176 likes in 3 weeks."
+  },
+  "tona_fit": {
+    "verdict": "reject",
+    "reason": "No German or major EU language; purpose-built for Indian languages. Useful only as a model for adding an Indic profile later.",
+    "blockers": [
+      "NVIDIA-only shipped engine"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/maya-research/maya2-native",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README, config, HF API"
+    },
+    {
+      "url": "https://voicearena.com/tts-leaderboard/hindi",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "leaderboard cited by the card; not opened"
+    }
+  ],
+  "open_questions": [
+    "Leaderboard page not opened by us",
+    "Component licences not read"
+  ],
+  "last_checked": "2026-11-19"
+}

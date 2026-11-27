@@ -1,0 +1,160 @@
+{
+ "label": "h-1m-on",
+ "build": "merged",
+ "env": {
+  "IE_DIAG": "1",
+  "IE_SEQS": "1"
+ },
+ "jobs": [
+  {
+   "ctx": 1048576,
+   "env": {},
+   "log": "/var/tmp/claude/scale1103/h-1m-on-server-1-ctx1048576.log",
+   "start_s": 20.02077978802845,
+   "metrics": {
+    "prefill@2000": 1363.4470499684141,
+    "decode@2000": 64.53890248464785
+   },
+   "shas": {
+    "2000": "a1c43447d6e6c021"
+   },
+   "counters": {
+    "2000": {
+     "expert_hits": 109927,
+     "expert_misses": 17175
+    }
+   },
+   "status": {
+    "ready": true,
+    "uptime": 26.517239302,
+    "phases": [
+     {
+      "name": "Open model",
+      "done": 0.0,
+      "total": 0.0,
+      "t0": 0.000117749,
+      "t1": 0.084344482
+     },
+     {
+      "name": "Weights into VRAM",
+      "done": 6893261312.0,
+      "total": 37377879552.0,
+      "t0": 0.084344482,
+      "t1": 4.668800462
+     },
+     {
+      "name": "Expert cache in VRAM",
+      "done": 48.0,
+      "total": 48.0,
+      "t0": 4.668800462,
+      "t1": 9.290641168
+     },
+     {
+      "name": "Pinning experts in RAM",
+      "done": 48.0,
+      "total": 48.0,
+      "t0": 9.290641168,
+      "t1": 18.888463257
+     },
+     {
+      "name": "Releasing page cache",
+      "done": 0.0,
+      "total": 0.0,
+      "t0": 18.888463257,
+      "t1": 19.766025636
+     }
+    ],
+    "system": {
+     "gpu": {
+      "vram_used": 16413470720.0,
+      "vram_total": 17095983104.0,
+      "busy": 98.0,
+      "power_w": 141.0,
+      "power_cap_w": 182.0,
+      "sclk_mhz": 3431.0,
+      "temp_c": 52.0,
+      "temp_junction_c": 65.0
+     },
+     "ram": {
+      "total": 64924282880.0,
+      "available": 15186067456.0
+     }
+    },
+    "config": {
+     "model": "Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf",
+     "drafter": "mtp",
+     "host": "127.0.0.1",
+     "port": 8097,
+     "n_ctx": 1048576,
+     "pid": 3184251,
+     "kv_gb": 14.495514624,
+     "kv_in": "RAM",
+     "vram_gb": 14.608658388,
+     "pinned_gb": 25.1461632,
+     "slots": 74,
+     "load_s": 19.765910497
+    },
+    "engine": {
+     "state": "idle",
+     "elapsed": 0.0,
+     "prompt": 0,
+     "prefill_done": 0,
+     "prefill_total": 0,
+     "out_tokens": 0,
+     "tok_s": 0.0,
+     "active": [],
+     "slots": 1,
+     "queue": 0,
+     "waiting": []
+    },
+    "totals": {
+     "requests": 1,
+     "passes": 104,
+     "gen_tokens": 300,
+     "tokens_per_pass": 2.8846153846153846,
+     "stashed": 0,
+     "on_disk": 0,
+     "expert_hits": 109927,
+     "expert_misses": 17175,
+     "early_hits": 9035,
+     "early_misses": 2066,
+     "mtp_passes": 322,
+     "multi_passes": 0,
+     "yields": 0
+    },
+    "recent": [
+     {
+      "time": 1793702294,
+      "prompt": 1934,
+      "reused": 0,
+      "computed": 1934,
+      "prefill_s": 1.418463592,
+      "out": 299,
+      "gen_s": 4.632864652,
+      "tok_s": 64.53890248464785,
+      "prefill_tok_s": 1363.4470499684141,
+      "tokens_per_pass": 2.8846153846153846,
+      "slot": -1,
+      "cancel": false,
+      "effort": "off",
+      "think_tokens": 0,
+      "think_budget": -1,
+      "project": "",
+      "session": "",
+      "agent": "",
+      "role": "main"
+     }
+    ]
+   },
+   "hwm_gb_final": 17.617523193359375,
+   "peaks": {
+    "rss_gb": 11.309516906738281,
+    "gtt_gb": 29.015357971191406,
+    "vram_gb": 15.286235809326172,
+    "hwm_gb": 17.617523193359375,
+    "avail_min_gb": 14.14193344116211
+   }
+  }
+ ],
+ "wall_s": 26.879358708043583
+}

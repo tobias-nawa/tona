@@ -1,0 +1,118 @@
+{
+  "id": "mimo-v2.6-distill-qwen-9b",
+  "name": "MiMo-V2.6-Distill-Qwen-9B",
+  "vendor": "Xiaomi MiMo",
+  "release_date": "2026-09-21",
+  "lineage": {
+    "base_model": "Qwen/Qwen3.5-9B",
+    "family": "MiMo-V2.6",
+    "how_derived": "supervised fine-tuning of Qwen3.5-9B on MiMo-generated data (77.4B tokens total, 27.2B loss-bearing): code 29.9 %, cyber 14.2 %, general 28.5 %, visual 27.4 % of tokens (card table). The card calls the checkpoint the SFT stage; an RL follow-up of this distill is requested in discussion 2 but not released."
+  },
+  "purpose": "The card states: a 9B agentic model developed by Xiaomi MiMo through supervised fine-tuning of Qwen3.5-9B on MiMo-generated data, covering coding, general-purpose agent tasks, visual coding and cybersecurity, released as the SFT checkpoint and a starting point for open research in agentic reinforcement learning.",
+  "tasks": ["coding", "general", "vision"],
+  "modalities": {"input": ["text", "image"], "output": ["text"]},
+  "languages": {"natural": ["en", "zh"]},
+  "license": {
+    "name": "MIT (card tag)",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card YAML says license mit; no LICENSE file in the repository (404 on raw/main/LICENSE, 2026-11-19), so no licence text was read. The card also carries a 'Use Restrictions' notice (no unlawful use, no military use, no malicious cyber activity, no autonomous high-risk actions without human oversight, among others) that it says is informational only and does not amend the licence. Base Qwen3.5-9B is Apache-2.0 per the qwen3.5-9b record."
+  },
+  "architecture": {
+    "kind": "dense hybrid Gated DeltaNet + gated attention (Qwen3.5-9B architecture, model_type qwen3_5) with vision tower",
+    "gguf_arch": "qwen35",
+    "params_total_b": 9,
+    "params_active_b": 9,
+    "layers": 32,
+    "attention": "full attention every 4th layer (full_attention_interval 4, so 8 full-attention and 24 linear-attention layers), 16 Q / 4 KV heads, head dim 256, hidden 4096, FFN 12288",
+    "recurrent": "Gated DeltaNet",
+    "context_native": 262144,
+    "context_max": 262144,
+    "drafter": "none shipped: config.json declares mtp_num_hidden_layers 1 but the safetensors index has no mtp tensors (0 matches, 2026-11-19); community adds the Qwen3.5-9B MTP head separately (discussion 8)",
+    "why_this_design": "Unchanged from Qwen3.5-9B; the card describes only the SFT data mixture and the role as an RL starting point, with no architecture reasons."
+  },
+  "variants": [
+    {"repo": "XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B", "format": "safetensors BF16", "size_gb": 18.85, "official": true, "notes": "revision 1f09ddcc, last modified 2026-10-28; generation_config.json sets temperature 0.6, top_k 20, top_p 0.95"},
+    {"repo": "bartowski/MiMo-V2.6-Distill-Qwen-9B-GGUF", "format": "GGUF Q4_K_M", "size_gb": 5.84, "official": false, "notes": "Q4_K_L 6.2, Q5_K_M 6.88, Q6_K 7.79, Q8_0 9.55, bf16 17.92, mmproj bf16 0.92 (sizes from the earlier record, not re-measured); most-downloaded quant repo (about 950k downloads)"},
+    {"repo": "ggml-org/MiMo-V2.6-Distill-Qwen-9B-GGUF", "format": "GGUF Q8_0", "size_gb": 9.53, "official": false, "notes": "single Q8_0 plus mmproj Q8_0 0.62 GB; ggml-org is the llama.cpp project organisation, not the model vendor"},
+    {"repo": "mradermacher/MiMo-V2.6-Distill-Qwen-9B-i1-GGUF", "format": "GGUF imatrix i1, IQ1_S 2.74 to Q6_K 7.36", "size_gb": 5.63, "official": false, "notes": "Q4_K_M 5.63, Q5_K_M 6.47, Q6_K 7.36, IQ3_M 4.42, IQ2_M 3.61, IQ1_S 2.74 GB; imatrix file 0.01 GB"},
+    {"repo": "prithivMLmods/MiMo-V2.6-Distill-Qwen-9B-GGUF", "format": "GGUF BF16 17.92 and Q3_K_L to Q6_K", "size_gb": 5.63, "official": false, "notes": "Q4_K_M 5.63, Q6_K 7.36 GB, mmproj bf16 0.92 GB; no MTP in this repo (earlier record said MTP-repacked, not confirmed)"},
+    {"repo": "IHaveNoClueAndIMustPost/MiMo-V2.6-Distill-Qwen-9B-Q8_0-MTP", "format": "GGUF Q8_0 with the Qwen3.5-9B MTP head patched in", "size_gb": 9.79, "official": false, "notes": "linked in discussion 8; the MTP head comes from base Qwen3.5-9B, not trained for the distill"}
+  ],
+  "hardware_fit": {
+    "pc-12gb": {"fits": "yes", "basis": "estimate", "variant": "Q6_K 7.36 to 7.79 GB, or Q4_K_M 5.63 GB for long context", "notes": "Q8_0 9.5 GB plus KV is tight in a 9.6 GB VRAM budget; weights can also spill to RAM"},
+    "pc-16gb": {"fits": "yes", "basis": "estimate", "variant": "Q8_0 9.53 GB", "notes": "13.6 GB VRAM budget leaves about 4 GB for KV and states"},
+    "pc-24gb": {"fits": "yes", "basis": "estimate", "variant": "BF16 17.92 GB or Q8_0"},
+    "pc-32gb": {"fits": "yes", "basis": "estimate", "variant": "BF16 17.92 GB"},
+    "mac-16-24gb": {"fits": "yes", "basis": "estimate", "variant": "Q6_K 7.4 to 7.8 GB", "notes": "GPU share about 12 GB; Q8_0 9.5 GB leaves little KV room"},
+    "mac-32gb": {"fits": "yes", "basis": "estimate", "variant": "Q8_0 9.5 GB"},
+    "mac-64gb+": {"fits": "yes", "basis": "estimate", "variant": "BF16 17.92 GB"}
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": ["SGLang (card quickstart, reasoning parser mimo)", "Ollama (discussion 15 ran Q8_0 on Ollama v0.40.4)", "MLX (mlx-community OptiQ-4bit repo)"],
+    "notes": "Runs in llama.cpp, but the embedded chat template needs a community fix for reliable reasoning and tool calls (discussions 6 and 7), and one deterministic BF16 case leaks a literal </think> into content with the upstream template (discussion 4). Tona runs the Qwen3.5 MoE relatives; the dense Qwen3.5-9B path is not confirmed."
+  },
+  "benchmarks": [
+    {"name": "SWE-bench Verified", "score": 61.1, "kind": "vendor", "unit": "% avg@3 (Qwen3.5-9B 60.0)", "variant": "SFT checkpoint BF16", "harness": "MiMo-V2.6 technical report setup, not detailed on the card", "source": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B"},
+    {"name": "SWE-bench Pro", "score": 44.6, "kind": "vendor", "unit": "% avg@3 (Qwen3.5-9B 32.0)", "variant": "BF16", "source": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B"},
+    {"name": "MiMo Code (mini), internal set", "score": 51.6, "kind": "vendor", "unit": "% avg@3 (Qwen3.5-9B 19.5)", "variant": "BF16", "source": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B"},
+    {"name": "MiMo Cyber (mini), internal set", "score": 31.3, "kind": "vendor", "unit": "% avg@3 (Qwen3.5-9B 5.7)", "variant": "BF16", "source": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B"},
+    {"name": "Terminal-Bench 2.1", "score": 37.1, "kind": "vendor", "unit": "% avg@1 (Qwen3.5-9B 27.0)", "variant": "BF16", "source": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B"},
+    {"name": "Toolathlon-Verified", "score": 35.2, "kind": "vendor", "unit": "avg@1 (Qwen3.5-9B 25.9)", "variant": "BF16", "source": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B"},
+    {"name": "AutomationBench v1.0.6", "score": 30.3, "kind": "vendor", "unit": "avg@1 (Qwen3.5-9B 5.0)", "variant": "BF16", "source": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B"},
+    {"name": "OfficeQA", "score": 19.5, "kind": "vendor", "unit": "avg@1 (Qwen3.5-9B 9.0)", "variant": "BF16", "source": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B"},
+    {"name": "JobBench", "score": 18.3, "kind": "vendor", "unit": "avg@1 (Qwen3.5-9B 2.6)", "variant": "BF16", "source": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B"},
+    {"name": "MiMo General (mini), internal set", "score": 62.2, "kind": "vendor", "unit": "avg@1 (Qwen3.5-9B 28.5)", "variant": "BF16", "source": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B"},
+    {"name": "MiMo Visual Coding (mini), internal set", "score": 64.0, "kind": "vendor", "unit": "avg@1 (Qwen3.5-9B 61.7)", "variant": "BF16", "source": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B"},
+    {"name": "GSM8K, 100 questions, temperature 0, 16K output budget", "score": "96/100", "kind": "independent", "variant": "Q8_0 GGUF, llama.cpp, RTX 5080 laptop 16 GB, FP16 KV (base Qwen3.5-9B Q8_0 also 96/100)", "harness": "one process per question, own harness", "date": "2026-10-16", "source": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B/discussions/15"},
+    {"name": "GSM8K wall time, 100 questions, same run", "score": "503 s (base Qwen3.5-9B 6058 s)", "kind": "independent", "unit": "total wall time; average think length 150 to 400 tokens vs 1800 to 3500 for the base", "variant": "Q8_0, llama.cpp", "date": "2026-10-16", "source": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B/discussions/15"},
+    {"name": "Needle retrieval 128K to 512K with YaRN x2, 40 needles", "score": "40/40", "kind": "independent", "variant": "Q8_0, llama.cpp, RX 7900 XTX, q8 KV", "date": "2026-10-09", "source": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B/discussions/13"},
+    {"name": "Decode speed at 512K context, RX 7900 XTX", "score": 74, "kind": "independent", "unit": "tok/s decode (prefill about 660 tok/s)", "variant": "Q8_0, q8/q8 KV, flash attention, parallel 1", "date": "2026-10-09", "source": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B/discussions/13"},
+    {"name": "Decode speed with and without MTP, mixed 11-prompt set", "score": "93.1 tok/s without, higher with MTP (coding 165 vs 95)", "kind": "independent", "unit": "tok/s decode; MTP acceptance 0.43 to 0.75 per category", "variant": "Q8_0 with Qwen3.5-9B MTP head patched in, hardware not stated in the excerpt read", "date": "2026-09-25", "source": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B/discussions/8"}
+  ],
+  "soft": {
+    "strengths": ["Vendor SWE-bench Pro gain over the base (32.0 to 44.6) and large agent-task gains (AutomationBench 5.0 to 30.3, Terminal-Bench 2.1 27.0 to 37.1) for a 9B", "Fits 12 to 16 GB cards at Q6_K to Q8_0; very popular GGUF (about 950k downloads for the bartowski repo)", "Long context works with YaRN (user: 40/40 needles at 512K, no short-task loss)", "On GSM8K a user measured the same accuracy as the base with 150 to 400 think tokens instead of 1800 to 3500"],
+    "weaknesses": ["SWE-bench Verified gain over Qwen3.5-9B is small (61.1 vs 60.0, vendor), and a commenter mocked the avg@3 reporting (discussion 10)", "Thinking chains can still run long on hard questions: at temperature 0 an 8K cap truncated over half of GPQA attempts (user report, discussion 13)", "llama.cpp template needs a community fix for tool calls; reasoning boundary can leak </think> into content", "Many vendor scores are on internal MiMo evaluation sets", "Tool-calling loops are reported (discussion 16, unreviewed weight-editing experiment, no statistics yet)"],
+    "behavior": "Thinking via enable_thinking. generation_config.json sets temperature 0.6, top_k 20, top_p 0.95; llama-cli defaults min_p 0.05 while Ollama defaults to 0, a commenter suggests min_p 0 or 0.03 (discussion 12). The user comparison in discussion 15 found much shorter think chains than the base on GSM8K, while discussion 13 found long chains on GPQA: length depends on the task. Budget generous max tokens for reasoning.",
+    "best_for": ["agentic coding and tool use on 12 to 16 GB GPUs", "base for agentic RL research", "long-context work with YaRN"],
+    "avoid_for": ["hard reasoning under short token budgets"],
+    "user_reports": [
+      {"summary": "Stock llama.cpp template picks the wrong parser: reasoning_content empty and tool calls unreliable; a community template fixes both (confirmed on an RTX 3090)", "sentiment": "mixed", "source": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B/discussions/6", "date": "2026-09-22"},
+      {"summary": "Upstream template on a BF16 GGUF can emit a literal </think> inside content with an empty reasoning_content on some prompts, reproduced at temperature 0", "sentiment": "negative", "source": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B/discussions/4", "date": "2026-09-21"},
+      {"summary": "YaRN x2 to 512K works on Q8_0 with an RX 7900 XTX: 40/40 needles, 74 tok/s decode; thinking chains long", "sentiment": "positive", "source": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B/discussions/13", "date": "2026-10-09"},
+      {"summary": "474-run audit on an RTX 5080 laptop: 96/100 on GSM8K like the base Qwen3.5-9B but 5 s per question instead of 61 s (12x faster) because the think chain is 150 to 400 tokens; author concludes it is not smarter in math, only more efficient (own harness, single author)", "sentiment": "positive", "source": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B/discussions/15", "date": "2026-10-16"},
+      {"summary": "Adding the Qwen3.5-9B MTP head to a Q8_0 GGUF raised decode from about 93 tok/s overall to 123 to 165 tok/s depending on category (coding 165) with acceptance 0.43 to 0.75 (poster says about +50 percent); another user objects that the head was not trained for this distill and acceptance may fall", "sentiment": "mixed", "source": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B/discussions/8", "date": "2026-09-25"}
+    ],
+    "maturity": "Xiaomi MiMo is an established lab with the MiMo-V2.6 family (Flash and Pro, see mimo-v2.6-flash-mopd); heavy community uptake (about 31k downloads and 713 likes on the base repo, 16 discussion threads, many quant and ablation derivatives)."
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "An MIT-tagged 9B agent model on the Qwen3.5 architecture that fits the 12 and 16 GB classes with good agent numbers (vendor) and short think chains on easy tasks (user), complementing the A3B MoEs for users with little RAM. Needs an own agent and Rust/Go evaluation against Qwen3.5-9B, since the SWE-bench Verified gain is small and most vendor scores are on internal or non-independent sets.",
+    "blockers": ["dense Qwen3.5-9B path in Tona not confirmed", "license file missing (tag only)", "no independent agent eval"]
+  },
+  "sources": [
+    {"url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B", "kind": "primary", "checked": "2026-11-19", "note": "README (benchmarks, training data, use restrictions), config.json, generation_config.json, safetensors index (no mtp tensors), file sizes via the HF API"},
+    {"url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B/raw/main/LICENSE", "kind": "primary", "checked": "2026-11-19", "note": "404, no licence file"},
+    {"url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B/discussions", "kind": "primary", "checked": "2026-11-19", "note": "discussion text via the HF API: threads 2, 4, 6, 7, 8, 10, 11, 12, 13, 15, 16"},
+    {"url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B/discussions/6", "kind": "primary", "checked": "2026-11-19", "note": "template fix thread"},
+    {"url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B/discussions/13", "kind": "primary", "checked": "2026-11-19", "note": "YaRN 512K user report"},
+    {"url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B/discussions/15", "kind": "primary", "checked": "2026-11-19", "note": "GSM8K and speed audit by a user"},
+    {"url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B/discussions/8", "kind": "primary", "checked": "2026-11-19", "note": "MTP thread"},
+    {"url": "https://huggingface.co/bartowski/MiMo-V2.6-Distill-Qwen-9B-GGUF", "kind": "primary", "checked": "2026-11-19", "note": "sizes from the HF API"},
+    {"url": "https://huggingface.co/ggml-org/MiMo-V2.6-Distill-Qwen-9B-GGUF", "kind": "primary", "checked": "2026-11-19", "note": "file sizes from the HF tree API"},
+    {"url": "https://huggingface.co/mradermacher/MiMo-V2.6-Distill-Qwen-9B-i1-GGUF", "kind": "primary", "checked": "2026-11-19", "note": "file sizes from the HF tree API"},
+    {"url": "https://huggingface.co/prithivMLmods/MiMo-V2.6-Distill-Qwen-9B-GGUF", "kind": "primary", "checked": "2026-11-19", "note": "file sizes from the HF tree API"},
+    {"url": "https://huggingface.co/IHaveNoClueAndIMustPost/MiMo-V2.6-Distill-Qwen-9B-Q8_0-MTP", "kind": "primary", "checked": "2026-11-19", "note": "file size from the HF tree API"}
+  ],
+  "open_questions": [
+    "License text (tag only, no LICENSE file)",
+    "Independent coding or agent evaluation on a standard harness",
+    "Whether an RL follow-up of this distill has been released (requested in discussion 2; the card says only that this is the SFT checkpoint)",
+    "Acceptance rate of a Qwen3.5-9B MTP head on this distill under a controlled test (user numbers in discussion 8 are mixed and hardware is not stated in the excerpt read)",
+    "Whether the llama.cpp </think> leak (discussion 4) is fixed in the current template revision"
+  ],
+  "last_checked": "2026-11-19"
+}

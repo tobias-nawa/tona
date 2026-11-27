@@ -1,0 +1,3 @@
+# Vendored code is not ours to fix and is exempt from the gates as well (AGENTS.md).
+paths-ignore:
+  - engine/third_party

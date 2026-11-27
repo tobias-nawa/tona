@@ -1,0 +1,145 @@
+{
+  "id": "minimax-h3-image",
+  "name": "MiniMax-H3-Image",
+  "vendor": "MiniMax (Nanonoble Pte. Ltd.)",
+  "release_date": "2026-11-03",
+  "lineage": {
+    "family": "MiniMax H3",
+    "base_model": "MiniMaxAI/MiniMax-H3",
+    "how_derived": "H3 diffusion transformer without the audio layers, distilled to 6 sampling steps; reuses the unchanged MiniMax-H3 text encoder"
+  },
+  "purpose": "Open-weight image generation and editing in one checkpoint, aimed at 16-megapixel output (up to 4096x4096) with strong instruction following and up to 16 reference images (card).",
+  "tasks": [
+    "image-generation"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image"
+    ],
+    "output": [
+      "image"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en"
+    ]
+  },
+  "license": {
+    "name": "MiniMax-H3-Image Community License Agreement",
+    "verified": true,
+    "commercial_use": "limited",
+    "redistribution": "limited",
+    "notes": "Text read 2026-11-19. The license is 'expressly limited to the Applicable Territory': worldwide excluding the European Union, the United Kingdom, the Republic of Korea and the United States of America. Separate written authorization is needed if annualized revenue of you and affiliates exceeds 1 million USD or you host the model as a service for third parties; the product UI must display 'MiniMax-H3-Image'; distillation outputs count as Model Derivatives. Card tag 'other' agrees."
+  },
+  "architecture": {
+    "kind": "dense single-stream diffusion transformer, 33.1B, 50 layers, hidden 5376, 56 heads, 3D multimodal RoPE; Qwen3-VL text encoder (reads layer 50); VAE 16x downsampling, 24 channels",
+    "params_total_b": 33.1,
+    "why_this_design": "Packs text tokens, reference-image tokens and target latents into one sequence for single-stream attention; 16x VAE downsampling with 32x32-pixel tokens keeps 16 MP generation tractable; 6-step distillation without CFG for speed (card)."
+  },
+  "variants": [
+    {
+      "repo": "MiniMaxAI/MiniMax-H3-Image",
+      "format": "safetensors BF16 DiT (FP32 embeddings)",
+      "size_gb": 68.65,
+      "official": true,
+      "notes": "plus the 66.7 GB text encoder from MiniMaxAI/MiniMax-H3; optional prompt expander MiniMax-H3-Image-PE NVFP4 17.9 GB"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "no",
+      "basis": "estimate",
+      "notes": "68.65 GB DiT plus 66.7 GB text encoder"
+    },
+    "pc-16gb": {
+      "fits": "no",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "pc-24gb": {
+      "fits": "no",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "pc-32gb": {
+      "fits": "no",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-32gb": {
+      "fits": "no",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-64gb+": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "notes": "BF16 weights alone exceed 64 GB; quantization needed"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "diffusers",
+      "DiffSynth-Studio (low-VRAM mode)",
+      "ComfyUI (Comfy-Org repo exists)"
+    ],
+    "notes": "The card lists deployment configurations for NVIDIA and AMD accelerators at server scale."
+  },
+  "benchmarks": [],
+  "soft": {
+    "strengths": [
+      "16 MP output without upscaler",
+      "up to 16 reference images",
+      "6 steps"
+    ],
+    "weaknesses": [
+      "more than 130 GB of weights",
+      "territory-limited license"
+    ],
+    "maturity": "MiniMax; released 2026-11-03 per HF createdAt (license dated 2026-11-10); 821k downloads and 1.6k likes within weeks per the HF API."
+  },
+  "tona_fit": {
+    "verdict": "reject",
+    "reason": "License excludes the EU, UK, South Korea and the USA (text read) and the model needs about 135 GB of weights; no PC or Mac class of Tona's users can run it.",
+    "blockers": [
+      "license excludes EU/UK/KR/US",
+      "135 GB weights",
+      "Tona has no image engine"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/MiniMaxAI/MiniMax-H3-Image",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "card read"
+    },
+    {
+      "url": "https://huggingface.co/MiniMaxAI/MiniMax-H3-Image/raw/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "license text read"
+    },
+    {
+      "url": "https://huggingface.co/api/models?search=MiniMax-H3",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "createdAt 2026-11-03, downloads"
+    }
+  ],
+  "open_questions": [
+    "No benchmark table on the card",
+    "No user reports found",
+    "No community quantization or consumer-GPU speed found (searched 2026-11-19)"
+  ],
+  "last_checked": "2026-11-19"
+}

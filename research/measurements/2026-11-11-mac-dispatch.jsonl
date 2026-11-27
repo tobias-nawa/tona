@@ -1,0 +1,18 @@
+{"kind": "run", "run": 1, "time": "12:26:06", "load": "16,64 13,78 10,78", "power": "AC Power", "bg_cpu_pct": 73.2}
+{"block":"D1","kind":"dispatch","max_us":1.9348750356584787,"median_us":1.7900833627209067,"min_us":1.7244166228920221,"n":1000,"n_samples":20,"p99_us":1.9348750356584787,"unit":"us per dispatch"}
+{"block":"D2","kind":"dispatch","max_us":1.8434165976941586,"median_us":1.7300000181421638,"min_us":1.6757500125095248,"n":1000,"n_samples":20,"p99_us":1.8434165976941586,"unit":"us per dispatch"}
+{"block":"D3","kind":"dispatch","max_us":2.1737499628216028,"median_us":2.0283750491216779,"min_us":2.0067500881850719,"n":1000,"n_samples":20,"p99_us":2.1737499628216028,"unit":"us per dispatch"}
+{"block":"D4","kind":"dispatch","max_us":366.29199999999997,"median_us":169.875,"min_us":95.625,"n_samples":500,"p99_us":325.08300000000003,"unit":"us per round trip"}
+{"block":"D5","kind":"dispatch","max_us":23.264915999999999,"median_us":22.854292000000001,"min_us":22.445916,"n":1000,"n_samples":20,"p99_us":23.264915999999999,"unit":"us per command buffer"}
+{"kind": "run", "run": 2, "time": "12:26:17", "load": "15,65 13,67 10,77", "power": "AC Power", "bg_cpu_pct": 69.5}
+{"block":"D1","kind":"dispatch","max_us":2.0474999910220504,"median_us":1.9965000683441758,"min_us":1.8579167081043124,"n":1000,"n_samples":20,"p99_us":2.0474999910220504,"unit":"us per dispatch"}
+{"block":"D2","kind":"dispatch","max_us":2.0064583513885736,"median_us":1.895916648209095,"min_us":1.7045417334884405,"n":1000,"n_samples":20,"p99_us":2.0064583513885736,"unit":"us per dispatch"}
+{"block":"D3","kind":"dispatch","max_us":2.1419583354145288,"median_us":2.0137082319706678,"min_us":1.9968750420957804,"n":1000,"n_samples":20,"p99_us":2.1419583354145288,"unit":"us per dispatch"}
+{"block":"D4","kind":"dispatch","max_us":358.33300000000003,"median_us":170.75,"min_us":98.75,"n_samples":500,"p99_us":293.29199999999997,"unit":"us per round trip"}
+{"block":"D5","kind":"dispatch","max_us":22.982333999999998,"median_us":22.812917000000002,"min_us":22.427958,"n":1000,"n_samples":20,"p99_us":22.982333999999998,"unit":"us per command buffer"}
+{"kind": "run", "run": 3, "time": "12:26:28", "load": "15,68 13,77 10,86", "power": "AC Power", "bg_cpu_pct": 72.2}
+{"block":"D1","kind":"dispatch","max_us":2.0752083510160446,"median_us":1.9570000004023314,"min_us":1.6941250069066882,"n":1000,"n_samples":20,"p99_us":2.0752083510160446,"unit":"us per dispatch"}
+{"block":"D2","kind":"dispatch","max_us":2.079749945551157,"median_us":1.987166702747345,"min_us":1.7036250792443752,"n":1000,"n_samples":20,"p99_us":2.079749945551157,"unit":"us per dispatch"}
+{"block":"D3","kind":"dispatch","max_us":2.1176250884309411,"median_us":2.0042499527335167,"min_us":1.9907916430383921,"n":1000,"n_samples":20,"p99_us":2.1176250884309411,"unit":"us per dispatch"}
+{"block":"D4","kind":"dispatch","max_us":376.29199999999997,"median_us":171.75,"min_us":135.792,"n_samples":500,"p99_us":289.916,"unit":"us per round trip"}
+{"block":"D5","kind":"dispatch","max_us":23.179917,"median_us":22.545458,"min_us":22.191417000000001,"n":1000,"n_samples":20,"p99_us":23.179917,"unit":"us per command buffer"}

@@ -1,0 +1,282 @@
+{
+  "config": {
+    "A": {
+      "build": "/var/tmp/claude/161/build",
+      "env": {},
+      "tooling": {
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0",
+        "TONA_EXPERT_PROFILE": "/var/tmp/claude/161/wt/work/profile/experts-coder.bin"
+      },
+      "commit": "v0.0.2-954-g0602d8be73",
+      "model": "/var/tmp/claude/161/wt/work/models/coder-iq1_m/Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf",
+      "drafter": "/var/tmp/claude/161/wt/work/models/draft/mtp-Qwen3.8-Flash-Next-Q8_0.gguf"
+    },
+    "B": {
+      "build": "/var/tmp/claude/161/build",
+      "env": {
+        "TONA_CLOCK_HOLD": "1"
+      },
+      "tooling": {
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0",
+        "TONA_CLOCK_HOLD": "1",
+        "TONA_EXPERT_PROFILE": "/var/tmp/claude/161/wt/work/profile/experts-coder.bin"
+      },
+      "commit": "v0.0.2-954-g0602d8be73",
+      "model": "/var/tmp/claude/161/wt/work/models/coder-iq1_m/Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf",
+      "drafter": "/var/tmp/claude/161/wt/work/models/draft/mtp-Qwen3.8-Flash-Next-Q8_0.gguf"
+    },
+    "workload": "short",
+    "targets": "2000:400 2000:write:400 at --ctx 140000",
+    "deterministic": false,
+    "plan_info": {
+      "expect": [
+        [
+          "prefill",
+          -0.5,
+          0.5
+        ],
+        [
+          "decode",
+          -0.5,
+          0.5
+        ]
+      ],
+      "source": "A/A of 2026-11-12-prefill-bimodal.md (prefill 0.2 %, decode 0.1 to 0.5 %)",
+      "workload": "short",
+      "targets": "2000:400 2000:write:400 at --ctx 140000",
+      "primary": "",
+      "why_size": "prefill@2000 only: the effect to exclude is the 7 to 9 % queue effect of 2026-11-12 (A/A spread 0.2 %), so 1 to 2 rounds decide; 4 at most; decode must stay equal",
+      "decode_tokens": 200,
+      "noise": {
+        "prefill@2000": [
+          0.09,
+          4,
+          "research/measurements/2026-11-02-ab-tool.md: run 7, short, A/A merged against merged, 5 rounds with warm-up"
+        ],
+        "decode@2000": [
+          0.231,
+          4,
+          "research/measurements/2026-11-02-ab-tool.md: run 7, short, A/A merged against merged, 5 rounds with warm-up"
+        ],
+        "prefill@2000:write": [
+          0.163,
+          4,
+          "research/measurements/2026-11-02-ab-tool.md: run 7, short, A/A merged against merged, 5 rounds with warm-up"
+        ],
+        "decode@2000:write": [
+          0.605,
+          4,
+          "research/measurements/2026-11-02-ab-tool.md: run 7, short, A/A merged against merged, 5 rounds with warm-up"
+        ]
+      },
+      "warmup": true,
+      "round_warmup": false,
+      "load_log": false,
+      "A": {
+        "build": "/var/tmp/claude/161/build",
+        "env": {},
+        "tooling": {
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0",
+          "TONA_EXPERT_PROFILE": "/var/tmp/claude/161/wt/work/profile/experts-coder.bin"
+        },
+        "commit": "v0.0.2-954-g0602d8be73",
+        "model": "/var/tmp/claude/161/wt/work/models/coder-iq1_m/Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf",
+        "drafter": "/var/tmp/claude/161/wt/work/models/draft/mtp-Qwen3.8-Flash-Next-Q8_0.gguf"
+      },
+      "B": {
+        "build": "/var/tmp/claude/161/build",
+        "env": {
+          "TONA_CLOCK_HOLD": "1"
+        },
+        "tooling": {
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0",
+          "TONA_CLOCK_HOLD": "1",
+          "TONA_EXPERT_PROFILE": "/var/tmp/claude/161/wt/work/profile/experts-coder.bin"
+        },
+        "commit": "v0.0.2-954-g0602d8be73",
+        "model": "/var/tmp/claude/161/wt/work/models/coder-iq1_m/Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf",
+        "drafter": "/var/tmp/claude/161/wt/work/models/draft/mtp-Qwen3.8-Flash-Next-Q8_0.gguf"
+      }
+    },
+    "reference_sha": {},
+    "corpus_sha256": "e13a800340859f7d39c63712d90383faae7e5a47c3865f0811e40d912612d38e",
+    "corpus_is_reference": true,
+    "commit": "0602d8b",
+    "noise": {
+      "prefill@2000": [
+        0.09,
+        4
+      ],
+      "decode@2000": [
+        0.231,
+        4
+      ],
+      "prefill@2000:write": [
+        0.163,
+        4
+      ],
+      "decode@2000:write": [
+        0.605,
+        4
+      ]
+    }
+  },
+  "rounds": [
+    {
+      "order": "AB",
+      "sha": {
+        "A": {
+          "2000": "75eff9b8784c7d4c",
+          "2000:write": "a6f07fd6fb86e448"
+        },
+        "B": {
+          "2000": "75eff9b8784c7d4c",
+          "2000:write": "a6f07fd6fb86e448"
+        }
+      },
+      "A": {
+        "prefill@2000": 1459.1398413187385,
+        "decode@2000": 76.6233046733472,
+        "prefill@2000:write": 1744.5277952798938,
+        "decode@2000:write": 126.04745724516494
+      },
+      "counters": {
+        "A": {
+          "2000": {
+            "expert_hits": 133160,
+            "expert_misses": 19689
+          },
+          "2000:write": {
+            "expert_hits": 86604,
+            "expert_misses": 23673
+          }
+        },
+        "B": {
+          "2000": {
+            "expert_hits": 133160,
+            "expert_misses": 19689
+          },
+          "2000:write": {
+            "expert_hits": 86604,
+            "expert_misses": 23673
+          }
+        }
+      },
+      "B": {
+        "prefill@2000": 1462.1002271731802,
+        "decode@2000": 76.05165591600617,
+        "prefill@2000:write": 1743.2864349859985,
+        "decode@2000:write": 126.30490710936392
+      },
+      "seconds": 65.04817321799965
+    },
+    {
+      "order": "BA",
+      "sha": {
+        "B": {
+          "2000": "75eff9b8784c7d4c",
+          "2000:write": "a6f07fd6fb86e448"
+        },
+        "A": {
+          "2000": "75eff9b8784c7d4c",
+          "2000:write": "a6f07fd6fb86e448"
+        }
+      },
+      "B": {
+        "prefill@2000": 1454.8614903443583,
+        "decode@2000": 76.40863175575626,
+        "prefill@2000:write": 1732.6651611638308,
+        "decode@2000:write": 126.33612010716318
+      },
+      "counters": {
+        "B": {
+          "2000": {
+            "expert_hits": 133160,
+            "expert_misses": 19689
+          },
+          "2000:write": {
+            "expert_hits": 86604,
+            "expert_misses": 23673
+          }
+        },
+        "A": {
+          "2000": {
+            "expert_hits": 133160,
+            "expert_misses": 19689
+          },
+          "2000:write": {
+            "expert_hits": 86604,
+            "expert_misses": 23673
+          }
+        }
+      },
+      "A": {
+        "prefill@2000": 1461.0876625302226,
+        "decode@2000": 76.47842208202228,
+        "prefill@2000:write": 1744.3701052798344,
+        "decode@2000:write": 126.85375040439628
+      },
+      "seconds": 64.72361910600011
+    }
+  ],
+  "discarded": [],
+  "stop_reason": "error: server exited with 1 before it was ready (partial result)",
+  "wall_seconds": 177.0664104260004,
+  "loads": [],
+  "warmup": {
+    "prefill@2000": 1349.1431084968483,
+    "decode@2000": 75.42781473716501,
+    "prefill@2000:write": 1383.4893000396632,
+    "decode@2000:write": 126.48718701491849
+  },
+  "plan": {
+    "alpha": 0.05,
+    "margin": 0.5,
+    "max_rounds": 4,
+    "min_rounds": 2,
+    "prior_sd": 0.5,
+    "prior_df": 4.0
+  },
+  "decisions": {
+    "prefill@2000": {
+      "decided_at_round": 1,
+      "decision": "equal",
+      "mean_diff_percent": -0.1116235036635882,
+      "ci_diff_percent": [
+        -0.6823732687107785,
+        0.45912626138360213
+      ]
+    },
+    "decode@2000": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": -0.41865284905247546,
+      "ci_diff_percent": [
+        -1.1966800964464879,
+        0.35937439834153706
+      ]
+    },
+    "prefill@2000:write": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": -0.3710850169536595,
+      "ci_diff_percent": [
+        -1.007425338238288,
+        0.2652553043309692
+      ]
+    },
+    "decode@2000:write": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": -0.10190222664119286,
+      "ci_diff_percent": [
+        -1.6305574429353757,
+        1.42675298965299
+      ]
+    }
+  }
+}

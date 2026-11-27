@@ -1,0 +1,4 @@
+host memory: GTT (probe 64 MB grew the GTT use by 64 MB; 0.4 of 32.5 GB in use)
+evicted_ms counter: /sys/class/kfd/kfd/proc/2222532/stats_7773/evicted_ms (0 ms so far), evictions do not count against the pass deadline
+loaded in 10.4 s, VRAM 13.61 GB (expert cache 87 per layer), megakernel: 1076 steps, 32 blocks (at most 32, LDS 32024 B, 192 VGPRs), verify pass 32 blocks (max 32, 192 VGPRs)
+Error: gpu::Mega: token outside the vocabulary

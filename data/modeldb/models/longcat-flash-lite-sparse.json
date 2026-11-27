@@ -1,0 +1,273 @@
+{
+  "id": "longcat-flash-lite-sparse",
+  "name": "LongCat-Flash-Lite-Sparse",
+  "vendor": "Meituan (meituan-longcat)",
+  "release_date": "2026-07-31",
+  "tasks": [
+    "coding",
+    "general",
+    "research"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/meituan-longcat/LongCat-Flash-Lite-Sparse/raw/main/README.md",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "raw card text"
+    },
+    {
+      "url": "https://huggingface.co/meituan-longcat/LongCat-Flash-Lite-Sparse/raw/main/config.json",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/meituan-longcat/LongCat-Flash-Lite-Sparse/raw/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/api/models/llmfan46/LongCat-Flash-Lite-Sparse-Uncensored-Heretic-Native-MTP-And-LSA-Preserved-GGUF/tree/main",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "file sizes"
+    },
+    {
+      "url": "https://huggingface.co/meituan-longcat/LongCat-Flash-Lite-Sparse/discussions",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "research/49-moe-models-2026-11.md",
+      "kind": "own",
+      "checked": "2026-11-19"
+    }
+  ],
+  "last_checked": "2026-11-19",
+  "purpose": "Meituan states: a non-thinking MoE built on LongCat-Flash-Lite that replaces dense MLA with LongCat Sparse Attention (LSA) to support 1 M tokens of context and to improve agentic coding, search and tool use.",
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en",
+      "zh"
+    ]
+  },
+  "lineage": {
+    "base_model": "LongCat-Flash-Lite",
+    "family": "LongCat",
+    "how_derived": "dense MLA replaced by LSA (DeepSeek Sparse Attention extended with streaming-aware, cross-layer and hierarchical indexing), long-context extension to 1,024K"
+  },
+  "license": {
+    "name": "MIT",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "LICENSE file read: standard MIT, Copyright (c) 2026 Meituan; the card states weights and source code are MIT."
+  },
+  "architecture": {
+    "kind": "MoE with sparse attention (LSA), non-thinking",
+    "gguf_arch": "none in mainline llama.cpp (community fork only)",
+    "params_total_b": 69,
+    "params_active_b": 3,
+    "attention": "LongCat Sparse Attention (LSA): streaming-aware indexing (sink and local window plus dynamic selection), cross-layer index reuse, optional hierarchical indexing at inference",
+    "experts": 256,
+    "context_native": 983040,
+    "context_max": 1048576,
+    "drafter": "native MTP (preserved in a community GGUF; official repo does not describe it)",
+    "why_this_design": "Meituan states: LSA turns fragmented KV access into contiguous reads, improving HBM efficiency; cross-layer reuse exploits stable attention saliency; hierarchical indexing lowers indexing overhead and needs no extra training."
+  },
+  "variants": [
+    {
+      "repo": "meituan-longcat/LongCat-Flash-Lite-Sparse",
+      "format": "safetensors BF16",
+      "size_gb": 138.3,
+      "official": true
+    },
+    {
+      "repo": "llmfan46/LongCat-Flash-Lite-Sparse-Uncensored-Heretic-Native-MTP-And-LSA-Preserved-GGUF",
+      "format": "GGUF Q3_K_M (uncensored derivative, needs a llama.cpp fork)",
+      "size_gb": 32.7,
+      "official": false,
+      "notes": "refusal-removed derivative, not the vendor model; behaviour differs"
+    },
+    {
+      "repo": "llmfan46/LongCat-Flash-Lite-Sparse-Uncensored-Heretic-Native-MTP-And-LSA-Preserved-GGUF",
+      "format": "GGUF Q4_K_M (same derivative)",
+      "size_gb": 41.2,
+      "official": false
+    },
+    {
+      "repo": "llmfan46/LongCat-Flash-Lite-Sparse-Uncensored-Heretic-Native-MTP-And-LSA-Preserved-GGUF",
+      "format": "GGUF Q2_K (same derivative)",
+      "size_gb": 25.4,
+      "official": false
+    },
+    {
+      "repo": "Intel/LongCat-Flash-Lite-Sparse-MXFP4-CT-AutoRound",
+      "format": "MXFP4 (AutoRound)",
+      "official": false,
+      "notes": "size not read"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "variant": "Q4_K_M (community derivative)",
+      "basis": "estimate",
+      "notes": "estimate from the file size (41.2 GB) against the budget of docs/hardware: 9.6 GB VRAM plus 50 GB RAM = 60 GB; about 23% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that); Q3_K_M (32.7 GB) would leave more VRAM share; no official GGUF"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "Q4_K_M (community derivative)",
+      "basis": "estimate",
+      "notes": "estimate from the file size (41.2 GB) against the budget of docs/hardware: 13.6 GB VRAM plus 50 GB RAM = 64 GB; about 33% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that); Q3_K_M (32.7 GB) would leave more VRAM share; no official GGUF"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "Q4_K_M (community derivative)",
+      "basis": "estimate",
+      "notes": "estimate from the file size (41.2 GB) against the budget of docs/hardware: 21.6 GB VRAM plus 82 GB RAM = 104 GB; about 52% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that); Q3_K_M (32.7 GB) would leave more VRAM share; no official GGUF"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "Q4_K_M (community derivative)",
+      "basis": "estimate",
+      "notes": "estimate from the file size (41.2 GB) against the budget of docs/hardware: 29.6 GB VRAM plus 114 GB RAM = 144 GB; about 72% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that); Q3_K_M (32.7 GB) would leave more VRAM share; no official GGUF"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "Q4_K_M (community derivative)",
+      "basis": "estimate",
+      "notes": "estimate from the file size (41.2 GB) against the GPU share of docs/hardware (about 12 GB); Q3_K_M (32.7 GB) would leave more VRAM share; no official GGUF"
+    },
+    "mac-32gb": {
+      "fits": "no",
+      "variant": "Q4_K_M (community derivative)",
+      "basis": "estimate",
+      "notes": "estimate from the file size (41.2 GB) against the GPU share of docs/hardware (about 22 GB); Q3_K_M (32.7 GB) would leave more VRAM share; no official GGUF"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "Q4_K_M (community derivative)",
+      "basis": "estimate",
+      "notes": "estimate from the file size (41.2 GB) against the GPU share of docs/hardware (about 52 GB); Q3_K_M (32.7 GB) would leave more VRAM share; no official GGUF"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "SGLang (PR 32918)",
+      "mlx-vlm"
+    ],
+    "notes": "Mainline llama.cpp lacks the LongCat-Flash-Lite arch (PR 19167 in progress as of 2026-08-06) and has no LSA; the community GGUFs need a fork. Tona would need a new module (LSA indexer, 256 experts)."
+  },
+  "benchmarks": [
+    {
+      "name": "SWE-bench Verified",
+      "score": 68.2,
+      "kind": "vendor",
+      "source": "https://huggingface.co/meituan-longcat/LongCat-Flash-Lite-Sparse/raw/main/README.md",
+      "variant": "official weights, LSA without hierarchical indexing",
+      "date": "2026-07-31"
+    },
+    {
+      "name": "SWE-bench Pro",
+      "score": 40.63,
+      "kind": "vendor",
+      "source": "https://huggingface.co/meituan-longcat/LongCat-Flash-Lite-Sparse/raw/main/README.md",
+      "variant": "official weights, LSA without hierarchical indexing",
+      "date": "2026-07-31"
+    },
+    {
+      "name": "SWE-bench Multilingual",
+      "score": 59.33,
+      "kind": "vendor",
+      "source": "https://huggingface.co/meituan-longcat/LongCat-Flash-Lite-Sparse/raw/main/README.md",
+      "variant": "official weights, LSA without hierarchical indexing",
+      "date": "2026-07-31"
+    },
+    {
+      "name": "TerminalBench 2.0",
+      "score": 33.7,
+      "kind": "vendor",
+      "source": "https://huggingface.co/meituan-longcat/LongCat-Flash-Lite-Sparse/raw/main/README.md",
+      "variant": "official weights, LSA without hierarchical indexing",
+      "date": "2026-07-31"
+    },
+    {
+      "name": "tau2-Telecom",
+      "score": 95.18,
+      "kind": "vendor",
+      "source": "https://huggingface.co/meituan-longcat/LongCat-Flash-Lite-Sparse/raw/main/README.md",
+      "variant": "official weights, LSA without hierarchical indexing",
+      "date": "2026-07-31"
+    },
+    {
+      "name": "MCP-Atlas",
+      "score": 45.6,
+      "kind": "vendor",
+      "source": "https://huggingface.co/meituan-longcat/LongCat-Flash-Lite-Sparse/raw/main/README.md",
+      "variant": "official weights, LSA without hierarchical indexing",
+      "date": "2026-07-31"
+    },
+    {
+      "name": "LongCodeQA",
+      "score": 62.3,
+      "kind": "vendor",
+      "source": "https://huggingface.co/meituan-longcat/LongCat-Flash-Lite-Sparse/raw/main/README.md",
+      "variant": "official weights, LSA without hierarchical indexing",
+      "date": "2026-07-31",
+      "unit": "%"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "MIT with the text verified",
+      "3 B active: cheap decode; non-thinking: short answers and low latency",
+      "Large gain over the dense Lite on SWE-bench Verified (54.4 to 68.2) and Multilingual (38.1 to 59.3)"
+    ],
+    "weaknesses": [
+      "Vendor SWE-bench Verified 68.2 against 79.2 to 82.8 for the Qwen3.8-Flash-Next family and 79 for Ornith-1.5-35B-A3B",
+      "No official GGUF and no mainline llama.cpp support",
+      "Terminal-Bench 2.0 33.7 (dense Lite 33.75): no agentic-terminal gain",
+      "No independent score found"
+    ],
+    "behavior": "Non-thinking model.",
+    "best_for": [
+      "low-latency coding help where a thinking model is too slow, once an engine supports LSA"
+    ],
+    "avoid_for": [
+      "today: anything that needs a stock llama.cpp"
+    ],
+    "maturity": "Meituan LongCat: three releases in 2026; 1.2k downloads of this repo, 3 discussions.",
+    "user_reports": [
+      {
+        "summary": "Community asks for GGUF; mainline llama.cpp does not support the base arch, a fork author says Sparse needs \"a lot of extra work\"",
+        "sentiment": "mixed",
+        "source": "https://huggingface.co/meituan-longcat/LongCat-Flash-Lite-Sparse/discussions/1",
+        "date": "2026-08-06"
+      }
+    ]
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "MIT (verified) and a size that fits 16 GB + 64 GB at Q3/Q4 (33 to 41 GB), but its vendor agent numbers are below the Qwen3.8-Flash-Next and Ornith class and nothing independent exists. Candidate only if a coding-calibrated quant or an independent score changes that.",
+    "blockers": [
+      "Tona has no LSA module (engine support, not a quality judgement)",
+      "no official GGUF",
+      "no independent score"
+    ]
+  },
+  "open_questions": [
+    "Independent score: none found. Check: Artificial Analysis and SWE-bench leaderboards.",
+    "Quality of the community Q3/Q4 against BF16: no measurement. Check: own polyglot run (needs the fork).",
+    "Per-language coding quality: no public per-language numbers found (vendor tables are aggregates; swebench.com per-language view not retrievable). Check: run our Exercism polyglot set per language on the model."
+  ]
+}

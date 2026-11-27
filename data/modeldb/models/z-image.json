@@ -1,0 +1,148 @@
+{
+  "id": "z-image",
+  "name": "Z-Image (base)",
+  "vendor": "Tongyi-MAI (Alibaba Tongyi)",
+  "release_date": "2026-01-23",
+  "lineage": {
+    "family": "Z-Image",
+    "how_derived": "full-capacity undistilled model; Turbo is distilled from it"
+  },
+  "purpose": "Undistilled base for creative generation, fine-tuning and downstream development; supports CFG and negative prompts.",
+  "tasks": [
+    "image-generation"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "image"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en",
+      "zh"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Apache License 2.0 text read in the Z-Image GitHub repository LICENSE; HF repo has no LICENSE file. HF API createdAt 2026-01-23 (base weights came two months after Turbo)."
+  },
+  "architecture": {
+    "kind": "single-stream diffusion transformer (S3-DiT), dense",
+    "params_total_b": 6
+  },
+  "variants": [
+    {
+      "repo": "Tongyi-MAI/Z-Image",
+      "format": "safetensors BF16",
+      "official": true,
+      "notes": "28-50 steps, CFG 3-5"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "notes": "BF16 about 12 GB; needs quant or offload"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "28-50 steps with CFG: several times the time of Turbo"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-16-24gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "stable-diffusion.cpp (GGUF, ROCm/HIP and Metal builds)",
+      "ComfyUI",
+      "diffusers"
+    ],
+    "notes": "Tona has no image path; plan in research/52 is stable-diffusion.cpp as a separate backend (one model at a time). No seconds-per-image was measured on gfx1200 yet."
+  },
+  "soft": {
+    "strengths": [
+      "CFG, negative prompting, fine-tuning",
+      "high output diversity (card table)"
+    ],
+    "weaknesses": [
+      "28-50 steps versus 8 for Turbo"
+    ],
+    "best_for": [
+      "LoRA training",
+      "when diversity matters"
+    ],
+    "maturity": "as Z-Image-Turbo",
+    "user_reports": [
+      {
+        "summary": "One HF user reports better likeness when the LoRA is trained on Z-Image base and used on Turbo; fine-tuning guides treat base as the training checkpoint.",
+        "sentiment": "positive",
+        "source": "https://discuss.huggingface.co/t/about-traning-lora-for-z-image-turbo/173911",
+        "date": "2026-01"
+      }
+    ]
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Quality and license are fine (Apache-2.0 verified), but it is the fine-tuning base: more steps with CFG than Turbo for the same use. Becomes an offer for users who train LoRAs; no speed or quality advantage for plain generation.",
+    "blockers": [
+      "Tona has no image engine"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/Tongyi-MAI/Z-Image",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Tongyi-MAI/Z-Image/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "license text, read through a summarizer"
+    },
+    {
+      "url": "https://huggingface.co/api/models/Tongyi-MAI/Z-Image",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "createdAt 2026-01-23"
+    }
+  ],
+  "open_questions": [
+    "VRAM at 1024 px",
+    "stable-diffusion.cpp support for the base checkpoint",
+    "Seconds per image on any consumer GPU for the base model: not found in searches on 2026-11-19"
+  ],
+  "last_checked": "2026-11-19"
+}

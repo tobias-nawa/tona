@@ -1,0 +1,62 @@
+== ref cuts= 
+exit 0
+Prefill 20000 tokens: chunk by chunk, chunk 2048, group 0, loan limit 16 MB
+tail: prefill 20000 tokens in 0.7 s, then 64 tokens through the megakernel (250.5 tok/s): NLL 34.666086, top-1 0.00 %
+== ref2 cuts= 
+exit 0
+Prefill 20000 tokens: chunk by chunk, chunk 2048, group 0, loan limit 16 MB
+tail: prefill 20000 tokens in 0.7 s, then 64 tokens through the megakernel (250.9 tok/s): NLL 34.666086, top-1 0.00 %
+== c4096 cuts=4096 
+exit 0
+Prefill 4096 tokens: chunk by chunk, chunk 2048, group 0, loan limit 16 MB
+Prefill 15904 tokens: chunk by chunk, chunk 2048, group 0, loan limit 16 MB
+tail: prefill 20000 tokens in 0.7 s, then 64 tokens through the megakernel (251.4 tok/s): NLL 34.666086, top-1 0.00 %
+== c4097 cuts=4097,9001 
+exit 0
+Prefill 4097 tokens: chunk by chunk, chunk 2048, group 0, loan limit 16 MB
+Prefill 4904 tokens: chunk by chunk, chunk 2048, group 0, loan limit 16 MB
+Prefill 10999 tokens: chunk by chunk, chunk 2048, group 0, loan limit 16 MB
+tail: prefill 20000 tokens in 0.7 s, then 64 tokens through the megakernel (250.6 tok/s): NLL 34.666086, top-1 0.00 %
+== c6144 cuts=6144 
+exit 0
+Prefill 6144 tokens: chunk by chunk, chunk 2048, group 0, loan limit 16 MB
+Prefill 13856 tokens: chunk by chunk, chunk 2048, group 0, loan limit 16 MB
+tail: prefill 20000 tokens in 0.7 s, then 64 tokens through the megakernel (250.2 tok/s): NLL 34.666086, top-1 0.00 %
+== c6143 cuts=6143,13000,13001 
+exit 0
+Prefill 6143 tokens: chunk by chunk, chunk 2048, group 0, loan limit 16 MB
+Prefill 6857 tokens: chunk by chunk, chunk 2048, group 0, loan limit 16 MB
+Prefill 1 tokens: chunk by chunk, chunk 2048, group 0, loan limit 16 MB
+Prefill 6999 tokens: chunk by chunk, chunk 2048, group 0, loan limit 16 MB
+tail: prefill 20000 tokens in 0.7 s, then 64 tokens through the megakernel (250.3 tok/s): NLL 34.666086, top-1 0.00 %
+== c1 cuts=1,19999 
+exit 0
+Prefill 1 tokens: chunk by chunk, chunk 2048, group 0, loan limit 16 MB
+Prefill 19998 tokens: chunk by chunk, chunk 2048, group 0, loan limit 16 MB
+Prefill 1 tokens: chunk by chunk, chunk 2048, group 0, loan limit 16 MB
+tail: prefill 20000 tokens in 0.7 s, then 64 tokens through the megakernel (252.8 tok/s): NLL 34.666086, top-1 0.00 %
+== c8191 cuts=8191 
+exit 0
+Prefill 8191 tokens: chunk by chunk, chunk 2048, group 0, loan limit 16 MB
+Prefill 11809 tokens: chunk by chunk, chunk 2048, group 0, loan limit 16 MB
+tail: prefill 20000 tokens in 0.7 s, then 64 tokens through the megakernel (250.1 tok/s): NLL 34.666086, top-1 0.00 %
+-- chunk by chunk
+== nl-ref cuts= IE_PF_LAYERED=0
+exit 0
+Prefill 20000 tokens: chunk by chunk, chunk 2048, group 0, loan limit 16 MB
+tail: prefill 20000 tokens in 0.7 s, then 64 tokens through the megakernel (250.7 tok/s): NLL 34.666086, top-1 0.00 %
+== nl-c4097 cuts=4097,9001 IE_PF_LAYERED=0
+exit 0
+Prefill 4097 tokens: chunk by chunk, chunk 2048, group 0, loan limit 16 MB
+Prefill 4904 tokens: chunk by chunk, chunk 2048, group 0, loan limit 16 MB
+Prefill 10999 tokens: chunk by chunk, chunk 2048, group 0, loan limit 16 MB
+tail: prefill 20000 tokens in 0.7 s, then 64 tokens through the megakernel (250.6 tok/s): NLL 34.666086, top-1 0.00 %
+SAME ref2
+SAME c4096
+SAME c4097
+SAME c6144
+SAME c6143
+SAME c1
+SAME c8191
+SAME nl-c4097
+SAME layered vs not

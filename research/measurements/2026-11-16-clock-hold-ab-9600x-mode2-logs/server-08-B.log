@@ -1,0 +1,5 @@
+Tona (tona-server) on http://127.0.0.1:8099 (Anthropic: /v1/messages, OpenAI: /v1/chat/completions), without key, loading ...
+host memory: GTT (probe 64 MB grew the GTT use by 64 MB; 1.3 of 32.5 GB in use)
+evicted_ms counter: /sys/class/kfd/kfd/proc/3860418/stats_7773/evicted_ms (0 ms so far), evictions do not count against the pass deadline
+Initialization: 512 MTP experts as Q2_0, converted on the GPU (708 MB) in 1.0 s
+Error: gpu::Mega: VRAM only fits 0 expert slots (minimum 10; in use 6.16 GB, limit TONA_VRAM_GB -1.0)

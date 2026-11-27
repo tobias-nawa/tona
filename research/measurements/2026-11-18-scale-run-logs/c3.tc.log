@@ -1,0 +1,36 @@
+## before c3 2026-11-18 12:52:46
+### Test conditions
+
+- CPU: AMD Ryzen 9 9950X 16-Core Processor, 16 cores / 32 threads
+- GPU: AMD 1002:13c0, gfx1036, 2.0 GiB VRAM, 0.02 GiB held by others before the run, 0 % busy before the run, integrated
+- GPU: AMD Radeon RX 9060 XT, gfx1200, 15.9 GiB VRAM, 1.93 GiB held by others before the run, 1 % busy before the run
+- RAM: 60.5 GiB, 57.1 GiB available before the run
+- OS: Fedora Linux 44 (Workstation Edition), kernel 7.3.4-200.fc44.x86_64 (x86_64)
+- Driver and toolkit: rocm 10.1.0
+- TONA_* variables: `TONA_DIAG=1` `TONA_GPU_ARCH=gfx1200` `TONA_HIPCXX=<repo>/work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel/lib/llvm/bin/amdclang++` `TONA_HIPFLAGS=-x hip --offload-arch=gfx1200 -isystem <repo>/work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel/include` `TONA_HIPLDFLAGS=-L<repo>/work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel/lib -lamdhip64 -Wl,-rpath,<repo>/work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel/lib`
+- cgroup limits of this shell: none set
+- Load average (1, 5, 15 min): 1.75, 1.7, 1.81
+- CPU use by other programs over 0.5 s: 0.1 % of all threads, swap in use 1.45 GiB
+- sandbox: no
+- Commit: `d46b0aa` (clean tree)
+- Quiet check (2026-11-18 12:52:47): warning
+  - warning: 1.93 GiB of 15.9 GiB VRAM are held by others
+quiet_check exit 1
+## after c3 2026-11-18 12:55:10
+### Test conditions
+
+- CPU: AMD Ryzen 9 9950X 16-Core Processor, 16 cores / 32 threads
+- GPU: AMD 1002:13c0, gfx1036, 2.0 GiB VRAM, 0.02 GiB held by others before the run, 0 % busy before the run, integrated
+- GPU: AMD Radeon RX 9060 XT, gfx1200, 15.9 GiB VRAM, 11.04 GiB held by others before the run, 23 % busy before the run
+- RAM: 60.5 GiB, 57.0 GiB available before the run
+- OS: Fedora Linux 44 (Workstation Edition), kernel 7.3.4-200.fc44.x86_64 (x86_64)
+- Driver and toolkit: rocm 10.1.0
+- TONA_* variables: `TONA_DIAG=1` `TONA_GPU_ARCH=gfx1200` `TONA_HIPCXX=<repo>/work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel/lib/llvm/bin/amdclang++` `TONA_HIPFLAGS=-x hip --offload-arch=gfx1200 -isystem <repo>/work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel/include` `TONA_HIPLDFLAGS=-L<repo>/work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel/lib -lamdhip64 -Wl,-rpath,<repo>/work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel/lib`
+- cgroup limits of this shell: none set
+- Load average (1, 5, 15 min): 2.9, 2.15, 1.97
+- CPU use by other programs over 0.5 s: 0.1 % of all threads, swap in use 1.45 GiB
+- sandbox: no
+- Commit: `d46b0aa` (clean tree)
+- Quiet check (2026-11-18 12:55:11): warning
+  - warning: 1.93 GiB of 15.9 GiB VRAM are held by others
+quiet_check exit 1

@@ -1,0 +1,88 @@
+{
+  "id": "ernie-5.5-flash-base",
+  "name": "ERNIE-5.5-Flash-Base",
+  "vendor": "Baidu",
+  "release_date": "2026-11",
+  "lineage": {
+    "family": "ERNIE 5.5",
+    "how_derived": "pre-trained from scratch on 33.5T tokens with the Muon optimiser; the checkpoint at the end of pre-training, before any mid- or post-training. No instruct or reasoning model of ERNIE 5.5 Flash is released as open weights on these cards."
+  },
+  "purpose": "The card releases the base checkpoint as a common starting point for domain adaptation, instruction tuning and reinforcement-learning research. A text-only 280B-A14B MoE; the vendor says different domains, reasoning tasks and agent applications need different data and training objectives, so only the base is shared.",
+  "tasks": ["general", "coding"],
+  "modalities": {"input": ["text"], "output": ["text"]},
+  "languages": {"natural": ["en", "zh"]},
+  "license": {
+    "name": "ERNIE 5.5 Flash Base Model License Agreement v1.0 (Baidu, release date 2026-11-05)",
+    "verified": true,
+    "commercial_use": "limited",
+    "redistribution": "limited",
+    "notes": "Full text read (25.6 KB; identical in the FP8 and BF16 repos). Territory: all areas worldwide other than the European Union, the United Kingdom and South Korea; the model, derivatives AND their outputs must not be used, reproduced, modified, distributed or displayed outside the Territory (5.3). Non-commercial use is free. Commercial use is free of charge up to US$50 million annual revenue of related products, with a one-time use notice to Baidu_ERNIE@baidu.com and a required 'Powered by ERNIE' notice; above US$50 million a separate written authorisation is needed. Outputs may not be used to improve any other AI model (5.5). Operators of hosted services must meet safety obligations (5.6). Redistribution only inside the Territory with the licence attached. Users in the EU, UK or South Korea have no licence at all."
+  },
+  "architecture": {
+    "kind": "hybrid-attention sparse MoE (Multi-Router Latent MoE) with manifold-constrained Hyper-Connections and MultiMax head",
+    "params_total_b": 280,
+    "params_active_b": 14,
+    "layers": 43,
+    "attention": "37 Heavily Compressed Attention (HCA) layers (one cache entry per 128 tokens, head dim 512) and 6 MLA layers with sparse attention (MLA + DSA, head dim 256), 64 heads, 1 dense FFN layer and 42 latent MoE layers",
+    "recurrent": "none",
+    "experts": 512,
+    "experts_active": 10,
+    "context_native": 131072,
+    "context_max": 1048576,
+    "drafter": "ECHO: the backbone's final layer doubles as the draft model (0.36B extra parameters excluded from the totals)",
+    "why_this_design": "The card gives reasons per component: one in seven layers keeps full-context access via MLA while the rest use HCA to cut the KV cache; head dimensions are matched to each layer's cost; Multi-Router replaces a single router because one router's scores correlate only weakly with expert utility; ECHO reuses the final layer instead of a separate MTP module so the multi-horizon loss shapes next-token parameters."
+  },
+  "variants": [
+    {"repo": "baidu/ERNIE-5.5-Flash-Base", "format": "safetensors FP8 mixed", "size_gb": 288.46, "official": true},
+    {"repo": "baidu/ERNIE-5.5-Flash-Base-BF16", "format": "safetensors BF16", "size_gb": 572.96, "official": true},
+    {"repo": "orcarouter/ERNIE-5.5-Flash-Base-abliterated-GGUF", "format": "GGUF mixed quants of an abliterated (refusal-removed) variant", "size_gb": 59.98, "official": false, "notes": "Mix-60G 59.98, Mix-122G 121.99, Mix-245G 244.61 GB; weights are modified, quality not documented in what was read; file sizes only"}
+  ],
+  "hardware_fit": {
+    "pc-12gb": {"fits": "no", "basis": "estimate", "notes": "smallest GGUF (60 GB, modified weights) against about 60 GB budget leaves nothing for KV; no unmodified GGUF exists"},
+    "pc-16gb": {"fits": "marginal", "variant": "orcarouter Mix-60G, 59.98 GB", "basis": "estimate", "notes": "60 GB against about 64 GB (13.6 VRAM + 50 RAM), abliterated weights, unknown quality, base model only"},
+    "pc-24gb": {"fits": "marginal", "variant": "orcarouter Mix-60G", "basis": "estimate", "notes": "60 GB against about 104 GB; same caveats"},
+    "pc-32gb": {"fits": "marginal", "variant": "orcarouter Mix-122G, 121.99 GB", "basis": "estimate", "notes": "122 GB against about 158 GB (29.6 VRAM + 128 RAM); the weights are an abliterated variant of a base model"},
+    "mac-16-24gb": {"fits": "no", "basis": "estimate"},
+    "mac-32gb": {"fits": "no", "basis": "estimate"},
+    "mac-64gb+": {"fits": "no", "basis": "estimate", "notes": "60 GB file against about 52 GB GPU share on a 64 GB Mac"}
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "unknown",
+    "other": ["SGLang (dev-ernie-55-flash image)", "vLLM"],
+    "notes": "The community GGUFs exist, but llama.cpp support was not verified."
+  },
+  "benchmarks": [
+    {"name": "MMLU (5-shot)", "score": 93.3, "kind": "vendor", "variant": "base BF16/FP8 (DeepSeek-V4-Flash-Base 89.4, Hy3-preview-Base 87.5, MiMo-V2.5-Base 87.6)", "source": "https://huggingface.co/baidu/ERNIE-5.5-Flash-Base"},
+    {"name": "MMLU-Pro (5-shot)", "score": 78.4, "kind": "vendor", "variant": "base (DeepSeek-V4-Flash-Base 69.2)", "source": "https://huggingface.co/baidu/ERNIE-5.5-Flash-Base"},
+    {"name": "GPQA (5-shot)", "score": 60.2, "kind": "vendor", "variant": "base (DeepSeek-V4-Flash-Base 55.9)", "source": "https://huggingface.co/baidu/ERNIE-5.5-Flash-Base"},
+    {"name": "HumanEval+ (1-shot)", "score": 82.3, "kind": "vendor", "variant": "base (DeepSeek-V4-Flash-Base 69.5)", "source": "https://huggingface.co/baidu/ERNIE-5.5-Flash-Base"},
+    {"name": "LiveCodeBench (1-shot)", "score": 40.1, "kind": "vendor", "variant": "base (DeepSeek-V4-Flash-Base 31.9)", "source": "https://huggingface.co/baidu/ERNIE-5.5-Flash-Base"},
+    {"name": "RepoQA (0-shot)", "score": 91.7, "kind": "vendor", "variant": "base (Hy3-preview-Base 91.3)", "source": "https://huggingface.co/baidu/ERNIE-5.5-Flash-Base"},
+    {"name": "LongBench-v2 (0-shot)", "score": 48.7, "kind": "vendor", "variant": "base (DeepSeek-V4-Flash-Base 44.5)", "source": "https://huggingface.co/baidu/ERNIE-5.5-Flash-Base"}
+  ],
+  "soft": {
+    "strengths": ["Leads its three named 13 to 21B-active comparison bases on most rows of the vendor table, with a 128x-compressed KV cache for most layers"],
+    "weaknesses": ["Base model only: no chat or agent behaviour", "Licence excludes the EU, the UK and South Korea"],
+    "best_for": ["domain adaptation and RL research outside the excluded territories"],
+    "avoid_for": ["any use in the EU, UK or South Korea", "chat or agent work"],
+    "maturity": "Baidu ERNIE line; the licence is new (2026-11-05) and was written for this release."
+  },
+  "tona_fit": {
+    "verdict": "reject",
+    "reason": "A base checkpoint, not an agent model, and the licence grants no rights in the EU, UK or South Korea (and bars use of outputs there), which excludes a large part of our users; commercial use needs attribution and a notice. Size is also large (288 GB FP8) and the only GGUFs are abliterated third-party builds.",
+    "blockers": ["licence territory exclusion", "base model", "size"]
+  },
+  "sources": [
+    {"url": "https://huggingface.co/baidu/ERNIE-5.5-Flash-Base", "kind": "primary", "checked": "2026-11-19", "note": "README with architecture and base table, config.json, file sizes via the HF API (repo created 2026-10-21)"},
+    {"url": "https://huggingface.co/baidu/ERNIE-5.5-Flash-Base/blob/main/LICENSE", "kind": "primary", "checked": "2026-11-19", "note": "licence text read: territory, revenue threshold, attribution, no-model-improvement clause; the BF16 repo's file is byte-identical (diff)"},
+    {"url": "https://huggingface.co/baidu/ERNIE-5.5-Flash-Base-BF16", "kind": "primary", "checked": "2026-11-19", "note": "file size via the HF API"},
+    {"url": "https://huggingface.co/orcarouter/ERNIE-5.5-Flash-Base-abliterated-GGUF", "kind": "primary", "checked": "2026-11-19", "note": "file sizes via the HF tree API only"}
+  ],
+  "open_questions": [
+    "Whether an instruct or reasoning ERNIE 5.5 Flash is released with open weights (the card mentions only the base)",
+    "Release date of the model (the licence is dated 2026-11-05, the repos were created 2026-10-21)",
+    "Quality of the third-party GGUFs"
+  ],
+  "last_checked": "2026-11-19"
+}

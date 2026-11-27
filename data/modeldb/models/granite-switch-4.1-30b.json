@@ -1,0 +1,172 @@
+{
+  "id": "granite-switch-4.1-30b",
+  "name": "Granite Switch 4.1 30B (and 8B)",
+  "vendor": "IBM",
+  "release_date": "2026-10-14",
+  "lineage": {
+    "base_model": "Granite 4.1 30B",
+    "how_derived": "modular bundle: base model plus adapters plus a speech encoder, adapters switched by control tokens"
+  },
+  "purpose": "One endpoint that handles chat responses, decision-making and speech-to-text; adapters are activated on demand through the chat template (coarse-grained expert switching: one adapter active across all layers for a span of tokens).",
+  "tasks": [
+    "general",
+    "documents",
+    "audio-transcription"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "audio"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en",
+      "de",
+      "es",
+      "fr",
+      "ja",
+      "pt",
+      "ar",
+      "cs",
+      "it",
+      "ko",
+      "nl",
+      "zh"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card links the apache.org text and says the LICENSE file of the granite-switch repo applies; that file read (Apache License 2.0, first lines checked, summarizer). Text matches the apache.org copy."
+  },
+  "architecture": {
+    "kind": "dense decoder-only transformer (GQA, RoPE, SwiGLU, RMSNorm) with adapter switching",
+    "params_total_b": 30,
+    "params_active_b": 30,
+    "context_native": 131072,
+    "drafter": "none",
+    "why_this_design": "Card: a modular LLM that composes a base model, multiple adapters and an encoder so that 'a single hosted endpoint can move between natural-language responses, general and specialized decisions, and speech-to-text'; adapters are activated on demand through control tokens in the chat template (launch blog title: 'Update models like you update software')."
+  },
+  "variants": [
+    {
+      "repo": "ibm-granite/granite-switch-4.1-30b",
+      "format": "safetensors",
+      "official": true
+    },
+    {
+      "repo": "ibm-granite/granite-switch-4.1-30b-GGUF",
+      "format": "GGUF",
+      "official": true
+    },
+    {
+      "repo": "ibm-granite/granite-switch-4.1-8b-GGUF",
+      "format": "GGUF (8B)",
+      "official": true
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "no",
+      "basis": "estimate",
+      "variant": "30B; use the 8B"
+    },
+    "pc-16gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "variant": "30B Q3 (about 14 GB, estimate); 8B comfortable"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "30B Q4 (about 18 GB, estimate)"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "30B Q6-Q8"
+    },
+    "mac-16-24gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "variant": "8B"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "30B Q4"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "30B Q8"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "notes": "Official GGUF repos; whether adapter switching works in llama.cpp was not checked."
+  },
+  "benchmarks": [
+    {
+      "name": "Decision Index (JEV) v0.3, decision adapter: overall / knowledge / language / retrieval / tools",
+      "score": "51.33 / 34.8 / 58.5 / 59.8 / 69.0",
+      "kind": "vendor",
+      "source": "https://huggingface.co/ibm-granite/granite-switch-4.1-30b"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "Enterprise-oriented: German named first among text languages, adapters for guardrail and decisions, Apache-2.0"
+    ],
+    "weaknesses": [
+      "No general knowledge benchmarks on the card",
+      "Checkpoint ships guardian-core and decision adapters only; no RAG adapter",
+      "Dense 30B reads all weights per token"
+    ],
+    "best_for": [
+      "Structured decisions and guardrails in a document workflow"
+    ],
+    "avoid_for": [
+      "Open-ended research chat"
+    ],
+    "maturity": "IBM Granite: steady cadence (4.1, 4.2 30B MLX in September)."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "A deployment construct (granite-4.1-30b base plus decision and guardian adapters plus speech input), not a stronger model: general quality is that of the Granite 4.1 30B base, for which the card shows no knowledge or German numbers and the independent German index has no entry. Apache-2.0 (text read). Granite 4.2 30B (own record) is the newer dense base.",
+    "blockers": [
+      "no general-use evidence for the 4.1 base"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/ibm-granite/granite-switch-4.1-30b",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "model card read in full 2026-11-19: base granite-4.1-30b, adapters decision and guardian-core, embedded 470M speech encoder, revision 4.1.1 dated 2026-10-27"
+    },
+    {
+      "url": "https://huggingface.co/api/models?author=ibm-granite&sort=createdAt&direction=-1&limit=12",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "repo dates"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/generative-computing/granite-switch/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "granite-switch repo LICENSE (Apache-2.0), summarizer read"
+    }
+  ],
+  "open_questions": [
+    "General benchmarks (MMLU-Pro, GPQA) of the 4.1 base",
+    "GGUF sizes and whether llama.cpp handles the adapter/encoder composition (the card lists only Transformers and vLLM)"
+  ],
+  "last_checked": "2026-11-19"
+}

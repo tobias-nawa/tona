@@ -1,0 +1,3562 @@
+{
+ "tool": "micro",
+ "rocm": "venv",
+ "env": {
+  "time": "2026-10-22T21:33:03+02:00",
+  "host": "reference-pc",
+  "kernel": "7.2.11-200.fc44.x86_64",
+  "os": "Fedora Linux 44 (Workstation Edition)",
+  "python": "3.14.8",
+  "cpu": "AMD Ryzen 5 9600X 6-Core Processor",
+  "cpu_governor": "performance",
+  "cpu_epp": "performance",
+  "mem_total_gib": 30.5,
+  "mem_avail_gib": 24.8,
+  "swap_used_mib": 0,
+  "gpu": {
+   "sysfs": "/sys/devices/pci0000:00/0000:00:01.1/0000:01:00.0/0000:02:00.0/0000:03:00.0",
+   "vram_total_mib": 16304,
+   "vram_used_mib": 1647,
+   "vbios_version": "113-R906XTGO-F2",
+   "current_link_speed": "32.0 GT/s PCIe",
+   "current_link_width": "16",
+   "power_dpm_force_performance_level": "auto",
+   "pci_id": "1002:7590"
+  },
+  "packages": {
+   "rocm-runtime": "7.1.1-6.fc44",
+   "rocm-hip": "7.1.1-3.fc44",
+   "hipblaslt": "7.1.1-7.fc44",
+   "rocblas": "7.1.1-7.fc44",
+   "kernel": "7.2.11-200.fc44"
+  },
+  "git": {
+   "commit": "b0e7892",
+   "dirty": true
+  },
+  "target": null,
+  "server": {},
+  "warnings": [
+   "repository has uncommitted changes"
+  ]
+ },
+ "meta": {
+  "gpu": {
+   "device": "AMD Radeon RX 9060 XT",
+   "arch": "gfx1200",
+   "cus": 16,
+   "clock_khz": 2780000,
+   "mem_clock_khz": 1258000,
+   "bus_bits": 128,
+   "l2_bytes": 4194304,
+   "hip_runtime": 71626385,
+   "hip_headers": 71626385
+  },
+  "parts": {
+   "vram": {
+    "vram_peak_mib": 7962.4765625,
+    "gtt_peak_mib": 108.9296875,
+    "ram_avail_min_mib": 25406.73828125,
+    "swap_used_max_mib": 0.0,
+    "gpu_busy_mean": 97.46153846153847,
+    "power_mean_w": 87.3076923076923,
+    "temp_max_c": 50.0,
+    "sclk_mean_mhz": 2848.153846153846,
+    "samples": 13
+   },
+   "pcie": {
+    "vram_peak_mib": 3899.87109375,
+    "gtt_peak_mib": 108.96875,
+    "ram_avail_min_mib": 22491.62109375,
+    "swap_used_max_mib": 0.0,
+    "gpu_busy_mean": 88.73333333333333,
+    "power_mean_w": 49.28888888888889,
+    "temp_max_c": 48.0,
+    "sclk_mean_mhz": 2856.822222222222,
+    "samples": 45
+   },
+   "launch": {
+    "vram_peak_mib": 1831.34375,
+    "gtt_peak_mib": 108.94140625,
+    "ram_avail_min_mib": 25654.8984375,
+    "swap_used_max_mib": 0.0,
+    "gpu_busy_mean": 90.88888888888889,
+    "power_mean_w": 41.333333333333336,
+    "temp_max_c": 48.0,
+    "sclk_mean_mhz": 2679.777777777778,
+    "samples": 9
+   },
+   "persist": {
+    "vram_peak_mib": 1833.1640625,
+    "gtt_peak_mib": 108.94140625,
+    "ram_avail_min_mib": 25633.37890625,
+    "swap_used_max_mib": 0.0,
+    "gpu_busy_mean": 87.5,
+    "power_mean_w": 43.0,
+    "temp_max_c": 48.0,
+    "sclk_mean_mhz": 2966.25,
+    "samples": 4
+   },
+   "wmma": {
+    "vram_peak_mib": 1818.46875,
+    "gtt_peak_mib": 108.9296875,
+    "ram_avail_min_mib": 25629.41796875,
+    "swap_used_max_mib": 0.0,
+    "gpu_busy_mean": 99.04444444444445,
+    "power_mean_w": 174.8,
+    "temp_max_c": 85.0,
+    "sclk_mean_mhz": 3122.4444444444443,
+    "samples": 45
+   },
+   "fma": {
+    "vram_peak_mib": 1818.46875,
+    "gtt_peak_mib": 108.9296875,
+    "ram_avail_min_mib": 25647.22265625,
+    "swap_used_max_mib": 0.0,
+    "gpu_busy_mean": 92.16666666666667,
+    "power_mean_w": 139.83333333333334,
+    "temp_max_c": 79.0,
+    "sclk_mean_mhz": 2938.5,
+    "samples": 6
+   }
+  }
+ },
+ "system": {
+  "vram_peak_mib": 7962.4765625,
+  "gtt_peak_mib": 108.96875,
+  "ram_avail_min_mib": 22491.62109375,
+  "swap_used_max_mib": 0.0,
+  "gpu_busy_mean": 93.00813008130082,
+  "power_mean_w": 102.63414634146342,
+  "temp_max_c": 85.0,
+  "sclk_mean_mhz": 2924.6341463414633,
+  "samples": 123
+ },
+ "rows": [
+  {
+   "test": "vram",
+   "var": "resident blocks per unit",
+   "param": 8,
+   "unit": "blocks",
+   "n": 1,
+   "median": 128.0,
+   "mean": 128.0,
+   "stdev": 0.0,
+   "min": 128.0,
+   "max": 128.0
+  },
+  {
+   "test": "vram",
+   "var": "read Nullen (Gegenprobe)",
+   "param": 1024,
+   "unit": "GB/s",
+   "n": 7,
+   "median": 315.748,
+   "mean": 315.2358571428571,
+   "stdev": 1.4466374146702299,
+   "min": 311.958,
+   "max": 315.866
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 0,
+   "unit": "GB/s",
+   "n": 14,
+   "median": 3374.34,
+   "mean": 3360.7092857142857,
+   "stdev": 304.40952728101416,
+   "min": 2965.64,
+   "max": 3707.66
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 1,
+   "unit": "GB/s",
+   "n": 7,
+   "median": 4110.94,
+   "mean": 4073.4757142857147,
+   "stdev": 69.1996887895561,
+   "min": 3954.84,
+   "max": 4138.36
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 2,
+   "unit": "GB/s",
+   "n": 7,
+   "median": 3475.67,
+   "mean": 3483.414285714286,
+   "stdev": 81.52593040604586,
+   "min": 3382.71,
+   "max": 3603.15
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 4,
+   "unit": "GB/s",
+   "n": 7,
+   "median": 3610.66,
+   "mean": 3610.747142857143,
+   "stdev": 55.897269675207376,
+   "min": 3530.29,
+   "max": 3671.53
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 8,
+   "unit": "GB/s",
+   "n": 7,
+   "median": 1184.75,
+   "mean": 1128.8142857142857,
+   "stdev": 84.60257085478015,
+   "min": 1004.62,
+   "max": 1195.7
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 16,
+   "unit": "GB/s",
+   "n": 7,
+   "median": 1187.47,
+   "mean": 1186.7342857142855,
+   "stdev": 6.883755896172935,
+   "min": 1172.06,
+   "max": 1193.14
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 32,
+   "unit": "GB/s",
+   "n": 7,
+   "median": 1173.93,
+   "mean": 1166.1014285714286,
+   "stdev": 19.29601463910052,
+   "min": 1138.37,
+   "max": 1187.58
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 64,
+   "unit": "GB/s",
+   "n": 7,
+   "median": 336.405,
+   "mean": 336.8101428571428,
+   "stdev": 1.1213850704331947,
+   "min": 336.339,
+   "max": 339.352
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 128,
+   "unit": "GB/s",
+   "n": 7,
+   "median": 314.927,
+   "mean": 315.09914285714285,
+   "stdev": 0.5488048920370554,
+   "min": 314.467,
+   "max": 315.76
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 256,
+   "unit": "GB/s",
+   "n": 7,
+   "median": 315.599,
+   "mean": 314.8004285714286,
+   "stdev": 1.4870267714629786,
+   "min": 311.694,
+   "max": 315.809
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 512,
+   "unit": "GB/s",
+   "n": 7,
+   "median": 315.692,
+   "mean": 315.29442857142857,
+   "stdev": 0.7711592695725127,
+   "min": 313.742,
+   "max": 315.784
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 1024,
+   "unit": "GB/s",
+   "n": 7,
+   "median": 315.636,
+   "mean": 315.315,
+   "stdev": 0.7605458566056343,
+   "min": 313.713,
+   "max": 315.771
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 2048,
+   "unit": "GB/s",
+   "n": 7,
+   "median": 315.681,
+   "mean": 315.3287142857143,
+   "stdev": 0.5757892306176278,
+   "min": 314.465,
+   "max": 315.814
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 4096,
+   "unit": "GB/s",
+   "n": 7,
+   "median": 315.729,
+   "mean": 315.16742857142856,
+   "stdev": 0.8623365269512183,
+   "min": 313.597,
+   "max": 315.827
+  },
+  {
+   "test": "vram",
+   "var": "write",
+   "param": 1024,
+   "unit": "GB/s",
+   "n": 7,
+   "median": 275.813,
+   "mean": 274.3982857142857,
+   "stdev": 4.489554421628266,
+   "min": 266.382,
+   "max": 280.134
+  },
+  {
+   "test": "vram",
+   "var": "copy (lesen+schreiben)",
+   "param": 1024,
+   "unit": "GB/s",
+   "n": 7,
+   "median": 282.119,
+   "mean": 280.0141428571429,
+   "stdev": 3.293697892874188,
+   "min": 276.121,
+   "max": 283.319
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 64,
+   "unit": "GB/s",
+   "n": 7,
+   "median": 11.5311,
+   "mean": 11.008562857142858,
+   "stdev": 1.0399041018240458,
+   "min": 8.81244,
+   "max": 11.5841
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 64,
+   "unit": "GB/s",
+   "n": 7,
+   "median": 11.7683,
+   "mean": 11.427291428571428,
+   "stdev": 0.741406141405833,
+   "min": 9.81594,
+   "max": 11.8115
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 256,
+   "unit": "GB/s",
+   "n": 7,
+   "median": 28.7189,
+   "mean": 28.695685714285712,
+   "stdev": 0.0760452371634023,
+   "min": 28.5826,
+   "max": 28.8001
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 256,
+   "unit": "GB/s",
+   "n": 7,
+   "median": 28.745,
+   "mean": 28.74487142857143,
+   "stdev": 0.05358005581326313,
+   "min": 28.6587,
+   "max": 28.8069
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 1024,
+   "unit": "GB/s",
+   "n": 7,
+   "median": 45.0722,
+   "mean": 45.069742857142856,
+   "stdev": 0.06712204946073543,
+   "min": 44.9795,
+   "max": 45.1471
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 1024,
+   "unit": "GB/s",
+   "n": 7,
+   "median": 44.9355,
+   "mean": 44.93272857142858,
+   "stdev": 0.032604381826461616,
+   "min": 44.8862,
+   "max": 44.9735
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 4096,
+   "unit": "GB/s",
+   "n": 7,
+   "median": 52.8163,
+   "mean": 52.80695714285714,
+   "stdev": 0.026885179135406147,
+   "min": 52.7525,
+   "max": 52.8289
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 4096,
+   "unit": "GB/s",
+   "n": 7,
+   "median": 52.6068,
+   "mean": 52.551100000000005,
+   "stdev": 0.15622128536150168,
+   "min": 52.2004,
+   "max": 52.6485
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 16384,
+   "unit": "GB/s",
+   "n": 7,
+   "median": 55.1052,
+   "mean": 55.10144285714286,
+   "stdev": 0.02288164163274755,
+   "min": 55.0598,
+   "max": 55.1247
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 16384,
+   "unit": "GB/s",
+   "n": 7,
+   "median": 54.9005,
+   "mean": 54.902185714285714,
+   "stdev": 0.00953527286297707,
+   "min": 54.8886,
+   "max": 54.9186
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 65536,
+   "unit": "GB/s",
+   "n": 7,
+   "median": 55.7134,
+   "mean": 55.70495714285715,
+   "stdev": 0.01410695539356989,
+   "min": 55.6769,
+   "max": 55.7153
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 65536,
+   "unit": "GB/s",
+   "n": 7,
+   "median": 55.4976,
+   "mean": 55.49238571428571,
+   "stdev": 0.012558188374049003,
+   "min": 55.4676,
+   "max": 55.5038
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 262144,
+   "unit": "GB/s",
+   "n": 7,
+   "median": 55.8688,
+   "mean": 55.86394285714285,
+   "stdev": 0.010085609739105167,
+   "min": 55.8475,
+   "max": 55.8728
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 262144,
+   "unit": "GB/s",
+   "n": 7,
+   "median": 55.6077,
+   "mean": 55.60897142857142,
+   "stdev": 0.010283435594150559,
+   "min": 55.5909,
+   "max": 55.6187
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 1048576,
+   "unit": "GB/s",
+   "n": 7,
+   "median": 55.908,
+   "mean": 55.90347142857143,
+   "stdev": 0.01079192820054464,
+   "min": 55.8875,
+   "max": 55.914
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 1048576,
+   "unit": "GB/s",
+   "n": 7,
+   "median": 55.6136,
+   "mean": 55.61752857142857,
+   "stdev": 0.01083769875415083,
+   "min": 55.6048,
+   "max": 55.6327
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pageable",
+   "param": 1048576,
+   "unit": "GB/s",
+   "n": 7,
+   "median": 55.5229,
+   "mean": 55.295071428571426,
+   "stdev": 0.6246361413235854,
+   "min": 53.8789,
+   "max": 55.5573
+  },
+  {
+   "test": "pcie",
+   "var": "bidirektional pinned (Summe)",
+   "param": 262144,
+   "unit": "GB/s",
+   "n": 7,
+   "median": 60.4071,
+   "mean": 59.357228571428564,
+   "stdev": 2.3928332409609356,
+   "min": 54.0073,
+   "max": 60.4863
+  },
+  {
+   "test": "launch",
+   "var": "Start+Sync (Rundlauf)",
+   "param": 1,
+   "unit": "us",
+   "n": 7,
+   "median": 17.5584,
+   "mean": 17.86435714285714,
+   "stdev": 1.0998477453071143,
+   "min": 16.8614,
+   "max": 19.8207
+  },
+  {
+   "test": "launch",
+   "var": "Starts hintereinander",
+   "param": 1,
+   "unit": "us/Kernel",
+   "n": 7,
+   "median": 2.16824,
+   "mean": 2.248555714285714,
+   "stdev": 0.22331384707455593,
+   "min": 2.06274,
+   "max": 2.64935
+  },
+  {
+   "test": "launch",
+   "var": "HIP Graph, 200 Kernels",
+   "param": 200,
+   "unit": "us/Kernel",
+   "n": 7,
+   "median": 2.08851,
+   "mean": 2.0866942857142856,
+   "stdev": 0.003840021081291299,
+   "min": 2.08007,
+   "max": 2.09
+  },
+  {
+   "test": "persist",
+   "var": "grid.sync() (cooperative groups)",
+   "param": 16,
+   "unit": "us/Barriere",
+   "n": 7,
+   "median": 0.549022,
+   "mean": 0.5480532857142857,
+   "stdev": 0.003970466585272067,
+   "min": 0.541781,
+   "max": 0.552042
+  },
+  {
+   "test": "persist",
+   "var": "eigene Barriere (Atomics)",
+   "param": 16,
+   "unit": "us/Barriere",
+   "n": 7,
+   "median": 0.774623,
+   "mean": 0.7830397142857143,
+   "stdev": 0.02121396571219288,
+   "min": 0.773303,
+   "max": 0.831043
+  },
+  {
+   "test": "persist",
+   "var": "grid.sync() (cooperative groups)",
+   "param": 32,
+   "unit": "us/Barriere",
+   "n": 7,
+   "median": 0.543722,
+   "mean": 0.5438447142857143,
+   "stdev": 0.0018580504760174184,
+   "min": 0.541622,
+   "max": 0.547562
+  },
+  {
+   "test": "persist",
+   "var": "eigene Barriere (Atomics)",
+   "param": 32,
+   "unit": "us/Barriere",
+   "n": 7,
+   "median": 0.772723,
+   "mean": 0.771830857142857,
+   "stdev": 0.0022939562934350998,
+   "min": 0.768682,
+   "max": 0.774602
+  },
+  {
+   "test": "persist",
+   "var": "grid.sync() (cooperative groups)",
+   "param": 64,
+   "unit": "us/Barriere",
+   "n": 7,
+   "median": 0.540202,
+   "mean": 0.5398044285714285,
+   "stdev": 0.0017207983473902443,
+   "min": 0.537102,
+   "max": 0.541842
+  },
+  {
+   "test": "persist",
+   "var": "eigene Barriere (Atomics)",
+   "param": 64,
+   "unit": "us/Barriere",
+   "n": 7,
+   "median": 0.767022,
+   "mean": 0.7677821428571429,
+   "stdev": 0.002968213852839876,
+   "min": 0.763322,
+   "max": 0.772362
+  },
+  {
+   "test": "persist",
+   "var": "grid.sync() (cooperative groups)",
+   "param": 128,
+   "unit": "us/Barriere",
+   "n": 7,
+   "median": 0.551722,
+   "mean": 0.5510075714285715,
+   "stdev": 0.0034915016758382024,
+   "min": 0.545862,
+   "max": 0.556522
+  },
+  {
+   "test": "persist",
+   "var": "eigene Barriere (Atomics)",
+   "param": 128,
+   "unit": "us/Barriere",
+   "n": 7,
+   "median": 0.800843,
+   "mean": 0.7992395714285714,
+   "stdev": 0.005066841911129749,
+   "min": 0.791822,
+   "max": 0.805822
+  },
+  {
+   "test": "persist",
+   "var": "Block zu Block (halber Rundlauf)",
+   "param": 2,
+   "unit": "us",
+   "n": 7,
+   "median": 0.212826,
+   "mean": 0.21025485714285713,
+   "stdev": 0.005943834576785462,
+   "min": 0.197997,
+   "max": 0.214949
+  },
+  {
+   "test": "persist",
+   "var": "CPU <-> GPU via host memory (half round trip)",
+   "param": 1,
+   "unit": "us",
+   "n": 7,
+   "median": 0.650282,
+   "mean": 0.6513852857142857,
+   "stdev": 0.00243685526271637,
+   "min": 0.649352,
+   "max": 0.656148
+  },
+  {
+   "test": "peak",
+   "var": "WMMA f16 -> f32",
+   "param": 0,
+   "unit": "TFLOPS",
+   "n": 7,
+   "median": 95.4471,
+   "mean": 94.08725714285715,
+   "stdev": 2.4993376014837367,
+   "min": 90.5406,
+   "max": 96.7648
+  },
+  {
+   "test": "peak",
+   "var": "WMMA f16 -> f16",
+   "param": 0,
+   "unit": "TFLOPS",
+   "n": 7,
+   "median": 95.1238,
+   "mean": 94.03148571428572,
+   "stdev": 3.726572871253412,
+   "min": 86.9985,
+   "max": 97.1729
+  },
+  {
+   "test": "peak",
+   "var": "WMMA bf16 -> f32",
+   "param": 0,
+   "unit": "TFLOPS",
+   "n": 7,
+   "median": 96.2013,
+   "mean": 95.46751428571429,
+   "stdev": 4.165481335703623,
+   "min": 90.0789,
+   "max": 102.513
+  },
+  {
+   "test": "peak",
+   "var": "WMMA fp8 -> f32",
+   "param": 0,
+   "unit": "TFLOPS",
+   "n": 7,
+   "median": 181.444,
+   "mean": 180.94357142857143,
+   "stdev": 5.302263254408214,
+   "min": 172.312,
+   "max": 186.315
+  },
+  {
+   "test": "peak",
+   "var": "WMMA int8 -> i32",
+   "param": 0,
+   "unit": "TOPS",
+   "n": 7,
+   "median": 182.19,
+   "mean": 179.6992857142857,
+   "stdev": 5.871035051115648,
+   "min": 169.597,
+   "max": 184.516
+  },
+  {
+   "test": "peak",
+   "var": "WMMA int4 (K=32) -> i32",
+   "param": 0,
+   "unit": "TOPS",
+   "n": 7,
+   "median": 332.921,
+   "mean": 333.96728571428577,
+   "stdev": 6.666769650395061,
+   "min": 325.502,
+   "max": 340.797
+  },
+  {
+   "test": "peak",
+   "var": "FMA f32 (Vektor)",
+   "param": 0,
+   "unit": "TFLOPS",
+   "n": 7,
+   "median": 24.3398,
+   "mean": 24.241585714285716,
+   "stdev": 0.24853585541843187,
+   "min": 23.6806,
+   "max": 24.3515
+  }
+ ],
+ "samples": [
+  {
+   "test": "vram",
+   "var": "resident blocks per unit",
+   "param": 8,
+   "unit": "blocks",
+   "value": 128
+  },
+  {
+   "test": "vram",
+   "var": "read Nullen (Gegenprobe)",
+   "param": 1024,
+   "unit": "GB/s",
+   "value": 311.958
+  },
+  {
+   "test": "vram",
+   "var": "read Nullen (Gegenprobe)",
+   "param": 1024,
+   "unit": "GB/s",
+   "value": 315.721
+  },
+  {
+   "test": "vram",
+   "var": "read Nullen (Gegenprobe)",
+   "param": 1024,
+   "unit": "GB/s",
+   "value": 315.777
+  },
+  {
+   "test": "vram",
+   "var": "read Nullen (Gegenprobe)",
+   "param": 1024,
+   "unit": "GB/s",
+   "value": 315.866
+  },
+  {
+   "test": "vram",
+   "var": "read Nullen (Gegenprobe)",
+   "param": 1024,
+   "unit": "GB/s",
+   "value": 315.722
+  },
+  {
+   "test": "vram",
+   "var": "read Nullen (Gegenprobe)",
+   "param": 1024,
+   "unit": "GB/s",
+   "value": 315.859
+  },
+  {
+   "test": "vram",
+   "var": "read Nullen (Gegenprobe)",
+   "param": 1024,
+   "unit": "GB/s",
+   "value": 315.748
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 0,
+   "unit": "GB/s",
+   "value": 2965.64
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 0,
+   "unit": "GB/s",
+   "value": 3017.73
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 0,
+   "unit": "GB/s",
+   "value": 3077.32
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 0,
+   "unit": "GB/s",
+   "value": 3101.32
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 0,
+   "unit": "GB/s",
+   "value": 3057.17
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 0,
+   "unit": "GB/s",
+   "value": 3146.86
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 0,
+   "unit": "GB/s",
+   "value": 3136.47
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 0,
+   "unit": "GB/s",
+   "value": 3614.18
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 0,
+   "unit": "GB/s",
+   "value": 3619.91
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 0,
+   "unit": "GB/s",
+   "value": 3650.31
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 0,
+   "unit": "GB/s",
+   "value": 3707.66
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 0,
+   "unit": "GB/s",
+   "value": 3704.97
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 0,
+   "unit": "GB/s",
+   "value": 3648.57
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 0,
+   "unit": "GB/s",
+   "value": 3601.82
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 1,
+   "unit": "GB/s",
+   "value": 3954.84
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 1,
+   "unit": "GB/s",
+   "value": 4014.28
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 1,
+   "unit": "GB/s",
+   "value": 4050.92
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 1,
+   "unit": "GB/s",
+   "value": 4110.94
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 1,
+   "unit": "GB/s",
+   "value": 4133.1
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 1,
+   "unit": "GB/s",
+   "value": 4138.36
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 1,
+   "unit": "GB/s",
+   "value": 4111.89
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 2,
+   "unit": "GB/s",
+   "value": 3424.13
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 2,
+   "unit": "GB/s",
+   "value": 3382.71
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 2,
+   "unit": "GB/s",
+   "value": 3420.2
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 2,
+   "unit": "GB/s",
+   "value": 3475.67
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 2,
+   "unit": "GB/s",
+   "value": 3510.33
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 2,
+   "unit": "GB/s",
+   "value": 3567.71
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 2,
+   "unit": "GB/s",
+   "value": 3603.15
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 4,
+   "unit": "GB/s",
+   "value": 3658.39
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 4,
+   "unit": "GB/s",
+   "value": 3605.57
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 4,
+   "unit": "GB/s",
+   "value": 3530.29
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 4,
+   "unit": "GB/s",
+   "value": 3544.51
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 4,
+   "unit": "GB/s",
+   "value": 3610.66
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 4,
+   "unit": "GB/s",
+   "value": 3654.28
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 4,
+   "unit": "GB/s",
+   "value": 3671.53
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 8,
+   "unit": "GB/s",
+   "value": 1004.62
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 8,
+   "unit": "GB/s",
+   "value": 1021.11
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 8,
+   "unit": "GB/s",
+   "value": 1111.32
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 8,
+   "unit": "GB/s",
+   "value": 1191
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 8,
+   "unit": "GB/s",
+   "value": 1195.7
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 8,
+   "unit": "GB/s",
+   "value": 1193.2
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 8,
+   "unit": "GB/s",
+   "value": 1184.75
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 16,
+   "unit": "GB/s",
+   "value": 1172.06
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 16,
+   "unit": "GB/s",
+   "value": 1186.91
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 16,
+   "unit": "GB/s",
+   "value": 1190.04
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 16,
+   "unit": "GB/s",
+   "value": 1187.47
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 16,
+   "unit": "GB/s",
+   "value": 1186.73
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 16,
+   "unit": "GB/s",
+   "value": 1190.79
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 16,
+   "unit": "GB/s",
+   "value": 1193.14
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 32,
+   "unit": "GB/s",
+   "value": 1139.72
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 32,
+   "unit": "GB/s",
+   "value": 1187.58
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 32,
+   "unit": "GB/s",
+   "value": 1178.7
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 32,
+   "unit": "GB/s",
+   "value": 1138.37
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 32,
+   "unit": "GB/s",
+   "value": 1174.77
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 32,
+   "unit": "GB/s",
+   "value": 1169.64
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 32,
+   "unit": "GB/s",
+   "value": 1173.93
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 64,
+   "unit": "GB/s",
+   "value": 339.352
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 64,
+   "unit": "GB/s",
+   "value": 336.39
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 64,
+   "unit": "GB/s",
+   "value": 336.405
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 64,
+   "unit": "GB/s",
+   "value": 336.406
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 64,
+   "unit": "GB/s",
+   "value": 336.339
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 64,
+   "unit": "GB/s",
+   "value": 336.344
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 64,
+   "unit": "GB/s",
+   "value": 336.435
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 128,
+   "unit": "GB/s",
+   "value": 314.927
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 128,
+   "unit": "GB/s",
+   "value": 314.467
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 128,
+   "unit": "GB/s",
+   "value": 314.533
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 128,
+   "unit": "GB/s",
+   "value": 315.585
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 128,
+   "unit": "GB/s",
+   "value": 315.76
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 128,
+   "unit": "GB/s",
+   "value": 315.635
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 128,
+   "unit": "GB/s",
+   "value": 314.787
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 256,
+   "unit": "GB/s",
+   "value": 314.731
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 256,
+   "unit": "GB/s",
+   "value": 311.694
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 256,
+   "unit": "GB/s",
+   "value": 314.314
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 256,
+   "unit": "GB/s",
+   "value": 315.713
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 256,
+   "unit": "GB/s",
+   "value": 315.809
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 256,
+   "unit": "GB/s",
+   "value": 315.743
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 256,
+   "unit": "GB/s",
+   "value": 315.599
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 512,
+   "unit": "GB/s",
+   "value": 315.702
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 512,
+   "unit": "GB/s",
+   "value": 315.784
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 512,
+   "unit": "GB/s",
+   "value": 314.768
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 512,
+   "unit": "GB/s",
+   "value": 313.742
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 512,
+   "unit": "GB/s",
+   "value": 315.692
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 512,
+   "unit": "GB/s",
+   "value": 315.756
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 512,
+   "unit": "GB/s",
+   "value": 315.617
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 1024,
+   "unit": "GB/s",
+   "value": 315.766
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 1024,
+   "unit": "GB/s",
+   "value": 315.771
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 1024,
+   "unit": "GB/s",
+   "value": 315.634
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 1024,
+   "unit": "GB/s",
+   "value": 314.964
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 1024,
+   "unit": "GB/s",
+   "value": 313.713
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 1024,
+   "unit": "GB/s",
+   "value": 315.636
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 1024,
+   "unit": "GB/s",
+   "value": 315.721
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 2048,
+   "unit": "GB/s",
+   "value": 315.794
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 2048,
+   "unit": "GB/s",
+   "value": 315.804
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 2048,
+   "unit": "GB/s",
+   "value": 315.681
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 2048,
+   "unit": "GB/s",
+   "value": 315.814
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 2048,
+   "unit": "GB/s",
+   "value": 314.979
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 2048,
+   "unit": "GB/s",
+   "value": 314.465
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 2048,
+   "unit": "GB/s",
+   "value": 314.764
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 4096,
+   "unit": "GB/s",
+   "value": 315.827
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 4096,
+   "unit": "GB/s",
+   "value": 315.729
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 4096,
+   "unit": "GB/s",
+   "value": 315.804
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 4096,
+   "unit": "GB/s",
+   "value": 315.79
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 4096,
+   "unit": "GB/s",
+   "value": 314.851
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 4096,
+   "unit": "GB/s",
+   "value": 313.597
+  },
+  {
+   "test": "vram",
+   "var": "read Zufall",
+   "param": 4096,
+   "unit": "GB/s",
+   "value": 314.574
+  },
+  {
+   "test": "vram",
+   "var": "write",
+   "param": 1024,
+   "unit": "GB/s",
+   "value": 266.382
+  },
+  {
+   "test": "vram",
+   "var": "copy (lesen+schreiben)",
+   "param": 1024,
+   "unit": "GB/s",
+   "value": 277.264
+  },
+  {
+   "test": "vram",
+   "var": "write",
+   "param": 1024,
+   "unit": "GB/s",
+   "value": 276.246
+  },
+  {
+   "test": "vram",
+   "var": "copy (lesen+schreiben)",
+   "param": 1024,
+   "unit": "GB/s",
+   "value": 276.121
+  },
+  {
+   "test": "vram",
+   "var": "write",
+   "param": 1024,
+   "unit": "GB/s",
+   "value": 275.093
+  },
+  {
+   "test": "vram",
+   "var": "copy (lesen+schreiben)",
+   "param": 1024,
+   "unit": "GB/s",
+   "value": 283.319
+  },
+  {
+   "test": "vram",
+   "var": "write",
+   "param": 1024,
+   "unit": "GB/s",
+   "value": 276.43
+  },
+  {
+   "test": "vram",
+   "var": "copy (lesen+schreiben)",
+   "param": 1024,
+   "unit": "GB/s",
+   "value": 282.238
+  },
+  {
+   "test": "vram",
+   "var": "write",
+   "param": 1024,
+   "unit": "GB/s",
+   "value": 270.69
+  },
+  {
+   "test": "vram",
+   "var": "copy (lesen+schreiben)",
+   "param": 1024,
+   "unit": "GB/s",
+   "value": 282.119
+  },
+  {
+   "test": "vram",
+   "var": "write",
+   "param": 1024,
+   "unit": "GB/s",
+   "value": 280.134
+  },
+  {
+   "test": "vram",
+   "var": "copy (lesen+schreiben)",
+   "param": 1024,
+   "unit": "GB/s",
+   "value": 282.804
+  },
+  {
+   "test": "vram",
+   "var": "write",
+   "param": 1024,
+   "unit": "GB/s",
+   "value": 275.813
+  },
+  {
+   "test": "vram",
+   "var": "copy (lesen+schreiben)",
+   "param": 1024,
+   "unit": "GB/s",
+   "value": 276.234
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 64,
+   "unit": "GB/s",
+   "value": 8.81244
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 64,
+   "unit": "GB/s",
+   "value": 9.81594
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 64,
+   "unit": "GB/s",
+   "value": 10.5288
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 64,
+   "unit": "GB/s",
+   "value": 11.2243
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 64,
+   "unit": "GB/s",
+   "value": 11.5072
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 64,
+   "unit": "GB/s",
+   "value": 11.7683
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 64,
+   "unit": "GB/s",
+   "value": 11.5311
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 64,
+   "unit": "GB/s",
+   "value": 11.7634
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 64,
+   "unit": "GB/s",
+   "value": 11.5437
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 64,
+   "unit": "GB/s",
+   "value": 11.7988
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 64,
+   "unit": "GB/s",
+   "value": 11.5526
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 64,
+   "unit": "GB/s",
+   "value": 11.8088
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 64,
+   "unit": "GB/s",
+   "value": 11.5841
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 64,
+   "unit": "GB/s",
+   "value": 11.8115
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 256,
+   "unit": "GB/s",
+   "value": 28.5826
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 256,
+   "unit": "GB/s",
+   "value": 28.6587
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 256,
+   "unit": "GB/s",
+   "value": 28.6213
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 256,
+   "unit": "GB/s",
+   "value": 28.7147
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 256,
+   "unit": "GB/s",
+   "value": 28.6702
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 256,
+   "unit": "GB/s",
+   "value": 28.745
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 256,
+   "unit": "GB/s",
+   "value": 28.7204
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 256,
+   "unit": "GB/s",
+   "value": 28.7149
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 256,
+   "unit": "GB/s",
+   "value": 28.7189
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 256,
+   "unit": "GB/s",
+   "value": 28.7696
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 256,
+   "unit": "GB/s",
+   "value": 28.7563
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 256,
+   "unit": "GB/s",
+   "value": 28.8069
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 256,
+   "unit": "GB/s",
+   "value": 28.8001
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 256,
+   "unit": "GB/s",
+   "value": 28.8043
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 1024,
+   "unit": "GB/s",
+   "value": 45.0722
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 1024,
+   "unit": "GB/s",
+   "value": 44.9355
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 1024,
+   "unit": "GB/s",
+   "value": 44.9795
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 1024,
+   "unit": "GB/s",
+   "value": 44.8862
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 1024,
+   "unit": "GB/s",
+   "value": 45.1282
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 1024,
+   "unit": "GB/s",
+   "value": 44.9268
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 1024,
+   "unit": "GB/s",
+   "value": 45.0471
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 1024,
+   "unit": "GB/s",
+   "value": 44.9403
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 1024,
+   "unit": "GB/s",
+   "value": 45.1228
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 1024,
+   "unit": "GB/s",
+   "value": 44.9735
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 1024,
+   "unit": "GB/s",
+   "value": 45.1471
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 1024,
+   "unit": "GB/s",
+   "value": 44.8984
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 1024,
+   "unit": "GB/s",
+   "value": 44.9913
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 1024,
+   "unit": "GB/s",
+   "value": 44.9684
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 4096,
+   "unit": "GB/s",
+   "value": 52.7975
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 4096,
+   "unit": "GB/s",
+   "value": 52.6125
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 4096,
+   "unit": "GB/s",
+   "value": 52.8232
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 4096,
+   "unit": "GB/s",
+   "value": 52.5933
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 4096,
+   "unit": "GB/s",
+   "value": 52.8026
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 4096,
+   "unit": "GB/s",
+   "value": 52.6068
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 4096,
+   "unit": "GB/s",
+   "value": 52.8289
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 4096,
+   "unit": "GB/s",
+   "value": 52.6191
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 4096,
+   "unit": "GB/s",
+   "value": 52.8163
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 4096,
+   "unit": "GB/s",
+   "value": 52.5771
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 4096,
+   "unit": "GB/s",
+   "value": 52.8277
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 4096,
+   "unit": "GB/s",
+   "value": 52.6485
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 4096,
+   "unit": "GB/s",
+   "value": 52.7525
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 4096,
+   "unit": "GB/s",
+   "value": 52.2004
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 16384,
+   "unit": "GB/s",
+   "value": 55.0863
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 16384,
+   "unit": "GB/s",
+   "value": 54.8886
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 16384,
+   "unit": "GB/s",
+   "value": 55.1208
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 16384,
+   "unit": "GB/s",
+   "value": 54.9096
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 16384,
+   "unit": "GB/s",
+   "value": 55.1247
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 16384,
+   "unit": "GB/s",
+   "value": 54.9186
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 16384,
+   "unit": "GB/s",
+   "value": 55.0968
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 16384,
+   "unit": "GB/s",
+   "value": 54.8984
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 16384,
+   "unit": "GB/s",
+   "value": 55.0598
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 16384,
+   "unit": "GB/s",
+   "value": 54.9018
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 16384,
+   "unit": "GB/s",
+   "value": 55.1165
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 16384,
+   "unit": "GB/s",
+   "value": 54.9005
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 16384,
+   "unit": "GB/s",
+   "value": 55.1052
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 16384,
+   "unit": "GB/s",
+   "value": 54.8978
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 65536,
+   "unit": "GB/s",
+   "value": 55.7143
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 65536,
+   "unit": "GB/s",
+   "value": 55.5038
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 65536,
+   "unit": "GB/s",
+   "value": 55.7046
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 65536,
+   "unit": "GB/s",
+   "value": 55.4976
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 65536,
+   "unit": "GB/s",
+   "value": 55.6769
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 65536,
+   "unit": "GB/s",
+   "value": 55.4994
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 65536,
+   "unit": "GB/s",
+   "value": 55.7153
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 65536,
+   "unit": "GB/s",
+   "value": 55.4859
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 65536,
+   "unit": "GB/s",
+   "value": 55.7134
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 65536,
+   "unit": "GB/s",
+   "value": 55.491
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 65536,
+   "unit": "GB/s",
+   "value": 55.6967
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 65536,
+   "unit": "GB/s",
+   "value": 55.5014
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 65536,
+   "unit": "GB/s",
+   "value": 55.7135
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 65536,
+   "unit": "GB/s",
+   "value": 55.4676
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 262144,
+   "unit": "GB/s",
+   "value": 55.8728
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 262144,
+   "unit": "GB/s",
+   "value": 55.6077
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 262144,
+   "unit": "GB/s",
+   "value": 55.8726
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 262144,
+   "unit": "GB/s",
+   "value": 55.6187
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 262144,
+   "unit": "GB/s",
+   "value": 55.8638
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 262144,
+   "unit": "GB/s",
+   "value": 55.6173
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 262144,
+   "unit": "GB/s",
+   "value": 55.8475
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 262144,
+   "unit": "GB/s",
+   "value": 55.6187
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 262144,
+   "unit": "GB/s",
+   "value": 55.8688
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 262144,
+   "unit": "GB/s",
+   "value": 55.6023
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 262144,
+   "unit": "GB/s",
+   "value": 55.8696
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 262144,
+   "unit": "GB/s",
+   "value": 55.5909
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 262144,
+   "unit": "GB/s",
+   "value": 55.8525
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 262144,
+   "unit": "GB/s",
+   "value": 55.6072
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 1048576,
+   "unit": "GB/s",
+   "value": 55.903
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 1048576,
+   "unit": "GB/s",
+   "value": 55.6327
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 1048576,
+   "unit": "GB/s",
+   "value": 55.9091
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 1048576,
+   "unit": "GB/s",
+   "value": 55.6327
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 1048576,
+   "unit": "GB/s",
+   "value": 55.8897
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 1048576,
+   "unit": "GB/s",
+   "value": 55.6129
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 1048576,
+   "unit": "GB/s",
+   "value": 55.914
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 1048576,
+   "unit": "GB/s",
+   "value": 55.6048
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 1048576,
+   "unit": "GB/s",
+   "value": 55.913
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 1048576,
+   "unit": "GB/s",
+   "value": 55.6145
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 1048576,
+   "unit": "GB/s",
+   "value": 55.8875
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 1048576,
+   "unit": "GB/s",
+   "value": 55.6115
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pinned",
+   "param": 1048576,
+   "unit": "GB/s",
+   "value": 55.908
+  },
+  {
+   "test": "pcie",
+   "var": "D2H pinned",
+   "param": 1048576,
+   "unit": "GB/s",
+   "value": 55.6136
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pageable",
+   "param": 1048576,
+   "unit": "GB/s",
+   "value": 53.8789
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pageable",
+   "param": 1048576,
+   "unit": "GB/s",
+   "value": 55.5229
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pageable",
+   "param": 1048576,
+   "unit": "GB/s",
+   "value": 55.5172
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pageable",
+   "param": 1048576,
+   "unit": "GB/s",
+   "value": 55.5368
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pageable",
+   "param": 1048576,
+   "unit": "GB/s",
+   "value": 55.5163
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pageable",
+   "param": 1048576,
+   "unit": "GB/s",
+   "value": 55.5573
+  },
+  {
+   "test": "pcie",
+   "var": "H2D pageable",
+   "param": 1048576,
+   "unit": "GB/s",
+   "value": 55.5361
+  },
+  {
+   "test": "pcie",
+   "var": "bidirektional pinned (Summe)",
+   "param": 262144,
+   "unit": "GB/s",
+   "value": 54.0073
+  },
+  {
+   "test": "pcie",
+   "var": "bidirektional pinned (Summe)",
+   "param": 262144,
+   "unit": "GB/s",
+   "value": 59.3565
+  },
+  {
+   "test": "pcie",
+   "var": "bidirektional pinned (Summe)",
+   "param": 262144,
+   "unit": "GB/s",
+   "value": 60.4362
+  },
+  {
+   "test": "pcie",
+   "var": "bidirektional pinned (Summe)",
+   "param": 262144,
+   "unit": "GB/s",
+   "value": 60.3794
+  },
+  {
+   "test": "pcie",
+   "var": "bidirektional pinned (Summe)",
+   "param": 262144,
+   "unit": "GB/s",
+   "value": 60.4278
+  },
+  {
+   "test": "pcie",
+   "var": "bidirektional pinned (Summe)",
+   "param": 262144,
+   "unit": "GB/s",
+   "value": 60.4863
+  },
+  {
+   "test": "pcie",
+   "var": "bidirektional pinned (Summe)",
+   "param": 262144,
+   "unit": "GB/s",
+   "value": 60.4071
+  },
+  {
+   "test": "launch",
+   "var": "Start+Sync (Rundlauf)",
+   "param": 1,
+   "unit": "us",
+   "value": 19.8207
+  },
+  {
+   "test": "launch",
+   "var": "Starts hintereinander",
+   "param": 1,
+   "unit": "us/Kernel",
+   "value": 2.64935
+  },
+  {
+   "test": "launch",
+   "var": "Start+Sync (Rundlauf)",
+   "param": 1,
+   "unit": "us",
+   "value": 18.7554
+  },
+  {
+   "test": "launch",
+   "var": "Starts hintereinander",
+   "param": 1,
+   "unit": "us/Kernel",
+   "value": 2.43765
+  },
+  {
+   "test": "launch",
+   "var": "Start+Sync (Rundlauf)",
+   "param": 1,
+   "unit": "us",
+   "value": 18.0377
+  },
+  {
+   "test": "launch",
+   "var": "Starts hintereinander",
+   "param": 1,
+   "unit": "us/Kernel",
+   "value": 2.27406
+  },
+  {
+   "test": "launch",
+   "var": "Start+Sync (Rundlauf)",
+   "param": 1,
+   "unit": "us",
+   "value": 17.5584
+  },
+  {
+   "test": "launch",
+   "var": "Starts hintereinander",
+   "param": 1,
+   "unit": "us/Kernel",
+   "value": 2.16824
+  },
+  {
+   "test": "launch",
+   "var": "Start+Sync (Rundlauf)",
+   "param": 1,
+   "unit": "us",
+   "value": 17.1534
+  },
+  {
+   "test": "launch",
+   "var": "Starts hintereinander",
+   "param": 1,
+   "unit": "us/Kernel",
+   "value": 2.08396
+  },
+  {
+   "test": "launch",
+   "var": "Start+Sync (Rundlauf)",
+   "param": 1,
+   "unit": "us",
+   "value": 16.8614
+  },
+  {
+   "test": "launch",
+   "var": "Starts hintereinander",
+   "param": 1,
+   "unit": "us/Kernel",
+   "value": 2.06274
+  },
+  {
+   "test": "launch",
+   "var": "Start+Sync (Rundlauf)",
+   "param": 1,
+   "unit": "us",
+   "value": 16.8635
+  },
+  {
+   "test": "launch",
+   "var": "Starts hintereinander",
+   "param": 1,
+   "unit": "us/Kernel",
+   "value": 2.06389
+  },
+  {
+   "test": "launch",
+   "var": "HIP Graph, 200 Kernels",
+   "param": 200,
+   "unit": "us/Kernel",
+   "value": 2.08007
+  },
+  {
+   "test": "launch",
+   "var": "HIP Graph, 200 Kernels",
+   "param": 200,
+   "unit": "us/Kernel",
+   "value": 2.08851
+  },
+  {
+   "test": "launch",
+   "var": "HIP Graph, 200 Kernels",
+   "param": 200,
+   "unit": "us/Kernel",
+   "value": 2.08268
+  },
+  {
+   "test": "launch",
+   "var": "HIP Graph, 200 Kernels",
+   "param": 200,
+   "unit": "us/Kernel",
+   "value": 2.08693
+  },
+  {
+   "test": "launch",
+   "var": "HIP Graph, 200 Kernels",
+   "param": 200,
+   "unit": "us/Kernel",
+   "value": 2.08898
+  },
+  {
+   "test": "launch",
+   "var": "HIP Graph, 200 Kernels",
+   "param": 200,
+   "unit": "us/Kernel",
+   "value": 2.09
+  },
+  {
+   "test": "launch",
+   "var": "HIP Graph, 200 Kernels",
+   "param": 200,
+   "unit": "us/Kernel",
+   "value": 2.08969
+  },
+  {
+   "test": "persist",
+   "var": "grid.sync() (cooperative groups)",
+   "param": 16,
+   "unit": "us/Barriere",
+   "value": 0.551202
+  },
+  {
+   "test": "persist",
+   "var": "grid.sync() (cooperative groups)",
+   "param": 16,
+   "unit": "us/Barriere",
+   "value": 0.551662
+  },
+  {
+   "test": "persist",
+   "var": "grid.sync() (cooperative groups)",
+   "param": 16,
+   "unit": "us/Barriere",
+   "value": 0.552042
+  },
+  {
+   "test": "persist",
+   "var": "grid.sync() (cooperative groups)",
+   "param": 16,
+   "unit": "us/Barriere",
+   "value": 0.549022
+  },
+  {
+   "test": "persist",
+   "var": "grid.sync() (cooperative groups)",
+   "param": 16,
+   "unit": "us/Barriere",
+   "value": 0.545902
+  },
+  {
+   "test": "persist",
+   "var": "grid.sync() (cooperative groups)",
+   "param": 16,
+   "unit": "us/Barriere",
+   "value": 0.544762
+  },
+  {
+   "test": "persist",
+   "var": "grid.sync() (cooperative groups)",
+   "param": 16,
+   "unit": "us/Barriere",
+   "value": 0.541781
+  },
+  {
+   "test": "persist",
+   "var": "eigene Barriere (Atomics)",
+   "param": 16,
+   "unit": "us/Barriere",
+   "value": 0.777282
+  },
+  {
+   "test": "persist",
+   "var": "eigene Barriere (Atomics)",
+   "param": 16,
+   "unit": "us/Barriere",
+   "value": 0.773303
+  },
+  {
+   "test": "persist",
+   "var": "eigene Barriere (Atomics)",
+   "param": 16,
+   "unit": "us/Barriere",
+   "value": 0.776542
+  },
+  {
+   "test": "persist",
+   "var": "eigene Barriere (Atomics)",
+   "param": 16,
+   "unit": "us/Barriere",
+   "value": 0.831043
+  },
+  {
+   "test": "persist",
+   "var": "eigene Barriere (Atomics)",
+   "param": 16,
+   "unit": "us/Barriere",
+   "value": 0.774623
+  },
+  {
+   "test": "persist",
+   "var": "eigene Barriere (Atomics)",
+   "param": 16,
+   "unit": "us/Barriere",
+   "value": 0.774042
+  },
+  {
+   "test": "persist",
+   "var": "eigene Barriere (Atomics)",
+   "param": 16,
+   "unit": "us/Barriere",
+   "value": 0.774443
+  },
+  {
+   "test": "persist",
+   "var": "grid.sync() (cooperative groups)",
+   "param": 32,
+   "unit": "us/Barriere",
+   "value": 0.543422
+  },
+  {
+   "test": "persist",
+   "var": "grid.sync() (cooperative groups)",
+   "param": 32,
+   "unit": "us/Barriere",
+   "value": 0.543842
+  },
+  {
+   "test": "persist",
+   "var": "grid.sync() (cooperative groups)",
+   "param": 32,
+   "unit": "us/Barriere",
+   "value": 0.543722
+  },
+  {
+   "test": "persist",
+   "var": "grid.sync() (cooperative groups)",
+   "param": 32,
+   "unit": "us/Barriere",
+   "value": 0.547562
+  },
+  {
+   "test": "persist",
+   "var": "grid.sync() (cooperative groups)",
+   "param": 32,
+   "unit": "us/Barriere",
+   "value": 0.542561
+  },
+  {
+   "test": "persist",
+   "var": "grid.sync() (cooperative groups)",
+   "param": 32,
+   "unit": "us/Barriere",
+   "value": 0.544182
+  },
+  {
+   "test": "persist",
+   "var": "grid.sync() (cooperative groups)",
+   "param": 32,
+   "unit": "us/Barriere",
+   "value": 0.541622
+  },
+  {
+   "test": "persist",
+   "var": "eigene Barriere (Atomics)",
+   "param": 32,
+   "unit": "us/Barriere",
+   "value": 0.774602
+  },
+  {
+   "test": "persist",
+   "var": "eigene Barriere (Atomics)",
+   "param": 32,
+   "unit": "us/Barriere",
+   "value": 0.772723
+  },
+  {
+   "test": "persist",
+   "var": "eigene Barriere (Atomics)",
+   "param": 32,
+   "unit": "us/Barriere",
+   "value": 0.773122
+  },
+  {
+   "test": "persist",
+   "var": "eigene Barriere (Atomics)",
+   "param": 32,
+   "unit": "us/Barriere",
+   "value": 0.773703
+  },
+  {
+   "test": "persist",
+   "var": "eigene Barriere (Atomics)",
+   "param": 32,
+   "unit": "us/Barriere",
+   "value": 0.770782
+  },
+  {
+   "test": "persist",
+   "var": "eigene Barriere (Atomics)",
+   "param": 32,
+   "unit": "us/Barriere",
+   "value": 0.769202
+  },
+  {
+   "test": "persist",
+   "var": "eigene Barriere (Atomics)",
+   "param": 32,
+   "unit": "us/Barriere",
+   "value": 0.768682
+  },
+  {
+   "test": "persist",
+   "var": "grid.sync() (cooperative groups)",
+   "param": 64,
+   "unit": "us/Barriere",
+   "value": 0.541842
+  },
+  {
+   "test": "persist",
+   "var": "grid.sync() (cooperative groups)",
+   "param": 64,
+   "unit": "us/Barriere",
+   "value": 0.541601
+  },
+  {
+   "test": "persist",
+   "var": "grid.sync() (cooperative groups)",
+   "param": 64,
+   "unit": "us/Barriere",
+   "value": 0.540202
+  },
+  {
+   "test": "persist",
+   "var": "grid.sync() (cooperative groups)",
+   "param": 64,
+   "unit": "us/Barriere",
+   "value": 0.540461
+  },
+  {
+   "test": "persist",
+   "var": "grid.sync() (cooperative groups)",
+   "param": 64,
+   "unit": "us/Barriere",
+   "value": 0.538481
+  },
+  {
+   "test": "persist",
+   "var": "grid.sync() (cooperative groups)",
+   "param": 64,
+   "unit": "us/Barriere",
+   "value": 0.538942
+  },
+  {
+   "test": "persist",
+   "var": "grid.sync() (cooperative groups)",
+   "param": 64,
+   "unit": "us/Barriere",
+   "value": 0.537102
+  },
+  {
+   "test": "persist",
+   "var": "eigene Barriere (Atomics)",
+   "param": 64,
+   "unit": "us/Barriere",
+   "value": 0.772362
+  },
+  {
+   "test": "persist",
+   "var": "eigene Barriere (Atomics)",
+   "param": 64,
+   "unit": "us/Barriere",
+   "value": 0.767022
+  },
+  {
+   "test": "persist",
+   "var": "eigene Barriere (Atomics)",
+   "param": 64,
+   "unit": "us/Barriere",
+   "value": 0.766582
+  },
+  {
+   "test": "persist",
+   "var": "eigene Barriere (Atomics)",
+   "param": 64,
+   "unit": "us/Barriere",
+   "value": 0.770562
+  },
+  {
+   "test": "persist",
+   "var": "eigene Barriere (Atomics)",
+   "param": 64,
+   "unit": "us/Barriere",
+   "value": 0.768263
+  },
+  {
+   "test": "persist",
+   "var": "eigene Barriere (Atomics)",
+   "param": 64,
+   "unit": "us/Barriere",
+   "value": 0.766362
+  },
+  {
+   "test": "persist",
+   "var": "eigene Barriere (Atomics)",
+   "param": 64,
+   "unit": "us/Barriere",
+   "value": 0.763322
+  },
+  {
+   "test": "persist",
+   "var": "grid.sync() (cooperative groups)",
+   "param": 128,
+   "unit": "us/Barriere",
+   "value": 0.556522
+  },
+  {
+   "test": "persist",
+   "var": "grid.sync() (cooperative groups)",
+   "param": 128,
+   "unit": "us/Barriere",
+   "value": 0.551722
+  },
+  {
+   "test": "persist",
+   "var": "grid.sync() (cooperative groups)",
+   "param": 128,
+   "unit": "us/Barriere",
+   "value": 0.552382
+  },
+  {
+   "test": "persist",
+   "var": "grid.sync() (cooperative groups)",
+   "param": 128,
+   "unit": "us/Barriere",
+   "value": 0.547682
+  },
+  {
+   "test": "persist",
+   "var": "grid.sync() (cooperative groups)",
+   "param": 128,
+   "unit": "us/Barriere",
+   "value": 0.545862
+  },
+  {
+   "test": "persist",
+   "var": "grid.sync() (cooperative groups)",
+   "param": 128,
+   "unit": "us/Barriere",
+   "value": 0.550341
+  },
+  {
+   "test": "persist",
+   "var": "grid.sync() (cooperative groups)",
+   "param": 128,
+   "unit": "us/Barriere",
+   "value": 0.552542
+  },
+  {
+   "test": "persist",
+   "var": "eigene Barriere (Atomics)",
+   "param": 128,
+   "unit": "us/Barriere",
+   "value": 0.805822
+  },
+  {
+   "test": "persist",
+   "var": "eigene Barriere (Atomics)",
+   "param": 128,
+   "unit": "us/Barriere",
+   "value": 0.796443
+  },
+  {
+   "test": "persist",
+   "var": "eigene Barriere (Atomics)",
+   "param": 128,
+   "unit": "us/Barriere",
+   "value": 0.803002
+  },
+  {
+   "test": "persist",
+   "var": "eigene Barriere (Atomics)",
+   "param": 128,
+   "unit": "us/Barriere",
+   "value": 0.802222
+  },
+  {
+   "test": "persist",
+   "var": "eigene Barriere (Atomics)",
+   "param": 128,
+   "unit": "us/Barriere",
+   "value": 0.800843
+  },
+  {
+   "test": "persist",
+   "var": "eigene Barriere (Atomics)",
+   "param": 128,
+   "unit": "us/Barriere",
+   "value": 0.791822
+  },
+  {
+   "test": "persist",
+   "var": "eigene Barriere (Atomics)",
+   "param": 128,
+   "unit": "us/Barriere",
+   "value": 0.794523
+  },
+  {
+   "test": "persist",
+   "var": "Block zu Block (halber Rundlauf)",
+   "param": 2,
+   "unit": "us",
+   "value": 0.213051
+  },
+  {
+   "test": "persist",
+   "var": "Block zu Block (halber Rundlauf)",
+   "param": 2,
+   "unit": "us",
+   "value": 0.214825
+  },
+  {
+   "test": "persist",
+   "var": "Block zu Block (halber Rundlauf)",
+   "param": 2,
+   "unit": "us",
+   "value": 0.209949
+  },
+  {
+   "test": "persist",
+   "var": "Block zu Block (halber Rundlauf)",
+   "param": 2,
+   "unit": "us",
+   "value": 0.208187
+  },
+  {
+   "test": "persist",
+   "var": "Block zu Block (halber Rundlauf)",
+   "param": 2,
+   "unit": "us",
+   "value": 0.214949
+  },
+  {
+   "test": "persist",
+   "var": "Block zu Block (halber Rundlauf)",
+   "param": 2,
+   "unit": "us",
+   "value": 0.212826
+  },
+  {
+   "test": "persist",
+   "var": "Block zu Block (halber Rundlauf)",
+   "param": 2,
+   "unit": "us",
+   "value": 0.197997
+  },
+  {
+   "test": "persist",
+   "var": "CPU <-> GPU via host memory (half round trip)",
+   "param": 1,
+   "unit": "us",
+   "value": 0.656148
+  },
+  {
+   "test": "persist",
+   "var": "CPU <-> GPU via host memory (half round trip)",
+   "param": 1,
+   "unit": "us",
+   "value": 0.650282
+  },
+  {
+   "test": "persist",
+   "var": "CPU <-> GPU via host memory (half round trip)",
+   "param": 1,
+   "unit": "us",
+   "value": 0.652897
+  },
+  {
+   "test": "persist",
+   "var": "CPU <-> GPU via host memory (half round trip)",
+   "param": 1,
+   "unit": "us",
+   "value": 0.651454
+  },
+  {
+   "test": "persist",
+   "var": "CPU <-> GPU via host memory (half round trip)",
+   "param": 1,
+   "unit": "us",
+   "value": 0.649496
+  },
+  {
+   "test": "persist",
+   "var": "CPU <-> GPU via host memory (half round trip)",
+   "param": 1,
+   "unit": "us",
+   "value": 0.650068
+  },
+  {
+   "test": "persist",
+   "var": "CPU <-> GPU via host memory (half round trip)",
+   "param": 1,
+   "unit": "us",
+   "value": 0.649352
+  },
+  {
+   "test": "peak",
+   "var": "WMMA f16 -> f32",
+   "param": 0,
+   "unit": "TFLOPS",
+   "value": 96.7648
+  },
+  {
+   "test": "peak",
+   "var": "WMMA f16 -> f32",
+   "param": 0,
+   "unit": "TFLOPS",
+   "value": 90.5406
+  },
+  {
+   "test": "peak",
+   "var": "WMMA f16 -> f32",
+   "param": 0,
+   "unit": "TFLOPS",
+   "value": 95.9811
+  },
+  {
+   "test": "peak",
+   "var": "WMMA f16 -> f32",
+   "param": 0,
+   "unit": "TFLOPS",
+   "value": 95.4471
+  },
+  {
+   "test": "peak",
+   "var": "WMMA f16 -> f32",
+   "param": 0,
+   "unit": "TFLOPS",
+   "value": 95.528
+  },
+  {
+   "test": "peak",
+   "var": "WMMA f16 -> f32",
+   "param": 0,
+   "unit": "TFLOPS",
+   "value": 90.9696
+  },
+  {
+   "test": "peak",
+   "var": "WMMA f16 -> f32",
+   "param": 0,
+   "unit": "TFLOPS",
+   "value": 93.3796
+  },
+  {
+   "test": "peak",
+   "var": "WMMA f16 -> f16",
+   "param": 0,
+   "unit": "TFLOPS",
+   "value": 91.3671
+  },
+  {
+   "test": "peak",
+   "var": "WMMA f16 -> f16",
+   "param": 0,
+   "unit": "TFLOPS",
+   "value": 95.1238
+  },
+  {
+   "test": "peak",
+   "var": "WMMA f16 -> f16",
+   "param": 0,
+   "unit": "TFLOPS",
+   "value": 86.9985
+  },
+  {
+   "test": "peak",
+   "var": "WMMA f16 -> f16",
+   "param": 0,
+   "unit": "TFLOPS",
+   "value": 97.1729
+  },
+  {
+   "test": "peak",
+   "var": "WMMA f16 -> f16",
+   "param": 0,
+   "unit": "TFLOPS",
+   "value": 93.8948
+  },
+  {
+   "test": "peak",
+   "var": "WMMA f16 -> f16",
+   "param": 0,
+   "unit": "TFLOPS",
+   "value": 96.8255
+  },
+  {
+   "test": "peak",
+   "var": "WMMA f16 -> f16",
+   "param": 0,
+   "unit": "TFLOPS",
+   "value": 96.8378
+  },
+  {
+   "test": "peak",
+   "var": "WMMA bf16 -> f32",
+   "param": 0,
+   "unit": "TFLOPS",
+   "value": 102.513
+  },
+  {
+   "test": "peak",
+   "var": "WMMA bf16 -> f32",
+   "param": 0,
+   "unit": "TFLOPS",
+   "value": 96.9698
+  },
+  {
+   "test": "peak",
+   "var": "WMMA bf16 -> f32",
+   "param": 0,
+   "unit": "TFLOPS",
+   "value": 90.8481
+  },
+  {
+   "test": "peak",
+   "var": "WMMA bf16 -> f32",
+   "param": 0,
+   "unit": "TFLOPS",
+   "value": 95.112
+  },
+  {
+   "test": "peak",
+   "var": "WMMA bf16 -> f32",
+   "param": 0,
+   "unit": "TFLOPS",
+   "value": 90.0789
+  },
+  {
+   "test": "peak",
+   "var": "WMMA bf16 -> f32",
+   "param": 0,
+   "unit": "TFLOPS",
+   "value": 96.5495
+  },
+  {
+   "test": "peak",
+   "var": "WMMA bf16 -> f32",
+   "param": 0,
+   "unit": "TFLOPS",
+   "value": 96.2013
+  },
+  {
+   "test": "peak",
+   "var": "WMMA fp8 -> f32",
+   "param": 0,
+   "unit": "TFLOPS",
+   "value": 185.668
+  },
+  {
+   "test": "peak",
+   "var": "WMMA fp8 -> f32",
+   "param": 0,
+   "unit": "TFLOPS",
+   "value": 178.238
+  },
+  {
+   "test": "peak",
+   "var": "WMMA fp8 -> f32",
+   "param": 0,
+   "unit": "TFLOPS",
+   "value": 185.507
+  },
+  {
+   "test": "peak",
+   "var": "WMMA fp8 -> f32",
+   "param": 0,
+   "unit": "TFLOPS",
+   "value": 172.312
+  },
+  {
+   "test": "peak",
+   "var": "WMMA fp8 -> f32",
+   "param": 0,
+   "unit": "TFLOPS",
+   "value": 186.315
+  },
+  {
+   "test": "peak",
+   "var": "WMMA fp8 -> f32",
+   "param": 0,
+   "unit": "TFLOPS",
+   "value": 181.444
+  },
+  {
+   "test": "peak",
+   "var": "WMMA fp8 -> f32",
+   "param": 0,
+   "unit": "TFLOPS",
+   "value": 177.121
+  },
+  {
+   "test": "peak",
+   "var": "WMMA int8 -> i32",
+   "param": 0,
+   "unit": "TOPS",
+   "value": 173.103
+  },
+  {
+   "test": "peak",
+   "var": "WMMA int8 -> i32",
+   "param": 0,
+   "unit": "TOPS",
+   "value": 182.428
+  },
+  {
+   "test": "peak",
+   "var": "WMMA int8 -> i32",
+   "param": 0,
+   "unit": "TOPS",
+   "value": 184.08
+  },
+  {
+   "test": "peak",
+   "var": "WMMA int8 -> i32",
+   "param": 0,
+   "unit": "TOPS",
+   "value": 182.19
+  },
+  {
+   "test": "peak",
+   "var": "WMMA int8 -> i32",
+   "param": 0,
+   "unit": "TOPS",
+   "value": 181.981
+  },
+  {
+   "test": "peak",
+   "var": "WMMA int8 -> i32",
+   "param": 0,
+   "unit": "TOPS",
+   "value": 169.597
+  },
+  {
+   "test": "peak",
+   "var": "WMMA int8 -> i32",
+   "param": 0,
+   "unit": "TOPS",
+   "value": 184.516
+  },
+  {
+   "test": "peak",
+   "var": "WMMA int4 (K=32) -> i32",
+   "param": 0,
+   "unit": "TOPS",
+   "value": 326.474
+  },
+  {
+   "test": "peak",
+   "var": "WMMA int4 (K=32) -> i32",
+   "param": 0,
+   "unit": "TOPS",
+   "value": 331.217
+  },
+  {
+   "test": "peak",
+   "var": "WMMA int4 (K=32) -> i32",
+   "param": 0,
+   "unit": "TOPS",
+   "value": 340.313
+  },
+  {
+   "test": "peak",
+   "var": "WMMA int4 (K=32) -> i32",
+   "param": 0,
+   "unit": "TOPS",
+   "value": 340.797
+  },
+  {
+   "test": "peak",
+   "var": "WMMA int4 (K=32) -> i32",
+   "param": 0,
+   "unit": "TOPS",
+   "value": 325.502
+  },
+  {
+   "test": "peak",
+   "var": "WMMA int4 (K=32) -> i32",
+   "param": 0,
+   "unit": "TOPS",
+   "value": 332.921
+  },
+  {
+   "test": "peak",
+   "var": "WMMA int4 (K=32) -> i32",
+   "param": 0,
+   "unit": "TOPS",
+   "value": 340.547
+  },
+  {
+   "test": "peak",
+   "var": "FMA f32 (Vektor)",
+   "param": 0,
+   "unit": "TFLOPS",
+   "value": 24.2827
+  },
+  {
+   "test": "peak",
+   "var": "FMA f32 (Vektor)",
+   "param": 0,
+   "unit": "TFLOPS",
+   "value": 24.3496
+  },
+  {
+   "test": "peak",
+   "var": "FMA f32 (Vektor)",
+   "param": 0,
+   "unit": "TFLOPS",
+   "value": 24.3497
+  },
+  {
+   "test": "peak",
+   "var": "FMA f32 (Vektor)",
+   "param": 0,
+   "unit": "TFLOPS",
+   "value": 24.3398
+  },
+  {
+   "test": "peak",
+   "var": "FMA f32 (Vektor)",
+   "param": 0,
+   "unit": "TFLOPS",
+   "value": 24.3372
+  },
+  {
+   "test": "peak",
+   "var": "FMA f32 (Vektor)",
+   "param": 0,
+   "unit": "TFLOPS",
+   "value": 24.3515
+  },
+  {
+   "test": "peak",
+   "var": "FMA f32 (Vektor)",
+   "param": 0,
+   "unit": "TFLOPS",
+   "value": 23.6806
+  }
+ ]
+}

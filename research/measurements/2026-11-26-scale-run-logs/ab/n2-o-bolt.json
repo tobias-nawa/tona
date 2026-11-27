@@ -1,0 +1,437 @@
+{
+  "config": {
+    "A": {
+      "build": "scale1126",
+      "env": {},
+      "tooling": {
+        "HIP_PATH": "<repo>/work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+        "HSA_COREDUMP_PATTERN": "<worktree>/work/diag/gpucore-%p.core",
+        "ROCR_VISIBLE_DEVICES": "0",
+        "TONA_EXPERT_PROFILE": "<worktree>/toolchain/profiles/nemotron-bolt-74b-a9b-24gb.bin"
+      },
+      "commit": "v0.0.2-1468-g0f0736635d",
+      "model": "<repo>/work/models/nemotron-bolt-74b-a9b-24gb/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB.gguf",
+      "drafter": ""
+    },
+    "B": {
+      "build": "scale1126",
+      "env": {},
+      "tooling": {
+        "HIP_PATH": "<repo>/work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+        "HSA_COREDUMP_PATTERN": "<worktree>/work/diag/gpucore-%p.core",
+        "ROCR_VISIBLE_DEVICES": "0",
+        "TONA_EXPERT_PROFILE": "<worktree>/toolchain/profiles/nemotron-bolt-74b-a9b-24gb.bin"
+      },
+      "commit": "v0.0.2-1468-g0f0736635d",
+      "model": "<repo>/work/models/nemotron-bolt-74b-a9b-24gb/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB.gguf",
+      "drafter": ""
+    },
+    "workload": "server",
+    "targets": "2000:200 16000:200 64000:100 at --ctx 262144",
+    "deterministic": false,
+    "plan_info": {
+      "expect": [
+        [
+          "decode",
+          -3.0,
+          3.0
+        ],
+        [
+          "prefill",
+          -3.0,
+          3.0
+        ]
+      ],
+      "source": "A/A, same build: B against A is 0 within the known noise",
+      "workload": "server",
+      "targets": "2000:200 16000:200 64000:100 at --ctx 262144",
+      "primary": "",
+      "why_size": "the offer.json rows of Bolt (2K, 16K, 64K code summary, no drafter, history drafts); targets as 2026-11-20-ornith-bolt-clean-state.md; 2 rounds is the minimum of ab.py",
+      "decode_tokens": 200,
+      "noise": {},
+      "warmup": true,
+      "round_warmup": false,
+      "load_log": true,
+      "A": {
+        "build": "scale1126",
+        "env": {},
+        "tooling": {
+          "HIP_PATH": "<repo>/work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+          "HSA_COREDUMP_PATTERN": "<worktree>/work/diag/gpucore-%p.core",
+          "ROCR_VISIBLE_DEVICES": "0",
+          "TONA_EXPERT_PROFILE": "<worktree>/toolchain/profiles/nemotron-bolt-74b-a9b-24gb.bin"
+        },
+        "commit": "v0.0.2-1468-g0f0736635d",
+        "model": "<repo>/work/models/nemotron-bolt-74b-a9b-24gb/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB.gguf",
+        "drafter": ""
+      },
+      "B": {
+        "build": "scale1126",
+        "env": {},
+        "tooling": {
+          "HIP_PATH": "<repo>/work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+          "HSA_COREDUMP_PATTERN": "<worktree>/work/diag/gpucore-%p.core",
+          "ROCR_VISIBLE_DEVICES": "0",
+          "TONA_EXPERT_PROFILE": "<worktree>/toolchain/profiles/nemotron-bolt-74b-a9b-24gb.bin"
+        },
+        "commit": "v0.0.2-1468-g0f0736635d",
+        "model": "<repo>/work/models/nemotron-bolt-74b-a9b-24gb/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB.gguf",
+        "drafter": ""
+      }
+    },
+    "reference_sha": {},
+    "corpus_sha256": "e13a800340859f7d39c63712d90383faae7e5a47c3865f0811e40d912612d38e",
+    "corpus_is_reference": true,
+    "commit": "1f09a01d",
+    "noise": {}
+  },
+  "rounds": [
+    {
+      "order": "AB",
+      "sha": {
+        "A": {
+          "2000": "929d9d0d30b0f75a",
+          "16000": "c5260d1b5f1fe082",
+          "64000": "4a5a7f1af555b2e8"
+        },
+        "B": {
+          "2000": "929d9d0d30b0f75a",
+          "16000": "c5260d1b5f1fe082",
+          "64000": "4a5a7f1af555b2e8"
+        }
+      },
+      "A": {
+        "prefill@2000": 1554.9743688514166,
+        "decode@2000": 41.003788933179344,
+        "prefill@16000": 1625.0800430852355,
+        "decode@16000": 39.618906867938044,
+        "prefill@64000": 1479.7889004749914,
+        "decode@64000": 36.81534144581152
+      },
+      "counters": {
+        "A": {
+          "2000": {
+            "expert_hits": 45349,
+            "expert_misses": 26651,
+            "passes": 199,
+            "gen_tokens": 199,
+            "mtp_passes": 0
+          },
+          "16000": {
+            "expert_hits": 43195,
+            "expert_misses": 28805,
+            "passes": 199,
+            "gen_tokens": 199,
+            "mtp_passes": 0
+          },
+          "64000": {
+            "expert_hits": 24603,
+            "expert_misses": 12137,
+            "passes": 99,
+            "gen_tokens": 99,
+            "mtp_passes": 0
+          }
+        },
+        "B": {
+          "2000": {
+            "expert_hits": 45349,
+            "expert_misses": 26651,
+            "passes": 199,
+            "gen_tokens": 199,
+            "mtp_passes": 0
+          },
+          "16000": {
+            "expert_hits": 43195,
+            "expert_misses": 28805,
+            "passes": 199,
+            "gen_tokens": 199,
+            "mtp_passes": 0
+          },
+          "64000": {
+            "expert_hits": 24603,
+            "expert_misses": 12137,
+            "passes": 99,
+            "gen_tokens": 99,
+            "mtp_passes": 0
+          }
+        }
+      },
+      "B": {
+        "prefill@2000": 1431.5848684839334,
+        "decode@2000": 41.04565256201486,
+        "prefill@16000": 1623.0412027065845,
+        "decode@16000": 39.731585005380154,
+        "prefill@64000": 1466.3272098353111,
+        "decode@64000": 36.975535710657354
+      },
+      "seconds": 129.0127585750306
+    },
+    {
+      "order": "BA",
+      "sha": {
+        "B": {
+          "2000": "929d9d0d30b0f75a",
+          "16000": "c5260d1b5f1fe082",
+          "64000": "4a5a7f1af555b2e8"
+        },
+        "A": {
+          "2000": "929d9d0d30b0f75a",
+          "16000": "c5260d1b5f1fe082",
+          "64000": "4a5a7f1af555b2e8"
+        }
+      },
+      "B": {
+        "prefill@2000": 1558.1843013133175,
+        "decode@2000": 41.11605009188365,
+        "prefill@16000": 1625.993309789511,
+        "decode@16000": 39.71846986148645,
+        "prefill@64000": 1466.0625245744109,
+        "decode@64000": 36.91390812618041
+      },
+      "counters": {
+        "B": {
+          "2000": {
+            "expert_hits": 45349,
+            "expert_misses": 26651,
+            "passes": 199,
+            "gen_tokens": 199,
+            "mtp_passes": 0
+          },
+          "16000": {
+            "expert_hits": 43195,
+            "expert_misses": 28805,
+            "passes": 199,
+            "gen_tokens": 199,
+            "mtp_passes": 0
+          },
+          "64000": {
+            "expert_hits": 24603,
+            "expert_misses": 12137,
+            "passes": 99,
+            "gen_tokens": 99,
+            "mtp_passes": 0
+          }
+        },
+        "A": {
+          "2000": {
+            "expert_hits": 45349,
+            "expert_misses": 26651,
+            "passes": 199,
+            "gen_tokens": 199,
+            "mtp_passes": 0
+          },
+          "16000": {
+            "expert_hits": 43195,
+            "expert_misses": 28805,
+            "passes": 199,
+            "gen_tokens": 199,
+            "mtp_passes": 0
+          },
+          "64000": {
+            "expert_hits": 24603,
+            "expert_misses": 12137,
+            "passes": 99,
+            "gen_tokens": 99,
+            "mtp_passes": 0
+          }
+        }
+      },
+      "A": {
+        "prefill@2000": 1438.6325878034193,
+        "decode@2000": 41.06669031210037,
+        "prefill@16000": 1623.4242498681613,
+        "decode@16000": 39.78002062307653,
+        "prefill@64000": 1465.3104191521022,
+        "decode@64000": 36.82433455253206
+      },
+      "seconds": 129.51224892097525
+    }
+  ],
+  "discarded": [],
+  "stop_reason": "2 rounds (undecided metrics stay open)",
+  "wall_seconds": 324.32178569899406,
+  "loads": [
+    {
+      "start": 1,
+      "arm": "A",
+      "cpu_own": 148.2,
+      "cpu_system": 14.7,
+      "cpu_other": 17.8,
+      "gpu_own": 0.0,
+      "gpu_system": 0.0,
+      "gpu_other": 1.5,
+      "pageins": 21812.4,
+      "swapins": 7.6,
+      "compressions": 0.0,
+      "level_min": 54,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": null,
+      "seconds": 65,
+      "idle_before_s": null,
+      "ready_s": 8.0
+    },
+    {
+      "start": 2,
+      "arm": "A",
+      "cpu_own": 146.1,
+      "cpu_system": 16.9,
+      "cpu_other": 19.0,
+      "gpu_own": 0.0,
+      "gpu_system": 0.0,
+      "gpu_other": 1.5,
+      "pageins": 22434.7,
+      "swapins": 29.0,
+      "compressions": 0.0,
+      "level_min": 55,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": null,
+      "seconds": 63,
+      "idle_before_s": 1.1,
+      "ready_s": 8.3
+    },
+    {
+      "start": 3,
+      "arm": "B",
+      "cpu_own": 152.8,
+      "cpu_system": 15.1,
+      "cpu_other": 14.0,
+      "gpu_own": 0.0,
+      "gpu_system": 0.0,
+      "gpu_other": 1.6,
+      "pageins": 19558.2,
+      "swapins": 18.5,
+      "compressions": 0.0,
+      "level_min": 55,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": null,
+      "seconds": 61,
+      "idle_before_s": 1.1,
+      "ready_s": 6.0
+    },
+    {
+      "start": 4,
+      "arm": "B",
+      "cpu_own": 147.6,
+      "cpu_system": 16.1,
+      "cpu_other": 12.6,
+      "gpu_own": 0.0,
+      "gpu_system": 0.0,
+      "gpu_other": 1.5,
+      "pageins": 23448.7,
+      "swapins": 2.2,
+      "compressions": 0.0,
+      "level_min": 55,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": null,
+      "seconds": 63,
+      "idle_before_s": 1.1,
+      "ready_s": 8.5
+    },
+    {
+      "start": 5,
+      "arm": "A",
+      "cpu_own": 153.1,
+      "cpu_system": 15.6,
+      "cpu_other": 14.9,
+      "gpu_own": 0.0,
+      "gpu_system": 0.0,
+      "gpu_other": 1.5,
+      "pageins": 20405.8,
+      "swapins": 1.0,
+      "compressions": 0.0,
+      "level_min": 55,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": null,
+      "seconds": 61,
+      "idle_before_s": 1.1,
+      "ready_s": 6.0
+    }
+  ],
+  "warmup": {
+    "prefill@2000": 1505.6532327332368,
+    "decode@2000": 40.84099189756562,
+    "prefill@16000": 1596.246164556694,
+    "decode@16000": 39.654302805529845,
+    "prefill@64000": 1457.0554699335416,
+    "decode@64000": 36.79448521488654
+  },
+  "plan": {
+    "alpha": 0.05,
+    "margin": 0.5,
+    "max_rounds": 2,
+    "min_rounds": 2,
+    "prior_sd": 0.5,
+    "prior_df": 4.0
+  },
+  "decisions": {
+    "prefill@2000": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": 0.18747331375725285,
+      "ci_diff_percent": [
+        -9.185599798496483,
+        9.56054642601099
+      ]
+    },
+    "decode@2000": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": 0.1111455882263801,
+      "ci_diff_percent": [
+        -0.7018103175383618,
+        0.924101493991122
+      ]
+    },
+    "prefill@16000": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": 0.01639426404254074,
+      "ci_diff_percent": [
+        -0.8126914217742366,
+        0.8454799498593181
+      ]
+    },
+    "decode@16000": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": 0.06483856790396314,
+      "ci_diff_percent": [
+        -0.7863380246302843,
+        0.9160151604382106
+      ]
+    },
+    "prefill@64000": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": -0.42918803446936327,
+      "ci_diff_percent": [
+        -1.4120079449717322,
+        0.5536318760330057
+      ]
+    },
+    "decode@64000": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": 0.33918735145422874,
+      "ci_diff_percent": [
+        -0.4811503754929386,
+        1.159525078401396
+      ]
+    }
+  }
+}

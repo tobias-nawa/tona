@@ -1,0 +1,19 @@
+== hw_report
+### Test conditions
+
+- CPU: Apple M1 Max, 10 cores / 10 threads
+- GPU: Apple M1 Max, 32.0 GiB unified memory
+- RAM: 32.0 GiB
+- OS: macOS 27.0.1, kernel 27.0.0 (arm64)
+- Driver and toolkit: no toolkit found
+- TONA_* variables: none set
+- cgroup limits of this shell: none set
+- Load average (1, 5, 15 min): 3.43, 3.82, 3.37
+- CPU use by other programs over 0.5 s: 5.0 % of all threads
+- sandbox: no
+- Commit: `3a4aac2` (dirty tree)
+== before run 1
+- Quiet check (2026-11-15 19:51:04): warning
+  - warning: load average 3.43 is high (it lags a minute)
+== after run 1
+- Quiet check (2026-11-15 19:56:17): ok

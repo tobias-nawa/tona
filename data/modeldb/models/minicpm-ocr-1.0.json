@@ -1,0 +1,205 @@
+{
+  "id": "minicpm-ocr-1.0",
+  "name": "MiniCPM-OCR 1.0",
+  "vendor": "OpenBMB",
+  "release_date": "2026-10-21",
+  "lineage": {
+    "family": "MiniCPM",
+    "base_model": "MiniCPM-V 4.6",
+    "how_derived": "trained for OCR on top of MiniCPM-V 4.6; DSpark draft model and a separate Jev correctness model released alongside"
+  },
+  "purpose": "First OCR-specific model of the MiniCPM-V/o family: text-centric document understanding (text, tables, formulas, charts, seals, key information extraction) balancing quality and speed on real-world captures (card).",
+  "tasks": [
+    "documents",
+    "vision"
+  ],
+  "modalities": {
+    "input": [
+      "image",
+      "document"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "zh",
+      "en"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card tag apache-2.0; the HF repo has no LICENSE file, the Apache-2.0 text was read in the GitHub repo OpenBMB/MiniCPM-OCR. The full-page pipeline also uses the PP-DocLayoutV3 layout model (PaddlePaddle), whose license was not checked."
+  },
+  "architecture": {
+    "kind": "vision-language: SigLIP encoder + Qwen3.5-style hybrid language model (config text_config: 24 layers, one full-attention layer in four, linear attention in between)",
+    "params_total_b": 1.3,
+    "layers": 24,
+    "attention": "full attention every 4th layer, linear (gated DeltaNet-style) in between, per config full_attention_interval 4",
+    "recurrent": "linear attention (Qwen3.5 text config)",
+    "context_native": 262144,
+    "drafter": "DSpark draft model (openbmb/MiniCPM-OCR-1.0-DSpark, 0.59 GB BF16)"
+  },
+  "variants": [
+    {
+      "repo": "openbmb/MiniCPM-OCR-1.0",
+      "format": "safetensors BF16",
+      "size_gb": 2.62,
+      "official": true
+    },
+    {
+      "repo": "openbmb/MiniCPM-OCR-1.0-gguf",
+      "format": "GGUF Q4_K_M",
+      "size_gb": 0.53,
+      "official": true,
+      "notes": "Q8_0 0.81, F16 1.52 GB, mmproj F16 0.90 GB"
+    },
+    {
+      "repo": "openbmb/MiniCPM-OCR-1.0-DSpark-gguf",
+      "format": "GGUF Q4_K_M (draft)",
+      "size_gb": 0.21,
+      "official": true,
+      "notes": "speculative-decoding draft; card: +55% end-to-end efficiency"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "variant": "GGUF Q8_0 plus mmproj (0.81 + 0.90 GB, about 1.7 GB)",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (9.6 GB)"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "GGUF Q8_0 plus mmproj (0.81 + 0.90 GB, about 1.7 GB)",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (13.6 GB)"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "GGUF Q8_0 plus mmproj (0.81 + 0.90 GB, about 1.7 GB)",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (21.6 GB)"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "GGUF Q8_0 plus mmproj (0.81 + 0.90 GB, about 1.7 GB)",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (29.6 GB)"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "variant": "GGUF Q8_0 plus mmproj (0.81 + 0.90 GB, about 1.7 GB)",
+      "basis": "estimate",
+      "notes": "1.4 GB file against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "GGUF Q8_0 plus mmproj (0.81 + 0.90 GB, about 1.7 GB)",
+      "basis": "estimate",
+      "notes": "1.4 GB file against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "GGUF Q8_0 plus mmproj (0.81 + 0.90 GB, about 1.7 GB)",
+      "basis": "estimate",
+      "notes": "1.4 GB file against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "vLLM",
+      "SGLang",
+      "Ollama",
+      "AWQ/GPTQ official repos",
+      "official Docker image"
+    ],
+    "notes": "Card: vLLM, SGLang, llama.cpp and Ollama from day one. Full-page parsing is a two-stage pipeline: PP-DocLayoutV3 layout detection in the SDK, then region recognition by the model over HTTP."
+  },
+  "benchmarks": [
+    {
+      "name": "Real5-OmniDocBench",
+      "score": 93.68,
+      "kind": "vendor",
+      "source": "https://huggingface.co/openbmb/MiniCPM-OCR-1.0"
+    },
+    {
+      "name": "OCRBench v2",
+      "score": 54.7,
+      "kind": "vendor",
+      "source": "https://huggingface.co/openbmb/MiniCPM-OCR-1.0"
+    },
+    {
+      "name": "throughput on RTX 5090, OmniDocBench v1.6, concurrency 1",
+      "score": 1.2,
+      "unit": "pages/s",
+      "kind": "vendor",
+      "source": "https://huggingface.co/openbmb/MiniCPM-OCR-1.0"
+    },
+    {
+      "name": "throughput relative to PaddleOCR-VL-1.6 / MinerU2.5 Pro",
+      "score": "1.49x / 3.62x",
+      "kind": "vendor",
+      "source": "https://huggingface.co/openbmb/MiniCPM-OCR-1.0"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "1.3B: the smallest strong document parser found, official GGUF down to 0.5 GB",
+      "structured extraction (KIE) next to parsing",
+      "speed-optimised with a draft model"
+    ],
+    "weaknesses": [
+      "primary languages are Chinese and English only (card); German not stated",
+      "needs an external layout model for full pages, so it is a pipeline rather than one end-to-end model"
+    ],
+    "maturity": "OpenBMB family with day-one llama.cpp support; 243k downloads of the main repo"
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Excellent size and license, but the card lists Chinese and English only; for German documents a model with German evidence (Chandra-class, or the WeVisDoc models) is the better first pick. Becomes a candidate if a German page benchmark appears.",
+    "blockers": [
+      "no Tona vision-encoder path",
+      "needs a layout detector for full pages"
+    ]
+  },
+  "open_questions": [
+    "German and other European language quality",
+    "builder's reasons for the Qwen3.5 hybrid backbone",
+    "license of the PP-DocLayoutV3 layout model used by the pipeline",
+    "full per-benchmark table (the card shows panels as images)"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/openbmb/MiniCPM-OCR-1.0",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README and config.json read"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/OpenBMB/MiniCPM-OCR/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "Apache-2.0 text"
+    },
+    {
+      "url": "https://huggingface.co/api/models/openbmb/MiniCPM-OCR-1.0-gguf?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "file sizes"
+    },
+    {
+      "url": "https://huggingface.co/openbmb/MiniCPM-OCR-Jev",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "companion 2B correctness model (AUROC 93.6 on JevOCRBench, vendor)"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

@@ -1,0 +1,190 @@
+- Quiet check (2026-11-12 23:41:28): warning
+  - warning: other programs use 6.7 % of all CPU threads
+23:41:28
+=== W=4 MMA=0 23:41:29
+Metal profile (GPU time per part, all passes):
+  attend            160.2 ms    2.5 %  612 buffers
+  attn_proj         431.9 ms    6.8 %  1836 buffers
+  dn_proj          1210.0 ms   18.9 %  3672 buffers
+  dn_scan           177.9 ms    2.8 %  1836 buffers
+  embed               0.6 ms    0.0 %  51 buffers
+  experts          1646.9 ms   25.8 %  2448 buffers
+  experts_down      733.9 ms   11.5 %  2448 buffers
+  gated_read        996.8 ms   15.6 %  7344 buffers
+  head              229.5 ms    3.6 %  48 buffers
+  indexer           288.0 ms    4.5 %  1224 buffers
+  ple                30.6 ms    0.5 %  51 buffers
+  router            131.9 ms    2.1 %  2448 buffers
+  shared_exp        350.8 ms    5.5 %  2448 buffers
+  total            6389.1 ms
+Backend metal-apple-m1-max, prefill 64, decode 64 in passes of 4, 2 rounds
+  warmup: prefill 6.82 tok/s, decode 35.30 tok/s (not counted)
+  round 1: prefill 89.73 tok/s, decode 37.28 tok/s, pass 107.29 ms, MTP fill 0.00 ms, step 0.00 ms
+  round 2: prefill 90.55 tok/s, decode 37.45 tok/s, pass 106.81 ms, MTP fill 0.00 ms, step 0.00 ms
+prefill: median 90.55 tok/s, range 89.73 ... 90.55 (2 rounds)
+decode: median 37.45 tok/s, range 37.28 ... 37.45 (2 rounds)
+pass: median 107.29 ms, range 106.81 ... 107.29 (2 rounds)
+=== W=4 MMA=1 23:41:45
+Metal profile (GPU time per part, all passes):
+  attend            157.9 ms    2.7 %  612 buffers
+  attn_proj         354.4 ms    6.0 %  1836 buffers
+  dn_proj           990.6 ms   16.7 %  3672 buffers
+  dn_scan           175.9 ms    3.0 %  1836 buffers
+  embed               0.6 ms    0.0 %  51 buffers
+  experts          1620.6 ms   27.3 %  2448 buffers
+  experts_down      722.5 ms   12.2 %  2448 buffers
+  gated_read        919.1 ms   15.5 %  7344 buffers
+  head              229.1 ms    3.9 %  48 buffers
+  indexer           286.0 ms    4.8 %  1224 buffers
+  ple                24.5 ms    0.4 %  51 buffers
+  router            130.7 ms    2.2 %  2448 buffers
+  shared_exp        325.7 ms    5.5 %  2448 buffers
+  total            5937.6 ms
+Backend metal-apple-m1-max, prefill 64, decode 64 in passes of 4, 2 rounds
+  warmup: prefill 59.50 tok/s, decode 39.50 tok/s (not counted)
+  round 1: prefill 90.61 tok/s, decode 40.77 tok/s, pass 98.11 ms, MTP fill 0.00 ms, step 0.00 ms
+  round 2: prefill 90.44 tok/s, decode 40.63 tok/s, pass 98.45 ms, MTP fill 0.00 ms, step 0.00 ms
+prefill: median 90.61 tok/s, range 90.44 ... 90.61 (2 rounds)
+decode: median 40.77 tok/s, range 40.63 ... 40.77 (2 rounds)
+pass: median 98.45 ms, range 98.11 ... 98.45 (2 rounds)
+=== W=8 MMA=0 23:41:53
+Metal profile (GPU time per part, all passes):
+  attend            155.2 ms    2.6 %  324 buffers
+  attn_proj         425.8 ms    7.1 %  972 buffers
+  dn_proj          1181.7 ms   19.8 %  1944 buffers
+  dn_scan           146.0 ms    2.4 %  972 buffers
+  embed               0.4 ms    0.0 %  27 buffers
+  experts          1524.5 ms   25.5 %  1296 buffers
+  experts_down      686.3 ms   11.5 %  1296 buffers
+  gated_read        903.6 ms   15.1 %  3888 buffers
+  head              228.9 ms    3.8 %  24 buffers
+  indexer           277.8 ms    4.6 %  648 buffers
+  ple                25.8 ms    0.4 %  27 buffers
+  router            102.0 ms    1.7 %  1296 buffers
+  shared_exp        322.6 ms    5.4 %  1296 buffers
+  total            5980.6 ms
+Backend metal-apple-m1-max, prefill 64, decode 64 in passes of 8, 2 rounds
+  warmup: prefill 60.50 tok/s, decode 42.91 tok/s (not counted)
+  round 1: prefill 90.91 tok/s, decode 43.92 tok/s, pass 182.14 ms, MTP fill 0.00 ms, step 0.00 ms
+  round 2: prefill 90.23 tok/s, decode 43.86 tok/s, pass 182.41 ms, MTP fill 0.00 ms, step 0.00 ms
+prefill: median 90.91 tok/s, range 90.23 ... 90.91 (2 rounds)
+decode: median 43.92 tok/s, range 43.86 ... 43.92 (2 rounds)
+pass: median 182.41 ms, range 182.14 ... 182.41 (2 rounds)
+=== W=8 MMA=1 23:42:01
+Metal profile (GPU time per part, all passes):
+  attend            151.3 ms    2.7 %  324 buffers
+  attn_proj         353.1 ms    6.3 %  972 buffers
+  dn_proj           984.2 ms   17.5 %  1944 buffers
+  dn_scan           145.5 ms    2.6 %  972 buffers
+  embed               0.4 ms    0.0 %  27 buffers
+  experts          1533.5 ms   27.2 %  1296 buffers
+  experts_down      687.3 ms   12.2 %  1296 buffers
+  gated_read        842.3 ms   15.0 %  3888 buffers
+  head              228.0 ms    4.0 %  24 buffers
+  indexer           276.0 ms    4.9 %  648 buffers
+  ple                23.6 ms    0.4 %  27 buffers
+  router            101.4 ms    1.8 %  1296 buffers
+  shared_exp        304.6 ms    5.4 %  1296 buffers
+  total            5631.2 ms
+Backend metal-apple-m1-max, prefill 64, decode 64 in passes of 8, 2 rounds
+  warmup: prefill 59.44 tok/s, decode 46.79 tok/s (not counted)
+  round 1: prefill 90.52 tok/s, decode 47.54 tok/s, pass 168.28 ms, MTP fill 0.00 ms, step 0.00 ms
+  round 2: prefill 90.77 tok/s, decode 47.52 tok/s, pass 168.33 ms, MTP fill 0.00 ms, step 0.00 ms
+prefill: median 90.77 tok/s, range 90.52 ... 90.77 (2 rounds)
+decode: median 47.54 tok/s, range 47.52 ... 47.54 (2 rounds)
+pass: median 168.33 ms, range 168.28 ... 168.33 (2 rounds)
+=== W=8 MMA=1 23:42:08
+Metal profile (GPU time per part, all passes):
+  attend            151.8 ms    2.7 %  324 buffers
+  attn_proj         350.7 ms    6.2 %  972 buffers
+  dn_proj           985.8 ms   17.5 %  1944 buffers
+  dn_scan           146.7 ms    2.6 %  972 buffers
+  embed               0.4 ms    0.0 %  27 buffers
+  experts          1534.9 ms   27.2 %  1296 buffers
+  experts_down      688.7 ms   12.2 %  1296 buffers
+  gated_read        844.2 ms   15.0 %  3888 buffers
+  head              228.3 ms    4.0 %  24 buffers
+  indexer           278.5 ms    4.9 %  648 buffers
+  ple                23.7 ms    0.4 %  27 buffers
+  router            102.2 ms    1.8 %  1296 buffers
+  shared_exp        305.3 ms    5.4 %  1296 buffers
+  total            5641.1 ms
+Backend metal-apple-m1-max, prefill 64, decode 64 in passes of 8, 2 rounds
+  warmup: prefill 60.64 tok/s, decode 47.28 tok/s (not counted)
+  round 1: prefill 90.38 tok/s, decode 47.39 tok/s, pass 168.83 ms, MTP fill 0.00 ms, step 0.00 ms
+  round 2: prefill 90.44 tok/s, decode 47.35 tok/s, pass 168.94 ms, MTP fill 0.00 ms, step 0.00 ms
+prefill: median 90.44 tok/s, range 90.38 ... 90.44 (2 rounds)
+decode: median 47.39 tok/s, range 47.35 ... 47.39 (2 rounds)
+pass: median 168.94 ms, range 168.83 ... 168.94 (2 rounds)
+=== W=8 MMA=0 23:42:15
+Metal profile (GPU time per part, all passes):
+  attend            156.2 ms    2.6 %  324 buffers
+  attn_proj         425.0 ms    7.1 %  972 buffers
+  dn_proj          1185.4 ms   19.8 %  1944 buffers
+  dn_scan           146.5 ms    2.4 %  972 buffers
+  embed               0.4 ms    0.0 %  27 buffers
+  experts          1525.0 ms   25.5 %  1296 buffers
+  experts_down      685.9 ms   11.5 %  1296 buffers
+  gated_read        905.3 ms   15.1 %  3888 buffers
+  head              228.5 ms    3.8 %  24 buffers
+  indexer           277.6 ms    4.6 %  648 buffers
+  ple                26.0 ms    0.4 %  27 buffers
+  router            102.4 ms    1.7 %  1296 buffers
+  shared_exp        323.2 ms    5.4 %  1296 buffers
+  total            5987.4 ms
+Backend metal-apple-m1-max, prefill 64, decode 64 in passes of 8, 2 rounds
+  warmup: prefill 59.59 tok/s, decode 43.48 tok/s (not counted)
+  round 1: prefill 90.42 tok/s, decode 43.74 tok/s, pass 182.88 ms, MTP fill 0.00 ms, step 0.00 ms
+  round 2: prefill 90.60 tok/s, decode 44.03 tok/s, pass 181.69 ms, MTP fill 0.00 ms, step 0.00 ms
+prefill: median 90.60 tok/s, range 90.42 ... 90.60 (2 rounds)
+decode: median 44.03 tok/s, range 43.74 ... 44.03 (2 rounds)
+pass: median 182.88 ms, range 181.69 ... 182.88 (2 rounds)
+=== W=4 MMA=1 23:42:22
+Metal profile (GPU time per part, all passes):
+  attend            165.5 ms    2.8 %  612 buffers
+  attn_proj         357.4 ms    6.0 %  1836 buffers
+  dn_proj           991.2 ms   16.6 %  3672 buffers
+  dn_scan           178.3 ms    3.0 %  1836 buffers
+  embed               0.5 ms    0.0 %  51 buffers
+  experts          1625.1 ms   27.2 %  2448 buffers
+  experts_down      725.0 ms   12.1 %  2448 buffers
+  gated_read        928.5 ms   15.5 %  7344 buffers
+  head              229.0 ms    3.8 %  48 buffers
+  indexer           287.2 ms    4.8 %  1224 buffers
+  ple                24.7 ms    0.4 %  51 buffers
+  router            131.8 ms    2.2 %  2448 buffers
+  shared_exp        329.5 ms    5.5 %  2448 buffers
+  total            5973.8 ms
+Backend metal-apple-m1-max, prefill 64, decode 64 in passes of 4, 2 rounds
+  warmup: prefill 60.12 tok/s, decode 40.12 tok/s (not counted)
+  round 1: prefill 90.19 tok/s, decode 40.63 tok/s, pass 98.44 ms, MTP fill 0.00 ms, step 0.00 ms
+  round 2: prefill 90.30 tok/s, decode 40.60 tok/s, pass 98.53 ms, MTP fill 0.00 ms, step 0.00 ms
+prefill: median 90.30 tok/s, range 90.19 ... 90.30 (2 rounds)
+decode: median 40.63 tok/s, range 40.60 ... 40.63 (2 rounds)
+pass: median 98.53 ms, range 98.44 ... 98.53 (2 rounds)
+=== W=4 MMA=0 23:42:30
+Metal profile (GPU time per part, all passes):
+  attend            161.6 ms    2.5 %  612 buffers
+  attn_proj         425.9 ms    6.7 %  1836 buffers
+  dn_proj          1207.8 ms   19.0 %  3672 buffers
+  dn_scan           177.6 ms    2.8 %  1836 buffers
+  embed               0.5 ms    0.0 %  51 buffers
+  experts          1631.2 ms   25.7 %  2448 buffers
+  experts_down      728.6 ms   11.5 %  2448 buffers
+  gated_read        992.7 ms   15.6 %  7344 buffers
+  head              229.6 ms    3.6 %  48 buffers
+  indexer           286.7 ms    4.5 %  1224 buffers
+  ple                26.8 ms    0.4 %  51 buffers
+  router            132.4 ms    2.1 %  2448 buffers
+  shared_exp        350.8 ms    5.5 %  2448 buffers
+  total            6352.0 ms
+Backend metal-apple-m1-max, prefill 64, decode 64 in passes of 4, 2 rounds
+  warmup: prefill 59.92 tok/s, decode 37.33 tok/s (not counted)
+  round 1: prefill 90.43 tok/s, decode 37.10 tok/s, pass 107.81 ms, MTP fill 0.00 ms, step 0.00 ms
+  round 2: prefill 90.37 tok/s, decode 37.12 tok/s, pass 107.76 ms, MTP fill 0.00 ms, step 0.00 ms
+prefill: median 90.43 tok/s, range 90.37 ... 90.43 (2 rounds)
+decode: median 37.12 tok/s, range 37.10 ... 37.12 (2 rounds)
+pass: median 107.81 ms, range 107.76 ... 107.81 (2 rounds)
+23:42:38
+- Quiet check (2026-11-12 23:42:38): do not measure
+  - do not measure: the GPU is 97 % busy

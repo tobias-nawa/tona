@@ -1,0 +1,20 @@
+passes per layer 682, slots 90, k 10, test = second half
+lru                          hit  76.29 %  (exact routing)  misses/pass  6.38
+lrfu                         hit  78.25 %  (exact routing)  misses/pass  5.85
+learned                      hit  78.64 %  (exact routing)  misses/pass  5.75
+belady                       hit  88.32 %  (exact routing)  misses/pass  3.15
+prune:0:4                    hit  91.75 %  replaced 17.07 %  weight mass lost  9.92 %  misses/pass  1.71
+prune:0:6                    hit  87.12 %  replaced 10.89 %  weight mass lost  5.76 %  misses/pass  2.92
+prune:0:8                    hit  82.55 %  replaced  5.38 %  weight mass lost  2.66 %  misses/pass  4.25
+bonus:2:4                    hit  94.24 %  replaced 23.73 %  weight mass lost 14.38 %  misses/pass  1.22
+bonus:2:6                    hit  91.03 %  replaced 19.01 %  weight mass lost 10.81 %  misses/pass  2.01
+bonus:2:10                   hit  84.44 %  replaced 11.05 %  weight mass lost  5.94 %  misses/pass  3.85
+bonus:3:4                    hit  95.36 %  replaced 28.19 %  weight mass lost 17.49 %  misses/pass  0.98
+bonus:3:6                    hit  92.90 %  replaced 23.88 %  weight mass lost 13.98 %  misses/pass  1.57
+bonus:3:10                   hit  87.64 %  replaced 17.18 %  weight mass lost  9.48 %  misses/pass  2.95
+bonus:5:4                    hit  96.66 %  replaced 33.48 %  weight mass lost 21.85 %  misses/pass  0.70
+bonus:5:6                    hit  94.91 %  replaced 29.33 %  weight mass lost 18.07 %  misses/pass  1.10
+bonus:5:10                   hit  91.16 %  replaced 24.33 %  weight mass lost 14.02 %  misses/pass  2.02
+bonus:10:4                   hit  98.37 %  replaced 43.41 %  weight mass lost 32.19 %  misses/pass  0.33
+bonus:10:6                   hit  97.12 %  replaced 37.57 %  weight mass lost 25.72 %  misses/pass  0.59
+bonus:10:10                  hit  94.53 %  replaced 32.83 %  weight mass lost 20.67 %  misses/pass  1.18

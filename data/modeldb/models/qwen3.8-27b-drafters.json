@@ -1,0 +1,85 @@
+{
+  "id": "qwen3.8-27b-drafters",
+  "name": "Qwen3.8-27B drafters: Tencent DSpine-b16 and NVIDIA Qwen3.5-4B draft",
+  "vendor": "Tencent / NVIDIA",
+  "release_date": "2026-11-07",
+  "lineage": {
+    "base_model": "Qwen/Qwen3.8-27B (target); DSpine is a new 5-layer draft, the NVIDIA draft is initialized from Qwen/Qwen3.5-4B",
+    "family": "Qwen3.8-27B speculative-decoding drafters (see qwen3.8-27b; the earlier official DFlash2 drafter z-lab/Qwen3.8-27B-DFlash2 dates from 2026-08-15 and is not recorded separately)",
+    "how_derived": "DSpine: parallel block drafter in which each layer passes predicted predecessor features to adjacent positions (carries causal dependencies through depth). NVIDIA: a complete small LM trained with NVIDIA Model Optimizer in external speculative decoding mode on 199,998 conversations whose target top-20 distributions were recorded"
+  },
+  "purpose": "Lower decode latency of Qwen3.8-27B without changing its output distribution: both are draft models whose blocks the target verifies. Tencent's card positions DSpine against the official DFlash2 drafter; NVIDIA states the draft is intended for NVIDIA Groq 3 LPU deployments and loads in vLLM, SGLang and TRT-LLM.",
+  "tasks": ["other", "general", "coding"],
+  "modalities": {"input": ["text"], "output": ["text"]},
+  "languages": {"natural": ["en", "many"]},
+  "license": {
+    "name": "Tencent DSpine: Apache-2.0; NVIDIA draft: NVIDIA Open Model Agreement",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "unknown",
+    "notes": "The DSpine repo LICENSE is the standard Apache License 2.0 (head read, 2026-11-19). The NVIDIA repo has no LICENSE file and the Open Model Agreement text was not read; the card says it is ready for commercial or non-commercial use and the Qwen3.5-4B and Qwen3.8-27B parts are Apache-2.0. verified stays false because only one of the two texts was read."
+  },
+  "architecture": {
+    "kind": "draft models for speculative decoding (DSpine 5-layer sliding-window block drafter; NVIDIA dense Qwen3.5-4B-based drafter)",
+    "gguf_arch": "none",
+    "params_total_b": 4.21,
+    "params_active_b": 4.21,
+    "layers": 5,
+    "attention": "DSpine: 5 sliding-window layers (window 8192), hidden 5120, 32 Q / 8 KV heads, block size 16. NVIDIA draft: 32 layers (24 Gated DeltaNet + 8 full attention), hidden 2560, 4.21 B parameters, trained at sequence length 12,288",
+    "recurrent": "NVIDIA draft: Gated DeltaNet; DSpine: none",
+    "context_native": 262144,
+    "drafter": "this is the drafter; the Qwen3.8-27B target has its own MTP head",
+    "why_this_design": "DSpine card: parallel drafting with dependencies carried through network depth gives longer accepted blocks than DFlash2 (acceptance 7.20 against 5.69 on GSM8K). NVIDIA card: a draft that is a complete LM with the target's tokenizer and a probabilistic drafting policy matched to the serving policy (temperature 1.0, top-k 20, top-p 0.95), trained on target distributions for rejection sampling."
+  },
+  "variants": [
+    {"repo": "tencent/Qwen3.8-27B-DSpine-b16", "format": "safetensors (5-layer drafter)", "size_gb": 4.05, "official": false, "notes": "official in the sense of Tencent (the Qwen team's own drafter is z-lab/Qwen3.8-27B-DFlash2, 3.85 GB)"},
+    {"repo": "nvidia/Qwen3.5-4B-Qwen3.8-27B-Draft", "format": "safetensors BF16 (4.21 B)", "size_gb": 8.43, "official": false}
+  ],
+  "hardware_fit": {
+    "pc-12gb": {"fits": "no", "basis": "estimate", "notes": "the 27B target does not fit; an extra 4 to 8 GB of draft makes it worse"},
+    "pc-16gb": {"fits": "marginal", "basis": "estimate", "notes": "27B Q4 (about 16 GB) already exceeds the 13.6 GB VRAM budget; a draft adds 4 GB (DSpine) at BF16, less quantized"},
+    "pc-24gb": {"fits": "yes", "basis": "estimate", "variant": "DSpine", "notes": "27B at Q4 plus DSpine 4 GB BF16 in 21.6 GB is tight; the NVIDIA 8.4 GB draft would need quantization"},
+    "pc-32gb": {"fits": "yes", "basis": "estimate", "variant": "DSpine or NVIDIA draft"},
+    "mac-16-24gb": {"fits": "no", "basis": "estimate"},
+    "mac-32gb": {"fits": "marginal", "basis": "estimate", "variant": "DSpine", "notes": "27B Q4 about 16 GB plus 4 GB draft within 22 GB, little KV left"},
+    "mac-64gb+": {"fits": "yes", "basis": "estimate"}
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": ["SGLang 0.5.22 (DSpine, with ReplaySSM)", "vLLM, SGLang, TRT-LLM (NVIDIA draft)"],
+    "notes": "No GGUF. DSpine uses dynamic verification following DSpark (deepseek-ai/DeepSpec) and ReplaySSM for the recurrent layers of the target. Tona uses the target's MTP head; an external drafter would be new work."
+  },
+  "benchmarks": [
+    {"name": "Acceptance length GSM8K (T=0)", "score": 7.2, "kind": "vendor", "variant": "DSpine-b16, SGLang, BF16 (DFlash2 5.69)", "source": "https://huggingface.co/tencent/Qwen3.8-27B-DSpine-b16", "unit": "tokens per step"},
+    {"name": "Acceptance length HumanEval (T=0)", "score": 5.71, "kind": "vendor", "variant": "DSpine-b16 (DFlash2 4.87)", "source": "https://huggingface.co/tencent/Qwen3.8-27B-DSpine-b16", "unit": "tokens per step"},
+    {"name": "Agent end-to-end throughput speed-up, SWE-bench Pro replay (xhigh)", "score": "3.19x over AR (DFlash2 2.87x)", "kind": "vendor", "variant": "DSpine-b16, SGLang 0.5.22, concurrency 8", "source": "https://huggingface.co/tencent/Qwen3.8-27B-DSpine-b16", "harness": "replayed tool-call prefixes, 791 tok/s total"},
+    {"name": "SPEED-Bench acceptance, coding (block 16)", "score": 5.22, "kind": "vendor", "variant": "NVIDIA Qwen3.5-4B draft (Qwen3.8-27B MTP head 3.78)", "source": "https://huggingface.co/nvidia/Qwen3.5-4B-Qwen3.8-27B-Draft", "unit": "tokens per step"},
+    {"name": "SPEED-Bench acceptance, overall average (block 16)", "score": 5.58, "kind": "vendor", "variant": "NVIDIA draft (MTP head 3.81)", "source": "https://huggingface.co/nvidia/Qwen3.5-4B-Qwen3.8-27B-Draft", "unit": "tokens per step"}
+  ],
+  "soft": {
+    "strengths": ["Acceptance lengths well above the target's own MTP head (NVIDIA: 5.58 against 3.81 overall) and above DFlash2 (Tencent), both vendor numbers", "Output distribution of the target is preserved by rejection sampling"],
+    "weaknesses": ["Throughput numbers are batched server numbers (concurrency 8, B-class GPUs), not single-user consumer-GPU decode", "Drafters cost 4 to 8 GB extra memory, which matters on 16 to 32 GB cards", "No GGUF or llama.cpp path"],
+    "behavior": "Block size 16 (DSpine) or 16 (NVIDIA acceptance table); DSpine needs dynamic verification and ReplaySSM, the NVIDIA draft samples probabilistically under the serving policy.",
+    "best_for": ["server or large-VRAM deployments of Qwen3.8-27B"],
+    "avoid_for": ["12 to 16 GB cards where VRAM is the limit"],
+    "maturity": "DSpine 6.9k downloads, NVIDIA draft under 1k; both are about two weeks old."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Prior art for our speculative decoding work on the Qwen3.8-27B target (acceptance 5.6 against 3.8 for the MTP head). The memory cost and recurrent-layer verification (ReplaySSM) make it a research input rather than an offer for 16 GB users.",
+    "blockers": ["no external-drafter path in Tona", "extra 4 to 8 GB memory", "NVIDIA license text unread"]
+  },
+  "sources": [
+    {"url": "https://huggingface.co/tencent/Qwen3.8-27B-DSpine-b16", "kind": "primary", "checked": "2026-11-19", "note": "README, config.json and LICENSE head read"},
+    {"url": "https://huggingface.co/nvidia/Qwen3.5-4B-Qwen3.8-27B-Draft", "kind": "primary", "checked": "2026-11-19", "note": "README and config.json read; no LICENSE file"},
+    {"url": "https://huggingface.co/z-lab/Qwen3.8-27B-DFlash2", "kind": "primary", "checked": "2026-11-19", "note": "metadata only (created 2026-08-15, Apache-2.0 tag)"}
+  ],
+  "open_questions": [
+    "Single-user decode speed-up on a consumer GPU (all vendor numbers are server batches)",
+    "NVIDIA Open Model Agreement text",
+    "Whether either drafter can be quantized without losing acceptance",
+    "Release date of DSpine against the DSpark paper arXiv 2607.05147"
+  ],
+  "last_checked": "2026-11-19"
+}

@@ -1,0 +1,132 @@
+{
+  "id": "llama-embed-nemotron-8b",
+  "name": "Llama-Embed-Nemotron-8B",
+  "vendor": "NVIDIA",
+  "release_date": "2025-10-21",
+  "lineage": {
+    "base_model": "Llama-3.1-8B",
+    "how_derived": "fine-tuned with bidirectional attention"
+  },
+  "purpose": "Multilingual and cross-lingual retrieval, reranking, similarity and classification for RAG systems.",
+  "tasks": [
+    "embeddings"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "embedding"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "many"
+    ]
+  },
+  "license": {
+    "name": "NVIDIA License (customized-nscl-v1) plus Llama 3.1 Community License",
+    "verified": true,
+    "commercial_use": "no",
+    "redistribution": "limited",
+    "notes": "NVIDIA License text read in LICENSE: 3.3 'The Work and any derivative works thereof only may be used or intended for use non-commercially ... \"non-commercially\" means for non-commercial research purposes only', NVIDIA excepted. Redistribution only under the same license with a copy (3.1). Card and text agree. Note: 'research purposes only' is narrower than hobby use. Verdict policy (README, 2026-11-19): this licence term does not lower tona_fit; kept here for an installer label."
+  },
+  "architecture": {
+    "kind": "dense decoder, bidirectional attention",
+    "params_total_b": 7.5,
+    "context_native": 32768
+  },
+  "variants": [
+    {
+      "repo": "nvidia/llama-embed-nemotron-8b",
+      "format": "safetensors",
+      "official": true,
+      "notes": "4096-d"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "notes": "Q4"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "quantized"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-16-24gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "unknown",
+    "other": [
+      "Transformers"
+    ]
+  },
+  "benchmarks": [
+    {
+      "name": "MMTEB (MTEB Multilingual v2) mean task",
+      "score": 69.46,
+      "kind": "vendor",
+      "variant": "BF16",
+      "date": "2025-10-21",
+      "source": "https://huggingface.co/nvidia/llama-embed-nemotron-8b"
+    }
+  ],
+  "soft": {
+    "weaknesses": [
+      "non-commercial",
+      "tested on A100/H100 only",
+      "below Qwen3-Embedding-8B on mean score (70.58)"
+    ]
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "MMTEB 69.46 (vendor) is below Qwen3-Embedding-8B (70.58) at the same 8B size, so there is no quality edge over the current embedding offer.",
+    "blockers": [
+      "Tona has no embeddings route"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/nvidia/llama-embed-nemotron-8b",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/nvidia/llama-embed-nemotron-8b/raw/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "license text"
+    }
+  ],
+  "open_questions": [
+    "Quantized GGUF availability"
+  ],
+  "last_checked": "2026-11-19"
+}

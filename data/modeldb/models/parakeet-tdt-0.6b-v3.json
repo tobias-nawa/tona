@@ -1,0 +1,259 @@
+{
+  "id": "parakeet-tdt-0.6b-v3",
+  "name": "Parakeet-TDT-0.6B-v3",
+  "vendor": "NVIDIA",
+  "release_date": "2025-08",
+  "purpose": "Multilingual (25 European languages) high-throughput ASR with punctuation, capitalization and word timestamps; automatic language detection (card).",
+  "tasks": [
+    "audio-transcription"
+  ],
+  "modalities": {
+    "input": [
+      "audio"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "de",
+      "en",
+      "fr",
+      "es",
+      "it",
+      "pt",
+      "nl",
+      "pl",
+      "ru",
+      "uk",
+      "many"
+    ]
+  },
+  "license": {
+    "name": "CC-BY-4.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "HF tag cc-by-4.0, no LICENSE file in the repo. CC BY 4.0 legal code read (Fluid Speech Pro repo LICENSE, same license); commercial use and redistribution allowed with attribution."
+  },
+  "architecture": {
+    "kind": "NON-AUTOREGRESSIVE FastConformer encoder + TDT transducer decoder (no LLM; compute-bound encoder, Tona's decode machinery does not apply)",
+    "params_total_b": 0.6
+  },
+  "variants": [
+    {
+      "repo": "nvidia/parakeet-tdt-0.6b-v3",
+      "format": "NeMo / safetensors",
+      "official": true
+    },
+    {
+      "repo": "handy-computer GGUF",
+      "format": "GGUF Q8_0",
+      "size_gb": 0.74,
+      "official": false,
+      "notes": "transcribe.cpp; size from its docs"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "CPU also plausible"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "NeMo",
+      "transcribe.cpp (CPU, Metal, Vulkan, CUDA, HIP/ROCm 6.1+)",
+      "parakeet.cpp",
+      "onnx-asr / sherpa-onnx",
+      "parakeet-mlx",
+      "FluidAudio Core ML"
+    ],
+    "notes": "transcribe.cpp README lists HIP/ROCm (research/52 said Vulkan only: update it). Windowed local attention [256,256] gives linear memory: a 25 min talk on a 16 GB laptop."
+  },
+  "benchmarks": [
+    {
+      "name": "Open ASR English avg WER",
+      "score": 6.34,
+      "kind": "vendor",
+      "source": "https://huggingface.co/nvidia/parakeet-tdt-0.6b-v3",
+      "unit": "% WER"
+    },
+    {
+      "name": "FLEURS German WER",
+      "score": 5.04,
+      "kind": "vendor",
+      "source": "https://huggingface.co/nvidia/parakeet-tdt-0.6b-v3",
+      "unit": "% WER"
+    },
+    {
+      "name": "CoVoST German WER",
+      "score": 4.84,
+      "kind": "vendor",
+      "source": "https://huggingface.co/nvidia/parakeet-tdt-0.6b-v3",
+      "unit": "% WER"
+    },
+    {
+      "name": "RTFx (eval metadata, NVIDIA GPU)",
+      "score": 3332,
+      "kind": "vendor",
+      "source": "https://huggingface.co/nvidia/parakeet-tdt-0.6b-v3",
+      "unit": "x real time"
+    },
+    {
+      "name": "TED-LIUM 3 full talks WER, full attention to windowed",
+      "score": "2.87 -> 2.71",
+      "kind": "vendor",
+      "source": "https://github.com/handy-computer/transcribe.cpp/blob/main/docs/models/parakeet.md",
+      "variant": "GGUF Q8_0"
+    },
+    {
+      "name": "Long-form mean WER (55 min chunks)",
+      "score": 13.37,
+      "kind": "vendor",
+      "source": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Transcribe-30B-A4B",
+      "harness": "NVIDIA's table on the Nemotron Transcribe card"
+    },
+    {
+      "name": "German WER, Open ASR multilingual track (6 of 8 datasets)",
+      "score": 4.12,
+      "kind": "independent",
+      "source": "https://huggingface.co/spaces/hf-audio/open_asr_leaderboard",
+      "date": "2026-11-19",
+      "harness": "Open ASR Leaderboard multilingual track, German column (WER %), read from the Space config JSON 2026-11-19; rows differ in how many of the 8 datasets they cover",
+      "unit": "% WER"
+    },
+    {
+      "name": "Open ASR English avg WER (leaderboard rank 39 of 69)",
+      "score": 7.04,
+      "kind": "independent",
+      "source": "https://huggingface.co/spaces/hf-audio/open_asr_leaderboard",
+      "date": "2026-11-19",
+      "harness": "Open ASR Leaderboard English track, read 2026-11-19",
+      "unit": "% WER"
+    },
+    {
+      "name": "RTFx on the leaderboard (English track, leaderboard GPU)",
+      "score": 6321.9,
+      "kind": "independent",
+      "source": "https://huggingface.co/spaces/hf-audio/open_asr_leaderboard",
+      "date": "2026-11-19",
+      "harness": "Open ASR Leaderboard, read 2026-11-19"
+    },
+    {
+      "name": "German average WER in the leaderboard paper (Table 4)",
+      "score": 4.9,
+      "kind": "independent",
+      "source": "https://arxiv.org/html/2510.06961v3",
+      "date": "2026-11-19",
+      "harness": "Open ASR Leaderboard multilingual track, paper snapshot (late 2025); whisper-large-v3 4.97, canary-1b-v2 4.96, Voxtral Mini 3B 5.36",
+      "unit": "% WER"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "Tiny (0.74 GB Q8), CPU-feasible, thousands of x real time on GPU",
+      "Word timestamps; 24 min full attention or 3 h local attention",
+      "Runs next to a coder"
+    ],
+    "weaknesses": [
+      "No diarization",
+      "No LLM-style context or instructions",
+      "Words missing from the vocabulary rarely recognized; isolated words poor"
+    ],
+    "best_for": [
+      "Dictation and batch transcription, German via the primeline fine-tune"
+    ],
+    "maturity": "NVIDIA; 1288 likes, 527k downloads; ported to many runtimes.",
+    "user_reports": [
+      {
+        "summary": "Sometimes drops whole sentences in clean audio (offline and streaming, NeMo and ONNX); a second user sees the same in July.",
+        "source": "https://huggingface.co/nvidia/parakeet-tdt-0.6b-v3/discussions/42",
+        "date": "2026-07-31",
+        "sentiment": "negative"
+      },
+      {
+        "summary": "Without an explicit language tag the model hallucinates words from other European languages (no language forcing in the API).",
+        "source": "https://huggingface.co/nvidia/parakeet-tdt-0.6b-v3/discussions/46",
+        "date": "2026-07-19",
+        "sentiment": "negative"
+      }
+    ]
+  },
+  "tona_fit": {
+    "verdict": "offer",
+    "reason": "Fast (RTFx 6322), small, CC-BY-4.0, every class; German 4.12 on the independent leaderboard is behind newer models (Cohere 3.10, Qwen3-ASR 3.88, Fluid 3.76) but it has the mature GGML path (transcribe.cpp incl. HIP). Known: dropped sentences, language hallucination without a tag. Run as managed side engine."
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/nvidia/parakeet-tdt-0.6b-v3",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://github.com/handy-computer/transcribe.cpp",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://github.com/handy-computer/transcribe.cpp/blob/main/docs/models/parakeet.md",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Transcribe-30B-A4B",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "long-form comparison row"
+    },
+    {
+      "url": "research/52-purpose-models.md",
+      "kind": "own",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/spaces/hf-audio/open_asr_leaderboard",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "Space /config JSON read directly"
+    },
+    {
+      "url": "https://arxiv.org/html/2510.06961v3",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "Open ASR Leaderboard paper; read through the fetch tool summarizer"
+    }
+  ],
+  "open_questions": [
+    "Own RTF on gfx1200 via transcribe.cpp ROCm (unmeasured)"
+  ],
+  "last_checked": "2026-11-19"
+}

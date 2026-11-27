@@ -1,0 +1,47 @@
+{
+ "ready": true,
+ "uptime": 60.0,
+ "phases": [],
+ "system": {
+  "gpu": {
+   "vram_used": 15100000000.0,
+   "vram_total": 17160000000.0,
+   "busy": 87,
+   "power_w": 150,
+   "power_cap_w": 160,
+   "sclk_mhz": 2900,
+   "temp_c": 62,
+   "temp_junction_c": 71
+  },
+  "ram": {
+   "total": 64000000000.0,
+   "available": 15000000000.0
+  }
+ },
+ "config": {
+  "model": "Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf",
+  "drafter": "mtp",
+  "n_ctx": 262144,
+  "kv_gb": 1.2,
+  "kv_in": "RAM",
+  "vram_gb": 14.1,
+  "pinned_gb": 33.8,
+  "slots": 86,
+  "load_s": 93.0
+ },
+ "engine": {
+  "state": "idle",
+  "elapsed": 0.0,
+  "prompt": 0,
+  "prefill_done": 0,
+  "prefill_total": 0,
+  "out_tokens": 0,
+  "tok_s": 0.0,
+  "active": [],
+  "slots": 6,
+  "queue": 0,
+  "waiting": []
+ },
+ "totals": {},
+ "recent": []
+}

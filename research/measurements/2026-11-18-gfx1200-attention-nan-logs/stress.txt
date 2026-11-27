@@ -1,0 +1,26 @@
+stress decode  hd 128 nh 32 nkv 2 pos0   511 x 1: 200 runs, NaN 0, inf 0, runs differing 0: ok
+stress decode  hd 128 nh 32 nkv 2 pos0   508 x 4: 200 runs, NaN 0, inf 0, runs differing 0: ok
+stress decode  hd 128 nh 32 nkv 2 pos0  1000 x 4: 200 runs, NaN 0, inf 0, runs differing 0: ok
+stress prefill hd 128 nh 32 nkv 2 pos0   437 x 75: 200 runs, NaN 0, inf 0, runs differing 0: ok
+stress prefill hd 128 nh 32 nkv 2 pos0   436 x 76: 200 runs, NaN 0, inf 0, runs differing 0: ok
+stress prefill hd 128 nh 32 nkv 2 pos0     0 x 76: 200 runs, NaN 0, inf 0, runs differing 0: ok
+stress decode  hd 128 nh 64 nkv 4 pos0   511 x 1: 200 runs, NaN 0, inf 0, runs differing 0: ok
+stress decode  hd 128 nh 64 nkv 4 pos0   508 x 4: 200 runs, NaN 0, inf 0, runs differing 0: ok
+stress decode  hd 128 nh 64 nkv 4 pos0  1000 x 4: 200 runs, NaN 0, inf 0, runs differing 0: ok
+stress prefill hd 128 nh 64 nkv 4 pos0   437 x 75: 200 runs, NaN 0, inf 0, runs differing 0: ok
+stress prefill hd 128 nh 64 nkv 4 pos0   436 x 76: 200 runs, NaN 0, inf 0, runs differing 0: ok
+stress prefill hd 128 nh 64 nkv 4 pos0     0 x 76: 200 runs, NaN 0, inf 0, runs differing 0: ok
+stress decode  hd 256 nh 16 nkv 2 pos0   511 x 1: 200 runs, NaN 0, inf 0, runs differing 0: ok
+stress decode  hd 256 nh 16 nkv 2 pos0   508 x 4: 200 runs, NaN 0, inf 0, runs differing 0: ok
+stress decode  hd 256 nh 16 nkv 2 pos0  1000 x 4: 200 runs, NaN 0, inf 0, runs differing 0: ok
+stress prefill hd 256 nh 16 nkv 2 pos0   437 x 75: 200 runs, NaN 0, inf 0, runs differing 0: ok
+stress prefill hd 256 nh 16 nkv 2 pos0   436 x 76: 200 runs, NaN 0, inf 0, runs differing 0: ok
+stress prefill hd 256 nh 16 nkv 2 pos0     0 x 76: 200 runs, NaN 0, inf 0, runs differing 0: ok
+stress decode  hd 256 nh 64 nkv 4 pos0   511 x 1: 200 runs, NaN 0, inf 0, runs differing 0: ok
+stress decode  hd 256 nh 64 nkv 4 pos0   508 x 4: 200 runs, NaN 0, inf 0, runs differing 0: ok
+stress decode  hd 256 nh 64 nkv 4 pos0  1000 x 4: 200 runs, NaN 0, inf 0, runs differing 0: ok
+stress prefill hd 256 nh 64 nkv 4 pos0   437 x 75: 200 runs, NaN 0, inf 0, runs differing 0: ok
+stress prefill hd 256 nh 64 nkv 4 pos0   436 x 76: 200 runs, NaN 0, inf 0, runs differing 0: ok
+stress prefill hd 256 nh 64 nkv 4 pos0     0 x 76: 200 runs, NaN 0, inf 0, runs differing 0: ok
+stress: all ok
+rc=0

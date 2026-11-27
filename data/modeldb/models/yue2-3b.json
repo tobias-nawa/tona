@@ -1,0 +1,148 @@
+{
+  "id": "yue2-3b",
+  "name": "YuE2-3B (music generation with editable scores)",
+  "vendor": "M-A-P (multimodal-art-projection)",
+  "release_date": "2026-09-09",
+  "lineage": {
+    "family": "YuE (YuE2-3B with YuE2-Vae; SheetSage2 and MERT-v2 companions)"
+  },
+  "purpose": "'Frontier music generation with editable scores': symbolic planning, agentic editing, cover of existing songs (card headings; Chinese and English lyrics).",
+  "tasks": [
+    "other"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "audio"
+    ],
+    "output": [
+      "audio"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "zh",
+      "en"
+    ]
+  },
+  "license": {
+    "name": "CC-BY-NC-4.0",
+    "verified": false,
+    "commercial_use": "no",
+    "redistribution": "limited",
+    "notes": "Card tag cc-by-nc-4.0 and a LICENSE file plus third-party licences (SnakeBeta NVIDIA MIT, stable-audio-tools MIT) in the repo; texts not read. Non-commercial per the CC licence name. Verdict policy (README, 2026-11-19): this licence term does not lower tona_fit; kept here for an installer label."
+  },
+  "architecture": {
+    "kind": "3.6B-parameter causal LM (YuE2ForCausalLM, custom code) generating music with the YuE2-Vae audio codec",
+    "params_total_b": 3.63
+  },
+  "variants": [
+    {
+      "repo": "m-a-p/YuE2-3B",
+      "format": "safetensors BF16",
+      "official": true,
+      "size_gb": 7.26,
+      "notes": "20.6k downloads, 1,266 likes"
+    },
+    {
+      "repo": "audio-cpp/Yue2-3B-GGUF",
+      "format": "GGUF (audio.cpp)",
+      "official": false,
+      "notes": "265k downloads; also Serveurperso/YuE2-GGUF with 6.9M downloads"
+    },
+    {
+      "repo": "Comfy-Org/YuE2",
+      "format": "ComfyUI repack",
+      "official": false,
+      "notes": "243k downloads"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (9.6 GB)"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (13.6 GB)"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (21.6 GB)"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (29.6 GB)"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "7.3 GB file against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "7.3 GB file against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "7.3 GB file against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "audio.cpp GGUF",
+      "ComfyUI"
+    ],
+    "notes": "llama.cpp b12458 (2026-11-17) 'mtmd: support YuE2-3B'."
+  },
+  "benchmarks": [],
+  "soft": {
+    "strengths": [
+      "editable symbolic plan before audio generation",
+      "7.3 GB, runs locally"
+    ],
+    "weaknesses": [
+      "non-commercial licence",
+      "music, not speech or text: outside Tona's coding-worker purpose"
+    ],
+    "maturity": "The YuE line since 2025; 1,266 likes in 10 weeks."
+  },
+  "tona_fit": {
+    "verdict": "reject",
+    "reason": "Music generation is outside Tona's coding-agent purpose; recorded because llama.cpp and the audio.cpp ecosystem now carry it."
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/m-a-p/YuE2-3B",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README top, config, HF API"
+    },
+    {
+      "url": "https://github.com/ggml-org/llama.cpp/releases",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "b12458"
+    }
+  ],
+  "open_questions": [
+    "Benchmarks (card section 'Benchmarks') not read",
+    "Licence texts not read"
+  ],
+  "last_checked": "2026-11-19"
+}

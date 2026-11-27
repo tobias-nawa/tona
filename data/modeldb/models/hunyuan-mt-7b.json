@@ -1,0 +1,166 @@
+{
+  "id": "hunyuan-mt-7b",
+  "name": "Hunyuan-MT-7B (and Chimera-7B)",
+  "vendor": "Tencent",
+  "release_date": "2025-09-01",
+  "lineage": {
+    "how_derived": "pretraining, cross-lingual pretraining, SFT, translation enhancement and ensemble refinement"
+  },
+  "purpose": "Translation between languages; Hunyuan-MT-Chimera-7B is an ensemble model that refines several candidate translations into one.",
+  "tasks": [
+    "translation"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "de",
+      "many"
+    ]
+  },
+  "license": {
+    "name": "Tencent Hunyuan Community License Agreement (Hunyuan-MT, release 2025-09-01)",
+    "verified": true,
+    "commercial_use": "limited",
+    "redistribution": "limited",
+    "notes": "License.txt read in full. Decisive clause: the first line states 'THIS LICENSE AGREEMENT DOES NOT APPLY IN THE EUROPEAN UNION, UNITED KINGDOM AND SOUTH KOREA'; the Territory excludes them (1k) and Section 5(c) says 'You must not use, reproduce, modify, distribute, or display the Tencent Hunyuan Works, Output or results ... outside the Territory. Any such use outside the Territory is unlicensed and unauthorized'; the Acceptable Use Policy repeats 'Outside the Territory' (item 1) and bars military use (19), high-stakes automated decisions (14) and unlicensed professional practice (20). Section 5(b): you must not use the Works or any Output 'to improve any other AI model'. Section 4: more than 100 million monthly active users needs a separate license. Section 3 requires distributing the agreement and a Notice file, exclusively within the Territory. Outside the EU/UK/Korea commercial use is allowed."
+  },
+  "architecture": {
+    "kind": "dense transformer (HunYuanDenseV1ForCausalLM), GQA",
+    "params_total_b": 7,
+    "params_active_b": 7,
+    "layers": 32,
+    "attention": "GQA, 32 heads and 8 KV heads, head dim 128",
+    "recurrent": "none",
+    "context_native": 32768,
+    "drafter": "none",
+    "why_this_design": "Not an architecture claim: the card describes a five-stage training framework (pretraining, cross-lingual pretraining, SFT, translation enhancement, ensemble refinement) and an ensemble model, Chimera, that refines several candidate translations into one."
+  },
+  "variants": [
+    {
+      "repo": "tencent/Hunyuan-MT-7B",
+      "format": "safetensors",
+      "official": true
+    },
+    {
+      "repo": "tencent/Hunyuan-MT-Chimera-7B",
+      "format": "safetensors",
+      "official": true,
+      "notes": "ensemble refiner"
+    },
+    {
+      "repo": "tencent/Hunyuan-MT-7B-fp8",
+      "format": "FP8",
+      "official": true,
+      "notes": "FP8 versions listed on the card; exact repo name not read"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q4-Q8",
+      "notes": "estimate"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q8"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "BF16"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "BF16"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q4-Q8"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "BF16"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "BF16"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "unknown",
+    "other": [
+      "community GGUFs exist (mradermacher, Mungert, others, created from 2025-09-02)",
+      "MLX 4/8 bit (mlx-community)",
+      "transformers (hunyuan_v1_dense)"
+    ],
+    "notes": "Hidden size 4096, 32 layers, intermediate 14336, vocabulary 290,943 (config org_vocab_size). Community GGUF conversions imply llama.cpp can load it; not verified by us."
+  },
+  "benchmarks": [
+    {
+      "name": "WMT25 (vendor claim: first place in 30 of 31 language categories entered)",
+      "score": "30 of 31 first places",
+      "kind": "vendor",
+      "source": "https://huggingface.co/tencent/Hunyuan-MT-7B"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "German is in the language table; 33 languages in the text, 38 entries in the table (card inconsistent)"
+    ],
+    "weaknesses": [
+      "No numeric scores on the card, only the WMT25 claim",
+      "License excludes the EU, UK and South Korea entirely",
+      "Use of outputs to improve other AI models is forbidden"
+    ],
+    "best_for": [
+      "Translation"
+    ],
+    "maturity": "Tencent; open-sourced on Hugging Face 2025-09-01."
+  },
+  "tona_fit": {
+    "verdict": "reject",
+    "reason": "The license text excludes the EU, UK and South Korea: it does not apply there and use there is unlicensed. Tona's users, starting with the maintainers in Germany, are inside that excluded territory, so the model cannot be offered regardless of quality (WMT25 claim: first place in 30 of 31 language pairs entered, vendor). Tencent's output-use clause (no training other models on outputs) is a second problem.",
+    "blockers": [
+      "license does not apply in the EU, UK or South Korea"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/tencent/Hunyuan-MT-7B",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "model card"
+    },
+    {
+      "url": "https://huggingface.co/tencent/Hunyuan-MT-7B/raw/main/License.txt",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "License.txt"
+    },
+    {
+      "url": "https://huggingface.co/tencent/Hunyuan-MT-7B/raw/main/config.json",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "config.json"
+    }
+  ],
+  "open_questions": [
+    "Numeric benchmark scores (card has none)",
+    "Whether newer Hunyuan translation models carry the same territorial exclusion"
+  ],
+  "last_checked": "2026-11-19"
+}

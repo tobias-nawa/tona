@@ -1,0 +1,129 @@
+{
+  "id": "hydrogen-1.0",
+  "name": "Hydrogen-1.0",
+  "vendor": "Deep Principle",
+  "release_date": "2026-10-31",
+  "lineage": {
+    "family": "GLM-5.3",
+    "base_model": "zai-org/GLM-5.3",
+    "how_derived": "scientific post-training (details not read)"
+  },
+  "purpose": "Scientific problem solving and research assistance: explains derivations, answers scientific questions and drafts structured responses to open-ended research problems for expert review (card, via page summary).",
+  "tasks": [
+    "research",
+    "general"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en"
+    ]
+  },
+  "license": {
+    "name": "MIT (weights); vendor code Apache-2.0",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Repo has a LICENSE file (MIT tag); text not read. The README was only reachable through a page summary."
+  },
+  "architecture": {
+    "kind": "MoE with DSA attention (glm_moe_dsa)",
+    "params_total_b": 753,
+    "context_native": 1000000,
+    "drafter": "not stated"
+  },
+  "variants": [
+    {
+      "repo": "deep-principle/Hydrogen-1.0",
+      "format": "safetensors BF16",
+      "official": true
+    },
+    {
+      "repo": "deep-principle/Hydrogen-1.0-MXFP4",
+      "format": "MXFP4",
+      "official": true,
+      "notes": "15.7k downloads; sizes not checked"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "no",
+      "basis": "estimate",
+      "notes": "753B total parameters, far beyond every class"
+    },
+    "pc-16gb": {
+      "fits": "no",
+      "basis": "estimate",
+      "notes": "753B total parameters, far beyond every class"
+    },
+    "pc-24gb": {
+      "fits": "no",
+      "basis": "estimate",
+      "notes": "753B total parameters, far beyond every class"
+    },
+    "pc-32gb": {
+      "fits": "no",
+      "basis": "estimate",
+      "notes": "753B total parameters, far beyond every class"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "basis": "estimate",
+      "notes": "753B total parameters, far beyond every class"
+    },
+    "mac-32gb": {
+      "fits": "no",
+      "basis": "estimate",
+      "notes": "753B total parameters, far beyond every class"
+    },
+    "mac-64gb+": {
+      "fits": "no",
+      "basis": "estimate",
+      "notes": "753B total parameters, far beyond every class"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "unknown"
+  },
+  "benchmarks": [],
+  "soft": {
+    "weaknesses": [
+      "the card reports no numeric benchmarks (page summary)"
+    ],
+    "maturity": "49k downloads, 301 likes"
+  },
+  "tona_fit": {
+    "verdict": "reject",
+    "reason": "753B parameters; a science fine-tune of GLM-5.3 with no reported scores.",
+    "blockers": [
+      "size"
+    ]
+  },
+  "open_questions": [
+    "active parameters",
+    "any evaluation number"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/deep-principle/Hydrogen-1.0",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "fetched through a page summary; raw README returned 401"
+    },
+    {
+      "url": "https://huggingface.co/api/models/deep-principle/Hydrogen-1.0",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "tags: base GLM-5.3, licence mit"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

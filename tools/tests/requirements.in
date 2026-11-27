@@ -1,0 +1,10 @@
+# Direct dependencies of the test and coverage tooling. requirements.txt is generated from this file:
+#   pip-compile --generate-hashes --allow-unsafe --strip-extras --output-file=tools/tests/requirements.txt tools/tests/requirements.in
+# (pip-tools 7.6.2). Install with: pip install --require-hashes -r tools/tests/requirements.txt
+coverage==7.17.3
+diff-cover==11.0.3
+gcovr==8.8
+pytest==9.2.0
+lizard==1.26.1
+# tools/coder_requant (repack --tile) computes the tile layout with numpy
+numpy==2.5.5

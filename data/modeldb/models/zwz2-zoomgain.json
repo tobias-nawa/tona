@@ -1,0 +1,166 @@
+{
+  "id": "zwz2-zoomgain",
+  "name": "ZwZ2 and ZoomGain (fine-grained perception RL models)",
+  "vendor": "inclusionAI",
+  "release_date": "2026-10-16",
+  "lineage": {
+    "family": "Zooming-without-Zooming",
+    "base_model": "ZwZ2: Qwen3.5 (9B confirmed on the card; 4B and 27B siblings exist); ZoomGain: 4B and 9B",
+    "how_derived": "GRPO without an SFT stage on about 20K verified multi-region questions built from SA-1B images (ZwZ2, EvidenceConnect); ZoomGain builds questions about full images from details visible only when zoomed in"
+  },
+  "purpose": "Teach vision-language models to connect visual evidence across regions and read fine detail in full images without zoom tools at inference (cards).",
+  "tasks": [
+    "vision"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en"
+    ]
+  },
+  "license": {
+    "name": "not stated",
+    "verified": false,
+    "commercial_use": "unknown",
+    "redistribution": "unknown",
+    "notes": "No license field in the ZwZ2-9B, ZoomGain-9B repos; the base Qwen3.5 models are Apache-2.0 but the fine-tune's terms are not given."
+  },
+  "architecture": {
+    "kind": "Qwen3.5 vision-language models after RL",
+    "params_total_b": 9.0
+  },
+  "variants": [
+    {
+      "repo": "inclusionAI/ZwZ2-9B",
+      "format": "safetensors BF16",
+      "size_gb": 18.82,
+      "official": true
+    },
+    {
+      "repo": "inclusionAI/ZoomGain-9B",
+      "format": "safetensors BF16",
+      "size_gb": 18.82,
+      "official": true
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "no",
+      "variant": "9B BF16 (18.8 GB; no quantization found)",
+      "basis": "estimate",
+      "notes": "18.82 GB against a VRAM budget of 9.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-16gb": {
+      "fits": "no",
+      "variant": "9B BF16 (18.8 GB; no quantization found)",
+      "basis": "estimate",
+      "notes": "18.82 GB against a VRAM budget of 13.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-24gb": {
+      "fits": "marginal",
+      "variant": "9B BF16 (18.8 GB; no quantization found)",
+      "basis": "estimate",
+      "notes": "18.82 GB against a VRAM budget of 21.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "9B BF16 (18.8 GB; no quantization found)",
+      "basis": "estimate",
+      "notes": "18.82 GB against a VRAM budget of 29.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "9B BF16 (18.8 GB; no quantization found)",
+      "basis": "estimate",
+      "notes": "18.82 GB against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "marginal",
+      "variant": "9B BF16 (18.8 GB; no quantization found)",
+      "basis": "estimate",
+      "notes": "18.82 GB against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "9B BF16 (18.8 GB; no quantization found)",
+      "basis": "estimate",
+      "notes": "18.82 GB against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "unknown",
+    "other": [
+      "transformers 5.13.1",
+      "vLLM 0.19.1 for the ZoomGain evaluation"
+    ]
+  },
+  "benchmarks": [
+    {
+      "name": "25 benchmarks across six domains, overall accuracy",
+      "score": "51.63 to 56.59 (+4.96)",
+      "kind": "vendor",
+      "variant": "ZwZ2-9B vs its Qwen3.5-9B base",
+      "source": "https://huggingface.co/inclusionAI/ZwZ2-9B"
+    },
+    {
+      "name": "ZoomGainBench, best of 28 evaluated models",
+      "score": 61.08,
+      "kind": "vendor",
+      "variant": "paper statement; ZoomGain-9B 'superior' on perception benchmarks, number not read",
+      "source": "https://huggingface.co/inclusionAI/ZoomGain-9B"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "improves its base on every one of 25 benchmarks (vendor), including spatial reasoning and multimodal-agent tasks"
+    ],
+    "weaknesses": [
+      "no licence",
+      "research artifacts whose per-benchmark numbers are only in images"
+    ],
+    "maturity": "ZwZ2 1.4k downloads, ZoomGain 1.6k; papers arXiv 2610.37037 and 2611.14076; earlier skipped as research artifacts, recorded after opening the cards"
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Releasable fine-tunes of Qwen3.5-9B with a measurable perception gain, but no licence, no GGUF and a small gain over a base model we can already offer. Watch for a licence and a screenshot-focused evaluation.",
+    "blockers": [
+      "licence missing",
+      "no quantized builds"
+    ]
+  },
+  "open_questions": [
+    "licence",
+    "ZwZ2 27B and 4B base models and sizes",
+    "gain on screenshot and document benchmarks specifically"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/inclusionAI/ZwZ2-9B",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README read"
+    },
+    {
+      "url": "https://huggingface.co/inclusionAI/ZoomGain-9B",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README read"
+    },
+    {
+      "url": "https://huggingface.co/api/models/inclusionAI/ZwZ2-9B?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "size and absent licence"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

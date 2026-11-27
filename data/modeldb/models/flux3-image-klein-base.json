@@ -1,0 +1,143 @@
+{
+  "id": "flux3-image-klein-base",
+  "name": "FLUX 3 Image Klein Base",
+  "vendor": "Black Forest Labs",
+  "release_date": "2026-10-13",
+  "lineage": {
+    "family": "flux3-image-klein",
+    "how_derived": "undistilled base checkpoint of FLUX 3 Image Klein; the distilled checkpoint (16 steps, no guidance) is the separate record flux3-image-klein"
+  },
+  "purpose": "Undistilled base checkpoint for fine-tuning, LoRA training and research; same capabilities as Klein (editing, text-to-image, composition from up to 10 reference images, optional bounding-box layout). Uses classifier-free guidance (50 steps, guidance 3.5 per the card as summarized).",
+  "tasks": [
+    "image-generation"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image"
+    ],
+    "output": [
+      "image"
+    ]
+  },
+  "license": {
+    "name": "FLUX Kommunity License v1.0 (text encoder Qwen3-VL-4B-Instruct: Apache-2.0)",
+    "verified": false,
+    "commercial_use": "limited",
+    "redistribution": "limited",
+    "notes": "The card (read through a summarizing fetch, repo is gated) names the same license as the distilled Klein: non-commercial use, and commercial output generation only for Qualifying Users under US$5M annual revenue. The license text itself was read for the sibling record flux3-image-klein (unsloth copy), not for this repo, hence verified false. Verdict policy (README, 2026-11-19): this licence term does not lower tona_fit; kept here for an installer label."
+  },
+  "architecture": {
+    "kind": "diffusion transformer, dense, undistilled; separate text encoder Qwen3-VL-4B-Instruct; separate 9B prompt upsampler",
+    "params_total_b": 5.6,
+    "why_this_design": "Card says to always run the prompt upsampler because short prompts give generic output (summarized)."
+  },
+  "variants": [
+    {
+      "repo": "black-forest-labs/flux-3-image-klein-base",
+      "format": "safetensors BF16 (transformer 11.08 GB, text encoder 8.89 GB, VAE 0.34 GB)",
+      "size_gb": 43.24,
+      "official": true,
+      "notes": "gated; repo total 43.24 GB includes the FP8 and NVFP4 variants and a root model.safetensors (11.08 GB) of the same size as the transformer/ folder (likely a second copy, not compared). FP8 (variants/fp8r) transformer 6.25 GB, NVFP4 (variants/nvfp4) 5.26 GB. Card: peak GPU memory on a B200 at 1024x1024 without the upsampler about 31 GB BF16, 29 GB FP8, 26 GB NVFP4."
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "marginal",
+      "variant": "NVFP4 / FP8 transformer with text encoder offloaded",
+      "basis": "estimate",
+      "notes": "the card's 26-31 GB peak figures are B200 measurements with everything resident; offload is needed. Fine-tuning use needs far more."
+    },
+    "pc-16gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "notes": "inference with offload; training not realistic"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "inference"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-16-24gb": {
+      "fits": "marginal",
+      "basis": "estimate"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "BFL reference code",
+      "Diffusers",
+      "AI Toolkit (LoRA training)",
+      "NVIDIA NeMo AutoModel (training recipes)"
+    ]
+  },
+  "soft": {
+    "weaknesses": [
+      "Gated download",
+      "License limits commercial use above US$5M revenue",
+      "No benchmarks on the card; 50 steps with guidance makes it slower than the distilled Klein for plain generation"
+    ],
+    "best_for": [
+      "Fine-tuning and LoRA training",
+      "Research on the Klein family"
+    ],
+    "avoid_for": [
+      "Everyday generation (use the distilled flux3-image-klein)"
+    ],
+    "maturity": "Black Forest Labs; about 69k downloads in the last month on the page read."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "A training base, not an inference default: the distilled Klein generates in 16 steps without guidance and is the one to offer. Relevant only if Tona users want to train LoRAs for the image path.",
+    "blockers": [
+      "Tona has no image engine and no training path",
+      "gated"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/black-forest-labs/flux-3-image-klein-base",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "card is gated (raw README 401); content read through a summarizing page fetch, not verbatim"
+    },
+    {
+      "url": "https://huggingface.co/api/models/black-forest-labs/flux-3-image-klein-base?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "file listing and sizes (public even though files are gated)"
+    },
+    {
+      "url": "https://docs.nvidia.com/nemo/automodel/model-coverage/diffusion/black-forest-labs/flux-3-image-klein-base",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "search result summary: LoRA and full fine-tuning recipes; NVIDIA notes release weights were not independently exercised in its recorded runs"
+    },
+    {
+      "url": "https://huggingface.co/black-forest-labs/flux-3-image-klein",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "sibling record flux3-image-klein, license text read there"
+    }
+  ],
+  "open_questions": [
+    "Raw card and LICENSE unreadable (401); confirm license text is identical to the distilled Klein's",
+    "Seconds per image on consumer GPUs for 50 steps with guidance: not found",
+    "Quality compared with the distilled Klein: no benchmark on the card"
+  ],
+  "last_checked": "2026-11-19"
+}

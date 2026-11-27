@@ -1,0 +1,188 @@
+{
+  "id": "intern-decision",
+  "name": "Intern-Decision (0.8B, 2B, 4B)",
+  "vendor": "Shanghai AI Laboratory (InternLM)",
+  "release_date": "2026-09-26",
+  "lineage": {
+    "family": "Intern-Decision",
+    "base_model": "Qwen/Qwen3.5-0.8B, Qwen3.5-2B, Qwen3.5-4B",
+    "how_derived": "fine-tuned with a masked-next-token decision objective; probabilities read from the logits of single-token option symbols at placeholder positions, then calibrated"
+  },
+  "purpose": "Multimodal structured decisions: a shared state, a schema of named questions and optional images in, an answer distribution per question out in one forward pass (card; technical report arXiv 2610.22131).",
+  "tasks": [
+    "other",
+    "vision"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0 (plus Qwen licence file)",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Repo has LICENSE and LICENSE-QWEN; texts not read."
+  },
+  "architecture": {
+    "kind": "Qwen3.5 hybrid vision-language backbone used as a candidate scorer (no generate())",
+    "params_total_b": 4.0,
+    "context_native": 262144
+  },
+  "variants": [
+    {
+      "repo": "internlm/Intern-Decision-4B",
+      "format": "safetensors BF16",
+      "size_gb": 9.1,
+      "official": true
+    },
+    {
+      "repo": "internlm/Intern-Decision-2B",
+      "format": "safetensors BF16",
+      "size_gb": 4.4,
+      "official": true
+    },
+    {
+      "repo": "internlm/Intern-Decision-0.8B",
+      "format": "safetensors BF16",
+      "size_gb": 1.7,
+      "official": true
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "marginal",
+      "variant": "4B BF16 (9.1 GB); 2B 4.4 GB and 0.8B 1.7 GB fit every class",
+      "basis": "estimate",
+      "notes": "9.1 GB against a VRAM budget of 9.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "4B BF16 (9.1 GB); 2B 4.4 GB and 0.8B 1.7 GB fit every class",
+      "basis": "estimate",
+      "notes": "9.1 GB against a VRAM budget of 13.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "4B BF16 (9.1 GB); 2B 4.4 GB and 0.8B 1.7 GB fit every class",
+      "basis": "estimate",
+      "notes": "9.1 GB against a VRAM budget of 21.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "4B BF16 (9.1 GB); 2B 4.4 GB and 0.8B 1.7 GB fit every class",
+      "basis": "estimate",
+      "notes": "9.1 GB against a VRAM budget of 29.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "variant": "4B BF16 (9.1 GB); 2B 4.4 GB and 0.8B 1.7 GB fit every class",
+      "basis": "estimate",
+      "notes": "9.1 GB against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "4B BF16 (9.1 GB); 2B 4.4 GB and 0.8B 1.7 GB fit every class",
+      "basis": "estimate",
+      "notes": "9.1 GB against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "4B BF16 (9.1 GB); 2B 4.4 GB and 0.8B 1.7 GB fit every class",
+      "basis": "estimate",
+      "notes": "9.1 GB against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "transformers (candidate scoring path, no generate)"
+    ]
+  },
+  "benchmarks": [
+    {
+      "name": "vendor suite average (JevBench Easy/Original/Hard, Typed Decision, ToolACE, AG News, WildJailBreak)",
+      "score": "90.02 (4B) / 84.68 (2B) / 79.38 (0.8B)",
+      "kind": "vendor",
+      "variant": "BF16; hosted Jev 88.74, SemIf 84.23, Laya 57.77",
+      "source": "https://huggingface.co/internlm/Intern-Decision-4B"
+    },
+    {
+      "name": "Brier / ECE (4B)",
+      "score": "0.347 / 0.065",
+      "kind": "vendor",
+      "variant": "Jev 0.358 / 0.095",
+      "source": "https://huggingface.co/internlm/Intern-Decision-4B"
+    },
+    {
+      "name": "per-query latency on one RTX 4090",
+      "score": "44.2 (4B) / 33.3 (2B) / 34.0 (0.8B) mean",
+      "unit": "ms",
+      "kind": "vendor",
+      "variant": "Jev 109.7",
+      "source": "https://huggingface.co/internlm/Intern-Decision-4B"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "A decision model reads a state (text, JSON, images) and a schema of typed questions and returns calibrated probabilities for every option in one forward pass; it does not generate text.",
+      "4B beats the hosted Jev average on the vendor's suite at 44 ms on a 4090"
+    ],
+    "weaknesses": [
+      "suite chosen by the vendor, includes its own typed-decision set"
+    ],
+    "best_for": [
+      "cheap routing, moderation and tool-selection classification"
+    ],
+    "maturity": "InternLM lab release with a technical report; 4B 5.9k downloads, 96 likes"
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "The smallest credible decision models (0.8B to 4B, Apache by tag) from an established lab; useful as a router or guardrail next to a worker. Not a worker.",
+    "blockers": [
+      "decision readout needs its own code path"
+    ]
+  },
+  "open_questions": [
+    "rank on the independent Decision Index board",
+    "licence texts"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/internlm/Intern-Decision-4B",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README read"
+    },
+    {
+      "url": "https://huggingface.co/api/models/internlm/Intern-Decision-4B?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "sizes"
+    },
+    {
+      "url": "https://huggingface.co/api/models/internlm/Intern-Decision-2B?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "sizes"
+    },
+    {
+      "url": "https://huggingface.co/api/models/internlm/Intern-Decision-0.8B?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "sizes"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

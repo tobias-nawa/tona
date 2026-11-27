@@ -1,0 +1,134 @@
+{
+  "id": "laplace-1-atlas",
+  "name": "Laplace-1-Atlas",
+  "vendor": "Juneo AI",
+  "release_date": "2026-11-01",
+  "lineage": {
+    "family": "Laplace-1",
+    "base_model": "Qwen/Qwen3.8-27B",
+    "how_derived": "causal-interventional decision model trained with the vendor's 'Decision Forge'; a smaller Laplace-1-Vector exists"
+  },
+  "purpose": "Predict what an action will do inside an organization and use that to decide who does the work, who sees the information, what runs and what is accepted (card).",
+  "tasks": [
+    "other"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Apache License 2.0 text read in the repo LICENSE file: commercial use, modification and redistribution allowed with notice and patent grant."
+  },
+  "architecture": {
+    "kind": "hybrid Gated-DeltaNet plus full attention dense transformer (Qwen3.8-27B layout)",
+    "gguf_arch": "qwen35",
+    "params_total_b": 27,
+    "params_active_b": 27,
+    "attention": "full attention every 4th layer, hidden 5120, head dim 256",
+    "recurrent": "Gated DeltaNet",
+    "drafter": "none stated"
+  },
+  "variants": [
+    {
+      "repo": "JuneoAI/Laplace-1-Atlas",
+      "format": "safetensors",
+      "official": true,
+      "notes": "size not checked"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "no",
+      "variant": "BF16 (size assumed equal to the base, not checked)",
+      "basis": "estimate",
+      "notes": "54.7 GB file exceeds the 9.6 GB VRAM plus 50 GB RAM budget"
+    },
+    "pc-16gb": {
+      "fits": "marginal",
+      "variant": "BF16 (size assumed equal to the base, not checked)",
+      "basis": "estimate",
+      "notes": "54.7 GB file against 13.6 GB VRAM plus 50 GB RAM budget; part of the dense weights stream from RAM (decode is bandwidth bound)"
+    },
+    "pc-24gb": {
+      "fits": "marginal",
+      "variant": "BF16 (size assumed equal to the base, not checked)",
+      "basis": "estimate",
+      "notes": "54.7 GB file against 21.6 GB VRAM plus 82 GB RAM budget; part of the dense weights stream from RAM (decode is bandwidth bound)"
+    },
+    "pc-32gb": {
+      "fits": "marginal",
+      "variant": "BF16 (size assumed equal to the base, not checked)",
+      "basis": "estimate",
+      "notes": "54.7 GB file against 29.6 GB VRAM plus 82 GB RAM budget; part of the dense weights stream from RAM (decode is bandwidth bound)"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "BF16 (size assumed equal to the base, not checked)",
+      "basis": "estimate",
+      "notes": "54.7 GB file against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "no",
+      "variant": "BF16 (size assumed equal to the base, not checked)",
+      "basis": "estimate",
+      "notes": "54.7 GB file against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "no",
+      "variant": "BF16 (size assumed equal to the base, not checked)",
+      "basis": "estimate",
+      "notes": "54.7 GB file against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "unknown"
+  },
+  "benchmarks": [
+    {
+      "name": "first on 7 of 9 decision benchmarks",
+      "score": "7/9",
+      "kind": "vendor",
+      "variant": "against models from OpenAI, Perplexity, Cloudflare and others per the card",
+      "source": "https://huggingface.co/JuneoAI/Laplace-1-Atlas"
+    }
+  ],
+  "soft": {
+    "weaknesses": [
+      "vendor-only"
+    ],
+    "maturity": "17k downloads, 54 likes"
+  },
+  "tona_fit": {
+    "verdict": "reject",
+    "reason": "Decision model for organizational actions, not a coding worker.",
+    "blockers": [
+      "not a text-generation worker"
+    ]
+  },
+  "open_questions": [
+    "independent evidence"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/JuneoAI/Laplace-1-Atlas",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README, LICENSE read"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

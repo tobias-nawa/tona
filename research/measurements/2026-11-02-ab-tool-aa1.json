@@ -1,0 +1,279 @@
+{
+  "config": {
+    "A": {
+      "build": "merged",
+      "env": {},
+      "tooling": {
+        "HIP_PATH": "./work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+        "IE_EXPERT_PROFILE": "./work/profile/experts-coder.bin",
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0"
+      },
+      "commit": "v0.0.2-107-geb88826527"
+    },
+    "B": {
+      "build": "merged",
+      "env": {},
+      "tooling": {
+        "HIP_PATH": "./work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+        "IE_EXPERT_PROFILE": "./work/profile/experts-coder.bin",
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0"
+      },
+      "commit": "v0.0.2-107-geb88826527"
+    },
+    "workload": "server",
+    "targets": "30000,130000",
+    "ctx": 140000,
+    "deterministic": false,
+    "plan_info": {
+      "expect": [
+        [
+          "decode",
+          -1.0,
+          1.0
+        ],
+        [
+          "prefill",
+          -1.0,
+          1.0
+        ]
+      ],
+      "source": "A/A spread of the 2026-11-01 rows in BENCHMARKS.md",
+      "workload": "server",
+      "targets": "30000,130000",
+      "ctx": 140000,
+      "A": {
+        "build": "merged",
+        "env": {},
+        "tooling": {
+          "HIP_PATH": "./work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+          "IE_EXPERT_PROFILE": "./work/profile/experts-coder.bin",
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0"
+        },
+        "commit": "v0.0.2-107-geb88826527"
+      },
+      "B": {
+        "build": "merged",
+        "env": {},
+        "tooling": {
+          "HIP_PATH": "./work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+          "IE_EXPERT_PROFILE": "./work/profile/experts-coder.bin",
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0"
+        },
+        "commit": "v0.0.2-107-geb88826527"
+      }
+    },
+    "corpus_sha256": "3c3c2a1f39381406f8fcf3f7226407e9015094ea9cd182796e3a4d89ac4c048c",
+    "corpus_is_reference": true,
+    "commit": "846e8f8"
+  },
+  "rounds": [
+    {
+      "order": "AB",
+      "sha": {
+        "A": {
+          "30000": "1fad1ead2f1ac34c",
+          "130000": "971ebf40510eb261"
+        },
+        "B": {
+          "30000": "1fad1ead2f1ac34c",
+          "130000": "971ebf40510eb261"
+        }
+      },
+      "A": {
+        "prefill@30000": 1794.1584559675505,
+        "decode@30000": 66.97207627843162,
+        "prefill@130000": 1708.4946235018056,
+        "decode@130000": 66.3689414138281
+      },
+      "B": {
+        "prefill@30000": 1806.3093767893752,
+        "decode@30000": 67.66808899384559,
+        "prefill@130000": 1716.701277180307,
+        "decode@130000": 67.57115450012307
+      },
+      "seconds": 240.06022184202448
+    },
+    {
+      "order": "BA",
+      "sha": {
+        "B": {
+          "30000": "1fad1ead2f1ac34c",
+          "130000": "971ebf40510eb261"
+        },
+        "A": {
+          "30000": "1fad1ead2f1ac34c",
+          "130000": "971ebf40510eb261"
+        }
+      },
+      "B": {
+        "prefill@30000": 1807.1029665972494,
+        "decode@30000": 67.60341784276152,
+        "prefill@130000": 1717.0546788428285,
+        "decode@130000": 67.62543430900932
+      },
+      "A": {
+        "prefill@30000": 1806.7728038000964,
+        "decode@30000": 67.44985421870776,
+        "prefill@130000": 1716.9176978780633,
+        "decode@130000": 67.23693642921872
+      },
+      "seconds": 238.81995700800326
+    },
+    {
+      "order": "AB",
+      "sha": {
+        "A": {
+          "30000": "1fad1ead2f1ac34c",
+          "130000": "971ebf40510eb261"
+        },
+        "B": {
+          "30000": "1fad1ead2f1ac34c",
+          "130000": "971ebf40510eb261"
+        }
+      },
+      "A": {
+        "prefill@30000": 1806.749907060814,
+        "decode@30000": 67.32960744751641,
+        "prefill@130000": 1716.9368254816802,
+        "decode@130000": 67.09966300633542
+      },
+      "B": {
+        "prefill@30000": 1805.9716914417463,
+        "decode@30000": 67.39570680754683,
+        "prefill@130000": 1716.9077190855894,
+        "decode@130000": 67.60098314462302
+      },
+      "seconds": 238.749081003014
+    },
+    {
+      "order": "BA",
+      "sha": {
+        "B": {
+          "30000": "1fad1ead2f1ac34c",
+          "130000": "971ebf40510eb261"
+        },
+        "A": {
+          "30000": "1fad1ead2f1ac34c",
+          "130000": "971ebf40510eb261"
+        }
+      },
+      "B": {
+        "prefill@30000": 1807.1898269078151,
+        "decode@30000": 67.65869113852658,
+        "prefill@130000": 1717.205405718022,
+        "decode@130000": 67.32457797214647
+      },
+      "A": {
+        "prefill@30000": 1807.011699288638,
+        "decode@30000": 67.60170910275905,
+        "prefill@130000": 1716.842782869369,
+        "decode@130000": 67.56875225780564
+      },
+      "seconds": 238.72044799104333
+    },
+    {
+      "order": "AB",
+      "sha": {
+        "A": {
+          "30000": "1fad1ead2f1ac34c",
+          "130000": "971ebf40510eb261"
+        },
+        "B": {
+          "30000": "1fad1ead2f1ac34c",
+          "130000": "971ebf40510eb261"
+        }
+      },
+      "A": {
+        "prefill@30000": 1807.6062736015888,
+        "decode@30000": 67.62668759465585,
+        "prefill@130000": 1716.9728934700495,
+        "decode@130000": 67.62105442807817
+      },
+      "B": {
+        "prefill@30000": 1807.0199601542308,
+        "decode@30000": 67.3982453011742,
+        "prefill@130000": 1717.7812914084577,
+        "decode@130000": 67.51300064096843
+      },
+      "seconds": 238.79308475600556
+    },
+    {
+      "order": "BA",
+      "sha": {
+        "B": {
+          "30000": "1fad1ead2f1ac34c",
+          "130000": "971ebf40510eb261"
+        },
+        "A": {
+          "30000": "1fad1ead2f1ac34c",
+          "130000": "971ebf40510eb261"
+        }
+      },
+      "B": {
+        "prefill@30000": 1806.970677423261,
+        "decode@30000": 67.52880931620538,
+        "prefill@130000": 1717.2252351620857,
+        "decode@130000": 67.3303899227206
+      },
+      "A": {
+        "prefill@30000": 1808.22016127672,
+        "decode@30000": 67.58633697834311,
+        "prefill@130000": 1717.4030547814423,
+        "decode@130000": 67.52626375956342
+      },
+      "seconds": 238.74389394500758
+    }
+  ],
+  "stop_reason": "6 rounds (undecided metrics stay open)",
+  "wall_seconds": 1433.8914220640436,
+  "plan": {
+    "alpha": 0.05,
+    "margin": 0.5,
+    "max_rounds": 6,
+    "min_rounds": 2,
+    "prior_sd": 0.5,
+    "prior_df": 4.0
+  },
+  "decisions": {
+    "prefill@30000": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": 0.09346190718969027,
+      "ci_diff_percent": [
+        -0.4924981867816963,
+        0.6794220011610769
+      ]
+    },
+    "decode@30000": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": 0.17107936339659235,
+      "ci_diff_percent": [
+        -0.5419612891548947,
+        0.8841200159480794
+      ]
+    },
+    "prefill@130000": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": 0.09074624042434236,
+      "ci_diff_percent": [
+        -0.4454101771656372,
+        0.6269026580143219
+      ]
+    },
+    "decode@130000": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": 0.3875176261109725,
+      "ci_diff_percent": [
+        -0.6591181587386459,
+        1.434153410960591
+      ]
+    }
+  }
+}

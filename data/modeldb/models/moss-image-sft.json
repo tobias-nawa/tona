@@ -1,0 +1,172 @@
+{
+  "id": "moss-image-sft",
+  "name": "MOSS-Image (Base and SFT)",
+  "vendor": "OpenMOSS / MOSI.AI",
+  "release_date": "2026-10-11",
+  "lineage": {
+    "base_model": "OpenMOSS-Team/MOSS-Image-Base (SFT is a supervised fine-tune of it with the same architecture and pipeline)",
+    "how_derived": "5B single-stream DiT pretrained from scratch (technical report); SFT variant fine-tuned for clearer text grouping and layouts (card)",
+    "family": "moss-image"
+  },
+  "purpose": "Open-weight text-to-image system for dense, long-form bilingual (English and Chinese) text rendering and precise layout control, with an agentic prompt-enhancement module that turns requests into content and layout specifications (arXiv abstract).",
+  "tasks": [
+    "image-generation"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "image"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en",
+      "zh"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "LICENSE file of the SFT repo read: Apache License 2.0; card states weights and bundled inference code are Apache-2.0."
+  },
+  "architecture": {
+    "kind": "single-stream diffusion transformer (MOSSImageTransformer, flow-matching Euler) with a Qwen3.5 text encoder (Qwen3_5Model) and the FLUX.2 VAE (AutoencoderKLFlux2)",
+    "params_total_b": 5.08,
+    "why_this_design": "Technical report abstract: the from-scratch 5B single-stream DiT with its training recipe is meant to enable bilingual long-form text rendering and precise layout control; the card adds negative-branch layer skipping (layer 22) to guide with fewer forwards."
+  },
+  "variants": [
+    {
+      "repo": "OpenMOSS-Team/MOSS-Image-SFT",
+      "format": "diffusers BF16 (DiT 5.08B parameters plus Qwen3.5 text encoder and VAE)",
+      "size_gb": 27.23,
+      "official": true
+    },
+    {
+      "repo": "unsloth/MOSS-Image-SFT-GGUF",
+      "format": "GGUF Q4_K_M (diffusion transformer only)",
+      "size_gb": 3.2,
+      "official": false,
+      "notes": "Q8_0 5.48 GB, UD-Q6_K_XL 4.53 GB, BF16 10.17 GB; text encoder separate; 264k downloads on the HF API"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "variant": "GGUF Q4_K_M to Q8_0 with text encoder offloaded",
+      "basis": "estimate"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "GGUF Q8_0",
+      "basis": "estimate"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "GGUF BF16",
+      "basis": "estimate"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "variant": "GGUF Q4_K_M or Q8_0",
+      "basis": "estimate"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "unknown",
+    "other": [
+      "Diffusers (custom pipeline pipeline_moss_image, diffusers >= 0.38)",
+      "ComfyUI plugin (ComfyUI Manager)",
+      "Gradio demo"
+    ],
+    "notes": "Default sampling is 50 steps, CFG 3, shift 5, with negative branch layer skipping; two transformer forwards per step."
+  },
+  "benchmarks": [
+    {
+      "name": "LongLongTextBench (LLTB) average text coverage, long-form English and Chinese text rendering",
+      "score": 96.3,
+      "unit": "%",
+      "kind": "vendor",
+      "variant": "MOSS-Image system, best among open-weight models per the builder",
+      "source": "https://arxiv.org/abs/2610.23374",
+      "date": "2026-10-16",
+      "harness": "benchmark introduced by the same authors"
+    },
+    {
+      "name": "RealLayoutArena (RLA) end-to-end system rank",
+      "score": "2nd",
+      "kind": "vendor",
+      "variant": "MOSS-Image with prompt enhancement; the backbone ranks 1st among generators with shared enhanced prompts",
+      "source": "https://arxiv.org/abs/2610.23374",
+      "date": "2026-10-16",
+      "harness": "benchmark introduced by the same authors"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "Apache-2.0 with commercial use",
+      "Long text and layout control through JSON layouts with bounding boxes",
+      "5B DiT with GGUF Q4_K_M of 3.2 GB"
+    ],
+    "weaknesses": [
+      "Benchmarks are the builder's own new benchmarks (LLTB, RLA)",
+      "German text rendering not stated: bilingual English and Chinese only",
+      "Prompt enhancer skill is designed for GPT-6-family agents (card)"
+    ],
+    "best_for": [
+      "posters, signs and infographics with dense text and layouts; layout-controlled generation"
+    ],
+    "maturity": "OpenMOSS (Fudan/MOSI); many community derivatives on the HF API (Base 12k and SFT 20k downloads, ComfyUI plugin)."
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "5B size and layout control make it a strong option for local image generation; German text rendering and general image quality versus z-image-turbo, qwen-image-2.1-turbo and flux3-image-klein need our own test.",
+    "blockers": [
+      "MOSS DiT with Qwen3.5 text encoder and FLUX.2 VAE not in Tona",
+      "no independent image-arena result seen"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/OpenMOSS-Team/MOSS-Image-SFT",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README, model_index.json, LICENSE read"
+    },
+    {
+      "url": "https://arxiv.org/abs/2610.23374",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "abstract only"
+    },
+    {
+      "url": "https://huggingface.co/api/models/unsloth/MOSS-Image-SFT-GGUF?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "GGUF sizes"
+    }
+  ],
+  "open_questions": [
+    "Difference in quality between Base and SFT",
+    "Independent arena Elo or GenEval",
+    "German and other European text rendering",
+    "Distillation or few-step variants (community LoRAs exist, not inspected)"
+  ],
+  "last_checked": "2026-11-19"
+}

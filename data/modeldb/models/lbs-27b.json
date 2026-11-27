@@ -1,0 +1,167 @@
+{
+  "id": "lbs-27b",
+  "name": "LBS-27B",
+  "vendor": "inclusionAI (UI-Venus team)",
+  "release_date": "2026-10-26",
+  "lineage": {
+    "family": "Qwen3.8",
+    "base_model": "Qwen3.8-27B",
+    "how_derived": "about 10K cold-start SFT examples, then 80 GRPO steps (batch 64, 8 rollouts per prompt) on synthetic GUI grounding data only"
+  },
+  "purpose": "Learn an observation policy from GUI grounding (select and inspect image regions, zoom in, revisit the original) and transfer it to general visual question answering and high-resolution perception without any general-domain VQA training (card).",
+  "tasks": [
+    "vision",
+    "other"
+  ],
+  "modalities": {
+    "input": [
+      "image",
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card tag apache-2.0; no LICENSE file in the repo, text not read; base Qwen3.8-27B is Apache-2.0 (see its record)."
+  },
+  "architecture": {
+    "kind": "dense hybrid vision-language, Qwen3.8-27B",
+    "gguf_arch": "qwen35",
+    "params_total_b": 27,
+    "params_active_b": 27,
+    "context_native": 262144,
+    "why_this_design": "Unchanged base architecture; agentic zoom-in tool: up to two independent crops per turn, a budget of three crop calls per episode."
+  },
+  "variants": [
+    {
+      "repo": "inclusionAI/LBS-27B",
+      "format": "safetensors BF16",
+      "official": true
+    },
+    {
+      "repo": "bartowski/LBS-27B-GGUF",
+      "format": "GGUF Q4_K_M",
+      "size_gb": 17.2,
+      "official": false,
+      "notes": "IQ4_XS 15.24, Q6_K 23.62, Q8_0 28.67 GB, mmproj 0.93 GB"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "marginal",
+      "variant": "bartowski GGUF Q4_K_M plus mmproj",
+      "basis": "estimate",
+      "notes": "18.1 GB file against 9.6 GB VRAM plus 50 GB RAM budget; part streams from RAM (dense: decode is bandwidth bound)"
+    },
+    "pc-16gb": {
+      "fits": "marginal",
+      "variant": "bartowski GGUF Q4_K_M plus mmproj",
+      "basis": "estimate",
+      "notes": "18.1 GB file against 13.6 GB VRAM plus 50 GB RAM budget; part streams from RAM (dense: decode is bandwidth bound)"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "bartowski GGUF Q4_K_M plus mmproj",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (21.6 GB)"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "bartowski GGUF Q4_K_M plus mmproj",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (29.6 GB)"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "bartowski GGUF Q4_K_M plus mmproj",
+      "basis": "estimate",
+      "notes": "18.1 GB file against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "bartowski GGUF Q4_K_M plus mmproj",
+      "basis": "estimate",
+      "notes": "18.1 GB file against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "bartowski GGUF Q4_K_M plus mmproj",
+      "basis": "estimate",
+      "notes": "18.1 GB file against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "Transformers"
+    ],
+    "notes": "the zoom-in tool loop is the vendor's harness (UI-Venus repo, branch LBS); plain llama.cpp gives only the base VLM"
+  },
+  "benchmarks": [
+    {
+      "name": "ScreenSpot-Pro action accuracy",
+      "score": 81.15,
+      "kind": "vendor",
+      "variant": "agentic zoom-in",
+      "source": "https://huggingface.co/inclusionAI/LBS-27B"
+    },
+    {
+      "name": "OS-World-G (Refine) action accuracy",
+      "score": 84.57,
+      "kind": "vendor",
+      "source": "https://huggingface.co/inclusionAI/LBS-27B"
+    },
+    {
+      "name": "HR-Bench 4K",
+      "score": 89.13,
+      "kind": "vendor",
+      "source": "https://huggingface.co/inclusionAI/LBS-27B"
+    },
+    {
+      "name": "HR-Bench 8K",
+      "score": 87.75,
+      "kind": "vendor",
+      "source": "https://huggingface.co/inclusionAI/LBS-27B"
+    },
+    {
+      "name": "PerceptionBench judge accuracy",
+      "score": 59.67,
+      "kind": "vendor",
+      "source": "https://huggingface.co/inclusionAI/LBS-27B"
+    }
+  ],
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "GUI-grounding specialist on the Qwen3.8-27B base: relevant only for a computer-use role, and it adds nothing for repository coding.",
+    "blockers": [
+      "no Tona vision path",
+      "needs the zoom tool harness"
+    ]
+  },
+  "open_questions": [
+    "independent evaluation",
+    "license text",
+    "BF16 size (not summed)"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/inclusionAI/LBS-27B",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README read"
+    },
+    {
+      "url": "https://huggingface.co/api/models/bartowski/LBS-27B-GGUF?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "GGUF sizes"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

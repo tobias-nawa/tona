@@ -1,0 +1,147 @@
+ie-server on http://127.0.0.1:8097 (Anthropic: /v1/messages, OpenAI: /v1/chat/completions), without key, loading ...
+warning: --ctx 1048576 is beyond the native context of 262144 tokens and IE_ROPE_YARN is off; quality beyond 262144 is not measured
+host memory: GTT (probe 64 MB grew the GTT use by 64 MB; 0.3 of 32.5 GB in use)
+evicted_ms counter: /sys/class/kfd/kfd/proc/3204622/stats_7773/evicted_ms (0 ms so far), evictions do not count against the pass deadline
+Initialization: 512 MTP experts as Q2_0, converted on the GPU (708 MB) in 1.0 s
+host memory: 11.7 GB of the pinned experts do not fit the GTT and are registered as userptr
+Releasing page cache: 8.25 GB of file mappings removed from the address space
+loaded in 21.1 s: context 1048576 (KV int8 14.50 GB in RAM), VRAM 14.61 GB, 74 expert slots per layer, 25.1 GB pinned
+12:16:07 POST /v1/messages/count_tokens → 200
+12:16:08 POST /v1/messages/count_tokens → 200
+12:16:08 POST /v1/messages/count_tokens → 200
+12:16:08 POST /v1/messages/count_tokens → 200
+12:16:09 POST /v1/messages/count_tokens → 200
+12:16:09 POST /v1/messages/count_tokens → 200
+12:16:09 POST /v1/messages/count_tokens → 200
+12:16:10 POST /v1/messages/count_tokens → 200
+12:16:10 POST /v1/messages/count_tokens → 200
+12:16:10 POST /v1/messages/count_tokens → 200
+12:16:11 POST /v1/messages/count_tokens → 200
+12:16:11 POST /v1/messages/count_tokens → 200
+Prefill 998909 tokens: layer by layer, chunk 2048, group 8192, loan limit 3832 MB
+Prefill group at 0: KV staging 9 MB, 16 layers borrowed
+Prefill group at 8192: KV staging 19 MB, 16 layers borrowed
+Prefill group at 16384: KV staging 28 MB, 16 layers borrowed
+Prefill group at 24576: KV staging 38 MB, 16 layers borrowed
+Prefill group at 32768: KV staging 47 MB, 16 layers borrowed
+Prefill group at 40960: KV staging 57 MB, 16 layers borrowed
+Prefill group at 49152: KV staging 66 MB, 17 layers borrowed
+Prefill group at 57344: KV staging 75 MB, 17 layers borrowed
+Prefill group at 65536: KV staging 85 MB, 17 layers borrowed
+Prefill group at 73728: KV staging 94 MB, 17 layers borrowed
+Prefill group at 81920: KV staging 104 MB, 17 layers borrowed
+Prefill group at 90112: KV staging 113 MB, 17 layers borrowed
+Prefill group at 98304: KV staging 123 MB, 17 layers borrowed
+Prefill group at 106496: KV staging 132 MB, 17 layers borrowed
+Prefill group at 114688: KV staging 142 MB, 17 layers borrowed
+Prefill group at 122880: KV staging 151 MB, 17 layers borrowed
+Prefill group at 131072: KV staging 160 MB, 17 layers borrowed
+Prefill group at 139264: KV staging 170 MB, 17 layers borrowed
+Prefill group at 147456: KV staging 179 MB, 17 layers borrowed
+Prefill group at 155648: KV staging 189 MB, 17 layers borrowed
+Prefill group at 163840: KV staging 198 MB, 17 layers borrowed
+Prefill group at 172032: KV staging 208 MB, 17 layers borrowed
+Prefill group at 180224: KV staging 217 MB, 17 layers borrowed
+Prefill group at 188416: KV staging 226 MB, 18 layers borrowed
+Prefill group at 196608: KV staging 236 MB, 18 layers borrowed
+Prefill group at 204800: KV staging 245 MB, 18 layers borrowed
+Prefill group at 212992: KV staging 255 MB, 18 layers borrowed
+Prefill group at 221184: KV staging 264 MB, 18 layers borrowed
+Prefill group at 229376: KV staging 274 MB, 18 layers borrowed
+Prefill group at 237568: KV staging 283 MB, 18 layers borrowed
+Prefill group at 245760: KV staging 293 MB, 18 layers borrowed
+Prefill group at 253952: KV staging 302 MB, 18 layers borrowed
+Prefill group at 262144: KV staging 311 MB, 18 layers borrowed
+Prefill group at 270336: KV staging 321 MB, 18 layers borrowed
+Prefill group at 278528: KV staging 330 MB, 18 layers borrowed
+Prefill group at 286720: KV staging 340 MB, 18 layers borrowed
+Prefill group at 294912: KV staging 349 MB, 19 layers borrowed
+Prefill group at 303104: KV staging 359 MB, 19 layers borrowed
+Prefill group at 311296: KV staging 368 MB, 19 layers borrowed
+Prefill group at 319488: KV staging 377 MB, 19 layers borrowed
+Prefill group at 327680: KV staging 387 MB, 19 layers borrowed
+Prefill group at 335872: KV staging 396 MB, 19 layers borrowed
+Prefill group at 344064: KV staging 406 MB, 19 layers borrowed
+Prefill group at 352256: KV staging 415 MB, 19 layers borrowed
+Prefill group at 360448: KV staging 425 MB, 19 layers borrowed
+Prefill group at 368640: KV staging 434 MB, 19 layers borrowed
+Prefill group at 376832: KV staging 444 MB, 19 layers borrowed
+Prefill group at 385024: KV staging 453 MB, 19 layers borrowed
+Prefill group at 393216: KV staging 462 MB, 19 layers borrowed
+Prefill group at 401408: KV staging 472 MB, 19 layers borrowed
+Prefill group at 409600: KV staging 481 MB, 19 layers borrowed
+Prefill group at 417792: KV staging 491 MB, 19 layers borrowed
+Prefill group at 425984: KV staging 500 MB, 19 layers borrowed
+Prefill group at 434176: KV staging 510 MB, 19 layers borrowed
+Prefill group at 442368: KV staging 519 MB, 20 layers borrowed
+Prefill group at 450560: KV staging 528 MB, 20 layers borrowed
+Prefill group at 458752: KV staging 538 MB, 20 layers borrowed
+Prefill group at 466944: KV staging 547 MB, 20 layers borrowed
+Prefill group at 475136: KV staging 557 MB, 20 layers borrowed
+Prefill group at 483328: KV staging 566 MB, 20 layers borrowed
+Prefill group at 491520: KV staging 576 MB, 20 layers borrowed
+Prefill group at 499712: KV staging 585 MB, 20 layers borrowed
+Prefill group at 507904: KV staging 595 MB, 20 layers borrowed
+Prefill group at 516096: KV staging 604 MB, 20 layers borrowed
+Prefill group at 524288: KV staging 613 MB, 20 layers borrowed
+Prefill group at 532480: KV staging 623 MB, 20 layers borrowed
+Prefill group at 540672: KV staging 632 MB, 20 layers borrowed
+Prefill group at 548864: KV staging 642 MB, 20 layers borrowed
+Prefill group at 557056: KV staging 651 MB, 20 layers borrowed
+Prefill group at 565248: KV staging 661 MB, 20 layers borrowed
+Prefill group at 573440: KV staging 670 MB, 20 layers borrowed
+Prefill group at 581632: KV staging 679 MB, 20 layers borrowed
+Prefill group at 589824: KV staging 689 MB, 20 layers borrowed
+Prefill group at 598016: KV staging 698 MB, 21 layers borrowed
+Prefill group at 606208: KV staging 708 MB, 21 layers borrowed
+Prefill group at 614400: KV staging 717 MB, 21 layers borrowed
+Prefill group at 622592: KV staging 727 MB, 21 layers borrowed
+Prefill group at 630784: KV staging 736 MB, 21 layers borrowed
+Prefill group at 638976: KV staging 746 MB, 21 layers borrowed
+Prefill group at 647168: KV staging 755 MB, 21 layers borrowed
+Prefill group at 655360: KV staging 764 MB, 21 layers borrowed
+Prefill group at 663552: KV staging 774 MB, 21 layers borrowed
+Prefill group at 671744: KV staging 783 MB, 21 layers borrowed
+Prefill group at 679936: KV staging 793 MB, 21 layers borrowed
+Prefill group at 688128: KV staging 802 MB, 21 layers borrowed
+Prefill group at 696320: KV staging 812 MB, 21 layers borrowed
+Prefill group at 704512: KV staging 821 MB, 21 layers borrowed
+Prefill group at 712704: KV staging 830 MB, 21 layers borrowed
+Prefill group at 720896: KV staging 840 MB, 21 layers borrowed
+Prefill group at 729088: KV staging 849 MB, 21 layers borrowed
+Prefill group at 737280: KV staging 859 MB, 21 layers borrowed
+Prefill group at 745472: KV staging 868 MB, 22 layers borrowed
+Prefill group at 753664: KV staging 878 MB, 22 layers borrowed
+Prefill group at 761856: KV staging 887 MB, 22 layers borrowed
+Prefill group at 770048: KV staging 897 MB, 22 layers borrowed
+Prefill group at 778240: KV staging 906 MB, 22 layers borrowed
+Prefill group at 786432: KV staging 915 MB, 22 layers borrowed
+Prefill group at 794624: KV staging 925 MB, 22 layers borrowed
+Prefill group at 802816: KV staging 934 MB, 22 layers borrowed
+Prefill group at 811008: KV staging 944 MB, 22 layers borrowed
+Prefill group at 819200: KV staging 953 MB, 22 layers borrowed
+Prefill group at 827392: KV staging 963 MB, 22 layers borrowed
+Prefill group at 835584: KV staging 972 MB, 22 layers borrowed
+Prefill group at 843776: KV staging 981 MB, 22 layers borrowed
+Prefill group at 851968: KV staging 991 MB, 22 layers borrowed
+Prefill group at 860160: KV staging 1000 MB, 22 layers borrowed
+Prefill group at 868352: KV staging 1010 MB, 23 layers borrowed
+Prefill group at 876544: KV staging 1019 MB, 23 layers borrowed
+Prefill group at 884736: KV staging 1029 MB, 23 layers borrowed
+Prefill group at 892928: KV staging 1038 MB, 23 layers borrowed
+Prefill group at 901120: KV staging 1048 MB, 23 layers borrowed
+Prefill group at 909312: KV staging 1057 MB, 23 layers borrowed
+Prefill group at 917504: KV staging 1066 MB, 23 layers borrowed
+Prefill group at 925696: KV staging 1076 MB, 23 layers borrowed
+Prefill group at 933888: KV staging 1085 MB, 23 layers borrowed
+Prefill group at 942080: KV staging 1095 MB, 23 layers borrowed
+Prefill group at 950272: KV staging 1104 MB, 23 layers borrowed
+Prefill group at 958464: KV staging 1114 MB, 23 layers borrowed
+Prefill group at 966656: KV staging 1123 MB, 23 layers borrowed
+Prefill group at 974848: KV staging 1132 MB, 23 layers borrowed
+Prefill group at 983040: KV staging 1142 MB, 23 layers borrowed
+Prefill group at 991232: KV staging 1151 MB, 23 layers borrowed
+run_prompt: prefill 998909 tokens 912410.8 ms (MTP included: 5190.5 ms)
+run_prompt: remainder through forward 41.1 ms
+12:31:27 Request: 998910 prompt tokens (0 reused, 998910 computed in 912.5 s, new conversation (stashing 0 ms)), 200 tokens in 3.2 s = 62.6 tok/s, 3.85 tokens per pass, 2 of 52 passes from the history (3.50 per pass)
+12:31:27 POST /v1/chat/completions → 200

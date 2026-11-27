@@ -1,0 +1,164 @@
+{
+  "id": "thinkingcap-qwen3.8-27b",
+  "name": "ThinkingCap-Qwen3.8-27B",
+  "vendor": "BottleCap AI",
+  "release_date": "2026-09-23",
+  "lineage": {
+    "family": "Qwen3.8",
+    "base_model": "Qwen/Qwen3.8-27B",
+    "how_derived": "fine-tune to cut thinking verbosity (method not described on the page summary read)"
+  },
+  "purpose": "Cut thinking tokens while keeping accuracy on hard and agentic tasks (card, via page summary).",
+  "tasks": [
+    "general",
+    "coding"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en"
+    ]
+  },
+  "license": {
+    "name": "PolyForm Small Business 1.0.0 plus a personal-use grant (upstream Qwen parts Apache-2.0)",
+    "verified": false,
+    "commercial_use": "limited",
+    "redistribution": "limited",
+    "notes": "Licence file names read from the repo listing; the text was not read. Page summary: commercial use needs a separate licence from BottleCap AI. Repo is gated (access request)."
+  },
+  "architecture": {
+    "kind": "hybrid Gated-DeltaNet plus full attention dense transformer (Qwen3.8-27B layout)",
+    "gguf_arch": "qwen35",
+    "params_total_b": 27,
+    "params_active_b": 27,
+    "attention": "full attention every 4th layer, hidden 5120, head dim 256",
+    "recurrent": "Gated DeltaNet",
+    "drafter": "not stated"
+  },
+  "variants": [
+    {
+      "repo": "bottlecapai/ThinkingCap-Qwen3.8-27B",
+      "format": "safetensors BF16",
+      "size_gb": 55.6,
+      "official": true
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "marginal",
+      "variant": "Q4_K_M by analogy to Arete-27B (17.2 GB); no quant checked",
+      "basis": "estimate",
+      "notes": "17.2 GB file against 9.6 GB VRAM plus 50 GB RAM budget; part of the dense weights stream from RAM (decode is bandwidth bound)"
+    },
+    "pc-16gb": {
+      "fits": "marginal",
+      "variant": "Q4_K_M by analogy to Arete-27B (17.2 GB); no quant checked",
+      "basis": "estimate",
+      "notes": "17.2 GB file against 13.6 GB VRAM plus 50 GB RAM budget; part of the dense weights stream from RAM (decode is bandwidth bound)"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "Q4_K_M by analogy to Arete-27B (17.2 GB); no quant checked",
+      "basis": "estimate",
+      "notes": "17.2 GB file fits the VRAM budget (21.6 GB) with room for KV"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "Q4_K_M by analogy to Arete-27B (17.2 GB); no quant checked",
+      "basis": "estimate",
+      "notes": "17.2 GB file fits the VRAM budget (29.6 GB) with room for KV"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "Q4_K_M by analogy to Arete-27B (17.2 GB); no quant checked",
+      "basis": "estimate",
+      "notes": "17.2 GB file against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "Q4_K_M by analogy to Arete-27B (17.2 GB); no quant checked",
+      "basis": "estimate",
+      "notes": "17.2 GB file against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "Q4_K_M by analogy to Arete-27B (17.2 GB); no quant checked",
+      "basis": "estimate",
+      "notes": "17.2 GB file against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [],
+    "notes": "Qwen3.8-27B layout."
+  },
+  "benchmarks": [
+    {
+      "name": "reasoning tokens versus base",
+      "score": -37.2,
+      "unit": "%",
+      "kind": "vendor",
+      "variant": "BF16, 11 benchmarks average; range 11 percent (Terminal-Bench 2.1) to 66 percent (MMMLU)",
+      "source": "https://huggingface.co/bottlecapai/ThinkingCap-Qwen3.8-27B"
+    },
+    {
+      "name": "macro-average accuracy",
+      "score": 85.8,
+      "kind": "vendor",
+      "variant": "BF16; base 86.6",
+      "source": "https://huggingface.co/bottlecapai/ThinkingCap-Qwen3.8-27B"
+    },
+    {
+      "name": "LiveCodeBench v6",
+      "score": 91.21,
+      "kind": "vendor",
+      "variant": "BF16; base 91.14, 20.3 percent fewer tokens",
+      "source": "https://huggingface.co/bottlecapai/ThinkingCap-Qwen3.8-27B"
+    },
+    {
+      "name": "AIME 2026",
+      "score": 94.27,
+      "kind": "vendor",
+      "variant": "BF16; base 98.13",
+      "source": "https://huggingface.co/bottlecapai/ThinkingCap-Qwen3.8-27B"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "fewer thinking tokens means faster agent loops at the same decode speed"
+    ],
+    "weaknesses": [
+      "AIME 2026 loses 3.9 points; only 11 percent fewer tokens on Terminal-Bench 2.1"
+    ],
+    "maturity": "3.6k downloads, 205 likes; sibling ThinkingCap-Qwen3.6-27B was the source of a transfer component in Swift"
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "Token-efficient thinking directly raises effective agent speed on our decode-bound hardware at a 0.8-point average accuracy cost in the vendor table. Same layout as the base. Compare with Swift-Qwen3.8-27B and the stock model in our harness.",
+    "blockers": [
+      "vendor-only benchmarks"
+    ]
+  },
+  "open_questions": [
+    "training method",
+    "agentic token savings in our harness"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/bottlecapai/ThinkingCap-Qwen3.8-27B",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "README returned 401 (gated); content via page summary; API file list read"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

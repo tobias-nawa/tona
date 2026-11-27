@@ -1,0 +1,202 @@
+{
+  "id": "tongyi-deepresearch-30b-a3b",
+  "name": "Tongyi DeepResearch 30B-A3B",
+  "vendor": "Alibaba Tongyi Lab",
+  "release_date": "2025-09-16",
+  "lineage": {
+    "how_derived": "agentic continual pre-training plus SFT plus on-policy RL (custom GRPO); base confirmed by a model-card discussion reply from the authors",
+    "base_model": "Qwen/Qwen3-30B-A3B-Thinking-2507"
+  },
+  "purpose": "Agentic LLM for long-horizon, deep information-seeking tasks (web research with many search and page-visit steps), built by Alibaba's Tongyi Lab as an open-source AI researcher.",
+  "tasks": [
+    "research"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card says apache-2.0 and the HF repo has no LICENSE file; the inference repo Alibaba-NLP/DeepResearch LICENSE was read (Apache License 2.0, first lines, summarizer) and the base Qwen3-30B-A3B-Thinking-2507 is also Apache-2.0."
+  },
+  "architecture": {
+    "kind": "MoE (qwen3_moe)",
+    "params_total_b": 30,
+    "params_active_b": 3,
+    "drafter": "none",
+    "why_this_design": "Blog: the IterResearch inference mode rebuilds a streamlined workspace around a central report each round to avoid 'cognitive suffocation' and 'noise pollution' from one ever-growing context; training uses fully synthetic agentic data because it is more consistent in distribution than human-annotated data such as BrowseComp, scales more easily and avoids commercial tool API calls. The MoE size (30B total, 3B active) is not justified in the text read.",
+    "context_native": 131072
+  },
+  "variants": [
+    {
+      "repo": "Alibaba-NLP/Tongyi-DeepResearch-30B-A3B",
+      "format": "safetensors BF16",
+      "official": true
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "variant": "community Q4 (about 18 GB, estimate)"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "community Q4",
+      "notes": "estimate"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q4-Q6"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q8"
+    },
+    "mac-16-24gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "variant": "Q4"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q4-Q6"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q8"
+    }
+  },
+  "engine_support": {
+    "tona": "planned",
+    "llama_cpp": "yes",
+    "other": [
+      "vLLM (authors use --tool-call-parser hermes, --max-model-len 128000)",
+      "Ollama",
+      "LM Studio",
+      "community GGUFs (bartowski, mradermacher, Mungert and others)"
+    ],
+    "notes": "Tool requirements of the vendor harness (Alibaba-NLP/DeepResearch, README read through a summarizer): web search and Google Scholar through Serper.dev (SERPER_KEY_ID); page reading through Jina.ai (JINA_API_KEYS) plus an OpenAI-compatible LLM endpoint for page summarization (API_KEY, API_BASE); a Python interpreter through SandboxFusion endpoints (SANDBOX_FUSION_ENDPOINT); a file parser through Dashscope (DASHSCOPE_API_KEY). Two modes: ReAct and the IterResearch 'Heavy' mode. All tools are paid or hosted services; a fully local setup needs replacements for search, visit and the sandbox. Qwen3-MoE architecture, so an engine with qwen3_moe support runs the weights."
+  },
+  "benchmarks": [
+    {
+      "name": "BrowseComp",
+      "score": 43.4,
+      "kind": "vendor",
+      "source": "https://tongyi-agent.github.io/blog/introducing-tongyi-deep-research",
+      "harness": "ReAct or IterResearch harness from the vendor repo, tools: search, visit, scholar, python, file parser",
+      "date": "2025-09"
+    },
+    {
+      "name": "BrowseComp-ZH",
+      "score": 46.7,
+      "kind": "vendor",
+      "source": "https://tongyi-agent.github.io/blog/introducing-tongyi-deep-research",
+      "harness": "ReAct or IterResearch harness from the vendor repo, tools: search, visit, scholar, python, file parser",
+      "date": "2025-09"
+    },
+    {
+      "name": "Humanity's Last Exam",
+      "score": 32.9,
+      "kind": "vendor",
+      "source": "https://tongyi-agent.github.io/blog/introducing-tongyi-deep-research",
+      "harness": "ReAct or IterResearch harness from the vendor repo, tools: search, visit, scholar, python, file parser",
+      "date": "2025-09"
+    },
+    {
+      "name": "xbench-DeepSearch",
+      "score": 75.0,
+      "kind": "vendor",
+      "source": "https://tongyi-agent.github.io/blog/introducing-tongyi-deep-research",
+      "harness": "ReAct or IterResearch harness from the vendor repo, tools: search, visit, scholar, python, file parser",
+      "date": "2025-09"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "Reference model for open deep-research work; two inference modes: ReAct and an IterResearch-based Heavy mode",
+      "Apache-2.0, quantizations available"
+    ],
+    "weaknesses": [
+      "Scores only as images on the card (numbers taken from the vendor blog)",
+      "Needs Serper, Jina, a summarizer LLM and a code sandbox: no fully local path out of the box",
+      "Superseded on BrowseComp by its own finetune SearchSwarm (68.1 self-reported vs 43.4) and by OpenResearcher on BrowseComp-Plus"
+    ],
+    "best_for": [
+      "Baseline for local research agents"
+    ],
+    "maturity": "Alibaba Tongyi Lab; inference code in Alibaba-NLP/DeepResearch.",
+    "behavior": "Runs a ReAct tool loop (think, call search or visit, observe) over a 128K context; a reported failure is degenerate repeated tokens late in long BrowseComp runs, which the authors call a normal probabilistic failure of long generations.",
+    "user_reports": [
+      {
+        "summary": "Repeated-token degeneration on a BrowseComp question served with vLLM (TP 4, hermes tool parser, 128K); an author-side reply says all LLMs can fall into repetition with some probability.",
+        "sentiment": "negative",
+        "source": "https://huggingface.co/Alibaba-NLP/Tongyi-DeepResearch-30B-A3B/discussions/16",
+        "date": "2025-10-14"
+      }
+    ]
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "Apache-2.0 (text read), well-known baseline with many community GGUFs, 128K context, fits 16 GB-class machines; quality is below the newer SearchSwarm and OpenResearcher on their own tables. The harness (five tool backends) is the real work, not a license or quality problem. Missing qwen3_moe module is only a blocker.",
+    "blockers": [
+      "agent harness with search, visit, python and file-parser tools",
+      "qwen3_moe module in Tona"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/Alibaba-NLP/Tongyi-DeepResearch-30B-A3B",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "model card"
+    },
+    {
+      "url": "https://modal.com/resources/best-open-source-models-rl-training-deep-research-agents",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "search result, not opened"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Alibaba-NLP/DeepResearch/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "inference repo LICENSE (Apache-2.0), summarizer read"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Alibaba-NLP/DeepResearch/main/README.md",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "inference repo README, summarizer read: tools, keys, 128K context"
+    },
+    {
+      "url": "https://tongyi-agent.github.io/blog/introducing-tongyi-deep-research",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "vendor tech blog, summarizer read"
+    },
+    {
+      "url": "https://huggingface.co/Alibaba-NLP/Tongyi-DeepResearch-30B-A3B/discussions/10",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "authors name the base model"
+    }
+  ],
+  "open_questions": [
+    "Independent reproduction of the vendor numbers",
+    "Which local replacements for Serper, Jina and SandboxFusion give comparable quality"
+  ],
+  "last_checked": "2026-11-19"
+}

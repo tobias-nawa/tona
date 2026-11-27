@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# Re-run after the desktop VRAM fell (05:20): waits for block g (g.sh, started separately), then e, c1, c3, c4, f, f2, i with 60 s pauses
+S=/var/tmp/claude/scale1110; R=$S/run.sh; W=<repo>
+cd $W; source toolchain/env.sh; export TONA_DIAG=1
+until grep -q "^g done" $S/g.out; do sleep 30; done
+vram() { echo "VRAM-desktop $1 $(date +%T) $(( $(cat /sys/class/drm/card1/device/mem_info_vram_used) / 1048576 )) MiB"; }
+step() { echo "STEP $1 $(date +%T)"; vram "$1"; }
+cv() { sleep 60; step $1; local l=$1; shift; $R python3 -I $S/curve.py $l merged "$@" > $S/$l.out 2>&1; grep -h "expert slots" $S/$l-server-*.log | sed "s/^/SLOTS $l: /"; }
+sleep 60; step e2; $R python3 -I $S/drive.py press 10 r8r merged DRIVE_ULIMIT_C=unlimited TONA_DIAG=1 > $S/r8r.out 2>&1
+grep -h "expert slots" $S/r8r.server.log | sed "s/^/SLOTS e2: /"
+cv c1r set --env TONA_DIAG=1
+cv c3r2 mid,long --env TONA_DIAG=1
+cv c4r3 huge --env TONA_DIAG=1
+cv fr server --targets 250000:100 --ctx 262144 --env TONA_DIAG=1
+cv f2r server --targets 1000000:200 --ctx 1048576 --env TONA_SEQS=1 --env TONA_DIAG=1
+sleep 60; step ir
+bash $S/ir.sh > $S/ir.out 2>&1
+step rerun-done

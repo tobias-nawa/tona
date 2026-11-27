@@ -1,0 +1,145 @@
+{
+  "id": "liquid-codec",
+  "name": "LiquidCodec",
+  "vendor": "Liquid AI",
+  "release_date": "2026-09-16",
+  "purpose": "Compact streaming audio codec that compresses speech into discrete tokens and back; the audio tokenizer behind LFM3-Audio-2B and LFM3-Omni-2B (card). Codebooks have no sequential dependencies, so speech models can predict all codebooks of a frame in parallel.",
+  "tasks": [
+    "other"
+  ],
+  "modalities": {
+    "input": [
+      "audio"
+    ],
+    "output": [
+      "audio"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en",
+      "zh",
+      "de",
+      "fr",
+      "ja",
+      "ko",
+      "many"
+    ]
+  },
+  "license": {
+    "name": "LFM Open License v1.0",
+    "verified": true,
+    "commercial_use": "limited",
+    "redistribution": "yes",
+    "notes": "LICENSE read: Apache-2.0-style grant (copyright and patent, redistribution with license copy, change notices and attribution) but commercial use is licensed only while the user or legal entity stays below an annual revenue threshold of US$10,000,000; above it commercial use is not licensed; non-profits may use it for non-commercial or research purposes regardless of the threshold; trademarks excluded. Verdict policy (README, 2026-11-19): this licence term does not lower tona_fit; kept here for an installer label."
+  },
+  "architecture": {
+    "kind": "symmetric, fully causal LFM3 encoder and decoder with grouped finite scalar quantization (GFSQ), 12 codebooks (FSQ levels 8,7,6,6), not an LLM",
+    "params_total_b": 0.074,
+    "why_this_design": "Card: GFSQ gives codebooks without sequential dependencies, so speech models can predict all codebooks of a frame in parallel; decoder-only quantization-aware training lets the decoder run in Q4_0."
+  },
+  "variants": [
+    {
+      "repo": "LiquidAI/Liquid-Codec",
+      "format": "safetensors BF16",
+      "size_gb": 0.15,
+      "official": true,
+      "notes": "24 kHz mono speech, 12.5 Hz frames, 12 tokens per frame, about 1.65 kbps; Q4_0/Q4_K_M/Q8_0 decoders ship only inside LFM3-Audio-2B-GGUF and LFM3-Omni-2B-GGUF"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "0.15 GB; card measured 361x real-time encode and 87x decode on one Apple M4 Max CPU thread (FP32)"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "measured",
+      "notes": "speed measured by the vendor on an Apple M4 Max CPU thread"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "partial",
+    "other": [
+      "Transformers (LiquidCodecModel, streaming cache)",
+      "decoder inside LFM3-Audio-2B-GGUF and LFM3-Omni-2B-GGUF for llama.cpp"
+    ],
+    "notes": "llama.cpp support only as part of the LFM3 audio GGUFs, per the card."
+  },
+  "benchmarks": [
+    {
+      "name": "ViSQOL, LibriSpeech test-clean (reconstruction)",
+      "score": 4.319,
+      "kind": "vendor",
+      "variant": "BF16; Q4_0 decoder 4.292; X-Codec 2 4.119, NanoCodec 4.219, Mimi 12cb 4.031",
+      "source": "https://huggingface.co/LiquidAI/Liquid-Codec"
+    },
+    {
+      "name": "Encode / decode real-time factor, FP32, one CPU thread",
+      "score": "0.0028 / 0.0115",
+      "kind": "vendor",
+      "variant": "Apple M4 Max; Mimi 0.0361 / 0.0329, X-Codec 2 0.7359 / 0.0379",
+      "source": "https://huggingface.co/LiquidAI/Liquid-Codec"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "Very fast on CPU, 74M parameters, streaming encode and decode",
+      "Trained on 264k hours across 107 languages (card)"
+    ],
+    "weaknesses": [
+      "Trained and evaluated on speech only; music, singing and environmental sound not evaluated (card)",
+      "License caps commercial use at US$10M revenue"
+    ],
+    "maturity": "Liquid AI; weights last modified 2026-11-12."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "A component, not a user-facing model: useful only as the tokenizer if Tona ports a Liquid LFM3 speech model. Quality results are vendor-run on eight test sets; no independent check.",
+    "blockers": [
+      "no Tona audio module",
+      "meaningful only together with an LFM3 audio model"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/LiquidAI/Liquid-Codec",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "card, config.json, file sizes"
+    },
+    {
+      "url": "https://huggingface.co/LiquidAI/Liquid-Codec/raw/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "LFM Open License v1.0 text read"
+    }
+  ],
+  "open_questions": [
+    "No independent codec comparison found",
+    "Whether a standalone ggml/GGUF codec exists outside the LFM3 audio GGUFs"
+  ],
+  "last_checked": "2026-11-19"
+}

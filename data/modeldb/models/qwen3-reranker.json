@@ -1,0 +1,231 @@
+{
+  "id": "qwen3-reranker",
+  "name": "Qwen3-Reranker (0.6B, 4B, 8B)",
+  "vendor": "Alibaba Qwen",
+  "release_date": "2025-05-29",
+  "lineage": {
+    "family": "Qwen3",
+    "how_derived": "causal LM fine-tuned as pointwise reranker (score = P(yes) vs P(no))"
+  },
+  "purpose": "Rerank candidate passages for a query, instruction-aware, including code and 100+ languages.",
+  "tasks": [
+    "reranking"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "many"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card tag apache-2.0. The reranker HF repos have no LICENSE file; the sibling Qwen3-Embedding-8B repo carries the Apache-2.0 text, and the Qwen3-Embedding GitHub page states no license. Reranker repo text not read, so verified stays false. HF createdAt 2025-05-29."
+  },
+  "architecture": {
+    "kind": "dense decoder transformer, pointwise cross-encoder via chat template",
+    "gguf_arch": "qwen3",
+    "params_total_b": 8,
+    "layers": 36,
+    "context_native": 32768
+  },
+  "variants": [
+    {
+      "repo": "Qwen/Qwen3-Reranker-0.6B",
+      "format": "safetensors BF16",
+      "official": true
+    },
+    {
+      "repo": "ggml-org Qwen3-Reranker-0.6B GGUF",
+      "format": "GGUF Q8_0",
+      "official": false,
+      "notes": "repo exists per research/52, size not read"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "0.6B/4B"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "any size"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "0.6B/4B"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "llama.cpp /v1/embeddings and /reranking",
+      "vLLM",
+      "TEI",
+      "Sentence Transformers"
+    ],
+    "notes": "llama-server --reranking; the prompt must follow the card template (Instruct/Query/Document)."
+  },
+  "benchmarks": [
+    {
+      "name": "MTEB-Code (rerank top-100 from Qwen3-Embedding-0.6B)",
+      "score": 73.42,
+      "kind": "vendor",
+      "variant": "0.6B",
+      "source": "https://huggingface.co/Qwen/Qwen3-Reranker-0.6B"
+    },
+    {
+      "name": "MTEB-Code",
+      "score": 81.2,
+      "kind": "vendor",
+      "variant": "4B",
+      "source": "https://huggingface.co/Qwen/Qwen3-Reranker-0.6B"
+    },
+    {
+      "name": "MTEB-Code",
+      "score": 81.22,
+      "kind": "vendor",
+      "variant": "8B",
+      "source": "https://huggingface.co/Qwen/Qwen3-Reranker-0.6B"
+    },
+    {
+      "name": "MMTEB-R",
+      "score": 66.36,
+      "kind": "vendor",
+      "variant": "0.6B",
+      "source": "https://huggingface.co/Qwen/Qwen3-Reranker-0.6B"
+    },
+    {
+      "name": "MMTEB-R",
+      "score": 72.74,
+      "kind": "vendor",
+      "variant": "4B",
+      "source": "https://huggingface.co/Qwen/Qwen3-Reranker-0.6B"
+    },
+    {
+      "name": "MTEB-R",
+      "score": 65.8,
+      "kind": "vendor",
+      "variant": "0.6B",
+      "source": "https://huggingface.co/Qwen/Qwen3-Reranker-0.6B"
+    },
+    {
+      "name": "CMTEB-R",
+      "score": 71.31,
+      "kind": "vendor",
+      "variant": "0.6B",
+      "source": "https://huggingface.co/Qwen/Qwen3-Reranker-0.6B"
+    },
+    {
+      "name": "MLDR",
+      "score": 67.28,
+      "kind": "vendor",
+      "variant": "0.6B",
+      "source": "https://huggingface.co/Qwen/Qwen3-Reranker-0.6B"
+    },
+    {
+      "name": "Rerank top-15 from EmbeddingGemma 2, nDCG@10 (in-house, 30 queries)",
+      "score": 96.84,
+      "kind": "independent",
+      "variant": "Qwen3-Reranker-4B via hosted API, ChatML template; without the template 77.98; embedder alone 92.22 Recall@5",
+      "source": "https://regolo.ai/embeddinggemma-2-vs-qwen3-embedding-benchmarks.md",
+      "unit": "%",
+      "date": "2026-10-15"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "4B gets nearly all of the 8B code reranking score",
+      "adds recall on top of the embedder"
+    ],
+    "weaknesses": [
+      "pointwise: one forward pass per candidate, cost grows with candidate count",
+      "FollowIR is low (5.41 for 0.6B)"
+    ],
+    "user_reports": [
+      {
+        "summary": "A hosted-API seller's benchmark: adding Qwen3-Reranker-4B raised Recall@5 from 92.22% to 95.56% on a 60-document test (weak evidence).",
+        "sentiment": "positive",
+        "source": "https://regolo.ai/embeddinggemma-2-vs-qwen3-embedding-benchmarks.md"
+      },
+      {
+        "summary": "Prompt format matters: omitting the ChatML template dropped nDCG@10 from 96.84 to 77.98 in a small in-house test; p50 rerank latency about 332 ms for 15 candidates (hosted 4B).",
+        "sentiment": "mixed",
+        "source": "https://regolo.ai/embeddinggemma-2-vs-qwen3-embedding-benchmarks.md",
+        "date": "2026-10-15"
+      }
+    ],
+    "maturity": "as Qwen3-Embedding"
+  },
+  "tona_fit": {
+    "verdict": "offer",
+    "reason": "Paired with Qwen3-Embedding in the recommended search stack (research/52).",
+    "blockers": [
+      "no reranking route in Tona"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/Qwen/Qwen3-Reranker-0.6B",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://regolo.ai/embeddinggemma-2-vs-qwen3-embedding-benchmarks.md",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "seller of a competing hosted API"
+    },
+    {
+      "url": "research/52-purpose-models.md",
+      "kind": "own",
+      "checked": "2026-11-19",
+      "note": "our research note 52, facts fetched 2026-11-15, not a measurement"
+    },
+    {
+      "url": "https://huggingface.co/api/models/Qwen/Qwen3-Reranker-0.6B",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "createdAt 2025-05-29"
+    }
+  ],
+  "open_questions": [
+    "Rerank latency on our hardware for 50-100 candidates",
+    "GGUF file sizes of the 4B/8B rerankers (only the 0.6B GGUF was read)",
+    "Reranker repo license text (no LICENSE file in the repo)"
+  ],
+  "last_checked": "2026-11-19"
+}

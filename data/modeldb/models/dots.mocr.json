@@ -1,0 +1,173 @@
+{
+  "id": "dots.mocr",
+  "name": "dots.mocr",
+  "vendor": "rednote-hilab (Xingyin Information Technology)",
+  "release_date": "2026-03",
+  "lineage": {
+    "family": "dots.ocr",
+    "base_model": "dots.ocr (3B)",
+    "how_derived": "successor with SVG/graphics parsing added; the paper is arXiv 2603.13032"
+  },
+  "purpose": "Multilingual document parsing that also converts structured graphics (charts, UI layouts, scientific figures) into SVG code; grounding, recognition and dialogue (card).",
+  "tasks": [
+    "documents",
+    "vision"
+  ],
+  "modalities": {
+    "input": [
+      "image",
+      "document"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en",
+      "zh",
+      "many"
+    ]
+  },
+  "license": {
+    "name": "MIT (card tag) plus dots.mocr LICENSE AGREEMENT (custom, MIT prevails on conflict)",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Agreement text read; same terms as dots.ocr: commercial use and redistribution granted, but 3.3 prohibits extracting sensitive personal data without legal basis and \"unauthorized digitization of publications/document scanning\", 5.2 prohibits processing GDPR/HIPAA-protected personal data without consent and safeguards; automatic termination on breach."
+  },
+  "architecture": {
+    "kind": "vision-language model, 3.04B parameters (safetensors total), dots.ocr architecture with custom code",
+    "params_total_b": 3.04
+  },
+  "variants": [
+    {
+      "repo": "dots-studio/dots.mocr",
+      "format": "safetensors BF16",
+      "size_gb": 6.1,
+      "official": true,
+      "notes": "the rednote-hilab path redirects; size from parameter count x 2 bytes"
+    },
+    {
+      "repo": "mlx-community/dots.mocr-4bit",
+      "format": "MLX 4bit",
+      "official": false
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "BF16 about 6 GB"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "BF16 about 6 GB; one model at a time in Tona"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "unknown",
+    "other": [
+      "transformers custom code",
+      "vLLM (dots.ocr path)",
+      "MLX community conversions"
+    ],
+    "notes": "no llama.cpp or GGUF support confirmed for dots.mocr"
+  },
+  "benchmarks": [
+    {
+      "name": "MDPBench overall (17 languages)",
+      "score": 80.5,
+      "kind": "independent",
+      "variant": "dots.mocr; digital 90.5, photographed 77.2, best open model in the table",
+      "date": "2026-07",
+      "source": "https://huggingface.co/datasets/Delores-Lin/MDPBench"
+    },
+    {
+      "name": "MDPBench German pages (DE column)",
+      "score": 82.6,
+      "kind": "independent",
+      "variant": "dots.mocr",
+      "date": "2026-07",
+      "source": "https://huggingface.co/datasets/Delores-Lin/MDPBench",
+      "harness": "run by the dots.mocr authors (same group as the benchmark)"
+    },
+    {
+      "name": "olmOCR-bench overall",
+      "score": 83.9,
+      "kind": "vendor",
+      "source": "https://huggingface.co/dots-studio/dots.mocr",
+      "unit": "% +-0.9"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "highest overall score among open parsers on MDPBench incl. photographed pages",
+      "German 82.6 third-party"
+    ],
+    "weaknesses": [
+      "license agreement restricts personal-data and scanned-publication use",
+      "no llama.cpp path found",
+      "3B is larger than the 1B parsers with similar German scores (GLM-OCR 82.7)"
+    ],
+    "best_for": [
+      "accurate parsing of mixed digital and photographed pages, charts to SVG"
+    ],
+    "maturity": "same vendor as dots.ocr; releases March 2026; 58,829 downloads at check time"
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "top quality among open parsers on third-party multilingual/photo tests, fits every class; held back by the personal-data clauses in the license agreement (invoices, ID-bearing scans) and an unconfirmed llama.cpp route, not by missing Tona support",
+    "blockers": [
+      "license clause on personal data and scanned publications",
+      "no confirmed llama.cpp support",
+      "Tona engine has no vision/OCR architecture"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/dots-studio/dots.mocr",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "HF API and README; rednote-hilab/dots.mocr is the card link in the README"
+    },
+    {
+      "url": "https://huggingface.co/dots-studio/dots.mocr/raw/main/dots.mocr%20LICENSE%20AGREEMENT",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/datasets/Delores-Lin/MDPBench",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "leaderboard table in the dataset README"
+    }
+  ],
+  "open_questions": [
+    "GGUF / llama.cpp support for the dots architecture",
+    "legal reading of the personal-data clauses for local private use"
+  ],
+  "last_checked": "2026-11-19"
+}

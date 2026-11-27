@@ -1,0 +1,152 @@
+{
+  "id": "luciole-8b-audio-1.0",
+  "name": "Luciole-8B-Audio-1.0 (also 1B and 23B)",
+  "vendor": "LINAGORA / OpenLLM-France consortium",
+  "release_date": "2026-09-18",
+  "lineage": {
+    "base_model": "OpenLLM-France/Luciole-8B-Instruct-1.1",
+    "how_derived": "speech-LLM: frozen Parakeet-TDT-0.6B-v3 Conformer encoder + linear adapter (1024 to 4096) with RoTE, LLM adapted with LoRA (r 64) on NeMo Speech (card)",
+    "family": "Luciole"
+  },
+  "purpose": "European, sovereign audio-language model trained on the Jean Zay supercomputer (France 2030, BPI): ASR, speech translation, spoken QA, summarization, diarization, temporal localization, speaker/emotion/language recognition, sound and music captioning (card).",
+  "tasks": [
+    "audio-transcription",
+    "general"
+  ],
+  "modalities": {
+    "input": [
+      "audio",
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "fr",
+      "en",
+      "de",
+      "es",
+      "it",
+      "pt",
+      "nl",
+      "ar"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card License section: released under the Apache License 2.0 by LINAGORA SAS; no LICENSE file read."
+  },
+  "architecture": {
+    "kind": "speech LLM (SALM): frozen Parakeet-TDT encoder + audio adapter + Luciole-8B LLM with LoRA",
+    "params_total_b": 8.6
+  },
+  "variants": [
+    {
+      "repo": "OpenLLM-France/Luciole-8B-Audio-1.0",
+      "format": "safetensors BF16 (NeMo speechlm2)",
+      "official": true,
+      "size_gb": 17.39,
+      "notes": "repo total per HF API"
+    },
+    {
+      "repo": "OpenLLM-France/Luciole-1B-Audio-1.0",
+      "format": "safetensors",
+      "official": true,
+      "notes": "listed in the sweep, card not read"
+    },
+    {
+      "repo": "OpenLLM-France/Luciole-23B-Audio-1.0",
+      "format": "safetensors",
+      "official": true,
+      "notes": "listed in the sweep, card not read"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "marginal",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "17.4 GB file against 9.6 GB VRAM plus 50 GB RAM budget; part streams from RAM (dense: decode is bandwidth bound)"
+    },
+    "pc-16gb": {
+      "fits": "marginal",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "17.4 GB file against 13.6 GB VRAM plus 50 GB RAM budget; part streams from RAM (dense: decode is bandwidth bound)"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (21.6 GB)"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (29.6 GB)"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "17.4 GB file against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "17.4 GB file against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "17.4 GB file against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "NeMo Speech",
+      "vLLM via the SALM plugin (nemo.collections.speechlm2.vllm.salm)"
+    ]
+  },
+  "benchmarks": [],
+  "soft": {
+    "strengths": [
+      "French/English strongest; German, Spanish, Italian for ASR, AST and spoken QA",
+      "Apache-2.0 and European"
+    ],
+    "weaknesses": [
+      "card: spoken QA mainly French and English; Arabic weak (FLEURS WER about 30%) because the frozen Parakeet v3 encoder never saw Arabic"
+    ],
+    "maturity": "Public-funded consortium, 3 sizes; 1k downloads so far."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "An open audio-understanding LLM with German ASR/translation and a European provenance, built on the Parakeet encoder we already track. Evaluate against Voxtral and Qwen3-Omni-class audio models on German tasks before any offer.",
+    "blockers": [
+      "no Tona audio module"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/OpenLLM-France/Luciole-8B-Audio-1.0",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README, config.json, HF API"
+    }
+  ],
+  "open_questions": [
+    "Evaluation figures are charts; German WER not extracted",
+    "1B and 23B variants not opened"
+  ],
+  "last_checked": "2026-11-19"
+}

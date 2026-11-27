@@ -1,0 +1,145 @@
+{
+  "id": "autotrust-decider-pro-vision-27b",
+  "name": "AutoTrust Decider Pro Vision 27B (JEV-27B-VL)",
+  "vendor": "AutoTrust",
+  "release_date": "2026-09-30",
+  "lineage": {
+    "family": "Jev decision models",
+    "base_model": "Qwen/Qwen3.8-27B",
+    "how_derived": "LoRA adapter (base_model_relation adapter) trained on a distilled decision corpus (SargeDev/jev-distill-corpus-v3); the unmodified base serves as 'System 2' for thinking"
+  },
+  "purpose": "One decision model instead of a ranking team: calibrated typed decisions (choice, yes/no, score) for recommendation, search re-ranking and similar, in about half a second; the card also reports embodied-reasoning results (card).",
+  "tasks": [
+    "other",
+    "vision"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Apache License 2.0 text read in the repo LICENSE file: commercial use, modification and redistribution allowed with notice and patent grant."
+  },
+  "architecture": {
+    "kind": "hybrid Gated-DeltaNet plus full attention dense transformer (Qwen3.8-27B layout)",
+    "gguf_arch": "qwen35",
+    "params_total_b": 27,
+    "params_active_b": 27,
+    "attention": "full attention every 4th layer, hidden 5120, head dim 256",
+    "recurrent": "Gated DeltaNet",
+    "drafter": "none"
+  },
+  "variants": [
+    {
+      "repo": "autotrust/AutoTrust-Decider-Pro-Vision-27B",
+      "format": "safetensors BF16 (adapter plus weights, 56 GB in the repo)",
+      "size_gb": 56.05,
+      "official": true
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "no",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "56.05 GB file exceeds the 9.6 GB VRAM plus 50 GB RAM budget"
+    },
+    "pc-16gb": {
+      "fits": "marginal",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "56.05 GB file against 13.6 GB VRAM plus 50 GB RAM budget; part of the dense weights stream from RAM (decode is bandwidth bound)"
+    },
+    "pc-24gb": {
+      "fits": "marginal",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "56.05 GB file against 21.6 GB VRAM plus 82 GB RAM budget; part of the dense weights stream from RAM (decode is bandwidth bound)"
+    },
+    "pc-32gb": {
+      "fits": "marginal",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "56.05 GB file against 29.6 GB VRAM plus 82 GB RAM budget; part of the dense weights stream from RAM (decode is bandwidth bound)"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "56.05 GB file against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "no",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "56.05 GB file against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "no",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "56.05 GB file against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "vLLM"
+    ],
+    "notes": "Jev-compatible /v1/systemone API per the card."
+  },
+  "benchmarks": [
+    {
+      "name": "ERQA (embodied reasoning QA, 400 questions)",
+      "score": 61.5,
+      "unit": "%",
+      "kind": "vendor",
+      "variant": "with thinking (medium); 53.8 in one pass; 95% interval about +-5 points",
+      "source": "https://huggingface.co/autotrust/AutoTrust-Decider-Pro-Vision-27B"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "calibrated option probabilities"
+    ],
+    "weaknesses": [
+      "the ERQA claim ('top open model, tied with Claude Opus 5') is the vendor's; no robot data was used per the card"
+    ],
+    "maturity": "991k downloads and 5.8k likes; the card carries promotional demo banners; why the download count is that far above comparable repos is not explained"
+  },
+  "tona_fit": {
+    "verdict": "reject",
+    "reason": "A Qwen3.8-27B LoRA for typed decisions and ranking, not a general or coding model; the large download count (991k) comes with no evidence of broader utility.",
+    "blockers": [
+      "not a text-generation worker"
+    ]
+  },
+  "open_questions": [
+    "why the downloads are so high (usage by a benchmark or pipeline is a guess, unchecked)",
+    "independent Decision Index scores"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/autotrust/AutoTrust-Decider-Pro-Vision-27B",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README, config.json, LICENSE read"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

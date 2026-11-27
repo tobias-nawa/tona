@@ -1,0 +1,170 @@
+{
+  "id": "leanstral-1.5-119b-a6b",
+  "name": "Leanstral 1.5 119B-A6B",
+  "vendor": "Mistral AI",
+  "release_date": "2026-07-01",
+  "lineage": {
+    "base_model": "mistralai/Leanstral-2603",
+    "family": "Mistral Small 4",
+    "how_derived": "updated Lean 4 specialist built as part of the Mistral Small 4 family"
+  },
+  "purpose": "Open-source code agent for Lean 4, the proof assistant used for complex mathematical objects (perfectoid spaces) and software specifications (properties of Rust fragments); built to be performant and cost-effective compared with closed alternatives (card).",
+  "tasks": [
+    "math",
+    "coding"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en"
+    ],
+    "programming": {
+      "Lean 4": {
+        "level": "strong",
+        "evidence": "purpose-built Lean 4 agent; benchmark figure is an image on the card, not read",
+        "sources": [
+          "https://huggingface.co/mistralai/Leanstral-1.5-119B-A6B"
+        ]
+      }
+    }
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Repo has no LICENSE file; card tag apache-2.0. Text read: standard Apache License 2.0 text, identical to https://www.apache.org/licenses/LICENSE-2.0.txt (read 2026-11-19)."
+  },
+  "architecture": {
+    "kind": "MoE with multi-head latent attention (Mistral Small 4 family), multimodal input",
+    "params_total_b": 119,
+    "params_active_b": 6.5,
+    "layers": 36,
+    "attention": "MLA (q_lora_rank 1024, kv_lora_rank 256, 32 heads), YaRN to 1,048,576 positions in params.json",
+    "recurrent": "none",
+    "experts": 128,
+    "experts_active": 4,
+    "context_native": 262144,
+    "drafter": "none named",
+    "why_this_design": "Card: built on the Mistral Small 4 family to combine multimodal capabilities with an efficient MoE architecture, making it 'both performant and cost-effective'; recommended context is 200K or less."
+  },
+  "variants": [
+    {
+      "repo": "mistralai/Leanstral-1.5-119B-A6B",
+      "format": "safetensors FP8 (e4m3 weights per params.json)",
+      "official": true
+    },
+    {
+      "repo": "GZGavinZhao/Leanstral-1.5-119B-A6B-GGUF",
+      "format": "GGUF",
+      "official": false,
+      "notes": "10,544 downloads, created 2026-07-04; several other community GGUF, NVFP4 and MLX builds exist; sizes not collected"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "no",
+      "basis": "estimate"
+    },
+    "pc-16gb": {
+      "fits": "no",
+      "basis": "estimate"
+    },
+    "pc-24gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "variant": "Q4 about 70 GB",
+      "notes": "experts stream from 96-128 GB RAM"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q4 about 70 GB",
+      "notes": "with 96-128 GB RAM"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "basis": "estimate"
+    },
+    "mac-32gb": {
+      "fits": "no",
+      "basis": "estimate"
+    },
+    "mac-64gb-plus": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q4 about 70 GB",
+      "notes": "needs 96 GB or more for headroom"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "partial",
+    "other": [
+      "vLLM >= 0.24.0 with mistral_common >= 1.11.5 (card: --tool-call-parser mistral, --reasoning-parser mistral, TP 4 example)",
+      "Mistral API (free plan, Labs models opt-in)"
+    ],
+    "notes": "Tool requirements: designed for Mistral Vibe (vibe --agent lean after /leanstall) and recommended with lean-lsp-mcp so the agent talks to the Lean language server; local use through a vLLM server configured in ~/.vibe/agents/lean.toml (temperature 1.0, thinking high, auto-compact at 168000 tokens, bash timeout 1200 s). Card advises using the Mistral API if local serving is subpar. Community GGUFs exist; llama.cpp quality for this model is unchecked."
+  },
+  "benchmarks": [],
+  "soft": {
+    "strengths": [
+      "Only open model on record built specifically for Lean 4 proving and verification",
+      "Apache-2.0"
+    ],
+    "weaknesses": [
+      "Benchmark comparison is an image on the card, no numbers read",
+      "119B total"
+    ],
+    "best_for": [
+      "Lean 4 proof and verification work with lean-lsp-mcp"
+    ],
+    "avoid_for": [
+      "general chat or knowledge questions"
+    ],
+    "maturity": "Mistral AI; update of Leanstral-2603 (445 downloads of the original repo, 10.5K of one GGUF)."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Niche specialist: valuable only for users who write Lean 4; Apache-2.0 (text read) and capable on paper, but 119B-A6.5B needs a large RAM class and the agent expects the Vibe CLI plus lean-lsp-mcp. Not a general worker.",
+    "blockers": [
+      "119B total: pc-32gb or mac-64gb+ only",
+      "needs Lean toolchain and lean-lsp-mcp",
+      "no MLA/Mistral Small 4 module in Tona"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/mistralai/Leanstral-1.5-119B-A6B",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "model card and params.json read"
+    },
+    {
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.txt",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "license text"
+    },
+    {
+      "url": "https://huggingface.co/api/models?search=Leanstral-1.5",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "variant listing"
+    }
+  ],
+  "open_questions": [
+    "Benchmark numbers (image on the card)",
+    "Quality of community GGUFs against the FP8 original on Lean tasks",
+    "Whether a smaller Lean model exists"
+  ],
+  "last_checked": "2026-11-19"
+}

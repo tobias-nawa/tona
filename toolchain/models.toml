@@ -1,0 +1,142 @@
+# Pinned models. Revision and SHA-256 match the reference distribution of the model, so every engine
+# measures the same bytes. Fetch: tools/get_model.py <name>
+#
+# Coder: shard 1 of 2026-10-19 (ISTA-DASLab commit d1d94679, "updated expert-pruned model", 3,063 of 12,288 experts
+# exchanged); part 2 unchanged. Same speed, NLL equal on code and better on prose against the shard of 2026-09-29
+# (research/measurements/2026-11-12-coder-1019.md); the old pin was 5348543e (sha256 e11083ba... for shard 1).
+
+[coder-iq1_m]
+title = "Qwen3.8-Flash-Next Coder, GSQ-RCO IQ1_M (ISTA-DASLab)"
+kind = "model"
+tested = true      # runs in our engine, measured
+license = "Qwen Community License 1.0 (the card text says the weights inherit the base license; its YAML tag apache-2.0 contradicts it, research/42-model-licenses.md)"
+quality = "SWE-bench Verified 75.6 (ISTA, as of 2026-09-29)"
+repo = "ISTA-DASLab/Qwen3.8-Flash-Next-GSQ-RCO-Coder-GGUF"
+revision = "bba88856f8c3c0c9e40e45f82d05e228b814ac43"   # 2026-10-19
+files = [
+  { path = "IQ1_M/Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf", size = 29608446496, sha256 = "bfa3644db4adfff072fc946c20994f2909d2cf89879d83f80a4c811d4016c211" },
+  { path = "IQ1_M/Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00002-of-00002.gguf", size = 28800138432, sha256 = "316b46f3a2dbd68c900f43136ab9449f9dcc3725dfd8c794847c204bc161e113" },
+]
+
+# Ornith 1.5 35B-A3B, Q4_K_M, the file Tona runs (official GGUF repository of the publisher, commit of 2026-08-24, read
+# from the Hugging Face API on 2026-11-24). No mmproj (vision is not in Tona), no other quantization. The repository has
+# no LICENSE file; the publisher declares MIT elsewhere (research/2026-11-25-ornith-license.md).
+["ornith-1.5-35b-a3b"]
+title = "Ornith 1.5 35B-A3B, Q4_K_M (ornith-ai)"
+kind = "model"
+tested = true      # runs in our engine, measured (research/measurements/2026-11-20-ornith-bolt-clean-state.md)
+license = "MIT (research/2026-11-25-ornith-license.md)"
+quality = "SWE-bench Verified 79 (vendor); Rust 8 of 22 exercises against the Coder's 2 of 22 (our eval, llama.cpp)"
+repo = "ornith-ai/Ornith-1.5-35B-A3B-GGUF"
+revision = "12393612fd4f730ff5aadc23e9b8f9648aa49ceb"   # 2026-08-24
+files = [
+  { path = "Ornith-1.5-35B-Q4_K_M.gguf", size = 21713463040, sha256 = "42739874cc2ccfdb8523b23fbe52e29b2a7555c8176737ca9ca0b5d59859d41f" },
+]
+
+# Nemotron 3.5 Bolt 74B-A9B for 24 GB machines (NVIDIA, commit of 2026-10-15, read from the Hugging Face API on
+# 2026-11-24). The model file only: no mmproj (vision is not in Tona) and not the LiLiCorr drafter (separate repository,
+# Tona has no kernel for it yet; Bolt runs without a drafter, research/measurements/2026-11-20-ornith-bolt-clean-state.md).
+[nemotron-bolt-74b-a9b-24gb]
+title = "Nemotron 3.5 Bolt 74B-A9B, 24GB GGUF (NVIDIA)"
+kind = "model"
+tested = true      # runs in our engine, measured (research/measurements/2026-11-20-ornith-bolt-clean-state.md)
+license = "OpenMDW-1.1 (license text read, data/modeldb/models/nemotron-3.5-bolt-74b-a9b-24gb.json)"
+quality = "Terminal-Bench 2.1 50.98 (vendor); no coding accuracy published, 2-bit experts"
+repo = "nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB-GGUF"
+revision = "e0fecb69cb3e5e4c5e8a056fa2aec98c78e91246"   # 2026-10-15
+files = [
+  { path = "NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB.gguf", size = 22018326528, sha256 = "91d63363e782c8a3d5f4be42816eba8e0d42dd2530bd07a7d0d2dc440599af75" },
+]
+
+[swift-iq2_xs]
+title = "Swift 1.5 (UkisAI fine-tune of Qwen3.8-Flash-Next), GSQ-RCO IQ2_XS"
+kind = "model"
+tested = false     # fetched for comparison measurements only, never ran in the engine
+license = "Swift Open License 1.0 (per the Hugging Face model card); base model: Qwen Community License 1.0"
+quality = "Terminal-Bench 2.1 69.7 (vendor); 68 GB, needs 64 GB RAM"
+repo = "ukisai/Swift-1.5-Qwen3.8-Flash-Next-GSQ-RCO-GGUF"
+revision = "99bb8f7f95c7aa7b24a36a7786a4f657b30f5d3d"   # 2026-10-07
+files = [
+  { path = "Swift-Qwen3.8-Flash-Next-GSQ-RCO-IQ2_XS-00001-of-00002.gguf", size = 39788473344, sha256 = "ca3b302d3d1eb6eddce3ea4acc79854e6cc5fdc0583e374a6a8b6bb67327743b" },
+  { path = "Swift-Qwen3.8-Flash-Next-GSQ-RCO-IQ2_XS-00002-of-00002.gguf", size = 28363693824, sha256 = "e4996a6de18fd49c58d9a0040fcfd73787db6407c51973f29884bee7b14c9dbb" },
+]
+
+# The Coder cut to 164 of its 256 experts per layer (kept experts byte copies), its Q6_K matrices in the tile layout
+# TONA_Q6_K_T (bit-identical values): the Mac's model (Metal module of tona setup, maintainer decision 2026-11-12;
+# research/measurements/2026-11-12-mac-dmt-server-ab.md). Part 2 is the unchanged ISTA part 2, byte-equal to
+# coder-iq1_m's, so it comes from that pin and is saved under part 1's prefix.
+# UNPUBLISHED: part 1 has no repository yet; tona setup and get_model.py refuse the entry until both are pinned
+# (research/42-model-licenses.md, checklist).
+[coder-dmt-164]
+title = "Qwen3.8-Flash-Next Coder, 164 experts, Q6_K tiled (Mac)"
+kind = "model"
+tested = true      # runs in the Metal backend, measured
+license = "Qwen Community License 1.0 (derived from the ISTA-DASLab Coder, research/42-model-licenses.md)"
+quality = "code KLD 0.053 against the 256-expert Coder (research/measurements/2026-11-11-requant.md)"
+repo = "UNPUBLISHED"
+revision = "UNPUBLISHED"
+mtp = "mtp-164"    # the MTP head cut to the same 164 experts
+files = [
+  { path = "coder-DMT-164e-00001-of-00002.gguf", size = 20548934176, sha256 = "46307cd51f79be7df16e9e4f9c6bc290e8888b56647d21ca7a43ee77495a40fb" },
+  { path = "IQ1_M/Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00002-of-00002.gguf", size = 28800138432, sha256 = "316b46f3a2dbd68c900f43136ab9449f9dcc3725dfd8c794847c204bc161e113", repo = "ISTA-DASLab/Qwen3.8-Flash-Next-GSQ-RCO-Coder-GGUF", revision = "bba88856f8c3c0c9e40e45f82d05e228b814ac43", save_as = "coder-DMT-164e-00002-of-00002.gguf" },
+]
+
+# The unpruned Flash-Next (512 experts per layer, GSQ-RCO Q2_0, ISTA-DASLab commit ed59f920 of 2026-09-29) for the
+# 512-expert size class of the HIP backend (phase 2a). Part 1 is the upstream file with its Q3_K tensors as Q6_K and
+# its Q4_0 and Q5_0 tensors as Q8_0 (tools/coder_requant, `pipeline.py dense`; every block compared bit for bit, the
+# values are unchanged; the engine has no kernels for those three types). Upstream part 1 has size 37623740192 and
+# sha256 69820c02ec7d0b45ef2ebb19d6620299db749fe2aded7f39f93c6b88b199b720. Part 2 is the unchanged ISTA part 2, byte-equal
+# to coder-iq1_m's.
+# UNPUBLISHED: the repacked part 1 has no repository yet; tona setup and get_model.py refuse the entry until both are
+# pinned. Not recommended by the installer before phase 2b (speed and agent quality against the Coder).
+[flash-next-512-q2_0]
+title = "Qwen3.8-Flash-Next, 512 experts, GSQ-RCO Q2_0, dense types repacked (ISTA-DASLab)"
+kind = "model"
+tested = false     # runs in the engine (cross-check, phase 2a); measurements against the Coder follow in phase 2b
+license = "Qwen Community License 1.0 (the card text says the weights inherit the base license; its YAML tag apache-2.0 contradicts it, research/42-model-licenses.md)"
+quality = "vendor: see the model card of ISTA-DASLab/Qwen3.8-Flash-Next-GSQ-RCO-GGUF; 66.4 GB (37.6 + 28.8) upstream"
+repo = "UNPUBLISHED"
+revision = "UNPUBLISHED"
+files = [
+  { path = "flash-next-512-q2_0-dense-00001-of-00002.gguf", size = 38343356192, sha256 = "e3e7366e2419aefc4cc713fc6662fba2dd1d99f81a9f7fcb6e70f4ef81a26040" },
+  { path = "IQ1_M/Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00002-of-00002.gguf", size = 28800138432, sha256 = "316b46f3a2dbd68c900f43136ab9449f9dcc3725dfd8c794847c204bc161e113", repo = "ISTA-DASLab/Qwen3.8-Flash-Next-GSQ-RCO-Coder-GGUF", revision = "bba88856f8c3c0c9e40e45f82d05e228b814ac43", save_as = "flash-next-512-q2_0-dense-00002-of-00002.gguf" },
+]
+
+# Drafters (drafts for speculation), from ggml-org; revision of 2026-10-27
+[mtp-q8_0]
+title = "MTP head of Qwen3.8-Flash-Next, Q8_0 (default drafter)"
+kind = "drafter"
+tested = true
+license = "other (per the Hugging Face model card); base model: Qwen Community License 1.0"
+quality = "default since 2026-10-26"
+repo = "ggml-org/Qwen3.8-Flash-Next-GGUF"
+revision = "91fb00353e766eb43944ed223665ea4fb87dad47"
+files = [
+  { path = "mtp-Qwen3.8-Flash-Next-Q8_0.gguf", size = 4137429312, sha256 = "713b16d7e97246858ebd9a6dec403b1cfc3407d8a539f65401948e20b38b0f91" },
+]
+
+[dflash-q8_0]
+title = "DFlash2 drafter for Qwen3.8-Flash-Next, Q8_0"
+kind = "drafter"
+tested = true
+license = "other (per the Hugging Face model card); base model: Qwen Community License 1.0"
+quality = "default until 2026-10-26, now an alternative"
+repo = "ggml-org/Qwen3.8-Flash-Next-GGUF"
+revision = "91fb00353e766eb43944ed223665ea4fb87dad47"
+files = [
+  { path = "dflash-Qwen3.8-Flash-Next-Q8_0.gguf", size = 652101056, sha256 = "f0ae6ece1fbd71e203c448d79ad4877ade59c27c8c4db3106596b85bae63f106" },
+]
+
+# The MTP head cut to the 164 experts with the largest routing mass of the head itself on coding load (88.5 %), for
+# coder-dmt-164 (research/measurements/2026-11-11-mac-mtp.md). UNPUBLISHED like coder-dmt-164.
+[mtp-164]
+title = "MTP head of Qwen3.8-Flash-Next, Q8_0, cut to 164 experts (Mac)"
+kind = "drafter"
+tested = true
+license = "Qwen Community License 1.0 (derived from the ggml-org MTP head, research/42-model-licenses.md)"
+quality = "3.68 tokens per pass against 3.92 with the full head (research/measurements/2026-11-11-mac-mtp.md)"
+repo = "UNPUBLISHED"
+revision = "UNPUBLISHED"
+files = [
+  { path = "mtp-Qwen3.8-Flash-Next-Q8_0-164e.gguf", size = 2316470592, sha256 = "bd6e76dc45d5d10fea92688f66548ee5a93e2e89f298047290b145842ec9154b" },
+]

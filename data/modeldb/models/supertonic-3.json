@@ -1,0 +1,160 @@
+{
+  "id": "supertonic-3",
+  "name": "Supertonic 3",
+  "vendor": "Supertone",
+  "release_date": "2026-09-08",
+  "lineage": {
+    "family": "Supertonic (v2 had 5 languages)"
+  },
+  "purpose": "Lightweight on-device TTS that runs with ONNX Runtime without a cloud call; version 3 expands the open-weight release from 5 to 31 languages, reduces repeat/skip failures and adds expression tags like <laugh> (card).",
+  "tasks": [
+    "speech-synthesis"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "audio"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en",
+      "ko",
+      "ja",
+      "ar",
+      "bg",
+      "cs",
+      "da",
+      "de",
+      "el",
+      "es",
+      "et",
+      "fi",
+      "fr",
+      "hi",
+      "hr",
+      "hu",
+      "id",
+      "it",
+      "lt",
+      "lv",
+      "nl",
+      "pl",
+      "pt",
+      "ro",
+      "ru",
+      "sk",
+      "sl",
+      "sv",
+      "tr",
+      "uk",
+      "vi"
+    ]
+  },
+  "license": {
+    "name": "BigScience OpenRAIL-M (repo tag 'openrail')",
+    "verified": false,
+    "commercial_use": "limited",
+    "redistribution": "yes",
+    "notes": "LICENSE file opened: BigScience Open RAIL-M License dated 2022-08-18 (header); behavioural use restrictions attach to the model and derivatives. Full text not read."
+  },
+  "architecture": {
+    "kind": "on-device TTS exported as ONNX graphs (internals not described in the part of the card I read)"
+  },
+  "variants": [
+    {
+      "repo": "supertone-oss-archive/supertonic-3",
+      "format": "ONNX",
+      "official": true,
+      "size_gb": 0.41,
+      "notes": "repo total per HF API; the repo is an archive/stub mirror (config says stub for download counting), 7.5k downloads"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "variant": "0.41 GB ONNX",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "0.41 GB ONNX",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "0.41 GB ONNX",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "0.41 GB ONNX",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "variant": "0.41 GB ONNX",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "0.41 GB ONNX",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "0.41 GB ONNX",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "supertonic Python SDK (ONNX Runtime)",
+      "other language SDKs on the project's repository (not opened)"
+    ]
+  },
+  "benchmarks": [],
+  "soft": {
+    "strengths": [
+      "31 languages including German at 0.41 GB",
+      "fixed preset voices, no GPU needed"
+    ],
+    "weaknesses": [
+      "fixed preset voices in the open package; custom voices only in a demo",
+      "OpenRAIL-M use restrictions"
+    ],
+    "maturity": "Supertone; v3 successor of an open v1/v2 line."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "German in a 0.4 GB ONNX package is attractive for a CPU-side readout voice, but OpenRAIL-M restrictions and preset-only voices make it a comparison point next to Kokoro and Kitten TTS rather than an offer until quality is listened to.",
+    "blockers": [
+      "no Tona audio module"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/supertone-oss-archive/supertonic-3",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README, HF API, LICENSE header"
+    }
+  ],
+  "open_questions": [
+    "Parameter count and architecture not stated in the card text read",
+    "Benchmark charts are images; numbers not extracted",
+    "Upstream repo (Supertone org) not opened"
+  ],
+  "last_checked": "2026-11-19"
+}

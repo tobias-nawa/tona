@@ -1,0 +1,168 @@
+{
+  "id": "nucleus-image",
+  "name": "Nucleus-Image",
+  "vendor": "NucleusAI",
+  "release_date": "2026-04",
+  "purpose": "Text-to-image model testing whether a sparse MoE diffusion transformer reaches leading quality with about 2B active parameters. Released as a base model without post-training.",
+  "tasks": [
+    "image-generation"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "image"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card tag apache-2.0; the HF repo has no LICENSE file and the vendor's GitHub repo LICENSE was not reachable (404 on raw), so the text itself was not read."
+  },
+  "architecture": {
+    "kind": "sparse MoE diffusion transformer, expert-choice routing",
+    "params_total_b": 17,
+    "params_active_b": 2,
+    "layers": 32,
+    "experts": 64,
+    "attention": "GQA, 16 query heads, 4 KV heads",
+    "why_this_design": "Expert-choice routing balances experts without auxiliary losses; a decoupled router sees the unmodulated token plus timestep so modulation does not collapse selection; text tokens stay out of the backbone and only contribute KV, enabling text-KV caching across denoising steps; progressive resolution training 256-512-1024. 29 of 32 blocks are MoE (64 routed + 1 shared), first 3 dense. Text encoder Qwen3-VL-8B-Instruct, Qwen-Image 16-channel VAE."
+  },
+  "variants": [
+    {
+      "repo": "NucleusAI/Nucleus-Image",
+      "format": "safetensors BF16",
+      "size_gb": 51.7,
+      "official": true,
+      "notes": "size incl. 8B text encoder per research/52"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "no",
+      "basis": "estimate",
+      "notes": "BF16 51.7 GB; no GGUF found"
+    },
+    "pc-16gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "notes": "only with quantization and offload; no engine No consumer-GPU speed found."
+    },
+    "pc-24gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "notes": "same"
+    },
+    "pc-32gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "notes": "same"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-32gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "BF16 fits in unified memory; PyTorch only"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "diffusers/PyTorch"
+    ],
+    "notes": "stable-diffusion.cpp PR #2315 and issue #1421 were open on 2026-11-15, not merged."
+  },
+  "benchmarks": [
+    {
+      "name": "GenEval",
+      "score": 0.87,
+      "kind": "vendor",
+      "variant": "base BF16, 1024px, 50 steps, CFG 8",
+      "source": "https://huggingface.co/NucleusAI/Nucleus-Image"
+    },
+    {
+      "name": "DPG-Bench",
+      "score": 88.79,
+      "kind": "vendor",
+      "variant": "same",
+      "source": "https://huggingface.co/NucleusAI/Nucleus-Image"
+    },
+    {
+      "name": "OneIG-Bench",
+      "score": 0.522,
+      "kind": "vendor",
+      "variant": "same",
+      "source": "https://huggingface.co/NucleusAI/Nucleus-Image"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "strong benchmarks for 2B active parameters (vendor)"
+    ],
+    "weaknesses": [
+      "all 64 experts are touched in every layer at image-token batch sizes, so MoE saves compute, not memory (research/52 estimate)",
+      "base model without DPO/RL, 50 steps with CFG",
+      "English only on the card"
+    ],
+    "maturity": "New vendor, paper arXiv 2604.12163."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Apache-2.0 by tag, strong GenEval 0.87 / DPG 88.79 (vendor), but a 17B MoE at 51.7 GB BF16 with no engine and no GGUF; revisit when quantized files exist.",
+    "blockers": [
+      "Tona has no image engine",
+      "no GGUF, 51.7 GB BF16",
+      "license text not read"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/NucleusAI/Nucleus-Image",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://arxiv.org/abs/2604.12163",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "abstract only"
+    },
+    {
+      "url": "research/52-purpose-models.md",
+      "kind": "own",
+      "checked": "2026-11-19",
+      "note": "our research note 52, facts fetched 2026-11-15, not a measurement"
+    },
+    {
+      "url": "https://huggingface.co/api/models/NucleusAI/Nucleus-Image",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "createdAt 2026-03-17 (paper arXiv 2604.12163 is April)"
+    }
+  ],
+  "open_questions": [
+    "License text: not found as a file; confirm in the vendor GitHub repo",
+    "VRAM not stated",
+    "Status of stable-diffusion.cpp PR #2315 after 2026-11-15",
+    "No consumer-GPU speed found (searched 2026-11-19)"
+  ],
+  "last_checked": "2026-11-19"
+}

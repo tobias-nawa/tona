@@ -1,0 +1,194 @@
+{
+  "id": "bge-m3",
+  "name": "BGE-M3",
+  "vendor": "BAAI",
+  "release_date": "2024-01-27",
+  "lineage": {
+    "family": "BGE",
+    "base_model": "XLM-RoBERTa-large (RetroMAE-extended to 8192)",
+    "how_derived": "unsupervised contrastive pretraining then unified fine-tuning for dense, sparse and multi-vector retrieval"
+  },
+  "purpose": "One multilingual embedder that does dense, sparse (lexical) and ColBERT-style multi-vector retrieval over inputs from short sentences to 8192-token documents in 100+ languages (card).",
+  "tasks": [
+    "embeddings"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "embedding"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "many"
+    ]
+  },
+  "license": {
+    "name": "MIT",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card tag mit; the HF repo has no LICENSE file, so text not read. HF createdAt 2024-01-27."
+  },
+  "architecture": {
+    "kind": "XLM-RoBERTa-large encoder (568M), bidirectional, CLS pooling",
+    "params_total_b": 0.568,
+    "context_native": 8192,
+    "why_this_design": "Multi-Functionality, Multi-Linguality, Multi-Granularity (title of the paper, arXiv 2402.03216): the three retrieval modes share one model and can be fused for hybrid ranking."
+  },
+  "variants": [
+    {
+      "repo": "BAAI/bge-m3",
+      "format": "safetensors",
+      "official": true,
+      "notes": "1024-d dense"
+    },
+    {
+      "repo": "ggml-org/bge-m3-Q8_0-GGUF",
+      "format": "GGUF Q8_0",
+      "size_gb": 0.63,
+      "official": false,
+      "notes": "llama.cpp dense only; sparse and ColBERT outputs need FlagEmbedding"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "0.63 GB at Q8_0"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "runs beside the coder, or on CPU"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "FlagEmbedding",
+      "Sentence Transformers",
+      "TEI",
+      "vLLM"
+    ],
+    "notes": "llama.cpp serves the dense vector only."
+  },
+  "benchmarks": [
+    {
+      "name": "PosIR / aggregate multilingual retrieval vs Qwen3-Embedding-0.6B",
+      "score": "bge-m3 generally lower",
+      "kind": "independent",
+      "variant": "dense",
+      "source": "https://arxiv.org/pdf/2601.08363",
+      "date": "2026-01"
+    },
+    {
+      "name": "ALEE English-centric minimal pairs",
+      "score": "~0.88 vs ~0.70 for Qwen3-0.6B",
+      "kind": "independent",
+      "variant": "dense",
+      "source": "https://arxiv.org/pdf/2607.00171",
+      "date": "2026-07"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "8192-token context",
+      "dense plus sparse plus multi-vector in one model",
+      "MIT, mature tooling, 100+ languages"
+    ],
+    "weaknesses": [
+      "older (Jan 2024): Qwen3-Embedding-0.6B scores higher on aggregate multilingual and code retrieval in the independent tables found",
+      "no code-specific training",
+      "no instruction prefix"
+    ],
+    "best_for": [
+      "multilingual document search where hybrid dense plus lexical ranking is wanted"
+    ],
+    "avoid_for": [
+      "code retrieval where Qwen3-Embedding is available"
+    ],
+    "user_reports": [
+      {
+        "summary": "Korean practice guide: bge-m3 has the more mature retrieval tooling; Qwen3 performs best when each query carries a one-sentence task instruction.",
+        "sentiment": "mixed",
+        "source": "https://www.youngju.dev/split/ai/2026-08-12-huggingface-embedding-models",
+        "date": "2026-08-12"
+      }
+    ],
+    "maturity": "BAAI, very large community, many quants; no update since 2024."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "MIT, tiny and mature, and the only one here with a native sparse plus multi-vector mode, but Qwen3-Embedding-0.6B is newer and ahead on code and aggregate retrieval at similar size; keep as the hybrid-search alternative.",
+    "blockers": [
+      "Tona has no embeddings route"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/BAAI/bge-m3",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "card read 2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/api/models/ggml-org/bge-m3-Q8_0-GGUF",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "size 0.63 GB via blobs"
+    },
+    {
+      "url": "https://arxiv.org/pdf/2601.08363",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "third-party benchmark, seen through a search summary"
+    },
+    {
+      "url": "https://arxiv.org/pdf/2607.00171",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "third-party benchmark, seen through a search summary"
+    },
+    {
+      "url": "https://www.youngju.dev/split/ai/2026-08-12-huggingface-embedding-models",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "blog, search summary"
+    }
+  ],
+  "open_questions": [
+    "License text (no LICENSE file in the repo)",
+    "German retrieval head-to-head with Qwen3-Embedding-0.6B: none found; own test on a German corpus",
+    "CoIR / MTEB Code score not on the card"
+  ],
+  "last_checked": "2026-11-19"
+}

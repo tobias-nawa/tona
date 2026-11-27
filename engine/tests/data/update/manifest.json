@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "product": "tona",
+  "version": "0.3.0",
+  "seq": 3,
+  "released": "2026-11-02T10:00:00Z",
+  "expires": "2027-05-02T00:00:00Z",
+  "commit": "0123456789abcdef0123456789abcdef01234567",
+  "rocm_lock_sha256": "89abcdef0123456789abcdef0123456789abcdef0123456789abcdef01234567",
+  "severity": "normal",
+  "changelog": "Test release.",
+  "files": [
+    {"asset": "tona-server", "path": "bin/tona-server", "platform": "linux-x86_64-gfx1200",
+     "size": 1234, "sha256": "abababababababababababababababababababababababababababababababab", "mode": "0755"}
+  ]
+}

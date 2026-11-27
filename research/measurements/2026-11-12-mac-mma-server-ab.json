@@ -1,0 +1,157 @@
+{
+  "config": {
+    "A": {
+      "build": "work/build/mtl",
+      "env": {},
+      "tooling": {
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0"
+      },
+      "commit": "stand-2026-10-25-934-g061c2ab33c",
+      "model": "<repo>/work/models/coder-dmix/coder-DM-164e-00001-of-00002.gguf"
+    },
+    "B": {
+      "build": "work/build/mtl",
+      "env": {
+        "TONA_METAL_MMA": "1"
+      },
+      "tooling": {
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0",
+        "TONA_METAL_MMA": "1"
+      },
+      "commit": "stand-2026-10-25-934-g061c2ab33c",
+      "model": "<repo>/work/models/coder-dmix/coder-DM-164e-00001-of-00002.gguf"
+    },
+    "workload": "set",
+    "targets": "bench-set at --ctx 32768",
+    "deterministic": false,
+    "plan_info": {
+      "expect": [
+        [
+          "decode-code",
+          2.0,
+          8.0
+        ],
+        [
+          "decode-text",
+          1.0,
+          7.0
+        ]
+      ],
+      "source": "research/measurements/2026-11-12-mac-mma-pass-costs.md",
+      "workload": "set",
+      "targets": "bench-set at --ctx 32768",
+      "primary": "",
+      "why_size": "bench-set: the decode of the production path, 11 code and 3 text prompts",
+      "decode_tokens": 200,
+      "noise": {},
+      "warmup": true,
+      "round_warmup": true,
+      "A": {
+        "build": "work/build/mtl",
+        "env": {},
+        "tooling": {
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0"
+        },
+        "commit": "stand-2026-10-25-934-g061c2ab33c",
+        "model": "<repo>/work/models/coder-dmix/coder-DM-164e-00001-of-00002.gguf"
+      },
+      "B": {
+        "build": "work/build/mtl",
+        "env": {
+          "TONA_METAL_MMA": "1"
+        },
+        "tooling": {
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0",
+          "TONA_METAL_MMA": "1"
+        },
+        "commit": "stand-2026-10-25-934-g061c2ab33c",
+        "model": "<repo>/work/models/coder-dmix/coder-DM-164e-00001-of-00002.gguf"
+      }
+    },
+    "reference_sha": {},
+    "corpus_sha256": "e13a800340859f7d39c63712d90383faae7e5a47c3865f0811e40d912612d38e",
+    "corpus_is_reference": true,
+    "commit": "061c2ab",
+    "noise": {}
+  },
+  "rounds": [
+    {
+      "order": "AB",
+      "sha": {
+        "A": {},
+        "B": {}
+      },
+      "A": {
+        "decode-code": 31.3,
+        "decode-text": 24.0
+      },
+      "counters": {
+        "A": {},
+        "B": {}
+      },
+      "B": {
+        "decode-code": 33.8,
+        "decode-text": 24.9
+      },
+      "seconds": 654.5210296249716
+    },
+    {
+      "order": "BA",
+      "sha": {
+        "B": {},
+        "A": {}
+      },
+      "B": {
+        "decode-code": 34.5,
+        "decode-text": 26.6
+      },
+      "counters": {
+        "B": {},
+        "A": {}
+      },
+      "A": {
+        "decode-code": 32.3,
+        "decode-text": 25.1
+      },
+      "seconds": 632.9234202499501
+    }
+  ],
+  "stop_reason": "all metrics decided after round 2",
+  "wall_seconds": 1461.46688416705,
+  "warmup": {
+    "decode-code": 31.3,
+    "decode-text": 24.2
+  },
+  "plan": {
+    "alpha": 0.05,
+    "margin": 0.5,
+    "max_rounds": 6,
+    "min_rounds": 2,
+    "prior_sd": 0.5,
+    "prior_df": 4.0
+  },
+  "decisions": {
+    "decode-code": {
+      "decided_at_round": 2,
+      "decision": "B faster",
+      "mean_diff_percent": 7.399182979060126,
+      "ci_diff_percent": [
+        6.061610201862424,
+        8.736755756257828
+      ]
+    },
+    "decode-text": {
+      "decided_at_round": 2,
+      "decision": "B faster",
+      "mean_diff_percent": 4.8630478087649305,
+      "ci_diff_percent": [
+        2.9451702384021408,
+        6.78092537912772
+      ]
+    }
+  }
+}

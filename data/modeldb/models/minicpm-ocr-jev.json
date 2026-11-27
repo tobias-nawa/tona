@@ -1,0 +1,159 @@
+{
+  "id": "minicpm-ocr-jev",
+  "name": "MiniCPM-OCR Jev",
+  "vendor": "OpenBMB",
+  "release_date": "2026-10-23",
+  "lineage": {
+    "family": "MiniCPM-OCR (see minicpm-ocr-1.0)",
+    "base_model": "Qwen/Qwen3.5-2B",
+    "how_derived": "language-model head replaced with a binary classification head that learns whether a candidate OCR result is correct"
+  },
+  "purpose": "Score the correctness (0 to 1) of an OCR result for a text, formula or table region given the region image, so reliable regions are auto-accepted, the rest go to human review, or the best of several OCR outputs is picked (card).",
+  "tasks": [
+    "documents",
+    "vision"
+  ],
+  "modalities": {
+    "input": [
+      "image",
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en",
+      "zh"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0 (card tag)",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card tag apache-2.0; no LICENSE file in the repo listing."
+  },
+  "architecture": {
+    "kind": "Qwen3.5-2B vision-language with a binary classification head (single_label_classification)",
+    "params_total_b": 2.0,
+    "context_native": 262144
+  },
+  "variants": [
+    {
+      "repo": "openbmb/MiniCPM-OCR-Jev",
+      "format": "safetensors BF16",
+      "size_gb": 4.43,
+      "official": true
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "variant": "BF16 (4.4 GB)",
+      "basis": "estimate",
+      "notes": "4.43 GB against a VRAM budget of 9.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "BF16 (4.4 GB)",
+      "basis": "estimate",
+      "notes": "4.43 GB against a VRAM budget of 13.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "BF16 (4.4 GB)",
+      "basis": "estimate",
+      "notes": "4.43 GB against a VRAM budget of 21.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "BF16 (4.4 GB)",
+      "basis": "estimate",
+      "notes": "4.43 GB against a VRAM budget of 29.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "variant": "BF16 (4.4 GB)",
+      "basis": "estimate",
+      "notes": "4.43 GB against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "BF16 (4.4 GB)",
+      "basis": "estimate",
+      "notes": "4.43 GB against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "BF16 (4.4 GB)",
+      "basis": "estimate",
+      "notes": "4.43 GB against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "OpenBMB SDK service and Docker image with a built-in renderer",
+      "free cloud API"
+    ],
+    "notes": "Input includes a rendering of the candidate text; the plain service needs the caller to supply it."
+  },
+  "benchmarks": [
+    {
+      "name": "JevOCRBench decision AUROC x100",
+      "score": 93.6,
+      "kind": "vendor",
+      "variant": "BF16; JEV-35B-A3B 90.1, Qwen3.5-397B-A17B 93.8",
+      "source": "https://huggingface.co/openbmb/MiniCPM-OCR-Jev"
+    },
+    {
+      "name": "AUROC x100 on parses from MiniCPM-OCR 1.0, GLM-OCR, PaddleOCR-VL-1.6 and Xiaomi-OCR-0",
+      "score": "91.9 to 93.4",
+      "kind": "vendor",
+      "source": "https://huggingface.co/openbmb/MiniCPM-OCR-Jev"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "a verifier that works across different OCR engines",
+      "small: 2B"
+    ],
+    "weaknesses": [
+      "needs a candidate OCR result and the region category as input, so it is a pipeline add-on, not a parser"
+    ],
+    "best_for": [
+      "confidence gating of an OCR pipeline (auto-accept versus review)"
+    ],
+    "maturity": "71.7k downloads, 99 likes; benchmark JevOCRBench published by the same lab"
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "A useful quality gate for a document pipeline (decide which pages need a second pass), but it presupposes a parser and a region-level pipeline; revisit when Tona offers document parsing.",
+    "blockers": [
+      "needs region crops and a renderer",
+      "no Tona path for the classification head"
+    ]
+  },
+  "open_questions": [
+    "German or other-language performance (card lists English and Chinese)",
+    "licence text"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/openbmb/MiniCPM-OCR-Jev",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README and config read"
+    },
+    {
+      "url": "https://huggingface.co/api/models/openbmb/MiniCPM-OCR-Jev?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "size"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

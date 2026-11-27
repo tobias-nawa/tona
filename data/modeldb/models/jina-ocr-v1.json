@@ -1,0 +1,177 @@
+{
+  "id": "jina-ocr-v1",
+  "name": "jina-ocr-v1",
+  "vendor": "Jina AI",
+  "release_date": "2026-09-01",
+  "lineage": {
+    "family": "DeepSeek-OCR",
+    "base_model": "DeepSeek-OCR (DeepEncoder + 3B MoE)",
+    "how_derived": "reward-dense post-training plus a FastMTP speculative decoding head (K=3)"
+  },
+  "purpose": "End-to-end document parsing with high-quality OCR at an efficient serving point, targeting low-budget GPUs (card and blog title).",
+  "tasks": [
+    "documents",
+    "vision"
+  ],
+  "modalities": {
+    "input": [
+      "image",
+      "document"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "many"
+    ]
+  },
+  "license": {
+    "name": "CC-BY-NC-4.0",
+    "verified": false,
+    "commercial_use": "no",
+    "redistribution": "limited",
+    "notes": "Card tag cc-by-nc-4.0; the repo has no LICENSE file, so the text was not read. Non-commercial. Verdict policy (README, 2026-11-19): this licence term does not lower tona_fit; kept here for an installer label."
+  },
+  "architecture": {
+    "kind": "vision-language, DeepSeek-OCR: DeepEncoder (1024x1024 view in 256 visual tokens plus dynamic tiles) and 3B MoE decoder, 64 routed + 2 shared experts, 6 active",
+    "params_total_b": 3.0,
+    "params_active_b": 0.57,
+    "layers": 12,
+    "experts": 64,
+    "experts_active": 6,
+    "context_native": 32768,
+    "drafter": "FastMTP head, one dense draft block shared over K=3 steps (vLLM only), greedy verification keeps the verifier output exactly",
+    "why_this_design": "Card: DeepEncoder maps a 1024x1024 view from 4,096 patches to 256 tokens (3,887 pixels per visual token against 783 to 1,022 for 28 to 32 px patch encoders), and the MoE decoder activates about 570M parameters per token; the MTP head adds throughput without changing output."
+  },
+  "variants": [
+    {
+      "repo": "jinaai/jina-ocr-v1",
+      "format": "safetensors BF16",
+      "size_gb": 6.76,
+      "official": true
+    },
+    {
+      "repo": "ahmadw/jina-ocr-v1-GGUF",
+      "format": "GGUF",
+      "official": false,
+      "notes": "community; sizes not checked"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (9.6 GB)"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (13.6 GB)"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (21.6 GB)"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (29.6 GB)"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "6.8 GB file against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "6.8 GB file against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "6.8 GB file against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "unknown",
+    "other": [
+      "Transformers (trust_remote_code)",
+      "vLLM (needs an architecture registration for the MTP head)"
+    ],
+    "notes": "A community GGUF exists; MTP head works only on vLLM per the card."
+  },
+  "benchmarks": [
+    {
+      "name": "OmniDocBench v1.6 Overall",
+      "score": 91.14,
+      "kind": "vendor",
+      "source": "https://huggingface.co/jinaai/jina-ocr-v1"
+    },
+    {
+      "name": "olmOCR-Bench Overall",
+      "score": 83.4,
+      "kind": "vendor",
+      "source": "https://huggingface.co/jinaai/jina-ocr-v1",
+      "variant": "+7.4 over DeepSeek-OCR"
+    },
+    {
+      "name": "throughput, olmOCR-Bench, A100, concurrency 32",
+      "score": 2.57,
+      "unit": "pages/s",
+      "kind": "vendor",
+      "source": "https://huggingface.co/jinaai/jina-ocr-v1",
+      "variant": "highest of 14 systems measured by the vendor"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "highest page throughput among the 14 systems the vendor measured"
+    ],
+    "weaknesses": [
+      "non-commercial license",
+      "lower OmniDocBench v1.6 than the 2026 Apache/MIT models (WeVisDoc 95.4, Unlimited-OCR v1 93.9)"
+    ]
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Small (3B, 0.57B active) and fits every class, but its vendor OmniDocBench v1.6 score (91.14) is below Apache/MIT parsers of the same size class in vendor tables (WeVisDoc 95+), so there is no quality reason to prefer it."
+  },
+  "open_questions": [
+    "license text (no file in repo)",
+    "German quality",
+    "arXiv 2609.03181 report was not opened"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/jinaai/jina-ocr-v1",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README and config.json read"
+    },
+    {
+      "url": "https://huggingface.co/api/models/jinaai/jina-ocr-v1?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "sizes"
+    },
+    {
+      "url": "https://arxiv.org/abs/2609.03181",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "linked from the card, not opened"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

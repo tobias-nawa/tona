@@ -1,0 +1,87 @@
+{
+  "id": "llada2.2-mini",
+  "name": "LLaDA2.2-mini",
+  "vendor": "inclusionAI (Ant Group)",
+  "release_date": "2026-09-05",
+  "lineage": {
+    "base_model": "LLaDA2.0-mini architecture",
+    "family": "LLaDA2 (2.0, 2.1, 2.2; sibling LLaDA2.2-flash 100B)",
+    "how_derived": "agentic reinforcement learning with L-EBPO (Levenshtein Editing ELBO-based Block-level Policy Optimization) on top of the LLaDA2.0-mini MoE diffusion architecture, adding DELETE and INSERT control tokens"
+  },
+  "purpose": "A lightweight agentic diffusion language model: long-context tool calling, multi-turn interaction and error correction through Levenshtein editing, with a small active parameter count to cut inference cost.",
+  "tasks": ["general", "coding"],
+  "modalities": {"input": ["text"], "output": ["text"]},
+  "languages": {"natural": ["en", "zh"]},
+  "license": {
+    "name": "Apache-2.0",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card tag apache-2.0; no LICENSE file in the repo (404 on raw/main/LICENSE, 2026-11-19), text not read."
+  },
+  "architecture": {
+    "kind": "MoE diffusion language model (block diffusion) with Levenshtein editing",
+    "gguf_arch": "unknown (llada2_moe; a community GGUF exists)",
+    "params_total_b": 16,
+    "params_active_b": 1.4,
+    "layers": 20,
+    "attention": "GQA 16 Q / 4 KV heads, hidden 2048",
+    "recurrent": "none",
+    "experts": 256,
+    "experts_active": 8,
+    "context_native": 131072,
+    "context_max": 131072,
+    "drafter": "none (parallel block decoding with confidence threshold)",
+    "why_this_design": "Card: 128K context with a Block Routing mechanism that restricts MoE expert activation at the diffusion-block level, enabling efficient long-context agentic tasks; DELETE and INSERT tokens let parallel decoding remove redundant content and create insertion points; agentic RL trains those edits against environment rewards."
+  },
+  "variants": [
+    {"repo": "inclusionAI/LLaDA2.2-mini", "format": "safetensors BF16", "size_gb": 32.52, "official": true},
+    {"repo": "DreamBlooms/LLaDA2.2-mini-GGUF", "format": "GGUF (community)", "official": false, "notes": "sizes not recorded; also MLX 4/5/6 bit builds by one community author"}
+  ],
+  "hardware_fit": {
+    "pc-12gb": {"fits": "marginal", "basis": "estimate", "variant": "BF16 32.5 GB or a quant", "notes": "1.4 B active but the card documents only the Transformers sampler; a quant of the 16 B would be about 9 GB"},
+    "pc-16gb": {"fits": "marginal", "basis": "estimate", "notes": "BF16 32.5 GB needs RAM offload; quantization untested"},
+    "pc-24gb": {"fits": "yes", "basis": "estimate", "variant": "BF16 with RAM offload"},
+    "pc-32gb": {"fits": "yes", "basis": "estimate", "variant": "BF16", "notes": "32.5 GB is about the whole VRAM budget (29.6 GB), some experts in RAM"},
+    "mac-16-24gb": {"fits": "no", "basis": "estimate", "notes": "BF16 does not fit; a 4-bit MLX build exists from a community author"},
+    "mac-32gb": {"fits": "marginal", "basis": "estimate", "notes": "MLX 6-bit would be about 12 GB (community, unverified)"},
+    "mac-64gb+": {"fits": "yes", "basis": "estimate", "variant": "BF16"}
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "unknown",
+    "other": ["Transformers >= 5.2.0 with trust_remote_code", "MLX (community)"],
+    "notes": "Open discussion asks for vLLM or llama.cpp support; a community GGUF exists but diffusion decoding support in llama.cpp was not checked."
+  },
+  "benchmarks": [
+    {"name": "BFCL v4", "score": 47.68, "kind": "vendor", "variant": "BF16 (LLaDA2.1-mini 28.44)", "source": "https://huggingface.co/inclusionAI/LLaDA2.2-mini"},
+    {"name": "LiveCodeBench v6", "score": 28.14, "kind": "vendor", "variant": "BF16", "source": "https://huggingface.co/inclusionAI/LLaDA2.2-mini"},
+    {"name": "MultiPL-E", "score": 65.26, "kind": "vendor", "variant": "BF16", "source": "https://huggingface.co/inclusionAI/LLaDA2.2-mini"},
+    {"name": "τ²-Bench", "score": 57.5, "kind": "vendor", "variant": "BF16", "source": "https://huggingface.co/inclusionAI/LLaDA2.2-mini"},
+    {"name": "GPQA Diamond", "score": 44.41, "kind": "vendor", "variant": "BF16", "source": "https://huggingface.co/inclusionAI/LLaDA2.2-mini"},
+    {"name": "LongBench v2", "score": 34.99, "kind": "vendor", "variant": "BF16 (LLaDA2.1-mini 12.13)", "source": "https://huggingface.co/inclusionAI/LLaDA2.2-mini"}
+  ],
+  "soft": {
+    "strengths": ["Large gains in function calling and long context over LLaDA2.1-mini (vendor)", "Only 1.4 B active parameters"],
+    "weaknesses": ["Reasoning and knowledge scores below LLaDA2.1-mini (AIME 2026 35.1 against 40.4, GPQA 44.4 against 48.4, vendor)", "Coding is weak (LiveCodeBench v6 28.1)", "Diffusion decoding is not supported by common local engines"],
+    "behavior": "Generates blocks of 32 tokens in parallel with a confidence threshold (card example gen_length 512, block_length 32, threshold 0.5).",
+    "best_for": ["diffusion-decoding research", "small agentic tool-calling experiments"],
+    "avoid_for": ["coding agents"],
+    "maturity": "inclusionAI (Ant Group) LLaDA line with 2.0, 2.1 and 2.2; 3.5k downloads, four discussions."
+  },
+  "tona_fit": {
+    "verdict": "reject",
+    "reason": "Coding score is weak and the diffusion decoder is outside Tona's autoregressive engine; useful only as prior art for block-level expert routing in long-context decoding.",
+    "blockers": ["diffusion decoding not supported", "weak coding"]
+  },
+  "sources": [
+    {"url": "https://huggingface.co/inclusionAI/LLaDA2.2-mini", "kind": "primary", "checked": "2026-11-19", "note": "README and config.json read"},
+    {"url": "https://huggingface.co/inclusionAI/LLaDA2.2-mini/discussions", "kind": "primary", "checked": "2026-11-19", "note": "titles read via the HF API"}
+  ],
+  "open_questions": [
+    "License text",
+    "Real decode speed of block diffusion on consumer GPUs",
+    "Quantization and GGUF quality (community repo only)"
+  ],
+  "last_checked": "2026-11-19"
+}

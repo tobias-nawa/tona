@@ -1,0 +1,12 @@
+step 1: 4096 bytes added at offset 0, mapped 4096, kernel ok
+step 2: 45056 bytes added at offset 4096, mapped 49152, kernel ok
+step 3: 12288 bytes added at offset 49152, mapped 61440, kernel ok
+step 4: 20480 bytes added at offset 61440, mapped 81920, kernel ok
+step 5: 4096 bytes added at offset 81920, mapped 86016, kernel ok
+step 6: 28672 bytes added at offset 86016, mapped 114688, kernel ok
+step 7: 8192 bytes added at offset 114688, mapped 122880, kernel ok
+step 8: 53248 bytes added at offset 122880, mapped 176128, kernel ok
+step 9: 16384 bytes added at offset 176128, mapped 192512, kernel ok
+step 10: 36864 bytes added at offset 192512, mapped 229376, kernel ok
+granule 4096 (minimum), set access on new sub-range: all steps ok
+rc=0

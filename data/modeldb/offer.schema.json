@@ -1,0 +1,151 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tona.local/modeldb/offer.schema.json",
+  "title": "Tona offer data",
+  "description": "What the installer and the client show: tasks, the recommendation per task and hardware class, and the model card with every number. One value, one source: every number and verdict carries a basis word and a source (a repository path or a URL). tools/gates/offer.py checks the paths and the model ids against toolchain/models.toml; tools/gen_offer_data.py embeds the file in C++.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "updated", "hw_classes", "languages", "tasks", "offers", "models"],
+  "$defs": {
+    "text": {"type": "string", "minLength": 1, "description": "English text for the screens"},
+    "basis": {
+      "enum": ["measured", "provisional", "vendor", "independent", "none"],
+      "description": "measured: in Tona, a file under research/measurements/; provisional: measurement incomplete; vendor: model card; independent: a third-party test; none: nothing known (only with level open)"
+    },
+    "source": {"type": "string", "minLength": 1, "description": "repository path (must exist) or http(s) URL"},
+    "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]*$"},
+    "remark": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["text", "basis", "source"],
+      "properties": {
+        "text": {"$ref": "#/$defs/text"},
+        "basis": {"$ref": "#/$defs/basis"},
+        "source": {"$ref": "#/$defs/source"},
+        "brief": {"$ref": "#/$defs/text", "description": "keywords for the one-line list; the sentence in text goes to the details"}
+      }
+    },
+    "language_verdict": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["level", "basis", "detail", "source"],
+      "properties": {
+        "level": {"enum": ["strong", "weak", "open"]},
+        "basis": {"$ref": "#/$defs/basis"},
+        "detail": {"$ref": "#/$defs/text"},
+        "source": {"$ref": "#/$defs/source"}
+      }
+    },
+    "rate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["context_tokens", "basis", "note", "source"],
+      "anyOf": [{"required": ["decode_tps"]}, {"required": ["prefill_tps"]}],
+      "properties": {
+        "context_tokens": {"type": "integer", "minimum": 0, "description": "tokens of prompt before the measured pass"},
+        "decode_tps": {"type": "number", "exclusiveMinimum": 0, "description": "decode: generated tokens per second"},
+        "prefill_tps": {"type": "number", "exclusiveMinimum": 0, "description": "prefill: prompt tokens per second"},
+        "basis": {"$ref": "#/$defs/basis"},
+        "note": {"$ref": "#/$defs/text"},
+        "source": {"$ref": "#/$defs/source"}
+      }
+    }
+  },
+  "properties": {
+    "$schema": {"type": "string"},
+    "version": {"const": 1},
+    "updated": {"type": "string", "format": "date"},
+    "hw_classes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "label", "doc", "measured"],
+        "properties": {
+          "id": {"$ref": "#/$defs/id"},
+          "label": {"$ref": "#/$defs/text"},
+          "doc": {"$ref": "#/$defs/source"},
+          "measured": {"type": "boolean", "description": "true only when the numbers of the models were measured on this class"}
+        }
+      }
+    },
+    "languages": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "label"],
+        "properties": {"id": {"$ref": "#/$defs/id"}, "label": {"type": "string", "minLength": 1}}
+      }
+    },
+    "tasks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "label", "help", "status"],
+        "properties": {
+          "id": {"$ref": "#/$defs/id"},
+          "label": {"$ref": "#/$defs/text"},
+          "help": {"$ref": "#/$defs/text"},
+          "status": {"enum": ["available", "coming"]},
+          "coming_note": {"$ref": "#/$defs/text"}
+        },
+        "if": {"properties": {"status": {"const": "coming"}}},
+        "then": {"required": ["coming_note"]}
+      }
+    },
+    "offers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["task", "hw_class", "recommended", "reason", "source"],
+        "properties": {
+          "task": {"$ref": "#/$defs/id"},
+          "hw_class": {"$ref": "#/$defs/id"},
+          "recommended": {"$ref": "#/$defs/id", "description": "model id of toolchain/models.toml"},
+          "alternative": {"$ref": "#/$defs/id", "description": "at most one, never equal to recommended"},
+          "reason": {"$ref": "#/$defs/text"},
+          "source": {"$ref": "#/$defs/source"}
+        }
+      }
+    },
+    "models": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": {"$ref": "#/$defs/id"},
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "modeldb", "languages", "strengths", "weaknesses", "rates", "license"],
+        "properties": {
+          "name": {"type": "string", "minLength": 1},
+          "modeldb": {"$ref": "#/$defs/id", "description": "file stem of the record in data/modeldb/models/"},
+          "languages": {
+            "type": "object",
+            "propertyNames": {"$ref": "#/$defs/id"},
+            "additionalProperties": {"$ref": "#/$defs/language_verdict"},
+            "description": "one verdict for every language of the top-level list; unknown is open, never a guess"
+          },
+          "strengths": {"type": "array", "items": {"$ref": "#/$defs/remark"}},
+          "weaknesses": {"type": "array", "items": {"$ref": "#/$defs/remark"}},
+          "rates": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/rate"}},
+          "license": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["text", "verified", "source"],
+            "properties": {
+              "text": {"$ref": "#/$defs/text"},
+              "verified": {"type": "boolean", "description": "true only when the license text itself was read"},
+              "source": {"$ref": "#/$defs/source"}
+            }
+          }
+        }
+      }
+    }
+  }
+}

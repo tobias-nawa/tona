@@ -1,0 +1,3 @@
+# Sandbox for the polyglot exercises (rust): toolchain only, exercises are mounted at run time, no network then.
+# The three exercises with crate dependencies fail the reference check (no network) and are dropped for every model.
+FROM docker.io/library/rust:1-slim

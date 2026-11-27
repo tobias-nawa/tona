@@ -1,0 +1,6 @@
+# Direct dependency of the code gates; requirements.txt is generated from this file (pip-tools 7.6.2, Python 3.14):
+#   pip-compile --generate-hashes --allow-unsafe --strip-extras --output-file=tools/gates/requirements.txt tools/gates/requirements.in
+# pre-commit fetches all hook tools itself in the versions pinned in .pre-commit-config.yaml. Used by scripts/setup.sh and
+# .github/workflows/check.yml: pip checks the hashes on its own once the file has them. Python 3.11 or newer (the
+# transitive set was resolved for it).
+pre-commit==4.7.0

@@ -1,0 +1,144 @@
+{
+  "id": "h2o-lightning-4b",
+  "name": "H2O-Lightning-4B",
+  "vendor": "H2O.ai",
+  "release_date": "2026-10-02",
+  "lineage": {
+    "family": "Jev-class decision models",
+    "base_model": "Qwen/Qwen3.5-4B",
+    "how_derived": "decision model answering choice, yes/no (noul) and score questions about a record and its images"
+  },
+  "purpose": "Typed decision questions about a record (document, ticket, policy, conversation) and accompanying images (photos, screenshots, scans, charts) with a probability per option (card).",
+  "tasks": [
+    "other",
+    "vision"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0 (card tag)",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card tag apache-2.0 and a LICENSE file in the repo; the text was not read."
+  },
+  "architecture": {
+    "kind": "Qwen3.5-4B decision model",
+    "params_total_b": 4.0
+  },
+  "variants": [
+    {
+      "repo": "h2oai/h2o-lightning-4b",
+      "format": "safetensors BF16",
+      "size_gb": 9.3,
+      "official": true
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "marginal",
+      "variant": "BF16 (9.3 GB)",
+      "basis": "estimate",
+      "notes": "9.3 GB against a VRAM budget of 9.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "BF16 (9.3 GB)",
+      "basis": "estimate",
+      "notes": "9.3 GB against a VRAM budget of 13.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "BF16 (9.3 GB)",
+      "basis": "estimate",
+      "notes": "9.3 GB against a VRAM budget of 21.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "BF16 (9.3 GB)",
+      "basis": "estimate",
+      "notes": "9.3 GB against a VRAM budget of 29.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "variant": "BF16 (9.3 GB)",
+      "basis": "estimate",
+      "notes": "9.3 GB against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "BF16 (9.3 GB)",
+      "basis": "estimate",
+      "notes": "9.3 GB against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "BF16 (9.3 GB)",
+      "basis": "estimate",
+      "notes": "9.3 GB against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "transformers"
+    ]
+  },
+  "benchmarks": [
+    {
+      "name": "ImageJevBench v0.3.0 Composite rank among open-weight Jev-class models",
+      "score": "#1 of 46",
+      "kind": "vendor",
+      "variant": "release v1.4.1, page read 2026-10-31; ahead of Drex Max 44.65, Jev 1.13.0 + images 26.43, Clef-Flash 20.41",
+      "source": "https://huggingface.co/h2oai/h2o-lightning-4b"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "A decision model reads a state (text, JSON, images) and a schema of typed questions and returns calibrated probabilities for every option in one forward pass; it does not generate text."
+    ],
+    "weaknesses": [
+      "ranking claim comes from a benchmark edition different from the Decision Index boards, so it cannot be compared with them"
+    ],
+    "maturity": "26k downloads, 109 likes"
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Small Apache 4B decision model with strong self-reported ranking on a different benchmark; same pipeline-step class as the other decision models.",
+    "blockers": [
+      "decision readout path"
+    ]
+  },
+  "open_questions": [
+    "score on the Decision Index boards",
+    "licence text read"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/h2oai/h2o-lightning-4b",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README head read"
+    },
+    {
+      "url": "https://huggingface.co/api/models/h2oai/h2o-lightning-4b?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "size and LICENSE file listing"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

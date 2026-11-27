@@ -1,0 +1,187 @@
+{
+  "id": "mineru2.5-pro-1.2b",
+  "name": "MinerU2.5-Pro-2604-1.2B",
+  "vendor": "OpenDataLab (Shanghai AI Lab)",
+  "release_date": "2026-04",
+  "lineage": {
+    "family": "MinerU",
+    "base_model": "MinerU 2.5 (same 1.2B architecture)",
+    "how_derived": "data engineering: corpus grown from under 10M to 65.5M pages, hard-sample fine-tuning, GRPO format alignment"
+  },
+  "purpose": "PDF-to-Markdown conversion for LLM data pipelines and RAG; also images, charts and in-table images.",
+  "languages": {
+    "natural": [
+      "zh",
+      "en"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0 (model card tag); MinerU code repo: Apache-2.0 plus additional terms",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Model repo has no LICENSE file (card tag apache-2.0). The MinerU GitHub LICENSE.md read says Apache-2.0 plus: separate commercial license needed above 100M monthly active users or 20M USD monthly revenue; online services based on MinerU must display that MinerU is used; breach terminates the license. Irrelevant at our scale, but binding if we ship the pipeline as a service."
+  },
+  "architecture": {
+    "kind": "vision-language, Qwen2-VL class (card tag qwen2_vl)",
+    "params_total_b": 1.2,
+    "why_this_design": "Gains came from data and training recipe, not from a larger architecture (card)."
+  },
+  "variants": [
+    {
+      "repo": "opendatalab/MinerU2.5-Pro-2604-1.2B",
+      "format": "safetensors BF16",
+      "official": true
+    },
+    {
+      "repo": "community GGUF (six listed)",
+      "format": "GGUF",
+      "official": false
+    }
+  ],
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "partial",
+    "other": [
+      "mineru-vl-utils (transformers, vLLM)",
+      "vLLM/SGLang servers",
+      "Docker"
+    ],
+    "notes": "recommended path is vLLM; GGUF only community"
+  },
+  "benchmarks": [
+    {
+      "name": "OmniDocBench v1.6 overall",
+      "score": 95.69,
+      "kind": "vendor",
+      "source": "https://huggingface.co/opendatalab/MinerU2.5-Pro-2604-1.2B"
+    },
+    {
+      "name": "Formula CDM (dense)",
+      "score": 97.29,
+      "kind": "vendor",
+      "source": "https://huggingface.co/opendatalab/MinerU2.5-Pro-2604-1.2B"
+    },
+    {
+      "name": "Real5-OmniDocBench",
+      "score": 88.94,
+      "kind": "vendor",
+      "source": "https://huggingface.co/opendatalab/MinerU2.5-Pro-2604-1.2B"
+    },
+    {
+      "name": "Dr.DocBench overall (as listed in another vendor's card)",
+      "score": 62.26,
+      "kind": "independent",
+      "source": "https://huggingface.co/XingChen-AGI/TeleOCR",
+      "harness": "third-party vendor table"
+    },
+    {
+      "name": "MDPBench German pages (DE column)",
+      "score": 78.3,
+      "kind": "independent",
+      "source": "https://huggingface.co/datasets/Delores-Lin/MDPBench",
+      "variant": "MinerU-2.5-Pro-1.2B (MinerU-2.5-VLM: DE 68.8, overall 46.3)",
+      "date": "2026-07"
+    },
+    {
+      "name": "MDPBench overall (17 languages)",
+      "score": 71.0,
+      "kind": "independent",
+      "source": "https://huggingface.co/datasets/Delores-Lin/MDPBench",
+      "variant": "MinerU-2.5-Pro-1.2B; photographed 66.1, digital 86.2",
+      "date": "2026-07"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "mature pipeline project with large user base",
+      "strong tables and formulas"
+    ],
+    "weaknesses": [
+      "cross-page table merging not yet integrated",
+      "image/chart analysis off by default",
+      "Chinese and English only on the card",
+      "MDPBench: strong on digital pages (86.2) but drops on photographed ones (66.1)"
+    ],
+    "best_for": [
+      "batch PDF to Markdown for retrieval"
+    ],
+    "maturity": "MinerU is an established open-source project with frequent releases"
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "good digital-page parser, German 78.3 on third-party pages, but photographed pages drop and its normal path is a Python pipeline; PaddleOCR-VL and GLM-OCR score higher on German with simpler deployment"
+  },
+  "open_questions": [
+    "GGUF quality and sizes"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/opendatalab/MinerU2.5-Pro-2604-1.2B",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/XingChen-AGI/TeleOCR",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/opendatalab/MinerU/master/LICENSE.md",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/datasets/Delores-Lin/MDPBench",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "MDPBench README table read directly; an earlier summarizer pass mislabeled the Latin-average column as DE, the DE values here come from the dataset README"
+    }
+  ],
+  "tasks": [
+    "documents",
+    "vision"
+  ],
+  "modalities": {
+    "input": [
+      "image",
+      "document"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "about 1B parameters, BF16 about 2 GB"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "BF16 about 2 GB; Tona runs one model at a time, so it replaces the resident model while it works"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate"
+    }
+  },
+  "last_checked": "2026-11-19"
+}

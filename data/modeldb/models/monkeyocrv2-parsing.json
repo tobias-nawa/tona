@@ -1,0 +1,240 @@
+{
+  "id": "monkeyocrv2-parsing",
+  "name": "MonkeyOCRv2-Parsing (S 0.6B, B 0.7B)",
+  "vendor": "HUST (Xiang Bai, Yuliang Liu groups; HF org zenosai)",
+  "release_date": "2026-07-14",
+  "lineage": {
+    "family": "MonkeyOCR",
+    "how_derived": "frozen document-native ViT encoder (MonkeyOCRv2-S 28M / -B 113M) paired with a small language model; earlier generation MonkeyOCR-pro (1.2B/3B, 2025)"
+  },
+  "purpose": "Multilingual document parsing (17 languages, digital and photographed pages) from a vision encoder pretrained on documents instead of natural images, which the authors argue is needed for dense text and fine character strokes (arXiv 2607.11562 abstract).",
+  "tasks": [
+    "documents",
+    "vision"
+  ],
+  "modalities": {
+    "input": [
+      "image",
+      "document"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "zh",
+      "en",
+      "ar",
+      "de",
+      "es",
+      "fr",
+      "hi",
+      "id",
+      "it",
+      "ja",
+      "ko",
+      "nl",
+      "pt",
+      "ru",
+      "th",
+      "vi"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0 (code and all weights); MonkeyDoc v2 annotations CC BY 4.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "GitHub LICENSE file read: \"The code and all MonkeyOCRv2 model weights (encoders, Parsing, Und) are released under the Apache License 2.0 ... MonkeyDoc v2 annotations are released under CC BY 4.0; see the dataset card for image-source terms.\" The file is this short grant, not the full Apache text (GitHub reports license metadata NOASSERTION); the HF card tag and card text agree (\"free for both research and commercial use\"). The HF repos carry no LICENSE file."
+  },
+  "architecture": {
+    "kind": "vision-language: ViT-B (12 layers, 113M) + Qwen3-shaped decoder (28 layers, hidden 1024, 16 heads / 8 KV heads, per config.json), custom code (monkeyocrv2)",
+    "params_total_b": 0.7,
+    "layers": 28,
+    "context_native": 40960,
+    "drafter": "MonkeyOCRv2-B-Parsing-DFlash (84M, qwen3, vLLM)",
+    "why_this_design": "general visual encoders are pretrained on natural images; the encoder here is pretrained with image-to-text generation plus pixel-level document reconstruction on 113M document images (MonkeyDoc v2), then frozen under a lightweight LLM (arXiv abstract). The decoder family is inferred from config.json, the card does not name it."
+  },
+  "variants": [
+    {
+      "repo": "zenosai/MonkeyOCRv2-B-Parsing",
+      "format": "safetensors BF16",
+      "size_gb": 1.76,
+      "official": true,
+      "notes": "0.88B parameters per HF API incl. vision; 152,298 downloads; created 2026-07-11"
+    },
+    {
+      "repo": "zenosai/MonkeyOCRv2-S-Parsing",
+      "format": "safetensors BF16",
+      "size_gb": 1.57,
+      "official": true,
+      "notes": "0.78B parameters per HF API"
+    },
+    {
+      "repo": "zenosai/MonkeyOCRv2-B-Parsing-DFlash",
+      "format": "drafter, safetensors",
+      "official": true,
+      "notes": "speculative drafter for vLLM, card says up to 2x faster inference"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "under 2 GB of BF16 weights; Tona runs one model at a time, so it replaces the resident model while it works"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "transformers custom code (trust_remote_code)",
+      "vLLM (+DFlash)",
+      "CPU mode (card news 2026-08-22)",
+      "RAGFlow PDF parser (2026-09-07)"
+    ],
+    "notes": "no GGUF found in an HF search for MonkeyOCR on 2026-11-19 for v2 (only community GGUFs of the 2025 MonkeyOCR); custom architecture needs a llama.cpp port"
+  },
+  "benchmarks": [
+    {
+      "name": "MDPBench German pages (DE column)",
+      "score": 87.7,
+      "kind": "independent",
+      "variant": "MonkeyOCRv2-B-Parsing",
+      "date": "2026-07",
+      "source": "https://huggingface.co/datasets/Delores-Lin/MDPBench",
+      "harness": "official MDPBench leaderboard; the benchmark authors list it, the vendor reports the same row on its card"
+    },
+    {
+      "name": "MDPBench German pages (DE column)",
+      "score": 87.3,
+      "kind": "independent",
+      "variant": "MonkeyOCRv2-S-Parsing",
+      "date": "2026-07",
+      "source": "https://huggingface.co/datasets/Delores-Lin/MDPBench"
+    },
+    {
+      "name": "MDPBench overall (17 languages)",
+      "score": 83.3,
+      "kind": "independent",
+      "variant": "B-Parsing; digital 88.1, photographed 81.7",
+      "date": "2026-07",
+      "source": "https://huggingface.co/datasets/Delores-Lin/MDPBench"
+    },
+    {
+      "name": "MDPBench overall (17 languages)",
+      "score": 82.5,
+      "kind": "independent",
+      "variant": "S-Parsing; digital 87.9, photographed 80.7",
+      "date": "2026-07",
+      "source": "https://huggingface.co/datasets/Delores-Lin/MDPBench"
+    },
+    {
+      "name": "MDPBench Latin-script average",
+      "score": 84.2,
+      "kind": "independent",
+      "variant": "B-Parsing (S: 83.2)",
+      "date": "2026-07",
+      "source": "https://huggingface.co/datasets/Delores-Lin/MDPBench"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "best German and overall MDPBench score among all specialised open parsers listed (DE 87.7 vs Chandra 86.6, PaddleOCR-VL-1.5 84.8, GLM-OCR 82.7)",
+      "sub-1B, under 2 GB of weights",
+      "Apache-2.0 for code and weights",
+      "holds up on photographed pages (81.7)",
+      "integrated by RAGFlow as a PDF parser (card news 2026-09-07)"
+    ],
+    "weaknesses": [
+      "very new (July 2026), no community user reports beyond the vendor news and the RAGFlow integration",
+      "custom-code architecture, no GGUF or llama.cpp port",
+      "its main benchmark is the vendor-adjacent MDPBench; no OmniDocBench or olmOCR-bench numbers read for it",
+      "training corpus partly synthetic (52M synthetic + 52M real samples released)"
+    ],
+    "best_for": [
+      "German and multilingual scans and photographed pages parsed to text/markdown"
+    ],
+    "maturity": "GitHub repo created 2026-07-10, 1669 stars and 0 open issues at check time; ongoing releases (CPU support, DFlash drafter, training code)",
+    "user_reports": [
+      {
+        "summary": "RAGFlow announced MonkeyOCRv2-Parsing as a supported PDF parser (vendor card news, not an independent report)",
+        "sentiment": "positive",
+        "source": "https://huggingface.co/zenosai/MonkeyOCRv2-B-Parsing",
+        "date": "2026-09-07"
+      }
+    ]
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "highest third-party German score of all parsers checked, 0.7B, Apache-2.0 verified, fits every hardware class; it is the first model to test against PaddleOCR-VL and GLM-OCR on our German scans. Missing Tona and llama.cpp support are blockers only.",
+    "blockers": [
+      "Tona engine has no vision/OCR architecture",
+      "no GGUF / llama.cpp port for the monkeyocrv2 architecture"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/zenosai/MonkeyOCRv2-B-Parsing",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "HF API, README (model zoo tables), config.json"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Yuliang-Liu/MonkeyOCRv2/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://github.com/Yuliang-Liu/MonkeyOCRv2",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README raw; 1669 stars, 0 open issues per the GitHub API"
+    },
+    {
+      "url": "https://arxiv.org/abs/2607.11562",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "abstract page read through a summarizer; PDF (30 MB) not read"
+    },
+    {
+      "url": "https://huggingface.co/datasets/Delores-Lin/MDPBench",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "leaderboard table in the dataset README (DE column read directly)"
+    }
+  ],
+  "open_questions": [
+    "user reports and failure cases (GitHub Discussions #13 on the repo was not opened)",
+    "decoder base model and tokenizer (card does not name it; config looks Qwen3-0.6B-shaped)",
+    "OmniDocBench / olmOCR-bench numbers from a source other than the MDPBench group",
+    "GGUF feasibility and speed on CPU (the card offers a CPU mode, speed not stated)",
+    "DFlash drafter details (84M qwen3-type, vLLM only)"
+  ],
+  "last_checked": "2026-11-19"
+}

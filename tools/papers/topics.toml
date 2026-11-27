@@ -1,0 +1,84 @@
+# Topics of the paper scan. `scan.py` reads this file; bump `version` whenever a topic or a query changes, so the
+# coverage book (research/papers-coverage.md) shows which windows were searched with which topics.
+#
+# query:        arXiv search expression (all:/ti:/abs:/cat: with AND/OR), combined with the date window by scan.py
+# categories:   optional arXiv categories, ANDed with the query
+# github_terms: search terms for GitHub issues (one query per term and repo) and keywords that tag PRs and issues
+version = 1
+
+[[topic]]
+id = "moe-offload"
+title = "MoE offloading, expert cache, expert pruning"
+query = '(ti:MoE OR abs:MoE OR abs:"mixture of experts" OR abs:"mixture-of-experts") AND (abs:offload OR abs:offloading OR abs:"expert cache" OR abs:"expert caching" OR abs:"expert prefetch" OR abs:prefetching OR abs:"expert pruning" OR abs:"expert placement" OR abs:"expert prediction" OR abs:"expert offloading" OR abs:"expert merging" OR abs:"expert routing")'
+categories = ["cs.LG", "cs.CL", "cs.AR", "cs.DC", "cs.PF", "cs.AI", "cs.OS"]
+github_terms = ["MoE offload", "expert cache", "expert offloading", "n-cpu-moe", "expert pruning"]
+
+[[topic]]
+id = "speculative"
+title = "Speculative decoding, MTP, drafters"
+query = 'abs:"speculative decoding" OR abs:"speculative sampling" OR abs:"multi-token prediction" OR abs:"draft model" OR abs:drafter OR abs:"self-speculative" OR abs:"tree attention" OR ti:speculative'
+categories = ["cs.LG", "cs.CL", "cs.AR", "cs.DC", "cs.AI"]
+github_terms = ["speculative decoding", "MTP", "multi-token prediction", "drafter", "DFlash", "EAGLE"]
+
+[[topic]]
+id = "linear-attention"
+title = "Linear and sparse attention, DeltaNet, hybrids"
+query = 'abs:DeltaNet OR abs:"Gated DeltaNet" OR abs:"linear attention" OR abs:"sparse attention" OR abs:"hybrid attention" OR abs:"state space model" OR abs:"recurrent state" OR abs:"sliding window attention" OR abs:"hybrid model"'
+categories = ["cs.LG", "cs.CL", "cs.AR", "cs.DC", "cs.AI"]
+github_terms = ["DeltaNet", "gated delta", "linear attention", "sparse attention", "Qwen3-Next", "hybrid model", "mamba"]
+
+[[topic]]
+id = "kv-cache"
+title = "KV cache, prefix cache, agent serving"
+query = '(abs:"KV cache" OR abs:"prefix cache" OR abs:"prefix caching" OR abs:"prompt cache" OR abs:"context caching") OR ((abs:agent OR abs:agentic) AND (abs:serving OR abs:inference OR abs:"tool call" OR abs:"multi-turn") AND (abs:latency OR abs:cache OR abs:throughput))'
+categories = ["cs.LG", "cs.CL", "cs.AR", "cs.DC", "cs.PF", "cs.AI", "cs.OS"]
+github_terms = ["KV cache", "prefix cache", "prompt cache", "slot save", "checkpoint cache", "context shift"]
+
+[[topic]]
+id = "quantization"
+title = "Quantization of weights and KV, FP8/FP4, microscaling"
+query = '(abs:quantization OR abs:quantized OR abs:"low-bit" OR abs:MXFP4 OR abs:NVFP4 OR abs:FP8 OR abs:FP4 OR abs:microscaling OR abs:"post-training quantization" OR abs:"1-bit" OR abs:"2-bit" OR abs:"KV quantization") AND (abs:LLM OR abs:LLMs OR abs:"language model" OR abs:"language models" OR abs:transformer OR abs:inference OR abs:GGUF OR abs:llama)'
+categories = ["cs.LG", "cs.CL", "cs.AR", "cs.DC", "cs.AI"]
+github_terms = ["quantization", "IQ1_M", "MXFP4", "FP8", "imatrix", "KV quant", "Q4_K"]
+
+[[topic]]
+id = "megakernel"
+title = "Megakernels, persistent kernels, kernel fusion"
+query = 'abs:megakernel OR abs:mega-kernel OR abs:"persistent kernel" OR abs:"kernel fusion" OR abs:"fused kernel" OR abs:"decode kernel" OR abs:"GPU kernel generation" OR abs:"CUDA graph"'
+categories = ["cs.LG", "cs.CL", "cs.AR", "cs.DC", "cs.PF", "cs.AI", "cs.OS"]
+github_terms = ["megakernel", "persistent kernel", "fused kernel", "graph capture"]
+
+[[topic]]
+id = "amd-rocm"
+title = "AMD, RDNA, ROCm, HIP"
+query = 'abs:RDNA OR abs:RDNA4 OR abs:ROCm OR abs:HIP OR abs:"AMD GPU" OR abs:"AMD GPUs" OR abs:MI300X OR abs:MI355X OR abs:gfx1200 OR abs:"Strix Halo" OR abs:"WMMA"'
+categories = ["cs.LG", "cs.CL", "cs.AR", "cs.DC", "cs.PF", "cs.AI", "cs.SE"]
+github_terms = ["RDNA4", "gfx1200", "gfx12", "ROCm", "HIP", "WMMA", "Strix Halo"]
+
+[[topic]]
+id = "apple-silicon"
+title = "Apple silicon, Metal, unified memory"
+query = 'abs:"Apple silicon" OR abs:Metal OR abs:"unified memory" OR abs:"Apple M" OR abs:MLX OR abs:"Neural Engine" OR abs:"M4" OR abs:"M5"'
+categories = ["cs.LG", "cs.CL", "cs.AR", "cs.DC", "cs.PF", "cs.AI"]
+github_terms = ["Metal", "Apple silicon", "unified memory", "MLX", "ANE"]
+
+[[topic]]
+id = "long-context"
+title = "Long context, RoPE scaling, context extension"
+query = 'abs:YaRN OR abs:"RoPE scaling" OR abs:"context extension" OR abs:"context length extension" OR abs:"long-context" OR abs:"long context" OR abs:"position interpolation" OR abs:"1M context" OR abs:"million-token"'
+categories = ["cs.LG", "cs.CL", "cs.AI"]
+github_terms = ["YaRN", "RoPE scaling", "long context", "rope-scaling", "context length"]
+
+[[topic]]
+id = "memory-pressure"
+title = "Memory pressure, elastic inference on desktops, SSD and RAM tiers"
+query = '(abs:"memory pressure" OR abs:"elastic inference" OR abs:"consumer GPU" OR abs:"consumer hardware" OR abs:"on-device inference" OR abs:"local inference" OR abs:"edge device" OR abs:"limited memory" OR abs:"memory-constrained" OR abs:"SSD offload" OR abs:"mmap") AND (abs:LLM OR abs:"language model" OR abs:inference)'
+categories = ["cs.LG", "cs.CL", "cs.AR", "cs.DC", "cs.PF", "cs.AI", "cs.OS"]
+github_terms = ["memory pressure", "mmap", "out of memory", "swap", "no-mmap", "mlock"]
+
+[[topic]]
+id = "tool-calling-quality"
+title = "Tool-calling quality of quantized and local models"
+query = '(abs:"tool calling" OR abs:"tool use" OR abs:"function calling" OR abs:"coding agent" OR abs:"coding agents") AND (abs:quantization OR abs:quantized OR abs:"low-bit" OR abs:compression OR abs:pruning OR abs:"small model" OR abs:"local model" OR abs:"open-weight")'
+categories = ["cs.LG", "cs.CL", "cs.SE", "cs.AI"]
+github_terms = ["tool call", "function calling", "tool_calls", "parser", "chat template", "reasoning parser"]

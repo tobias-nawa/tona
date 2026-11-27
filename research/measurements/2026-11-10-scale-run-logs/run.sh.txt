@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# usage: run.sh CMD... ; GPU lock + env.sh
+cd <repo>
+source toolchain/env.sh
+exec flock <repo>/work/gpu.lock env TONA_GPU_LOCK_HELD=1 "$@"

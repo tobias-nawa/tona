@@ -1,0 +1,46 @@
+diff --git a/engine/gpu/mega_op_matvec.h b/engine/gpu/mega_op_matvec.h
+index b819f90..356d0b3 100644
+--- a/engine/gpu/mega_op_matvec.h
++++ b/engine/gpu/mega_op_matvec.h
+@@ -45,6 +45,31 @@ __device__ __forceinline__ void matvec_stage_x(const MegaOp& op, const Ctx& c, f
+     bt.lx = lx, bt.lm = lm;
+ }
+ 
++// Weights of the first unit of this wave in every int8 task of the phase go into L2 before x is staged: the staging
++// waits for a read of x from device memory (and a barrier), and the first weight reads of the units would start only
++// after it. Same unit numbering as run_phase; the prefetch changes no value.
++__device__ __noinline__ void prefetch_first_units(const PhaseRange pr, const WaveCtx wc, const Batch& bt) {
++    int64_t base = 0;
++    for (int i = pr.a; i < pr.b; i++) {
++        DevTask t = pr.tasks[i];
++        const bool tw = bt.wide && t.wide;
++        if (tw) t.units = (t.rows + 15) / 16;
++        if (bt.n_u >= 0 || bt.wide) {
++            if (bt.n_u >= 0 && t.n_exp > 1) t.units = (int64_t)t.upe * min(t.n_exp, bt.n_u);
++            t.base = base;
++            base += t.units;
++        }
++        if (tw || !t.xq || t.n_exp <= 1) continue;  // expert groups only: the dense tasks are a few KB each
++        const int64_t r = (int64_t)(((uint32_t)wc.w + (uint32_t)wc.W - (uint32_t)(t.base % wc.W)) % (uint32_t)wc.W);
++        if (r >= t.units) continue;
++        uint32_t mask;
++        const int64_t u = resolve_unit(t, r, bt, mask);
++        if (mask == 0) continue;
++        const uint8_t* p = t.w + u * (WAVE / t.L) * t.row_bytes;
++        __builtin_amdgcn_s_prefetch_data(p, 31);
++    }
++}
++
+ template <int NB, Q6Layout L>
+ __device__ __forceinline__ void run_matvec(const MegaOp& op, const Ctx& c, const StepEnv env) {
+     // i[7] = 1: without block 0 (it waits for the CPU in host.wait before)
+@@ -52,6 +77,9 @@ __device__ __forceinline__ void run_matvec(const MegaOp& op, const Ctx& c, const
+     // n_u = 0 (all experts of the layer on the CPU): no unit, otherwise the group would read an old slot
+     Batch bt{env.P->slot, env.P->umask, c.pos, c.nb, env.P->n_u};
+     bt.wide = env.P->wide_min > 0 && c.nb >= env.P->wide_min && op.cond != 1;
++    const WaveCtx wc = op.i[7] == 1 ? WaveCtx{c.gw - MWAVES, c.GW - MWAVES, c.lane, nullptr, env.tabs}
++                                    : WaveCtx{c.gw, c.GW, c.lane, nullptr, env.tabs};
++    prefetch_first_units(PhaseRange{env.tasks, op.a, op.b}, wc, bt);
+     matvec_stage_x(op, c, env.sm, bt);
+     if (op.i[7] == 1)
+         run_phase<NB, L>(PhaseRange{env.tasks, op.a, op.b},

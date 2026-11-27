@@ -1,0 +1,9 @@
+Based on the provided code, here is a summary of the inference engine's benchmarking and backend infrastructure:
+
+### **Benchmarking Harness (`ibench`)**
+*   **CLI Interface:** Provides commands to `run` measurement suites against a target server, `compare` two JSON reports, `proxy` requests to record traces, and `env` to snapshot system state.
+*   **Measurement Logic:** Executes test cases (defined in TOML suites) with configurable warm-up runs, cache strategies (cold/warm), and repetition counts.
+*   **Metrics Collection:** Measures Time-To-First-Token (TTFT), prefill/decode throughput (client and server-side), inter-token latency (ITL), token counts, and system resource usage (VRAM, RAM, GPU power/temperature).
+*   **Reporting:** Generates raw JSON data and human-readable Markdown reports with statistical summaries (median, min/max, stdev) and environment snapshots.
+
+### **Micro-Bench

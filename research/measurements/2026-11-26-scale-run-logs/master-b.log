@@ -1,0 +1,6 @@
+STEP b 00:24:00
+VRAM-desktop b 00:24:00 1102 MiB
+SLOTS b: loaded in 15.8 s: context 140000 (KV int8 1.94 GB in RAM), VRAM 14.11 GB, 81 expert slots per layer, 27.4 GB pinned
+STEP c1 00:27:21
+VRAM-desktop c1 00:27:21 1102 MiB
+Beendet                    RUN_LABEL=$l "$R" python3 -I "$S/curve.py" "$l" scale1126 "$@" > "$S/$l.out" 2>&1

@@ -1,0 +1,200 @@
+{
+  "id": "openresearcher-30b-a3b",
+  "name": "OpenResearcher-30B-A3B",
+  "vendor": "OpenResearcher (community lab)",
+  "release_date": "2026-02-03",
+  "lineage": {
+    "base_model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-Base-BF16",
+    "how_derived": "SFT on 96K long-horizon trajectories (100+ turns) distilled from GPT-OSS-120B with its native browser tools",
+    "family": "OpenResearcher"
+  },
+  "purpose": "Agentic LLM for long-horizon deep research, fine-tuned by TIGER-AI-Lab and collaborators to show a fully open pipeline for synthesizing deep-research trajectories (arXiv 2603.20278) with an offline retrieval corpus instead of paid search APIs.",
+  "tasks": [
+    "research"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "license": {
+    "name": "MIT (card tag) on a base under the NVIDIA Nemotron Open Model License",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "No MIT text found: the HF repo has no LICENSE file and the GitHub repo LICENSE path returned 404. The base model's license text was read (https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-nemotron-open-model-license/, summarizer): 'Works are commercially usable', 'You are free to create and distribute Derivative Works', redistribution with a copy of the license, a Notice file 'Licensed by NVIDIA Corporation under the NVIDIA Nemotron Model License' if the work ships a NOTICE, license ends if you sue over infringement by the Work; no guardrail clause. Training data distilled from GPT-OSS-120B (Apache-2.0). Commercial use is therefore allowed under both texts, but the MIT claim itself is unverified."
+  },
+  "architecture": {
+    "kind": "hybrid Mamba-2 + MoE (nemotron_h)",
+    "params_total_b": 30,
+    "params_active_b": 3,
+    "recurrent": "Mamba-2",
+    "drafter": "none",
+    "why_this_design": "Not an architecture contribution: the model is the Nemotron 3 Nano hybrid (nemotron_h) base. The paper's stated design choice is the data pipeline: trajectories are synthesized offline over a 15M-document corpus with three browser primitives (search, open, find) so that 97K+ long trajectories can be produced without live search API cost."
+  },
+  "variants": [
+    {
+      "repo": "OpenResearcher/OpenResearcher-30B-A3B",
+      "format": "safetensors BF16",
+      "official": true
+    },
+    {
+      "repo": "OpenResearcher/OpenResearcher-30B-A3B-GGUF",
+      "format": "GGUF Q4_K_M",
+      "size_gb": 24.52,
+      "official": true
+    },
+    {
+      "repo": "OpenResearcher/OpenResearcher-30B-A3B-GGUF",
+      "format": "GGUF Q8_0",
+      "size_gb": 33.59,
+      "official": true
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "variant": "Q4_K_M 24.5 GB, experts in RAM"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q4_K_M 24.5 GB",
+      "notes": "3 B active."
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q4_K_M"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q8_0"
+    },
+    "mac-16-24gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "variant": "Q4_K_M",
+      "notes": "24 GB only."
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q4_K_M"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q8_0"
+    }
+  },
+  "engine_support": {
+    "tona": "planned",
+    "llama_cpp": "yes",
+    "other": [
+      "vLLM (vendor script scripts/start_nemotron_servers.sh, OpenAI-compatible endpoint on port 8001)",
+      "official GGUF repo OpenResearcher/OpenResearcher-30B-A3B-GGUF"
+    ],
+    "notes": "Tool requirements (repo README, summarizer; paper abstract): the model was trained on gpt-oss 'native browser tools' with three primitives search, open and find, and the client runs with use_native_tools=True against an OpenAI-compatible server. Search backend is selected by browser_backend: 'local' (self-hosted BM25 or dense retrieval service, needs no key, used for BrowseComp-Plus) or 'serper' (Serper Google Search API, needs SERPER_API_KEY, used for BrowseComp, GAIA and xbench). OPENAI_API_KEY is needed only for scoring. Context window and turn limit are not stated; training trajectories have 100+ turns. A user found the Serper free credits gone in about 2 minutes and asked how to stay fully local."
+  },
+  "benchmarks": [
+    {
+      "name": "BrowseComp-Plus",
+      "score": 54.8,
+      "kind": "vendor",
+      "source": "https://huggingface.co/OpenResearcher/OpenResearcher-30B-A3B",
+      "unit": "%",
+      "harness": "not described on the card (GitHub repo)"
+    },
+    {
+      "name": "BrowseComp-Plus accuracy",
+      "score": 54.8,
+      "kind": "vendor",
+      "source": "https://huggingface.co/OpenResearcher/OpenResearcher-30B-A3B",
+      "harness": "local BM25/dense retrieval backend of BrowseComp-Plus, vendor harness",
+      "date": "2026-03",
+      "unit": "%"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "Trained for 100+ turn browsing loops",
+      "Official GGUF; MIT"
+    ],
+    "weaknesses": [
+      "Self-reported scores; detailed tables (BrowseComp, GAIA, xbench) only as an image",
+      "Needs trust_remote_code in Transformers",
+      "Student of gpt-oss-120b trajectories: inherits its knowledge limits",
+      "The no-key path needs a self-hosted retrieval service over a corpus; live web search needs a paid Serper key",
+      "MIT tag unverified, base under the NVIDIA Nemotron Open Model License"
+    ],
+    "behavior": "Expects a search and browse tool backend; the card does not name one (see GitHub quick-start).",
+    "best_for": [
+      "Local web research with a search tool"
+    ],
+    "avoid_for": [
+      "Chat without tools"
+    ],
+    "maturity": "Small lab, paper arXiv 2603.20278 (2026-03-17); 4 quantizations and 9 finetunes listed.",
+    "user_reports": [
+      {
+        "summary": "First impressions: install smooth but incomplete instructions; the demo burnt the free Serper credits in about two minutes, which defeats running local AI; the user asks how to avoid the Serper dependency (browser_backend local needs its own retrieval service).",
+        "sentiment": "mixed",
+        "source": "https://huggingface.co/OpenResearcher/OpenResearcher-30B-A3B/discussions/2",
+        "date": "2026-02-12"
+      }
+    ]
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "Only research-agent model with an official GGUF, vendor BrowseComp-Plus 54.8 percent above Tongyi DeepResearch on the same benchmark, a fully local retrieval option, license permissive in practice (NVIDIA Nemotron Open Model License text read, MIT claim unverified). Needs a browser-tool harness (search, open, find) and a search backend. Missing nemotron_h_moe coverage is only a blocker.",
+    "blockers": [
+      "nemotron_h_moe path must cover Nano-30B",
+      "browser-tool harness and a search backend"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/OpenResearcher/OpenResearcher-30B-A3B",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "model card"
+    },
+    {
+      "url": "https://huggingface.co/api/models/OpenResearcher/OpenResearcher-30B-A3B-GGUF?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "GGUF sizes, repo created 2026-02-11"
+    },
+    {
+      "url": "https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-nemotron-open-model-license/",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "base model license, summarizer read"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/TIGER-AI-Lab/OpenResearcher/main/README.md",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "repo README, summarizer read: backends, keys, vLLM"
+    },
+    {
+      "url": "https://arxiv.org/abs/2603.20278",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "paper abstract, summarizer read"
+    }
+  ],
+  "open_questions": [
+    "Context length not stated",
+    "Official numbers on BrowseComp, GAIA and xbench are in an image table",
+    "Parameter count 30B in the name, 32B in metadata",
+    "MIT license text for the weights (none in the HF or GitHub repo)"
+  ],
+  "last_checked": "2026-11-19"
+}

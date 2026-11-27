@@ -1,0 +1,14 @@
+### Test conditions
+
+- CPU: AMD Ryzen 9 9950X 16-Core Processor, 16 cores / 32 threads
+- GPU: AMD Ryzen 9 9950X 16-Core Processor, gfx1036, 2.0 GiB VRAM, 0.02 GiB held by others before the run, 0 % busy before the run, integrated
+- GPU: AMD Radeon RX 9060 XT, gfx1200, 15.9 GiB VRAM, 14.89 GiB held by others before the run, 100 % busy before the run
+- RAM: 60.5 GiB, 23.8 GiB available before the run
+- OS: Fedora Linux 44 (Workstation Edition), kernel 7.3.4-200.fc44.x86_64 (x86_64)
+- Driver and toolkit: hip 7.1.52802-9999
+- TONA_* variables: none set
+- cgroup limits of this shell: none set
+- Load average (1, 5, 15 min): 2.27, 3.74, 2.71
+- CPU use by other programs over 0.5 s: 8.2 % of all threads, swap in use 1.43 GiB
+- sandbox: no
+- Commit: `14cad0f` (dirty tree)

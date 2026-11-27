@@ -1,0 +1,327 @@
+name: tests
+
+# Unit tests of the host code (no model, no GPU), with sanitizers and with coverage gates. The compiler is the one of
+# the reference platform (Fedora 44, GCC 16): the engine uses C++23 and is built with -Werror, so another compiler
+# would test another program. The container image is pinned by digest; dnf installs the packages of the day inside it.
+# The unit tests run on any x86-64 CPU with AVX2 (TONA_MARCH=x86-64-v3); the reference build keeps -march=znver5.
+# GPU checks cannot run on GitHub: the maintainer sets the commit status `gpu-golden` (scripts/gpu-status.sh).
+# The job names are the names the rulesets require: engine-cpu-tests, engine-sanitizers, coverage. The job engine-macos
+# (Apple silicon, Metal backend) is not required yet; see docs/use/macos.md and scripts/github-setup.sh.
+# A container job runs as root, and the updater refuses to install as root (engine/update/install.cpp), so its
+# tests would fail there: the tests run as the unprivileged user `ci`, which owns the workspace.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions: {}
+
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  changes:
+    # Which areas the pull request touches (scripts/ci-changes.sh); push, schedule and manual runs turn all on.
+    name: changes
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    outputs:
+      cpp: ${{ steps.areas.outputs.cpp }}
+      py: ${{ steps.areas.outputs.py }}
+      ci: ${{ steps.areas.outputs.ci }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0 # the merge base of the pull request must exist
+      - name: Areas
+        id: areas
+        env:
+          EVENT: ${{ github.event_name }}
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD: ${{ github.event.pull_request.head.sha }}
+        run: scripts/ci-changes.sh "$EVENT" "$PR_BASE" "$PR_HEAD"
+
+  engine-cpu-tests:
+    needs: changes
+    if: needs.changes.outputs.cpp == 'true' || needs.changes.outputs.ci == 'true'
+    name: engine-cpu-tests
+    permissions:
+      contents: read
+    runs-on: ubuntu-24.04
+    container: registry.fedoraproject.org/fedora:44@sha256:a329903517f5dbd709721cba0cb1b6d0cc05f01b9e5feb59c2b6bbe9eb083ade
+    steps:
+      - name: Packages
+        run: dnf install -y --setopt=install_weak_deps=False gcc-c++ cmake ninja-build git openssl-devel shadow-utils util-linux procps-ng
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Configure
+        # no model and no llama.cpp build: the tests that need them are not labelled `unit`
+        run: cmake -S engine -B build/engine -G Ninja -DTONA_MARCH=x86-64-v3 -DTONA_MODEL=/nonexistent/model.gguf -DTONA_LLAMACPP_BUILD=/nonexistent
+      - name: Build
+        run: cmake --build build/engine -j4
+      - name: Unit tests
+        run: |
+          useradd --create-home ci
+          chown -R ci "$GITHUB_WORKSPACE"
+          runuser -u ci -- env HOME=/home/ci ctest --test-dir build/engine -L unit --output-on-failure --no-tests=error
+
+  engine-sanitizers:
+    needs: changes
+    if: needs.changes.outputs.cpp == 'true' || needs.changes.outputs.ci == 'true'
+    name: engine-sanitizers
+    permissions:
+      contents: read
+    runs-on: ubuntu-24.04
+    container:
+      image: registry.fedoraproject.org/fedora:44@sha256:a329903517f5dbd709721cba0cb1b6d0cc05f01b9e5feb59c2b6bbe9eb083ade
+      # LeakSanitizer stops the world with ptrace
+      options: --cap-add=SYS_PTRACE
+    steps:
+      - name: Packages
+        run: dnf install -y --setopt=install_weak_deps=False gcc-c++ cmake ninja-build git openssl-devel libasan libubsan shadow-utils util-linux procps-ng
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Configure (AddressSanitizer, UndefinedBehaviorSanitizer)
+        run: cmake -S engine -B build/sanitize -G Ninja -DTONA_MARCH=x86-64-v3 -DTONA_MODEL=/nonexistent/model.gguf -DTONA_LLAMACPP_BUILD=/nonexistent -DCMAKE_BUILD_TYPE=Debug -DTONA_SANITIZE=ON
+      - name: Build
+        run: cmake --build build/sanitize -j4
+      - name: Unit tests
+        env:
+          ASAN_OPTIONS: detect_leaks=1:strict_string_checks=1:detect_stack_use_after_return=1
+          UBSAN_OPTIONS: print_stacktrace=1
+        run: |
+          useradd --create-home ci
+          chown -R ci "$GITHUB_WORKSPACE"
+          runuser -u ci -- env HOME=/home/ci ctest --test-dir build/sanitize -L unit --output-on-failure --no-tests=error
+
+  clang-tidy:
+    needs: changes
+    if: needs.changes.outputs.cpp == 'true' || needs.changes.outputs.ci == 'true'
+    # .clang-tidy on the host-only sources: the engine configured without ROCm (no GPU build, no compile of the HIP
+    # sources) and the installer. The distribution's clang-tidy has another major version than the ROCm toolchain's
+    # (the toolchain's is a development build of LLVM, no stock release matches it), so this job is a second opinion on
+    # the host code; `just check` with the toolchain also lints the GPU sources and decides in a disagreement.
+    # libomp-devel: the sources that include omp.h; clang looks for it in its own resource directory, not in GCC's.
+    name: clang-tidy
+    permissions:
+      contents: read
+    runs-on: ubuntu-24.04
+    container: registry.fedoraproject.org/fedora:44@sha256:a329903517f5dbd709721cba0cb1b6d0cc05f01b9e5feb59c2b6bbe9eb083ade
+    steps:
+      - name: Packages
+        run: dnf install -y --setopt=install_weak_deps=False clang-tools-extra libomp-devel gcc-c++ cmake ninja-build git openssl-devel python3
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Compile databases (configure only)
+        run: |
+          cmake -S engine -B build/engine -G Ninja -DTONA_MARCH=x86-64-v3 -DTONA_MODEL=/nonexistent/model.gguf -DTONA_LLAMACPP_BUILD=/nonexistent
+          cmake -S installer -B build/installer -G Ninja
+      - name: clang-tidy on every host source
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          python3 tools/gates/tidy.py --system --all -j4 --engine-db build/engine --installer-db build/installer
+
+  hardening:
+    needs: changes
+    if: needs.changes.outputs.cpp == 'true' || needs.changes.outputs.ci == 'true'
+    # The host code of the release programs is built with FORTIFY_SOURCE=3, stack protector, stack clash protection, CET,
+    # PIE and full RELRO (engine/cmake/hardening.cmake); tools/check_hardening.py proves it on the finished programs.
+    # tona-server needs the ROCm toolchain and is checked by the release build (scripts/release-build.sh) with the same
+    # script; here the two programs that build without it. The compiler is the one of the release build (GCC 16).
+    name: hardening
+    permissions:
+      contents: read
+    runs-on: ubuntu-24.04
+    container: registry.fedoraproject.org/fedora:44@sha256:a329903517f5dbd709721cba0cb1b6d0cc05f01b9e5feb59c2b6bbe9eb083ade
+    steps:
+      - name: Packages
+        run: dnf install -y --setopt=install_weak_deps=False gcc-c++ cmake ninja-build git openssl-devel binutils python3
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Build the programs hardened
+        run: |
+          cmake -S engine -B build/engine -G Ninja -DTONA_HARDEN=ON -DTONA_MARCH=x86-64-v3 -DTONA_MODEL=/nonexistent/model.gguf -DTONA_LLAMACPP_BUILD=/nonexistent
+          cmake --build build/engine -j4
+      - name: Check the programs
+        # every program the build produced (tona, the setup is inside it), found by name prefix
+        run: |
+          mapfile -t programs < <(find build/engine -maxdepth 1 -type f -executable -name 'tona*')
+          [ "${#programs[@]}" -gt 0 ]
+          python3 -I tools/check_hardening.py "${programs[@]}"
+
+  mini-tokens:
+    needs: changes
+    if: needs.changes.outputs.cpp == 'true' || needs.changes.outputs.py == 'true' || needs.changes.outputs.ci == 'true'
+    # Greedy tokens and logits of the CPU reference on the three mini models, against data/mini-models/expected/cpu.json.
+    # The mini models are built from the committed headers (tools/make_mini_model.py, 4 s): nothing is downloaded, and
+    # a cache would cost more than it saves. Same container and flags as engine-cpu-tests.
+    name: mini-tokens
+    permissions:
+      contents: read
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    container: registry.fedoraproject.org/fedora:44@sha256:a329903517f5dbd709721cba0cb1b6d0cc05f01b9e5feb59c2b6bbe9eb083ade
+    steps:
+      - name: Packages
+        run: dnf install -y --setopt=install_weak_deps=False gcc-c++ cmake ninja-build git openssl-devel python3
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Configure
+        run: cmake -S engine -B build/engine -G Ninja -DTONA_MARCH=x86-64-v3 -DTONA_MODEL=/nonexistent/model.gguf -DTONA_LLAMACPP_BUILD=/nonexistent
+      - name: Build the CPU reference
+        run: cmake --build build/engine --target tona-ref -j4
+      - name: Token check
+        env:
+          OMP_NUM_THREADS: "4"
+        run: python3 -I tools/mini_token_check.py compare --build build/engine --models build/models
+
+  ubuntu-no-gpu:
+    needs: changes
+    if: needs.changes.outputs.cpp == 'true' || needs.changes.outputs.py == 'true' || needs.changes.outputs.ci == 'true'
+    # What a contributor on Ubuntu without the reference GPU does (docs/contribute/development.md): setup.sh --no-gpu, the gates with
+    # clang-tidy, the CPU unit tests, the Python tests. The other jobs run on Fedora only; four defects
+    # showed only on a fresh Ubuntu: GCC 13 without znver5, ninja before 1.12 in build-fresh.sh, `just` before 1.40,
+    # the PEP 668 pip. No GPU is needed for any step.
+    name: ubuntu-no-gpu
+    permissions:
+      contents: read
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    env:
+      # GCC 14 is the first with a complete <format> and the znver5 target; Ubuntu 24.04 ships 13 as g++
+      CC: gcc-14
+      CXX: g++-14
+      # The packaged `just` (1.21) rejects the justfile; the release binary is pinned by its hash
+      JUST_VERSION: "1.43.0"
+      JUST_SHA256: a1bc93654f31669fd964ea3011a5e5e9676b9b6f8adcd762606e5140632ea72d
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0 # `just check` measures against the merge base with origin/main
+          persist-credentials: false
+      - name: Packages
+        run: sudo apt-get install -y --no-install-recommends g++-14 gcc-14 cmake ninja-build libssl-dev pkg-config python3-venv python3-pip jq curl
+      - name: just (release binary, hash-checked)
+        run: |
+          curl -fsSL -o "$RUNNER_TEMP/just.tgz" "https://github.com/casey/just/releases/download/${JUST_VERSION}/just-${JUST_VERSION}-x86_64-unknown-linux-musl.tar.gz"
+          echo "${JUST_SHA256}  $RUNNER_TEMP/just.tgz" | sha256sum -c -
+          sudo tar -xzf "$RUNNER_TEMP/just.tgz" -C /usr/local/bin just
+      - name: Free disk space
+        # The ROCm wheels of the gate toolchain unpack to ~7 GB; the runner has ~14 GB free
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache
+          df -h /
+      - name: Toolchain and gate tools (no GPU)
+        run: scripts/setup.sh --no-gpu
+      - name: Gates with clang-tidy
+        run: just check
+      - name: CPU unit tests
+        run: just test-cpu
+      - name: Python tests
+        run: just test-py
+
+  coverage:
+    needs: changes
+    if: needs.changes.outputs.cpp == 'true' || needs.changes.outputs.py == 'true' || needs.changes.outputs.ci == 'true'
+    name: coverage
+    permissions:
+      contents: read
+    runs-on: ubuntu-24.04
+    container: registry.fedoraproject.org/fedora:44@sha256:a329903517f5dbd709721cba0cb1b6d0cc05f01b9e5feb59c2b6bbe9eb083ade
+    steps:
+      - name: Packages
+        run: dnf install -y --setopt=install_weak_deps=False gcc-c++ cmake ninja-build git openssl-devel python3 python3-pip shadow-utils util-linux procps-ng jq
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0 # the changed lines of a pull request need its base commit
+          persist-credentials: false
+      - name: Tools (pinned with hashes)
+        run: |
+          python3 -m venv /opt/venv
+          /opt/venv/bin/pip install --require-hashes -r tools/tests/requirements.txt
+      - name: Coverage and gates
+        env:
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
+        run: |
+          base=()
+          if [ -n "$PR_BASE" ]; then base=(--base "$PR_BASE"); fi
+          useradd --create-home ci
+          chown -R ci "$GITHUB_WORKSPACE"
+          # The summary file of the runner is not writable for `ci`: the gate writes its own, the root shell appends it
+          install -o ci /dev/null /tmp/coverage-summary.md
+          rc=0
+          # shellcheck disable=SC2016 # the inner shell expands the variables
+          runuser -u ci -- env HOME=/home/ci PATH="/opt/venv/bin:$PATH" bash -c '
+            git config --global --add safe.directory "$GITHUB_WORKSPACE"
+            python3 tools/gates/coverage_gate.py run --jobs 4 --summary /tmp/coverage-summary.md "$@"' _ "${base[@]}" || rc=$?
+          cat /tmp/coverage-summary.md >> "$GITHUB_STEP_SUMMARY"
+          exit "$rc"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: coverage
+          path: |
+            work/build/coverage/cpp.xml
+            work/build/coverage/python.xml
+            work/build/coverage/cpp/
+            work/build/coverage/python/
+          if-no-files-found: warn
+
+  engine-macos:
+    needs: changes
+    if: needs.changes.outputs.cpp == 'true' || needs.changes.outputs.ci == 'true'
+    # The Metal backend builds and its host tests run on a GitHub-hosted Apple-silicon runner, from the steps of
+    # docs/use/macos.md and nothing else: the proof that they work without the backend's owner (docs/backends/README.md#tiers).
+    # Only the unit tests run (no model, no speed or quality check); those stay with the maintainer.
+    name: engine-macos
+    permissions:
+      contents: read
+    runs-on: macos-15 # arm64 (M1); macOS 15 is the minimum of the kernels (MSL 3.2)
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Packages
+        run: brew install libomp openssl@3 ninja
+      - name: Metal toolchain
+        # Xcode 26 and newer ship the Metal compiler as a separate download
+        run: |
+          xcrun metal --version >/dev/null 2>&1 || xcodebuild -downloadComponent MetalToolchain
+          xcrun metal --version
+      - name: Configure
+        # openssl@3 explicitly: Homebrew also has openssl@4 now, and httplib.h uses a function that is deprecated there
+        run: cmake -S engine -B build/mtl -G Ninja -DTONA_BACKEND_METAL=ON -DCMAKE_BUILD_TYPE=Release -DOPENSSL_ROOT_DIR="$(brew --prefix openssl@3)"
+      - name: Build
+        run: cmake --build build/mtl
+      - name: Unit tests
+        run: ctest --test-dir build/mtl -L unit --output-on-failure --no-tests=error
+      - name: Installer
+        run: |
+          cmake -S installer -B build/installer -G Ninja -DOPENSSL_ROOT_DIR="$(brew --prefix openssl@3)"
+          cmake --build build/installer
+          ctest --test-dir build/installer --output-on-failure --no-tests=error
+
+  tests-ok:
+    # The one check the ruleset requires for this workflow: skipped jobs count as fine, failed or cancelled ones do not.
+    name: tests-ok
+    if: always()
+    needs: [changes, engine-cpu-tests, engine-sanitizers, clang-tidy, hardening, mini-tokens, ubuntu-no-gpu, coverage, engine-macos]
+    runs-on: ubuntu-24.04
+    permissions: {}
+    steps:
+      - name: Every needed job passed or was skipped
+        env:
+          RESULTS: ${{ join(needs.*.result, ' ') }}
+        run: |
+          echo "results: $RESULTS"
+          case " $RESULTS " in *" failure "* | *" cancelled "*) exit 1 ;; esac

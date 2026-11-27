@@ -1,0 +1,90 @@
+name: fuzz
+
+# libFuzzer with AddressSanitizer and UndefinedBehaviorSanitizer on the parsers that read data from outside: the
+# API request parsers and chat renderer (api), the GGUF loader (gguf) and the signature and manifest parsers of the
+# updater (minisig). Short run (60 s per target) on every pull request, long run (30 min per target) every night.
+# Each target has its own folder (scripts/fuzz.sh), a crash fails the job and uploads the inputs as an artifact.
+# Same pinned Fedora 44 image as tests.yml; the clang of the distribution builds the fuzzers.
+
+on:
+  pull_request:
+  schedule:
+    - cron: "17 2 * * *"
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: fuzz-${{ github.ref }}-${{ github.event_name }}
+  cancel-in-progress: true
+
+jobs:
+  changes:
+    # Which areas the pull request touches (scripts/ci-changes.sh); push, schedule and manual runs turn all on.
+    name: changes
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    outputs:
+      cpp: ${{ steps.areas.outputs.cpp }}
+      py: ${{ steps.areas.outputs.py }}
+      ci: ${{ steps.areas.outputs.ci }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0 # the merge base of the pull request must exist
+      - name: Areas
+        id: areas
+        env:
+          EVENT: ${{ github.event_name }}
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD: ${{ github.event.pull_request.head.sha }}
+        run: scripts/ci-changes.sh "$EVENT" "$PR_BASE" "$PR_HEAD"
+
+  fuzz:
+    needs: changes
+    if: needs.changes.outputs.cpp == 'true' || needs.changes.outputs.ci == 'true'
+    name: fuzz
+    permissions:
+      contents: read
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    container:
+      image: registry.fedoraproject.org/fedora:44@sha256:a329903517f5dbd709721cba0cb1b6d0cc05f01b9e5feb59c2b6bbe9eb083ade
+    env:
+      # 60 s per pull request, 30 min per night; a manual run takes the short time
+      FUZZ_SECONDS: ${{ github.event_name == 'schedule' && '1800' || '60' }}
+    steps:
+      - name: Packages
+        run: dnf install -y --setopt=install_weak_deps=False clang compiler-rt openssl-devel findutils
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Fuzz
+        env:
+          FUZZ_CXX: clang++
+          FUZZ_OUT: ${{ runner.temp }}/fuzz
+        run: scripts/fuzz.sh "$FUZZ_SECONDS"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: failure()
+        with:
+          name: fuzz-findings
+          path: ${{ runner.temp }}/fuzz/*/findings/
+          if-no-files-found: warn
+          retention-days: 30
+
+  fuzz-ok:
+    # The one check the ruleset requires for this workflow: skipped jobs count as fine, failed or cancelled ones do not.
+    name: fuzz-ok
+    if: always()
+    needs: [changes, fuzz]
+    runs-on: ubuntu-24.04
+    permissions: {}
+    steps:
+      - name: Every needed job passed or was skipped
+        env:
+          RESULTS: ${{ join(needs.*.result, ' ') }}
+        run: |
+          echo "results: $RESULTS"
+          case " $RESULTS " in *" failure "* | *" cancelled "*) exit 1 ;; esac

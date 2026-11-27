@@ -1,0 +1,437 @@
+{
+  "id": "ornith-1.5-35b-a3b",
+  "name": "Ornith-1.5-35B-A3B",
+  "vendor": "ornith-ai",
+  "release_date": "2026-08-18",
+  "lineage": {
+    "base_model": "Ornith-1.0-35B-A3B, itself built on Qwen3.5 and Gemma 4 (the base of 1.5 is not stated; parameter count equals Qwen3.6-35B-A3B)",
+    "family": "Ornith 1.5 (35B-A3B, 122B and others)",
+    "how_derived": "continued pretraining, mid-training, post-training with reinforcement learning in a self-improvement loop (task generation, scaffold construction, rollouts)"
+  },
+  "purpose": "The builder presents it as a step toward foundation models built through end-to-end self-improvement; the intended users are developers building agents and terminal-based coding tools (tool calling, OpenCode and similar CLIs). It claims to beat Qwen3.6-35B-A3B and Gemma-4-31B on coding and agentic benchmarks with 3 B active parameters.",
+  "tasks": [
+    "coding",
+    "general"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en",
+      "zh"
+    ],
+    "programming": {
+      "Rust": {
+        "level": "good",
+        "evidence": "our eval: 8/22 within 4 attempts on llama.cpp (Q4_K_M), 4/12 on Tona (stopped at 12); the Coder solves 2/22; third party MultiPL-E Rust 0.75 for the base (single-function problems, much easier)",
+        "sources": [
+          "research/measurements/2026-11-19-rust-go-ornith-bolt.md",
+          "research/measurements/2026-11-19-ornith-tona-rust-go.md",
+          "research/70-ornith-bolt-rust-go.md"
+        ]
+      },
+      "Go": {
+        "level": "unknown",
+        "evidence": "first measurement is partial: 7 of the first 9 exercises within 4 attempts on llama.cpp, stopped at 9/39, no verdict",
+        "sources": [
+          "research/measurements/2026-11-19-rust-go-ornith-bolt.md"
+        ]
+      },
+      "JavaScript": {
+        "level": "good",
+        "evidence": "third party MultiPL-E 0.90 on the base model (ManniX-ITA CoderX card)",
+        "sources": [
+          "research/70-ornith-bolt-rust-go.md"
+        ]
+      }
+    }
+  },
+  "license": {
+    "name": "MIT (declared by the publisher on the model card, in the GGUF metadata and in its GitHub repository; the LICENSE file is missing in the Hugging Face repositories)",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Publisher declares MIT in four places (research/2026-11-25-ornith-license.md): card YAML license: mit with a dead license_link, GGUF general.license = mit, and https://github.com/ornith-ai/Ornith-1 with a full MIT LICENSE whose README says both generations (1.0 and 1.5) are MIT licensed. No HF repo of ornith-ai ships a LICENSE file (rechecked 2026-11-25). The publisher names Qwen3.5 and Gemma 4 as base for 1.0 only; config.json shows the Qwen3.5-MoE architecture; those bases are Apache-2.0 and their attribution is not carried by Ornith. verified stays false: the text was read in the code repository, not next to the model files. Recheck before every release whether the file appeared on Hugging Face."
+  },
+  "architecture": {
+    "kind": "hybrid Gated DeltaNet + gated attention MoE",
+    "gguf_arch": "qwen35moe",
+    "params_total_b": 36,
+    "params_active_b": 3,
+    "layers": 40,
+    "attention": "30 Gated DeltaNet + 10 gated full attention layers (16 Q / 2 KV heads, head dim 256)",
+    "recurrent": "Gated DeltaNet",
+    "experts": 256,
+    "experts_active": 8,
+    "context_native": 262144,
+    "context_max": 1000000,
+    "drafter": "MTP head (1 layer)",
+    "why_this_design": "The card states no architecture reasons. It describes the training goal: end-to-end self-improvement that jointly optimizes task generation, scaffold construction and solution rollouts instead of fixed human-curated tasks and harnesses. Ornith-1.0 was built on Qwen3.5 and Gemma 4 with continued pre-training, mid-training and post-training."
+  },
+  "variants": [
+    {
+      "repo": "ornith-ai/Ornith-1.5-35B-A3B-GGUF",
+      "format": "GGUF Q4_K_M (also Q5, Q6, Q8)",
+      "size_gb": 21.7,
+      "bits_per_weight": 4.9,
+      "official": true,
+      "notes": "the file Tona runs"
+    },
+    {
+      "repo": "ornith-ai/Ornith-1.5-35B-A3B",
+      "format": "safetensors BF16",
+      "size_gb": 70,
+      "official": true
+    },
+    {
+      "repo": "peculiar-ragdoll/Tiel-Coder-35B-A3B-GGUF",
+      "format": "GGUF UD-IQ3_XXS 13.2 GB to Q8_K_XL 38.5 GB",
+      "official": false,
+      "notes": "community requant with own code imatrix, see tiel-coder-35b-a3b"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q4_K_M",
+      "notes": "estimate: half of the experts in VRAM, rest from RAM; UD-IQ3_XXS (13.2 GB) of a community requant would nearly fit VRAM"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "measured",
+      "variant": "Q4_K_M",
+      "notes": "reference platform: 154 expert slots per layer, 13.94 GB VRAM used by tona-server, 20.4 GB pinned host memory, KV int8 at 64K context 0.75 GB"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "estimate from file size against the budget of docs/hardware (24 GB VRAM with 96 GB RAM); experts beyond VRAM stream from RAM, decode speed depends on that path",
+      "variant": "Q4_K_M"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "estimate from file size against the budget of docs/hardware (32 GB VRAM with 128 GB RAM); experts beyond VRAM stream from RAM, decode speed depends on that path",
+      "variant": "Q4_K_M"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "basis": "estimate",
+      "notes": "estimate from file size against the budget of docs/hardware (unified memory 16-24 GB, GPU share about 12 GB)",
+      "variant": "Q4_K_M"
+    },
+    "mac-32gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "notes": "estimate from file size against the budget of docs/hardware (unified 32 GB, GPU share about 22 GB)",
+      "variant": "Q4_K_M"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "estimate from file size against the budget of docs/hardware (unified 64 GB, GPU share about 52 GB)",
+      "variant": "Q4_K_M"
+    }
+  },
+  "engine_support": {
+    "tona": "runs",
+    "llama_cpp": "yes",
+    "other": [
+      "vLLM",
+      "SGLang",
+      "Ollama"
+    ],
+    "notes": "Tona: qwen35moe backend with MTP head and kernel prefill (O1-O6); llama.cpp loads the official GGUF"
+  },
+  "benchmarks": [
+    {
+      "name": "SWE-bench Verified",
+      "score": 79,
+      "kind": "vendor",
+      "source": "https://huggingface.co/ornith-ai/Ornith-1.5-35B-A3B",
+      "variant": "BF16, five-run average",
+      "harness": "Terminus-2 / own harness",
+      "unit": "%"
+    },
+    {
+      "name": "SWE-bench Pro",
+      "score": 59.6,
+      "kind": "vendor",
+      "source": "https://huggingface.co/ornith-ai/Ornith-1.5-35B-A3B",
+      "variant": "BF16",
+      "unit": "%"
+    },
+    {
+      "name": "SWE-bench Multilingual",
+      "score": 71.4,
+      "kind": "vendor",
+      "source": "https://huggingface.co/ornith-ai/Ornith-1.5-35B-A3B",
+      "variant": "BF16",
+      "unit": "%"
+    },
+    {
+      "name": "Terminal-Bench 2.1",
+      "score": 67.8,
+      "kind": "vendor",
+      "source": "https://huggingface.co/ornith-ai/Ornith-1.5-35B-A3B",
+      "variant": "BF16",
+      "harness": "Terminus-2 (68.5 with Claude Code)",
+      "unit": "%"
+    },
+    {
+      "name": "NL2Repo",
+      "score": 46.2,
+      "kind": "vendor",
+      "source": "https://huggingface.co/ornith-ai/Ornith-1.5-35B-A3B",
+      "variant": "BF16"
+    },
+    {
+      "name": "DeepSWE",
+      "score": 22,
+      "kind": "vendor",
+      "source": "https://huggingface.co/ornith-ai/Ornith-1.5-35B-A3B",
+      "variant": "BF16",
+      "unit": "%"
+    },
+    {
+      "name": "Toolathlon-Verified",
+      "score": 48.7,
+      "kind": "vendor",
+      "source": "https://huggingface.co/ornith-ai/Ornith-1.5-35B-A3B"
+    },
+    {
+      "name": "MCP-Atlas",
+      "score": 70.2,
+      "kind": "vendor",
+      "source": "https://huggingface.co/ornith-ai/Ornith-1.5-35B-A3B"
+    },
+    {
+      "name": "GPQA Diamond",
+      "score": 89.2,
+      "kind": "vendor",
+      "source": "https://huggingface.co/ornith-ai/Ornith-1.5-35B-A3B"
+    },
+    {
+      "name": "MultiPL-E Rust (300 problems)",
+      "score": 0.75,
+      "kind": "independent",
+      "source": "https://huggingface.co/ManniX-ITA/Ornith-1.5-27B-A3B-CoderX",
+      "variant": "Ornith 35B base, Q6_K with imatrix, third-party derivative card",
+      "harness": "MultiPL-E"
+    },
+    {
+      "name": "Exercism Rust (4 attempts)",
+      "score": "8/22",
+      "kind": "ours",
+      "source": "research/measurements/2026-11-19-rust-go-ornith-bolt.md",
+      "variant": "Q4_K_M on llama.cpp, thinking off, min_p 0.05 default",
+      "harness": "bench/polyglot",
+      "date": "2026-11-19"
+    },
+    {
+      "name": "Exercism Rust (4 attempts), partial",
+      "score": "4/12",
+      "kind": "ours",
+      "source": "research/measurements/2026-11-19-ornith-tona-rust-go.md",
+      "variant": "Q4_K_M on Tona with MTP, stopped at 12 of 22",
+      "harness": "bench/polyglot",
+      "date": "2026-11-19"
+    },
+    {
+      "name": "Exercism Go (4 attempts), partial",
+      "score": "7/9",
+      "kind": "ours",
+      "source": "research/measurements/2026-11-19-rust-go-ornith-bolt.md",
+      "variant": "Q4_K_M on llama.cpp, first 9 of 39 exercises only, not a rate",
+      "harness": "bench/polyglot",
+      "date": "2026-11-19"
+    },
+    {
+      "name": "Decode speed on Tona (median per request, MTP + history drafts)",
+      "score": 113.5,
+      "kind": "ours",
+      "source": "research/measurements/2026-11-19-ornith-tona-rust-go.md",
+      "variant": "Q4_K_M, KV int8, ctx 65536",
+      "harness": "41 requests of the Rust run, decode",
+      "unit": "tok/s",
+      "date": "2026-11-19"
+    },
+    {
+      "name": "Prefill speed on Tona, 4K prompt",
+      "score": 3477,
+      "kind": "ours",
+      "source": "research/measurements/2026-11-19-ornith-prefill.md",
+      "variant": "Q4_K_M, kernel prefill",
+      "harness": "exclusive job, two runs, spread below 0.1 %",
+      "unit": "tok/s (prefill)",
+      "date": "2026-11-19"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "Strongest coding agent numbers per active parameter among the small MoE models (vendor), SWE-bench Verified 79",
+      "Rust: 8/22 against the Coder's 2/22 in our paired eval (p = 0.031, with a favourable sampler)",
+      "Fits every class from 12 GB VRAM upward at Q4_K_M; very high decode on Tona (median 113 tok/s)",
+      "No sign of a dropped language in the base model"
+    ],
+    "weaknesses": [
+      "Behind the Coder on long agentic tasks per vendor table (DeepSWE 22, Toolathlon 48.7 against the Flash-Next base 58.7 and 73.5)",
+      "Numbers are vendor only; vendor is new",
+      "Verbose chain of thought on simple tasks (HF discussion 5)",
+      "Q4_K_M quality unmeasured; license file missing"
+    ],
+    "behavior": "Reasoning model with think blocks by default; recommended sampling 0.6/0.95/20 for general use and 1.0 to reproduce the benchmarks. Plain fenced code blocks instead of FILE headers in our harness smoke test. Tona's chat template renderer for it matches the GGUF Jinja template byte for byte on 9 of 9 cases.",
+    "best_for": [
+      "Rust and general coding agents on 12 to 16 GB VRAM",
+      "several parallel workers (3 B active)"
+    ],
+    "avoid_for": [
+      "single-file visual HTML generation was reported broken by one user (anecdote)"
+    ],
+    "user_reports": [
+      {
+        "summary": "'Not for coding?': single-file HTML aquarium with runtime errors at Q8, v1.5 worse than 1.0 and Qwen 27B; replies suggest Q6 and checking sampling",
+        "sentiment": "negative",
+        "source": "https://huggingface.co/ornith-ai/Ornith-1.5-35B-A3B-GGUF/discussions/6",
+        "date": "2026-09"
+      },
+      {
+        "summary": "Excessive chain of thought on simple tasks",
+        "sentiment": "negative",
+        "source": "https://huggingface.co/ornith-ai/Ornith-1.5-35B-A3B-GGUF/discussions/5",
+        "date": "2026-09"
+      },
+      {
+        "summary": "Positive experience reports",
+        "sentiment": "positive",
+        "source": "https://huggingface.co/ornith-ai/Ornith-1.5-35B-A3B-GGUF/discussions/19",
+        "date": "2026-10"
+      },
+      {
+        "summary": "Launch complaints: file read/write tool calls failing and endless thinking in a Pi agent; replies trace most of it to speculative decoding and KV-cache quantization (Q4 cache), and the shipped mtp.* tensors looked untrained",
+        "sentiment": "negative",
+        "source": "https://huggingface.co/ornith-ai/Ornith-1.5-35B-A3B/discussions/8",
+        "date": "2026-08-20"
+      },
+      {
+        "summary": "Constant looping reported; advice: switch thinking off and use 8-bit weights",
+        "sentiment": "negative",
+        "source": "https://huggingface.co/ornith-ai/Ornith-1.5-35B-A3B/discussions/18",
+        "date": "2026-08-22"
+      },
+      {
+        "summary": "mtp.* tensors look like random initialisation (std exactly 0.02); a community-trained MTP head reaches 69 % code acceptance against 37 % for the shipped head (fixed shard re-uploaded 2026-08-23)",
+        "sentiment": "mixed",
+        "source": "https://huggingface.co/ornith-ai/Ornith-1.5-35B-A3B/discussions/10",
+        "date": "2026-08-20"
+      },
+      {
+        "summary": "RTX 5090, llama.cpp Q4_K_M: 271 tok/s decode and 673 tok/s at 8 concurrent requests, compared with Gemma 4-26B-A4B and Qwen3.8-27B",
+        "sentiment": "positive",
+        "source": "https://huggingface.co/ornith-ai/Ornith-1.5-35B-A3B/discussions/31",
+        "date": "2026-08-28"
+      },
+      {
+        "summary": "MMLU-style knowledge benchmark trade-off: lower general knowledge than Qwen at the same quant (oQ4e); defenders note the model targets agentic coding",
+        "sentiment": "mixed",
+        "source": "https://huggingface.co/ornith-ai/Ornith-1.5-35B-A3B/discussions/26",
+        "date": "2026-08-24"
+      }
+    ],
+    "maturity": "New vendor (Ornith 1.0 earlier in 2026); 26 open discussions on the GGUF repo; large community requant ecosystem (221 quantizations, 40 finetunes listed)."
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "Runs on Tona (decode, MTP, kernel prefill) and is the best measured Rust option so far; Go still undecided. Agent quality on long tasks must be shown by one full agent eval on the finished implementation before it is offered.",
+    "blockers": [
+      "Go not measured to the end",
+      "no full agent eval on Tona yet"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/ornith-ai/Ornith-1.5-35B-A3B",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "page text read through a summarizer (WebFetch)"
+    },
+    {
+      "url": "https://huggingface.co/ornith-ai/Ornith-1.5-35B-A3B-GGUF/discussions",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "discussions read through a summarizer in research/70"
+    },
+    {
+      "url": "https://huggingface.co/ManniX-ITA/Ornith-1.5-27B-A3B-CoderX",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "third-party derivative card with MultiPL-E numbers of the base"
+    },
+    {
+      "url": "research/measurements/2026-11-19-rust-go-ornith-bolt.md",
+      "kind": "own",
+      "checked": "2026-11-19",
+      "note": "Rust and Go on llama.cpp"
+    },
+    {
+      "url": "research/measurements/2026-11-19-ornith-tona-rust-go.md",
+      "kind": "own",
+      "checked": "2026-11-19",
+      "note": "Tona Rust run, speed by-product, chat template"
+    },
+    {
+      "url": "research/measurements/2026-11-19-ornith-prefill.md",
+      "kind": "own",
+      "checked": "2026-11-19",
+      "note": "kernel prefill speed and quality"
+    },
+    {
+      "url": "research/70-ornith-bolt-rust-go.md",
+      "kind": "own",
+      "checked": "2026-11-19",
+      "note": "web research of 2026-11-19"
+    },
+    {
+      "url": "research/08-models.md",
+      "kind": "own",
+      "checked": "2026-11-19",
+      "note": "config.json derived architecture"
+    },
+    {
+      "url": "https://huggingface.co/ornith-ai/Ornith-1.5-35B-A3B/discussions",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "discussions read through the HF API"
+    },
+    {
+      "url": "https://github.com/ornith-ai/Ornith-1",
+      "kind": "primary",
+      "checked": "2026-11-25",
+      "note": "MIT LICENSE and README statement on both generations"
+    },
+    {
+      "url": "research/2026-11-25-ornith-license.md",
+      "kind": "own",
+      "checked": "2026-11-25",
+      "note": "license evidence and how other catalogs label it"
+    }
+  ],
+  "open_questions": [
+    "Base model and license of Ornith 1.5 (card names Qwen3.5 and Gemma 4 for 1.0 only)",
+    "Go pass rate over all 39 exercises",
+    "Coding quality of Q4_K_M against Q6_K / Q8_0 (no measurement found)",
+    "Equal-sampling confirmation of the Rust gain on Tona (the llama.cpp run had min_p 0.05)",
+    "Agent-task quality (SWE, long tasks) on Tona",
+    "Do the launch tool-call and looping complaints still hold with a fixed MTP shard, no KV quantization and no speculative decoding? Check: our own agent eval on Tona (planned in the ticket).",
+    "Per-language quality and independent coding evidence: the Aider polyglot board is stale (mirrors: last update 2025-11-20, no entry for any model of this database), LiveCodeBench and swebench.com publish no per-language numbers for it that we could retrieve. Check: our own Exercism polyglot run per language."
+  ],
+  "last_checked": "2026-11-19"
+}

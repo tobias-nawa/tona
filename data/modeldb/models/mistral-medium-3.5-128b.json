@@ -1,0 +1,215 @@
+{
+  "id": "mistral-medium-3.5-128b",
+  "name": "Mistral Medium 3.5 128B",
+  "vendor": "Mistral AI",
+  "release_date": "2026-03-31",
+  "lineage": {
+    "family": "Mistral Medium",
+    "how_derived": "merged flagship: replaces Mistral Medium 3.1 and Magistral in Le Chat and Devstral 2 in the Vibe coding agent"
+  },
+  "purpose": "Mistral's first 'flagship merged model': one dense 128B set of weights that handles instruction following, reasoning and coding, with reasoning effort configurable per request and a vision encoder trained from scratch for variable image sizes (card).",
+  "tasks": [
+    "general",
+    "coding",
+    "vision"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en",
+      "fr",
+      "de",
+      "es",
+      "pt",
+      "it",
+      "ja",
+      "ko",
+      "ru",
+      "zh",
+      "ar",
+      "fa",
+      "id",
+      "ms",
+      "ne",
+      "pl",
+      "ro",
+      "sr",
+      "sv",
+      "tr",
+      "uk",
+      "vi",
+      "hi",
+      "bn"
+    ]
+  },
+  "license": {
+    "name": "Modified MIT License (Mistral AI, 2026)",
+    "verified": true,
+    "commercial_use": "limited",
+    "redistribution": "limited",
+    "notes": "LICENSE file read. MIT grant to use, copy, modify, merge, publish, distribute, sublicense and sell, with attribution, but 'You are not authorized to exercise any rights under this license if the global consolidated monthly revenue of your company (or that of your employer) exceeds $20 million (or its equivalent in another currency) for the preceding month'; the restriction covers derivatives and combined works, and a commercial license can be requested from Mistral at its sole discretion. Free for individuals and small companies; a user whose employer is above the revenue line has no rights, which also bars an offer through Tona for those users. The card tag is 'other'. Verdict policy (README, 2026-11-19): this licence term does not lower tona_fit; kept here for an installer label."
+  },
+  "architecture": {
+    "kind": "dense transformer with vision encoder (Mistral3ForConditionalGeneration, ministral3 text config)",
+    "params_total_b": 128,
+    "params_active_b": 128,
+    "layers": 88,
+    "attention": "GQA, 96 heads and 8 KV heads, head dim 128, full attention (no sliding window), YaRN rope factor 64",
+    "recurrent": "none",
+    "context_native": 262144,
+    "drafter": "separate EAGLE model mistralai/Mistral-Medium-3.5-128B-EAGLE",
+    "why_this_design": "Card: merge instruct, reasoning and coding into a single model so that one set of weights serves quick chat replies and long agentic runs, with the reasoning effort ('none' or 'high') chosen per request."
+  },
+  "variants": [
+    {
+      "repo": "mistralai/Mistral-Medium-3.5-128B",
+      "format": "safetensors (FP8 static activation quantization per config.json)",
+      "official": true,
+      "notes": "card warns that an incorrect Transformers config entry degraded long-context quality until the fix of 2026-05-01; GGUFs made from the old config are affected"
+    },
+    {
+      "repo": "nvidia/Mistral-Medium-3.5-128B-NVFP4",
+      "format": "NVFP4",
+      "official": false,
+      "notes": "34,553 downloads, created 2026-06-30"
+    },
+    {
+      "repo": "unsloth/Mistral-Medium-3.5-128B-GGUF",
+      "format": "GGUF",
+      "official": false,
+      "notes": "10,839 downloads, created 2026-04-27; bartowski and mradermacher GGUFs also exist; sizes not collected"
+    },
+    {
+      "repo": "mlx-community/Mistral-Medium-3.5-128B-4bit",
+      "format": "MLX 4bit",
+      "official": false
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "no",
+      "basis": "estimate",
+      "notes": "dense 128B"
+    },
+    "pc-16gb": {
+      "fits": "no",
+      "basis": "estimate",
+      "notes": "dense 128B"
+    },
+    "pc-24gb": {
+      "fits": "no",
+      "basis": "estimate",
+      "variant": "Q4",
+      "notes": "about 72 GB at 4 bit must stream from RAM on every token (dense, no sparsity), far below usable decode speed"
+    },
+    "pc-32gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "variant": "Q4",
+      "notes": "fits 128 GB RAM plus VRAM but decode is bound by RAM bandwidth"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "basis": "estimate"
+    },
+    "mac-32gb": {
+      "fits": "no",
+      "basis": "estimate"
+    },
+    "mac-64gb-plus": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "variant": "Q4 on 96-128 GB unified memory",
+      "notes": "does not fit 64 GB at 4 bit"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "vLLM",
+      "SGLang",
+      "MLX"
+    ],
+    "notes": "GGUFs from unsloth, bartowski and mradermacher exist; Mistral Vibe can use a local vLLM server."
+  },
+  "benchmarks": [
+    {
+      "name": "SWE-Bench Verified",
+      "score": 77.6,
+      "unit": "%",
+      "kind": "vendor",
+      "source": "https://huggingface.co/mistralai/Mistral-Medium-3.5-128B"
+    },
+    {
+      "name": "tau3-Telecom",
+      "score": 91.4,
+      "unit": "%",
+      "kind": "vendor",
+      "source": "https://huggingface.co/mistralai/Mistral-Medium-3.5-128B"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "Vendor says it supersedes Devstral on all its coding benchmarks and powers Le Chat",
+      "256K context, 24 languages listed including German",
+      "Native function calling and JSON output"
+    ],
+    "weaknesses": [
+      "128B dense: no sparsity to exploit on a single consumer GPU",
+      "Revenue-capped license",
+      "Other benchmark figures are images on the card"
+    ],
+    "user_reports": [
+      {
+        "summary": "Maintainers flagged that GGUFs and quantized or fine-tuned models built before the Transformers config fix lose long-context quality; the card carries the same warning.",
+        "sentiment": "mixed",
+        "source": "https://huggingface.co/mistralai/Mistral-Medium-3.5-128B/discussions/18",
+        "date": "2026-05-02"
+      }
+    ],
+    "maturity": "Mistral AI flagship; active community quantization (NVFP4, AWQ, GGUF, MLX)."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Strongest Mistral model with good vendor coding numbers and 24 languages, but a dense 128B needs 96-128 GB unified memory to be usable. Re-check if a smaller Mistral Medium appears.",
+    "blockers": [
+      "dense 128B: only mac-64gb+ with 96-128 GB",
+      "no Mistral3 module in Tona"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/mistralai/Mistral-Medium-3.5-128B",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "model card read (first part), LICENSE and config.json read"
+    },
+    {
+      "url": "https://huggingface.co/mistralai/Mistral-Medium-3.5-128B/raw/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "Modified MIT License text"
+    },
+    {
+      "url": "https://huggingface.co/api/models?search=Mistral-Medium-3.5",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "variant listing"
+    }
+  ],
+  "open_questions": [
+    "Benchmark figures on the card are images: MMLU-Pro, GPQA, AIME and similar",
+    "GGUF sizes and real decode rate on 96-128 GB machines",
+    "German quality: no independent score (not in PeerBench)"
+  ],
+  "last_checked": "2026-11-19"
+}

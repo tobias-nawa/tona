@@ -1,0 +1,17 @@
+# Label set of the repository (at most 15, docs/maintain/maintainer.md). Columns, tab separated: name, colour, description.
+# scripts/github-setup.sh creates or updates them; nothing else manages labels.
+accepted	0e8a16	A maintainer accepted the proposal; a pull request may follow
+needs-info	fbca04	Waiting for the reporter: template incomplete or details missing
+needs-repro	fbca04	Waiting for a reproduction the reporter ran
+confirmed	d93f0b	Reproduced by a maintainer
+cannot-repro	cfd3d7	A maintainer could not reproduce it
+owner-needed	5319e7	Needs a named owner with the hardware
+help-wanted	008672	Accepted; a contributor is welcome to take it
+wontfix	ffffff	Will not be done; the reason is in the issue
+unverified	cfd3d7	Claim without data in the format of AGENTS.md rule 2
+orphaned	b60205	Backend without an active owner (docs/maintain/maintainer.md, backend contribution)
+bug	d73a4a	Something does not work as documented
+backend	1d76db	A backend for other hardware; its own label per accepted backend
+docs	0075ca	Documentation only
+model	1d76db	A proposal for a new model to build in, optimize and offer
+feature	0075ca	A change or feature proposal; the problem comes first

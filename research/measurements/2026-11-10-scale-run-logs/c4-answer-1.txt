@@ -1,0 +1,10 @@
+Based on the provided code, here is a summary of what the C++ and HIP code does:
+
+*   **Inference Engine Core (HIP/C++):**
+    *   Implements a high-performance inference engine for the `qwen4exp` (Qwen3.8-Flash-Next) model architecture.
+    *   Utilizes a "megakernel" approach (`k_mega`) that executes the entire forward pass (including attention, feed-forward, and residual connections) in a single persistent GPU kernel to minimize launch overhead.
+    *   Supports speculative decoding using an MTP (Multi-Token Prediction) head or a DFlash2 drafter to generate multiple tokens per pass.
+    *   Implements quantized self-attention (QSA) with indexer caching and block selection.
+    *   Handles expert routing (MoE) with dynamic loading of expert weights from VRAM, pinned RAM, or disk.
+
+*   **Server & API Layer:**

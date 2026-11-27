@@ -1,0 +1,183 @@
+{
+  "id": "kat-coder-v2.5-dev",
+  "name": "KAT-Coder-V2.5-Dev (Kwaipilot)",
+  "vendor": "Kwaipilot (Kuaishou)",
+  "release_date": "2026-07-23",
+  "lineage": {
+    "base_model": "Qwen3.6-35B-A3B",
+    "how_derived": "supervised fine-tuning on 127K examples, then reinforcement learning with sandboxed verifiers and harness-based rewards (technical report arXiv 2607.05471)"
+  },
+  "purpose": "Kwaipilot states the open release is to strengthen community contact and show research results; audience developers and researchers in agentic coding.",
+  "tasks": [
+    "coding"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en",
+      "zh"
+    ],
+    "programming": {}
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card tag apache-2.0; the repository has no LICENSE file, so the text was not read."
+  },
+  "architecture": {
+    "kind": "hybrid Gated DeltaNet + gated attention MoE (Qwen3.6 base)",
+    "gguf_arch": "qwen35moe",
+    "params_total_b": 35,
+    "params_active_b": 3,
+    "context_native": 262144,
+    "context_max": 1010000,
+    "why_this_design": "Team chose Qwen3.6-35B-A3B as a widely recognized post-training base; Qwen3.6 specific penalties for parallel, failed and empty tool calls and repetition were added because a binary reward collapsed by epoch two."
+  },
+  "variants": [
+    {
+      "repo": "Kwaipilot/KAT-Coder-V2.5-Dev",
+      "format": "safetensors",
+      "official": true,
+      "notes": "73 quantized models listed on the Hub",
+      "size_gb": 69.3
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "estimate from file size against the budget of docs/hardware (12 GB VRAM with 64 GB RAM); experts beyond VRAM stream from RAM, decode speed depends on that path",
+      "variant": "Q4_K_M class (size estimated, same shape as Ornith 35B)"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "estimate from file size against the budget of docs/hardware (16 GB VRAM with 64 GB RAM (reference)); experts beyond VRAM stream from RAM, decode speed depends on that path",
+      "variant": "Q4_K_M class (size estimated, same shape as Ornith 35B)"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "estimate from file size against the budget of docs/hardware (24 GB VRAM with 96 GB RAM); experts beyond VRAM stream from RAM, decode speed depends on that path",
+      "variant": "Q4_K_M class (size estimated, same shape as Ornith 35B)"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "estimate from file size against the budget of docs/hardware (32 GB VRAM with 128 GB RAM); experts beyond VRAM stream from RAM, decode speed depends on that path",
+      "variant": "Q4_K_M class (size estimated, same shape as Ornith 35B)"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "basis": "estimate",
+      "notes": "estimate from file size against the budget of docs/hardware (unified memory 16-24 GB, GPU share about 12 GB)",
+      "variant": "Q4_K_M class (size estimated, same shape as Ornith 35B)"
+    },
+    "mac-32gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "notes": "estimate from file size against the budget of docs/hardware (unified 32 GB, GPU share about 22 GB)",
+      "variant": "Q4_K_M class (size estimated, same shape as Ornith 35B)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "estimate from file size against the budget of docs/hardware (unified 64 GB, GPU share about 52 GB)",
+      "variant": "Q4_K_M class (size estimated, same shape as Ornith 35B)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "vLLM (needs --language-model-only)",
+      "SGLang"
+    ],
+    "notes": "same architecture as Ornith 35B, which Tona runs; the Qwen3.6 template handling would apply"
+  },
+  "benchmarks": [
+    {
+      "name": "SWE-bench Verified",
+      "score": 69.4,
+      "kind": "vendor",
+      "source": "https://huggingface.co/Kwaipilot/KAT-Coder-V2.5-Dev",
+      "variant": "BF16",
+      "harness": "claude_code 2.1.195, temp 1.0, top_p 0.95, 256K",
+      "unit": "%"
+    },
+    {
+      "name": "SWE-bench Multilingual",
+      "score": 63.0,
+      "kind": "vendor",
+      "source": "https://huggingface.co/Kwaipilot/KAT-Coder-V2.5-Dev",
+      "variant": "BF16",
+      "harness": "same"
+    },
+    {
+      "name": "SWE-bench Pro",
+      "score": 45.96,
+      "kind": "vendor",
+      "source": "https://huggingface.co/Kwaipilot/KAT-Coder-V2.5-Dev",
+      "variant": "BF16",
+      "harness": "same"
+    },
+    {
+      "name": "Terminal-Bench 2.1",
+      "score": 41.02,
+      "kind": "vendor",
+      "source": "https://huggingface.co/Kwaipilot/KAT-Coder-V2.5-Dev",
+      "variant": "BF16",
+      "harness": "average of Terminus-2 32.6 and Claude Code 49.44"
+    },
+    {
+      "name": "PinchBench",
+      "score": 93.43,
+      "kind": "vendor",
+      "source": "https://huggingface.co/Kwaipilot/KAT-Coder-V2.5-Dev",
+      "variant": "BF16",
+      "harness": "openclaw"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "Tool-call hygiene training (penalties for failed and empty calls)",
+      "Apache-2.0"
+    ],
+    "weaknesses": [
+      "Text only",
+      "Below Ornith-1.5 in the same size class on the vendor numbers (SWE-bench Verified 69.4 vs 79)",
+      "Thinking by default"
+    ],
+    "behavior": "Sampling T 1.0, top_p 0.95 (agentic); thinking default, non-thinking by API parameter.",
+    "maturity": "Kuaishou's Kwaipilot team; 691 likes; this is a Dev preview of a hosted model."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Runs on the same architecture as Ornith 35B but vendor numbers are lower; no reason to prefer it without independent results.",
+    "blockers": []
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/Kwaipilot/KAT-Coder-V2.5-Dev",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "page text read through a summarizer (WebFetch)"
+    }
+  ],
+  "open_questions": [
+    "Independent benchmarks",
+    "Programming languages",
+    "GGUF sizes",
+    "Per-language quality and independent coding evidence: the Aider polyglot board is stale (mirrors: last update 2025-11-20, no entry for any model of this database), LiveCodeBench and swebench.com publish no per-language numbers for it that we could retrieve. Check: our own Exercism polyglot run per language."
+  ],
+  "last_checked": "2026-11-19"
+}

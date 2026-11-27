@@ -1,0 +1,17 @@
+== big14-ref cuts= 
+exit 0
+Prefill 14000 tokens: layer by layer, chunk 6144, group 18432, loan limit 4765 MB
+tail: prefill 14000 tokens in 8.1 s, then 64 tokens through the megakernel (36.0 tok/s): NLL 1.117333, top-1 78.12 %
+== big14-c12289 cuts=12289 
+exit 0
+Prefill 12289 tokens: layer by layer, chunk 6144, group 18432, loan limit 4765 MB
+Prefill 1711 tokens: chunk by chunk, chunk 2048, group 0, loan limit 4765 MB
+tail: prefill 14000 tokens in 8.3 s, then 64 tokens through the megakernel (36.8 tok/s): NLL 1.117333, top-1 78.12 %
+== big14-c6000 cuts=6000,12000 
+exit 0
+Prefill 6000 tokens: layer by layer, chunk 6144, group 12288, loan limit 4765 MB
+Prefill 6000 tokens: layer by layer, chunk 6144, group 12288, loan limit 4765 MB
+Prefill 2000 tokens: chunk by chunk, chunk 2048, group 0, loan limit 4765 MB
+tail: prefill 14000 tokens in 8.4 s, then 64 tokens through the megakernel (36.8 tok/s): NLL 1.117333, top-1 78.12 %
+SAME c12289
+SAME c6000

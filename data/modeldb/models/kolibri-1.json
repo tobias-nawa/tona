@@ -1,0 +1,219 @@
+{
+  "id": "kolibri-1",
+  "name": "Kolibri 1",
+  "vendor": "Aleph Alpha Research",
+  "release_date": "2026-10-03",
+  "lineage": {
+    "family": "Kolibri",
+    "how_derived": "trained from scratch (20T pretraining tokens, 3.44T mid-training, 201B long-context extension, SFT and RL); FP8 build is the main repo, BF16 in Aleph-Alpha/Kolibri-1-BF16"
+  },
+  "purpose": "Strong German and English performance at low serving cost: a MoE reasoning model with a tokenizer tailored to German word structure; two languages by design (depth over breadth). Intended for conversational assistants and agentic workflows with human review, RAG, document processing, tool calling (card).",
+  "tasks": [
+    "general",
+    "coding",
+    "research"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "de",
+      "en"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Apache License 2.0 text read in the repo LICENSE file: commercial use, modification and redistribution allowed with notice and patent grant."
+  },
+  "architecture": {
+    "kind": "sparse MoE, 50 layers, 4:1 sliding-window to full GQA attention",
+    "params_total_b": 78.1,
+    "params_active_b": 3.46,
+    "layers": 50,
+    "attention": "sliding window 513 (4 of 5 layers, carry the positional encoding) plus GQA full layers, 48 Q / 4 KV heads, head dim 128",
+    "recurrent": "none",
+    "experts": 384,
+    "experts_active": 6,
+    "context_native": 262144,
+    "context_max": 1048576,
+    "drafter": "none stated",
+    "why_this_design": "MoE keeps compute per token low while keeping the capacity of a much larger model; the cost is memory. Most attention layers look at nearby text so long contexts stay affordable; positional encoding only in the sliding layers allows extension beyond the trained length without scaling (card, Design goals)."
+  },
+  "variants": [
+    {
+      "repo": "Aleph-Alpha/Kolibri-1",
+      "format": "safetensors FP8 (E4M3, 128x128 blocks)",
+      "size_gb": 78.86,
+      "official": true
+    },
+    {
+      "repo": "Aleph-Alpha/Kolibri-1-BF16",
+      "format": "safetensors BF16",
+      "official": true,
+      "notes": "size not checked"
+    },
+    {
+      "repo": "bartowski/Kolibri-1-GGUF",
+      "format": "GGUF Q4_K_M",
+      "size_gb": 49.76,
+      "official": false,
+      "notes": "IQ2_XXS 22.77, IQ2_M 28.08, Q3_K_M 37.62, IQ4_XS 43.63 GB; Q6_K about 69 GB and Q8_0 about 83 GB in two or three parts; 10.9k downloads"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "marginal",
+      "variant": "bartowski GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "49.76 GB file against 9.6 GB VRAM plus 50 GB RAM budget; experts stream from RAM (~3.5 B active, decode bound by RAM bandwidth)"
+    },
+    "pc-16gb": {
+      "fits": "marginal",
+      "variant": "bartowski GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "49.76 GB file against 13.6 GB VRAM plus 50 GB RAM budget; experts stream from RAM (~3.5 B active, decode bound by RAM bandwidth)"
+    },
+    "pc-24gb": {
+      "fits": "marginal",
+      "variant": "bartowski GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "49.76 GB file against 21.6 GB VRAM plus 82 GB RAM budget; experts stream from RAM (~3.5 B active, decode bound by RAM bandwidth)"
+    },
+    "pc-32gb": {
+      "fits": "marginal",
+      "variant": "bartowski GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "49.76 GB file against 29.6 GB VRAM plus 82 GB RAM budget; experts stream from RAM (~3.5 B active, decode bound by RAM bandwidth)"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "bartowski GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "49.76 GB file against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "no",
+      "variant": "bartowski GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "49.76 GB file against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "bartowski GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "49.76 GB file against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "unknown",
+    "other": [
+      "Transformers >= 5.20 (native)",
+      "several GGUF repos exist (bartowski, Hob-forge, mradermacher); llama.cpp support not verified"
+    ],
+    "notes": "Card lists Transformers and vLLM/SGLang-style serving on 2x H100 class GPUs for the FP8 weights."
+  },
+  "benchmarks": [
+    {
+      "name": "Overall (EN) vendor suite",
+      "score": 75.5,
+      "kind": "vendor",
+      "variant": "FP8 post-trained; same table: Qwen3.6-35B-A3B 71.4, Qwen3.5-35B-A3B 74.7, Qwen3.8-27B 80.2, GPT-OSS-120B 72.3",
+      "source": "https://huggingface.co/Aleph-Alpha/Kolibri-1"
+    },
+    {
+      "name": "Overall (DE) vendor suite",
+      "score": 70.8,
+      "kind": "vendor",
+      "variant": "FP8; Qwen3.6-35B-A3B 67.3, Qwen3.5-35B-A3B 69.8, Qwen3.8-27B 79.9, GPT-OSS-120B 70.2",
+      "source": "https://huggingface.co/Aleph-Alpha/Kolibri-1"
+    },
+    {
+      "name": "GPQA Diamond (EN)",
+      "score": 84.3,
+      "kind": "vendor",
+      "variant": "FP8; Qwen3.6-35B-A3B 83.4, Qwen3.8-27B 89.2",
+      "source": "https://huggingface.co/Aleph-Alpha/Kolibri-1"
+    },
+    {
+      "name": "MMLU-Pro CoT (EN)",
+      "score": 80.0,
+      "kind": "vendor",
+      "variant": "FP8; Qwen3.6-35B-A3B 84.3",
+      "source": "https://huggingface.co/Aleph-Alpha/Kolibri-1"
+    },
+    {
+      "name": "MMLU-ProX CoT (DE)",
+      "score": 75.5,
+      "kind": "vendor",
+      "variant": "FP8; Qwen3.6-35B-A3B 81.9",
+      "source": "https://huggingface.co/Aleph-Alpha/Kolibri-1"
+    },
+    {
+      "name": "Humanity's Last Exam (EN)",
+      "score": 21.5,
+      "kind": "vendor",
+      "variant": "FP8; Qwen3.6-35B-A3B 21.1",
+      "source": "https://huggingface.co/Aleph-Alpha/Kolibri-1"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "German and English focus with a German-aware tokenizer; the vendor's German overall score (70.8) is above Qwen3.6-35B-A3B (67.3) in its own table",
+      "reasoning mode and tool calling",
+      "up to 1M context validated, 262k recommended"
+    ],
+    "weaknesses": [
+      "78B total parameters: 50 GB at Q4_K_M, so it needs 64 GB class RAM or a Mac with 64 GB or more",
+      "vendor table puts Qwen3.8-27B ahead (80.2 EN, 79.9 DE) at a third of the memory",
+      "only two languages"
+    ],
+    "behavior": "explicit reasoning mode and tool calling; benchmark table is the vendor's, with an 'AA-Omniscience index' of -32.8 (more wrong than right answers on that set)",
+    "maturity": "Aleph Alpha is a German lab and signatory of the EU GPAI Code of Practice; 9.7k downloads of the FP8 repo, 55k of an abliterated GGUF"
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "The only EU-built, German-focused open model of this size with Apache-2.0 (text read) and 3.5B active parameters, which makes decode cheap if the 50 GB Q4 file sits in RAM. But the vendor's own table has the dense Qwen3.8-27B ahead in both languages, so it is a German-quality candidate to test, not a default.",
+    "blockers": [
+      "no independent benchmark",
+      "llama.cpp support not verified",
+      "needs 64 GB class memory"
+    ]
+  },
+  "open_questions": [
+    "independent German evaluation against Qwen3.8-27B and Gemma 4",
+    "coding and agentic scores (table rows not extracted from the card)",
+    "llama.cpp architecture support for kolibri1",
+    "behaviour at Q4_K_M versus FP8"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/Aleph-Alpha/Kolibri-1",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README, config.json, LICENSE read"
+    },
+    {
+      "url": "https://huggingface.co/api/models/bartowski/Kolibri-1-GGUF?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "GGUF sizes"
+    },
+    {
+      "url": "https://aleph-alpha.com/en/blog/kolibri-has-landed-a-sovereign-open-weight-model/",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "linked by the card, not opened"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

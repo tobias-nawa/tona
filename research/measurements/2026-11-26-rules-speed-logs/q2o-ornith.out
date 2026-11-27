@@ -1,0 +1,96 @@
+## Plan (written before the run)
+
+- Scope: workload server (30000:200 at --ctx 140000); A `n3-pr` against B `n3-hard`; rounds 2 to 6, alternating AB/BA, stop when the primary metrics (all) are decided (alpha 0.05, margin 0.5 %); one discarded warm-up start of A first.
+- Why this size: second model: decode after a 30K prompt, the decode rate is the one hardening could touch through the host loop (decode tokens per prompt as in the targets, default 200)
+- Duration: 3-8 min (2-6 rounds of 1.3 min, estimate before round 1)
+- Known noise: none for this workload (bench/noise.toml); at least 2 rounds.
+- Expectation (B against A, source: Coder expectation of q2; no noise table for Ornith (--no-noise), at least 2 rounds):
+  - decode: -0.5 to +0.5 %
+  - prefill: -0.5 to +0.5 %
+- Active tooling (TONA_*, HSA_*, HIP_*, OMP_*, ROCR_* of each server):
+  - A: build commit f50cd70c7a; HIP_PATH=<repo>/work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel, ROCR_VISIBLE_DEVICES=0, TONA_EXPERT_PROFILE=<worktree>/toolchain/profiles/ornith-1.5-35b-a3b.bin
+  - B: build commit f50cd70c7a; HIP_PATH=<repo>/work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel, ROCR_VISIBLE_DEVICES=0, TONA_EXPERT_PROFILE=<worktree>/toolchain/profiles/ornith-1.5-35b-a3b.bin
+
+warm-up start of A (discarded)
+round 1 (AB) done in 36 s
+duration 1-4 min (2-6 rounds of 0.6 min, from round 1)
+round 2 (BA) done in 34 s
+round 3 (AB) done in 34 s
+round 4 (BA) done in 34 s
+round 5 (AB) done in 34 s
+round 6 (BA) done in 34 s
+raw data: work/ab/n3-q2o-ornith.json
+noise table with this run added: work/ab/n3-q2o-ornith-noise.toml
+not written; to take it: cp work/ab/n3-q2o-ornith-noise.toml bench/noise.toml
+## Plan (written before the run)
+
+- Scope: workload server (30000:200 at --ctx 140000); A `n3-pr` against B `n3-hard`; rounds 2 to 6, alternating AB/BA, stop when the primary metrics (all) are decided (alpha 0.05, margin 0.5 %); one discarded warm-up start of A first.
+- Why this size: second model: decode after a 30K prompt, the decode rate is the one hardening could touch through the host loop (decode tokens per prompt as in the targets, default 200)
+- Duration: 1-3 min (2-6 rounds of 0.6 min, from round 1)
+- Known noise: none for this workload (bench/noise.toml); at least 2 rounds.
+- Expectation (B against A, source: Coder expectation of q2; no noise table for Ornith (--no-noise), at least 2 rounds):
+  - decode: -0.5 to +0.5 %
+  - prefill: -0.5 to +0.5 %
+- Active tooling (TONA_*, HSA_*, HIP_*, OMP_*, ROCR_* of each server):
+  - A: build commit f50cd70c7a; HIP_PATH=<repo>/work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel, ROCR_VISIBLE_DEVICES=0, TONA_EXPERT_PROFILE=<worktree>/toolchain/profiles/ornith-1.5-35b-a3b.bin
+  - B: build commit f50cd70c7a; HIP_PATH=<repo>/work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel, ROCR_VISIBLE_DEVICES=0, TONA_EXPERT_PROFILE=<worktree>/toolchain/profiles/ornith-1.5-35b-a3b.bin
+
+## Result
+
+A: `n3-pr` env -; B: `n3-hard` env -. Alpha 0.05, margin 0.5 %, rounds 6 of at most 6, stop: 6 rounds (undecided metrics stay open). All rounds are listed; none was dropped.
+
+| Metric | A, per round | B, per round | A median (range) | B median (range) | B vs A, mean [CI] | Decision |
+|---|---|---|---|---|---|---|
+| prefill@30000: Prefill tok/s after 30000 tokens of prompt | 3905.9 / 3906.4 / 3910.5 / 3909.1 / 3907.4 / 3894.5 | 3900.3 / 3905.7 / 3909.6 / 3905.9 / 3909.6 / 3908.1 | 3906.9 (3894.5-3910.5) | 3907.0 (3900.3-3909.6) | +0.02 % [-0.51, +0.55] | **equal** after round 6 |
+| decode@30000: Decode tok/s after 30000 tokens of prompt | 88.6 / 88.6 / 88.4 / 88.8 / 89.1 / 88.8 | 88.6 / 88.5 / 88.5 / 88.8 / 88.6 / 88.8 | 88.7 (88.4-89.1) | 88.6 (88.5-88.8) | -0.08 % [-0.66, +0.49] | open (undecided at the last round) |
+
+| Round | Order | prefill@30000 B vs A | decode@30000 B vs A | Seconds |
+|---|---|---|---|---|
+| 1 | AB | -0.14 % | +0.02 % | 36 |
+| 2 | BA | -0.02 % | -0.06 % | 34 |
+| 3 | AB | -0.02 % | +0.05 % | 34 |
+| 4 | BA | -0.08 % | +0.05 % | 34 |
+| 5 | AB | +0.06 % | -0.62 % | 34 |
+| 6 | BA | +0.35 % | +0.06 % | 34 |
+
+Result against the plan:
+
+| Metric | Measured B vs A | Expected | Verdict |
+|---|---|---|---|
+| prefill@30000 | +0.02 % | -0.5 to +0.5 % | within the expectation |
+| decode@30000 | -0.08 % | -0.5 to +0.5 % | within the expectation |
+
+Expert cache per request (counts from /status, no statistics):
+
+| Request | A hits / misses per round | B hits / misses per round | identical |
+|---|---|---|---|
+| 30000 | 58813, 4147 / 58813, 4147 / 58813, 4147 / 58813, 4147 / 58813, 4147 / 58813, 4147 | 58813, 4147 / 58813, 4147 / 58813, 4147 / 58813, 4147 / 58813, 4147 / 58813, 4147 | yes |
+
+| Request | A tokens per pass (draft steps per pass) | B tokens per pass (draft steps per pass) |
+|---|---|---|
+| 30000 | 2.24 (2.47) / 2.24 (2.47) / 2.24 (2.47) / 2.24 (2.47) / 2.24 (2.47) / 2.24 (2.47) | 2.24 (2.47) / 2.24 (2.47) / 2.24 (2.47) / 2.24 (2.47) / 2.24 (2.47) / 2.24 (2.47) |
+
+Load per server start (percent of one core or of the GPU's time; ours = server and client):
+
+| Start | Arm | CPU ours | CPU system | CPU other | GPU ours | GPU system | GPU other | page-ins MiB | swap-ins MiB | compressed MiB | memory level min | backup | thermal warning | CPU limit min | on battery | power mode | idle before s | to ready s |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | A | 190.5 | 61.5 | 12.9 | 0.0 | 0.0 | 0.5 | 23432.1 | 0.0 | 0.0 | 53 | 0.0 | 0.0 | - | 0.0 | - | - | 8.0 |
+| 2 | A | 194.8 | 67.9 | 14.3 | 0.0 | 0.0 | 0.4 | 20911.2 | 0.0 | 0.0 | 54 | 0.0 | 0.0 | - | 0.0 | - | 1.1 | 8.1 |
+| 3 | B | 224.3 | 67.5 | 11.7 | 0.0 | 0.0 | 0.5 | 19695.3 | 0.0 | 0.0 | 54 | 0.0 | 0.0 | - | 0.0 | - | 1.1 | 6.0 |
+| 4 | B | 223.4 | 66.7 | 12.5 | 0.0 | 0.0 | 0.4 | 19721.7 | 0.0 | 0.0 | 53 | 0.0 | 0.0 | - | 0.0 | - | 1.1 | 6.0 |
+| 5 | A | 223.9 | 67.7 | 13.1 | 0.0 | 0.0 | 0.5 | 19717.7 | 0.0 | 0.0 | 53 | 0.0 | 0.0 | - | 0.0 | - | 1.1 | 6.0 |
+| 6 | A | 226.1 | 69.1 | 12.6 | 0.0 | 0.0 | 0.5 | 19703.1 | 0.0 | 0.0 | 53 | 0.0 | 0.0 | - | 0.0 | - | 1.1 | 6.0 |
+| 7 | B | 225.7 | 67.2 | 15.1 | 0.0 | 0.0 | 0.5 | 19636.3 | 0.1 | 0.0 | 53 | 0.0 | 0.0 | - | 0.0 | - | 1.1 | 6.0 |
+| 8 | B | 226.4 | 69.3 | 17.9 | 0.0 | 0.0 | 0.4 | 19785.7 | 0.0 | 0.0 | 53 | 0.0 | 0.0 | - | 0.0 | - | 1.1 | 6.0 |
+| 9 | A | 226.7 | 68.1 | 16.2 | 0.0 | 0.0 | 0.6 | 19744.5 | 0.0 | 0.0 | 53 | 0.0 | 0.0 | - | 0.0 | - | 1.1 | 6.0 |
+| 10 | A | 226.1 | 67.9 | 14.3 | 0.0 | 0.0 | 0.5 | 19715.2 | 0.0 | 0.0 | 53 | 0.0 | 0.0 | - | 0.0 | - | 1.1 | 6.0 |
+| 11 | B | 224.6 | 68.0 | 14.1 | 0.0 | 0.0 | 0.5 | 19710.5 | 0.0 | 0.0 | 53 | 0.0 | 0.0 | - | 0.0 | - | 1.1 | 6.0 |
+| 12 | B | 224.8 | 67.9 | 12.8 | 0.0 | 0.0 | 0.5 | 19712.7 | 0.0 | 0.0 | 53 | 0.0 | 0.0 | - | 0.0 | - | 1.1 | 6.0 |
+| 13 | A | 229.0 | 73.8 | 17.1 | 0.0 | 0.0 | 0.5 | 19761.6 | 0.0 | 0.0 | 53 | 0.0 | 0.0 | - | 0.0 | - | 1.1 | 6.0 |
+
+| Request | SHA A | SHA B | A stable | B stable | A = B | Reference of main |
+|---|---|---|---|---|---|---|
+| 30000 | cbdc90ddd4016082 | cbdc90ddd4016082 | yes | yes | yes | - |
+
+Runtime: 3.7 min for 6 rounds (0.6 min per round); a fixed 3 rounds would take 1.7 min (-1.7 min saved).
+

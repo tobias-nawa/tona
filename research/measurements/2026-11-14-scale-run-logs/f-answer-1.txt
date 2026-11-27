@@ -1,0 +1,5 @@
+Based on the provided code, here is a summary of the inference engine's benchmarking and backend infrastructure:
+
+### **Benchmarking Harness (`ibench`)**
+*   **Measurement Engine:** A Python-based harness (`ibench`) that measures inference performance against OpenAI- or Anthropic-compatible APIs.
+*   **Metrics:** Tracks Time-to-First-Token (TTFT), prefill/decode throughput (tokens/sec), inter-token latency (ITL), and system resource usage (VRAM

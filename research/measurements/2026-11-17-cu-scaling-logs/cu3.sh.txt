@@ -1,0 +1,35 @@
+#!/bin/bash
+# C2 CU scaling: one exclusive job, started through scripts/gpu_queue.py. Usage: cu.sh
+set -u
+cd <worktree> || exit 1
+source toolchain/env.sh
+O=/var/tmp/claude/164/cu3
+B=work/build/b164
+M=work/models/coder-iq1_m/Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf
+P="$(cat scripts/bench-long-code.txt)"
+tc() { { echo "## $1 $(date +%T)"; python3 tools/quiet_check.py; } >> "$O/tc.log" 2>&1; }
+python3 tools/hw_report.py > "$O/hw_report.txt" 2>&1
+tc "quiet before"
+i=0
+for arm in 32 16 16 32; do
+    i=$((i + 1))
+    for w in $(seq 1 30); do # wait until the desktop alone holds the VRAM (a stopping server of an earlier job may still hold it)
+        v=$(cat /sys/class/drm/card*/device/mem_info_vram_used | sort -n | tail -1)
+        [ "$v" -lt 2500000000 ] && break
+        sleep 10
+    done
+    echo "vram used before run $i: $v" >> "$O/tc.log"
+    if [ "$v" -ge 2500000000 ]; then echo "run $i skipped: VRAM held by another program" >> "$O/tc.log"; continue; fi
+    extra=()
+    [ $arm = 16 ] && extra=(TONA_FREE_CUS=16)
+    log=$O/batch-$arm-$i.log
+    echo "## run $arm CUs $(date +%T) env=${extra[*]:-}" > "$log"
+    systemd-run --user --scope -q -p MemoryMax=54G -p MemorySwapMax=0 \
+        env OMP_NUM_THREADS=6 ROCR_VISIBLE_DEVICES=0 TONA_EXPERT_PROFILE="$PWD/work/profile/experts-coder.bin" \
+        TONA_BENCH_WIDTHS=1,4,8 TONA_BENCH_REPEAT=3 TONA_MEGA_PROF=1 TONA_PROF_LAYERS=1 TONA_PLAN=cpu TONA_EXPERT_SLOTS=87 "${extra[@]}" \
+        $B/tona-gpu-gen $M "$P" --mega --batch-bench 400 >> "$log" 2>&1
+    echo "rc=$? $(date +%T)" >> "$log"
+    tc "quiet after run $i ($arm CUs)"
+    sleep 20
+done
+echo DONE >> "$O/tc.log"

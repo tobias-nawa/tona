@@ -1,0 +1,310 @@
+== bias2: driver
+     3.0 s  server up
+    18.2 s  before 10.6 tok/s answer 8a8a04d1d96f86a5
+    31.0 s  before 10.0 tok/s answer 8a8a04d1d96f86a5
+    43.7 s  before 10.1 tok/s answer 8a8a04d1d96f86a5
+    43.7 s  balloon started
+    56.0 s  during 10.4 tok/s answer 8a8a04d1d96f86a5
+    68.4 s  during 10.3 tok/s answer 8a8a04d1d96f86a5
+    80.9 s  during 10.3 tok/s answer 8a8a04d1d96f86a5
+    93.3 s  during 10.3 tok/s answer 8a8a04d1d96f86a5
+   105.6 s  during 10.4 tok/s answer 8a8a04d1d96f86a5
+   118.0 s  during 10.4 tok/s answer 8a8a04d1d96f86a5
+   130.5 s  during 10.2 tok/s answer 8a8a04d1d96f86a5
+   142.9 s  during 10.4 tok/s answer 8a8a04d1d96f86a5
+   155.3 s  during 10.3 tok/s answer 8a8a04d1d96f86a5
+   168.0 s  during 10.1 tok/s answer 8a8a04d1d96f86a5
+   180.5 s  during 10.2 tok/s answer 8a8a04d1d96f86a5
+   193.2 s  during 10.1 tok/s answer 8a8a04d1d96f86a5
+   205.9 s  during 10.1 tok/s answer 8a8a04d1d96f86a5
+   205.9 s  balloon ended (exit 0)
+   218.4 s  after 10.2 tok/s answer 8a8a04d1d96f86a5
+   231.2 s  after 10.0 tok/s answer 8a8a04d1d96f86a5
+   243.8 s  after 10.1 tok/s answer 8a8a04d1d96f86a5
+   256.7 s  after 10.0 tok/s answer 8a8a04d1d96f86a5
+   269.5 s  after 10.0 tok/s answer 8a8a04d1d96f86a5
+   282.2 s  after 10.0 tok/s answer 8a8a04d1d96f86a5
+   295.0 s  after 10.0 tok/s answer 8a8a04d1d96f86a5
+   307.6 s  after 10.2 tok/s answer 8a8a04d1d96f86a5
+   320.1 s  after 10.2 tok/s answer 8a8a04d1d96f86a5
+   332.5 s  after 10.3 tok/s answer 8a8a04d1d96f86a5
+   345.1 s  after 10.2 tok/s answer 8a8a04d1d96f86a5
+   357.6 s  after 10.2 tok/s answer 8a8a04d1d96f86a5
+   370.2 s  after 10.2 tok/s answer 8a8a04d1d96f86a5
+   383.1 s  after 10.0 tok/s answer 8a8a04d1d96f86a5
+   395.8 s  after 10.0 tok/s answer 8a8a04d1d96f86a5
+   408.1 s  after 10.4 tok/s answer 8a8a04d1d96f86a5
+   420.4 s  after 10.4 tok/s answer 8a8a04d1d96f86a5
+   433.1 s  after 10.1 tok/s answer 8a8a04d1d96f86a5
+   445.5 s  after 10.3 tok/s answer 8a8a04d1d96f86a5
+   458.0 s  after 10.3 tok/s answer 8a8a04d1d96f86a5
+   470.3 s  after 10.4 tok/s answer 8a8a04d1d96f86a5
+   482.7 s  after 10.3 tok/s answer 8a8a04d1d96f86a5
+   495.0 s  after 10.4 tok/s answer 8a8a04d1d96f86a5
+   507.7 s  after 10.1 tok/s answer 8a8a04d1d96f86a5
+   507.7 s  SUMMARY reference 8a8a04d1d96f86a5; 37 requests, 0 failed, 0 answers differ
+== bias2: server, arena lines
+Metal arena: budget 13.13 GB (RAM 34.4 GB, held by all processes 10.3, our weights mapped 5.9, kept 5.0; working set 26.8, our buffers 9.8)
+Metal arena: 4289 of 12288 experts (77.7 % of the profile's uses) in 9.15 GB, cache 32 per layer (3.27 GB), staging 705 MB, blocks of 32 MB
+Metal arena: resident experts read in 1.4 s
+Metal arena: governor on, reserve 5.00 GB, free RAM calibrated by +0.00 GB
+Metal arena: freed 1061 MB (free 1.11 GB, short), holds 12.07 GB
+Metal arena: freed 292 MB (free 1.66 GB, tight), holds 11.77 GB
+Metal arena: freed 262 MB (free 1.66 GB, tight), holds 11.51 GB
+Metal arena: freed 290 MB (free 2.21 GB, tight), holds 11.22 GB
+Metal arena: freed 262 MB (free 2.49 GB, tight), holds 10.96 GB
+Metal arena: freed 261 MB (free 2.75 GB, tight), holds 10.70 GB
+Metal arena: freed 292 MB (free 3.01 GB, tight), holds 10.41 GB
+Metal arena: freed 261 MB (free 3.30 GB, tight), holds 10.15 GB
+Metal arena: freed 195 MB (free 3.56 GB, tight), holds 9.95 GB
+Metal arena: freed 192 MB (free 3.57 GB, tight), holds 9.76 GB
+== bias3: driver
+     3.0 s  server up
+    16.3 s  before 10.7 tok/s answer 8a8a04d1d96f86a5
+    29.0 s  before 10.2 tok/s answer 8a8a04d1d96f86a5
+    41.5 s  before 10.2 tok/s answer 8a8a04d1d96f86a5
+    41.5 s  balloon started
+    53.7 s  during 10.5 tok/s answer 8a8a04d1d96f86a5
+    66.1 s  during 10.3 tok/s answer 8a8a04d1d96f86a5
+    78.4 s  during 10.4 tok/s answer 8a8a04d1d96f86a5
+    90.9 s  during 10.3 tok/s answer 8a8a04d1d96f86a5
+   103.5 s  during 10.1 tok/s answer 8a8a04d1d96f86a5
+   116.1 s  during 10.2 tok/s answer 8a8a04d1d96f86a5
+   128.3 s  during 10.5 tok/s answer 8a8a04d1d96f86a5
+   140.4 s  during 10.5 tok/s answer 8a8a04d1d96f86a5
+   152.6 s  during 10.5 tok/s answer 8a8a04d1d96f86a5
+   164.8 s  during 10.5 tok/s answer 8a8a04d1d96f86a5
+   176.9 s  during 10.5 tok/s answer 8a8a04d1d96f86a5
+   188.9 s  during 10.7 tok/s answer 8a8a04d1d96f86a5
+   201.1 s  during 10.5 tok/s answer 8a8a04d1d96f86a5
+   201.1 s  balloon ended (exit 0)
+   213.2 s  after 10.5 tok/s answer 8a8a04d1d96f86a5
+   225.7 s  after 10.3 tok/s answer 8a8a04d1d96f86a5
+   238.1 s  after 10.3 tok/s answer 8a8a04d1d96f86a5
+   250.9 s  after 10.0 tok/s answer 8a8a04d1d96f86a5
+   263.6 s  after 10.1 tok/s answer 8a8a04d1d96f86a5
+   276.6 s  after 9.9 tok/s answer 8a8a04d1d96f86a5
+   289.3 s  after 10.0 tok/s answer 8a8a04d1d96f86a5
+   301.6 s  after 10.4 tok/s answer 8a8a04d1d96f86a5
+   313.9 s  after 10.4 tok/s answer 8a8a04d1d96f86a5
+   326.1 s  after 10.5 tok/s answer 8a8a04d1d96f86a5
+   338.4 s  after 10.5 tok/s answer 8a8a04d1d96f86a5
+   350.6 s  after 10.4 tok/s answer 8a8a04d1d96f86a5
+   362.8 s  after 10.5 tok/s answer 8a8a04d1d96f86a5
+   375.1 s  after 10.4 tok/s answer 8a8a04d1d96f86a5
+   387.4 s  after 10.5 tok/s answer 8a8a04d1d96f86a5
+   399.6 s  after 10.5 tok/s answer 8a8a04d1d96f86a5
+   411.7 s  after 10.6 tok/s answer 8a8a04d1d96f86a5
+   423.8 s  after 10.6 tok/s answer 8a8a04d1d96f86a5
+   436.0 s  after 10.4 tok/s answer 8a8a04d1d96f86a5
+   448.2 s  after 10.5 tok/s answer 8a8a04d1d96f86a5
+   460.4 s  after 10.6 tok/s answer 8a8a04d1d96f86a5
+   472.6 s  after 10.4 tok/s answer 8a8a04d1d96f86a5
+   485.0 s  after 10.3 tok/s answer 8a8a04d1d96f86a5
+   497.3 s  after 10.4 tok/s answer 8a8a04d1d96f86a5
+   509.4 s  after 10.6 tok/s answer 8a8a04d1d96f86a5
+   509.4 s  SUMMARY reference 8a8a04d1d96f86a5; 38 requests, 0 failed, 0 answers differ
+== bias3: server, arena lines
+Metal arena: budget 12.15 GB (RAM 34.4 GB, held by all processes 11.3, our weights mapped 5.9, kept 5.0; working set 26.8, our buffers 9.8)
+Metal arena: 3834 of 12288 experts (74.0 % of the profile's uses) in 8.17 GB, cache 32 per layer (3.27 GB), staging 705 MB, blocks of 32 MB
+Metal arena: resident experts read in 1.2 s
+Metal arena: governor on, reserve 5.00 GB, free RAM calibrated by +0.00 GB
+Metal arena: calm (free 6.92 GB), holds 12.15 GB
+Metal arena: band (free 3.94 GB), holds 12.15 GB
+Metal arena: short (free 0.68 GB), holds 12.15 GB
+Metal arena: freed 1061 MB (free 0.68 GB, short), holds 11.09 GB
+Metal arena: freed 1040 MB (free 0.68 GB, short), holds 10.05 GB
+Metal arena: tight (free 2.78 GB), holds 10.05 GB
+Metal arena: freed 261 MB (free 2.78 GB, tight), holds 9.79 GB
+Metal arena: freed 291 MB (free 3.03 GB, tight), holds 9.50 GB
+Metal arena: freed 262 MB (free 3.32 GB, tight), holds 9.23 GB
+Metal arena: freed 195 MB (free 3.59 GB, tight), holds 9.04 GB
+Metal arena: band (free 3.78 GB), holds 9.04 GB
+Metal arena: calm (free 6.79 GB), holds 9.04 GB
+Metal arena: band (free 4.98 GB), holds 9.04 GB
+== bias4: driver
+     2.0 s  server up
+    11.9 s  before 15.0 tok/s answer 8a8a04d1d96f86a5
+    26.0 s  before 9.1 tok/s answer 8a8a04d1d96f86a5
+    45.4 s  before 6.6 tok/s answer 8a8a04d1d96f86a5
+    45.4 s  balloon started
+    64.5 s  during 6.7 tok/s answer 8a8a04d1d96f86a5
+    81.6 s  during 7.5 tok/s answer 8a8a04d1d96f86a5
+    97.5 s  during 8.1 tok/s answer 8a8a04d1d96f86a5
+   111.1 s  during 9.4 tok/s answer 8a8a04d1d96f86a5
+   124.3 s  during 9.7 tok/s answer 8a8a04d1d96f86a5
+   137.0 s  during 10.1 tok/s answer 8a8a04d1d96f86a5
+   148.0 s  during 11.6 tok/s answer 8a8a04d1d96f86a5
+   157.1 s  during 14.1 tok/s answer 8a8a04d1d96f86a5
+   165.3 s  during 15.6 tok/s answer 8a8a04d1d96f86a5
+   173.4 s  during 15.7 tok/s answer 8a8a04d1d96f86a5
+   181.8 s  during 15.3 tok/s answer 8a8a04d1d96f86a5
+   190.4 s  during 15.0 tok/s answer 8a8a04d1d96f86a5
+   198.9 s  during 14.9 tok/s answer 8a8a04d1d96f86a5
+   198.9 s  balloon ended (exit 0)
+   207.6 s  after 14.8 tok/s answer 8a8a04d1d96f86a5
+   216.4 s  after 14.4 tok/s answer 8a8a04d1d96f86a5
+   225.1 s  after 14.8 tok/s answer 8a8a04d1d96f86a5
+   233.7 s  after 15.0 tok/s answer 8a8a04d1d96f86a5
+   242.3 s  after 14.8 tok/s answer 8a8a04d1d96f86a5
+   251.2 s  after 14.5 tok/s answer 8a8a04d1d96f86a5
+   259.6 s  after 15.1 tok/s answer 8a8a04d1d96f86a5
+   268.1 s  after 15.2 tok/s answer 8a8a04d1d96f86a5
+   276.7 s  after 14.9 tok/s answer 8a8a04d1d96f86a5
+   285.1 s  after 15.3 tok/s answer 8a8a04d1d96f86a5
+   293.2 s  after 15.7 tok/s answer 8a8a04d1d96f86a5
+   301.4 s  after 15.7 tok/s answer 8a8a04d1d96f86a5
+   309.6 s  after 15.7 tok/s answer 8a8a04d1d96f86a5
+   317.8 s  after 15.6 tok/s answer 8a8a04d1d96f86a5
+   325.9 s  after 15.7 tok/s answer 8a8a04d1d96f86a5
+   334.0 s  after 15.7 tok/s answer 8a8a04d1d96f86a5
+   342.2 s  after 15.6 tok/s answer 8a8a04d1d96f86a5
+   350.4 s  after 15.8 tok/s answer 8a8a04d1d96f86a5
+   358.5 s  after 15.8 tok/s answer 8a8a04d1d96f86a5
+   366.6 s  after 15.7 tok/s answer 8a8a04d1d96f86a5
+   374.7 s  after 15.8 tok/s answer 8a8a04d1d96f86a5
+   382.9 s  after 15.6 tok/s answer 8a8a04d1d96f86a5
+   391.1 s  after 15.7 tok/s answer 8a8a04d1d96f86a5
+   399.2 s  after 15.7 tok/s answer 8a8a04d1d96f86a5
+   407.3 s  after 15.9 tok/s answer 8a8a04d1d96f86a5
+   415.5 s  after 15.6 tok/s answer 8a8a04d1d96f86a5
+   423.7 s  after 15.7 tok/s answer 8a8a04d1d96f86a5
+   431.9 s  after 15.7 tok/s answer 8a8a04d1d96f86a5
+   439.9 s  after 15.8 tok/s answer 8a8a04d1d96f86a5
+   448.1 s  after 15.7 tok/s answer 8a8a04d1d96f86a5
+   456.2 s  after 15.8 tok/s answer 8a8a04d1d96f86a5
+   464.4 s  after 15.5 tok/s answer 8a8a04d1d96f86a5
+   473.0 s  after 14.9 tok/s answer 8a8a04d1d96f86a5
+   481.5 s  after 15.2 tok/s answer 8a8a04d1d96f86a5
+   489.7 s  after 15.6 tok/s answer 8a8a04d1d96f86a5
+   497.8 s  after 15.7 tok/s answer 8a8a04d1d96f86a5
+   506.0 s  after 15.6 tok/s answer 8a8a04d1d96f86a5
+   506.0 s  SUMMARY reference 8a8a04d1d96f86a5; 50 requests, 0 failed, 0 answers differ
+== bias4: server, arena lines
+Metal arena: budget 9.85 GB (RAM 34.4 GB, held by all processes 13.6, our weights mapped 5.9, kept 5.0; working set 26.8, our buffers 9.8)
+Metal arena: 2756 of 12288 experts (63.3 % of the profile's uses) in 5.87 GB, cache 32 per layer (3.27 GB), staging 705 MB, blocks of 32 MB
+Metal arena: resident experts read in 0.9 s
+Metal arena: governor on, reserve 5.00 GB, free RAM calibrated by +1.08 GB
+Metal arena: tight (free 2.00 GB), holds 9.85 GB
+Metal arena: freed 280 MB (free 2.00 GB, tight), holds 9.57 GB
+Metal arena: freed 292 MB (free 2.00 GB, tight), holds 9.28 GB
+Metal arena: freed 261 MB (free 2.00 GB, tight), holds 9.02 GB
+Metal arena: freed 261 MB (free 2.00 GB, tight), holds 8.76 GB
+Metal arena: freed 292 MB (free 2.00 GB, tight), holds 8.46 GB
+Metal arena: freed 261 MB (free 2.00 GB, tight), holds 8.20 GB
+Metal arena: freed 291 MB (free 2.00 GB, tight), holds 7.91 GB
+Metal arena: freed 262 MB (free 2.00 GB, tight), holds 7.65 GB
+Metal arena: freed 260 MB (free 2.00 GB, tight), holds 7.39 GB
+Metal arena: freed 292 MB (free 2.00 GB, tight), holds 7.10 GB
+Metal arena: freed 262 MB (free 2.00 GB, tight), holds 6.84 GB
+Metal arena: freed 267 MB (free 2.00 GB, tight), holds 6.57 GB
+Metal arena: freed 291 MB (free 2.00 GB, tight), holds 6.28 GB
+Metal arena: freed 291 MB (free 2.00 GB, tight), holds 5.99 GB
+Metal arena: freed 291 MB (free 2.00 GB, tight), holds 5.70 GB
+Metal arena: freed 290 MB (free 2.00 GB, tight), holds 5.41 GB
+Metal arena: freed 292 MB (free 2.00 GB, tight), holds 5.11 GB
+Metal arena: freed 261 MB (free 2.00 GB, tight), holds 4.85 GB
+Metal arena: freed 293 MB (free 2.00 GB, tight), holds 4.56 GB
+Metal arena: freed 290 MB (free 2.00 GB, tight), holds 4.27 GB
+Metal arena: freed 289 MB (free 2.00 GB, tight), holds 3.98 GB
+Metal arena: freed 290 MB (free 2.00 GB, tight), holds 3.69 GB
+Metal arena: freed 263 MB (free 2.00 GB, tight), holds 3.43 GB
+Metal arena: freed 261 MB (free 2.00 GB, tight), holds 3.17 GB
+Metal arena: freed 290 MB (free 2.00 GB, tight), holds 2.88 GB
+Metal arena: freed 262 MB (free 2.28 GB, tight), holds 2.62 GB
+Metal arena: freed 261 MB (free 3.38 GB, tight), holds 2.36 GB
+Metal arena: band (free 3.93 GB), holds 2.36 GB
+Metal arena: calm (free 5.57 GB), holds 2.36 GB
+Metal arena: read 523 MB (free 9.60 GB, calm), holds 2.88 GB
+Metal arena: read 518 MB (free 9.08 GB, calm), holds 3.40 GB
+Metal arena: read 521 MB (free 8.56 GB, calm), holds 3.92 GB
+Metal arena: read 515 MB (free 8.03 GB, calm), holds 4.43 GB
+Metal arena: read 520 MB (free 7.52 GB, calm), holds 4.95 GB
+Metal arena: read 517 MB (free 7.00 GB, calm), holds 5.47 GB
+Metal arena: read 518 MB (free 6.48 GB, calm), holds 5.99 GB
+Metal arena: read 517 MB (free 5.97 GB, calm), holds 6.50 GB
+Metal arena: band (free 5.44 GB), holds 6.50 GB
+Metal arena: read 528 MB (free 5.44 GB, band), holds 7.03 GB
+Metal arena: calm (free 7.91 GB), holds 7.03 GB
+Metal arena: read 520 MB (free 7.91 GB, calm), holds 7.55 GB
+Metal arena: read 520 MB (free 7.39 GB, calm), holds 8.07 GB
+Metal arena: read 522 MB (free 6.87 GB, calm), holds 8.59 GB
+Metal arena: read 520 MB (free 6.35 GB, calm), holds 9.11 GB
+Metal arena: read 521 MB (free 5.83 GB, calm), holds 9.64 GB
+Metal arena: band (free 5.31 GB), holds 9.64 GB
+Metal arena: read 214 MB (free 5.31 GB, band), holds 9.85 GB
+== bias5: driver
+     2.0 s  server up
+    12.3 s  before 14.4 tok/s answer 8a8a04d1d96f86a5
+    24.0 s  before 10.9 tok/s answer 8a8a04d1d96f86a5
+    36.1 s  before 10.5 tok/s answer 8a8a04d1d96f86a5
+    36.1 s  balloon started
+    47.8 s  during 11.0 tok/s answer 8a8a04d1d96f86a5
+    59.6 s  during 10.8 tok/s answer 8a8a04d1d96f86a5
+    72.0 s  during 10.4 tok/s answer 8a8a04d1d96f86a5
+    84.3 s  during 10.4 tok/s answer 8a8a04d1d96f86a5
+    96.5 s  during 10.5 tok/s answer 8a8a04d1d96f86a5
+   108.5 s  during 10.7 tok/s answer 8a8a04d1d96f86a5
+   120.2 s  during 11.0 tok/s answer 8a8a04d1d96f86a5
+   131.9 s  during 10.9 tok/s answer 8a8a04d1d96f86a5
+   143.6 s  during 11.0 tok/s answer 8a8a04d1d96f86a5
+   155.5 s  during 10.7 tok/s answer 8a8a04d1d96f86a5
+   167.7 s  during 10.5 tok/s answer 8a8a04d1d96f86a5
+   178.1 s  during 12.4 tok/s answer 8a8a04d1d96f86a5
+   187.6 s  during 13.5 tok/s answer 8a8a04d1d96f86a5
+   187.6 s  balloon ended (exit 0)
+   197.1 s  after 13.5 tok/s answer 8a8a04d1d96f86a5
+   206.7 s  after 13.2 tok/s answer 8a8a04d1d96f86a5
+   216.4 s  after 13.2 tok/s answer 8a8a04d1d96f86a5
+   226.1 s  after 13.3 tok/s answer 8a8a04d1d96f86a5
+   235.4 s  after 13.7 tok/s answer 8a8a04d1d96f86a5
+   244.6 s  after 14.0 tok/s answer 8a8a04d1d96f86a5
+   253.7 s  after 14.1 tok/s answer 8a8a04d1d96f86a5
+   262.6 s  after 14.4 tok/s answer 8a8a04d1d96f86a5
+   271.8 s  after 13.8 tok/s answer 8a8a04d1d96f86a5
+   281.0 s  after 14.0 tok/s answer 8a8a04d1d96f86a5
+   289.9 s  after 14.4 tok/s answer 8a8a04d1d96f86a5
+   298.8 s  after 14.4 tok/s answer 8a8a04d1d96f86a5
+   307.6 s  after 14.6 tok/s answer 8a8a04d1d96f86a5
+   316.4 s  after 14.5 tok/s answer 8a8a04d1d96f86a5
+   325.5 s  after 14.0 tok/s answer 8a8a04d1d96f86a5
+   334.8 s  after 13.7 tok/s answer 8a8a04d1d96f86a5
+   344.3 s  after 13.5 tok/s answer 8a8a04d1d96f86a5
+   353.7 s  after 13.6 tok/s answer 8a8a04d1d96f86a5
+   362.7 s  after 14.2 tok/s answer 8a8a04d1d96f86a5
+   372.2 s  after 13.4 tok/s answer 8a8a04d1d96f86a5
+   381.4 s  after 14.0 tok/s answer 8a8a04d1d96f86a5
+   390.3 s  after 14.4 tok/s answer 8a8a04d1d96f86a5
+   399.1 s  after 14.5 tok/s answer 8a8a04d1d96f86a5
+   408.1 s  after 14.2 tok/s answer 8a8a04d1d96f86a5
+   417.0 s  after 14.4 tok/s answer 8a8a04d1d96f86a5
+   425.9 s  after 14.4 tok/s answer 8a8a04d1d96f86a5
+   434.8 s  after 14.5 tok/s answer 8a8a04d1d96f86a5
+   443.6 s  after 14.4 tok/s answer 8a8a04d1d96f86a5
+   452.5 s  after 14.4 tok/s answer 8a8a04d1d96f86a5
+   461.4 s  after 14.4 tok/s answer 8a8a04d1d96f86a5
+   470.3 s  after 14.4 tok/s answer 8a8a04d1d96f86a5
+   479.3 s  after 14.4 tok/s answer 8a8a04d1d96f86a5
+   488.2 s  after 14.4 tok/s answer 8a8a04d1d96f86a5
+   488.2 s  SUMMARY reference 8a8a04d1d96f86a5; 46 requests, 0 failed, 0 answers differ
+== bias5: server, arena lines
+Metal arena: budget 8.92 GB (RAM 34.4 GB, held by all processes 14.5, our weights mapped 5.9, kept 5.0; working set 26.8, our buffers 9.8)
+Metal arena: 2319 of 12288 experts (57.8 % of the profile's uses) in 4.95 GB, cache 32 per layer (3.27 GB), staging 705 MB, blocks of 32 MB
+Metal arena: resident experts read in 0.7 s
+Metal arena: governor on, reserve 5.00 GB, free RAM calibrated by +1.05 GB
+Metal arena: tight (free 2.00 GB), holds 8.92 GB
+Metal arena: freed 280 MB (free 2.00 GB, tight), holds 8.64 GB
+Metal arena: freed 292 MB (free 2.36 GB, tight), holds 8.35 GB
+Metal arena: freed 261 MB (free 2.36 GB, tight), holds 8.09 GB
+Metal arena: freed 261 MB (free 2.66 GB, tight), holds 7.83 GB
+Metal arena: freed 292 MB (free 2.92 GB, tight), holds 7.54 GB
+Metal arena: freed 261 MB (free 2.92 GB, tight), holds 7.28 GB
+Metal arena: freed 291 MB (free 3.47 GB, tight), holds 6.99 GB
+Metal arena: freed 33 MB (free 3.73 GB, tight), holds 6.95 GB
+Metal arena: band (free 4.02 GB), holds 6.95 GB
+Metal arena: calm (free 7.25 GB), holds 6.95 GB
+Metal arena: read 520 MB (free 7.24 GB, calm), holds 7.47 GB
+Metal arena: read 521 MB (free 6.72 GB, calm), holds 7.99 GB
+Metal arena: read 521 MB (free 6.20 GB, calm), holds 8.51 GB
+Metal arena: read 409 MB (free 5.68 GB, calm), holds 8.92 GB
+Metal arena: band (free 5.27 GB), holds 8.92 GB

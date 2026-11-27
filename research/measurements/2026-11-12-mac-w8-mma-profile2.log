@@ -1,0 +1,48 @@
+=== W4
+  attend            161.7 ms    2.7 %  612 buffers
+  attn_proj         357.1 ms    6.0 %  1836 buffers
+  dn_proj           992.8 ms   16.7 %  3672 buffers
+  dn_scan           177.5 ms    3.0 %  1836 buffers
+  embed               0.8 ms    0.0 %  51 buffers
+  experts          1622.1 ms   27.2 %  2448 buffers
+  experts_down      724.8 ms   12.2 %  2448 buffers
+  gated_read        923.9 ms   15.5 %  7344 buffers
+  head              229.1 ms    3.8 %  48 buffers
+  indexer           286.6 ms    4.8 %  1224 buffers
+  ple                24.8 ms    0.4 %  51 buffers
+  router            130.5 ms    2.2 %  2448 buffers
+  shared_exp        329.5 ms    5.5 %  2448 buffers
+  total            5961.0 ms
+pass: median 99.24 ms, range 98.87 ... 99.24 (2 rounds)
+=== W5
+  attend            146.0 ms    2.6 %  468 buffers
+  attn_proj         327.0 ms    5.8 %  1404 buffers
+  dn_proj           847.1 ms   15.0 %  2808 buffers
+  dn_scan           158.2 ms    2.8 %  1404 buffers
+  embed               0.5 ms    0.0 %  39 buffers
+  experts          1568.0 ms   27.7 %  1872 buffers
+  experts_down      698.9 ms   12.4 %  1872 buffers
+  gated_read        890.4 ms   15.7 %  5616 buffers
+  head              267.3 ms    4.7 %  36 buffers
+  indexer           270.7 ms    4.8 %  936 buffers
+  ple                22.0 ms    0.4 %  39 buffers
+  router            121.6 ms    2.2 %  1872 buffers
+  shared_exp        336.8 ms    6.0 %  1872 buffers
+  total            5654.6 ms
+pass: median 118.24 ms, range 117.38 ... 118.24 (2 rounds)
+=== W8
+  attend            152.6 ms    2.9 %  324 buffers
+  attn_proj         295.1 ms    5.6 %  972 buffers
+  dn_proj           713.7 ms   13.6 %  1944 buffers
+  dn_scan           145.9 ms    2.8 %  972 buffers
+  embed               0.4 ms    0.0 %  27 buffers
+  experts          1531.4 ms   29.2 %  1296 buffers
+  experts_down      689.1 ms   13.1 %  1296 buffers
+  gated_read        798.8 ms   15.2 %  3888 buffers
+  head              228.3 ms    4.3 %  24 buffers
+  indexer           277.6 ms    5.3 %  648 buffers
+  ple                20.3 ms    0.4 %  27 buffers
+  router            102.1 ms    1.9 %  1296 buffers
+  shared_exp        294.0 ms    5.6 %  1296 buffers
+  total            5249.3 ms
+pass: median 152.31 ms, range 152.11 ... 152.31 (2 rounds)

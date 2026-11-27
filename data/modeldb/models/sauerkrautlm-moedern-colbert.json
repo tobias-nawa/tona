@@ -1,0 +1,190 @@
+{
+  "id": "sauerkrautlm-moedern-colbert",
+  "name": "SauerkrautLM-MoEdernColBERT (1.5M / 27M / 115M)",
+  "vendor": "VAGO solutions",
+  "release_date": "2026-10-17",
+  "lineage": {
+    "how_derived": "new MoEdernBERT encoder (ModernBERT-style with hash embeddings and mixture of experts), trained with Stella-style embedding distillation, then knowledge-distillation pre-training and multilingual fine-tuning (card)",
+    "family": "SauerkrautLM"
+  },
+  "purpose": "Multilingual multi-vector (ColBERT) retriever built for German and six other European languages, with documents up to 32k tokens, small and fast enough for phones and edge devices (card).",
+  "tasks": [
+    "embeddings",
+    "reranking"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "embedding"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "de",
+      "en",
+      "es",
+      "nl",
+      "fr",
+      "it",
+      "pt"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "LICENSE file in the 1.5M repo is the Apache License 2.0 (header opened); card tag apache-2.0. Not read in full."
+  },
+  "architecture": {
+    "kind": "ColBERT late-interaction encoder, MoEdernBERT: 2 layers, hidden 128, hash embeddings, 2 of 8 GeGLU experts plus a shared expert per layer; 128-dim token vectors, MaxSim scoring (1.5M variant)",
+    "params_total_b": 0.0015,
+    "context_native": 512,
+    "context_max": 32768,
+    "why_this_design": "Card: hash embedding cuts the embedding table from 3.8M to 0.48M parameters; a +-256-token sliding window above 513 tokens keeps long documents inside the trained range."
+  },
+  "variants": [
+    {
+      "repo": "VAGOsolutions/SauerkrautLM-MoEdernColBERT-1.5M",
+      "format": "safetensors (4-bit CoreML 0.87 MB per card)",
+      "official": true,
+      "size_gb": 0.01,
+      "notes": "1.47M parameters, 0.88M active per token"
+    },
+    {
+      "repo": "VAGOsolutions/SauerkrautLM-MoEdernColBERT-27M",
+      "format": "safetensors (4-bit CoreML 13.8 MB)",
+      "official": true,
+      "notes": "27.0M / 12.3M active"
+    },
+    {
+      "repo": "VAGOsolutions/SauerkrautLM-MoEdernColBERT-115M",
+      "format": "safetensors (4-bit CoreML 57.9 MB)",
+      "official": true,
+      "notes": "114.6M / 67.4M active"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "variant": "1.5M-115M parameters",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "1.5M-115M parameters",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "1.5M-115M parameters",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "1.5M-115M parameters",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "variant": "1.5M-115M parameters",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "1.5M-115M parameters",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "1.5M-115M parameters",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "sentence-transformers >= 6.1 MultiVectorEncoder with trust_remote_code",
+      "Triton MoE kernel on NVIDIA, PyTorch fallback"
+    ],
+    "notes": "Custom modeling code (ModernBertHashMoEHybridModel)."
+  },
+  "benchmarks": [
+    {
+      "name": "GermanQuAD retrieval",
+      "score": 0.976,
+      "kind": "vendor",
+      "source": "https://huggingface.co/VAGOsolutions/SauerkrautLM-MoEdernColBERT-1.5M",
+      "unit": "nDCG@10",
+      "variant": "1.5M",
+      "harness": "card compares with granite-97m-multilingual-r2 (0.918)"
+    },
+    {
+      "name": "German retrieval, 4 tasks",
+      "score": "0.858 / 0.870 / 0.897",
+      "kind": "vendor",
+      "source": "https://huggingface.co/VAGOsolutions/SauerkrautLM-MoEdernColBERT-1.5M",
+      "unit": "nDCG@10",
+      "variant": "1.5M / 27M / 115M"
+    },
+    {
+      "name": "NanoBEIR English",
+      "score": "0.591 / 0.619 / 0.643",
+      "kind": "vendor",
+      "source": "https://huggingface.co/VAGOsolutions/SauerkrautLM-MoEdernColBERT-1.5M",
+      "unit": "nDCG@10",
+      "variant": "1.5M / 27M / 115M"
+    },
+    {
+      "name": "LongEmbed up to 32k tokens",
+      "score": "85.2 / 86.9 / 90.1",
+      "kind": "vendor",
+      "source": "https://huggingface.co/VAGOsolutions/SauerkrautLM-MoEdernColBERT-1.5M",
+      "unit": "x100",
+      "variant": "1.5M / 27M / 115M"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "German-first with strong legal retrieval (LegalQuAD 0.794 / 0.796 / 0.851)",
+      "tiny: 43k docs/s on one GPU, 0.13 ms query latency on an Apple M5 Max (1.5M, vendor)"
+    ],
+    "weaknesses": [
+      "multi-vector index storage is larger than single-vector",
+      "custom code, tooling less common than dense embeddings",
+      "the card source is still a draft with a TODO comment about training data and teachers"
+    ],
+    "maturity": "VAGO solutions (SauerkrautLM German models); first MoEdernBERT release, 2 weeks old."
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "A German-first retriever that costs nothing in VRAM and is Apache-2.0: a natural fit for local RAG over German documents next to bge-m3 / Qwen3-Embedding. Needs our own German retrieval check, because all numbers are vendor numbers (comparisons use the vendor's own runs and some public MTEB results marked with a dagger).",
+    "blockers": [
+      "ColBERT multi-vector index support in the retrieval stack"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/VAGOsolutions/SauerkrautLM-MoEdernColBERT-1.5M",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README, config.json, HF API, LICENSE header"
+    }
+  ],
+  "open_questions": [
+    "Training data and teacher models not stated (TODO in card source)",
+    "No independent evaluation",
+    "27M and 115M cards not read; their numbers come from the family table in the 1.5M card"
+  ],
+  "last_checked": "2026-11-19"
+}

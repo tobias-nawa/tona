@@ -1,0 +1,192 @@
+{
+  "id": "k2-horizon-mova-36b-a4b",
+  "name": "K2-Horizon-MoVA-36B-A4B",
+  "vendor": "IFM (Institute of Foundation Models)",
+  "release_date": "2026-09-01",
+  "lineage": {
+    "family": "K2-Horizon",
+    "how_derived": "trained by IFM with open data, recipe, training code and intermediate checkpoints; family also contains dense 0.9B, 3.7B, 7B and 32B and a 375B-A23B MoE (repos IFM/K2-Horizon-*)"
+  },
+  "purpose": "Fully open sparse member of the K2-Horizon family: frontier-class agentic and reasoning results at 4B active parameters, with released data, code and intermediate checkpoints for research (card).",
+  "tasks": [
+    "general",
+    "coding",
+    "research"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0 (card tag)",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card tag apache-2.0; no LICENSE file in the repo, text not read."
+  },
+  "architecture": {
+    "kind": "MoE with Mixture-of-Values attention (MoVA)",
+    "params_total_b": 36,
+    "params_active_b": 4,
+    "layers": 48,
+    "attention": "MoVA (64 value experts, 4 active), 32 heads, head dim 128",
+    "recurrent": "none",
+    "experts": 100,
+    "experts_active": 8,
+    "context_native": 524288,
+    "drafter": "none stated"
+  },
+  "variants": [
+    {
+      "repo": "IFM/K2-Horizon-MoVA-36B-A4B",
+      "format": "safetensors BF16",
+      "size_gb": 74.92,
+      "official": true
+    },
+    {
+      "repo": "IFM/K2-Horizon-MoVA-36B-A4B-GGUF",
+      "format": "GGUF Q4_K_M",
+      "size_gb": 22.37,
+      "official": true,
+      "notes": "Q6_K 30.77, Q8_0 39.83 GB; 16k downloads"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "marginal",
+      "variant": "official GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "22.37 GB file against 9.6 GB VRAM plus 50 GB RAM budget; experts stream from RAM (~4 B active, decode bound by RAM bandwidth)"
+    },
+    "pc-16gb": {
+      "fits": "marginal",
+      "variant": "official GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "22.37 GB file against 13.6 GB VRAM plus 50 GB RAM budget; experts stream from RAM (~4 B active, decode bound by RAM bandwidth)"
+    },
+    "pc-24gb": {
+      "fits": "marginal",
+      "variant": "official GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "22.37 GB file against 21.6 GB VRAM plus 82 GB RAM budget; experts stream from RAM (~4 B active, decode bound by RAM bandwidth)"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "official GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "22.37 GB file fits the VRAM budget (29.6 GB) with room for KV"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "official GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "22.37 GB file against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "no",
+      "variant": "official GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "22.37 GB file against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "official GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "22.37 GB file against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "vLLM and SGLang recipes (custom code)"
+    ],
+    "notes": "Official GGUF published, so llama.cpp support exists; MoVA is a new attention type, support level not verified."
+  },
+  "benchmarks": [
+    {
+      "name": "Terminal-Bench 2.1",
+      "score": 58.6,
+      "kind": "vendor",
+      "variant": "BF16, reasoning high; Qwen3.6-35B-A3B 44.9, Muse-Glimmer-30B 51.7, Gemma 4 31B 43.4, Nemotron 3 Super 38.6 (scores taken from Artificial Analysis by the vendor)",
+      "source": "https://huggingface.co/IFM/K2-Horizon-MoVA-36B-A4B"
+    },
+    {
+      "name": "GPQA Diamond",
+      "score": 80.8,
+      "kind": "vendor",
+      "variant": "BF16; Qwen3.6-35B-A3B 84.1, Gemma 4 31B 85.7",
+      "source": "https://huggingface.co/IFM/K2-Horizon-MoVA-36B-A4B"
+    },
+    {
+      "name": "Humanity's Last Exam (no tools)",
+      "score": 25.2,
+      "kind": "vendor",
+      "variant": "BF16; Qwen3.6-35B-A3B 22.2",
+      "source": "https://huggingface.co/IFM/K2-Horizon-MoVA-36B-A4B"
+    },
+    {
+      "name": "AA-Omniscience Non-Hallucination rate",
+      "score": 69.2,
+      "kind": "vendor",
+      "variant": "BF16; Qwen3.6-35B-A3B 49.5, Muse-Glimmer-30B 18.1",
+      "source": "https://huggingface.co/IFM/K2-Horizon-MoVA-36B-A4B"
+    },
+    {
+      "name": "tau3-Banking",
+      "score": 26.8,
+      "kind": "vendor",
+      "variant": "BF16; Qwen3.6-35B-A3B 9.3",
+      "source": "https://huggingface.co/IFM/K2-Horizon-MoVA-36B-A4B"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "fully open (data, recipe, code, intermediate checkpoints)",
+      "high non-hallucination rate in the vendor's table"
+    ],
+    "weaknesses": [
+      "vendor table omits Qwen3.8-27B and Flint",
+      "GPQA below Qwen3.6-35B-A3B and Gemma 4 31B"
+    ],
+    "maturity": "15k downloads and 436 likes for this repo; the family spans 0.9B to 375B"
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "A 36B-A4B open model with a Terminal-Bench 2.1 score above Qwen3.6-35B-A3B in the vendor table and an open recipe. The attention type is new and the baseline is already Qwen3.8-27B, so it is a candidate only after an independent number appears.",
+    "blockers": [
+      "vendor-only benchmarks",
+      "new MoVA attention",
+      "licence text not read"
+    ]
+  },
+  "open_questions": [
+    "independent evaluation",
+    "speed of MoVA attention in llama.cpp",
+    "the smaller dense K2-Horizon models (0.9B, 3.7B, 7B, 32B) not recorded here"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/IFM/K2-Horizon-MoVA-36B-A4B",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README, config.json read"
+    },
+    {
+      "url": "https://huggingface.co/api/models/IFM/K2-Horizon-MoVA-36B-A4B-GGUF?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "GGUF sizes"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

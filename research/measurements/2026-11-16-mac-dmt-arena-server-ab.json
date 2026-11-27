@@ -1,0 +1,684 @@
+{
+  "config": {
+    "A": {
+      "build": "work/build/mtl",
+      "env": {},
+      "tooling": {
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0"
+      },
+      "commit": "stand-2026-10-25-1156-g58513e336f-dirty",
+      "model": "<repo>/work/models/coder-dmt/coder-DMT-164e-00001-of-00002.gguf",
+      "drafter": "<repo>/work/models/mtp-164/mtp-Qwen3.8-Flash-Next-Q8_0-164e.gguf"
+    },
+    "B": {
+      "build": "work/build/mtl",
+      "env": {
+        "TONA_METAL_ARENA_GB": "auto"
+      },
+      "tooling": {
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0",
+        "TONA_METAL_ARENA_GB": "auto"
+      },
+      "commit": "stand-2026-10-25-1156-g58513e336f-dirty",
+      "model": "<repo>/work/models/coder-dmt/coder-DMT-164e-00001-of-00002.gguf",
+      "drafter": "<repo>/work/models/mtp-164/mtp-Qwen3.8-Flash-Next-Q8_0-164e.gguf"
+    },
+    "workload": "set,server",
+    "targets": "8000:100 bench-set at --ctx 32768",
+    "deterministic": false,
+    "plan_info": {
+      "expect": [
+        [
+          "decode-code",
+          -40.0,
+          -5.0
+        ],
+        [
+          "decode-text",
+          -40.0,
+          -5.0
+        ],
+        [
+          "decode@8000",
+          -40.0,
+          -5.0
+        ],
+        [
+          "prefill@8000",
+          -30.0,
+          0.0
+        ]
+      ],
+      "source": "estimate from 2026-11-15-mac-coder-arena.md (recall 69 % at 16 GB) and 68.8 % of DM-T's experts resident",
+      "workload": "set,server",
+      "targets": "8000:100 bench-set at --ctx 32768",
+      "primary": "",
+      "why_size": "the workload of the Coder A/B, whose load table showed DM-T's displacement, so the compressed memory per start compares",
+      "decode_tokens": 200,
+      "noise": {},
+      "warmup": true,
+      "round_warmup": true,
+      "load_log": true,
+      "A": {
+        "build": "work/build/mtl",
+        "env": {},
+        "tooling": {
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0"
+        },
+        "commit": "stand-2026-10-25-1156-g58513e336f-dirty",
+        "model": "<repo>/work/models/coder-dmt/coder-DMT-164e-00001-of-00002.gguf",
+        "drafter": "<repo>/work/models/mtp-164/mtp-Qwen3.8-Flash-Next-Q8_0-164e.gguf"
+      },
+      "B": {
+        "build": "work/build/mtl",
+        "env": {
+          "TONA_METAL_ARENA_GB": "auto"
+        },
+        "tooling": {
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0",
+          "TONA_METAL_ARENA_GB": "auto"
+        },
+        "commit": "stand-2026-10-25-1156-g58513e336f-dirty",
+        "model": "<repo>/work/models/coder-dmt/coder-DMT-164e-00001-of-00002.gguf",
+        "drafter": "<repo>/work/models/mtp-164/mtp-Qwen3.8-Flash-Next-Q8_0-164e.gguf"
+      }
+    },
+    "reference_sha": {},
+    "corpus_sha256": "e13a800340859f7d39c63712d90383faae7e5a47c3865f0811e40d912612d38e",
+    "corpus_is_reference": true,
+    "commit": "58513e3",
+    "noise": {}
+  },
+  "rounds": [
+    {
+      "order": "AB",
+      "sha": {
+        "A": {
+          "8000": "727ff658ae742fa7"
+        },
+        "B": {
+          "8000": "727ff658ae742fa7"
+        }
+      },
+      "A": {
+        "prefill@8000": 170.83970714628907,
+        "decode@8000": 25.20346097494918,
+        "decode-code": 38.7,
+        "decode-text": 27.0
+      },
+      "counters": {
+        "A": {
+          "8000": {
+            "expert_hits": 0,
+            "expert_misses": 0
+          }
+        },
+        "B": {
+          "8000": {
+            "expert_hits": 0,
+            "expert_misses": 0
+          }
+        }
+      },
+      "B": {
+        "prefill@8000": 164.1485389335753,
+        "decode@8000": 13.082949662206415,
+        "decode-code": 16.8,
+        "decode-text": 14.4
+      },
+      "seconds": 1078.9847277910449
+    },
+    {
+      "order": "BA",
+      "sha": {
+        "B": {
+          "8000": "727ff658ae742fa7"
+        },
+        "A": {
+          "8000": "727ff658ae742fa7"
+        }
+      },
+      "B": {
+        "prefill@8000": 160.9759389027307,
+        "decode@8000": 13.427023221860903,
+        "decode-code": 16.2,
+        "decode-text": 14.0
+      },
+      "counters": {
+        "B": {
+          "8000": {
+            "expert_hits": 0,
+            "expert_misses": 0
+          }
+        },
+        "A": {
+          "8000": {
+            "expert_hits": 0,
+            "expert_misses": 0
+          }
+        }
+      },
+      "A": {
+        "prefill@8000": 168.9703889349559,
+        "decode@8000": 24.964359220646717,
+        "decode-code": 38.6,
+        "decode-text": 27.0
+      },
+      "seconds": 1508.3034401659388
+    }
+  ],
+  "discarded": [
+    {
+      "order": "AB",
+      "sha": {
+        "A": {
+          "8000": "727ff658ae742fa7"
+        },
+        "B": {
+          "8000": "727ff658ae742fa7"
+        }
+      },
+      "A": {
+        "prefill@8000": 165.59318376659743,
+        "decode@8000": 25.200622946798934,
+        "decode-code": 38.9,
+        "decode-text": 27.1
+      },
+      "counters": {
+        "A": {
+          "8000": {
+            "expert_hits": 0,
+            "expert_misses": 0
+          }
+        },
+        "B": {
+          "8000": {
+            "expert_hits": 0,
+            "expert_misses": 0
+          }
+        }
+      },
+      "B": {
+        "prefill@8000": 163.76485041817548,
+        "decode@8000": 13.462636572558125,
+        "decode-code": 16.4,
+        "decode-text": 13.9
+      },
+      "seconds": 1483.5829749580007,
+      "discarded": "a system backup ran"
+    },
+    {
+      "order": "BA",
+      "sha": {
+        "B": {
+          "8000": "727ff658ae742fa7"
+        },
+        "A": {
+          "8000": "727ff658ae742fa7"
+        }
+      },
+      "B": {
+        "prefill@8000": 162.97525002080278,
+        "decode@8000": 13.28960712905516,
+        "decode-code": 16.2,
+        "decode-text": 13.9
+      },
+      "counters": {
+        "B": {
+          "8000": {
+            "expert_hits": 0,
+            "expert_misses": 0
+          }
+        },
+        "A": {
+          "8000": {
+            "expert_hits": 0,
+            "expert_misses": 0
+          }
+        }
+      },
+      "A": {
+        "prefill@8000": 169.81266898679763,
+        "decode@8000": 24.985029544952344,
+        "decode-code": 38.7,
+        "decode-text": 27.3
+      },
+      "seconds": 1101.1638960829005,
+      "discarded": "a system backup ran"
+    }
+  ],
+  "stop_reason": "all metrics decided after round 2",
+  "wall_seconds": 5359.25953062484,
+  "loads": [
+    {
+      "start": 1,
+      "arm": "A",
+      "cpu_own": 6.2,
+      "cpu_system": 14.4,
+      "cpu_other": 7.7,
+      "gpu_own": 94.0,
+      "gpu_system": 0.2,
+      "gpu_other": 0.4,
+      "pageins": 2521.6,
+      "swapins": 0.8,
+      "compressions": 10635.8,
+      "level_min": 7,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 187,
+      "idle_before_s": null,
+      "ready_s": 2.0
+    },
+    {
+      "start": 2,
+      "arm": "A",
+      "cpu_own": 6.3,
+      "cpu_system": 48.7,
+      "cpu_other": 8.9,
+      "gpu_own": 94.1,
+      "gpu_system": 0.2,
+      "gpu_other": 0.4,
+      "pageins": 3321.9,
+      "swapins": 2.3,
+      "compressions": 13281.5,
+      "level_min": 7,
+      "backup_share": 0.84,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 184,
+      "idle_before_s": 0.1,
+      "ready_s": 2.0
+    },
+    {
+      "start": 3,
+      "arm": "A",
+      "cpu_own": 6.2,
+      "cpu_system": 48.7,
+      "cpu_other": 9.6,
+      "gpu_own": 93.8,
+      "gpu_system": 0.2,
+      "gpu_other": 0.3,
+      "pageins": 4002.9,
+      "swapins": 6.3,
+      "compressions": 19353.9,
+      "level_min": 6,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 187,
+      "idle_before_s": 390.6,
+      "ready_s": 2.0
+    },
+    {
+      "start": 4,
+      "arm": "B",
+      "cpu_own": 78.5,
+      "cpu_system": 16.1,
+      "cpu_other": 7.3,
+      "gpu_own": 58.2,
+      "gpu_system": 0.2,
+      "gpu_other": 0.2,
+      "pageins": 5197.9,
+      "swapins": 5.2,
+      "compressions": 30076.9,
+      "level_min": 14,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 361,
+      "idle_before_s": 0.1,
+      "ready_s": 4.0
+    },
+    {
+      "start": 5,
+      "arm": "B",
+      "cpu_own": 77.3,
+      "cpu_system": 15.2,
+      "cpu_other": 7.9,
+      "gpu_own": 59.0,
+      "gpu_system": 0.2,
+      "gpu_other": 0.2,
+      "pageins": 371.7,
+      "swapins": 1.1,
+      "compressions": 1847.5,
+      "level_min": 16,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 358,
+      "idle_before_s": 0.3,
+      "ready_s": 4.0
+    },
+    {
+      "start": 6,
+      "arm": "A",
+      "cpu_own": 5.9,
+      "cpu_system": 18.1,
+      "cpu_other": 8.2,
+      "gpu_own": 92.6,
+      "gpu_system": 0.2,
+      "gpu_other": 0.3,
+      "pageins": 16984.6,
+      "swapins": 0.5,
+      "compressions": 16945.3,
+      "level_min": 7,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 189,
+      "idle_before_s": 0.2,
+      "ready_s": 2.0
+    },
+    {
+      "start": 7,
+      "arm": "A",
+      "cpu_own": 5.6,
+      "cpu_system": 14.9,
+      "cpu_other": 7.6,
+      "gpu_own": 94.5,
+      "gpu_system": 0.2,
+      "gpu_other": 0.4,
+      "pageins": 2593.4,
+      "swapins": 0.5,
+      "compressions": 9987.8,
+      "level_min": 7,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 185,
+      "idle_before_s": 0.1,
+      "ready_s": 2.0
+    },
+    {
+      "start": 8,
+      "arm": "B",
+      "cpu_own": 76.9,
+      "cpu_system": 17.4,
+      "cpu_other": 7.9,
+      "gpu_own": 59.1,
+      "gpu_system": 0.2,
+      "gpu_other": 0.3,
+      "pageins": 5857.5,
+      "swapins": 7.2,
+      "compressions": 30937.6,
+      "level_min": 13,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 348,
+      "idle_before_s": 0.2,
+      "ready_s": 4.0
+    },
+    {
+      "start": 9,
+      "arm": "B",
+      "cpu_own": 76.6,
+      "cpu_system": 13.5,
+      "cpu_other": 6.8,
+      "gpu_own": 59.6,
+      "gpu_system": 0.2,
+      "gpu_other": 0.2,
+      "pageins": 116.2,
+      "swapins": 0.5,
+      "compressions": 52.8,
+      "level_min": 16,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 350,
+      "idle_before_s": 0.3,
+      "ready_s": 4.0
+    },
+    {
+      "start": 10,
+      "arm": "B",
+      "cpu_own": 76.9,
+      "cpu_system": 13.8,
+      "cpu_other": 6.8,
+      "gpu_own": 58.6,
+      "gpu_system": 0.2,
+      "gpu_other": 0.2,
+      "pageins": 121.9,
+      "swapins": 0.7,
+      "compressions": 70.7,
+      "level_min": 17,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 360,
+      "idle_before_s": 0.2,
+      "ready_s": 4.0
+    },
+    {
+      "start": 11,
+      "arm": "B",
+      "cpu_own": 77.4,
+      "cpu_system": 14.0,
+      "cpu_other": 6.8,
+      "gpu_own": 58.5,
+      "gpu_system": 0.2,
+      "gpu_other": 0.2,
+      "pageins": 185.9,
+      "swapins": 0.6,
+      "compressions": 53.6,
+      "level_min": 17,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 361,
+      "idle_before_s": 0.2,
+      "ready_s": 4.0
+    },
+    {
+      "start": 12,
+      "arm": "A",
+      "cpu_own": 5.8,
+      "cpu_system": 15.6,
+      "cpu_other": 7.7,
+      "gpu_own": 92.6,
+      "gpu_system": 0.2,
+      "gpu_other": 0.3,
+      "pageins": 16326.9,
+      "swapins": 0.1,
+      "compressions": 15790.3,
+      "level_min": 7,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 189,
+      "idle_before_s": 0.2,
+      "ready_s": 2.0
+    },
+    {
+      "start": 13,
+      "arm": "A",
+      "cpu_own": 5.8,
+      "cpu_system": 19.6,
+      "cpu_other": 7.8,
+      "gpu_own": 94.3,
+      "gpu_system": 0.2,
+      "gpu_other": 0.4,
+      "pageins": 2791.3,
+      "swapins": 0.3,
+      "compressions": 12276.1,
+      "level_min": 7,
+      "backup_share": 0.13,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 185,
+      "idle_before_s": 0.1,
+      "ready_s": 2.0
+    },
+    {
+      "start": 14,
+      "arm": "B",
+      "cpu_own": 77.0,
+      "cpu_system": 20.9,
+      "cpu_other": 10.1,
+      "gpu_own": 59.5,
+      "gpu_system": 0.2,
+      "gpu_other": 0.1,
+      "pageins": 5792.4,
+      "swapins": 2.1,
+      "compressions": 35620.2,
+      "level_min": 10,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 345,
+      "idle_before_s": 420.5,
+      "ready_s": 4.0
+    },
+    {
+      "start": 15,
+      "arm": "B",
+      "cpu_own": 77.3,
+      "cpu_system": 20.6,
+      "cpu_other": 7.1,
+      "gpu_own": 58.4,
+      "gpu_system": 0.2,
+      "gpu_other": 0.2,
+      "pageins": 1396.0,
+      "swapins": 3.8,
+      "compressions": 1162.9,
+      "level_min": 15,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 361,
+      "idle_before_s": 0.3,
+      "ready_s": 4.0
+    },
+    {
+      "start": 16,
+      "arm": "A",
+      "cpu_own": 6.1,
+      "cpu_system": 17.7,
+      "cpu_other": 8.2,
+      "gpu_own": 91.7,
+      "gpu_system": 0.2,
+      "gpu_other": 0.3,
+      "pageins": 17755.6,
+      "swapins": 0.4,
+      "compressions": 18501.5,
+      "level_min": 6,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 191,
+      "idle_before_s": 0.2,
+      "ready_s": 2.0
+    },
+    {
+      "start": 17,
+      "arm": "A",
+      "cpu_own": 5.9,
+      "cpu_system": 47.1,
+      "cpu_other": 9.5,
+      "gpu_own": 94.4,
+      "gpu_system": 0.2,
+      "gpu_other": 0.2,
+      "pageins": 3934.9,
+      "swapins": 1.5,
+      "compressions": 14687.0,
+      "level_min": 6,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 185,
+      "idle_before_s": 0.1,
+      "ready_s": 2.0
+    }
+  ],
+  "warmup": {
+    "prefill@8000": 169.92644884597405,
+    "decode@8000": 25.02978048287809,
+    "decode-code": 38.7,
+    "decode-text": 27.0
+  },
+  "plan": {
+    "alpha": 0.05,
+    "margin": 0.5,
+    "max_rounds": 6,
+    "min_rounds": 2,
+    "prior_sd": 0.5,
+    "prior_df": 4.0
+  },
+  "decisions": {
+    "prefill@8000": {
+      "decided_at_round": 2,
+      "decision": "B slower",
+      "mean_diff_percent": -4.323954025556387,
+      "ci_diff_percent": [
+        -5.510798873392067,
+        -3.1371091777207063
+      ]
+    },
+    "decode@8000": {
+      "decided_at_round": 2,
+      "decision": "B slower",
+      "mean_diff_percent": -47.15294609839743,
+      "ci_diff_percent": [
+        -48.86106406186138,
+        -45.44482813493348
+      ]
+    },
+    "decode-code": {
+      "decided_at_round": 2,
+      "decision": "B slower",
+      "mean_diff_percent": -57.31011768486164,
+      "ci_diff_percent": [
+        -58.77885385503063,
+        -55.84138151469264
+      ]
+    },
+    "decode-text": {
+      "decided_at_round": 2,
+      "decision": "B slower",
+      "mean_diff_percent": -47.407407407407405,
+      "ci_diff_percent": [
+        -48.896808355550654,
+        -45.918006459264156
+      ]
+    }
+  }
+}

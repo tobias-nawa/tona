@@ -1,0 +1,189 @@
+# Code gates as hooks. `just check` runs them on the changes, `just check-all` on every file; CI runs the same.
+# All tool versions are pinned here (rev / ==version) except clang-tidy, which comes with the ROCm toolchain
+# (toolchain/rocm-10.1.lock) and runs through `just check` (tools/gates/tidy.py). Update a pin together with the
+# files it reformats. Hooks only check; `just fmt` rewrites.
+minimum_pre_commit_version: "4.0.0"
+# commit-msg too: the trailer rules (tools/gates/commit_trailers.py) run on the message. Existing clones run
+# `pre-commit install` once more.
+default_install_hook_types: [pre-commit, commit-msg]
+exclude: ^engine/third_party/
+
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.17.5
+    hooks:
+      - id: ruff-check
+      - id: ruff-format
+        args: [--check, --diff]
+      # `just fmt` rewrites the changed files with the same pinned ruff.
+      - id: ruff-format
+        alias: ruff-format-fix
+        name: ruff format (rewrites)
+        stages: [manual]
+
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.11.0.1
+    hooks:
+      - id: shellcheck
+
+  - repo: https://github.com/rhysd/actionlint
+    rev: v1.7.12
+    hooks:
+      - id: actionlint
+
+  # Static analysis of the workflows: injection, dangerous triggers, excessive permissions, unpinned actions.
+  # Offline audits only; actionlint above checks the syntax.
+  - repo: https://github.com/zizmorcore/zizmor-pre-commit
+    rev: v1.32.0
+    hooks:
+      - id: zizmor
+
+  - repo: local
+    hooks:
+      # The gap zizmor leaves: statuses: write, self-hosted runners, github.event.* in run (tools/gates/workflows.py).
+      - id: workflows
+        name: workflow rules zizmor does not check (statuses, self-hosted, event data in run)
+        language: python
+        entry: python tools/gates/workflows.py
+        files: ^\.github/workflows/.*\.ya?ml$
+
+      # PyPI wheel instead of the system package: the version is the same on every machine and in CI.
+      - id: clang-format
+        name: clang-format (C++/HIP style, .clang-format)
+        language: python
+        additional_dependencies: ["clang-format==22.1.8"]
+        entry: clang-format --style=file --dry-run --Werror
+        files: \.(cpp|h|hpp|hip|cu|mm|metal)$
+        # Generated files must stay byte-identical to the generator output (tools/gen_tables.py,
+        # scripts/build-mtp-vocab.py), so they are never formatted.
+        exclude: ^engine/model/(quant_tables\.h|unicode_tables\.h|mtp_vocab\.inc)$
+
+      - id: clang-format-fix
+        name: clang-format (rewrites, `just fmt`)
+        language: python
+        additional_dependencies: ["clang-format==22.1.8"]
+        entry: clang-format --style=file -i
+        files: \.(cpp|h|hpp|hip|cu|mm|metal)$
+        # Generated files must stay byte-identical to the generator output (tools/gen_tables.py,
+        # scripts/build-mtp-vocab.py), so they are never formatted.
+        exclude: ^engine/model/(quant_tables\.h|unicode_tables\.h|mtp_vocab\.inc)$
+        stages: [manual]
+
+      # Gates with the limits of AGENTS.md: they take the changed files as arguments.
+      - id: file-length
+        name: file length (500 lines)
+        language: python
+        entry: python tools/gates/file_length.py
+        files: \.(cpp|h|hpp|hip|cu|mm|metal|py|sh)$
+
+      # The mechanical part of the comment rules in AGENTS.md: TODO(#n) only, no banners, no commented-out code
+      # (tools/gates/comments.py). "Why, not what" is a review item (docs/contribute/verification.md).
+      - id: comments
+        name: comments (TODO(#n), no banners, no commented-out code)
+        language: python
+        entry: python tools/gates/comments.py
+        files: \.(cpp|h|hpp|hip|cu|mm|metal|py|sh)$
+
+      # Everything in the repository is English (AGENTS.md rule 5): the German check, with
+      # its allow list, on the changed files (tools/gates/english.py).
+      - id: english
+        name: English only (German check)
+        language: python
+        entry: python tools/gates/english.py
+        stages: [pre-commit]
+
+      # The skill copies for the coding agents, the CLAUDE.md next to nested AGENTS.md files and the root GEMINI.md (tools/gates/agent_files.py).
+      # Fix with: python3 tools/gates/agent_files.py
+      - id: agent-files
+        name: agent files equal their source (skill copies, nested CLAUDE.md, GEMINI.md)
+        language: python
+        entry: python tools/gates/agent_files.py --check
+        pass_filenames: false
+        files: ^(tools/agent_files/|\.agents/|\.claude/|\.github/skills/|.*AGENTS\.md$|.*/CLAUDE\.md$|^GEMINI\.md$)
+
+      # Text a reviewer cannot see but an agent reads, in the files agents load (tools/gates/hidden_chars.py).
+      - id: hidden-chars
+        name: no hidden characters or comments in agent-facing files
+        language: python
+        entry: python tools/gates/hidden_chars.py
+        files: ^(.*/)?(AGENTS|CLAUDE|SKILL)\.md$|^(\.claude|\.agents|\.cursor|\.github/skills|\.github/ISSUE_TEMPLATE|tools/agent_files|data/modeldb|bench|scripts)/|^\.github/PULL_REQUEST_TEMPLATE|^docs/contribute/optimize-for-your-hardware\.md$
+
+      # Every dependency pinned (hash, SHA, exact tag) and listed with its licence in docs/contribute/licenses.md (tools/gates/dependencies.py).
+      - id: dependencies
+        name: dependencies are pinned and listed with their licence
+        language: python
+        entry: python tools/gates/dependencies.py
+        pass_filenames: false
+        files: ^(.*requirements.*\.txt|.*\.lock|\.pre-commit-config\.yaml|\.github/workflows/.*|.*CMakeLists\.txt|.*\.cmake|toolchain/models\.toml|engine/third_party/.*|docs/contribute/licenses\.md)$
+
+      # The paths that steer agents and run code stay with the maintainer in .github/CODEOWNERS (tools/gates/codeowners.py).
+      - id: codeowners
+        name: protected paths are owned by the maintainer
+        language: python
+        entry: python tools/gates/codeowners.py
+        pass_filenames: false
+        files: ^\.github/|(AGENTS|CLAUDE|SKILL)\.md$|^(\.claude|\.agents|tools/gates)/
+
+      # Trailer rules of AGENTS.md at commit time; CI checks every commit of a pull request again (check.yml, job commits).
+      - id: commit-trailers
+        name: commit trailers (Assisted-by format, no tool sign-off or session line)
+        language: python
+        entry: python tools/gates/commit_trailers.py
+        stages: [commit-msg]
+
+      - id: measurement-privacy
+        name: no process lists in measurement logs (field "top"), no private home paths in research and docs
+        language: python
+        entry: python tools/gates/measurement_privacy.py
+        files: ^(research|docs)/
+
+      # The offer data the installer and the client show: schema, sources that exist, model ids of the catalog
+      # (tools/gates/offer.py). jsonschema is pinned here; the test venv has no need of it.
+      - id: offer
+        name: offer data (schema, sources exist, models in the catalog)
+        language: python
+        additional_dependencies: ["jsonschema==4.26.0"]
+        entry: python tools/gates/offer.py
+        pass_filenames: false
+        files: ^(data/modeldb/offer(\.schema)?\.json|toolchain/models\.toml|data/modeldb/models/.*\.json|docs/hardware/.*|research/.*)$
+
+      # Every relative link and anchor in a Markdown file resolves (tools/gates/md_links.py). A link target that moves
+      # breaks files that were not changed, so the hook looks at all of them.
+      - id: md-links
+        name: Markdown links and anchors resolve
+        language: python
+        entry: python tools/gates/md_links.py
+        pass_filenames: false
+        files: \.md$
+
+      - id: arch-isolation
+        name: no per-architecture branches in shared code (switch over ArchId, kernel headers)
+        language: python
+        entry: python tools/gates/arch_isolation.py
+        files: ^engine/.*\.(cpp|h|hpp|hip|cu)$
+
+      - id: functions
+        name: function size, complexity, parameters (lizard)
+        language: python
+        additional_dependencies: ["lizard==1.24.3"]
+        entry: python tools/gates/functions.py
+        files: \.(cpp|h|hpp|hip|cu|mm|metal|py)$
+
+      # Secrets. Built by pre-commit with its own Go toolchain from the pinned module version (the module path still carries the old owner name).
+      - id: gitleaks
+        name: gitleaks (staged changes)
+        language: golang
+        additional_dependencies: ["github.com/zricethezav/gitleaks/v8@v8.30.1"]
+        entry: gitleaks git --pre-commit --staged --redact --no-banner
+        pass_filenames: false
+        always_run: true
+
+      # The whole git history; for CI and `just check-all`: pre-commit run --hook-stage manual gitleaks-history
+      - id: gitleaks-history
+        name: gitleaks (whole history)
+        language: golang
+        additional_dependencies: ["github.com/zricethezav/gitleaks/v8@v8.30.1"]
+        entry: gitleaks git --redact --no-banner
+        pass_filenames: false
+        always_run: true
+        stages: [manual]

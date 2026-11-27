@@ -1,0 +1,208 @@
+{
+  "config": {
+    "A": {
+      "build": "work/build/mtl",
+      "env": {},
+      "tooling": {
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0"
+      },
+      "commit": "stand-2026-10-25-1128-ga62325e908",
+      "model": "<repo>/work/models/coder-dmt/coder-DMT-164e-00001-of-00002.gguf",
+      "drafter": "<repo>/work/models/mtp-164/mtp-Qwen3.8-Flash-Next-Q8_0-164e.gguf"
+    },
+    "B": {
+      "build": "work/build/mtl",
+      "env": {
+        "TONA_METAL_WINDOW_MB": "1024",
+        "TONA_METAL_SPLIT_EVERY": "8"
+      },
+      "tooling": {
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0",
+        "TONA_METAL_SPLIT_EVERY": "8",
+        "TONA_METAL_WINDOW_MB": "1024"
+      },
+      "commit": "stand-2026-10-25-1128-ga62325e908",
+      "model": "<repo>/work/models/coder-iq1_m/Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf",
+      "drafter": "<repo>/work/models/mtp-256/mtp-Qwen3.8-Flash-Next-Q8_0-256e.gguf"
+    },
+    "workload": "set,server",
+    "targets": "8000:100 bench-set at --ctx 32768",
+    "deterministic": false,
+    "plan_info": {
+      "expect": [
+        [
+          "decode-code",
+          -50.0,
+          -10.0
+        ],
+        [
+          "decode-text",
+          -50.0,
+          -10.0
+        ],
+        [
+          "decode@8000",
+          -50.0,
+          -10.0
+        ],
+        [
+          "prefill@8000",
+          -40.0,
+          -5.0
+        ]
+      ],
+      "source": "research/measurements/2026-11-15-mac-coder-baseline.md",
+      "workload": "set,server",
+      "targets": "8000:100 bench-set at --ctx 32768",
+      "primary": "",
+      "why_size": "baseline of a new pair: 2 to 6 rounds, expected differences of 5 to 50 % against a spread of about 1 %",
+      "decode_tokens": 200,
+      "noise": {},
+      "warmup": true,
+      "round_warmup": true,
+      "load_log": true,
+      "A": {
+        "build": "work/build/mtl",
+        "env": {},
+        "tooling": {
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0"
+        },
+        "commit": "stand-2026-10-25-1128-ga62325e908",
+        "model": "<repo>/work/models/coder-dmt/coder-DMT-164e-00001-of-00002.gguf",
+        "drafter": "<repo>/work/models/mtp-164/mtp-Qwen3.8-Flash-Next-Q8_0-164e.gguf"
+      },
+      "B": {
+        "build": "work/build/mtl",
+        "env": {
+          "TONA_METAL_WINDOW_MB": "1024",
+          "TONA_METAL_SPLIT_EVERY": "8"
+        },
+        "tooling": {
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0",
+          "TONA_METAL_SPLIT_EVERY": "8",
+          "TONA_METAL_WINDOW_MB": "1024"
+        },
+        "commit": "stand-2026-10-25-1128-ga62325e908",
+        "model": "<repo>/work/models/coder-iq1_m/Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf",
+        "drafter": "<repo>/work/models/mtp-256/mtp-Qwen3.8-Flash-Next-Q8_0-256e.gguf"
+      }
+    },
+    "reference_sha": {},
+    "corpus_sha256": "e13a800340859f7d39c63712d90383faae7e5a47c3865f0811e40d912612d38e",
+    "corpus_is_reference": true,
+    "commit": "a62325e",
+    "noise": {}
+  },
+  "rounds": [],
+  "stop_reason": "error: Command '['python3', '-I', '<repo>/scripts/bench-set.py', 'http://127.0.0.1:8097']' returned non-zero exit status 1. (partial result)",
+  "wall_seconds": 2389.2115573750343,
+  "loads": [
+    {
+      "start": 1,
+      "arm": "A",
+      "cpu_own": 8.1,
+      "cpu_system": 20.2,
+      "cpu_other": 112.5,
+      "gpu_own": 89.6,
+      "gpu_system": 0.2,
+      "gpu_other": 0.4,
+      "pageins": 27159.3,
+      "swapins": 418.8,
+      "compressions": 27483.8,
+      "level_min": 6,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 192,
+      "idle_before_s": null,
+      "ready_s": 2.0
+    },
+    {
+      "start": 2,
+      "arm": "A",
+      "cpu_own": 6.9,
+      "cpu_system": 16.1,
+      "cpu_other": 76.7,
+      "gpu_own": 94.1,
+      "gpu_system": 0.2,
+      "gpu_other": 0.3,
+      "pageins": 2960.3,
+      "swapins": 768.8,
+      "compressions": 13887.0,
+      "level_min": 8,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 183,
+      "idle_before_s": 0.1,
+      "ready_s": 2.0
+    },
+    {
+      "start": 3,
+      "arm": "A",
+      "cpu_own": 7.1,
+      "cpu_system": 30.3,
+      "cpu_other": 61.4,
+      "gpu_own": 93.6,
+      "gpu_system": 0.2,
+      "gpu_other": 0.3,
+      "pageins": 3679.4,
+      "swapins": 32.6,
+      "compressions": 19564.9,
+      "level_min": 7,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 183,
+      "idle_before_s": 0.1,
+      "ready_s": 2.0
+    },
+    {
+      "start": 4,
+      "arm": "B",
+      "cpu_own": 39.7,
+      "cpu_system": 50.9,
+      "cpu_other": 23.4,
+      "gpu_own": 3.5,
+      "gpu_system": 0.3,
+      "gpu_other": 0.2,
+      "pageins": 3400094.2,
+      "swapins": 29227.1,
+      "compressions": 1905533.6,
+      "level_min": 4,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 1826,
+      "idle_before_s": 0.1,
+      "ready_s": 2.0
+    }
+  ],
+  "warmup": {
+    "prefill@8000": 144.1573871615352,
+    "decode@8000": 25.573367415621586,
+    "decode-code": 39.4,
+    "decode-text": 27.7
+  },
+  "plan": {
+    "alpha": 0.05,
+    "margin": 0.5,
+    "max_rounds": 6,
+    "min_rounds": 2,
+    "prior_sd": 0.5,
+    "prior_df": 4.0
+  },
+  "decisions": {}
+}

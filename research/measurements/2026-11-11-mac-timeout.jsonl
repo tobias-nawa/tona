@@ -1,0 +1,9 @@
+{"block":"probe","error":"","kind":"timeout","queue":"same, before","status":4,"wall_s":0.00064129102975130081,"wrote":true}
+{"block":"wait","completed_after_s":2.5115162499714643,"delay_s":2.5,"error":"","kind":"timeout","status":4}
+{"block":"wait","completed_after_s":3.0013631669571623,"delay_s":3,"error":"","kind":"timeout","status":4}
+{"block":"wait","completed_after_s":3.5022594589972869,"delay_s":3.5,"error":"","kind":"timeout","status":4}
+{"block":"wait","completed_after_s":4.0069821249926463,"delay_s":4,"error":"","kind":"timeout","status":4}
+{"block":"wait","completed_after_s":4.5108424159698188,"delay_s":4.5,"error":"","kind":"timeout","status":4}
+{"access_revoked":false,"block":"wait","code":2,"completed_after_s":5.0021399169927463,"delay_s":5,"domain":"MTLCommandBufferErrorDomain","error":"Caused GPU Timeout Error (00000002:kIOGPUCommandBufferCallbackErrorTimeout)","kind":"timeout","status":5}
+{"block":"probe","error":"","kind":"timeout","queue":"same, after abort","status":4,"wall_s":0.00095666700508445501,"wrote":true}
+{"block":"probe","error":"","kind":"timeout","queue":"new, after abort","status":4,"wall_s":0.00044808303937315941,"wrote":true}

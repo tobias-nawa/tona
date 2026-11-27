@@ -1,0 +1,164 @@
+{
+  "id": "fastframes",
+  "name": "FastFrames (S 1.3B and L 14B)",
+  "vendor": "Apple",
+  "release_date": "2026-11",
+  "lineage": {
+    "base_model": "Wan-AI/Wan2.1-T2V-1.3B and zhuhz22/Causal-Forcing (S); Wan-AI/Wan2.1-T2V-14B (L)",
+    "how_derived": "S keeps the frozen two-step frame-wise Causal Forcing++ generator and trains a pixel decoder and a KV refinement network around it; L distills Wan2.1-14B into a two-step causal model (Causal Forcing++ recipe) and then trains pixel decoder and KV refiner the same way (card)",
+    "family": "Wan2.1"
+  },
+  "purpose": "Autoregressive two-step video diffusion models that generate 480p video at interactive latency (paper: VAE decoding and KV-cache updates were over half of end-to-end latency and are replaced by lightweight networks); targets real-time camera- and physics-conditioned generation.",
+  "tasks": [
+    "video-generation"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "video"
+    ]
+  },
+  "license": {
+    "name": "Apple Machine Learning Research Model License (apple-amlr)",
+    "verified": true,
+    "commercial_use": "no",
+    "redistribution": "limited",
+    "notes": "LICENSE of apple/FastFrames-S read: use, copy, modify, distribute and create derivatives exclusively for Research Purposes (non-commercial scientific research; excludes commercial exploitation, product development and use in any commercial product or service); redistribution needs a copy of the agreement and an attribution notice, derivatives must be identified; revocable, terminable on breach. Same license named on the FastFrames-L card (its LICENSE file not separately read). The LingBot parts are CC BY-NC-SA 4.0 and the code uses the Apple Sample Code License (card). Verdict policy (README, 2026-11-19): this licence term does not lower tona_fit; kept here for an installer label."
+  },
+  "architecture": {
+    "kind": "autoregressive causal video diffusion transformer, two denoising steps per frame, plus separate KV-refinement network and lightweight pixel decoder instead of the VAE decoder",
+    "params_total_b": 1.3,
+    "recurrent": "none",
+    "drafter": "none"
+  },
+  "variants": [
+    {
+      "repo": "apple/FastFrames-S",
+      "format": "safetensors (pixel decoder 0.26 GB, KV refiner 0.69 GB; plus a LingBot variant 0.82 GB)",
+      "size_gb": 0.95,
+      "official": true,
+      "notes": "1.3B per card; the repo holds only the added networks, the frozen Causal Forcing++ generator is taken from the base repo (size not read here); outputs 832x480, 81 frames at 16 fps"
+    },
+    {
+      "repo": "apple/FastFrames-L",
+      "format": "safetensors (DiT 28.58 GB, KV refiner 1.78 GB, pixel decoder 0.29 GB)",
+      "size_gb": 30.64,
+      "official": true,
+      "notes": "14B per card; plus 142.89 GB of intermediate checkpoints (causal teacher, consistency, DMD) in the same repo"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "unknown",
+      "variant": "S",
+      "basis": "estimate",
+      "notes": "S weights are small, but the latency figures are B200 and the card requires Linux x86-64 with an NVIDIA GPU; no AMD data. L: no (30.64 GB BF16)."
+    },
+    "pc-16gb": {
+      "fits": "unknown",
+      "variant": "S",
+      "basis": "estimate",
+      "notes": "L: no"
+    },
+    "pc-24gb": {
+      "fits": "unknown",
+      "variant": "S",
+      "basis": "estimate",
+      "notes": "L: no in BF16 (30.64 GB)"
+    },
+    "pc-32gb": {
+      "fits": "marginal",
+      "variant": "L BF16 with RAM offload",
+      "basis": "estimate",
+      "notes": "30.64 GB of weights; the vendor runs L on 8 GPUs for its 45 ms per frame figure"
+    },
+    "mac-16-24gb": {
+      "fits": "unknown",
+      "variant": "S",
+      "basis": "estimate"
+    },
+    "mac-32gb": {
+      "fits": "unknown",
+      "variant": "S",
+      "basis": "estimate"
+    },
+    "mac-64gb+": {
+      "fits": "unknown",
+      "variant": "S / L",
+      "basis": "estimate"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "reference code apple-aiml-research/ml-fastframes (PyTorch, CUDA 12.8)"
+    ]
+  },
+  "benchmarks": [
+    {
+      "name": "Latency per frame, 480p",
+      "score": 36,
+      "unit": "ms",
+      "kind": "vendor",
+      "variant": "FastFrames-S, single B200 (paper abstract); card profile on 1 GPU: 35.4 ms",
+      "source": "https://arxiv.org/abs/2611.23226"
+    },
+    {
+      "name": "Latency per frame, 480p",
+      "score": 45,
+      "unit": "ms",
+      "kind": "vendor",
+      "variant": "FastFrames-L, 8x B200 node",
+      "source": "https://arxiv.org/abs/2611.23226"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "Interactive latency: 28 and 22 responses per second claimed (paper abstract)",
+      "S claimed to match a state-of-the-art model nearly 8x slower in quality (paper abstract, VBench table not read)"
+    ],
+    "weaknesses": [
+      "Research-only license",
+      "Only NVIDIA CUDA reference code; L needs a multi-GPU node for the quoted latency",
+      "480p, 81 frames at 16 fps"
+    ],
+    "maturity": "Apple Machine Learning Research; paper arXiv 2611.23226 (2026)."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Two-step causal video diffusion with lightweight decoder and KV refiner; S is small enough for any class, but video generation is outside Tona's coding-agent purpose, so it is prior art for a possible own video path.",
+    "blockers": [
+      "no Tona video engine"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/apple/FastFrames-S",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "card (raw README), LICENSE, file sizes"
+    },
+    {
+      "url": "https://huggingface.co/apple/FastFrames-L",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "card head and file sizes"
+    },
+    {
+      "url": "https://arxiv.org/abs/2611.23226",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "abstract read through a summarizing fetch"
+    }
+  ],
+  "open_questions": [
+    "VBench quality, semantic and total scores (Table 1 of the paper) not read",
+    "Size and license of the frozen generator weights for S (taken from the Causal-Forcing base repo)",
+    "Speed on any consumer GPU: card gives B200 numbers only",
+    "License file of FastFrames-L not separately opened"
+  ],
+  "last_checked": "2026-11-19"
+}

@@ -1,0 +1,43 @@
+# Weekly, grouped, with a 7-day cooldown: a freshly released version, which is the likeliest to be a compromised
+# one, is not proposed before a week has passed. Security updates ignore the cooldown.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    commit-message:
+      prefix: ci
+      include: scope # titles read `ci(deps): bump ...` (tools/gates/pr_title.py)
+    cooldown:
+      default-days: 7
+    groups:
+      actions:
+        patterns: ["*"]
+
+  - package-ecosystem: pip
+    directories: [/tools/gates, /tools/tests] # the gate and the test tools (requirements.txt each)
+    schedule:
+      interval: weekly
+    commit-message:
+      prefix: build
+      include: scope # titles read `build(deps): bump ...` (tools/gates/pr_title.py)
+    cooldown:
+      default-days: 7
+    groups:
+      python:
+        patterns: ["*"]
+
+  # The hook revisions in .pre-commit-config.yaml (the pip pins inside additional_dependencies are not seen).
+  - package-ecosystem: pre-commit
+    directory: /
+    schedule:
+      interval: weekly
+    commit-message:
+      prefix: build
+      include: scope # titles read `build(deps): bump ...` (tools/gates/pr_title.py)
+    cooldown:
+      default-days: 7
+    groups:
+      hooks:
+        patterns: ["*"]

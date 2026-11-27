@@ -1,0 +1,10 @@
+This is a comprehensive C++ LLM inference engine project. Here's a summary of what it does:
+
+## Overview
+
+**inference-engine** is a local LLM inference engine optimized for one specific hardware platform (AMD RX 9060 XT / gfx1200, Ryzen 5 9600X, 64 GB DDR5), serving an OpenAI- and Anthropic-compatible API for coding-agent workers.
+
+## Architecture
+
+- **Target model:** Qwen3.8-Flash-Next Coder (58 GB GGUF) with 48 layers (36 DeltaNet + 12 QSA), 256-expert MoE, hyper-connections, and a 28.8 GB n-gram PLE table
+- **Reference backend:** A persistent megakernel (`gpu::Mega`) that computes an entire forward pass as a program of ~1,100 GPU ops with in-k

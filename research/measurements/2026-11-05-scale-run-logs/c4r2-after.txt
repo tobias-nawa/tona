@@ -1,0 +1,38 @@
+Fr 6. Nov 11:49:37 CET 2026
+Node 0, zone      DMA      1      1      1      1      1      1      1      1      0      1      2 
+Node 0, zone    DMA32     17     21     27     16      7     13      6      9     10     10    399 
+Node 0, zone   Normal 645910 517986 266422  97341  32811  13126   7115   3089   1584   1944   5373 
+thp_migration_success 0
+thp_migration_fail 0
+thp_migration_split 0
+compact_migrate_scanned 906503445
+compact_free_scanned 1508346538
+compact_isolated 50413552
+compact_stall 55359
+compact_fail 10304
+compact_success 45055
+compact_daemon_wake 91306
+compact_daemon_migrate_scanned 574504130
+compact_daemon_free_scanned 1441797818
+thp_fault_alloc 0
+thp_fault_fallback 0
+thp_fault_fallback_charge 0
+thp_collapse_alloc 0
+thp_collapse_alloc_failed 0
+thp_file_alloc 0
+thp_file_fallback 0
+thp_file_fallback_charge 0
+thp_file_mapped 0
+thp_split_page 0
+thp_split_page_failed 0
+thp_deferred_split_page 0
+thp_underused_split_page 0
+thp_split_pmd 0
+thp_scan_exceed_none_pte 0
+thp_scan_exceed_swap_pte 0
+thp_scan_exceed_share_pte 0
+thp_split_pud 0
+thp_zero_page_alloc 0
+thp_zero_page_alloc_failed 0
+thp_swpout 0
+thp_swpout_fallback 0

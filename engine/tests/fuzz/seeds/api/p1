@@ -1,0 +1,12 @@
+denke </think>
+
+Text <tool_call>
+<function=f>
+<parameter=a>
+5
+</parameter>
+<parameter=b>
+x <y>
+</parameter>
+</function>
+</tool_call>

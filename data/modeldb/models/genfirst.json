@@ -1,0 +1,128 @@
+{
+  "id": "genfirst",
+  "name": "GenFirst (EiT end-to-end VAEs and priors)",
+  "vendor": "ByteDance Seed",
+  "release_date": "2026-08",
+  "purpose": "Research release for end-to-end training of a latent VAE jointly with a generative prior without latent collapse: phase 1 lets the prior shape the latent geometry, phase 2 lowers prior and entropy weights tenfold so the decoder recovers detail (card).",
+  "tasks": [
+    "image-generation"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "image"
+    ]
+  },
+  "license": {
+    "name": "CC BY-NC 4.0 (weights); MIT (code)",
+    "verified": true,
+    "commercial_use": "no",
+    "redistribution": "limited",
+    "notes": "Card states the weights are CC BY-NC 4.0, non-commercial research use only, stricter than the MIT code; the repository LICENSE file read is the MIT text (Copyright 2025 ByteDance and Leng/Singh). The weights are derivative of upstream models (SD VAE, VA-VAE, FLUX.1 VAE, CLIP) whose terms continue to apply. The CC BY-NC 4.0 text was not read separately. Verdict policy (README, 2026-11-19): this licence term does not lower tona_fit; kept here for an installer label."
+  },
+  "architecture": {
+    "kind": "latent diffusion (flow matching) with a jointly trained VAE; SiT-XL (class-conditional) and MMDiT-XL (text-to-image) priors, 28 blocks, width 1152, about 675M parameters; frozen CLIP-L text encoder",
+    "params_total_b": 0.675,
+    "why_this_design": "Card: a latent space that a diffusion prior fits well while remaining a good autoencoder."
+  },
+  "variants": [
+    {
+      "repo": "ByteDance-Seed/GenFirst",
+      "format": "PyTorch .pt checkpoints FP32 (pickle)",
+      "size_gb": 207.9,
+      "official": true,
+      "notes": "whole repo: class-conditional 65.6 GB, text-to-image 42.7, shared latents 42.7, unified text-image 47.4, VAEs 9.5; a single text-to-image prior plus VAE is a small fraction of that (file-level sizes not read)"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "675M-parameter prior at 512x512; per-checkpoint size not read"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "reference code ByteDance-Seed/GenFirst (PyTorch, raw .pt, not diffusers)"
+    ]
+  },
+  "benchmarks": [
+    {
+      "name": "GenEval overall",
+      "score": 0.8987,
+      "kind": "vendor",
+      "variant": "EiT T2I variant A, 512x512, no prompt rewriting",
+      "source": "https://huggingface.co/ByteDance-Seed/GenFirst"
+    },
+    {
+      "name": "DPG-Bench",
+      "score": 82.6,
+      "kind": "vendor",
+      "variant": "EiT T2I variant A, 512x512",
+      "source": "https://huggingface.co/ByteDance-Seed/GenFirst"
+    },
+    {
+      "name": "ImageNet 256 gFID (guided)",
+      "score": 0.969,
+      "kind": "vendor",
+      "variant": "EiT 800 epochs, f16d32 VAE",
+      "source": "https://huggingface.co/ByteDance-Seed/GenFirst"
+    }
+  ],
+  "soft": {
+    "weaknesses": [
+      "Research artifact: 512x512 text-to-image with CLIP-L, no product-grade model",
+      "Non-commercial weights; checkpoints are pickles that must be loaded with weights_only=False",
+      "The autoregressive EAR instantiation of the paper is not released"
+    ]
+  },
+  "tona_fit": {
+    "verdict": "reject",
+    "reason": "A 512x512 research prior with no role for a coding worker; of interest only as a technique (jointly trained VAE and prior) for a future own image path.",
+    "blockers": [
+      "no Tona image engine"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/ByteDance-Seed/GenFirst",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "card, LICENSE (MIT code), file listing"
+    }
+  ],
+  "open_questions": [
+    "Release date: HF createdAt not fetched; paper arXiv 2608.29335",
+    "File size of a single text-to-image prior plus VAE not itemized",
+    "Independent evaluation: none found"
+  ],
+  "last_checked": "2026-11-19"
+}

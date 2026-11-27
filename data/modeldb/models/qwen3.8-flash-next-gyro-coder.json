@@ -1,0 +1,213 @@
+{
+  "id": "qwen3.8-flash-next-gyro-coder",
+  "name": "Qwen3.8-Flash-Next Gyro-Coder (agentionai)",
+  "vendor": "agentionai (community)",
+  "release_date": "2026-10-21",
+  "lineage": {
+    "base_model": "Qwen/Qwen3.8-Flash-Next",
+    "how_derived": "256 of 512 experts kept by evolutionary search over about 2,200 candidate sets, trellis-coded quantization with Hadamard rotation (QTIP family), 2.125 bpw (Coder) or 3.2 bpw (Coder-L)"
+  },
+  "purpose": "Builder states: a 125B-class coding model on a single 24 GB card (RTX 3090/4090, 7900 XTX) or 32 GB card, for local coding help; Gyro-S/M variants for general work.",
+  "tasks": [
+    "coding"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en"
+    ],
+    "programming": {
+      "C++": {
+        "level": "unknown",
+        "evidence": "KLD 0.118, top-1 94.5 % against Q8_0 (builder, agreement not accuracy)",
+        "sources": [
+          "https://huggingface.co/agentionai/Qwen3.8-Flash-Next-Gyro-Coder-GGUF"
+        ]
+      },
+      "Rust": {
+        "level": "unknown",
+        "evidence": "KLD 0.223, top-1 88.7 % against Q8_0, the weakest compiled language in the builder's table; no task accuracy",
+        "sources": [
+          "https://huggingface.co/agentionai/Qwen3.8-Flash-Next-Gyro-Coder-GGUF"
+        ]
+      }
+    }
+  },
+  "license": {
+    "name": "Qwen Community License 1.0 (LICENSE file of the Gyro repo is the Qwen text); Gyro format and tools Apache-2.0 per card",
+    "verified": true,
+    "commercial_use": "limited",
+    "redistribution": "yes",
+    "notes": "LICENSE read: grant to \"use, copy, modify, merge, publish, distribute, sublicense, sell, deploy, host, fine-tune\" with condition 2: a licensee that \"conducts a Model as a Service or AI Work Assistant business\" needs a separate license from Qwen for commercial use; internal Use that does not make the model or its outputs available to third parties is exempt. Condition 1: model name displayed above 100 M monthly users or USD 20 M monthly revenue. An AI Work Assistant is \"an independent AI-powered product primarily designed for AI-assisted coding or office productivity\"."
+  },
+  "architecture": {
+    "kind": "same as Qwen3.8-Flash-Next with half the experts and trellis quantization",
+    "gguf_arch": "qwen4_exp",
+    "params_total_b": 65,
+    "params_active_b": 6,
+    "experts": 256,
+    "experts_active": 10,
+    "context_native": 262144,
+    "drafter": "MTP",
+    "why_this_design": "Builder: bring a 125B MoE to one consumer GPU; the n-gram table (50.7 GiB) stays on disk."
+  },
+  "variants": [
+    {
+      "repo": "agentionai/Qwen3.8-Flash-Next-Gyro-Coder-GGUF",
+      "format": "TQ2_0 (19.92 GiB on GPU, no-PLE file 21.4 GB, full 75.8 GB), TQ3_0 Coder-L (27.54 GiB, 84 GB full)",
+      "size_gb": 21.4,
+      "bits_per_weight": 2.125,
+      "official": false,
+      "notes": "v1.2 of 2026-10-29 replaced v1.0 and v1.1 under the same file name"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "estimate from file size against the budget of docs/hardware (12 GB VRAM with 64 GB RAM); experts beyond VRAM stream from RAM, decode speed depends on that path",
+      "variant": "TQ2_0 no-PLE file plus 50.7 GiB table on SSD"
+    },
+    "pc-16gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "notes": "builder targets 24 GB; with 16 GB VRAM about 157 of 256 expert slots would fit (research/08 estimate); table needs fast NVMe"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "estimate from file size against the budget of docs/hardware (24 GB VRAM with 96 GB RAM); experts beyond VRAM stream from RAM, decode speed depends on that path",
+      "variant": "TQ2_0 no-PLE file plus 50.7 GiB table on SSD"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "estimate from file size against the budget of docs/hardware (32 GB VRAM with 128 GB RAM); experts beyond VRAM stream from RAM, decode speed depends on that path",
+      "variant": "TQ2_0 no-PLE file plus 50.7 GiB table on SSD"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "basis": "estimate",
+      "notes": "estimate from file size against the budget of docs/hardware (unified memory 16-24 GB, GPU share about 12 GB)",
+      "variant": "TQ2_0 no-PLE file plus 50.7 GiB table on SSD"
+    },
+    "mac-32gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "notes": "estimate from file size against the budget of docs/hardware (unified 32 GB, GPU share about 22 GB)",
+      "variant": "TQ2_0 no-PLE file plus 50.7 GiB table on SSD"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "estimate from file size against the budget of docs/hardware (unified 64 GB, GPU share about 52 GB)",
+      "variant": "TQ2_0 no-PLE file plus 50.7 GiB table on SSD"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "agentionai llama.cpp fork (Docker, Vulkan or CUDA)",
+      "strix-llama.cpp"
+    ],
+    "notes": "stock llama.cpp, LM Studio and Ollama cannot load it; Tona would need trellis dequant kernels (research/08 effort M)"
+  },
+  "benchmarks": [
+    {
+      "name": "Auto-graded coding tasks",
+      "score": "13/16",
+      "kind": "vendor",
+      "source": "https://huggingface.co/agentionai/Qwen3.8-Flash-Next-Gyro-Coder-GGUF",
+      "variant": "Gyro-Coder TQ2_0 (same experts at 8 bit: 15/16; Coder-L: 13/16)",
+      "harness": "builder's own task set"
+    },
+    {
+      "name": "Tool calls without format error",
+      "score": "292/292",
+      "kind": "vendor",
+      "source": "https://huggingface.co/agentionai/Qwen3.8-Flash-Next-Gyro-Coder-GGUF",
+      "variant": "v1.2"
+    },
+    {
+      "name": "Decode speed on Strix Halo (Vulkan, MTP)",
+      "score": "11 to 22 per stream",
+      "kind": "vendor",
+      "source": "https://huggingface.co/agentionai/Qwen3.8-Flash-Next-Gyro-Coder-GGUF",
+      "variant": "TQ2_0",
+      "harness": "two streams",
+      "unit": "tok/s (decode)"
+    },
+    {
+      "name": "AA Coding Index (aggregator mirror), Qwen3.8-Flash-Next base",
+      "score": 73.0,
+      "kind": "independent",
+      "source": "https://benchlm.ai/benchmarks/aacodingindex",
+      "variant": "base model, not the Gyro quant",
+      "unit": "%",
+      "date": "2026-11-19",
+      "harness": "aggregator mirror of the Artificial Analysis Coding Index, read 2026-11-19; no per-row dates; upstream AA pages not reachable"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "Smaller resident weights than ISTA's Coder (19.9 vs 29.6 GB)",
+      "No SWE-bench published but zero tool-call format errors in 292 calls (v1.2)"
+    ],
+    "weaknesses": [
+      "Needs a fork of llama.cpp; format flagged experimental",
+      "General text and knowledge degrade (held-out KLD 0.579)",
+      "Bash task 3/10 and four runs hit the 64k limit for Coder-L",
+      "Symbol tables weak (Greek letters correct in 2 of 5 runs)"
+    ],
+    "behavior": "Best with clearly specified tasks.",
+    "maturity": "Small community vendor, format changes between versions (v1.0 to v1.2 within days)."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Would raise the expert cache hit rate on the reference GPU (157 instead of 100 slots, estimate) but needs a new quantization format, kernels and has no agent benchmark; compare to ISTA's Coder before any work.",
+    "blockers": [
+      "trellis format, fork-only",
+      "no SWE-bench"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/agentionai/Qwen3.8-Flash-Next-Gyro-Coder-GGUF",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "page text read through a summarizer (WebFetch)"
+    },
+    {
+      "url": "research/08-models.md",
+      "kind": "own",
+      "checked": "2026-11-19",
+      "note": "slot arithmetic"
+    },
+    {
+      "url": "https://huggingface.co/agentionai/Qwen3.8-Flash-Next-Gyro-Coder-GGUF/raw/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://benchlm.ai/benchmarks/aacodingindex",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "aggregator mirror of the Artificial Analysis Coding Index, read 2026-11-19; no per-row dates; upstream AA pages not reachable"
+    }
+  ],
+  "open_questions": [
+    "SWE-bench or other agent benchmark",
+    "License summary of the format",
+    "Independent user reports",
+    "Per-language quality and independent coding evidence: the Aider polyglot board is stale (mirrors: last update 2025-11-20, no entry for any model of this database), LiveCodeBench and swebench.com publish no per-language numbers for it that we could retrieve. Check: our own Exercism polyglot run per language."
+  ],
+  "last_checked": "2026-11-19"
+}

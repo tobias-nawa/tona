@@ -1,0 +1,20 @@
+== hw_report
+### Test conditions
+
+- CPU: Apple M1 Max, 10 cores / 10 threads
+- GPU: Apple M1 Max, 32.0 GiB unified memory
+- RAM: 32.0 GiB
+- OS: macOS 27.0.1, kernel 27.0.0 (arm64)
+- Driver and toolkit: no toolkit found
+- TONA_* variables: none set
+- cgroup limits of this shell: none set
+- Load average (1, 5, 15 min): 2.1, 4.35, 4.17
+- CPU use by other programs over 0.5 s: 4.5 % of all threads
+- sandbox: no
+- Commit: `c60b97c` (dirty tree)
+== before
+- Quiet check (2026-11-14 12:59:54): warning
+  - warning: other programs use 5.7 % of all CPU threads
+- Quiet check (2026-11-14 14:00:58): do not measure
+  - do not measure: the GPU is 97 % busy
+- Quiet check (2026-11-14 14:01:19): ok

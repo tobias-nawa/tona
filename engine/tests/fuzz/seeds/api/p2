@@ -1,0 +1,6 @@
+<tool_call>
+{"name": "f", "arguments": {"a": 1}}
+</tool_call><tool_call>
+<function=f>
+<parameter=c>
+[1,

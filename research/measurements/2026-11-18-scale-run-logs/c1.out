@@ -1,0 +1,37 @@
+{
+ "ctx": 32768,
+ "metrics": {
+  "decode-code": 94.7,
+  "decode-text": 68.1
+ },
+ "shas": {},
+ "counters": {},
+ "peaks": {
+  "rss_gb": 0.3850135803222656,
+  "gtt_gb": 26.12289810180664,
+  "vram_gb": 14.96010971069336,
+  "hwm_gb": 6.7926177978515625,
+  "avail_min_gb": 30.53955841064453
+ },
+ "load": {
+  "cpu_own": 327.5,
+  "cpu_system": 23.7,
+  "cpu_other": 5.2,
+  "gpu_own": 0.0,
+  "gpu_system": 0.0,
+  "gpu_other": 3.1,
+  "pageins": 27437.0,
+  "swapins": 0.0,
+  "compressions": 0.0,
+  "level_min": 51,
+  "backup_share": 0.0,
+  "warning_share": 0.0,
+  "battery_share": 0.0,
+  "cpu_limit_min": null,
+  "power_mode": null,
+  "seconds": 61,
+  "idle_before_s": null,
+  "ready_s": 10.0
+ }
+}
+wall 62 s

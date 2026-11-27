@@ -1,0 +1,208 @@
+{
+  "id": "surya-ocr-2.5",
+  "name": "Surya OCR 2.5",
+  "vendor": "Datalab",
+  "release_date": "2026-10-25",
+  "lineage": {
+    "family": "Surya",
+    "base_model": "Surya 2 (earlier checkpoint of the same line)",
+    "how_derived": "single Qwen3.5-style vision-language model for layout, OCR and table reading, trained on diverse document images (card, Training section)"
+  },
+  "purpose": "One small VLM that does layout analysis with reading order, full-page or per-block OCR and table reading as HTML, for document intelligence pipelines; the vendor also sells a managed platform and a larger model (Chandra).",
+  "tasks": [
+    "documents",
+    "vision"
+  ],
+  "modalities": {
+    "input": [
+      "image",
+      "document"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "many"
+    ]
+  },
+  "license": {
+    "name": "AI Pubs Open RAIL-M (modified); code Apache-2.0",
+    "verified": true,
+    "commercial_use": "limited",
+    "redistribution": "limited",
+    "notes": "LICENSE read. Weights: free for research, personal use and startups; use is barred for any purpose if you (or your employer/affiliates) had more than 5M USD gross revenue in the prior year or raised more than 5M USD in funding (personal/research use excepted), or if you offer a product competing with the licensor. Share-a-Like clause applies the licence to the model, derivatives and outputs; use-based restrictions must be passed on; hosting as a service counts as distribution; broader commercial licences are sold by the vendor. Verdict policy (README, 2026-11-19): this licence term does not lower tona_fit; kept here for an installer label."
+  },
+  "architecture": {
+    "kind": "vision-language, Qwen3.5-style hybrid (18 linear-attention plus 6 full-attention layers, 24 layers), 12-layer vision tower",
+    "params_total_b": 0.689,
+    "layers": 24,
+    "attention": "linear attention with a full-attention layer every 4th layer",
+    "recurrent": "gated linear attention (Qwen3.5 style)",
+    "context_native": 262144,
+    "drafter": "none shipped (config mtp_num_hidden_layers 0)",
+    "why_this_design": "not stated beyond one VLM handling layout, OCR and tables so one server replaces several models; text-line detection stays a separate small torch model (card Training section)"
+  },
+  "variants": [
+    {
+      "repo": "datalab-to/surya-ocr-2.5",
+      "format": "safetensors BF16",
+      "size_gb": 1.38,
+      "official": true,
+      "notes": "no official GGUF repo found; the card documents a script that builds GGUF plus mmproj for llama.cpp and an MLX conversion"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "variant": "BF16 / Q8_0 (about 1.4 GB, plus projector)",
+      "basis": "estimate",
+      "notes": "1.5 GB against a VRAM budget of 9.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "BF16 / Q8_0 (about 1.4 GB, plus projector)",
+      "basis": "estimate",
+      "notes": "1.5 GB against a VRAM budget of 13.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "BF16 / Q8_0 (about 1.4 GB, plus projector)",
+      "basis": "estimate",
+      "notes": "1.5 GB against a VRAM budget of 21.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "BF16 / Q8_0 (about 1.4 GB, plus projector)",
+      "basis": "estimate",
+      "notes": "1.5 GB against a VRAM budget of 29.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "variant": "BF16 / Q8_0 (about 1.4 GB, plus projector)",
+      "basis": "estimate",
+      "notes": "1.5 GB against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "BF16 / Q8_0 (about 1.4 GB, plus projector)",
+      "basis": "estimate",
+      "notes": "1.5 GB against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "BF16 / Q8_0 (about 1.4 GB, plus projector)",
+      "basis": "estimate",
+      "notes": "1.5 GB against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "vLLM (Docker, NVIDIA)",
+      "MLX (Apple Silicon)",
+      "transformers"
+    ],
+    "notes": "The surya package auto-spawns vLLM or llama-server; the card says llama.cpp serves it on CPU and Apple Silicon. Surya 2.5 gives no row/column geometry for tables (Surya 2 checkpoint needed)."
+  },
+  "benchmarks": [
+    {
+      "name": "OmniParseBench headline (mean of text, table, layout)",
+      "score": 85.9,
+      "kind": "vendor",
+      "variant": "BF16, 192 DPI, surya-ocr 0.23.0",
+      "harness": "public scorer, one run",
+      "source": "https://huggingface.co/datalab-to/surya-ocr-2.5"
+    },
+    {
+      "name": "OmniParseBench text / tables / layout",
+      "score": "83.8 / 78.3 / 95.7",
+      "kind": "vendor",
+      "variant": "BF16",
+      "source": "https://huggingface.co/datalab-to/surya-ocr-2.5"
+    },
+    {
+      "name": "olmOCR-bench",
+      "score": 83.7,
+      "kind": "vendor",
+      "variant": "BF16, mean of three passes",
+      "source": "https://huggingface.co/datalab-to/surya-ocr-2.5"
+    },
+    {
+      "name": "internal multilingual set, 91 languages",
+      "score": 74.9,
+      "unit": "%",
+      "kind": "vendor",
+      "source": "https://huggingface.co/datalab-to/surya-ocr-2.5"
+    },
+    {
+      "name": "throughput H100 vLLM, 192 DPI",
+      "score": 4.5,
+      "unit": "pages/s",
+      "kind": "vendor",
+      "source": "https://huggingface.co/datalab-to/surya-ocr-2.5"
+    },
+    {
+      "name": "throughput M4 Max (36 GB) llama.cpp Metal, 96 DPI, 8 parallel",
+      "score": 0.19,
+      "unit": "pages/s",
+      "kind": "vendor",
+      "variant": "BF16 (Q8_0: 0.198); about 1.4k tokens per page",
+      "source": "https://huggingface.co/datalab-to/surya-ocr-2.5"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "layout labels, reading order and tables from one 0.7B model",
+      "writes about a third as many tokens per page as Surya 2 (vendor measurement)"
+    ],
+    "weaknesses": [
+      "not meant for photos or natural scenes (card Limitations)",
+      "no table row/column geometry in 2.5",
+      "old scans and old math are its weakest olmOCR-bench slices (44.3 and 78.6)"
+    ],
+    "best_for": [
+      "scanned and born-digital pages to HTML/Markdown with layout"
+    ],
+    "avoid_for": [
+      "natural-scene text",
+      "commercial use above the revenue/funding thresholds without a licence from the vendor"
+    ],
+    "maturity": "third generation of the Surya line; 130k downloads of the repo in the first month"
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "0.7B, strong self-reported parsing and layout, runs through llama.cpp, fits every class. Benchmarks are all vendor-made on its own OmniParseBench, so compare on our own German documents.",
+    "blockers": [
+      "no Tona module for the Qwen3.5-style OCR model plus layout JSON mode"
+    ]
+  },
+  "open_questions": [
+    "independent scores (OmniParseBench is the vendor's own benchmark)",
+    "German page quality (per-language table exists in the card but only for the vendor's internal set)",
+    "whether the Share-a-Like clause also binds outputs of users"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/datalab-to/surya-ocr-2.5",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README and config.json read"
+    },
+    {
+      "url": "https://huggingface.co/datalab-to/surya-ocr-2.5/raw/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "licence text read"
+    },
+    {
+      "url": "https://huggingface.co/api/models/datalab-to/surya-ocr-2.5?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "file size"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

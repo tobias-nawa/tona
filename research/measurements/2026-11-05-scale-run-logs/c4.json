@@ -1,0 +1,189 @@
+{
+ "label": "c4",
+ "build": "merged",
+ "env": {
+  "TONA_DIAG": "1"
+ },
+ "jobs": [
+  {
+   "ctx": 1048576,
+   "env": {
+    "TONA_SEQS": "1"
+   },
+   "log": "/var/tmp/claude/scale1105/c4-server-1-ctx1048576.log",
+   "start_s": 24.72020252799848,
+   "metrics": {
+    "prefill@512000": 1430.8385040702697,
+    "decode@512000": 59.8353554443389,
+    "prefill@1000000": 1103.6679120049132,
+    "decode@1000000": 42.65466155373332
+   },
+   "shas": {
+    "512000": "2b5e4d00485e53ae",
+    "1000000": "e5c950ff2fae95bc"
+   },
+   "counters": {
+    "512000": {
+     "expert_hits": 67381,
+     "expert_misses": 9634
+    },
+    "1000000": {
+     "expert_hits": 10493,
+     "expert_misses": 1113
+    }
+   },
+   "status": {
+    "ready": true,
+    "uptime": 1297.461147704,
+    "phases": [
+     {
+      "name": "Open model",
+      "done": 0.0,
+      "total": 0.0,
+      "t0": 0.000110768,
+      "t1": 0.092652268
+     },
+     {
+      "name": "Weights into VRAM",
+      "done": 6893261312.0,
+      "total": 37377879552.0,
+      "t0": 0.092652268,
+      "t1": 4.687129646
+     },
+     {
+      "name": "Expert cache in VRAM",
+      "done": 48.0,
+      "total": 48.0,
+      "t0": 4.687129646,
+      "t1": 8.901834547
+     },
+     {
+      "name": "Pinning experts in RAM",
+      "done": 48.0,
+      "total": 48.0,
+      "t0": 8.901834547,
+      "t1": 21.673299669
+     },
+     {
+      "name": "Releasing page cache",
+      "done": 0.0,
+      "total": 0.0,
+      "t0": 21.673299669,
+      "t1": 22.765004238
+     }
+    ],
+    "system": {
+     "gpu": {
+      "vram_used": 16460312576.0,
+      "vram_total": 17095983104.0,
+      "busy": 90.0,
+      "power_w": 100.0,
+      "power_cap_w": 182.0,
+      "sclk_mhz": 2812.0,
+      "temp_c": 55.0,
+      "temp_junction_c": 62.0
+     },
+     "ram": {
+      "total": 64924278784.0,
+      "available": 14745329664.0
+     }
+    },
+    "config": {
+     "model": "Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf",
+     "drafter": "mtp",
+     "host": "127.0.0.1",
+     "port": 8097,
+     "n_ctx": 1048576,
+     "pid": 168654,
+     "kv_gb": 14.495514624,
+     "kv_in": "RAM",
+     "vram_gb": 14.019295188,
+     "pinned_gb": 25.1461632,
+     "slots": 68,
+     "load_s": 22.76489429
+    },
+    "engine": {
+     "state": "idle",
+     "elapsed": 0.0,
+     "prompt": 0,
+     "prefill_done": 0,
+     "prefill_total": 0,
+     "out_tokens": 0,
+     "tok_s": 0.0,
+     "active": [],
+     "slots": 1,
+     "queue": 0,
+     "waiting": []
+    },
+    "totals": {
+     "requests": 2,
+     "passes": 86,
+     "gen_tokens": 225,
+     "tokens_per_pass": 2.616279069767442,
+     "stashed": 0,
+     "on_disk": 0,
+     "expert_hits": 77874,
+     "expert_misses": 10747,
+     "early_hits": 15851,
+     "early_misses": 2308,
+     "mtp_passes": 239,
+     "multi_passes": 0,
+     "yields": 0
+    },
+    "recent": [
+     {
+      "time": 1793921360,
+      "prompt": 511946,
+      "reused": 0,
+      "computed": 511946,
+      "prefill_s": 357.794397162,
+      "out": 200,
+      "gen_s": 3.342505422,
+      "tok_s": 59.8353554443389,
+      "prefill_tok_s": 1430.8385040702697,
+      "tokens_per_pass": 2.689189189189189,
+      "slot": -1,
+      "cancel": false,
+      "effort": "off",
+      "think_tokens": 0,
+      "think_budget": -1,
+      "project": "",
+      "session": "",
+      "agent": "",
+      "role": "main"
+     },
+     {
+      "time": 1793922270,
+      "prompt": 998910,
+      "reused": 0,
+      "computed": 998910,
+      "prefill_s": 905.082035216,
+      "out": 26,
+      "gen_s": 0.609546508,
+      "tok_s": 42.65466155373332,
+      "prefill_tok_s": 1103.6679120049132,
+      "tokens_per_pass": 2.1666666666666665,
+      "slot": -1,
+      "cancel": false,
+      "effort": "off",
+      "think_tokens": 0,
+      "think_budget": -1,
+      "project": "",
+      "session": "",
+      "agent": "",
+      "role": "main"
+     }
+    ]
+   },
+   "hwm_gb_final": 17.181987762451172,
+   "peaks": {
+    "rss_gb": 11.456523895263672,
+    "gtt_gb": 29.22848892211914,
+    "vram_gb": 15.332714080810547,
+    "hwm_gb": 17.181987762451172,
+    "avail_min_gb": 13.429561614990234
+   }
+  }
+ ],
+ "wall_s": 1297.9215848029999
+}

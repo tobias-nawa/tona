@@ -1,0 +1,69 @@
+{
+  "id": "pplx-embed-v2-context",
+  "name": "pplx-embed-v2-context (9B and 0.6B)",
+  "vendor": "Perplexity",
+  "release_date": "2026-10-28",
+  "lineage": {
+    "base_model": "pplx-embed-v2-late-9b (9B) and pplx-embed-v2-late-0.6b (0.6B); Qwen3.5-style vision-language backbone (model_type pplx_contextual_qwen3_5)",
+    "how_derived": "fine-tuned by distilling graded chunk-level relevance from a query-aware context compression model, so no gold-chunk labels are needed (paper abstract)",
+    "family": "pplx-embed"
+  },
+  "purpose": "Contextual embeddings that represent a chunk with respect to its whole document and surface the evidence needed to verify an answer, not only a single gold chunk; also embeds images and visual documents, with contextual chunking of images (paper abstract, card).",
+  "tasks": ["embeddings", "documents", "vision"],
+  "modalities": {"input": ["text", "image", "document"], "output": ["embedding"]},
+  "languages": {"natural": ["many"]},
+  "license": {
+    "name": "MIT (9B card header)",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "9B card header says mit; the 0.6B card header has no license field; no LICENSE file opened."
+  },
+  "architecture": {
+    "kind": "hybrid linear-attention plus full-attention vision-language encoder (full attention every 4th layer, hidden 4096 in the 9B config), 2048-dimensional embeddings with Matryoshka prefix 1024",
+    "params_total_b": 8.4,
+    "attention": "full attention every 4th layer, linear attention in the others",
+    "recurrent": "linear attention (needs flash-linear-attention and causal-conv1d for the fast path)",
+    "why_this_design": "Paper: a vision-language backbone is used and the visual retrieval ability of the 9B transfers from its base model, which motivated chunking of image inputs into horizontal bands. Matryoshka losses at 1024 and 2048 dimensions; the 1024 prefix shares an embedding space with the 0.6B so documents and queries can be embedded by different models."
+  },
+  "variants": [
+    {"repo": "perplexity-ai/pplx-embed-v2-context-9b", "format": "safetensors (about 4 bytes per parameter as stored, 8.4B parameters)", "size_gb": 33.62, "official": true, "notes": "load in bfloat16 per card example, about 17 GB in memory; native outputs are unnormalized int8-quantized embeddings"},
+    {"repo": "perplexity-ai/pplx-embed-v2-context-0.6b", "format": "safetensors", "size_gb": 2.4, "official": true, "notes": "0.6B parameters, compatible with the 9B's 1024-dim prefix"}
+  ],
+  "hardware_fit": {
+    "pc-12gb": {"fits": "yes", "variant": "0.6B", "basis": "estimate", "notes": "9B needs about 17 GB in bf16"},
+    "pc-16gb": {"fits": "marginal", "variant": "9B bf16 17 GB needs a quant; 0.6B fits easily", "basis": "estimate"},
+    "pc-24gb": {"fits": "yes", "variant": "9B bf16", "basis": "estimate"},
+    "pc-32gb": {"fits": "yes", "variant": "9B bf16", "basis": "estimate"},
+    "mac-16-24gb": {"fits": "yes", "variant": "0.6B", "basis": "estimate"},
+    "mac-32gb": {"fits": "yes", "variant": "9B bf16", "basis": "estimate"},
+    "mac-64gb+": {"fits": "yes", "variant": "9B bf16", "basis": "estimate"}
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": ["Transformers >= 5.4 with trust_remote_code"],
+    "notes": "Custom code; queries must use encode_queries, documents encode (card)."
+  },
+  "benchmarks": [
+    {"name": "Context-bench, Q2D-Chunk and ConTEB (contextual embedding benchmarks)", "score": "new state of the art (numbers in paper tables)", "kind": "vendor", "variant": "9B", "source": "https://arxiv.org/abs/2610.38854", "date": "2026-10-28", "harness": "two of the benchmarks were introduced by the authors"}
+  ],
+  "soft": {
+    "strengths": ["Contextual chunk embeddings for retrieval-augmented search over long documents", "Documents embedded with the 0.6B can be queried with the 9B at 1024 dimensions", "Image embeddings through horizontal bands"],
+    "weaknesses": ["Numeric results not read (paper PDF not opened)", "Non-overlapping chunks required in contextual mode", "Unnormalized int8-quantized native outputs need handling"],
+    "best_for": ["long-document retrieval where chunk meaning depends on the surrounding document"],
+    "maturity": "Perplexity research; 9B 1.2k and 0.6B 1.7k downloads on the HF API 2026-11-19."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "A contextual embedder with a 0.6B variant is relevant to Tona's retrieval for documents and code, but the backbone is hybrid linear attention with custom code, and numbers on German or code retrieval are missing; compare with qwen3-embedding and jina-embeddings-v5 records.",
+    "blockers": ["custom hybrid linear-attention vision-language backbone not in Tona", "no numeric benchmark read", "license verified only from card header"]
+  },
+  "sources": [
+    {"url": "https://huggingface.co/perplexity-ai/pplx-embed-v2-context-9b", "kind": "primary", "checked": "2026-11-19", "note": "README and config.json read"},
+    {"url": "https://huggingface.co/perplexity-ai/pplx-embed-v2-context-0.6b", "kind": "primary", "checked": "2026-11-19", "note": "card head read"},
+    {"url": "https://arxiv.org/abs/2610.38854", "kind": "primary", "checked": "2026-11-19", "note": "abstract only"}
+  ],
+  "open_questions": ["MTEB and ConTEB numbers per size", "German and code retrieval quality", "License of the 0.6B", "Why the stored weights are fp32-sized (33.6 GB for 8.4B parameters)"],
+  "last_checked": "2026-11-19"
+}

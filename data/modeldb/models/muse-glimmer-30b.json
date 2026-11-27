@@ -1,0 +1,237 @@
+{
+  "id": "muse-glimmer-30b",
+  "name": "Muse Glimmer-30B (Meta)",
+  "vendor": "Meta",
+  "release_date": "2026-08-09",
+  "lineage": {
+    "how_derived": "distilled from Muse Spark",
+    "family": "Muse"
+  },
+  "purpose": "Meta states: autonomous agentic tasks on consumer hardware: local agents, coding agents, tool calling, multimodal reasoning, synthetic data and LLM-as-judge; built to run locally without cloud access. Mixed purpose, primary pitch agentic.",
+  "tasks": [
+    "general",
+    "coding",
+    "vision"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "many"
+    ],
+    "programming": {}
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "LICENSE file in the repo read: plain Apache License 2.0 (11,358 bytes, same md5 as the apache.org text). The card adds a usage policy (USAGE_POLICY.md, not opened) and says the model is not intended to be downloaded or used by persons under 18; these are intended-use statements outside the license text."
+  },
+  "architecture": {
+    "kind": "dense transformer with local/global attention and ViT-G/14 perception encoder",
+    "params_total_b": 29.6,
+    "layers": 52,
+    "attention": "3 local (sliding window 2048) : 1 global, GQA 32/2, gated attention",
+    "recurrent": "none",
+    "context_native": 131072,
+    "context_max": 131072,
+    "drafter": "DFlash drafter head (16-token blocks)",
+    "why_this_design": "Card: built to run locally; distillation from Muse Spark; no further rationale given."
+  },
+  "variants": [
+    {
+      "repo": "meta-models/Muse-Glimmer-30B",
+      "format": "4-bit K-Quant-17GB (24 GB VRAM), K-Quant-Dynamic (32 GB), BF16",
+      "size_gb": 17,
+      "official": true,
+      "notes": "degradation 1.0 % (17GB) and 0.2 % (Dynamic) over 15 benchmarks per card"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "no",
+      "basis": "estimate",
+      "notes": "estimate from file size against the budget of docs/hardware (12 GB VRAM with 64 GB RAM)",
+      "variant": "K-Quant-17GB"
+    },
+    "pc-16gb": {
+      "fits": "no",
+      "basis": "estimate",
+      "notes": "estimate from file size against the budget of docs/hardware (16 GB VRAM with 64 GB RAM (reference))",
+      "variant": "K-Quant-17GB"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "estimate from file size against the budget of docs/hardware (24 GB VRAM with 96 GB RAM); dense model, weights must sit in VRAM for speed",
+      "variant": "K-Quant-17GB"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "estimate from file size against the budget of docs/hardware (32 GB VRAM with 128 GB RAM); dense model, weights must sit in VRAM for speed",
+      "variant": "K-Quant-17GB"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "basis": "estimate",
+      "notes": "estimate from file size against the budget of docs/hardware (unified memory 16-24 GB, GPU share about 12 GB)",
+      "variant": "K-Quant-17GB"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "estimate from file size against the budget of docs/hardware (unified 32 GB, GPU share about 22 GB)",
+      "variant": "K-Quant-17GB"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "estimate from file size against the budget of docs/hardware (unified 64 GB, GPU share about 52 GB)",
+      "variant": "K-Quant-17GB"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "ExecuTorch"
+    ],
+    "notes": "GGUF k-quants listed; speeds on RTX 5090 74.9 tok/s baseline, 233 with DFlash (vendor)"
+  },
+  "benchmarks": [
+    {
+      "name": "SWE-bench Verified",
+      "score": 76.0,
+      "kind": "vendor",
+      "source": "https://huggingface.co/meta-models/Muse-Glimmer-30B",
+      "variant": "High reasoning",
+      "unit": "%"
+    },
+    {
+      "name": "SWE-bench Pro",
+      "score": 51.2,
+      "kind": "vendor",
+      "source": "https://huggingface.co/meta-models/Muse-Glimmer-30B",
+      "variant": "High reasoning"
+    },
+    {
+      "name": "Terminal-Bench 2.1",
+      "score": 51.7,
+      "kind": "vendor",
+      "source": "https://huggingface.co/meta-models/Muse-Glimmer-30B",
+      "variant": "High reasoning",
+      "harness": "terminus2"
+    },
+    {
+      "name": "MCP Atlas",
+      "score": 75.5,
+      "kind": "vendor",
+      "source": "https://huggingface.co/meta-models/Muse-Glimmer-30B"
+    },
+    {
+      "name": "GPQA Diamond",
+      "score": 83.5,
+      "kind": "vendor",
+      "source": "https://huggingface.co/meta-models/Muse-Glimmer-30B"
+    },
+    {
+      "name": "AIME 2026",
+      "score": 94.7,
+      "kind": "vendor",
+      "source": "https://huggingface.co/meta-models/Muse-Glimmer-30B"
+    },
+    {
+      "name": "INCLUDE (German, PeerBench DACH)",
+      "score": 86.0,
+      "kind": "independent",
+      "source": "https://dach.peerbench.ai/api/leaderboard.json",
+      "variant": "unspecified",
+      "harness": "PeerBench DACH German Language LLM Index, run by PeerBench; no MMLU-ProX, GermEval, SB10K or ScaLA entry; the larger sibling Muse Spark Open leads the whole index (Elo 1866)",
+      "date": "2026-08-15"
+    },
+    {
+      "name": "MuSR (German, PeerBench DACH)",
+      "score": 86.1,
+      "kind": "independent",
+      "source": "https://dach.peerbench.ai/api/leaderboard.json",
+      "variant": "unspecified",
+      "harness": "PeerBench DACH German Language LLM Index, run by PeerBench; no MMLU-ProX, GermEval, SB10K or ScaLA entry; the larger sibling Muse Spark Open leads the whole index (Elo 1866)",
+      "date": "2026-08-15"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "Best MCP-Atlas score in the 30B class (vendor)",
+      "Vision plus agent in one dense model; 17 GB quant fits 24 GB VRAM"
+    ],
+    "weaknesses": [
+      "Dense: 10.8 GB per pass limits decode on 16 GB cards (about 29 passes/s ceiling, research/08)",
+      "Lower Terminal-Bench than Qwen3.6-27B in Meta's own table (51.7 vs 60.7)"
+    ],
+    "behavior": "Reasoning strength set in the system prompt (low to xhigh); T 1.0, top_p 0.95, top_k 64.",
+    "maturity": "Meta; about 203 quantized derivatives on the Hub.",
+    "user_reports": [
+      {
+        "summary": "Independent C++/CUDA port (NVFP4) runs it at about 53 tok/s on one RTX 5090 using 19.5 GB; the author lists four semantics that break naive ports: gated attention before the output projection, NoPE on the full-attention layers (pattern 3 sliding : 1 full), Gemma-2-style centered norms.",
+        "sentiment": "positive",
+        "source": "https://huggingface.co/meta-models/Muse-Glimmer-30B/discussions/76",
+        "date": "2026-11-19"
+      },
+      {
+        "summary": "LoRA fine-tuning for llama.cpp serving cost a week of trial and error: labels must match the rendered assistant turn exactly, serving must use the same reasoning_strength as training (no \"none\" level), and a malformed header makes llama-server return 500 in reasoning mode.",
+        "sentiment": "mixed",
+        "source": "https://huggingface.co/meta-models/Muse-Glimmer-30B/discussions/63",
+        "date": "2026-09-14"
+      }
+    ]
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "Dense 30B distilled from the leading Muse Spark, Apache-2.0 (text read), purpose-built for local agents with a claimed 17 GB quant for 24 GB cards; independent German scores are strong (INCLUDE DE 86.0, MuSR DE 86.1, on par with Qwen3.8-27B). No Tona backend yet (gated attention, NoPE full layers, centered norms) is only a blocker.",
+    "blockers": [
+      "no Tona backend",
+      "chat template and reasoning_strength handling in llama.cpp need care"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/meta-models/Muse-Glimmer-30B",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "page text read through a summarizer (WebFetch)"
+    },
+    {
+      "url": "research/08-models.md",
+      "kind": "own",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/meta-models/Muse-Glimmer-30B/raw/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "LICENSE file"
+    },
+    {
+      "url": "https://dach.peerbench.ai/api/leaderboard.json",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "PeerBench DACH JSON export (generated 2026-10-25, last run 2026-10-16), read directly"
+    }
+  ],
+  "open_questions": [
+    "Programming languages",
+    "Independent coding results",
+    "Language coverage list (asked on the card discussions, unanswered): card says more than 100 languages",
+    "USAGE_POLICY.md content"
+  ],
+  "last_checked": "2026-11-19"
+}

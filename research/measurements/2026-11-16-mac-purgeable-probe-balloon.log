@@ -1,0 +1,165 @@
+     0.0 s  cycle to 6 GB at 1 GB/s
+     0.0 s  grow 1GB/s   held   0.1 GB  pressure 1  swap + 0.00 GB
+     1.1 s  grow 1GB/s   held   1.1 GB  pressure 1  swap + 0.00 GB
+     2.1 s  grow 1GB/s   held   2.1 GB  pressure 1  swap + 0.00 GB
+     3.1 s  grow 1GB/s   held   3.2 GB  pressure 1  swap + 0.00 GB
+     4.1 s  grow 1GB/s   held   4.2 GB  pressure 1  swap + 0.00 GB
+     5.2 s  grow 1GB/s   held   5.2 GB  pressure 1  swap + 0.00 GB
+     6.3 s  hold         held   6.0 GB  pressure 1  swap + 0.00 GB
+     7.4 s  hold         held   6.0 GB  pressure 1  swap + 0.00 GB
+     8.5 s  hold         held   6.0 GB  pressure 1  swap + 0.00 GB
+     9.5 s  hold         held   6.0 GB  pressure 1  swap + 0.00 GB
+    10.6 s  hold         held   6.0 GB  pressure 1  swap + 0.00 GB
+    11.7 s  hold         held   6.0 GB  pressure 1  swap + 0.00 GB
+    12.8 s  hold         held   6.0 GB  pressure 1  swap + 0.00 GB
+    13.8 s  hold         held   6.0 GB  pressure 1  swap + 0.00 GB
+    14.9 s  hold         held   6.0 GB  pressure 1  swap + 0.00 GB
+    16.0 s  hold         held   6.0 GB  pressure 1  swap + 0.00 GB
+    17.1 s  hold         held   6.0 GB  pressure 1  swap + 0.00 GB
+    18.1 s  hold         held   6.0 GB  pressure 1  swap + 0.00 GB
+    19.2 s  hold         held   6.0 GB  pressure 1  swap + 0.00 GB
+    20.3 s  hold         held   6.0 GB  pressure 1  swap + 0.00 GB
+    21.4 s  hold         held   6.0 GB  pressure 1  swap + 0.00 GB
+    22.5 s  hold         held   6.0 GB  pressure 1  swap + 0.00 GB
+    23.6 s  hold         held   6.0 GB  pressure 1  swap + 0.00 GB
+    24.7 s  hold         held   6.0 GB  pressure 1  swap + 0.00 GB
+    25.8 s  hold         held   6.0 GB  pressure 1  swap + 0.00 GB
+    26.9 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+    28.0 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+    29.1 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+    30.2 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+    31.2 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+    32.3 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+    33.4 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+    34.5 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+    35.6 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+    36.7 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+    37.8 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+    38.8 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+    39.9 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+    41.0 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+    42.1 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+    43.2 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+    44.3 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+    45.4 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+    46.5 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+    47.5 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+    48.6 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+    49.7 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+    50.8 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+    51.9 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+    53.0 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+    54.1 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+    55.2 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+    56.3 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+    56.5 s  cycle to 10 GB at 1 GB/s
+    57.3 s  grow 1GB/s   held   0.7 GB  pressure 1  swap + 0.00 GB
+    58.3 s  grow 1GB/s   held   1.8 GB  pressure 1  swap + 0.00 GB
+    59.3 s  grow 1GB/s   held   2.8 GB  pressure 1  swap + 0.00 GB
+    60.4 s  grow 1GB/s   held   3.9 GB  pressure 1  swap + 0.00 GB
+    61.4 s  grow 1GB/s   held   4.9 GB  pressure 1  swap + 0.00 GB
+    62.4 s  grow 1GB/s   held   5.9 GB  pressure 1  swap + 0.00 GB
+    63.4 s  grow 1GB/s   held   6.9 GB  pressure 1  swap + 0.00 GB
+    64.5 s  grow 1GB/s   held   8.0 GB  pressure 1  swap + 0.00 GB
+    65.5 s  grow 1GB/s   held   9.0 GB  pressure 1  swap + 0.00 GB
+    66.6 s  grow 1GB/s   held  10.1 GB  pressure 1  swap + 0.00 GB
+    67.7 s  hold         held  10.1 GB  pressure 1  swap + 0.00 GB
+    68.8 s  hold         held  10.1 GB  pressure 1  swap + 0.00 GB
+    69.9 s  hold         held  10.1 GB  pressure 1  swap + 0.00 GB
+    71.0 s  hold         held  10.1 GB  pressure 1  swap + 0.00 GB
+    72.1 s  hold         held  10.1 GB  pressure 1  swap + 0.00 GB
+    73.1 s  hold         held  10.1 GB  pressure 1  swap + 0.00 GB
+    74.2 s  hold         held  10.1 GB  pressure 1  swap + 0.00 GB
+    75.3 s  hold         held  10.1 GB  pressure 1  swap + 0.00 GB
+    76.4 s  hold         held  10.1 GB  pressure 1  swap + 0.00 GB
+    77.5 s  hold         held  10.1 GB  pressure 1  swap + 0.00 GB
+    78.6 s  hold         held  10.1 GB  pressure 1  swap + 0.00 GB
+    79.7 s  hold         held  10.1 GB  pressure 1  swap + 0.00 GB
+    80.7 s  hold         held  10.1 GB  pressure 1  swap + 0.00 GB
+    81.8 s  hold         held  10.1 GB  pressure 1  swap + 0.00 GB
+    82.9 s  hold         held  10.1 GB  pressure 1  swap + 0.00 GB
+    83.9 s  hold         held  10.1 GB  pressure 1  swap + 0.00 GB
+    85.0 s  hold         held  10.1 GB  pressure 1  swap + 0.00 GB
+    86.1 s  hold         held  10.1 GB  pressure 1  swap + 0.00 GB
+    87.2 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+    88.3 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+    89.4 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+    90.5 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+    91.5 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+    92.6 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+    93.7 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+    94.8 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+    95.8 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+    96.9 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+    98.0 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+    99.1 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+   100.2 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+   101.3 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+   102.4 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+   103.4 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+   104.5 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+   105.6 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+   106.7 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+   107.8 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+   108.9 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+   109.9 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+   111.0 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+   112.1 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+   113.2 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+   114.3 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+   115.4 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+   116.4 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+   117.0 s  cycle to 6 GB at 1 GB/s
+   117.4 s  grow 1GB/s   held   0.5 GB  pressure 1  swap + 0.00 GB
+   118.4 s  grow 1GB/s   held   1.5 GB  pressure 1  swap + 0.00 GB
+   119.5 s  grow 1GB/s   held   2.6 GB  pressure 1  swap + 0.00 GB
+   120.5 s  grow 1GB/s   held   3.6 GB  pressure 1  swap + 0.00 GB
+   121.6 s  grow 1GB/s   held   4.6 GB  pressure 1  swap + 0.00 GB
+   122.6 s  grow 1GB/s   held   5.6 GB  pressure 1  swap + 0.00 GB
+   123.6 s  hold         held   6.0 GB  pressure 1  swap + 0.00 GB
+   124.7 s  hold         held   6.0 GB  pressure 1  swap + 0.00 GB
+   125.8 s  hold         held   6.0 GB  pressure 1  swap + 0.00 GB
+   126.9 s  hold         held   6.0 GB  pressure 1  swap + 0.00 GB
+   128.0 s  hold         held   6.0 GB  pressure 1  swap + 0.00 GB
+   129.0 s  hold         held   6.0 GB  pressure 1  swap + 0.00 GB
+   130.1 s  hold         held   6.0 GB  pressure 1  swap + 0.00 GB
+   131.2 s  hold         held   6.0 GB  pressure 1  swap + 0.00 GB
+   132.3 s  hold         held   6.0 GB  pressure 1  swap + 0.00 GB
+   133.4 s  hold         held   6.0 GB  pressure 1  swap + 0.00 GB
+   134.5 s  hold         held   6.0 GB  pressure 1  swap + 0.00 GB
+   135.6 s  hold         held   6.0 GB  pressure 1  swap + 0.00 GB
+   136.7 s  hold         held   6.0 GB  pressure 1  swap + 0.00 GB
+   137.7 s  hold         held   6.0 GB  pressure 1  swap + 0.00 GB
+   138.8 s  hold         held   6.0 GB  pressure 1  swap + 0.00 GB
+   139.9 s  hold         held   6.0 GB  pressure 1  swap + 0.00 GB
+   141.0 s  hold         held   6.0 GB  pressure 1  swap + 0.00 GB
+   142.1 s  hold         held   6.0 GB  pressure 1  swap + 0.00 GB
+   143.3 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+   144.4 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+   145.4 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+   146.5 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+   147.6 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+   148.7 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+   149.8 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+   150.9 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+   152.0 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+   153.1 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+   154.2 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+   155.2 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+   156.3 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+   157.4 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+   158.5 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+   159.6 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+   160.7 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+   161.8 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+   162.9 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+   164.0 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+   165.0 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+   166.1 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+   167.2 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+   168.3 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+   169.4 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+   170.4 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+   171.5 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+   172.6 s  released     held   0.0 GB  pressure 1  swap + 0.00 GB
+   173.4 s  END: all phases done, released

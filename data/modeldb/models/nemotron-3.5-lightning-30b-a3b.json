@@ -1,0 +1,275 @@
+{
+  "id": "nemotron-3.5-lightning-30b-a3b",
+  "name": "NVIDIA Nemotron 3.5 Lightning 30B-A3B",
+  "vendor": "NVIDIA",
+  "release_date": "2026-08-01",
+  "purpose": "General-purpose reasoning and chat model; the BF16 release is the starting point for customization (post-training, domain adaptation, quantization) and NVIDIA recommends the NVFP4 release for deployment.",
+  "tasks": [
+    "general",
+    "research",
+    "coding"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en",
+      "es",
+      "fr",
+      "de",
+      "it",
+      "ja",
+      "zh"
+    ]
+  },
+  "license": {
+    "name": "OpenMDW-1.1",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "LICENSE read (\"Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES\", OpenMDW-1.1 text, identical to the Poolside copy): permission \"to deal in the Model Materials without restriction, including under all copyright, patent, database, and trade secret rights\"; distribution requires keeping a copy of the agreement and the notices of origin; patent-suit termination clause; \"no restrictions or obligations with respect to any use, modification, or sharing of any outputs\". OpenMDW-1.1 text read in the Nemotron 3.5 Lightning repo LICENSE and on openmdw.ai: 'permission is hereby granted, free of charge, to deal in the Model Materials without restriction, including under all copyright, patent, database, and trade secret rights'; conditions are only to keep the agreement and notices when distributing, and termination if you sue over patent or copyright infringement by the materials; 'no restrictions or obligations with respect to ... outputs'."
+  },
+  "architecture": {
+    "kind": "hybrid Mamba-2 + MoE + attention",
+    "gguf_arch": "nemotron_h_moe",
+    "params_total_b": 30,
+    "params_active_b": 3,
+    "recurrent": "Mamba-2",
+    "context_native": 1000000,
+    "drafter": "MTP layers; DSpark and DFlash NVFP4 drafters",
+    "why_this_design": "NVIDIA states: NVFP4 pre-training recipe on more than 20T tokens; MTP layers give richer training signals and, with asynchronous RL, speed rollouts; speculative decoding supported."
+  },
+  "variants": [
+    {
+      "repo": "nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16",
+      "format": "safetensors BF16",
+      "official": true
+    },
+    {
+      "repo": "nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4",
+      "format": "NVFP4",
+      "official": true
+    },
+    {
+      "repo": "unsloth/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-GGUF",
+      "format": "GGUF UD-IQ3_S",
+      "size_gb": 21.16,
+      "official": false
+    },
+    {
+      "repo": "unsloth/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-GGUF",
+      "format": "GGUF UD-Q4_K_M",
+      "size_gb": 25.27,
+      "official": false
+    },
+    {
+      "repo": "unsloth/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-GGUF",
+      "format": "GGUF Q8_0",
+      "size_gb": 35.0,
+      "official": false
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "variant": "UD-IQ2 19.4 GB, experts in RAM"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "UD-Q4_K_M 25 GB, experts partly in RAM",
+      "notes": "3 B active; Mamba keeps the KV small even at long context."
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "UD-Q4_K_M"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q8_0 35 GB marginal"
+    },
+    "mac-16-24gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "variant": "UD-IQ3_S 21 GB",
+      "notes": "24 GB only."
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "UD-Q4_K_M"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q8_0"
+    }
+  },
+  "engine_support": {
+    "tona": "planned",
+    "llama_cpp": "yes",
+    "other": [
+      "vLLM",
+      "SGLang"
+    ],
+    "notes": "Same nemotron_h_moe family as Bolt (ArchId::NemotronHMoe is in Tona); Lightning not run by us. GGUF arch name assumed from that family, unverified."
+  },
+  "benchmarks": [
+    {
+      "name": "MMLU-Pro",
+      "score": 81.94,
+      "kind": "vendor",
+      "source": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16",
+      "harness": "NVIDIA harness"
+    },
+    {
+      "name": "GPQA Diamond",
+      "score": 75.44,
+      "kind": "vendor",
+      "source": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16",
+      "harness": "NVIDIA harness"
+    },
+    {
+      "name": "AA-LCR",
+      "score": 52.0,
+      "kind": "vendor",
+      "source": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16",
+      "harness": "NVIDIA harness"
+    },
+    {
+      "name": "BrowseComp",
+      "score": 36.97,
+      "kind": "vendor",
+      "source": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16",
+      "harness": "NVIDIA harness"
+    },
+    {
+      "name": "IFBench (loose)",
+      "score": 71.88,
+      "kind": "vendor",
+      "source": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16",
+      "harness": "NVIDIA harness"
+    },
+    {
+      "name": "SWE-bench Verified",
+      "score": 51.56,
+      "kind": "vendor",
+      "source": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16",
+      "harness": "NVIDIA harness"
+    },
+    {
+      "name": "Terminal-Bench 2.1",
+      "score": 24.58,
+      "kind": "vendor",
+      "source": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16",
+      "harness": "NVIDIA harness"
+    },
+    {
+      "name": "AA Coding Index (aggregator mirror), NVFP4 listing",
+      "score": 26.8,
+      "kind": "independent",
+      "source": "https://benchlm.ai/benchmarks/aacodingindex",
+      "variant": "Nemotron 3.5 Lightning 30B A3B NVFP4",
+      "unit": "%",
+      "date": "2026-11-19",
+      "harness": "aggregator mirror of the Artificial Analysis Coding Index, read 2026-11-19; no per-row dates; upstream AA pages not reachable"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "1M context with a small Mamba KV; very fast per research/08",
+      "German, French, Spanish, Italian, Japanese named in the card"
+    ],
+    "weaknesses": [
+      "Behind Qwen3.6-35B-A3B on every row of NVIDIA's own table (MMLU-Pro 81.9 vs 85.6, BrowseComp 37.0 vs 48.7)",
+      "Coding is weak (Terminal-Bench 2.1 24.6)"
+    ],
+    "behavior": "Thinking toggled with enable_thinking (default on); T=1.0, top_p 0.95; no token-budget control described.",
+    "best_for": [
+      "Very long inputs on small KV budgets"
+    ],
+    "maturity": "NVIDIA: large vendor, quick cadence (Lightning, Bolt, Super VL within three months).",
+    "user_reports": [
+      {
+        "summary": "\"Useless for coding\": loses almost everywhere to Qwen, above all on SWE-bench and Terminal-Bench (matches NVIDIA's own table)",
+        "sentiment": "negative",
+        "source": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16/discussions/6",
+        "date": "2026-08-14"
+      },
+      {
+        "summary": "Independent port: 23 Mamba-2 layers, 23 MoE layers (128 experts, top 6, one shared expert) and six NoPE full-attention layers; 127 tok/s on one RTX 5090 with an 18 GB converted tree. The author warns that applying RoPE to the NoPE attention layers produces fluent garbage.",
+        "sentiment": "positive",
+        "source": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16/discussions/14",
+        "date": "2026-11-13"
+      },
+      {
+        "summary": "A user calls it useless for coding, losing to Qwen models by a large margin on SWE-bench and Terminal-Bench (strongly worded, no own measurements).",
+        "sentiment": "negative",
+        "source": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16/discussions/6",
+        "date": "2026-08-14"
+      }
+    ]
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "OpenMDW-1.1 (text read) and a cheap long-context KV footprint (only six attention layers), but weaker than the Qwen 35B-A3B class on NVIDIA's own table and criticised for coding; no independent German score. Missing nemotron_h_moe support is only a blocker.",
+    "blockers": [
+      "quality below Qwen3.6-35B-A3B",
+      "quality below Qwen3.6-35B-A3B on NVIDIA table"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "model card"
+    },
+    {
+      "url": "https://huggingface.co/api/models/unsloth/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-GGUF?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "GGUF sizes"
+    },
+    {
+      "url": "research/49-moe-models-2026-11.md",
+      "kind": "own",
+      "checked": "2026-11-19",
+      "note": "table row"
+    },
+    {
+      "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16/raw/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://benchlm.ai/benchmarks/aacodingindex",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "aggregator mirror of the Artificial Analysis Coding Index, read 2026-11-19; no per-row dates; upstream AA pages not reachable"
+    },
+    {
+      "url": "https://openmdw.ai/license/1-1/",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "OpenMDW-1.1 page, summarizer read"
+    }
+  ],
+  "open_questions": [
+    "Layer and expert counts not on the card",
+    "Whether Lightning shares Bolt's GGUF architecture name",
+    "Last 4K characters of the card not read",
+    "Independent Coding Index 26.8 (mirror) confirms weak coding; per-language evidence: none. Check: our own polyglot run if it is ever offered.",
+    "Independent German score (not in PeerBench)"
+  ],
+  "last_checked": "2026-11-19"
+}

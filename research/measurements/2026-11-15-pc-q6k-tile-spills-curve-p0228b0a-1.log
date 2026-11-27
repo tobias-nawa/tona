@@ -1,0 +1,67 @@
+host memory: GTT (probe 64 MB grew the GTT use by 64 MB; 0.1 of 32.5 GB in use)
+evicted_ms counter: /sys/class/kfd/kfd/proc/273306/stats_7773/evicted_ms (0 ms so far), evictions do not count against the pass deadline
+loaded in 10.5 s, VRAM 13.12 GB (expert cache 82 per layer), megakernel: 1076 steps, 32 blocks (at most 32, LDS 32024 B, 192 VGPRs), verify pass 32 blocks (max 32, 192 VGPRs)
+CPU selection 0.137 ms per pass
+per pass: 458.7 hits, 7.0 GPU direct, 14.3 CPU (1.4 ms), 0.2 refilled
+B = 1: 536 passes, 25.45 ms per pass, 39.3 passes/s, 39.3 tokens/s
+logits hash B = 1: 810d28ee4a7b6cef
+CPU selection 0.254 ms per pass
+per pass: 786.0 hits, 4.7 GPU direct, 31.9 CPU (2.8 ms), 0.0 refilled
+B = 2: 268 passes, 30.28 ms per pass, 33.0 passes/s, 66.1 tokens/s
+logits hash B = 2: 810d28ee4a7b6cef
+CPU selection 0.355 ms per pass
+per pass: 1075.7 hits, 4.1 GPU direct, 49.9 CPU (4.2 ms), 0.0 refilled
+B = 3: 178 passes, 34.14 ms per pass, 29.3 passes/s, 87.9 tokens/s
+logits hash B = 3: 810d28ee4a7b6cef
+CPU selection 0.495 ms per pass
+per pass: 1301.9 hits, 4.5 GPU direct, 65.5 CPU (5.5 ms), 0.0 refilled
+B = 4: 134 passes, 38.26 ms per pass, 26.1 passes/s, 104.5 tokens/s
+logits hash B = 4: 810d28ee4a7b6cef
+CPU selection 0.535 ms per pass
+per pass: 1355.8 hits, 5.0 GPU direct, 72.5 CPU (6.5 ms), 0.0 refilled
+B = 5: 107 passes, 43.35 ms per pass, 23.1 passes/s, 115.3 tokens/s
+logits hash B = 5: 810d28ee4a7b6cef
+CPU selection 0.604 ms per pass
+per pass: 1380.7 hits, 5.3 GPU direct, 77.9 CPU (7.1 ms), 0.0 refilled
+B = 6: 89 passes, 46.67 ms per pass, 21.4 passes/s, 128.6 tokens/s
+logits hash B = 6: 47d61a17e7270946
+CPU selection 0.684 ms per pass
+per pass: 1424.5 hits, 5.9 GPU direct, 83.0 CPU (8.2 ms), 0.0 refilled
+B = 7: 76 passes, 49.30 ms per pass, 20.3 passes/s, 142.0 tokens/s
+logits hash B = 7: bcf618c73b286575
+CPU selection 0.759 ms per pass
+per pass: 1470.0 hits, 6.2 GPU direct, 89.1 CPU (9.0 ms), 0.0 refilled
+B = 8: 67 passes, 51.68 ms per pass, 19.4 passes/s, 154.8 tokens/s
+logits hash B = 8: 47d61a17e7270946
+CPU selection 1.139 ms per pass
+per pass: 460.7 hits, 6.4 GPU direct, 12.9 CPU (1.4 ms), 0.0 refilled
+B = 1: 536 passes, 32.01 ms per pass, 31.2 passes/s, 31.2 tokens/s
+logits hash B = 1: 810d28ee4a7b6cef
+CPU selection 0.251 ms per pass
+per pass: 786.9 hits, 4.8 GPU direct, 30.9 CPU (2.7 ms), 0.0 refilled
+B = 2: 268 passes, 30.20 ms per pass, 33.1 passes/s, 66.2 tokens/s
+logits hash B = 2: 810d28ee4a7b6cef
+CPU selection 0.354 ms per pass
+per pass: 1076.3 hits, 3.9 GPU direct, 49.5 CPU (4.2 ms), 0.0 refilled
+B = 3: 178 passes, 34.10 ms per pass, 29.3 passes/s, 88.0 tokens/s
+logits hash B = 3: 810d28ee4a7b6cef
+CPU selection 0.450 ms per pass
+per pass: 1302.7 hits, 4.2 GPU direct, 64.9 CPU (5.3 ms), 0.0 refilled
+B = 4: 134 passes, 37.73 ms per pass, 26.5 passes/s, 106.0 tokens/s
+logits hash B = 4: 810d28ee4a7b6cef
+CPU selection 0.533 ms per pass
+per pass: 1356.4 hits, 5.0 GPU direct, 71.9 CPU (6.4 ms), 0.0 refilled
+B = 5: 107 passes, 43.27 ms per pass, 23.1 passes/s, 115.6 tokens/s
+logits hash B = 5: 810d28ee4a7b6cef
+CPU selection 0.598 ms per pass
+per pass: 1381.2 hits, 5.3 GPU direct, 77.5 CPU (7.1 ms), 0.0 refilled
+B = 6: 89 passes, 46.61 ms per pass, 21.5 passes/s, 128.7 tokens/s
+logits hash B = 6: 47d61a17e7270946
+CPU selection 0.677 ms per pass
+per pass: 1424.5 hits, 5.9 GPU direct, 83.0 CPU (8.0 ms), 0.0 refilled
+B = 7: 76 passes, 49.21 ms per pass, 20.3 passes/s, 142.3 tokens/s
+logits hash B = 7: bcf618c73b286575
+CPU selection 0.745 ms per pass
+per pass: 1470.0 hits, 6.2 GPU direct, 89.1 CPU (8.8 ms), 0.0 refilled
+B = 8: 67 passes, 51.58 ms per pass, 19.4 passes/s, 155.1 tokens/s
+logits hash B = 8: 47d61a17e7270946

@@ -1,0 +1,1093 @@
+{
+ "tool": "ibench",
+ "suite": {
+  "name": "base",
+  "description": "Baseline measurement: short prompt, long decode, needle in 10K/30K/60K context, warm prefix at 30K. Context sizes are in characters (Qwen3.8 tokenizer: ~4.6 characters per token, counted with llama-tokenize); the real token counts are in the report.",
+  "file": "bench/suites/base.toml"
+ },
+ "env": {
+  "time": "2026-11-15T01:39:31+01:00",
+  "kernel": "7.2.15-200.fc44.x86_64",
+  "os": "Fedora Linux 44 (Workstation Edition)",
+  "python": "3.14.10",
+  "cpu": "AMD Ryzen 5 9600X 6-Core Processor",
+  "cpu_governor": "performance",
+  "cpu_epp": "performance",
+  "mem_total_gib": 60.5,
+  "mem_avail_gib": 56.7,
+  "swap_used_mib": 986,
+  "gpu": {
+   "sysfs": "/sys/devices/pci0000:00/0000:00:01.1/0000:01:00.0/0000:02:00.0/0000:03:00.0",
+   "vram_total_mib": 16304,
+   "vram_used_mib": 13453,
+   "vbios_version": "113-R906XTGO-F2",
+   "current_link_speed": "32.0 GT/s PCIe",
+   "current_link_width": "16",
+   "power_dpm_force_performance_level": "auto",
+   "pci_id": "1002:7590"
+  },
+  "packages": {
+   "rocm-runtime": "7.1.1-6.fc44",
+   "rocm-hip": "7.1.1-4.fc44",
+   "hipblaslt": "7.1.1-7.fc44",
+   "rocblas": "7.1.1-7.fc44",
+   "kernel": "7.2.15-200.fc44"
+  },
+  "git": {
+   "commit": "508e201",
+   "dirty": true
+  },
+  "target": {
+   "name": "tona",
+   "url": "http://127.0.0.1:8091",
+   "api": "openai",
+   "model": "default",
+   "extra": {}
+  },
+  "server": {
+   "/v1/models": {
+    "models": [
+     {
+      "name": "<worktree>/work/models/ornith-1.5-35b-a3b/Ornith-1.5-35B-Q4_K_M.gguf",
+      "model": "<worktree>/work/models/ornith-1.5-35b-a3b/Ornith-1.5-35B-Q4_K_M.gguf",
+      "modified_at": "",
+      "size": "",
+      "digest": "",
+      "type": "model",
+      "description": "",
+      "tags": [
+       ""
+      ],
+      "capabilities": [
+       "completion"
+      ],
+      "parameters": "",
+      "details": {
+       "parent_model": "",
+       "format": "gguf",
+       "family": "",
+       "families": [
+        ""
+       ],
+       "parameter_size": "",
+       "quantization_level": ""
+      }
+     }
+    ],
+    "object": "list",
+    "data": [
+     {
+      "id": "<worktree>/work/models/ornith-1.5-35b-a3b/Ornith-1.5-35B-Q4_K_M.gguf",
+      "aliases": [
+       "<worktree>/work/models/ornith-1.5-35b-a3b/Ornith-1.5-35B-Q4_K_M.gguf"
+      ],
+      "tags": [],
+      "object": "model",
+      "architecture": {
+       "input_modalities": [
+        "text"
+       ],
+       "output_modalities": [
+        "text"
+       ]
+      },
+      "created": 1794703171,
+      "owned_by": "llamacpp",
+      "meta": {
+       "vocab_type": 2,
+       "n_vocab": 248320,
+       "n_ctx": 65536,
+       "n_ctx_train": 262144,
+       "n_embd": 2048,
+       "n_params": 35505251456,
+       "size": 21702472192,
+       "ftype": "Q4_K - Medium"
+      }
+     }
+    ]
+   },
+   "/props": {
+    "default_generation_settings": {
+     "params": {
+      "seed": 4294967295,
+      "temperature": 1.0,
+      "dynatemp_range": 0.0,
+      "dynatemp_exponent": 1.0,
+      "top_k": 20,
+      "top_p": 0.949999988079071,
+      "min_p": 0.05000000074505806,
+      "top_n_sigma": -1.0,
+      "xtc_probability": 0.0,
+      "xtc_threshold": 0.10000000149011612,
+      "typical_p": 1.0,
+      "repeat_last_n": 64,
+      "repeat_penalty": 1.0,
+      "presence_penalty": 0.0,
+      "frequency_penalty": 0.0,
+      "dry_multiplier": 0.0,
+      "dry_base": 1.75,
+      "dry_allowed_length": 2,
+      "dry_penalty_last_n": 64,
+      "mirostat": 0,
+      "mirostat_tau": 5.0,
+      "mirostat_eta": 0.10000000149011612,
+      "adaptive_target": -1.0,
+      "adaptive_decay": 0.8999999761581421,
+      "max_tokens": -1,
+      "n_predict": -1,
+      "n_keep": 0,
+      "n_discard": 0,
+      "ignore_eos": false,
+      "stream": false,
+      "n_probs": 0,
+      "min_keep": 0,
+      "chat_format": "Content-only",
+      "reasoning_format": "none",
+      "reasoning_in_content": false,
+      "generation_prompt": "",
+      "samplers": [
+       "penalties",
+       "dry",
+       "top_n_sigma",
+       "top_k",
+       "typ_p",
+       "top_p",
+       "min_p",
+       "xtc",
+       "temperature"
+      ],
+      "speculative.types": "none",
+      "timings_per_token": false,
+      "post_sampling_probs": false,
+      "backend_sampling": false,
+      "lora": []
+     },
+     "n_ctx": 65536
+    },
+    "total_slots": 1,
+    "model_alias": "<worktree>/work/models/ornith-1.5-35b-a3b/Ornith-1.5-35B-Q4_K_M.gguf",
+    "model_ftype": "Q4_K - Medium",
+    "model_path": "<worktree>/work/models/ornith-1.5-35b-a3b/Ornith-1.5-35B-Q4_K_M.gguf",
+    "modalities": {
+     "vision": false,
+     "video": false,
+     "audio": false
+    },
+    "media_marker": "<__media_byN9GCJtfxH4GaIVe51WT9nI3SLMeYrV__>",
+    "endpoint_slots": true,
+    "endpoint_props": false,
+    "endpoint_metrics": true,
+    "ui": true,
+    "ui_settings": {},
+    "chat_template": "{%- set image_count = namespace(value=0) %}\n{%- set video_count = namespace(value=0) %}\n{%- macro render_content(content, do_vision_count, is_system_content=false) %}\n    {%- if content is string %}\n        {{- content }}\n    {%- elif content is iterable and content is not mapping %}\n        {%- for item in content %}\n            {%- if 'image' in item or 'image_url' in item or item.type == 'image' %}\n                {%- if is_system_content %}\n                    {{- raise_exception('System message cannot contain images.') }}\n                {%- endif %}\n                {%- if do_vision_count %}\n                    {%- set image_count.value = image_count.value + 1 %}\n                {%- endif %}\n                {%- if add_vision_id %}\n                    {{- 'Picture ' ~ image_count.value ~ ': ' }}\n                {%- endif %}\n                {{- '<|vision_start|><|image_pad|><|vision_end|>' }}\n            {%- elif 'video' in item or item.type == 'video' %}\n                {%- if is_system_content %}\n                    {{- raise_exception('System message cannot contain videos.') }}\n                {%- endif %}\n                {%- if do_vision_count %}\n                    {%- set video_count.value = video_count.value + 1 %}\n                {%- endif %}\n                {%- if add_vision_id %}\n                    {{- 'Video ' ~ video_count.value ~ ': ' }}\n                {%- endif %}\n                {{- '<|vision_start|><|video_pad|><|vision_end|>' }}\n            {%- elif 'text' in item %}\n                {{- item.text }}\n            {%- else %}\n                {{- raise_exception('Unexpected item type in content.') }}\n            {%- endif %}\n        {%- endfor %}\n    {%- elif content is none or content is undefined %}\n        {{- '' }}\n    {%- else %}\n        {{- raise_exception('Unexpected content type.') }}\n    {%- endif %}\n{%- endmacro %}\n{%- if not messages %}\n    {{- raise_exception('No messages provided.') }}\n{%- endif %}\n{%- set num_sys = 0 %}\n{%- set merged_system = '' %}\n{%- if messages[0].role == 'system' or messages[0].role == 'developer' %}\n    {%- set first = render_content(messages[0].content, false, true)|trim %}\n    {%- if messages|length > 1 and (messages[1].role == 'system' or messages[1].role == 'developer') %}\n        {%- set second = render_content(messages[1].content, false, true)|trim %}\n        {%- set merged_system = first + '\\n' + second %}\n        {%- set num_sys = 2 %}\n    {%- else %}\n        {%- set merged_system = first %}\n        {%- set num_sys = 1 %}\n    {%- endif %}\n{%- endif %}\n{%- if tools and tools is iterable and tools is not mapping %}\n    {{- '<|im_start|>system\\n' }}\n    {{- \"# Tools\\n\\nYou have access to the following functions:\\n\\n<tools>\" }}\n    {%- for tool in tools %}\n        {{- \"\\n\" }}\n        {{- tool | tojson }}\n    {%- endfor %}\n    {{- \"\\n</tools>\" }}\n    {{- '\\n\\nIf you choose to call a function ONLY reply in the following format with NO suffix:\\n\\n<tool_call>\\n<function=example_function_name>\\n<parameter=example_parameter_1>\\nvalue_1\\n</parameter>\\n<parameter=example_parameter_2>\\nThis is the value for the second parameter\\nthat can span\\nmultiple lines\\n</parameter>\\n</function>\\n</tool_call>\\n\\n<IMPORTANT>\\nReminder:\\n- Function calls MUST follow the specified format: an inner <function=...></function> block must be nested within <tool_call></tool_call> XML tags\\n- Required parameters MUST be specified\\n- You may provide optional reasoning for your function call in natural language BEFORE the function call, but NOT after\\n- If there is no function call available, answer the question like normal with your current knowledge and do not tell the user about function calls\\n</IMPORTANT>' }}\n    {%- if merged_system %}\n        {{- '\\n\\n' + merged_system }}\n    {%- endif %}\n    {{- '<|im_end|>\\n' }}\n{%- else %}\n    {%- if merged_system %}\n        {{- '<|im_start|>system\\n' + merged_system + '<|im_end|>\\n' }}\n    {%- endif %}\n{%- endif %}\n{%- set ns = namespace(multi_step_tool=true, last_query_index=messages|length - 1) %}\n{%- for message in messages[::-1] %}\n    {%- set index = (messages|length - 1) - loop.index0 %}\n    {%- if ns.multi_step_tool and message.role == \"user\" %}\n        {%- set content = render_content(message.content, false)|trim %}\n        {%- if not(content.startswith('<tool_response>') and content.endswith('</tool_response>')) %}\n            {%- set ns.multi_step_tool = false %}\n            {%- set ns.last_query_index = index %}\n        {%- endif %}\n    {%- endif %}\n{%- endfor %}\n{%- for message in messages %}\n    {%- if loop.index0 >= num_sys and message.role != \"system\" and message.role != \"developer\" %}\n    {%- set content = render_content(message.content, true)|trim %}\n    {%- if message.role == \"user\" %}\n        {{- '<|im_start|>' + message.role + '\\n' + content + '<|im_end|>' + '\\n' }}\n    {%- elif message.role == \"assistant\" %}\n        {%- set reasoning_content = '' %}\n        {%- if message.reasoning_content is string %}\n            {%- set reasoning_content = message.reasoning_content %}\n        {%- else %}\n            {%- if '</think>' in content %}\n                {%- set reasoning_content = content.split('</think>')[0].rstrip('\\n').split('<think>')[-1].lstrip('\\n') %}\n                {%- set content = content.split('</think>')[-1].lstrip('\\n') %}\n            {%- endif %}\n        {%- endif %}\n        {%- set reasoning_content = reasoning_content|trim %}\n        {{- '<|im_start|>' + message.role + '\\n<think>\\n' + reasoning_content + '\\n</think>\\n\\n' + content }}\n        {%- if message.tool_calls and message.tool_calls is iterable and message.tool_calls is not mapping %}\n            {%- for tool_call in message.tool_calls %}\n                {%- if tool_call.function is defined %}\n                    {%- set tool_call = tool_call.function %}\n                {%- endif %}\n                {%- if loop.first %}\n                    {%- if content|trim %}\n                        {{- '\\n\\n<tool_call>\\n<function=' + tool_call.name + '>\\n' }}\n                    {%- else %}\n                        {{- '<tool_call>\\n<function=' + tool_call.name + '>\\n' }}\n                    {%- endif %}\n                {%- else %}\n                    {{- '\\n<tool_call>\\n<function=' + tool_call.name + '>\\n' }}\n                {%- endif %}\n                {%- if tool_call.arguments is mapping %}\n                    {%- for args_name in tool_call.arguments %}\n                        {%- set args_value = tool_call.arguments[args_name] %}\n                        {{- '<parameter=' + args_name + '>\\n' }}\n                        {%- set args_value = args_value | tojson | safe if args_value is mapping or (args_value is sequence and args_value is not string) else args_value | string %}\n                        {{- args_value }}\n                        {{- '\\n</parameter>\\n' }}\n                    {%- endfor %}\n                {%- endif %}\n                {{- '</function>\\n</tool_call>' }}\n            {%- endfor %}\n        {%- endif %}\n        {{- '<|im_end|>\\n' }}\n    {%- elif message.role == \"tool\" %}\n        {%- if loop.previtem and loop.previtem.role != \"tool\" %}\n            {{- '<|im_start|>user' }}\n        {%- endif %}\n        {{- '\\n<tool_response>\\n' }}\n        {{- content }}\n        {{- '\\n</tool_response>' }}\n        {%- if not loop.last and loop.nextitem.role != \"tool\" %}\n            {{- '<|im_end|>\\n' }}\n        {%- elif loop.last %}\n            {{- '<|im_end|>\\n' }}\n        {%- endif %}\n    {%- endif %}\n    {%- endif %}\n{%- endfor %}\n{%- if add_generation_prompt %}\n    {{- '<|im_start|>assistant\\n' }}\n    {%- if enable_thinking is defined and enable_thinking is false %}\n        {{- '<think>\\n\\n</think>\\n\\n' }}\n    {%- else %}\n        {{- '<think>\\n' }}\n    {%- endif %}\n{%- endif %}\n{#- Unsloth fixes - developer role, tool calling #}",
+    "chat_template_caps": {
+     "supports_object_arguments": true,
+     "supports_parallel_tool_calls": true,
+     "supports_preserve_reasoning": true,
+     "supports_reasoning_effort": false,
+     "supports_string_content": true,
+     "supports_system_role": true,
+     "supports_tool_calls": true,
+     "supports_tools": true,
+     "supports_typed_content": true
+    },
+    "bos_token": "<|endoftext|>",
+    "eos_token": "<|im_end|>",
+    "build_info": "b11822-d9ee007",
+    "is_sleeping": false,
+    "cors_proxy_enabled": false
+   }
+  },
+  "warnings": [
+   "Swap in use before start: 986 MiB",
+   "Repository has uncommitted changes"
+  ]
+ },
+ "cases": [
+  {
+   "case": {
+    "name": "short-code",
+    "description": "Short prompt, short answer. Matches the Fibonacci measurement of 22 Oct.",
+    "runs": 1,
+    "warmup": 1,
+    "cache": "cold",
+    "temperature": 0.0,
+    "max_tokens": 300,
+    "expect": "def\\s+fib\\s*\\(",
+    "min_decode_tokens": 32,
+    "pause_s": 0.0,
+    "extra": {},
+    "prompt": "Write a Python function `fib(n)` that returns the n-th Fibonacci number iteratively. Only the code, no explanation.",
+    "context_chars": 0,
+    "needle": null,
+    "needle_depth": 0.5,
+    "question": null,
+    "trace": null
+   },
+   "runs": [
+    {
+     "index": -1,
+     "warmup": true,
+     "nonce": "60bd4db56491",
+     "steps": [
+      {
+       "ok": true,
+       "error": null,
+       "finish": "stop",
+       "prompt_tokens": 62,
+       "cached_tokens": 0,
+       "completion_tokens": 142,
+       "tool_calls": 0,
+       "reasoning_tokens": null,
+       "reasoning_chars": 252,
+       "e2e_s": 5.128974609000579,
+       "prefill_tps_server": 37.04175023464754,
+       "decode_tps_server": 40.82386615330896,
+       "timings": {
+        "cache_n": 0,
+        "prompt_n": 62,
+        "prompt_ms": 1673.787,
+        "prompt_per_token_ms": 26.996564516129034,
+        "prompt_per_second": 37.04175023464754,
+        "predicted_n": 142,
+        "predicted_ms": 3453.862,
+        "predicted_per_token_ms": 24.495475177304964,
+        "predicted_per_second": 40.82386615330896
+       },
+       "ttft_s": 1.6754844440001762,
+       "prefill_tps_client": 37.00422300070814,
+       "decode_tps_client": 41.08149577094788,
+       "itl_p50_ms": 23.552824000944383,
+       "itl_p99_ms": 39.76389153962371,
+       "expect_ok": true,
+       "output_sha": "784ae4f2e975",
+       "text_head": "```python\ndef fib(n):\n    if n < 2:\n        return n\n    a, b = 0, 1\n    for _ in range(2, n + 1):\n        a, b = b, a + b\n    return b\n```",
+       "vram_peak_mib": 13574.640625,
+       "gtt_peak_mib": 70.07421875,
+       "ram_avail_min_mib": 57514.79296875,
+       "swap_used_max_mib": 986.078125,
+       "gpu_busy_mean": 76.9,
+       "power_mean_w": 63.96,
+       "temp_max_c": 55.0,
+       "sclk_mean_mhz": 2210.7,
+       "samples": 50
+      }
+     ]
+    },
+    {
+     "index": 0,
+     "warmup": false,
+     "nonce": "aeb3cc3862aa",
+     "steps": [
+      {
+       "ok": true,
+       "error": null,
+       "finish": "stop",
+       "prompt_tokens": 60,
+       "cached_tokens": 0,
+       "completion_tokens": 142,
+       "tool_calls": 0,
+       "reasoning_tokens": null,
+       "reasoning_chars": 252,
+       "e2e_s": 3.677791754998907,
+       "prefill_tps_server": 124.21382996782862,
+       "decode_tps_server": 44.664790745455356,
+       "timings": {
+        "cache_n": 0,
+        "prompt_n": 60,
+        "prompt_ms": 483.038,
+        "prompt_per_token_ms": 8.050633333333334,
+        "prompt_per_second": 124.21382996782862,
+        "predicted_n": 142,
+        "predicted_ms": 3156.849,
+        "predicted_per_token_ms": 22.389000000000003,
+        "predicted_per_second": 44.664790745455356
+       },
+       "ttft_s": 0.5209706339992408,
+       "prefill_tps_client": 115.16963929311885,
+       "decode_tps_client": 44.96328978422427,
+       "itl_p50_ms": 22.250230500503676,
+       "itl_p99_ms": 28.09855618012079,
+       "expect_ok": true,
+       "output_sha": "784ae4f2e975",
+       "text_head": "```python\ndef fib(n):\n    if n < 2:\n        return n\n    a, b = 0, 1\n    for _ in range(2, n + 1):\n        a, b = b, a + b\n    return b\n```",
+       "vram_peak_mib": 13574.84765625,
+       "gtt_peak_mib": 70.07421875,
+       "ram_avail_min_mib": 57201.29296875,
+       "swap_used_max_mib": 986.078125,
+       "gpu_busy_mean": 97.1891891891892,
+       "power_mean_w": 98.67567567567568,
+       "temp_max_c": 58.0,
+       "sclk_mean_mhz": 3360.837837837838,
+       "samples": 37
+      }
+     ]
+    }
+   ],
+   "summary": {
+    "steps": [
+     {
+      "n": 1,
+      "ok": 1,
+      "metrics": {
+       "ttft_s": {
+        "n": 1,
+        "median": 0.5209706339992408,
+        "mean": 0.5209706339992408,
+        "stdev": 0.0,
+        "min": 0.5209706339992408,
+        "max": 0.5209706339992408
+       },
+       "prefill_tps_client": {
+        "n": 1,
+        "median": 115.16963929311885,
+        "mean": 115.16963929311885,
+        "stdev": 0.0,
+        "min": 115.16963929311885,
+        "max": 115.16963929311885
+       },
+       "prefill_tps_server": {
+        "n": 1,
+        "median": 124.21382996782862,
+        "mean": 124.21382996782862,
+        "stdev": 0.0,
+        "min": 124.21382996782862,
+        "max": 124.21382996782862
+       },
+       "decode_tps_client": {
+        "n": 1,
+        "median": 44.96328978422427,
+        "mean": 44.96328978422427,
+        "stdev": 0.0,
+        "min": 44.96328978422427,
+        "max": 44.96328978422427
+       },
+       "decode_tps_server": {
+        "n": 1,
+        "median": 44.664790745455356,
+        "mean": 44.664790745455356,
+        "stdev": 0.0,
+        "min": 44.664790745455356,
+        "max": 44.664790745455356
+       },
+       "e2e_s": {
+        "n": 1,
+        "median": 3.677791754998907,
+        "mean": 3.677791754998907,
+        "stdev": 0.0,
+        "min": 3.677791754998907,
+        "max": 3.677791754998907
+       },
+       "prompt_tokens": {
+        "n": 1,
+        "median": 60.0,
+        "mean": 60.0,
+        "stdev": 0.0,
+        "min": 60.0,
+        "max": 60.0
+       },
+       "cached_tokens": {
+        "n": 1,
+        "median": 0.0,
+        "mean": 0.0,
+        "stdev": 0.0,
+        "min": 0.0,
+        "max": 0.0
+       },
+       "completion_tokens": {
+        "n": 1,
+        "median": 142.0,
+        "mean": 142.0,
+        "stdev": 0.0,
+        "min": 142.0,
+        "max": 142.0
+       },
+       "itl_p50_ms": {
+        "n": 1,
+        "median": 22.250230500503676,
+        "mean": 22.250230500503676,
+        "stdev": 0.0,
+        "min": 22.250230500503676,
+        "max": 22.250230500503676
+       },
+       "itl_p99_ms": {
+        "n": 1,
+        "median": 28.09855618012079,
+        "mean": 28.09855618012079,
+        "stdev": 0.0,
+        "min": 28.09855618012079,
+        "max": 28.09855618012079
+       },
+       "vram_peak_mib": {
+        "n": 1,
+        "median": 13574.84765625,
+        "mean": 13574.84765625,
+        "stdev": 0.0,
+        "min": 13574.84765625,
+        "max": 13574.84765625
+       },
+       "gtt_peak_mib": {
+        "n": 1,
+        "median": 70.07421875,
+        "mean": 70.07421875,
+        "stdev": 0.0,
+        "min": 70.07421875,
+        "max": 70.07421875
+       },
+       "ram_avail_min_mib": {
+        "n": 1,
+        "median": 57201.29296875,
+        "mean": 57201.29296875,
+        "stdev": 0.0,
+        "min": 57201.29296875,
+        "max": 57201.29296875
+       },
+       "swap_used_max_mib": {
+        "n": 1,
+        "median": 986.078125,
+        "mean": 986.078125,
+        "stdev": 0.0,
+        "min": 986.078125,
+        "max": 986.078125
+       },
+       "gpu_busy_mean": {
+        "n": 1,
+        "median": 97.1891891891892,
+        "mean": 97.1891891891892,
+        "stdev": 0.0,
+        "min": 97.1891891891892,
+        "max": 97.1891891891892
+       },
+       "power_mean_w": {
+        "n": 1,
+        "median": 98.67567567567568,
+        "mean": 98.67567567567568,
+        "stdev": 0.0,
+        "min": 98.67567567567568,
+        "max": 98.67567567567568
+       },
+       "temp_max_c": {
+        "n": 1,
+        "median": 58.0,
+        "mean": 58.0,
+        "stdev": 0.0,
+        "min": 58.0,
+        "max": 58.0
+       },
+       "sclk_mean_mhz": {
+        "n": 1,
+        "median": 3360.837837837838,
+        "mean": 3360.837837837838,
+        "stdev": 0.0,
+        "min": 3360.837837837838,
+        "max": 3360.837837837838
+       }
+      },
+      "expect_pass": 1,
+      "expect_n": 1,
+      "distinct_outputs": 1
+     }
+    ],
+    "warnings": [],
+    "run_e2e_s": {
+     "n": 1,
+     "median": 3.677791754998907,
+     "mean": 3.677791754998907,
+     "stdev": 0.0,
+     "min": 3.677791754998907,
+     "max": 3.677791754998907
+    }
+   }
+  },
+  {
+   "case": {
+    "name": "long-decode",
+    "description": "Short prompt, long answer: pure decode rate at small context.",
+    "runs": 1,
+    "warmup": 1,
+    "cache": "cold",
+    "temperature": 0.0,
+    "max_tokens": 1024,
+    "expect": "(?i)semaphore",
+    "min_decode_tokens": 64,
+    "pause_s": 0.0,
+    "extra": {},
+    "prompt": "Explain in detail how a mutex differs from a semaphore. Give a complete C example for each. Write at least 800 words.",
+    "context_chars": 0,
+    "needle": null,
+    "needle_depth": 0.5,
+    "question": null,
+    "trace": null
+   },
+   "runs": [
+    {
+     "index": -1,
+     "warmup": true,
+     "nonce": "3cb994e96366",
+     "steps": [
+      {
+       "ok": true,
+       "error": null,
+       "finish": "length",
+       "prompt_tokens": 67,
+       "cached_tokens": 0,
+       "completion_tokens": 1024,
+       "tool_calls": 0,
+       "reasoning_tokens": null,
+       "reasoning_chars": 2687,
+       "e2e_s": 22.25259149900012,
+       "prefill_tps_server": 137.0692547524161,
+       "decode_tps_server": 47.08655941087948,
+       "timings": {
+        "cache_n": 0,
+        "prompt_n": 67,
+        "prompt_ms": 488.804,
+        "prompt_per_token_ms": 7.295582089552238,
+        "prompt_per_second": 137.0692547524161,
+        "predicted_n": 1024,
+        "predicted_ms": 21725.945,
+        "predicted_per_token_ms": 21.237482893450636,
+        "predicted_per_second": 47.08655941087948
+       },
+       "ttft_s": 0.5266852249988005,
+       "prefill_tps_client": 127.210707306537,
+       "decode_tps_client": 47.08683714069784,
+       "itl_p50_ms": 20.787453002412803,
+       "itl_p99_ms": 28.04148299983353,
+       "expect_ok": true,
+       "output_sha": "05471209a8b2",
+       "text_head": "# Mutex vs. Semaphore: A Detailed Comparison\n\n## Introduction\n\nBoth mutexes and semaphores are synchronization primitives used to coordinate access to shared resources among multiple threads or processes. While they are sometimes used interchangeably in casual conversation, they have distinct semantics, design purposes, and behavioral guarantees. Understanding these differences is crucial for writ",
+       "vram_peak_mib": 13579.33203125,
+       "gtt_peak_mib": 70.07421875,
+       "ram_avail_min_mib": 56980.328125,
+       "swap_used_max_mib": 986.078125,
+       "gpu_busy_mean": 98.57272727272728,
+       "power_mean_w": 109.4590909090909,
+       "temp_max_c": 60.0,
+       "sclk_mean_mhz": 3438.086363636364,
+       "samples": 220
+      }
+     ]
+    },
+    {
+     "index": 0,
+     "warmup": false,
+     "nonce": "94c4f740e316",
+     "steps": [
+      {
+       "ok": true,
+       "error": null,
+       "finish": "length",
+       "prompt_tokens": 68,
+       "cached_tokens": 0,
+       "completion_tokens": 1024,
+       "tool_calls": 0,
+       "reasoning_tokens": null,
+       "reasoning_chars": 2442,
+       "e2e_s": 21.970553330997063,
+       "prefill_tps_server": 145.11743842112227,
+       "decode_tps_server": 47.66407589350923,
+       "timings": {
+        "cache_n": 0,
+        "prompt_n": 68,
+        "prompt_ms": 468.586,
+        "prompt_per_token_ms": 6.8909705882352945,
+        "prompt_per_second": 145.11743842112227,
+        "predicted_n": 1024,
+        "predicted_ms": 21462.705,
+        "predicted_per_token_ms": 20.98016129032258,
+        "predicted_per_second": 47.66407589350923
+       },
+       "ttft_s": 0.5078762359989923,
+       "prefill_tps_client": 133.8908875431906,
+       "decode_tps_client": 47.6643354937134,
+       "itl_p50_ms": 20.574604997818824,
+       "itl_p99_ms": 27.160208799614313,
+       "expect_ok": true,
+       "output_sha": "c18316d4638d",
+       "text_head": "# Mutex vs. Semaphore: A Detailed Comparison\n\n## Conceptual Foundations\n\nBoth mutexes and semaphores are synchronization primitives used to coordinate access to shared resources among multiple threads or processes. However, they were designed with different philosophies in mind, and this distinction shapes how you should use them.\n\n### What a Mutex Is\n\nA **mutex** (short for *mutual exclusion*) is",
+       "vram_peak_mib": 13577.55859375,
+       "gtt_peak_mib": 70.07421875,
+       "ram_avail_min_mib": 56886.55078125,
+       "swap_used_max_mib": 986.07421875,
+       "gpu_busy_mean": 98.5229357798165,
+       "power_mean_w": 110.35779816513761,
+       "temp_max_c": 62.0,
+       "sclk_mean_mhz": 3434.467889908257,
+       "samples": 218
+      }
+     ]
+    }
+   ],
+   "summary": {
+    "steps": [
+     {
+      "n": 1,
+      "ok": 1,
+      "metrics": {
+       "ttft_s": {
+        "n": 1,
+        "median": 0.5078762359989923,
+        "mean": 0.5078762359989923,
+        "stdev": 0.0,
+        "min": 0.5078762359989923,
+        "max": 0.5078762359989923
+       },
+       "prefill_tps_client": {
+        "n": 1,
+        "median": 133.8908875431906,
+        "mean": 133.8908875431906,
+        "stdev": 0.0,
+        "min": 133.8908875431906,
+        "max": 133.8908875431906
+       },
+       "prefill_tps_server": {
+        "n": 1,
+        "median": 145.11743842112227,
+        "mean": 145.11743842112227,
+        "stdev": 0.0,
+        "min": 145.11743842112227,
+        "max": 145.11743842112227
+       },
+       "decode_tps_client": {
+        "n": 1,
+        "median": 47.6643354937134,
+        "mean": 47.6643354937134,
+        "stdev": 0.0,
+        "min": 47.6643354937134,
+        "max": 47.6643354937134
+       },
+       "decode_tps_server": {
+        "n": 1,
+        "median": 47.66407589350923,
+        "mean": 47.66407589350923,
+        "stdev": 0.0,
+        "min": 47.66407589350923,
+        "max": 47.66407589350923
+       },
+       "e2e_s": {
+        "n": 1,
+        "median": 21.970553330997063,
+        "mean": 21.970553330997063,
+        "stdev": 0.0,
+        "min": 21.970553330997063,
+        "max": 21.970553330997063
+       },
+       "prompt_tokens": {
+        "n": 1,
+        "median": 68.0,
+        "mean": 68.0,
+        "stdev": 0.0,
+        "min": 68.0,
+        "max": 68.0
+       },
+       "cached_tokens": {
+        "n": 1,
+        "median": 0.0,
+        "mean": 0.0,
+        "stdev": 0.0,
+        "min": 0.0,
+        "max": 0.0
+       },
+       "completion_tokens": {
+        "n": 1,
+        "median": 1024.0,
+        "mean": 1024.0,
+        "stdev": 0.0,
+        "min": 1024.0,
+        "max": 1024.0
+       },
+       "itl_p50_ms": {
+        "n": 1,
+        "median": 20.574604997818824,
+        "mean": 20.574604997818824,
+        "stdev": 0.0,
+        "min": 20.574604997818824,
+        "max": 20.574604997818824
+       },
+       "itl_p99_ms": {
+        "n": 1,
+        "median": 27.160208799614313,
+        "mean": 27.160208799614313,
+        "stdev": 0.0,
+        "min": 27.160208799614313,
+        "max": 27.160208799614313
+       },
+       "vram_peak_mib": {
+        "n": 1,
+        "median": 13577.55859375,
+        "mean": 13577.55859375,
+        "stdev": 0.0,
+        "min": 13577.55859375,
+        "max": 13577.55859375
+       },
+       "gtt_peak_mib": {
+        "n": 1,
+        "median": 70.07421875,
+        "mean": 70.07421875,
+        "stdev": 0.0,
+        "min": 70.07421875,
+        "max": 70.07421875
+       },
+       "ram_avail_min_mib": {
+        "n": 1,
+        "median": 56886.55078125,
+        "mean": 56886.55078125,
+        "stdev": 0.0,
+        "min": 56886.55078125,
+        "max": 56886.55078125
+       },
+       "swap_used_max_mib": {
+        "n": 1,
+        "median": 986.07421875,
+        "mean": 986.07421875,
+        "stdev": 0.0,
+        "min": 986.07421875,
+        "max": 986.07421875
+       },
+       "gpu_busy_mean": {
+        "n": 1,
+        "median": 98.5229357798165,
+        "mean": 98.5229357798165,
+        "stdev": 0.0,
+        "min": 98.5229357798165,
+        "max": 98.5229357798165
+       },
+       "power_mean_w": {
+        "n": 1,
+        "median": 110.35779816513761,
+        "mean": 110.35779816513761,
+        "stdev": 0.0,
+        "min": 110.35779816513761,
+        "max": 110.35779816513761
+       },
+       "temp_max_c": {
+        "n": 1,
+        "median": 62.0,
+        "mean": 62.0,
+        "stdev": 0.0,
+        "min": 62.0,
+        "max": 62.0
+       },
+       "sclk_mean_mhz": {
+        "n": 1,
+        "median": 3434.467889908257,
+        "mean": 3434.467889908257,
+        "stdev": 0.0,
+        "min": 3434.467889908257,
+        "max": 3434.467889908257
+       }
+      },
+      "expect_pass": 1,
+      "expect_n": 1,
+      "distinct_outputs": 1
+     }
+    ],
+    "warnings": [],
+    "run_e2e_s": {
+     "n": 1,
+     "median": 21.970553330997063,
+     "mean": 21.970553330997063,
+     "stdev": 0.0,
+     "min": 21.970553330997063,
+     "max": 21.970553330997063
+    }
+   }
+  },
+  {
+   "case": {
+    "name": "needle-30k",
+    "description": "",
+    "runs": 1,
+    "warmup": 1,
+    "cache": "cold",
+    "temperature": 0.0,
+    "max_tokens": 768,
+    "expect": "osprey-2093",
+    "min_decode_tokens": 64,
+    "pause_s": 0.0,
+    "extra": {},
+    "prompt": null,
+    "context_chars": 141000,
+    "needle": "osprey-2093",
+    "needle_depth": 0.3,
+    "question": "The file above defines a constant SECRET_DEPLOY_TOKEN. First state its exact value. Then explain in detail what the code around it does, in at least 400 words.",
+    "trace": null
+   },
+   "runs": [
+    {
+     "index": -1,
+     "warmup": true,
+     "nonce": "03938d5f1f1c",
+     "steps": [
+      {
+       "ok": true,
+       "error": null,
+       "finish": "length",
+       "prompt_tokens": 30908,
+       "cached_tokens": 0,
+       "completion_tokens": 768,
+       "tool_calls": 0,
+       "reasoning_tokens": null,
+       "reasoning_chars": 3211,
+       "e2e_s": 65.95741969299706,
+       "prefill_tps_server": 713.9033815340533,
+       "decode_tps_server": 33.95019104175298,
+       "timings": {
+        "cache_n": 0,
+        "prompt_n": 30908,
+        "prompt_ms": 43294.374,
+        "prompt_per_token_ms": 1.4007497735214185,
+        "prompt_per_second": 713.9033815340533,
+        "predicted_n": 768,
+        "predicted_ms": 22591.92,
+        "predicted_per_token_ms": 29.454915254237285,
+        "predicted_per_second": 33.95019104175298
+       },
+       "ttft_s": 43.36503846599953,
+       "prefill_tps_client": 712.7400572752517,
+       "decode_tps_client": 33.95040999201643,
+       "itl_p50_ms": 29.060903001663974,
+       "itl_p99_ms": 35.882041399308946,
+       "expect_ok": false,
+       "output_sha": "9b63cf4bed7e",
+       "text_head": "",
+       "vram_peak_mib": 13600.24609375,
+       "gtt_peak_mib": 70.07421875,
+       "ram_avail_min_mib": 57009.64453125,
+       "swap_used_max_mib": 986.07421875,
+       "gpu_busy_mean": 99.21712538226299,
+       "power_mean_w": 105.24617737003058,
+       "temp_max_c": 65.0,
+       "sclk_mean_mhz": 3319.729357798165,
+       "samples": 654
+      }
+     ]
+    },
+    {
+     "index": 0,
+     "warmup": false,
+     "nonce": "2afd6b21f819",
+     "steps": [
+      {
+       "ok": true,
+       "error": null,
+       "finish": "length",
+       "prompt_tokens": 30906,
+       "cached_tokens": 0,
+       "completion_tokens": 768,
+       "tool_calls": 0,
+       "reasoning_tokens": null,
+       "reasoning_chars": 1910,
+       "e2e_s": 66.07459542499782,
+       "prefill_tps_server": 712.9297301247481,
+       "decode_tps_server": 33.95735169137717,
+       "timings": {
+        "cache_n": 0,
+        "prompt_n": 30906,
+        "prompt_ms": 43350.696,
+        "prompt_per_token_ms": 1.4026627839254515,
+        "prompt_per_second": 712.9297301247481,
+        "predicted_n": 768,
+        "predicted_ms": 22587.156,
+        "predicted_per_token_ms": 29.44870404172099,
+        "predicted_per_second": 33.95735169137717
+       },
+       "ttft_s": 43.4869212779995,
+       "prefill_tps_client": 710.6964368074425,
+       "decode_tps_client": 33.95750715485833,
+       "itl_p50_ms": 29.053173002466792,
+       "itl_p99_ms": 35.65949747993728,
+       "expect_ok": true,
+       "output_sha": "afd54d9742ff",
+       "text_head": "## The Token Value\n\n```python\nSECRET_DEPLOY_TOKEN = \"osprey-2093\"\n```\n\nThe exact value is the string **`osprey-2093`**.\n\n## Explanation of the Surrounding Code\n\nThe token is embedded inside the `_VersionAction` class, which lives in the `argparse.py` portion of the file. `_VersionAction` is the `Action` subclass that gets registered under the name `'version'` (see the line `self.register('action',",
+       "vram_peak_mib": 13597.4609375,
+       "gtt_peak_mib": 70.07421875,
+       "ram_avail_min_mib": 56421.12109375,
+       "swap_used_max_mib": 986.05859375,
+       "gpu_busy_mean": 99.11297709923664,
+       "power_mean_w": 105.0854961832061,
+       "temp_max_c": 67.0,
+       "sclk_mean_mhz": 3304.8702290076335,
+       "samples": 655
+      }
+     ]
+    }
+   ],
+   "summary": {
+    "steps": [
+     {
+      "n": 1,
+      "ok": 1,
+      "metrics": {
+       "ttft_s": {
+        "n": 1,
+        "median": 43.4869212779995,
+        "mean": 43.4869212779995,
+        "stdev": 0.0,
+        "min": 43.4869212779995,
+        "max": 43.4869212779995
+       },
+       "prefill_tps_client": {
+        "n": 1,
+        "median": 710.6964368074425,
+        "mean": 710.6964368074425,
+        "stdev": 0.0,
+        "min": 710.6964368074425,
+        "max": 710.6964368074425
+       },
+       "prefill_tps_server": {
+        "n": 1,
+        "median": 712.9297301247481,
+        "mean": 712.9297301247481,
+        "stdev": 0.0,
+        "min": 712.9297301247481,
+        "max": 712.9297301247481
+       },
+       "decode_tps_client": {
+        "n": 1,
+        "median": 33.95750715485833,
+        "mean": 33.95750715485833,
+        "stdev": 0.0,
+        "min": 33.95750715485833,
+        "max": 33.95750715485833
+       },
+       "decode_tps_server": {
+        "n": 1,
+        "median": 33.95735169137717,
+        "mean": 33.95735169137717,
+        "stdev": 0.0,
+        "min": 33.95735169137717,
+        "max": 33.95735169137717
+       },
+       "e2e_s": {
+        "n": 1,
+        "median": 66.07459542499782,
+        "mean": 66.07459542499782,
+        "stdev": 0.0,
+        "min": 66.07459542499782,
+        "max": 66.07459542499782
+       },
+       "prompt_tokens": {
+        "n": 1,
+        "median": 30906.0,
+        "mean": 30906.0,
+        "stdev": 0.0,
+        "min": 30906.0,
+        "max": 30906.0
+       },
+       "cached_tokens": {
+        "n": 1,
+        "median": 0.0,
+        "mean": 0.0,
+        "stdev": 0.0,
+        "min": 0.0,
+        "max": 0.0
+       },
+       "completion_tokens": {
+        "n": 1,
+        "median": 768.0,
+        "mean": 768.0,
+        "stdev": 0.0,
+        "min": 768.0,
+        "max": 768.0
+       },
+       "itl_p50_ms": {
+        "n": 1,
+        "median": 29.053173002466792,
+        "mean": 29.053173002466792,
+        "stdev": 0.0,
+        "min": 29.053173002466792,
+        "max": 29.053173002466792
+       },
+       "itl_p99_ms": {
+        "n": 1,
+        "median": 35.65949747993728,
+        "mean": 35.65949747993728,
+        "stdev": 0.0,
+        "min": 35.65949747993728,
+        "max": 35.65949747993728
+       },
+       "vram_peak_mib": {
+        "n": 1,
+        "median": 13597.4609375,
+        "mean": 13597.4609375,
+        "stdev": 0.0,
+        "min": 13597.4609375,
+        "max": 13597.4609375
+       },
+       "gtt_peak_mib": {
+        "n": 1,
+        "median": 70.07421875,
+        "mean": 70.07421875,
+        "stdev": 0.0,
+        "min": 70.07421875,
+        "max": 70.07421875
+       },
+       "ram_avail_min_mib": {
+        "n": 1,
+        "median": 56421.12109375,
+        "mean": 56421.12109375,
+        "stdev": 0.0,
+        "min": 56421.12109375,
+        "max": 56421.12109375
+       },
+       "swap_used_max_mib": {
+        "n": 1,
+        "median": 986.05859375,
+        "mean": 986.05859375,
+        "stdev": 0.0,
+        "min": 986.05859375,
+        "max": 986.05859375
+       },
+       "gpu_busy_mean": {
+        "n": 1,
+        "median": 99.11297709923664,
+        "mean": 99.11297709923664,
+        "stdev": 0.0,
+        "min": 99.11297709923664,
+        "max": 99.11297709923664
+       },
+       "power_mean_w": {
+        "n": 1,
+        "median": 105.0854961832061,
+        "mean": 105.0854961832061,
+        "stdev": 0.0,
+        "min": 105.0854961832061,
+        "max": 105.0854961832061
+       },
+       "temp_max_c": {
+        "n": 1,
+        "median": 67.0,
+        "mean": 67.0,
+        "stdev": 0.0,
+        "min": 67.0,
+        "max": 67.0
+       },
+       "sclk_mean_mhz": {
+        "n": 1,
+        "median": 3304.8702290076335,
+        "mean": 3304.8702290076335,
+        "stdev": 0.0,
+        "min": 3304.8702290076335,
+        "max": 3304.8702290076335
+       }
+      },
+      "expect_pass": 1,
+      "expect_n": 1,
+      "distinct_outputs": 1
+     }
+    ],
+    "warnings": [],
+    "run_e2e_s": {
+     "n": 1,
+     "median": 66.07459542499782,
+     "mean": 66.07459542499782,
+     "stdev": 0.0,
+     "min": 66.07459542499782,
+     "max": 66.07459542499782
+    }
+   }
+  }
+ ]
+}

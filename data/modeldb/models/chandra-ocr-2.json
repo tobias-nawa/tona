@@ -1,0 +1,177 @@
+{
+  "id": "chandra-ocr-2",
+  "name": "Chandra OCR 2",
+  "vendor": "Datalab",
+  "release_date": "2026-03",
+  "lineage": {
+    "family": "Chandra"
+  },
+  "purpose": "High-accuracy OCR and document intelligence including tables, handwriting and 90+ languages; the hosted API is the vendor's product, the weights are the open tier.",
+  "languages": {
+    "natural": [
+      "many"
+    ]
+  },
+  "license": {
+    "name": "OpenRAIL-M (modified, AI Pubs v0.1) for weights; Apache-2.0 for code",
+    "verified": true,
+    "commercial_use": "limited",
+    "redistribution": "limited",
+    "notes": "LICENSE text read. Attachment A.2 forbids use for any purpose by anyone whose organisation had >2,000,000 USD gross revenue last year or raised >2,000,000 USD funding, except personal use or research, and forbids use that competes with the licensor; section 8 Share-a-Like requires the same license on copies, derivatives AND the output. Card tag says only \"openrail\"; the text is stricter. Verdict policy (README, 2026-11-19): this licence term does not lower tona_fit; kept here for an installer label."
+  },
+  "architecture": {
+    "kind": "vision-language, about 4B (secondary source)",
+    "params_total_b": 4.0
+  },
+  "variants": [
+    {
+      "repo": "datalab-to/chandra-ocr-2",
+      "format": "safetensors",
+      "official": true
+    }
+  ],
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "unknown",
+    "other": [
+      "vLLM (recommended)",
+      "transformers"
+    ],
+    "notes": "README does not mention llama.cpp or quantized builds"
+  },
+  "benchmarks": [
+    {
+      "name": "olmOCR-bench overall",
+      "score": "85.8 +/- 0.8",
+      "kind": "vendor",
+      "source": "https://github.com/datalab-to/chandra"
+    },
+    {
+      "name": "multilingual average, 43 languages",
+      "score": 77.8,
+      "kind": "vendor",
+      "source": "https://github.com/datalab-to/chandra"
+    },
+    {
+      "name": "multilingual average, 90 languages",
+      "score": 72.7,
+      "kind": "vendor",
+      "source": "https://github.com/datalab-to/chandra"
+    },
+    {
+      "name": "olmOCR-bench Old Scans",
+      "score": 51.1,
+      "kind": "vendor",
+      "source": "https://github.com/datalab-to/chandra"
+    },
+    {
+      "name": "MDPBench German pages (DE column)",
+      "score": 86.6,
+      "kind": "independent",
+      "source": "https://huggingface.co/datasets/Delores-Lin/MDPBench",
+      "variant": "chandra-ocr-2",
+      "date": "2026-07"
+    },
+    {
+      "name": "MDPBench overall (17 languages)",
+      "score": 79.7,
+      "kind": "independent",
+      "source": "https://huggingface.co/datasets/Delores-Lin/MDPBench",
+      "variant": "chandra-ocr-2",
+      "date": "2026-07"
+    },
+    {
+      "name": "Vendor multilingual benchmark, German",
+      "score": 94.8,
+      "kind": "vendor",
+      "source": "https://huggingface.co/datalab-to/chandra-ocr-2",
+      "variant": "Chandra 2 (Gemini 2.5 Flash 88.3, GPT-5 Mini 93.8, Datalab API 93.8, Chandra 1 83.0)",
+      "unit": "%"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "highest olmOCR-bench score found among open weights",
+      "broad language benchmark",
+      "German is explicit in the vendor multilingual table (94.8) and confirmed third-party (MDPBench DE 86.6, 2nd of the specialised models)"
+    ],
+    "weaknesses": [
+      "license restricts commercial use above 2M USD and competing use",
+      "weaker than Gemini 2.5 Flash on several languages (Arabic 68.4 vs 84.4)",
+      "the hosted API is more accurate than the open weights"
+    ],
+    "maturity": "commercial vendor with open tier, two generations in five months"
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "Top-tier quality (olmOCR-bench 85.8 vendor, MDPBench DE 86.6 independent), the strongest German document evidence in the database, at 4B that fits every class. Compare it with the permissively licensed parsers on our own German documents before it becomes the default."
+  },
+  "open_questions": [
+    "parameter count and base model",
+    "builder's reasons for the architecture"
+  ],
+  "sources": [
+    {
+      "url": "https://github.com/datalab-to/chandra",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/datasets/Delores-Lin/MDPBench",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "MDPBench README table read directly; an earlier summarizer pass mislabeled the Latin-average column as DE, the DE values here come from the dataset README"
+    },
+    {
+      "url": "https://huggingface.co/datalab-to/chandra-ocr-2/raw/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    }
+  ],
+  "tasks": [
+    "documents",
+    "vision"
+  ],
+  "modalities": {
+    "input": [
+      "image",
+      "document"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "about 1B parameters, BF16 about 2 GB"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "BF16 about 2 GB; Tona runs one model at a time, so it replaces the resident model while it works"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate"
+    }
+  },
+  "last_checked": "2026-11-19"
+}

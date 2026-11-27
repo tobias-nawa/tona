@@ -1,0 +1,15 @@
+{
+  "name": "tona-poly-typescript",
+  "private": true,
+  "description": "Test dependencies of the Exercism TypeScript track (the devDependencies that every exercise shares, minus lint and type-test tools), locked in package-lock.json.",
+  "devDependencies": {
+    "@exercism/babel-preset-typescript": "^0.6.0",
+    "@jest/globals": "^29.7.0",
+    "@types/node": "~22.7.6",
+    "babel-jest": "^29.7.0",
+    "core-js": "~3.38.1",
+    "expect": "^29.7.0",
+    "jest": "^29.7.0",
+    "typescript": "~5.6.3"
+  }
+}

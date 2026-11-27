@@ -1,0 +1,390 @@
+{
+  "config": {
+    "A": {
+      "build": "ep175",
+      "env": {
+        "TONA_EXPERT_PROFILE": "none"
+      },
+      "tooling": {
+        "ROCR_VISIBLE_DEVICES": "0"
+      },
+      "commit": "v0.0.2-1339-g5034f45806-dirty",
+      "model": "<worktree>/work/models/nemotron-bolt-74b-a9b-24gb/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB.gguf",
+      "drafter": ""
+    },
+    "B": {
+      "build": "ep175",
+      "env": {},
+      "tooling": {
+        "ROCR_VISIBLE_DEVICES": "0",
+        "TONA_EXPERT_PROFILE": "<worktree>/toolchain/profiles/nemotron-bolt-74b-a9b-24gb.bin"
+      },
+      "commit": "v0.0.2-1339-g5034f45806-dirty",
+      "model": "<worktree>/work/models/nemotron-bolt-74b-a9b-24gb/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB.gguf",
+      "drafter": ""
+    },
+    "workload": "prose",
+    "targets": "2000:prose:400 16000:prose:400 at --ctx 32768",
+    "deterministic": false,
+    "plan_info": {
+      "expect": [
+        [
+          "prefill@2000:prose",
+          2.8,
+          8.8
+        ],
+        [
+          "decode@2000:prose",
+          -1.0,
+          0.4
+        ],
+        [
+          "prefill@16000:prose",
+          -1.9,
+          2.1
+        ],
+        [
+          "decode@16000:prose",
+          1.8,
+          4.8
+        ]
+      ],
+      "source": "2026-11-19-expert-profiles.md plan",
+      "workload": "prose",
+      "targets": "2000:prose:400 16000:prose:400 at --ctx 32768",
+      "primary": "",
+      "why_size": "2K shows the cache start, 16K the steady state (bolt-opt2 E3)",
+      "decode_tokens": 200,
+      "noise": {},
+      "warmup": true,
+      "round_warmup": false,
+      "load_log": false,
+      "A": {
+        "build": "ep175",
+        "env": {
+          "TONA_EXPERT_PROFILE": "none"
+        },
+        "tooling": {
+          "ROCR_VISIBLE_DEVICES": "0"
+        },
+        "commit": "v0.0.2-1339-g5034f45806-dirty",
+        "model": "<worktree>/work/models/nemotron-bolt-74b-a9b-24gb/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB.gguf",
+        "drafter": ""
+      },
+      "B": {
+        "build": "ep175",
+        "env": {},
+        "tooling": {
+          "ROCR_VISIBLE_DEVICES": "0",
+          "TONA_EXPERT_PROFILE": "<worktree>/toolchain/profiles/nemotron-bolt-74b-a9b-24gb.bin"
+        },
+        "commit": "v0.0.2-1339-g5034f45806-dirty",
+        "model": "<worktree>/work/models/nemotron-bolt-74b-a9b-24gb/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB.gguf",
+        "drafter": ""
+      }
+    },
+    "reference_sha": {},
+    "corpus_sha256": "e13a800340859f7d39c63712d90383faae7e5a47c3865f0811e40d912612d38e",
+    "corpus_is_reference": true,
+    "commit": "5034f45",
+    "noise": {}
+  },
+  "rounds": [
+    {
+      "order": "AB",
+      "sha": {
+        "A": {
+          "2000:prose": "03bc3042e3ebf8fa",
+          "16000:prose": "90eabd7be104c3f2"
+        },
+        "B": {
+          "2000:prose": "03bc3042e3ebf8fa",
+          "16000:prose": "90eabd7be104c3f2"
+        }
+      },
+      "A": {
+        "prefill@2000:prose": 1357.632083727409,
+        "decode@2000:prose": 41.83786098787969,
+        "prefill@16000:prose": 1848.6590879790745,
+        "decode@16000:prose": 42.38794544352028
+      },
+      "counters": {
+        "A": {
+          "2000:prose": {
+            "expert_hits": 107906,
+            "expert_misses": 36094,
+            "passes": 399,
+            "gen_tokens": 399,
+            "mtp_passes": 0
+          },
+          "16000:prose": {
+            "expert_hits": 111821,
+            "expert_misses": 32179,
+            "passes": 399,
+            "gen_tokens": 399,
+            "mtp_passes": 0
+          }
+        },
+        "B": {
+          "2000:prose": {
+            "expert_hits": 86058,
+            "expert_misses": 57942,
+            "passes": 399,
+            "gen_tokens": 399,
+            "mtp_passes": 0
+          },
+          "16000:prose": {
+            "expert_hits": 138972,
+            "expert_misses": 5028,
+            "passes": 399,
+            "gen_tokens": 399,
+            "mtp_passes": 0
+          }
+        }
+      },
+      "B": {
+        "prefill@2000:prose": 1426.8493986676615,
+        "decode@2000:prose": 41.509048180303125,
+        "prefill@16000:prose": 1853.0544645423267,
+        "decode@16000:prose": 44.18624928438105
+      },
+      "seconds": 72.3463925330143
+    },
+    {
+      "order": "BA",
+      "sha": {
+        "B": {
+          "2000:prose": "03bc3042e3ebf8fa",
+          "16000:prose": "90eabd7be104c3f2"
+        },
+        "A": {
+          "2000:prose": "03bc3042e3ebf8fa",
+          "16000:prose": "90eabd7be104c3f2"
+        }
+      },
+      "B": {
+        "prefill@2000:prose": 1426.1585163333305,
+        "decode@2000:prose": 41.52185949309843,
+        "prefill@16000:prose": 1851.5442601826837,
+        "decode@16000:prose": 44.170553482495045
+      },
+      "counters": {
+        "B": {
+          "2000:prose": {
+            "expert_hits": 86058,
+            "expert_misses": 57942,
+            "passes": 399,
+            "gen_tokens": 399,
+            "mtp_passes": 0
+          },
+          "16000:prose": {
+            "expert_hits": 138972,
+            "expert_misses": 5028,
+            "passes": 399,
+            "gen_tokens": 399,
+            "mtp_passes": 0
+          }
+        },
+        "A": {
+          "2000:prose": {
+            "expert_hits": 107906,
+            "expert_misses": 36094,
+            "passes": 399,
+            "gen_tokens": 399,
+            "mtp_passes": 0
+          },
+          "16000:prose": {
+            "expert_hits": 111821,
+            "expert_misses": 32179,
+            "passes": 399,
+            "gen_tokens": 399,
+            "mtp_passes": 0
+          }
+        }
+      },
+      "A": {
+        "prefill@2000:prose": 1357.503503937276,
+        "decode@2000:prose": 42.095917757804926,
+        "prefill@16000:prose": 1850.2339451317491,
+        "decode@16000:prose": 42.46207056014663
+      },
+      "seconds": 71.93424870501622
+    },
+    {
+      "order": "AB",
+      "sha": {
+        "A": {
+          "2000:prose": "03bc3042e3ebf8fa",
+          "16000:prose": "90eabd7be104c3f2"
+        },
+        "B": {
+          "2000:prose": "03bc3042e3ebf8fa",
+          "16000:prose": "90eabd7be104c3f2"
+        }
+      },
+      "A": {
+        "prefill@2000:prose": 1356.3515348769497,
+        "decode@2000:prose": 42.015951940806296,
+        "prefill@16000:prose": 1850.1329338733465,
+        "decode@16000:prose": 42.440886749095014
+      },
+      "counters": {
+        "A": {
+          "2000:prose": {
+            "expert_hits": 107906,
+            "expert_misses": 36094,
+            "passes": 399,
+            "gen_tokens": 399,
+            "mtp_passes": 0
+          },
+          "16000:prose": {
+            "expert_hits": 111821,
+            "expert_misses": 32179,
+            "passes": 399,
+            "gen_tokens": 399,
+            "mtp_passes": 0
+          }
+        },
+        "B": {
+          "2000:prose": {
+            "expert_hits": 86058,
+            "expert_misses": 57942,
+            "passes": 399,
+            "gen_tokens": 399,
+            "mtp_passes": 0
+          },
+          "16000:prose": {
+            "expert_hits": 138972,
+            "expert_misses": 5028,
+            "passes": 399,
+            "gen_tokens": 399,
+            "mtp_passes": 0
+          }
+        }
+      },
+      "B": {
+        "prefill@2000:prose": 1426.3660832719863,
+        "decode@2000:prose": 41.5419964394494,
+        "prefill@16000:prose": 1850.8152106109987,
+        "decode@16000:prose": 44.172531811236674
+      },
+      "seconds": 71.96470284700627
+    },
+    {
+      "order": "BA",
+      "sha": {
+        "B": {
+          "2000:prose": "03bc3042e3ebf8fa",
+          "16000:prose": "90eabd7be104c3f2"
+        },
+        "A": {
+          "2000:prose": "03bc3042e3ebf8fa",
+          "16000:prose": "90eabd7be104c3f2"
+        }
+      },
+      "B": {
+        "prefill@2000:prose": 1427.5008802825382,
+        "decode@2000:prose": 41.485237230353576,
+        "prefill@16000:prose": 1851.0650717880258,
+        "decode@16000:prose": 44.19577671035794
+      },
+      "counters": {
+        "B": {
+          "2000:prose": {
+            "expert_hits": 86058,
+            "expert_misses": 57942,
+            "passes": 399,
+            "gen_tokens": 399,
+            "mtp_passes": 0
+          },
+          "16000:prose": {
+            "expert_hits": 138972,
+            "expert_misses": 5028,
+            "passes": 399,
+            "gen_tokens": 399,
+            "mtp_passes": 0
+          }
+        },
+        "A": {
+          "2000:prose": {
+            "expert_hits": 107906,
+            "expert_misses": 36094,
+            "passes": 399,
+            "gen_tokens": 399,
+            "mtp_passes": 0
+          },
+          "16000:prose": {
+            "expert_hits": 111821,
+            "expert_misses": 32179,
+            "passes": 399,
+            "gen_tokens": 399,
+            "mtp_passes": 0
+          }
+        }
+      },
+      "A": {
+        "prefill@2000:prose": 1357.1255972163592,
+        "decode@2000:prose": 42.1331971305267,
+        "prefill@16000:prose": 1847.104447460452,
+        "decode@16000:prose": 42.43216156684375
+      },
+      "seconds": 71.92140792199643
+    }
+  ],
+  "discarded": [],
+  "stop_reason": "4 rounds (undecided metrics stay open)",
+  "wall_seconds": 326.1802960440109,
+  "loads": [],
+  "warmup": {
+    "prefill@2000:prose": 1310.567828252554,
+    "decode@2000:prose": 41.93616439041358,
+    "prefill@16000:prose": 1815.143576372736,
+    "decode@16000:prose": 42.4371383446531
+  },
+  "plan": {
+    "alpha": 0.05,
+    "margin": 0.5,
+    "max_rounds": 4,
+    "min_rounds": 4,
+    "prior_sd": 0.5,
+    "prior_df": 4.0
+  },
+  "decisions": {
+    "prefill@2000:prose": {
+      "decided_at_round": 4,
+      "decision": "B faster",
+      "mean_diff_percent": 5.12585535968339,
+      "ci_diff_percent": [
+        4.676685636172023,
+        5.575025083194758
+      ]
+    },
+    "decode@2000:prose": {
+      "decided_at_round": 4,
+      "decision": "B slower",
+      "mean_diff_percent": -1.203883556981683,
+      "ci_diff_percent": [
+        -1.7168217201645692,
+        -0.6909453937987968
+      ]
+    },
+    "prefill@16000:prose": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": 0.13996993078560505,
+      "ci_diff_percent": [
+        -0.3136692383188823,
+        0.5936090998900925
+      ]
+    },
+    "decode@16000:prose": {
+      "decided_at_round": 4,
+      "decision": "B faster",
+      "mean_diff_percent": 4.12562262429641,
+      "ci_diff_percent": [
+        3.6727387077343954,
+        4.578506540858425
+      ]
+    }
+  }
+}

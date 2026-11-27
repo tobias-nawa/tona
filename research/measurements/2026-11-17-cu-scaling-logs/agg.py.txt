@@ -1,0 +1,59 @@
+import re, glob, statistics as st, collections
+
+D = "/var/tmp/claude/164/cu3/"
+rounds = collections.defaultdict(list)  # (arm, w) -> list of {label: ms}
+tot = collections.defaultdict(list)
+passms = collections.defaultdict(list)
+for f in sorted(glob.glob(D + "batch-*.log")):
+    arm = re.search(r"batch-(\d+)-", f).group(1)
+    cur = None
+    for l in open(f):
+        m = re.match(r"B = (\d+): \d+ passes, ([\d.]+) ms per pass", l)
+        if m:
+            passms[(arm, int(m[1]))].append(float(m[2]))
+            continue
+        m = re.match(r"Profile B = (\d+): ([\d.]+) ms", l)
+        if m:
+            w = int(m[1])
+            tot[(arm, w)].append(float(m[2]))
+            cur = collections.defaultdict(float)
+            rounds[(arm, w)].append(cur)
+            continue
+        m = re.match(r"\s+(\S+?)#(\d+)\s+(\d+) µs", l)
+        if m and cur is not None:
+            if m[1] not in ("nu", "gd"):
+                cur[m[1]] += int(m[3]) / 1000
+        elif m is None and l.strip() and not l.startswith(" "):
+            cur = None
+labels = set()
+for v in rounds.values():
+    for r in v:
+        labels |= set(r)
+for w in (1, 4, 8):
+    print(f"\n== W={w}: wall pass ms 32: {passms[('32', w)]} 16: {passms[('16', w)]}")
+    print(f"   profile total 32: {tot[('32', w)]} 16: {tot[('16', w)]}")
+    rows = []
+    for lab in labels:
+        a = [r.get(lab, 0) for r in rounds[("32", w)]]
+        b = [r.get(lab, 0) for r in rounds[("16", w)]]
+        if a and b:
+            rows.append((st.median(a), lab, min(a), max(a), st.median(b), min(b), max(b)))
+    rows.sort(reverse=True)
+    print(f"{'step':16s}{'t32':>8s}{'min-max':>14s}{'t16':>8s}{'min-max':>14s}{'ratio':>7s}")
+    for ma, lab, a0, a1, mb, b0, b1 in rows[:24]:
+        print(f"{lab:16s}{ma:8.3f}{f'{a0:.2f}-{a1:.2f}':>14s}{mb:8.3f}{f'{b0:.2f}-{b1:.2f}':>14s}{(mb / ma if ma else 0):7.2f}")
+
+print("\n== classes by ratio of t16/t32 (profile sums of all steps; host.* separate)")
+for w in (1, 4, 8):
+    cls = collections.defaultdict(float); tcl = collections.defaultdict(float)
+    host = 0.0
+    for lab in labels:
+        a = [r.get(lab, 0) for r in rounds[("32", w)]]; b = [r.get(lab, 0) for r in rounds[("16", w)]]
+        if not a or not b: continue
+        ma, mb = st.median(a), st.median(b)
+        if lab.startswith("host") or lab == "moe.copy":
+            host += ma; continue
+        r = mb / ma if ma else 1
+        k = "fixed(<1.10)" if r < 1.10 else ("mixed(1.10-1.50)" if r < 1.5 else "cu-bound(>=1.50)")
+        cls[k] += ma; tcl[k] += mb
+    print(f"W={w}: host {host:.2f} ms;", "; ".join(f"{k}: t32 {cls[k]:.2f} -> t16 {tcl[k]:.2f}" for k in sorted(cls)))

@@ -1,0 +1,161 @@
+{
+  "id": "qwen-image-edit-2511",
+  "name": "Qwen-Image-Edit-2511",
+  "vendor": "Alibaba Qwen",
+  "release_date": "2025-12-17",
+  "lineage": {
+    "base_model": "Qwen-Image-Edit-2509",
+    "family": "Qwen-Image",
+    "how_derived": "enhanced revision of Qwen-Image-Edit-2509"
+  },
+  "purpose": "Image editing with less identity drift, better character and multi-person group consistency, built-in LoRA abilities, industrial design and geometric reasoning.",
+  "tasks": [
+    "image-generation"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image"
+    ],
+    "output": [
+      "image"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en",
+      "zh"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Apache License 2.0 text read in the Qwen-Image GitHub repository LICENSE (the Edit checkpoint is from the same family and the card tags apache-2.0); the HF repo itself has no LICENSE file. HF createdAt 2025-12-17."
+  },
+  "architecture": {
+    "kind": "dense diffusion transformer (MMDiT per research/52)",
+    "params_total_b": 20
+  },
+  "variants": [
+    {
+      "repo": "Qwen/Qwen-Image-Edit-2511",
+      "format": "safetensors BF16",
+      "official": true
+    },
+    {
+      "repo": "community GGUF",
+      "format": "GGUF Q4_K_M",
+      "size_gb": 12.84,
+      "official": false,
+      "notes": "from research/52"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "no",
+      "basis": "estimate",
+      "notes": "Q4 12.8 GB plus encoder"
+    },
+    "pc-16gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "notes": "alone only, not beside the coder No consumer-GPU speed found."
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "Q4"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "diffusers",
+      "stable-diffusion.cpp",
+      "ComfyUI"
+    ]
+  },
+  "benchmarks": [
+    {
+      "name": "VDEBench local IoU",
+      "score": 0.707,
+      "kind": "vendor",
+      "variant": "BF16",
+      "source": "https://huggingface.co/Qwen/Qwen-Image-Edit-2511"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "best Apache-2.0 editing quality among options read",
+      "40 steps with true CFG 4"
+    ],
+    "weaknesses": [
+      "20B: slow and large for 16 GB"
+    ],
+    "best_for": [
+      "high-fidelity edits on 24 GB+ cards or Macs with 32 GB+"
+    ],
+    "maturity": "Qwen: large community, 214 adapters on the Hub at read time."
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "Best Apache-2.0 editing model of the set (20B; community GGUF Q4_K_M 12.84 GB), fits 24 GB comfortably and 16 GB marginally; FLUX.2 klein 4B is the lighter editing alternative.",
+    "blockers": [
+      "Tona has no image engine",
+      "marginal on 16 GB"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/Qwen/Qwen-Image-Edit-2511",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "research/52-purpose-models.md",
+      "kind": "own",
+      "checked": "2026-11-19",
+      "note": "our research note 52, facts fetched 2026-11-15, not a measurement"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/QwenLM/Qwen-Image/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "Apache-2.0 text, read through a summarizer"
+    },
+    {
+      "url": "https://huggingface.co/api/models/Qwen/Qwen-Image-Edit-2511",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "createdAt 2025-12-17"
+    }
+  ],
+  "open_questions": [
+    "Text encoder and VRAM not stated on the card",
+    "No consumer-GPU speed found (searched 2026-11-19)"
+  ],
+  "last_checked": "2026-11-19"
+}

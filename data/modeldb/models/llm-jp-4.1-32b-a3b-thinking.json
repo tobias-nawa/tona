@@ -1,0 +1,144 @@
+{
+  "id": "llm-jp-4.1-32b-a3b-thinking",
+  "name": "LLM-jp-4.1 (32B-A3B, 33B, 8B thinking)",
+  "vendor": "NII Research and Development Center for LLMs (LLM-jp)",
+  "release_date": "2026-09-16",
+  "lineage": {
+    "family": "LLM-jp-4.1",
+    "how_derived": "pretraining and mid-training for the base; post-trained with SFT and DPO, no reinforcement learning; 32B-A3B, 33B and 8B thinking models"
+  },
+  "purpose": "Japanese-focused open models from the National Institute of Informatics; the card refers to a (Japanese) technical blog and a cookbook for use (card).",
+  "tasks": [
+    "general",
+    "coding"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "ja",
+      "en"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0 (card tag)",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card tag apache-2.0; no LICENSE file in the repo, text not read."
+  },
+  "architecture": {
+    "kind": "MoE (Qwen3-MoE architecture)",
+    "gguf_arch": "qwen3moe",
+    "params_total_b": 32,
+    "params_active_b": 3,
+    "layers": 32,
+    "attention": "GQA 40 Q / 4 KV heads, head dim 128, hidden 2560",
+    "recurrent": "none",
+    "experts": 128,
+    "experts_active": 8,
+    "context_native": 65536,
+    "drafter": "none"
+  },
+  "variants": [
+    {
+      "repo": "llm-jp/llm-jp-4.1-32b-a3b-thinking-gguf",
+      "format": "GGUF Q4_K_M",
+      "size_gb": 21.52,
+      "official": true,
+      "notes": "7.6k downloads; 33B and 8B thinking GGUF repos also exist (sizes not checked)"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "marginal",
+      "variant": "official GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "21.52 GB file against 9.6 GB VRAM plus 50 GB RAM budget; experts stream from RAM (~3 B active, decode bound by RAM bandwidth)"
+    },
+    "pc-16gb": {
+      "fits": "marginal",
+      "variant": "official GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "21.52 GB file against 13.6 GB VRAM plus 50 GB RAM budget; experts stream from RAM (~3 B active, decode bound by RAM bandwidth)"
+    },
+    "pc-24gb": {
+      "fits": "marginal",
+      "variant": "official GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "21.52 GB file against 21.6 GB VRAM plus 82 GB RAM budget; experts stream from RAM (~3 B active, decode bound by RAM bandwidth)"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "official GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "21.52 GB file fits the VRAM budget (29.6 GB) with room for KV"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "official GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "21.52 GB file against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "marginal",
+      "variant": "official GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "21.52 GB file against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "official GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "21.52 GB file against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "Transformers"
+    ],
+    "notes": "Standard qwen3_moe architecture."
+  },
+  "benchmarks": [],
+  "soft": {
+    "weaknesses": [
+      "evaluation only in a Japanese blog (not read)"
+    ],
+    "maturity": "8B thinking has 100k downloads; the 32B-A3B 4k"
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Candidate for Japanese-language users on 16 GB class hardware (plain qwen3moe, 3B active, 65k context). No numbers read, so no offer.",
+    "blockers": [
+      "no benchmark numbers read",
+      "licence text not read"
+    ]
+  },
+  "open_questions": [
+    "Japanese benchmark results versus Qwen3.8 models",
+    "8B and 33B sizes and scores"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/llm-jp/llm-jp-4.1-32b-a3b-thinking",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README, config.json, LICENSE read"
+    },
+    {
+      "url": "https://huggingface.co/api/models/llm-jp/llm-jp-4.1-32b-a3b-thinking-gguf?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "GGUF size"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

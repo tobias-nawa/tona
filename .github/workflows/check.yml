@@ -1,0 +1,207 @@
+name: check
+
+# What runs here: the code gates (the same pre-commit hooks as locally) and the installer build with its tests.
+# What does not: the engine build, GPU tests, the golden comparison and speed measurements. The reference platform
+# (RDNA4 GPU, ROCm toolchain of several GB, the model) does not exist on GitHub runners; the maintainers check it
+# locally (AGENTS.md, "Verifying", docs/contribute/verification.md level 1 to 3). clang-tidy needs that toolchain too and runs in
+# `just check`.
+
+on:
+  pull_request:
+    # edited: the prior-art job reads the pull request text, so fixing the text must run it again
+    types: [opened, synchronize, reopened, edited]
+  push:
+    branches: [main]
+
+# No default permissions; every job below asks for what it needs.
+permissions: {}
+
+concurrency:
+  group: check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  changes:
+    # Which areas the pull request touches (scripts/ci-changes.sh); push, schedule and manual runs turn all on.
+    name: changes
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    outputs:
+      cpp: ${{ steps.areas.outputs.cpp }}
+      py: ${{ steps.areas.outputs.py }}
+      ci: ${{ steps.areas.outputs.ci }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0 # the merge base of the pull request must exist
+      - name: Areas
+        id: areas
+        env:
+          EVENT: ${{ github.event_name }}
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD: ${{ github.event.pull_request.head.sha }}
+        run: scripts/ci-changes.sh "$EVENT" "$PR_BASE" "$PR_HEAD"
+
+  gates:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0 # the diff against the base and gitleaks over the whole history need all commits
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.12"
+      - run: pip install -r tools/gates/requirements.txt
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cache/pre-commit
+          key: pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
+      - name: Gates on the changes (strict)
+        env:
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
+          PUSH_BEFORE: ${{ github.event.before }}
+        run: |
+          # Pull request: its base. Push: the previous head; a new branch or a force push has none, then only the last commit.
+          from="${PR_BASE:-$PUSH_BEFORE}"
+          if [ -z "$from" ] || [ "$from" = 0000000000000000000000000000000000000000 ] || ! git cat-file -e "$from^{commit}"; then
+            from=HEAD~1
+          fi
+          # The first push of the public repository is one commit without a parent: the step after the next one
+          # checks every file, which is the same set.
+          if ! git rev-parse --quiet --verify "$from^{commit}" >/dev/null; then
+            echo "no commit before HEAD: the all-files step covers it"
+            exit 0
+          fi
+          pre-commit run --show-diff-on-failure --color=always --from-ref "$from" --to-ref HEAD
+      - name: Secrets in the whole history (strict)
+        run: pre-commit run gitleaks-history --hook-stage manual --color=always
+      - name: Gates on all files (strict)
+        run: pre-commit run --all-files --color=always
+
+  prior-art:
+    # Engine code needs the section "Prior art" in the pull request text (tools/gates/prior_art.py). The text is
+    # attacker-controlled: it reaches the script only through env, never through the shell command line. No secrets.
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0 # the changed files are the diff against the merge base
+      - name: Prior art in the pull request text
+        env:
+          PR_BODY: ${{ github.event.pull_request.body }}
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
+          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
+        # --online asks arxiv.org and github.com whether the links exist; network errors are warnings, never findings
+        run: python3 tools/gates/prior_art.py --online
+
+  pr-text:
+    # The `AI use:` line of the template is filled in (tools/gates/pr_text.py), the title is a
+    # Conventional Commit (tools/gates/pr_title.py). The squash
+    # merge copies the pull request text into the commit message, so the statement stays in the history. Text through
+    # env only.
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      issues: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: AI use, trailer rules and the closed issue in the pull request text
+        env:
+          PR_BODY: ${{ github.event.pull_request.body }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
+          PR_AUTHOR_ASSOCIATION: ${{ github.event.pull_request.author_association }}
+          GH_TOKEN: ${{ github.token }}
+        # --online reads the labels of the issue (read-only API call) for `accepted`
+        run: python3 tools/gates/pr_text.py --online
+      - name: Conventional Commits title (the squash commit, so the version)
+        # The title becomes the subject of the one commit main gets; scripts/release-next.py computes the version from it.
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_BODY: ${{ github.event.pull_request.body }}
+          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
+        run: python3 tools/gates/pr_title.py
+
+  commits:
+    # Trailer rules for every commit of the pull request (tools/gates/commit_trailers.py), for those who skipped the hook.
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Commit messages
+        env:
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD: ${{ github.event.pull_request.head.sha }}
+          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
+        run: python3 tools/gates/commit_trailers.py --range "$PR_BASE..$PR_HEAD"
+
+  agent-config:
+    # Agent configuration, hooks and instruction files change only through the maintainer (tools/gates/agent_config.py,
+    # .github/CODEOWNERS). The author's association is GitHub's field, not text of the pull request.
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Files that run code or instruct agents
+        env:
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
+          PR_AUTHOR_ASSOCIATION: ${{ github.event.pull_request.author_association }}
+          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
+        run: python3 tools/gates/agent_config.py
+
+  installer:
+    needs: changes
+    if: needs.changes.outputs.cpp == 'true' || needs.changes.outputs.ci == 'true'
+    # Plain C++23, no ROCm: builds and tests on a stock runner. Ubuntu 24.04 ships GCC 14, the first with a complete
+    # <format>, which the installer uses.
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    env:
+      CXX: g++-14
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Compiler
+        run: sudo apt-get install -y --no-install-recommends g++-14 ninja-build libssl-dev
+      - run: cmake -S installer -B build/installer -G Ninja
+      - run: cmake --build build/installer
+      - run: ctest --test-dir build/installer --output-on-failure
+
+  check-ok:
+    # The one check the ruleset requires for this workflow: skipped jobs count as fine, failed or cancelled ones do not.
+    name: check-ok
+    if: always()
+    needs: [changes, installer, gates, prior-art, pr-text, commits, agent-config]
+    runs-on: ubuntu-24.04
+    permissions: {}
+    steps:
+      - name: Every needed job passed or was skipped
+        env:
+          RESULTS: ${{ join(needs.*.result, ' ') }}
+        run: |
+          echo "results: $RESULTS"
+          case " $RESULTS " in *" failure "* | *" cancelled "*) exit 1 ;; esac

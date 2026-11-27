@@ -1,0 +1,28 @@
+== big-ref cuts= 
+exit 0
+Prefill 8200 tokens: layer by layer, chunk 6144, group 12288, loan limit 4765 MB
+tail: prefill 8200 tokens in 5.5 s, then 64 tokens through the megakernel (34.8 tok/s): NLL 0.075354, top-1 98.44 %
+== big-c8000 cuts=8000 
+exit 0
+Prefill 8000 tokens: layer by layer, chunk 6144, group 12288, loan limit 4765 MB
+Prefill 200 tokens: chunk by chunk, chunk 2048, group 0, loan limit 4765 MB
+tail: prefill 8200 tokens in 5.4 s, then 64 tokens through the megakernel (35.4 tok/s): NLL 0.075354, top-1 98.44 %
+== big-c4001 cuts=4001 
+exit 0
+Prefill 4001 tokens: layer by layer, chunk 6144, group 12288, loan limit 4765 MB
+Prefill 4199 tokens: layer by layer, chunk 6144, group 12288, loan limit 4765 MB
+tail: prefill 8200 tokens in 5.2 s, then 64 tokens through the megakernel (35.4 tok/s): NLL 0.075354, top-1 98.44 %
+== big-c4001b cuts=4001,6500 
+exit 0
+Prefill 4001 tokens: layer by layer, chunk 6144, group 12288, loan limit 4765 MB
+Prefill 2499 tokens: layer by layer, chunk 6144, group 12288, loan limit 4765 MB
+Prefill 1700 tokens: chunk by chunk, chunk 2048, group 0, loan limit 4765 MB
+tail: prefill 8200 tokens in 5.6 s, then 64 tokens through the megakernel (35.6 tok/s): NLL 0.075354, top-1 98.44 %
+== big-ref2 cuts= 
+exit 0
+Prefill 8200 tokens: layer by layer, chunk 6144, group 12288, loan limit 4765 MB
+tail: prefill 8200 tokens in 5.2 s, then 64 tokens through the megakernel (35.3 tok/s): NLL 0.075354, top-1 98.44 %
+SAME ref2
+SAME c8000
+SAME c4001
+SAME c4001b

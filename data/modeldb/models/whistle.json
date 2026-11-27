@@ -1,0 +1,67 @@
+{
+  "id": "whistle",
+  "name": "Whistle (16.9 MB speech model)",
+  "vendor": "Cactus Compute",
+  "release_date": "2026-09-30",
+  "lineage": {
+    "family": "cactus-needle",
+    "base_model": "shares the block code of Cactus's Needle model (Simple Attention blocks), trained separately (blog)"
+  },
+  "purpose": "Speech recognition, word timestamps and speech embeddings in one 16.9 MB file for mobiles, wearables, robots, smart home, automotive and microcontrollers, on the same CPU engine as Needle (blog, 2026-10-02).",
+  "tasks": ["audio-transcription"],
+  "modalities": {"input": ["audio"], "output": ["text", "embedding"]},
+  "languages": {"natural": ["en", "de", "fr", "es", "it", "nl", "pl"]},
+  "license": {
+    "name": "Apache-2.0",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card header states apache-2.0; no LICENSE file opened."
+  },
+  "architecture": {
+    "kind": "encoder-decoder: 8 non-causal Simple Attention encoder blocks (conv stem, 375 frames per 30 s) and 8 Laddered Simple Attention decoder blocks (width 512, GQA 8:2, gated cross attention), beam search with keyword biasing",
+    "layers": 16,
+    "attention": "GQA 8 query / 2 KV heads in the decoder, cross attention in every decoder layer",
+    "context_native": 320,
+    "why_this_design": "Blog: reuses Needle's block code so one binary turns audio into tool calls; every decoder depth from 2 layers up was trained as its own model and --audio-depth selects one at load time."
+  },
+  "variants": [
+    {"repo": "Cactus-Compute/whistle", "format": "cactus quantised (whistle.cact) plus safetensors checkpoint", "size_gb": 0.46, "official": true, "notes": "repo total 0.46 GB incl. checkpoint; the runtime file is 16.9 MB per the blog"}
+  ],
+  "hardware_fit": {
+    "pc-12gb": {"fits": "yes", "basis": "estimate", "notes": "runs on CPU"},
+    "pc-16gb": {"fits": "yes", "basis": "estimate"},
+    "pc-24gb": {"fits": "yes", "basis": "estimate"},
+    "pc-32gb": {"fits": "yes", "basis": "estimate"},
+    "mac-16-24gb": {"fits": "yes", "basis": "estimate"},
+    "mac-32gb": {"fits": "yes", "basis": "estimate"},
+    "mac-64gb+": {"fits": "yes", "basis": "estimate"}
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": ["Cactus C++ engine (pip install cactus-compute)", "WebAssembly in the browser"],
+    "notes": "Own runtime only; the encoder-decoder design is small enough to port."
+  },
+  "benchmarks": [
+    {"name": "Time to first token, 10 s of audio", "score": 11.1, "unit": "ms", "kind": "vendor", "variant": "Apple M4 Pro CPU, 5 beams (Whisper base 73.2 ms, Moonshine tiny v2 22.8 ms)", "source": "https://cactuscompute.com/blog/whistle", "date": "2026-10-02"},
+    {"name": "Decode speed, 10 s of audio", "score": 1319, "unit": "tokens/s", "kind": "vendor", "variant": "Apple M4 Pro CPU (Whisper base 266, Moonshine tiny v2 262)", "source": "https://cactuscompute.com/blog/whistle", "date": "2026-10-02"}
+  ],
+  "soft": {
+    "strengths": ["16.9 MB, first token in 11 ms on a laptop CPU", "German is one of the seven languages", "Word timestamps and keyword biasing built in"],
+    "weaknesses": ["Accuracy comparison is only shown as bar charts in the blog and only against Whisper base and Moonshine tiny v2 (Whisper base ahead on TED-LIUM, AMI and MLS average per the blog text)", "Blog uses the other models' published figures for Whisper and Moonshine, not a common run", "Only 7 languages, 30 s windows"],
+    "best_for": ["tiny always-on on-device transcription"],
+    "maturity": "Cactus Compute (Needle model family); 91k downloads on the HF API 2026-11-19."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Far below the quality class of the 0.6B to 1.7B ASR models in this database; relevant only as an ultra-light fallback or wake-word-style front end on weak hardware. No numeric German WER available as text.",
+    "blockers": ["no numeric WER, accuracy only as images", "own runtime and block design"]
+  },
+  "sources": [
+    {"url": "https://huggingface.co/Cactus-Compute/whistle", "kind": "primary", "checked": "2026-11-19", "note": "card read"},
+    {"url": "https://cactuscompute.com/blog/whistle", "kind": "primary", "checked": "2026-11-19", "note": "builder blog: architecture, benchmark text, speed"}
+  ],
+  "open_questions": ["Numeric WER per language (charts only)", "German accuracy against parakeet and Qwen3-ASR class models", "LICENSE file"],
+  "last_checked": "2026-11-19"
+}

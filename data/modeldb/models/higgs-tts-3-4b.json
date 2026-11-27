@@ -1,0 +1,169 @@
+{
+  "id": "higgs-tts-3-4b",
+  "name": "Higgs TTS 3 (4B)",
+  "vendor": "Boson AI",
+  "release_date": "2026-06-04",
+  "lineage": {
+    "base_model": "Qwen3-4B backbone with fused multi-codebook audio embedding/head",
+    "family": "Higgs Audio v3 (also higgs-audio-v3-stt, 8b-stt-v2)"
+  },
+  "purpose": "Built for voice chat: 'speaks, not just reads' with expressive conversational speech in 100+ languages, zero-shot voice cloning and inline control of emotion, style, prosody, pauses and sound effects (card).",
+  "tasks": [
+    "speech-synthesis"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "audio"
+    ],
+    "output": [
+      "audio"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "many",
+      "de",
+      "en",
+      "fr",
+      "ar",
+      "zh",
+      "da",
+      "nl",
+      "fi",
+      "el",
+      "bg",
+      "cs"
+    ]
+  },
+  "license": {
+    "name": "Boson Higgs TTS 3 Research and Non-Commercial License",
+    "verified": false,
+    "commercial_use": "no",
+    "redistribution": "limited",
+    "notes": "License file opened (Last Updated 2026-07-08), Sections I-II read: free for Research Purpose or Non-Commercial Purpose; any commercial use needs a separate written licence; a Creator Use Grant allows monetized creative content (podcasts, videos, posts) with attribution to Boson AI's Higgs Audio; prohibited uses include voice cloning without consent. Remaining sections not read. Verdict policy (README, 2026-11-19): this licence term does not lower tona_fit; kept here for an installer label."
+  },
+  "architecture": {
+    "kind": "autoregressive decoder on interleaved text and audio tokens: about 4B (36 layers, hidden 2560, GQA 32/8, context 8192), Higgs tokenizer with 8 codebooks at 25 fps with delay pattern, 24 kHz",
+    "params_total_b": 4.0,
+    "layers": 36,
+    "context_native": 8192
+  },
+  "variants": [
+    {
+      "repo": "bosonai/higgs-tts-3-4b",
+      "format": "safetensors BF16",
+      "official": true,
+      "size_gb": 9.32,
+      "notes": "gated; 89k downloads, 854 likes; also bosonai/higgs-audio-v3-tts-4b path"
+    },
+    {
+      "repo": "multimodalart/higgs-audio-v3-tts-4b-transformers",
+      "format": "safetensors",
+      "official": false,
+      "size_gb": 9.32,
+      "notes": "plain-transformers port, 23k downloads"
+    },
+    {
+      "repo": "drbaph/Higgs-Audio-v3-Studio",
+      "format": "community Studio build",
+      "official": false,
+      "notes": "1.22M downloads, 9 likes: ecosystem packaging; not opened"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "marginal",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "9.3 GB file against 9.6 GB VRAM plus 50 GB RAM budget; part streams from RAM (dense: decode is bandwidth bound)"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (13.6 GB)"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (21.6 GB)"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (29.6 GB)"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "9.3 GB file against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "9.3 GB file against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "9.3 GB file against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "partial",
+    "other": [
+      "SGLang",
+      "Transformers >= 5.5 with trust_remote_code"
+    ],
+    "notes": "llama.cpp mtmd added 'higgs v3 STT and vibevoice-ASR' in b12426; TTS support in mainline not confirmed."
+  },
+  "benchmarks": [],
+  "soft": {
+    "strengths": [
+      "WER/CER under 5 in 85 languages and single digit in 102 (vendor); German in the polished tier",
+      "inline emotion and sound tags, zero-shot cloning"
+    ],
+    "weaknesses": [
+      "non-commercial licence",
+      "8192-token context"
+    ],
+    "maturity": "Boson AI (Higgs Audio v2 widely used since 2025); strongly reused in the community (comparison column in Audio8's card)."
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "Best-covered multilingual expressive TTS found (German in the top tier) at 4B. Compare with Fish S2 Pro, Qwen3-TTS and Audio8 on our own German samples before any offer."
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/bosonai/higgs-audio-v3-tts-4b",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README, config, HF API (repo bosonai/higgs-tts-3-4b)"
+    },
+    {
+      "url": "https://huggingface.co/bosonai/higgs-tts-3-4b/raw/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "Sections I-II"
+    },
+    {
+      "url": "https://huggingface.co/multimodalart/higgs-audio-v3-tts-4b-transformers",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "port README"
+    }
+  ],
+  "open_questions": [
+    "Quality benchmarks (tier table is vendor WER/CER)",
+    "Full licence text",
+    "Whether llama.cpp supports the TTS model"
+  ],
+  "last_checked": "2026-11-19"
+}

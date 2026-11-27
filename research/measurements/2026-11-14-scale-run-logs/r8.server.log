@@ -1,0 +1,86 @@
+Tona (tona-server) on http://127.0.0.1:8097 (Anthropic: /v1/messages, OpenAI: /v1/chat/completions), without key, loading ...
+host memory: GTT (probe 64 MB grew the GTT use by 64 MB; 0.1 of 32.5 GB in use)
+evicted_ms counter: /sys/class/kfd/kfd/proc/42654/stats_7773/evicted_ms (0 ms so far), evictions do not count against the pass deadline
+Initialization: 512 MTP experts as Q2_0, converted on the GPU (708 MB) in 0.8 s
+host memory: 3.6 GB of the pinned experts do not fit the GTT and are registered as userptr
+host memory: transparent huge pages enabled=madvise defrag=madvise, 3.6 of 3.6 GB of the registered memory on huge pages
+Releasing page cache: 8.25 GB of file mappings removed from the address space
+loaded in 19.9 s: context 262144 (KV int8 3.62 GB in RAM), VRAM 14.13 GB, 77 expert slots per layer, 29.2 GB pinned
+20:08:12 Request: 29721 prompt tokens (0 reused, 29721 computed in 15.5 s, new conversation (stashing 0 ms), slot 0), 200 tokens in 3.4 s = 59.5 tok/s, 2.53 tokens per pass, 0 of 79 passes from the history (0.00 per pass)
+  DIAG hits 74752 misses 10960 cpu_experts 6649 (84.2/pass) gpu_direct 4311 fills 0 yields 0 launches 291 wait 2227 ms read 0 ms cpu 557 ms select 33 ms fill 0 ms prefetch_wait 1 ms prefetched 20842 used 9896 mtp_stale 0 mtp_dyn 18 early 9053/1720
+Conversation of 29694 tokens stashed: 643 MB (state 149, KV 445, pool 49, drafter 0) in 0.17 s
+Conversation of 129882 tokens stashed: 2311 MB (state 149, KV 1945, pool 216, drafter 0) in 0.34 s
+20:09:29 Request: 129909 prompt tokens (0 reused, 129909 computed in 72.4 s, new conversation (stashing 505 ms), checkpoint at 129882 (before the fixed end), slot 1), 200 tokens in 3.1 s = 65.2 tok/s, 3.02 tokens per pass, 0 of 66 passes from the history (0.00 per pass)
+  DIAG hits 68681 misses 7772 cpu_experts 5434 (82.3/pass) gpu_direct 2338 fills 0 yields 0 launches 273 wait 2045 ms read 0 ms cpu 462 ms select 30 ms fill 0 ms prefetch_wait 1 ms prefetched 17708 used 7688 mtp_stale 0 mtp_dyn 17 early 8918/1179
+Conversation of 29721 tokens stashed: 644 MB (state 149, KV 445, pool 49, drafter 0) in 0.11 s
+20:09:49 Request: 29721 prompt tokens (0 reused, 29721 computed in 15.7 s, new conversation (stashing 115 ms), slot 0), 200 tokens in 3.5 s = 57.0 tok/s, 2.63 tokens per pass, 0 of 76 passes from the history (0.00 per pass)
+  DIAG hits 77454 misses 11159 cpu_experts 6921 (91.1/pass) gpu_direct 4238 fills 0 yields 0 launches 292 wait 2095 ms read 0 ms cpu 784 ms select 41 ms fill 0 ms prefetch_wait 2 ms prefetched 20594 used 9762 mtp_stale 0 mtp_dyn 0 early 9681/1591
+Conversation of 129909 tokens stashed: 2311 MB (state 149, KV 1946, pool 216, drafter 0) in 0.57 s
+Conversation of 29694 tokens stashed: 643 MB (state 149, KV 445, pool 49, drafter 0) in 0.13 s
+Conversation of 129882 tokens stashed: 2311 MB (state 149, KV 1945, pool 216, drafter 0) in 0.53 s
+20:11:10 Request: 129909 prompt tokens (0 reused, 129909 computed in 75.4 s, new conversation (stashing 1240 ms), checkpoint at 129882 (before the fixed end), slot 1), 200 tokens in 3.4 s = 58.9 tok/s, 3.03 tokens per pass, 0 of 66 passes from the history (0.00 per pass)
+  DIAG hits 69303 misses 8537 cpu_experts 5627 (85.3/pass) gpu_direct 2910 fills 0 yields 0 launches 283 wait 2015 ms read 0 ms cpu 720 ms select 45 ms fill 0 ms prefetch_wait 5 ms prefetched 18606 used 8109 mtp_stale 0 mtp_dyn 2 early 8814/1006
+Conversation of 29721 tokens stashed: 644 MB (state 149, KV 445, pool 49, drafter 0) in 0.10 s
+20:11:31 Request: 29721 prompt tokens (0 reused, 29721 computed in 15.8 s, new conversation (stashing 95 ms), slot 0), 200 tokens in 2.9 s = 69.0 tok/s, 3.11 tokens per pass, 0 of 64 passes from the history (0.00 per pass)
+  DIAG hits 65961 misses 10081 cpu_experts 6575 (102.7/pass) gpu_direct 3506 fills 0 yields 0 launches 267 wait 1831 ms read 0 ms cpu 546 ms select 30 ms fill 0 ms prefetch_wait 1 ms prefetched 18546 used 8950 mtp_stale 0 mtp_dyn 4 early 8803/1203
+Conversation of 129909 tokens stashed: 2311 MB (state 149, KV 1946, pool 216, drafter 0) in 0.35 s
+Conversation of 29694 tokens stashed: 643 MB (state 149, KV 445, pool 49, drafter 0) in 0.09 s
+Conversation of 129882 tokens stashed: 2311 MB (state 149, KV 1945, pool 216, drafter 0) in 0.35 s
+20:12:48 Request: 129909 prompt tokens (0 reused, 129909 computed in 73.0 s, new conversation (stashing 858 ms), checkpoint at 129882 (before the fixed end), slot 1), 200 tokens in 3.2 s = 62.1 tok/s, 3.02 tokens per pass, 0 of 66 passes from the history (0.00 per pass)
+  DIAG hits 72501 misses 8417 cpu_experts 6084 (92.2/pass) gpu_direct 2333 fills 0 yields 0 launches 295 wait 2094 ms read 0 ms cpu 515 ms select 33 ms fill 0 ms prefetch_wait 1 ms prefetched 18674 used 8161 mtp_stale 0 mtp_dyn 4 early 8887/947
+Conversation of 29721 tokens stashed: 644 MB (state 149, KV 445, pool 49, drafter 0) in 0.14 s
+20:13:11 Request: 29721 prompt tokens (0 reused, 29721 computed in 17.8 s, new conversation (stashing 160 ms), slot 0), 200 tokens in 3.8 s = 53.0 tok/s, 2.90 tokens per pass, 0 of 69 passes from the history (0.00 per pass)
+  DIAG hits 71468 misses 11231 cpu_experts 5792 (83.9/pass) gpu_direct 5439 fills 0 yields 0 launches 284 wait 2055 ms read 0 ms cpu 916 ms select 120 ms fill 0 ms prefetch_wait 73 ms prefetched 19998 used 9819 mtp_stale 0 mtp_dyn 4 early 9282/1586
+Conversation of 129909 tokens stashed: 2311 MB (state 149, KV 1946, pool 216, drafter 0) in 0.57 s
+Conversation of 29694 tokens stashed: 643 MB (state 149, KV 445, pool 49, drafter 0) in 0.15 s
+Conversation of 129882 tokens stashed: 2311 MB (state 149, KV 1945, pool 216, drafter 0) in 0.42 s
+20:14:34 Request: 129909 prompt tokens (0 reused, 129909 computed in 78.1 s, new conversation (stashing 1399 ms), checkpoint at 129882 (before the fixed end), slot 1), 200 tokens in 3.5 s = 56.9 tok/s, 2.88 tokens per pass, 0 of 69 passes from the history (0.00 per pass)
+  DIAG hits 73532 misses 8166 cpu_experts 5742 (83.2/pass) gpu_direct 2424 fills 0 yields 0 launches 300 wait 2111 ms read 0 ms cpu 703 ms select 58 ms fill 0 ms prefetch_wait 17 ms prefetched 18942 used 8126 mtp_stale 0 mtp_dyn 0 early 8666/939
+Conversation of 29721 tokens stashed: 644 MB (state 149, KV 445, pool 49, drafter 0) in 0.10 s
+20:14:55 Request: 29721 prompt tokens (0 reused, 29721 computed in 15.8 s, new conversation (stashing 127 ms), slot 0), 200 tokens in 3.1 s = 63.8 tok/s, 2.86 tokens per pass, 0 of 70 passes from the history (0.00 per pass)
+  DIAG hits 70954 misses 10560 cpu_experts 6836 (97.7/pass) gpu_direct 3724 fills 0 yields 0 launches 291 wait 2002 ms read 0 ms cpu 567 ms select 32 ms fill 0 ms prefetch_wait 1 ms prefetched 19731 used 9324 mtp_stale 0 mtp_dyn 0 early 8858/1352
+Conversation of 129909 tokens stashed: 2311 MB (state 149, KV 1946, pool 216, drafter 0) in 0.36 s
+Conversation of 29694 tokens stashed: 643 MB (state 149, KV 445, pool 49, drafter 0) in 0.09 s
+Conversation of 129882 tokens stashed: 2311 MB (state 149, KV 1945, pool 216, drafter 0) in 0.35 s
+20:16:13 Request: 129909 prompt tokens (0 reused, 129909 computed in 73.0 s, new conversation (stashing 935 ms), checkpoint at 129882 (before the fixed end), slot 1), 200 tokens in 3.3 s = 59.9 tok/s, 2.90 tokens per pass, 0 of 69 passes from the history (0.00 per pass)
+  DIAG hits 74812 misses 8538 cpu_experts 5895 (85.4/pass) gpu_direct 2643 fills 0 yields 0 launches 309 wait 2202 ms read 0 ms cpu 504 ms select 34 ms fill 0 ms prefetch_wait 1 ms prefetched 18984 used 8403 mtp_stale 0 mtp_dyn 9 early 8646/1070
+Conversation of 29721 tokens stashed: 644 MB (state 149, KV 445, pool 49, drafter 0) in 0.14 s
+20:16:34 Request: 29721 prompt tokens (0 reused, 29721 computed in 16.1 s, new conversation (stashing 157 ms), slot 0), 200 tokens in 3.7 s = 54.5 tok/s, 2.94 tokens per pass, 0 of 68 passes from the history (0.00 per pass)
+  DIAG hits 70428 misses 11299 cpu_experts 5845 (86.0/pass) gpu_direct 5454 fills 0 yields 0 launches 287 wait 2073 ms read 0 ms cpu 871 ms select 79 ms fill 0 ms prefetch_wait 34 ms prefetched 19246 used 9518 mtp_stale 0 mtp_dyn 5 early 9376/1477
+Conversation of 129909 tokens stashed: 2311 MB (state 149, KV 1946, pool 216, drafter 0) in 0.58 s
+Conversation of 29694 tokens stashed: 643 MB (state 149, KV 445, pool 49, drafter 0) in 0.15 s
+Conversation of 129882 tokens stashed: 2311 MB (state 149, KV 1945, pool 216, drafter 0) in 0.42 s
+20:17:56 Request: 129909 prompt tokens (0 reused, 129909 computed in 76.8 s, new conversation (stashing 1398 ms), checkpoint at 129882 (before the fixed end), slot 1), 200 tokens in 3.3 s = 60.5 tok/s, 3.03 tokens per pass, 0 of 66 passes from the history (0.00 per pass)
+  DIAG hits 71268 misses 8368 cpu_experts 5846 (88.6/pass) gpu_direct 2522 fills 0 yields 0 launches 295 wait 1974 ms read 0 ms cpu 683 ms select 39 ms fill 0 ms prefetch_wait 1 ms prefetched 18236 used 8105 mtp_stale 0 mtp_dyn 1 early 8864/1092
+Conversation of 29721 tokens stashed: 644 MB (state 149, KV 445, pool 49, drafter 0) in 0.10 s
+20:18:16 Request: 29721 prompt tokens (0 reused, 29721 computed in 15.8 s, new conversation (stashing 125 ms), slot 0), 200 tokens in 3.0 s = 67.4 tok/s, 3.12 tokens per pass, 0 of 64 passes from the history (0.00 per pass)
+  DIAG hits 68080 misses 10679 cpu_experts 6953 (108.6/pass) gpu_direct 3726 fills 0 yields 0 launches 276 wait 1855 ms read 0 ms cpu 574 ms select 31 ms fill 0 ms prefetch_wait 1 ms prefetched 18307 used 8851 mtp_stale 0 mtp_dyn 1 early 9265/1402
+Conversation of 129909 tokens stashed: 2311 MB (state 149, KV 1946, pool 216, drafter 0) in 0.36 s
+Conversation of 29694 tokens stashed: 643 MB (state 149, KV 445, pool 49, drafter 0) in 0.10 s
+Conversation of 129882 tokens stashed: 2311 MB (state 149, KV 1945, pool 216, drafter 0) in 0.35 s
+20:19:34 Request: 129909 prompt tokens (0 reused, 129909 computed in 73.1 s, new conversation (stashing 945 ms), checkpoint at 129882 (before the fixed end), slot 1), 200 tokens in 3.2 s = 62.2 tok/s, 2.99 tokens per pass, 0 of 67 passes from the history (0.00 per pass)
+  DIAG hits 71665 misses 8802 cpu_experts 6161 (92.0/pass) gpu_direct 2641 fills 0 yields 0 launches 290 wait 2084 ms read 0 ms cpu 534 ms select 33 ms fill 0 ms prefetch_wait 1 ms prefetched 18699 used 8419 mtp_stale 0 mtp_dyn 5 early 7599/728
+Conversation of 29721 tokens stashed: 644 MB (state 149, KV 445, pool 49, drafter 0) in 0.14 s
+20:19:55 Request: 29721 prompt tokens (0 reused, 29721 computed in 16.1 s, new conversation (stashing 160 ms), slot 0), 200 tokens in 3.5 s = 57.5 tok/s, 3.03 tokens per pass, 0 of 66 passes from the history (0.00 per pass)
+  DIAG hits 69568 misses 10121 cpu_experts 5261 (79.7/pass) gpu_direct 4860 fills 0 yields 0 launches 282 wait 1960 ms read 0 ms cpu 803 ms select 106 ms fill 0 ms prefetch_wait 63 ms prefetched 18617 used 9089 mtp_stale 0 mtp_dyn 1 early 9009/1416
+Conversation of 129909 tokens stashed: 2311 MB (state 149, KV 1946, pool 216, drafter 0) in 0.58 s
+Conversation of 29694 tokens stashed: 643 MB (state 149, KV 445, pool 49, drafter 0) in 0.15 s
+Conversation of 129882 tokens stashed: 2311 MB (state 149, KV 1945, pool 216, drafter 0) in 0.42 s
+20:21:17 Request: 129909 prompt tokens (0 reused, 129909 computed in 76.8 s, new conversation (stashing 1371 ms), checkpoint at 129882 (before the fixed end), slot 1), 200 tokens in 3.3 s = 60.8 tok/s, 3.11 tokens per pass, 0 of 64 passes from the history (0.00 per pass)
+  DIAG hits 69945 misses 8681 cpu_experts 5913 (92.4/pass) gpu_direct 2768 fills 0 yields 0 launches 290 wait 1941 ms read 0 ms cpu 699 ms select 40 ms fill 0 ms prefetch_wait 2 ms prefetched 18152 used 8201 mtp_stale 0 mtp_dyn 0 early 9006/1256
+Conversation of 29721 tokens stashed: 644 MB (state 149, KV 445, pool 49, drafter 0) in 0.10 s
+20:21:38 Request: 29721 prompt tokens (0 reused, 29721 computed in 15.8 s, new conversation (stashing 122 ms), slot 0), 200 tokens in 3.1 s = 65.3 tok/s, 3.02 tokens per pass, 0 of 66 passes from the history (0.00 per pass)
+  DIAG hits 69812 misses 10523 cpu_experts 6688 (101.3/pass) gpu_direct 3835 fills 0 yields 0 launches 284 wait 1918 ms read 0 ms cpu 585 ms select 32 ms fill 0 ms prefetch_wait 1 ms prefetched 19246 used 9245 mtp_stale 0 mtp_dyn 0 early 9236/1446
+Conversation of 129909 tokens stashed: 2311 MB (state 149, KV 1946, pool 216, drafter 0) in 0.36 s
+Conversation of 29694 tokens stashed: 643 MB (state 149, KV 445, pool 49, drafter 0) in 0.10 s
+Conversation of 129882 tokens stashed: 2311 MB (state 149, KV 1945, pool 216, drafter 0) in 0.35 s
+20:22:56 Request: 129909 prompt tokens (0 reused, 129909 computed in 73.1 s, new conversation (stashing 945 ms), checkpoint at 129882 (before the fixed end), slot 1), 200 tokens in 3.4 s = 58.3 tok/s, 2.74 tokens per pass, 0 of 73 passes from the history (0.00 per pass)
+  DIAG hits 75099 misses 8600 cpu_experts 6024 (82.5/pass) gpu_direct 2576 fills 0 yields 0 launches 315 wait 2273 ms read 0 ms cpu 515 ms select 34 ms fill 0 ms prefetch_wait 1 ms prefetched 19742 used 8799 mtp_stale 0 mtp_dyn 2 early 8719/993
+Conversation of 29721 tokens stashed: 644 MB (state 149, KV 445, pool 49, drafter 0) in 0.14 s
+20:23:17 Request: 29721 prompt tokens (0 reused, 29721 computed in 16.3 s, new conversation (stashing 164 ms), slot 0), 200 tokens in 3.7 s = 53.7 tok/s, 2.78 tokens per pass, 1 of 72 passes from the history (1.00 per pass)
+  DIAG hits 76182 misses 11060 cpu_experts 6216 (86.3/pass) gpu_direct 4844 fills 0 yields 0 launches 297 wait 2078 ms read 0 ms cpu 915 ms select 73 ms fill 0 ms prefetch_wait 27 ms prefetched 20589 used 9692 mtp_stale 0 mtp_dyn 1 early 9214/1884
+Conversation of 129909 tokens stashed: 2311 MB (state 149, KV 1946, pool 216, drafter 0) in 0.57 s
+Conversation of 29694 tokens stashed: 643 MB (state 149, KV 445, pool 49, drafter 0) in 0.15 s
+Conversation of 129882 tokens stashed: 2311 MB (state 149, KV 1945, pool 216, drafter 0) in 0.41 s
+20:24:39 Request: 129909 prompt tokens (0 reused, 129909 computed in 76.7 s, new conversation (stashing 1344 ms), checkpoint at 129882 (before the fixed end), slot 1), 200 tokens in 3.4 s = 59.3 tok/s, 3.02 tokens per pass, 0 of 66 passes from the history (0.00 per pass)
+  DIAG hits 72635 misses 8448 cpu_experts 6028 (91.3/pass) gpu_direct 2420 fills 0 yields 0 launches 298 wait 2006 ms read 0 ms cpu 704 ms select 41 ms fill 0 ms prefetch_wait 2 ms prefetched 18858 used 8249 mtp_stale 0 mtp_dyn 0 early 8510/908

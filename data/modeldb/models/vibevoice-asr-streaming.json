@@ -1,0 +1,66 @@
+{
+  "id": "vibevoice-asr-streaming",
+  "name": "VibeVoice-ASR-Streaming (1.5B / 7B)",
+  "vendor": "Microsoft Research",
+  "release_date": "2026-09-02",
+  "lineage": {
+    "family": "vibevoice-asr",
+    "how_derived": "streaming successor of the offline VibeVoice-ASR (arXiv abstract: unified models still mainly supported offline recognition)"
+  },
+  "purpose": "Streaming speaker-attributed ASR: transcribes who said what as speech arrives, without a separate diarization stage, for low-latency voice assistants and agents; customized hotwords for names and technical terms (card, arXiv abstract).",
+  "tasks": ["audio-transcription"],
+  "modalities": {"input": ["audio", "text"], "output": ["text"]},
+  "languages": {"natural": ["zh", "en", "fr", "de", "it", "ja", "ko", "pt", "ru", "es"]},
+  "license": {
+    "name": "MIT",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card states 'licensed under the MIT License' and HF metadata says mit; no LICENSE file opened."
+  },
+  "architecture": {
+    "kind": "LLM-based streaming ASR with causal acoustic tokenizer; interleaves fixed-size audio chunks, a small amount of lookahead audio and previous text",
+    "params_total_b": 8.67,
+    "why_this_design": "Paper abstract: interleaving chunks, lookahead and previous text lets the model emit 'who said what' as speech arrives, without a separate diarization stage. 7B total is 8.67B parameters by the HF API (decoder plus acoustic tokenizer); the 1.5B has 2.81B."
+  },
+  "variants": [
+    {"repo": "microsoft/VibeVoice-ASR-Streaming-7B", "format": "safetensors BF16", "size_gb": 17.36, "official": true, "notes": "8.67B parameters"},
+    {"repo": "microsoft/VibeVoice-ASR-Streaming-1.5B", "format": "safetensors BF16", "size_gb": 5.65, "official": true, "notes": "2.81B parameters"}
+  ],
+  "hardware_fit": {
+    "pc-12gb": {"fits": "yes", "variant": "1.5B (5.7 GB)", "basis": "estimate", "notes": "7B in BF16 (17.4 GB) needs a quant"},
+    "pc-16gb": {"fits": "marginal", "variant": "7B BF16 17.4 GB needs offload or a quant; 1.5B fits", "basis": "estimate"},
+    "pc-24gb": {"fits": "yes", "variant": "7B BF16", "basis": "estimate"},
+    "pc-32gb": {"fits": "yes", "variant": "7B BF16", "basis": "estimate"},
+    "mac-16-24gb": {"fits": "yes", "variant": "1.5B", "basis": "estimate"},
+    "mac-32gb": {"fits": "yes", "variant": "7B BF16", "basis": "estimate"},
+    "mac-64gb+": {"fits": "yes", "variant": "7B BF16", "basis": "estimate"}
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "unknown",
+    "other": ["Transformers custom code (microsoft/VibeVoice repo)"],
+    "notes": "The sibling vibevoice-asr record uses a Qwen2 7B-class decoder; the streaming config of the 7B was not compared line by line."
+  },
+  "benchmarks": [
+    {"name": "Average WER/CER over five evaluation sets (lowest among compared systems)", "score": "lowest (value in a chart image only)", "kind": "vendor", "variant": "7B", "source": "https://arxiv.org/abs/2609.02812", "date": "2026-09-10"},
+    {"name": "Speaker attribution: best or tied-best settings", "score": "12 of 13", "kind": "vendor", "variant": "7B", "source": "https://arxiv.org/abs/2609.02812", "date": "2026-09-10"}
+  ],
+  "soft": {
+    "strengths": ["Speaker attribution and transcription in one streaming model", "German among the 10 languages", "Hotword support", "Small 1.5B variant"],
+    "weaknesses": ["Evaluation tables are images in the card; numeric WER per language not read", "No German-specific numbers seen"],
+    "best_for": ["live meeting transcription with speaker labels"],
+    "maturity": "Microsoft Research; 7B 13k downloads, 1.5B 2k downloads on the HF API 2026-11-19."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Streaming plus diarization in one MIT model fits a meeting-transcription use case no other record covers except the offline vibevoice-asr; the 1.5B fits every class. Needs German numbers and an architecture comparison before commitment.",
+    "blockers": ["VibeVoice ASR architecture not in Tona", "no numeric German WER read"]
+  },
+  "sources": [
+    {"url": "https://huggingface.co/microsoft/VibeVoice-ASR-Streaming-7B", "kind": "primary", "checked": "2026-11-19", "note": "card and config.json head read"},
+    {"url": "https://arxiv.org/abs/2609.02812", "kind": "primary", "checked": "2026-11-19", "note": "abstract only; PDF not read"}
+  ],
+  "open_questions": ["Numeric WER/CER and DER per language", "Latency (emission lag) values", "Decoder backbone of the 1.5B", "Streaming support in third-party runtimes"],
+  "last_checked": "2026-11-19"
+}

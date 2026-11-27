@@ -1,0 +1,206 @@
+{
+  "id": "phonon-2.5",
+  "name": "Phonon-2.5 (and Phonon-2.5-English)",
+  "vendor": "FermionResearch",
+  "release_date": "2026-10-22",
+  "lineage": {
+    "base_model": "nvidia/parakeet-tdt-0.6b-v3",
+    "how_derived": "low-bit (about 6-bit 'five-value' packing) compression of Parakeet TDT 0.6B v3 into a 156 MB container; the card calls it quantized",
+    "family": "Phonon (Fermion Research; not the Gradium Phonon TTS family)"
+  },
+  "purpose": "Open speech recognition for 25 European languages in a 156 MB download that runs on Apple silicon and on Linux/Windows CPUs without a GPU (card).",
+  "tasks": [
+    "audio-transcription"
+  ],
+  "modalities": {
+    "input": [
+      "audio"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en",
+      "es",
+      "fr",
+      "de",
+      "it",
+      "pt",
+      "nl",
+      "pl",
+      "ru",
+      "uk",
+      "ro",
+      "cs",
+      "sk",
+      "bg",
+      "hr",
+      "sv",
+      "da",
+      "fi",
+      "et",
+      "lv",
+      "lt",
+      "hu",
+      "sl",
+      "mt",
+      "el"
+    ]
+  },
+  "license": {
+    "name": "Weights CC-BY-4.0, code Apache-2.0",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Repo carries LICENSE-WEIGHTS-CC-BY-4.0.txt (header 'Attribution 4.0 International' opened) and LICENSE-CODE-Apache-2.0.txt; card and config.json say cc-by-4.0. Full legal text not read; CC BY 4.0 allows commercial use and redistribution with attribution."
+  },
+  "architecture": {
+    "kind": "FastConformer encoder + TDT transducer decoder (Parakeet TDT 0.6B v3) in a low-bit container, model_type parakeet_tdt_five_value",
+    "params_total_b": 0.6,
+    "recurrent": "none"
+  },
+  "variants": [
+    {
+      "repo": "FermionResearch/Phonon-2.5",
+      "format": "fermion-squeeze .fsq / .bps.tar.zst",
+      "official": true,
+      "size_gb": 0.16,
+      "notes": "download 156.2 MB; unpacked 177.9 MB per config.json; needs the fermion-research runtime (MLX on Apple silicon, CPU engine on Linux/Windows)"
+    },
+    {
+      "repo": "FermionResearch/Phonon-2.5-English",
+      "format": "same container, English only",
+      "official": true,
+      "notes": "English-only sibling, same size per card; not opened in detail"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "variant": "156 MB container",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "156 MB container",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "156 MB container",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "156 MB container",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "variant": "156 MB container",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "156 MB container",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "156 MB container",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "fermion-research Python package (MLX, CPU engine)",
+      "transformers ParakeetForTDT reference script"
+    ],
+    "notes": "Custom container format, only the vendor runtime reads it."
+  },
+  "benchmarks": [
+    {
+      "name": "FLEURS test, average WER over 25 languages",
+      "score": 11.71,
+      "kind": "vendor",
+      "source": "https://huggingface.co/FermionResearch/Phonon-2.5",
+      "unit": "% WER",
+      "variant": "Phonon-2.5",
+      "harness": "same harness and normalisation for all three models per card"
+    },
+    {
+      "name": "FLEURS test, average WER over 25 languages",
+      "score": 13.26,
+      "kind": "vendor",
+      "source": "https://huggingface.co/FermionResearch/Phonon-2.5",
+      "unit": "% WER",
+      "variant": "parakeet-tdt-0.6b-v3 (full precision, 2.5 GB), measured by the vendor"
+    },
+    {
+      "name": "FLEURS German WER",
+      "score": 6.67,
+      "kind": "vendor",
+      "source": "https://huggingface.co/FermionResearch/Phonon-2.5",
+      "unit": "% WER",
+      "variant": "Phonon-2.5 (parakeet v3 original: 5.96)"
+    },
+    {
+      "name": "Open ASR Leaderboard, 7 English sets average WER",
+      "score": 5.06,
+      "kind": "vendor",
+      "source": "https://huggingface.co/FermionResearch/Phonon-2.5",
+      "unit": "% WER",
+      "variant": "Phonon-2.5",
+      "harness": "leaderboard code, full test sets"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "156 MB for 25 languages, CPU only",
+      "beats Parakeet v3 on 12 of 25 FLEURS languages (card table: e.g. Greek, Latvian, Slovenian), loses on major languages"
+    ],
+    "weaknesses": [
+      "German and French FLEURS WER worse than the uncompressed Parakeet v3 (6.67 vs 5.96 DE, 8.12 vs 6.61 FR, vendor table)",
+      "proprietary container needs the vendor runtime"
+    ],
+    "maturity": "Phonon-2 (2026-09-28) had 388 likes on HF; Phonon-2.5 52 likes. Young vendor."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Small and CPU friendly, but for German the uncompressed Parakeet v3 (see parakeet-tdt-0.6b-v3) is better by about 0.7 WER points on FLEURS and fits every class anyway; the 156 MB size only matters on a phone or when RAM is the limit.",
+    "blockers": [
+      "custom container format, no Tona audio module"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/FermionResearch/Phonon-2.5",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README with benchmark table, config.json, HF API"
+    },
+    {
+      "url": "https://huggingface.co/FermionResearch/Phonon-2.5/raw/main/LICENSE-WEIGHTS-CC-BY-4.0.txt",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "header only"
+    }
+  ],
+  "open_questions": [
+    "No independent evaluation seen",
+    "Phonon-2.5-English card not read",
+    "Full CC BY 4.0 text not read"
+  ],
+  "last_checked": "2026-11-19"
+}

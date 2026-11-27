@@ -1,0 +1,199 @@
+{
+  "id": "whisper-large-v3-turbo",
+  "name": "Whisper large-v3-turbo",
+  "vendor": "OpenAI",
+  "release_date": "2024-10",
+  "lineage": {
+    "base_model": "openai/whisper-large-v3",
+    "how_derived": "decoder pruned from 32 to 4 layers, fine-tuned"
+  },
+  "purpose": "Faster Whisper large-v3 'at the expense of a minor quality degradation' (card).",
+  "tasks": [
+    "audio-transcription",
+    "translation"
+  ],
+  "modalities": {
+    "input": [
+      "audio"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "many"
+    ]
+  },
+  "license": {
+    "name": "MIT",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "LICENSE in https://github.com/openai/whisper read: MIT License, Copyright (c) 2022 OpenAI."
+  },
+  "architecture": {
+    "kind": "AUTOREGRESSIVE encoder-decoder transformer; 30 s windows; small 4-layer decoder",
+    "params_total_b": 0.81,
+    "layers": 4
+  },
+  "variants": [
+    {
+      "repo": "ggerganov/whisper.cpp",
+      "format": "ggml Q5_K_M",
+      "size_gb": 0.62,
+      "official": false,
+      "notes": "size from research/52"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "whisper.cpp (ROCm, Vulkan, Metal, Core ML)",
+      "transcribe.cpp",
+      "Transformers"
+    ]
+  },
+  "benchmarks": [
+    {
+      "name": "German avg WER (Tuda-De, MLS, CV19)",
+      "score": 3.64,
+      "kind": "vendor",
+      "source": "https://huggingface.co/primeline/parakeet-primeline",
+      "unit": "% WER",
+      "variant": "third-party table on the primeline card, not OpenAI"
+    },
+    {
+      "name": "German WER, Open ASR multilingual track (8 of 8 datasets)",
+      "score": 6.12,
+      "kind": "independent",
+      "source": "https://huggingface.co/spaces/hf-audio/open_asr_leaderboard",
+      "date": "2026-11-19",
+      "harness": "Open ASR Leaderboard multilingual track, German column (WER %), read from the Space config JSON 2026-11-19; rows differ in how many of the 8 datasets they cover",
+      "unit": "% WER"
+    },
+    {
+      "name": "Open ASR English avg WER (leaderboard rank 57 of 69)",
+      "score": 8.75,
+      "kind": "independent",
+      "source": "https://huggingface.co/spaces/hf-audio/open_asr_leaderboard",
+      "date": "2026-11-19",
+      "harness": "Open ASR Leaderboard English track, read 2026-11-19",
+      "unit": "% WER"
+    },
+    {
+      "name": "RTFx on the leaderboard (English track, leaderboard GPU)",
+      "score": 808.92,
+      "kind": "independent",
+      "source": "https://huggingface.co/spaces/hf-audio/open_asr_leaderboard",
+      "date": "2026-11-19",
+      "harness": "Open ASR Leaderboard, read 2026-11-19"
+    },
+    {
+      "name": "German WER whisper-large-v3 (not turbo), Open ASR multilingual track (8 of 8 sets)",
+      "score": 4.0,
+      "kind": "independent",
+      "source": "https://huggingface.co/spaces/hf-audio/open_asr_leaderboard",
+      "date": "2026-11-19",
+      "variant": "openai/whisper-large-v3",
+      "harness": "Open ASR Leaderboard multilingual track, German column (WER %), read from the Space config JSON 2026-11-19; rows differ in how many of the 8 datasets they cover",
+      "unit": "% WER"
+    },
+    {
+      "name": "German medical dialogue WER (whisper-large-v3 not turbo; Voxtral Small 7.1, Mini 8.5)",
+      "score": 12.6,
+      "kind": "independent",
+      "source": "https://arxiv.org/html/2601.19945",
+      "date": "2026-01",
+      "variant": "openai/whisper-large-v3",
+      "harness": "Med-De-Anamnese, 4 simulated doctor-patient dialogues from public videos, small set (paper, January 2026)",
+      "unit": "% WER"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "Most widely deployed, 99 languages, many fine-tunes (e.g. primeline German, 27k downloads)"
+    ],
+    "weaknesses": [
+      "Hallucination and repetition, especially on silence",
+      "No streaming, no native diarization",
+      "No longer the accuracy leader (German avg 3.64 vs 2.95 for primeline-parakeet)"
+    ],
+    "maturity": "OpenAI release of 2024; 3560 likes, 4.7M downloads."
+  },
+  "tona_fit": {
+    "verdict": "offer",
+    "reason": "Fallback and languages outside the 25 European ones; MIT, 99 languages, mature on AMD and Mac. On German the turbo is clearly weaker than large-v3 (6.12 vs 4.00) and than the newer models; prefer a Parakeet/Qwen/Cohere class model or the primeline German fine-tune."
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/openai/whisper-large-v3-turbo",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/primeline/parakeet-primeline",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "German comparison"
+    },
+    {
+      "url": "research/52-purpose-models.md",
+      "kind": "own",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/spaces/hf-audio/open_asr_leaderboard",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "Space /config JSON read directly"
+    },
+    {
+      "url": "https://arxiv.org/html/2601.19945",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "German medical benchmark paper, read through the fetch tool summarizer"
+    },
+    {
+      "url": "https://github.com/openai/whisper",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "LICENSE read"
+    }
+  ],
+  "open_questions": [
+    "Own long-form hallucination rate"
+  ],
+  "last_checked": "2026-11-19"
+}

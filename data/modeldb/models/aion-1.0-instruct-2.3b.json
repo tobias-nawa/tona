@@ -1,0 +1,84 @@
+{
+  "id": "aion-1.0-instruct-2.3b",
+  "name": "Aion 1.0 Instruct 2.3B",
+  "vendor": "Microsoft (Windows Applied Sciences Group)",
+  "release_date": "2026-11-18",
+  "lineage": {
+    "family": "Aion (successor of the Windows OS small language model Phi Silica)",
+    "how_derived": "trained on an extension of the Phi Silica data (filtered public documents plus synthetic data for math, coding, reasoning, world knowledge); about 6 % multilingual; the card describes no base checkpoint"
+  },
+  "purpose": "The foundational small language model of the Windows ecosystem for on-device text and OS scenarios: summarization, rewriting, chat, document comprehension, question answering. A further optimized version with a content-moderation model is planned as the Windows OS SLM by end of January 2027; this Hugging Face release is an introduction and a request for feedback.",
+  "tasks": ["general", "documents"],
+  "modalities": {"input": ["text"], "output": ["text"]},
+  "languages": {"natural": ["en", "de", "es", "pt", "it", "fr", "zh", "ja"]},
+  "license": {
+    "name": "MIT",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "LICENSE file in the repo read (head): standard MIT text, Microsoft Corporation."
+  },
+  "architecture": {
+    "kind": "dense hybrid sliding-window + full attention transformer (custom code)",
+    "gguf_arch": "unknown (community GGUF repos exist; arch name not checked)",
+    "params_total_b": 2.29,
+    "params_active_b": 2.29,
+    "layers": 28,
+    "attention": "GQA 24 Q / 8 KV heads, head dim 128; 21 sliding-window layers (window 2048) and 7 full-attention layers; RoPE theta 32000 with YaRN factor 16 on full layers",
+    "recurrent": "none",
+    "context_native": 32768,
+    "context_max": 32768,
+    "drafter": "none",
+    "why_this_design": "The card gives no architecture reasons beyond the on-device goal and 32K context."
+  },
+  "variants": [
+    {"repo": "microsoft/Aion-1.0-Instruct-2.3B", "format": "safetensors BF16", "size_gb": 4.59, "official": true, "notes": "the card says quantized versions follow; ONNX WebGPU repo exists (microsoft/Aion-1.0-Instruct-2.3B-ONNX-WebGPU)"},
+    {"repo": "AtomicChat/Aion-1.0-Instruct-2.3B-GGUF", "format": "GGUF (community)", "official": false, "notes": "sizes not recorded; also Xylolabs GGUF and an MLX 8-bit repo"}
+  ],
+  "hardware_fit": {
+    "pc-12gb": {"fits": "yes", "basis": "estimate", "variant": "BF16", "notes": "4.6 GB"},
+    "pc-16gb": {"fits": "yes", "basis": "estimate", "variant": "BF16"},
+    "pc-24gb": {"fits": "yes", "basis": "estimate", "variant": "BF16"},
+    "pc-32gb": {"fits": "yes", "basis": "estimate", "variant": "BF16"},
+    "mac-16-24gb": {"fits": "yes", "basis": "estimate", "variant": "BF16"},
+    "mac-32gb": {"fits": "yes", "basis": "estimate", "variant": "BF16"},
+    "mac-64gb+": {"fits": "yes", "basis": "estimate", "variant": "BF16"}
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "unknown",
+    "other": ["Transformers with trust_remote_code", "ONNX"],
+    "notes": "Custom modeling code; community GGUF repos exist but llama.cpp architecture support was not verified."
+  },
+  "benchmarks": [
+    {"name": "MMLU", "score": 55.15, "kind": "vendor", "variant": "BF16, lm-evaluation-harness", "source": "https://huggingface.co/microsoft/Aion-1.0-Instruct-2.3B"},
+    {"name": "MMLU-Pro", "score": 33.35, "kind": "vendor", "source": "https://huggingface.co/microsoft/Aion-1.0-Instruct-2.3B"},
+    {"name": "GSM8K", "score": 74.91, "kind": "vendor", "source": "https://huggingface.co/microsoft/Aion-1.0-Instruct-2.3B", "unit": "% loose"},
+    {"name": "MATH-500", "score": 48.0, "kind": "vendor", "source": "https://huggingface.co/microsoft/Aion-1.0-Instruct-2.3B"},
+    {"name": "IFEval", "score": 83.9, "kind": "vendor", "source": "https://huggingface.co/microsoft/Aion-1.0-Instruct-2.3B"},
+    {"name": "GPQA", "score": 28.18, "kind": "vendor", "source": "https://huggingface.co/microsoft/Aion-1.0-Instruct-2.3B"}
+  ],
+  "soft": {
+    "strengths": ["MIT license", "Reasonable instruction following for a 2.3B (IFEval 83.9)"],
+    "weaknesses": ["Not trained for world knowledge (card); GPQA 28, MMLU-Pro 33", "No coding or agent benchmarks on the card", "Microsoft states safety metrics XPIA, DIC and ECI need improvement"],
+    "behavior": "Short-form text tasks; the card advises pairing with a moderation model.",
+    "best_for": ["on-device summarization and rewriting"],
+    "avoid_for": ["coding", "knowledge questions", "agents"],
+    "maturity": "Released one day before the check date; 788 downloads, no discussions; the production Windows version follows by January 2027."
+  },
+  "tona_fit": {
+    "verdict": "reject",
+    "reason": "Text-assistant model without coding or agent focus and weak knowledge scores; below the purpose of Tona. Revisit when the optimized Windows OS version appears.",
+    "blockers": ["no coding or agent evidence"]
+  },
+  "sources": [
+    {"url": "https://huggingface.co/microsoft/Aion-1.0-Instruct-2.3B", "kind": "primary", "checked": "2026-11-19", "note": "README and config.json read"},
+    {"url": "https://huggingface.co/microsoft/Aion-1.0-Instruct-2.3B/raw/main/LICENSE", "kind": "primary", "checked": "2026-11-19", "note": "MIT text head read"}
+  ],
+  "open_questions": [
+    "llama.cpp architecture support for the community GGUF files",
+    "Quantized official release date and sizes",
+    "Coding capability (not measured by the vendor)"
+  ],
+  "last_checked": "2026-11-19"
+}

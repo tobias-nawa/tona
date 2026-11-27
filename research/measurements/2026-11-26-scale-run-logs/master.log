@@ -1,0 +1,48 @@
+gpu queue: 1 ahead of you (exclusive)
+STEP c1 00:35:10
+VRAM-desktop c1 00:35:10 1102 MiB
+SLOTS c1: loaded in 13.3 s: context 32768 (KV int8 0.45 GB in RAM), VRAM 14.05 GB, 84 expert slots per layer, 25.8 GB pinned
+STEP c3 00:37:19
+VRAM-desktop c3 00:37:19 1102 MiB
+SLOTS c3: loaded in 12.4 s: context 140000 (KV int8 1.94 GB in RAM), VRAM 14.11 GB, 81 expert slots per layer, 27.4 GB pinned
+STEP o-coder 00:40:05
+VRAM-desktop o-coder 00:40:05 1102 MiB
+      1 SLOTS o-coder: loaded in 14.3 s: context 262144 (KV int8 3.62 GB in RAM), VRAM 14.03 GB, 76 expert slots per layer, 29.2 GB pinned
+      1 SLOTS o-coder: loaded in 15.5 s: context 262144 (KV int8 3.62 GB in RAM), VRAM 14.03 GB, 76 expert slots per layer, 29.2 GB pinned
+      1 SLOTS o-coder: loaded in 17.3 s: context 262144 (KV int8 3.62 GB in RAM), VRAM 14.03 GB, 76 expert slots per layer, 29.2 GB pinned
+      1 SLOTS o-coder: loaded in 17.4 s: context 262144 (KV int8 3.62 GB in RAM), VRAM 14.03 GB, 76 expert slots per layer, 29.2 GB pinned
+      1 SLOTS o-coder: loaded in 17.6 s: context 262144 (KV int8 3.62 GB in RAM), VRAM 14.03 GB, 76 expert slots per layer, 29.2 GB pinned
+STEP o-ornith 00:46:01
+VRAM-desktop o-ornith 00:46:01 1102 MiB
+      1 SLOTS o-ornith: loaded in 5.9 s: context 262144 (KV int8 3.02 GB in RAM), VRAM 14.15 GB, 103 expert slots per layer, 21.1 GB pinned
+      3 SLOTS o-ornith: loaded in 6.0 s: context 262144 (KV int8 3.02 GB in RAM), VRAM 14.15 GB, 103 expert slots per layer, 21.1 GB pinned
+      1 SLOTS o-ornith: loaded in 6.1 s: context 262144 (KV int8 3.02 GB in RAM), VRAM 14.15 GB, 103 expert slots per layer, 21.1 GB pinned
+      1 SLOTS o-ornith: loaded in 6.6 s: context 262144 (KV int8 3.02 GB in RAM), VRAM 14.15 GB, 103 expert slots per layer, 21.1 GB pinned
+      1 SLOTS o-ornith: loaded in 7.1 s: context 262144 (KV int8 3.02 GB in RAM), VRAM 14.15 GB, 103 expert slots per layer, 21.1 GB pinned
+STEP o-bolt 00:51:07
+VRAM-desktop o-bolt 00:51:07 1102 MiB
+      1 SLOTS o-bolt: loaded in 5.8 s: context 262144 (KV int8 1.21 GB in RAM), VRAM 14.05 GB, 125 expert slots per layer, 17.9 GB pinned
+      1 SLOTS o-bolt: loaded in 5.9 s: context 262144 (KV int8 1.21 GB in RAM), VRAM 14.05 GB, 125 expert slots per layer, 17.9 GB pinned
+      1 SLOTS o-bolt: loaded in 6.2 s: context 262144 (KV int8 1.21 GB in RAM), VRAM 14.05 GB, 125 expert slots per layer, 17.9 GB pinned
+      1 SLOTS o-bolt: loaded in 6.3 s: context 262144 (KV int8 1.21 GB in RAM), VRAM 14.05 GB, 125 expert slots per layer, 17.9 GB pinned
+      1 SLOTS o-bolt: loaded in 6.5 s: context 262144 (KV int8 1.21 GB in RAM), VRAM 14.05 GB, 125 expert slots per layer, 17.9 GB pinned
+STEP c4 00:57:35
+VRAM-desktop c4 00:57:35 1102 MiB
+SLOTS c4: loaded in 45.1 s: context 1048576 (KV int8 14.50 GB in RAM), VRAM 14.07 GB, 69 expert slots per layer, 25.1 GB pinned
+HUGE c4: host memory: transparent huge pages enabled=madvise defrag=madvise, 0.4 of 11.3 GB of the registered memory on huge pages
+STEP e 01:19:30
+VRAM-desktop e 01:19:30 1102 MiB
+SLOTS e: loaded in 17.3 s: context 262144 (KV int8 3.62 GB in RAM), VRAM 14.03 GB, 76 expert slots per layer, 29.2 GB pinned
+HUGE e: host memory: transparent huge pages enabled=madvise defrag=madvise, 0.0 of 3.6 GB of the registered memory on huge pages
+STEP f 01:36:46
+VRAM-desktop f 01:36:46 1102 MiB
+SLOTS f: loaded in 23.8 s: context 262144 (KV int8 3.62 GB in RAM), VRAM 14.03 GB, 76 expert slots per layer, 29.2 GB pinned
+HUGE f: host memory: transparent huge pages enabled=madvise defrag=madvise, 0.0 of 3.6 GB of the registered memory on huge pages
+STEP f2 01:40:37
+VRAM-desktop f2 01:40:37 1102 MiB
+SLOTS f2: loaded in 18.8 s: context 1048576 (KV int8 14.50 GB in RAM), VRAM 14.07 GB, 69 expert slots per layer, 25.1 GB pinned
+HUGE f2: host memory: transparent huge pages enabled=madvise defrag=madvise, 1.7 of 11.3 GB of the registered memory on huge pages
+STEP i 01:56:52
+VRAM-desktop i 01:56:52 1793 MiB
+STEP finished 01:59:47
+VRAM-desktop finished 01:59:47 1793 MiB

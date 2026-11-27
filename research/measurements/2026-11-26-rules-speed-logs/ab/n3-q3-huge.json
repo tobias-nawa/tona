@@ -1,0 +1,345 @@
+{
+  "config": {
+    "A": {
+      "build": "n3-main",
+      "env": {},
+      "tooling": {
+        "HIP_PATH": "<repo>/work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+        "ROCR_VISIBLE_DEVICES": "0",
+        "TONA_EXPERT_PROFILE": "<worktree>/toolchain/profiles/coder-iq1_m.bin"
+      },
+      "commit": "d43a0b3fa7",
+      "model": "<worktree>/work/models/coder-iq1_m/Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf",
+      "drafter": "<worktree>/work/models/draft/mtp-Qwen3.8-Flash-Next-Q8_0.gguf"
+    },
+    "B": {
+      "build": "n3-pr",
+      "env": {},
+      "tooling": {
+        "HIP_PATH": "<repo>/work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+        "ROCR_VISIBLE_DEVICES": "0",
+        "TONA_EXPERT_PROFILE": "<worktree>/toolchain/profiles/coder-iq1_m.bin"
+      },
+      "commit": "f50cd70c7a",
+      "model": "<worktree>/work/models/coder-iq1_m/Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf",
+      "drafter": "<worktree>/work/models/draft/mtp-Qwen3.8-Flash-Next-Q8_0.gguf"
+    },
+    "workload": "huge",
+    "targets": "512000:200 1000000:200 at --ctx 1048576, TONA_SEQS=1",
+    "deterministic": false,
+    "plan_info": {
+      "expect": [
+        [
+          "decode",
+          -1.0,
+          1.0
+        ],
+        [
+          "prefill",
+          -1.0,
+          1.0
+        ]
+      ],
+      "source": "2026-11-26-scale-run.md c4 (prefill 1,536 / 1,164, decode 60.8 / 57.2 at 512K / 1M); two rounds (ab.py minimum), no warm-up start, no noise table for huge",
+      "workload": "huge",
+      "targets": "512000:200 1000000:200 at --ctx 1048576, TONA_SEQS=1",
+      "primary": "",
+      "why_size": "select_checks.py names R7 for attn_wmma2.h, mega_seq.cpp, prefill_plan.cpp, prompt_cache.cpp: 512K and 1M are past 262K where 32-bit index overflows and plan limits would show",
+      "decode_tokens": 200,
+      "noise": {},
+      "warmup": false,
+      "round_warmup": false,
+      "load_log": true,
+      "A": {
+        "build": "n3-main",
+        "env": {},
+        "tooling": {
+          "HIP_PATH": "<repo>/work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+          "ROCR_VISIBLE_DEVICES": "0",
+          "TONA_EXPERT_PROFILE": "<worktree>/toolchain/profiles/coder-iq1_m.bin"
+        },
+        "commit": "d43a0b3fa7",
+        "model": "<worktree>/work/models/coder-iq1_m/Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf",
+        "drafter": "<worktree>/work/models/draft/mtp-Qwen3.8-Flash-Next-Q8_0.gguf"
+      },
+      "B": {
+        "build": "n3-pr",
+        "env": {},
+        "tooling": {
+          "HIP_PATH": "<repo>/work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+          "ROCR_VISIBLE_DEVICES": "0",
+          "TONA_EXPERT_PROFILE": "<worktree>/toolchain/profiles/coder-iq1_m.bin"
+        },
+        "commit": "f50cd70c7a",
+        "model": "<worktree>/work/models/coder-iq1_m/Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf",
+        "drafter": "<worktree>/work/models/draft/mtp-Qwen3.8-Flash-Next-Q8_0.gguf"
+      }
+    },
+    "reference_sha": {},
+    "corpus_sha256": "e13a800340859f7d39c63712d90383faae7e5a47c3865f0811e40d912612d38e",
+    "corpus_is_reference": true,
+    "commit": "d43a0b3f",
+    "noise": {}
+  },
+  "rounds": [
+    {
+      "order": "AB",
+      "sha": {
+        "A": {
+          "512000": "32e65dd9bc402413",
+          "1000000": "dc6c12a50914afe6"
+        },
+        "B": {
+          "512000": "32e65dd9bc402413",
+          "1000000": "dc6c12a50914afe6"
+        }
+      },
+      "A": {
+        "prefill@512000": 1469.5085673698109,
+        "decode@512000": 59.88083302248395,
+        "prefill@1000000": 1076.6886729118335,
+        "decode@1000000": 56.385945310656474
+      },
+      "counters": {
+        "A": {
+          "512000": {
+            "expert_hits": 73665,
+            "expert_misses": 10839,
+            "passes": 72,
+            "gen_tokens": 200,
+            "mtp_passes": 219
+          },
+          "1000000": {
+            "expert_hits": 67467,
+            "expert_misses": 14390,
+            "passes": 64,
+            "gen_tokens": 200,
+            "mtp_passes": 211
+          }
+        },
+        "B": {
+          "512000": {
+            "expert_hits": 73665,
+            "expert_misses": 10839,
+            "passes": 72,
+            "gen_tokens": 200,
+            "mtp_passes": 219
+          },
+          "1000000": {
+            "expert_hits": 67467,
+            "expert_misses": 14390,
+            "passes": 64,
+            "gen_tokens": 200,
+            "mtp_passes": 211
+          }
+        }
+      },
+      "B": {
+        "prefill@512000": 1462.6387317009692,
+        "decode@512000": 60.13084544125031,
+        "prefill@1000000": 1078.5892630832484,
+        "decode@1000000": 56.130857601142665
+      },
+      "seconds": 2625.3463030860294
+    },
+    {
+      "order": "BA",
+      "sha": {
+        "B": {
+          "512000": "32e65dd9bc402413",
+          "1000000": "dc6c12a50914afe6"
+        },
+        "A": {
+          "512000": "32e65dd9bc402413",
+          "1000000": "dc6c12a50914afe6"
+        }
+      },
+      "B": {
+        "prefill@512000": 1463.5511561227788,
+        "decode@512000": 60.40131721779198,
+        "prefill@1000000": 1077.1869956760875,
+        "decode@1000000": 56.05690641519778
+      },
+      "counters": {
+        "B": {
+          "512000": {
+            "expert_hits": 73665,
+            "expert_misses": 10839,
+            "passes": 72,
+            "gen_tokens": 200,
+            "mtp_passes": 219
+          },
+          "1000000": {
+            "expert_hits": 67467,
+            "expert_misses": 14390,
+            "passes": 64,
+            "gen_tokens": 200,
+            "mtp_passes": 211
+          }
+        },
+        "A": {
+          "512000": {
+            "expert_hits": 73665,
+            "expert_misses": 10839,
+            "passes": 72,
+            "gen_tokens": 200,
+            "mtp_passes": 219
+          },
+          "1000000": {
+            "expert_hits": 67467,
+            "expert_misses": 14390,
+            "passes": 64,
+            "gen_tokens": 200,
+            "mtp_passes": 211
+          }
+        }
+      },
+      "A": {
+        "prefill@512000": 1454.4813886762493,
+        "decode@512000": 60.28501342472194,
+        "prefill@1000000": 1076.3173508400764,
+        "decode@1000000": 56.093999944477595
+      },
+      "seconds": 2626.7481583639747
+    }
+  ],
+  "discarded": [],
+  "stop_reason": "2 rounds (undecided metrics stay open)",
+  "wall_seconds": 5252.096578364028,
+  "loads": [
+    {
+      "start": 1,
+      "arm": "A",
+      "cpu_own": 108.1,
+      "cpu_system": 4.7,
+      "cpu_other": 12.2,
+      "gpu_own": 0.0,
+      "gpu_system": 0.0,
+      "gpu_other": 0.3,
+      "pageins": 53432.3,
+      "swapins": 20.8,
+      "compressions": 6.3,
+      "level_min": 18,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": null,
+      "seconds": 1313,
+      "idle_before_s": null,
+      "ready_s": 25.8
+    },
+    {
+      "start": 2,
+      "arm": "B",
+      "cpu_own": 107.8,
+      "cpu_system": 3.9,
+      "cpu_other": 12.4,
+      "gpu_own": 0.0,
+      "gpu_system": 0.0,
+      "gpu_other": 0.3,
+      "pageins": 46131.0,
+      "swapins": 161.3,
+      "compressions": 13.9,
+      "level_min": 20,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": null,
+      "seconds": 1307,
+      "idle_before_s": 1.4,
+      "ready_s": 25.1
+    },
+    {
+      "start": 3,
+      "arm": "B",
+      "cpu_own": 108.0,
+      "cpu_system": 4.8,
+      "cpu_other": 12.6,
+      "gpu_own": 0.0,
+      "gpu_system": 0.0,
+      "gpu_other": 0.3,
+      "pageins": 56889.4,
+      "swapins": 5.7,
+      "compressions": 118.9,
+      "level_min": 19,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": null,
+      "seconds": 1313,
+      "idle_before_s": 1.5,
+      "ready_s": 29.3
+    },
+    {
+      "start": 4,
+      "arm": "A",
+      "cpu_own": 108.3,
+      "cpu_system": 4.8,
+      "cpu_other": 12.3,
+      "gpu_own": 0.0,
+      "gpu_system": 0.0,
+      "gpu_other": 0.3,
+      "pageins": 59451.0,
+      "swapins": 5.6,
+      "compressions": 62.2,
+      "level_min": 20,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": null,
+      "seconds": 1309,
+      "idle_before_s": 1.4,
+      "ready_s": 22.6
+    }
+  ],
+  "plan": {
+    "alpha": 0.05,
+    "margin": 0.5,
+    "max_rounds": 2,
+    "min_rounds": 2,
+    "prior_sd": 0.5,
+    "prior_df": 4.0
+  },
+  "decisions": {
+    "prefill@512000": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": 0.078040965683851,
+      "ci_diff_percent": [
+        -0.9486522944225717,
+        1.1047342257902737
+      ]
+    },
+    "decode@512000": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": 0.3052199138794287,
+      "ci_diff_percent": [
+        -0.5178565831401161,
+        1.1282964108989735
+      ]
+    },
+    "prefill@1000000": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": 0.1286599877293737,
+      "ci_diff_percent": [
+        -0.6860893639383696,
+        0.943409339397117
+      ]
+    },
+    "decode@1000000": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": -0.25926167699761304,
+      "ci_diff_percent": [
+        -1.1019271282464582,
+        0.5834037742512322
+      ]
+    }
+  }
+}

@@ -1,0 +1,157 @@
+{
+  "id": "nemotron-3.5-rerank-8b",
+  "name": "Nemotron-3.5-Rerank-8B",
+  "vendor": "NVIDIA",
+  "release_date": "2026-10-15",
+  "lineage": {
+    "family": "Nemotron retriever",
+    "base_model": "Ministral-3-8B-Instruct-2512",
+    "how_derived": "two-stage training of a cross-encoder with a Pixtral vision encoder and a bidirectional Ministral3 tower"
+  },
+  "purpose": "Multilingual and multimodal reranker for classical or agentic vision-RAG pipelines: scores a text query against a document given as text, page image or both (card).",
+  "tasks": [
+    "reranking"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "many"
+    ]
+  },
+  "license": {
+    "name": "OpenMDW-1.1",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "LICENSE text read (the rerank repo carries it; the embed repos link the same OpenMDW-1.1): 'permission is hereby granted, free of charge, to deal in the Model Materials without restriction'; redistribution needs the agreement text and notices; rights end if you sue over patent or copyright infringement by the materials; no restriction on outputs. The Ministral-3 base models are Apache-2.0. Card tag 'other' with license_name openmdw-1.1 agrees."
+  },
+  "architecture": {
+    "kind": "cross-encoder, Pixtral vision encoder plus bidirectional Ministral3 tower, relevance logit",
+    "params_total_b": 8.38,
+    "context_native": 32768,
+    "why_this_design": "Reads the page image together with the query instead of relying on OCR text; outputs one relevance logit per query-document pair (card)."
+  },
+  "variants": [
+    {
+      "repo": "nvidia/Nemotron-3.5-Rerank-8B-BF16",
+      "format": "safetensors BF16",
+      "size_gb": 16.75,
+      "official": true,
+      "notes": "use /classify in vLLM; /score and /rerank can mishandle image placeholders (card)"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "no",
+      "basis": "estimate",
+      "notes": "16.75 GB BF16"
+    },
+    "pc-16gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "notes": "needs quantization; no quantized files seen"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "BF16"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "unknown",
+    "other": [
+      "vLLM",
+      "Sentence Transformers",
+      "transformers"
+    ],
+    "notes": "Pixtral vision encoder plus Ministral-3 text tower; no GGUF or llama.cpp support seen on the card (card documents vLLM 0.32 and transformers 5.20 only)."
+  },
+  "benchmarks": [
+    {
+      "name": "ViDoRe v3.1 Reranking leaderboard",
+      "score": "state of the art as of 2026-10-20 (rank and number not on the card)",
+      "kind": "vendor",
+      "variant": "BF16",
+      "source": "https://huggingface.co/nvidia/Nemotron-3.5-Rerank-8B-BF16"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "visual document reranking",
+      "permissive OpenMDW-1.1",
+      "32,768-token context"
+    ],
+    "weaknesses": [
+      "8B BF16 only, no quantization",
+      "vLLM-specific serving caveats"
+    ],
+    "best_for": [
+      "second stage after Nemotron-3.5-Embed on page images"
+    ],
+    "maturity": "NVIDIA; released 2026-10-15; 8.4k downloads by 2026-11-19. No independent result or user report found."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Permissive license and a leaderboard claim, but 16.75 GB BF16 fills a 16 GB card and no quantized or GGUF form exists; Qwen3-Reranker-0.6B is the practical choice for text and code.",
+    "blockers": [
+      "Tona has no reranking route",
+      "no quantization",
+      "no llama.cpp path seen"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/nvidia/Nemotron-3.5-Rerank-8B-BF16",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "card read 2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/nvidia/Nemotron-3.5-Rerank-8B-BF16/raw/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "OpenMDW-1.1 text"
+    },
+    {
+      "url": "https://huggingface.co/api/models/nvidia/Nemotron-3.5-Rerank-8B-BF16",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "createdAt and sizes"
+    }
+  ],
+  "open_questions": [
+    "Actual ViDoRe v3.1 reranking score and rank",
+    "Quantized or GGUF form",
+    "Independent evaluation and user reports: none found"
+  ],
+  "last_checked": "2026-11-19"
+}

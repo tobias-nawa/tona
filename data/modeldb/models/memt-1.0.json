@@ -1,0 +1,149 @@
+{
+  "id": "memt-1.0",
+  "name": "MemT-1.0 (Nano and Flash)",
+  "vendor": "MemTensor",
+  "release_date": "2026-10-15",
+  "lineage": {
+    "family": "MemT-1.0",
+    "base_model": "Qwen3.6-35B-A3B (Nano), deepseek-ai/DeepSeek-V4-Flash (Flash)",
+    "how_derived": "native memory block added next to attention (local memory plus trainable hyper memory with Mixture-of-Storage), two-stage training on 34B tokens"
+  },
+  "purpose": "Memory foundation models that make persistent, dynamically evolving memory part of the model computation: a constant-size state (about 66x smaller than a full-context KV cache at 128K history) instead of re-reading history (card).",
+  "tasks": [
+    "research",
+    "general"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0 (Nano tag), MIT (Flash tag)",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Tags only; no LICENSE file in the Flash repo and the Nano repo was not opened for a file."
+  },
+  "architecture": {
+    "kind": "backbone MoE plus native memory blocks (custom code)",
+    "params_total_b": 36,
+    "params_active_b": 3,
+    "recurrent": "memory state updated by a GDN-2 at the end of each turn",
+    "drafter": "none stated"
+  },
+  "variants": [
+    {
+      "repo": "MemTensor/MemT-1.0-Nano",
+      "format": "safetensors",
+      "size_gb": 70.26,
+      "official": true,
+      "notes": "36B total, 3B active, 451M trainable memory parameters"
+    },
+    {
+      "repo": "MemTensor/MemT-1.0-Flash",
+      "format": "safetensors",
+      "size_gb": 575.98,
+      "official": true,
+      "notes": "288B total, 17B active"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "marginal",
+      "variant": "Nano Q4 by analogy to its Qwen3.6-35B-A3B backbone; no quant published",
+      "basis": "estimate",
+      "notes": "22 GB file against 9.6 GB VRAM plus 50 GB RAM budget; experts stream from RAM (~3 B active, decode bound by RAM bandwidth)"
+    },
+    "pc-16gb": {
+      "fits": "marginal",
+      "variant": "Nano Q4 by analogy to its Qwen3.6-35B-A3B backbone; no quant published",
+      "basis": "estimate",
+      "notes": "22 GB file against 13.6 GB VRAM plus 50 GB RAM budget; experts stream from RAM (~3 B active, decode bound by RAM bandwidth)"
+    },
+    "pc-24gb": {
+      "fits": "marginal",
+      "variant": "Nano Q4 by analogy to its Qwen3.6-35B-A3B backbone; no quant published",
+      "basis": "estimate",
+      "notes": "22 GB file against 21.6 GB VRAM plus 82 GB RAM budget; experts stream from RAM (~3 B active, decode bound by RAM bandwidth)"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "Nano Q4 by analogy to its Qwen3.6-35B-A3B backbone; no quant published",
+      "basis": "estimate",
+      "notes": "22 GB file fits the VRAM budget (29.6 GB) with room for KV"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "Nano Q4 by analogy to its Qwen3.6-35B-A3B backbone; no quant published",
+      "basis": "estimate",
+      "notes": "22 GB file against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "marginal",
+      "variant": "Nano Q4 by analogy to its Qwen3.6-35B-A3B backbone; no quant published",
+      "basis": "estimate",
+      "notes": "22 GB file against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "Nano Q4 by analogy to its Qwen3.6-35B-A3B backbone; no quant published",
+      "basis": "estimate",
+      "notes": "22 GB file against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "Transformers custom code"
+    ],
+    "notes": "Memory blocks are not in any engine we know."
+  },
+  "benchmarks": [],
+  "soft": {
+    "strengths": [
+      "persistent memory with constant state size is a new axis for long agent sessions"
+    ],
+    "weaknesses": [
+      "card states that strong textual-memory systems remain ahead overall on its 11 memory benchmarks"
+    ],
+    "maturity": "Nano 90k downloads, Flash 58k; paper arXiv 2610.26825 (tag, not read)"
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Research-grade idea relevant to the long-session coding worker, but it needs custom memory blocks in the engine and the card itself says text memory systems still lead. Watch for a generally supported variant.",
+    "blockers": [
+      "custom architecture",
+      "no benchmark numbers read"
+    ]
+  },
+  "open_questions": [
+    "memory benchmark figures",
+    "coding-agent results of the experience-guided framework",
+    "paper"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/MemTensor/MemT-1.0-Flash",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README, config.json read"
+    },
+    {
+      "url": "https://huggingface.co/api/models/MemTensor/MemT-1.0-Nano?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "size, licence tag"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

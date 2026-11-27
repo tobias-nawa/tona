@@ -1,0 +1,18 @@
+{"kind": "run", "run": 1, "time": "12:12:40", "load": "7,73 6,61 6,48", "power": "AC Power"}
+{"kind": "cpu", "test": "read8", "threads": 1, "median_gbs": 56.34, "min_gbs": 46.56, "max_gbs": 60.81, "runs": 5}
+{"kind": "cpu", "test": "read8", "threads": 2, "median_gbs": 108.18, "min_gbs": 75.10, "max_gbs": 110.91, "runs": 5}
+{"kind": "cpu", "test": "read8", "threads": 4, "median_gbs": 103.51, "min_gbs": 95.98, "max_gbs": 109.29, "runs": 5}
+{"kind": "cpu", "test": "read8", "threads": 8, "median_gbs": 115.96, "min_gbs": 114.07, "max_gbs": 127.23, "runs": 5}
+{"kind": "cpu", "test": "read8", "threads": 10, "median_gbs": 120.47, "min_gbs": 115.38, "max_gbs": 132.20, "runs": 5}
+{"kind": "run", "run": 2, "time": "12:12:55", "load": "7,48 6,61 6,49", "power": "AC Power"}
+{"kind": "cpu", "test": "read8", "threads": 1, "median_gbs": 58.94, "min_gbs": 57.84, "max_gbs": 60.46, "runs": 5}
+{"kind": "cpu", "test": "read8", "threads": 2, "median_gbs": 98.09, "min_gbs": 75.72, "max_gbs": 110.63, "runs": 5}
+{"kind": "cpu", "test": "read8", "threads": 4, "median_gbs": 90.36, "min_gbs": 87.27, "max_gbs": 93.91, "runs": 5}
+{"kind": "cpu", "test": "read8", "threads": 8, "median_gbs": 110.54, "min_gbs": 108.69, "max_gbs": 134.82, "runs": 5}
+{"kind": "cpu", "test": "read8", "threads": 10, "median_gbs": 112.44, "min_gbs": 100.15, "max_gbs": 143.20, "runs": 5}
+{"kind": "run", "run": 3, "time": "12:13:11", "load": "7,20 6,59 6,48", "power": "AC Power"}
+{"kind": "cpu", "test": "read8", "threads": 1, "median_gbs": 59.53, "min_gbs": 57.15, "max_gbs": 60.16, "runs": 5}
+{"kind": "cpu", "test": "read8", "threads": 2, "median_gbs": 95.64, "min_gbs": 75.02, "max_gbs": 105.11, "runs": 5}
+{"kind": "cpu", "test": "read8", "threads": 4, "median_gbs": 104.29, "min_gbs": 101.57, "max_gbs": 108.38, "runs": 5}
+{"kind": "cpu", "test": "read8", "threads": 8, "median_gbs": 115.51, "min_gbs": 114.49, "max_gbs": 117.97, "runs": 5}
+{"kind": "cpu", "test": "read8", "threads": 10, "median_gbs": 117.00, "min_gbs": 116.26, "max_gbs": 124.38, "runs": 5}

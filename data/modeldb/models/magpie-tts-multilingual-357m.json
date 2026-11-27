@@ -1,0 +1,146 @@
+{
+  "id": "magpie-tts-multilingual-357m",
+  "name": "NVIDIA Magpie TTS Multilingual",
+  "vendor": "NVIDIA",
+  "purpose": "Dedicated speech-generation layer for voice agents: converts LLM text to speech in 12 languages with five fixed English-trained speaker voices, not for zero-shot cloning (card).",
+  "tasks": [
+    "speech-synthesis"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "audio"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "de",
+      "en",
+      "ar",
+      "es",
+      "fr",
+      "hi",
+      "it",
+      "ja",
+      "ko",
+      "pt",
+      "vi",
+      "zh"
+    ]
+  },
+  "license": {
+    "name": "NVIDIA Open Model License",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Agreement text read (nvidia.com): \"Models are commercially usable. You are free to create and distribute Derivative Models.\"; redistribution needs the agreement and the Notice \"Licensed by NVIDIA Corporation under the NVIDIA Open Model License\". Card forbids use outside the 12 languages only as \"not intended\"."
+  },
+  "architecture": {
+    "kind": "AUTOREGRESSIVE transformer encoder-decoder over multi-codebook audio codec tokens (typically 8 codebooks, frame stacking)",
+    "params_total_b": 0.364,
+    "why_this_design": "Card: end-to-end encoder-decoder that plugs into cascaded voice-agent pipelines without changing the upstream LLM."
+  },
+  "variants": [
+    {
+      "repo": "nvidia/magpie_tts_multilingual_357m",
+      "format": "NeMo checkpoint",
+      "official": true
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "364M parameters"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "364M parameters"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "364M parameters"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "364M parameters"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "364M parameters"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "364M parameters"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "364M parameters"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "NeMo",
+      "NVIDIA NIM"
+    ],
+    "notes": "Card: optimized for NVIDIA GPUs; AMD path unknown."
+  },
+  "benchmarks": [
+    {
+      "name": "German CER (v2607) / speaker similarity SSIM",
+      "score": "0.80 / 0.742",
+      "kind": "vendor",
+      "source": "https://huggingface.co/nvidia/magpie_tts_multilingual_357m",
+      "unit": "% CER / SSIM",
+      "date": "2026-11-19"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "tiny, built for latency in voice agents",
+      "German trained on CML-TTS German and a desktop speech corpus"
+    ],
+    "weaknesses": [
+      "no voice cloning",
+      "five preset voices",
+      "NVIDIA-centric runtime"
+    ]
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Open license, tiny, German supported, but a fixed small voice set, no cloning, and an NVIDIA-optimised NeMo stack with no known AMD/GGML path. Worth watching for a voice-agent product; no independent German quality evidence.",
+    "blockers": [
+      "no AMD/GGML runtime known",
+      "no Tona audio module"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/nvidia/magpie_tts_multilingual_357m",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "card read as raw README"
+    },
+    {
+      "url": "https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-open-model-license/",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "agreement text read"
+    }
+  ],
+  "open_questions": [
+    "German listening test",
+    "Is there a GGML/ONNX port that runs on AMD?"
+  ],
+  "last_checked": "2026-11-19"
+}

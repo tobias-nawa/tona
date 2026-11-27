@@ -1,0 +1,300 @@
+{
+  "id": "glm-5.3-flash",
+  "name": "GLM-5.3-Flash",
+  "vendor": "Z.ai (zai-org)",
+  "release_date": "2026-08-25",
+  "tasks": [
+    "coding",
+    "general"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/zai-org/GLM-5.3-Flash/raw/main/README.md",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "raw card text"
+    },
+    {
+      "url": "https://huggingface.co/zai-org/GLM-5.3-Flash/raw/main/config.json",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/zai-org/GLM-5.3-Flash/raw/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/api/models/unsloth/GLM-5.3-Flash-GGUF/tree/main",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "file sizes"
+    },
+    {
+      "url": "https://huggingface.co/zai-org/GLM-5.3-Flash/discussions",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "discussions read through the HF API"
+    },
+    {
+      "url": "https://huggingface.co/unsloth/GLM-5.3-Flash-GGUF/discussions",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://www.developersdigest.tech/models/best-for/coding/open-weights",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "search summary only"
+    },
+    {
+      "url": "research/49-moe-models-2026-11.md",
+      "kind": "own",
+      "checked": "2026-11-19"
+    }
+  ],
+  "last_checked": "2026-11-19",
+  "purpose": "Z.ai states: the first natively multimodal model of the GLM-5 series, outperforming GLM-5.2 at one-tenth of the price and approaching Claude Opus 4.8 on coding and agentic benchmarks; built for agentic engineering.",
+  "modalities": {
+    "input": [
+      "text",
+      "image",
+      "video"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en",
+      "zh"
+    ]
+  },
+  "lineage": {
+    "family": "GLM-5",
+    "how_derived": "newly trained base model (30T-token multimodal pre-training corpus), not derived from GLM-5.2"
+  },
+  "license": {
+    "name": "MIT",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "LICENSE file in the repository read: standard MIT, Copyright (c) 2026 Z.AI Co., Ltd: \"to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies\"."
+  },
+  "architecture": {
+    "kind": "hybrid linear + sparse attention MoE with manifold-constrained hyper-connections, multimodal",
+    "gguf_arch": "glm5_next (Transformers name; llama.cpp name not verified)",
+    "params_total_b": 320,
+    "params_active_b": 18,
+    "layers": 45,
+    "attention": "mostly linear attention layers with a DeepSeek-sparse-attention layer every fourth layer (layer_types in config.json; 64 heads, 64 KV heads)",
+    "recurrent": "linear attention",
+    "experts": 288,
+    "experts_active": 8,
+    "context_native": 1048576,
+    "context_max": 1048576,
+    "drafter": "one MTP layer (num_nextn_predict_layers = 1)",
+    "why_this_design": "Z.ai states: the first hybrid of sparse and linear attention in the GLM series sharply reduces long-context serving cost while preserving precise long-context retrieval; manifold-constrained hyper-connections (mHC) improve scaling efficiency."
+  },
+  "variants": [
+    {
+      "repo": "zai-org/GLM-5.3-Flash",
+      "format": "safetensors (FP8 mixed)",
+      "size_gb": 328.3,
+      "official": true
+    },
+    {
+      "repo": "unsloth/GLM-5.3-Flash-GGUF",
+      "format": "GGUF UD-IQ1_S",
+      "size_gb": 93.1,
+      "official": false
+    },
+    {
+      "repo": "unsloth/GLM-5.3-Flash-GGUF",
+      "format": "GGUF UD-IQ1_M",
+      "size_gb": 97.6,
+      "official": false
+    },
+    {
+      "repo": "unsloth/GLM-5.3-Flash-GGUF",
+      "format": "GGUF UD-IQ2_XXS",
+      "size_gb": 101.8,
+      "official": false
+    },
+    {
+      "repo": "unsloth/GLM-5.3-Flash-GGUF",
+      "format": "GGUF UD-Q2_K_XL",
+      "size_gb": 108.7,
+      "official": false
+    },
+    {
+      "repo": "unsloth/GLM-5.3-Flash-GGUF",
+      "format": "GGUF UD-IQ3_XXS",
+      "size_gb": 120.4,
+      "official": false
+    },
+    {
+      "repo": "unsloth/GLM-5.3-Flash-GGUF",
+      "format": "GGUF UD-IQ4_XS",
+      "size_gb": 156.8,
+      "official": false
+    },
+    {
+      "repo": "nvidia/GLM-5.3-Flash-NVFP4",
+      "format": "NVFP4",
+      "official": false,
+      "notes": "by NVIDIA, not by Z.ai; size not read"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "no",
+      "variant": "UD-IQ1_S",
+      "basis": "estimate",
+      "notes": "estimate from the file size (93.1 GB) against the budget of docs/hardware: 9.6 GB VRAM plus 50 GB RAM = 60 GB; about 10% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that)"
+    },
+    "pc-16gb": {
+      "fits": "no",
+      "variant": "UD-IQ1_S",
+      "basis": "estimate",
+      "notes": "estimate from the file size (93.1 GB) against the budget of docs/hardware: 13.6 GB VRAM plus 50 GB RAM = 64 GB; about 15% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that)"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "UD-IQ1_S",
+      "basis": "estimate",
+      "notes": "estimate from the file size (93.1 GB) against the budget of docs/hardware: 21.6 GB VRAM plus 82 GB RAM = 104 GB; about 23% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that)"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "UD-IQ1_S",
+      "basis": "estimate",
+      "notes": "estimate from the file size (93.1 GB) against the budget of docs/hardware: 29.6 GB VRAM plus 114 GB RAM = 144 GB; about 32% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that)"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "UD-IQ1_S",
+      "basis": "estimate",
+      "notes": "estimate from the file size (93.1 GB) against the GPU share of docs/hardware (about 12 GB)"
+    },
+    "mac-32gb": {
+      "fits": "no",
+      "variant": "UD-IQ1_S",
+      "basis": "estimate",
+      "notes": "estimate from the file size (93.1 GB) against the GPU share of docs/hardware (about 22 GB)"
+    },
+    "mac-64gb+": {
+      "fits": "no",
+      "variant": "UD-IQ1_S",
+      "basis": "estimate",
+      "notes": "estimate from the file size (93.1 GB) against the GPU share of docs/hardware (about 52 GB)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "partial",
+    "other": [
+      "vLLM",
+      "SGLang",
+      "KTransformers",
+      "Transformers (glm5_next)"
+    ],
+    "notes": "A llama.cpp user on 2026-09-24 still needed the unsloth glm5next branch (HF discussion unsloth/GLM-5.3-Flash-GGUF 22); whether mainline has it now is unchecked. Tona would need a new module (hybrid linear + DSA layers, mHC, 288 experts)."
+  },
+  "benchmarks": [
+    {
+      "name": "Terminal-Bench 2.1",
+      "score": 84.3,
+      "kind": "vendor",
+      "source": "https://huggingface.co/zai-org/GLM-5.3-Flash/raw/main/README.md",
+      "variant": "official weights, reasoning_effort max (default)",
+      "harness": "Claude Code 2.1.207, temperature 1.0, 65536 new tokens, 6 h timeout",
+      "date": "2026-08-25"
+    },
+    {
+      "name": "DeepSWE",
+      "score": 63.4,
+      "kind": "vendor",
+      "source": "https://huggingface.co/zai-org/GLM-5.3-Flash/raw/main/README.md",
+      "variant": "official weights, reasoning_effort max (default)",
+      "harness": "mini-swe-agent, temperature 0.95, 400K context",
+      "date": "2026-08-25"
+    },
+    {
+      "name": "DeepSWE v1.1 (GLM-5.3, the larger model, not Flash)",
+      "score": "69 +/- 3",
+      "kind": "independent",
+      "source": "https://www.developersdigest.tech/models/best-for/coding/open-weights",
+      "variant": "GLM-5.3 (not Flash)",
+      "date": "2026-11",
+      "unit": "%",
+      "harness": "search summary only; the page itself returned 404 when fetched; included as the nearest independent anchor, it is NOT a Flash score"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "Vendor coding and agent numbers near the large closed models at 18 B active (vendor)",
+      "1 M context with a small KV cache: about 6 KB per token read from config.json (HF discussion 55)",
+      "MTP head gives draft acceptance 0.83 on agentic coding in a Vulkan run on a 128 GB unified-memory machine (HF unsloth discussion 27)"
+    ],
+    "weaknesses": [
+      "FIM tokens were removed: no fill-in-the-middle autocomplete (HF discussion 43)",
+      "Reasoning loops reported with some clients and chat templates (HF discussion 47)",
+      "93 GB at 1 bit: needs 24 GB VRAM + 96 GB RAM or more; quality of 1-bit quants unmeasured by us",
+      "No Artificial Analysis Coding Index entry found for the Flash model (only the larger GLM-5.3)"
+    ],
+    "behavior": "Thinking budget via reasoning_effort low / high / max (default max); clear_thinking should be set true for chat.",
+    "best_for": [
+      "agentic coding on 32 GB VRAM + 128 GB RAM class machines",
+      "very long context on a small KV budget"
+    ],
+    "avoid_for": [
+      "editor autocomplete (no FIM)",
+      "16 GB VRAM + 64 GB RAM machines"
+    ],
+    "maturity": "Z.ai: large vendor with a GLM-5 technical report (arXiv 2602.15763); 6.4 M downloads of the main repo, 74 discussions, many community quantizations.",
+    "user_reports": [
+      {
+        "summary": "Reasoning loop on a trivial Kotlin task via opencode: 813K input tokens, no code; client dependent, fixed for one user by reverting the chat template",
+        "sentiment": "negative",
+        "source": "https://huggingface.co/zai-org/GLM-5.3-Flash/discussions/47",
+        "date": "2026-09-08"
+      },
+      {
+        "summary": "UD-IQ4_XS on 64 GB RAM + RTX 5090: about 250 tok/s prefill and 6 tok/s decode when streaming experts from two NVMe SSDs (custom patch); stock mmap offload 2.4 to 2.9 tok/s decode",
+        "sentiment": "mixed",
+        "source": "https://huggingface.co/unsloth/GLM-5.3-Flash-GGUF/discussions/22",
+        "date": "2026-09-24"
+      },
+      {
+        "summary": "Strix Halo 128 GB, llama.cpp Vulkan, MTP: about 29 tok/s decode on chat and 31 on coding, 74 to 83 % draft acceptance",
+        "sentiment": "positive",
+        "source": "https://huggingface.co/unsloth/GLM-5.3-Flash-GGUF/discussions/27",
+        "date": "2026-10-14"
+      },
+      {
+        "summary": "FIM tokens removed, \"useless\" for completion compared to Qwen",
+        "sentiment": "negative",
+        "source": "https://huggingface.co/zai-org/GLM-5.3-Flash/discussions/43",
+        "date": "2026-09-05"
+      }
+    ]
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "MIT (text verified), strongest vendor agent numbers of the Flash-class MoEs, small KV at 1 M context; fits the 32 GB VRAM + 128 GB RAM class with a 1-bit quant (93 GB) and the 24 GB + 96 GB class marginally. Out of reach of the 16 GB + 64 GB reference class (93 GB against about 64 GB budget). Not offered for 16 GB.",
+    "blockers": [
+      "Tona has no module for the hybrid linear/sparse attention layers and mHC (judged as engine support, not as model quality)",
+      "no FIM: not an autocomplete model",
+      "quality of 1-bit quants unmeasured",
+      "no independent score for the Flash model"
+    ]
+  },
+  "open_questions": [
+    "Does mainline llama.cpp load glm5_next now? Check: current llama.cpp release notes and a load of the unsloth GGUF.",
+    "Quality of UD-IQ1_S against UD-IQ4_XS on code: no measurement. Check: Exercism polyglot or a SWE task subset on both.",
+    "Which of the vendor numbers is the Flash model in the card chart (the table is an image)? Check: blog https://z.ai/blog/glm-5.3-flash.",
+    "Per-language coding quality: no public per-language numbers found (vendor tables are aggregates; swebench.com per-language view not retrievable). Check: run our Exercism polyglot set per language on the model."
+  ]
+}

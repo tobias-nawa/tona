@@ -1,0 +1,21 @@
+# One prompt per line, `id<TAB>prompt`. 10 German chat/instruction, 5 German technical, 5 English chat. Fixed before any run.
+de01	Schreibe diese Mitteilung freundlicher, aber kurz: "Ihr Antrag wurde abgelehnt, weil die Unterlagen unvollständig waren."
+de02	Fasse in drei Sätzen zusammen, warum der Himmel blau ist.
+de03	Erkläre einem Zehnjährigen, was Inflation ist.
+de04	Ich habe morgen ein Vorstellungsgespräch als Softwareentwickler. Gib mir fünf konkrete Tipps zur Vorbereitung.
+de05	Formuliere eine höfliche E-Mail an meinen Vermieter, dass die Heizung seit drei Tagen ausgefallen ist und ich um schnelle Reparatur bitte.
+de06	Was ist der Unterschied zwischen "scheinbar" und "anscheinend"? Gib je ein Beispiel.
+de07	Nenne Vor- und Nachteile von Homeoffice, je drei, in einer Tabelle.
+de08	Übersetze ins Deutsche und erkläre kurz die Redewendung "to bite the bullet".
+de09	Schreibe ein kurzes Gedicht (vier Zeilen, Reimschema AABB) über den ersten Schnee.
+de10	Ich bin unsicher, ob ich eine Katze oder einen Hund nehmen soll. Ich arbeite ganztags und wohne in einer Wohnung. Was rätst du mir und warum?
+dt01	Erkläre auf Deutsch den Unterschied zwischen einem Mutex und einem Semaphor, mit je einem kurzen Beispiel in Pseudocode.
+dt02	Was bedeutet "Race Condition"? Zeige ein kleines Python-Beispiel und wie man es behebt.
+dt03	Schreibe eine Bash-Zeile, die alle Dateien unter dem aktuellen Verzeichnis findet, die größer als 100 MB sind, und erkläre sie auf Deutsch.
+dt04	Warum ist `git rebase` auf einem geteilten Branch riskant? Antworte auf Deutsch in höchstens sechs Sätzen.
+dt05	Erkläre auf Deutsch, was ein Cache-Miss ist und warum Datenstrukturen mit zusammenhängendem Speicher schneller sein können.
+en01	Give me a two-sentence pitch for a local coding assistant that runs on a single consumer GPU.
+en02	What are three common reasons a Python script runs slower than expected? Keep it short.
+en03	Rewrite this to sound more confident: "I think maybe we could possibly try to ship on Friday?"
+en04	Explain the difference between latency and throughput using a restaurant analogy.
+en05	I have a list of 1 million strings and need to check membership many times. Which data structure should I use and why? Two short paragraphs.

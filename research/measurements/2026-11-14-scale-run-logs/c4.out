@@ -1,0 +1,51 @@
+{
+ "ctx": 1048576,
+ "metrics": {
+  "prefill@512000": 1430.2118820814867,
+  "decode@512000": 57.53022481385683,
+  "prefill@1000000": 1104.216413005288,
+  "decode@1000000": 54.76389345793179
+ },
+ "shas": {
+  "512000": "32e65dd9bc402413",
+  "1000000": "dc6c12a50914afe6"
+ },
+ "counters": {
+  "512000": {
+   "expert_hits": 75474,
+   "expert_misses": 9030
+  },
+  "1000000": {
+   "expert_hits": 69872,
+   "expert_misses": 11985
+  }
+ },
+ "peaks": {
+  "rss_gb": 19.51775360107422,
+  "gtt_gb": 29.276981353759766,
+  "vram_gb": 15.249958038330078,
+  "hwm_gb": 19.51775360107422,
+  "avail_min_gb": 8.45743179321289
+ },
+ "load": {
+  "cpu_own": 103.5,
+  "cpu_system": 3.0,
+  "cpu_other": 1.2,
+  "gpu_own": 0.0,
+  "gpu_system": 0.0,
+  "gpu_other": 0.0,
+  "pageins": 51009.9,
+  "swapins": 0.1,
+  "compressions": 128.0,
+  "level_min": 14,
+  "backup_share": 0.0,
+  "warning_share": 0.0,
+  "battery_share": 0.0,
+  "cpu_limit_min": null,
+  "power_mode": null,
+  "seconds": 1297,
+  "idle_before_s": null,
+  "ready_s": 22.5
+ }
+}
+wall 1299 s

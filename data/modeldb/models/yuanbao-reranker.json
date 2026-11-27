@@ -1,0 +1,69 @@
+{
+  "id": "yuanbao-reranker",
+  "name": "Yuanbao-Reranker (0.6B / 4B / 8B)",
+  "vendor": "Yuanbao-Search (HF organization; the card names no parent company)",
+  "release_date": "2026-11-06",
+  "lineage": {
+    "base_model": "Qwen3 backbone (8B card: Qwen/Qwen3-8B; 0.6B and 4B on the Qwen3 line)",
+    "how_derived": "trained on 2.75M ranking groups from document-grounded synthesis (answer-first, query-type-guided), three-stage curation, difficulty-stratified negatives; bounded minimum-gap preference distillation plus layerwise adaptive LERP merging (card)",
+    "family": "qwen3"
+  },
+  "purpose": "Pointwise yes/no reranker that scores query-document relevance in [0,1] across Chinese, multilingual, English, long-document (up to 8,192 tokens) and code retrieval (card).",
+  "tasks": ["reranking"],
+  "modalities": {"input": ["text"], "output": ["text"]},
+  "languages": {"natural": ["zh", "en", "many"]},
+  "license": {
+    "name": "Apache-2.0",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card header and badge say Apache-2.0 for the 8B; HF metadata of 0.6B also says apache-2.0; no LICENSE file opened."
+  },
+  "architecture": {
+    "kind": "dense decoder reranker on Qwen3 (relevance probability from yes/no tokens)",
+    "params_total_b": 8.19,
+    "layers": 36,
+    "context_native": 8192,
+    "why_this_design": "Card: preference distillation optimizes pointwise yes/no cross-entropy together with a capped pairwise hinge over positive-negative and negative-negative pairs; layerwise merging adds no inference overhead."
+  },
+  "variants": [
+    {"repo": "Yuanbao-Search/Yuanbao-Reranker-8B", "format": "safetensors BF16", "size_gb": 16.39, "official": true},
+    {"repo": "Yuanbao-Search/Yuanbao-Reranker-4B", "format": "safetensors BF16", "official": true, "notes": "size not read"},
+    {"repo": "Yuanbao-Search/Yuanbao-Reranker-0.6B", "format": "safetensors BF16", "size_gb": 1.2, "official": true, "notes": "28 layers"}
+  ],
+  "hardware_fit": {
+    "pc-12gb": {"fits": "yes", "variant": "0.6B or 4B (about 8 GB BF16)", "basis": "estimate"},
+    "pc-16gb": {"fits": "yes", "variant": "4B BF16, 8B with quant", "basis": "estimate"},
+    "pc-24gb": {"fits": "yes", "variant": "8B BF16 (16.4 GB)", "basis": "estimate"},
+    "pc-32gb": {"fits": "yes", "variant": "8B BF16", "basis": "estimate"},
+    "mac-16-24gb": {"fits": "yes", "variant": "0.6B or 4B", "basis": "estimate"},
+    "mac-32gb": {"fits": "yes", "variant": "8B BF16", "basis": "estimate"},
+    "mac-64gb+": {"fits": "yes", "variant": "8B BF16", "basis": "estimate"}
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "unknown",
+    "other": ["Transformers", "vLLM", "yuanbao-reranker package"],
+    "notes": "Same Qwen3 reranker prompt style as Qwen3-Reranker (yes/no token scoring), which llama.cpp supports for that family; for this checkpoint not tested."
+  },
+  "benchmarks": [
+    {"name": "Five-panel average nDCG@10 (CMTEB-R, MMTEB-R, BEIR, MLDR, MTEB-Code) on a Qwen3-Embedding-0.6B top-100 pool", "score": 74.21, "kind": "vendor", "variant": "8B (Qwen3-Reranker-8B 72.68; 4B 73.63; 0.6B 70.96)", "harness": "card, shared candidate pool of top-100 from Qwen3-Embedding-0.6B", "source": "https://huggingface.co/Yuanbao-Search/Yuanbao-Reranker-8B", "date": "2026-11-19"}
+  ],
+  "soft": {
+    "strengths": ["Beats Qwen3-Reranker-8B on every panel per the card (+1.53 average)", "0.6B at 70.96 average is a small option", "Code retrieval and long documents (8,192 tokens) in the evaluation"],
+    "weaknesses": ["Builder's own evaluation with its own candidate pool; no independent run", "Little adoption (74 downloads for the 8B on the HF API)", "German-specific numbers not read"],
+    "best_for": ["second-stage reranking for RAG and code search"],
+    "maturity": "Unknown organization, first release 2026-11-06."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Apache-2.0 reranker family on a Qwen3 backbone that Tona's reranker path (qwen3-reranker record) would carry; the gain over Qwen3-Reranker is small and vendor-measured, and adoption is nil so far.",
+    "blockers": ["unverified vendor claims", "no German evidence"]
+  },
+  "sources": [
+    {"url": "https://huggingface.co/Yuanbao-Search/Yuanbao-Reranker-8B", "kind": "primary", "checked": "2026-11-19", "note": "README read (per-panel table not extracted)"},
+    {"url": "https://huggingface.co/api/models/Yuanbao-Search/Yuanbao-Reranker-0.6B?blobs=true", "kind": "primary", "checked": "2026-11-19", "note": "0.6B size and license tag"}
+  ],
+  "open_questions": ["Per-panel scores", "German quality", "Who the builder is", "License text"],
+  "last_checked": "2026-11-19"
+}

@@ -1,0 +1,213 @@
+{
+  "id": "gemma-4-e4b-it",
+  "name": "Gemma 4 E4B (instruction-tuned)",
+  "vendor": "Google DeepMind",
+  "release_date": "2026-04",
+  "lineage": {
+    "family": "Gemma 4"
+  },
+  "purpose": "Smaller Gemma 4 models are designed for efficient local execution on laptops and mobile devices (on-device use).",
+  "tasks": [
+    "general",
+    "documents",
+    "vision",
+    "audio-transcription",
+    "translation"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image",
+      "video",
+      "audio"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "many"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Gemma 4 repos carry no LICENSE file; the card links ai.google.dev/gemma/docs/gemma_4_license, which redirects to gemma.ai/resources/apache-2/ (Google DeepMind, read through a summarizer 2026-11-19): plain Apache License 2.0 text ('perpetual, worldwide, non-exclusive, no-charge, royalty-free, irrevocable' grant), no Gemma-specific terms and no prohibited-use policy. The older Gemma Terms of Use (Gemma 1-3, TranslateGemma) are a different, restrictive text."
+  },
+  "architecture": {
+    "kind": "dense transformer with Per-Layer Embeddings, hybrid local/global attention",
+    "gguf_arch": "gemma4",
+    "params_total_b": 8,
+    "params_active_b": 4.5,
+    "layers": 42,
+    "attention": "sliding window 512 interleaved with global layers",
+    "recurrent": "none",
+    "context_native": 131072,
+    "drafter": "none stated",
+    "why_this_design": "Per-Layer Embeddings to maximize parameter efficiency in on-device deployments (4.5 B effective, 8 B with embeddings)."
+  },
+  "variants": [
+    {
+      "repo": "google/gemma-4-E4B-it",
+      "format": "safetensors BF16",
+      "official": true
+    },
+    {
+      "repo": "google/gemma-4-E4B-it-qat-w4a16-ct",
+      "format": "QAT W4A16",
+      "official": true
+    },
+    {
+      "repo": "google/gemma-4-E4B-it-qat-mobile-transformers",
+      "format": "QAT 8-bit mobile",
+      "official": true
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q8 or BF16",
+      "notes": "Runs next to another model."
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "BF16 16 GB marginal; Q8"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "BF16"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "BF16"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q8"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "BF16"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "BF16"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "vLLM",
+      "Transformers"
+    ],
+    "notes": "No Gemma 4 module in Tona (ArchId list: Qwen4Exp, Qwen35Moe, NemotronHMoe)."
+  },
+  "benchmarks": [
+    {
+      "name": "MMLU-Pro",
+      "score": 69.4,
+      "kind": "vendor",
+      "source": "https://huggingface.co/google/gemma-4-E4B-it",
+      "unit": "%"
+    },
+    {
+      "name": "GPQA Diamond",
+      "score": 58.6,
+      "kind": "vendor",
+      "source": "https://huggingface.co/google/gemma-4-E4B-it",
+      "unit": "%"
+    },
+    {
+      "name": "AIME 2026 no tools",
+      "score": 42.5,
+      "kind": "vendor",
+      "source": "https://huggingface.co/google/gemma-4-E4B-it",
+      "unit": "%"
+    },
+    {
+      "name": "MMMLU",
+      "score": 76.6,
+      "kind": "vendor",
+      "source": "https://huggingface.co/google/gemma-4-E4B-it",
+      "unit": "%"
+    },
+    {
+      "name": "MRCR v2 8-needle 128K",
+      "score": 25.4,
+      "kind": "vendor",
+      "source": "https://huggingface.co/google/gemma-4-E4B-it",
+      "unit": "%"
+    },
+    {
+      "name": "Tau2 avg",
+      "score": 42.2,
+      "kind": "vendor",
+      "source": "https://huggingface.co/google/gemma-4-E4B-it",
+      "unit": "%"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "Tiny footprint with text, image and audio input",
+      "MMMLU 76.6 at 4.5 B effective (vendor)"
+    ],
+    "weaknesses": [
+      "Weak long context (MRCR 25.4) and reasoning depth",
+      "A GitHub issue reports E4B tool calls rendered as content instead of parsed (not read)"
+    ],
+    "behavior": "Thinking switch as in the family; T=1.0, top_p 0.95, top_k 64.",
+    "best_for": [
+      "Low-latency helper, dictation follow-ups, 12 GB cards beside a coder"
+    ],
+    "avoid_for": [
+      "Research and long documents"
+    ],
+    "maturity": "Google DeepMind.",
+    "user_reports": [
+      {
+        "summary": "Community drafter for E4B (DSpark) claims up to 4.7x speedup with higher acceptance than the built-in MTP on 4 of 9 benchmarks; a separate thread documents a mechanistic fix for pointer-chasing collapse in the 7 global layers. Both are single-author claims, not reproduced by us.",
+        "sentiment": "mixed",
+        "source": "https://huggingface.co/google/gemma-4-E4B-it/discussions/51",
+        "date": "2026-10-10"
+      }
+    ]
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "Small always-on helper with audio and image input and Apache-2.0 (text read) that fits every hardware class; no independent German score exists for it (PeerBench lists 12B, 26B and 31B only). Missing Tona module is only a blocker.",
+    "blockers": [
+      "no Gemma 4 module in Tona"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/google/gemma-4-E4B-it",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "model card"
+    },
+    {
+      "url": "https://gemma.ai/resources/apache-2/",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "Gemma 4 license page (plain Apache-2.0), summarizer read"
+    }
+  ],
+  "open_questions": [
+    "GGUF sizes not collected",
+    "Exact release date",
+    "No independent German score (not in PeerBench)"
+  ],
+  "last_checked": "2026-11-19"
+}

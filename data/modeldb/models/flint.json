@@ -1,0 +1,188 @@
+{
+  "id": "flint",
+  "name": "Flint",
+  "vendor": "Recursive",
+  "release_date": "2026-10-21",
+  "purpose": "Mixture-of-experts language model for coding agents: investigates codebases, fixes bugs, implements features and writes tests; supports reasoning and multi-turn tool use (card).",
+  "tasks": [
+    "coding",
+    "general"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Apache License 2.0 text read in the repo LICENSE file: commercial use, modification and redistribution allowed with notice and patent grant."
+  },
+  "architecture": {
+    "kind": "decoder-only MoE, 2 dense then 47 MoE layers, sliding-window plus full attention",
+    "params_total_b": 39.8,
+    "params_active_b": 2.5,
+    "layers": 49,
+    "attention": "35 sliding-window layers (513 tokens) and 14 full-attention layers; 32 Q / 4 KV heads, head dim 128, per-head QK RMSNorm and learned attention sinks; RoPE on sliding layers only",
+    "recurrent": "none",
+    "experts": 256,
+    "experts_active": 6,
+    "context_native": 262144,
+    "drafter": "none stated"
+  },
+  "variants": [
+    {
+      "repo": "RecursiveSI/flint",
+      "format": "safetensors BF16",
+      "size_gb": 79.59,
+      "official": true
+    },
+    {
+      "repo": "unsloth/flint-GGUF",
+      "format": "GGUF UD-Q4_K_XL",
+      "size_gb": 25.05,
+      "official": false,
+      "notes": "UD-IQ2_XXS 11.86, UD-Q2_K_XL 13.56, UD-Q6_K_XL 36.32, Q8_0 42.3 GB; 352k downloads"
+    },
+    {
+      "repo": "RecursiveSI/flint-nvfp4-gguf",
+      "format": "GGUF NVFP4",
+      "official": true,
+      "notes": "137k downloads, size not checked"
+    },
+    {
+      "repo": "RecursiveSI/flint-int4-gguf",
+      "format": "GGUF int4",
+      "official": true,
+      "notes": "56.6k downloads, size not checked"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "marginal",
+      "variant": "unsloth GGUF UD-Q4_K_XL",
+      "basis": "estimate",
+      "notes": "25.05 GB file against 9.6 GB VRAM plus 50 GB RAM budget; experts stream from RAM (~2.5 B active, decode bound by RAM bandwidth)"
+    },
+    "pc-16gb": {
+      "fits": "marginal",
+      "variant": "unsloth GGUF UD-Q4_K_XL",
+      "basis": "estimate",
+      "notes": "25.05 GB file against 13.6 GB VRAM plus 50 GB RAM budget; experts stream from RAM (~2.5 B active, decode bound by RAM bandwidth)"
+    },
+    "pc-24gb": {
+      "fits": "marginal",
+      "variant": "unsloth GGUF UD-Q4_K_XL",
+      "basis": "estimate",
+      "notes": "25.05 GB file against 21.6 GB VRAM plus 82 GB RAM budget; experts stream from RAM (~2.5 B active, decode bound by RAM bandwidth)"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "unsloth GGUF UD-Q4_K_XL",
+      "basis": "estimate",
+      "notes": "25.05 GB file fits the VRAM budget (29.6 GB) with room for KV"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "unsloth GGUF UD-Q4_K_XL",
+      "basis": "estimate",
+      "notes": "25.05 GB file against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "no",
+      "variant": "unsloth GGUF UD-Q4_K_XL",
+      "basis": "estimate",
+      "notes": "25.05 GB file against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "unsloth GGUF UD-Q4_K_XL",
+      "basis": "estimate",
+      "notes": "25.05 GB file against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "SGLang kit in the repo (B300/H200)",
+      "LM Studio and ggml-org GGUF repos exist"
+    ],
+    "notes": "ggml-org, unsloth, lmstudio-community and bartowski publish GGUFs, so llama.cpp support exists; exact version not checked."
+  },
+  "benchmarks": [
+    {
+      "name": "Terminal-Bench 2.1 (Terminus 2)",
+      "score": 54.9,
+      "kind": "vendor",
+      "variant": "BF16, pass@1 over >=5 attempts, temp 1.0; web-retrieved solutions counted as failures",
+      "source": "https://huggingface.co/RecursiveSI/flint"
+    },
+    {
+      "name": "SWE-bench Pro v2 (mini-swe-agent)",
+      "score": 89.7,
+      "kind": "vendor",
+      "variant": "BF16, as stated in the card text; a score this high for a 2.5B-active model is unusual and is not cross-checked",
+      "source": "https://huggingface.co/RecursiveSI/flint"
+    },
+    {
+      "name": "SWE-bench Verified (mini-swe-agent)",
+      "score": 74.2,
+      "kind": "vendor",
+      "variant": "BF16",
+      "source": "https://huggingface.co/RecursiveSI/flint"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "2.5B active parameters: cheap decode, 25 GB at the Q4 level so it sits in 16 GB VRAM plus RAM",
+      "sliding-window attention on 35 of 49 layers keeps the KV cache small at long context",
+      "trained for terminal and repository agent work"
+    ],
+    "weaknesses": [
+      "only vendor numbers; comparison scores of other models in the card image are developer-reported",
+      "vendor serves it on a single B300 or H200, local quality at Q4 not measured"
+    ],
+    "behavior": "reasoning and tool use; sampling temperature 1.0, top-p 0.95, top-k 20 used for the vendor results",
+    "maturity": "new vendor (Recursive); strong uptake: 62k downloads and 1.4k likes of the main repo, 352k of the unsloth GGUF"
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "A 40B-A2.5B agentic coder with Apache-2.0 (text read), small active set and cheap long-context attention is close to the shape our reference box serves best. Quality is unproven outside the vendor table (Terminal-Bench 2.1 54.9 is in the Qwen3.6-35B-A3B class), so it needs our own coding eval against Qwen3.8-27B and Ornith.",
+    "blockers": [
+      "vendor-only benchmarks",
+      "implementation needed (sliding window with attention sinks, 256 experts)"
+    ]
+  },
+  "open_questions": [
+    "independent SWE-bench and Terminal-Bench reproduction",
+    "meaning of 'SWE-bench Pro v2 89.7' versus other Pro scores",
+    "Q4 quality loss on agentic tasks",
+    "builder's reasons for the sink and no-position full-attention layers"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/RecursiveSI/flint",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README, config.json, LICENSE read"
+    },
+    {
+      "url": "https://huggingface.co/api/models/unsloth/flint-GGUF?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "GGUF sizes"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

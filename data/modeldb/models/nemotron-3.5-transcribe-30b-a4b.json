@@ -1,0 +1,311 @@
+{
+  "id": "nemotron-3.5-transcribe-30b-a4b",
+  "name": "NVIDIA Nemotron 3.5 Transcribe 30B-A4B",
+  "vendor": "NVIDIA",
+  "release_date": "2026-10",
+  "lineage": {
+    "base_model": "nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16",
+    "how_derived": "speech encoder (ASR + Sortformer-based speaker encoder) joined to the LLM and fine-tuned",
+    "family": "Nemotron 3.5"
+  },
+  "purpose": "Open-weight offline speech and audio model: audio plus a text instruction in, text out. NVIDIA's stated reasoning: the correct form of a transcript depends on audience and purpose, so one natural-language instruction per request selects the style instead of a convention fixed at training time. Tasks: transcription, translation, contextual and speaker-attributed transcription, language ID, word timestamps, audio QA.",
+  "tasks": [
+    "audio-transcription"
+  ],
+  "modalities": {
+    "input": [
+      "audio",
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en",
+      "de",
+      "fr",
+      "es",
+      "it",
+      "pt",
+      "nl",
+      "hi",
+      "zh",
+      "ja",
+      "ko",
+      "ar",
+      "many"
+    ]
+  },
+  "license": {
+    "name": "OpenMDW-1.1",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "licenses/ folder in the repo and LICENSE: OpenMDW-1.1 text read: \"permission is hereby granted, free of charge, to deal in the Model Materials without restriction, including under all copyright, patent, database, and trade secret rights\"; redistribution keeps the agreement and notices; outputs unrestricted. HF tag is \"other\". The repo also ships the Qwen3-ASR (Apache-2.0) and vLLM licenses for included parts."
+  },
+  "architecture": {
+    "kind": "AUTOREGRESSIVE speech-augmented LLM: ~600M ASR encoder + ~99M Sortformer-based speaker encoder + hybrid Mamba-2/Transformer MoE decoder (decode is memory-bound like our LLMs)",
+    "params_total_b": 34,
+    "params_active_b": 4.3,
+    "context_native": 65536,
+    "drafter": "MTP head (two trained depths, up to 8 speculative tokens) and separate DFlash2 draft model (word timestamps unavailable with DFlash2)",
+    "recurrent": "Mamba-2",
+    "why_this_design": "Promptable transcription: a speech-augmented LLM follows a per-request instruction (style, context, speaker attribution) instead of a fixed output convention (NVIDIA research page)."
+  },
+  "variants": [
+    {
+      "repo": "nvidia/NVIDIA-Nemotron-3.5-Transcribe-30B-A4B",
+      "format": "safetensors BF16",
+      "official": true
+    },
+    {
+      "repo": "nvidia/NVIDIA-Nemotron-3.5-Transcribe-30B-A4B-FP8",
+      "format": "FP8",
+      "official": true
+    },
+    {
+      "repo": "nvidia/NVIDIA-Nemotron-3.5-Transcribe-30B-A4B-NVFP4",
+      "format": "NVFP4 (Blackwell)",
+      "official": true
+    },
+    {
+      "repo": "AtomicChat GGUF (third party)",
+      "format": "GGUF, decoder 13.6 GB (Q2_0_M) to 19.7 GB (IQ4_NL), needs NeMo-Speech.cpp",
+      "size_gb": 13.6,
+      "official": false,
+      "notes": "sizes from research/52; engine claim from a secondary article"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "no",
+      "basis": "estimate"
+    },
+    "pc-16gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "notes": "only the smallest GGUF, alone on the card"
+    },
+    "pc-24gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "notes": "4-bit decoder 14-20 GB plus encoder, tight"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "4-bit"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "basis": "estimate"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "vLLM 0.32.0 + NeMo Speech plugin",
+      "SGLang-Omni 0.2.0 (whole-file only)",
+      "Transformers (from source)",
+      "NeMo-Speech.cpp (GGUF; card lists RTX 5090 / PRO 6000)"
+    ],
+    "notes": "Upstream llama.cpp merged Nemotron 3.5 Lightning text support but has no audio path for this model (secondary source). Same decoder class as Nemotron 3.5 Lightning 30B-A3B, which research/49 lists as a coding candidate."
+  },
+  "benchmarks": [
+    {
+      "name": "Open ASR Leaderboard English mean WER (9 sets)",
+      "score": 4.71,
+      "kind": "vendor",
+      "source": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Transcribe-30B-A4B",
+      "unit": "% WER"
+    },
+    {
+      "name": "Open ASR multilingual mean WER (7 languages)",
+      "score": 4.62,
+      "kind": "vendor",
+      "source": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Transcribe-30B-A4B",
+      "unit": "% WER"
+    },
+    {
+      "name": "German mean WER (Open ASR multilingual)",
+      "score": 2.81,
+      "kind": "vendor",
+      "source": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Transcribe-30B-A4B",
+      "unit": "% WER",
+      "variant": "BF16"
+    },
+    {
+      "name": "FLEURS German WER",
+      "score": 2.73,
+      "kind": "vendor",
+      "source": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Transcribe-30B-A4B",
+      "unit": "% WER"
+    },
+    {
+      "name": "Long-form mean WER (55 min chunks)",
+      "score": 10.98,
+      "kind": "vendor",
+      "source": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Transcribe-30B-A4B",
+      "unit": "% WER",
+      "harness": "vs Parakeet-TDT-0.6B-v3 13.37"
+    },
+    {
+      "name": "Multi-speaker mean cpWER",
+      "score": 15.8,
+      "kind": "vendor",
+      "source": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Transcribe-30B-A4B",
+      "unit": "%",
+      "harness": "vs DiCoW v3.3 + DiariZen 16.83"
+    },
+    {
+      "name": "Throughput H100 batched English (MTP2)",
+      "score": 410,
+      "kind": "vendor",
+      "source": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Transcribe-30B-A4B",
+      "unit": "x real time",
+      "variant": "BF16, batch load, not single-request latency"
+    },
+    {
+      "name": "Throughput RTX PRO 6000 Blackwell NIM, NVFP4+DFlash2",
+      "score": 2238,
+      "kind": "vendor",
+      "source": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Transcribe-30B-A4B",
+      "unit": "x real time"
+    },
+    {
+      "name": "German WER, Open ASR multilingual track (8 of 8 datasets)",
+      "score": 2.79,
+      "kind": "independent",
+      "source": "https://huggingface.co/spaces/hf-audio/open_asr_leaderboard",
+      "date": "2026-11-19",
+      "harness": "Open ASR Leaderboard multilingual track, German column (WER %), read from the Space config JSON 2026-11-19; rows differ in how many of the 8 datasets they cover",
+      "unit": "% WER"
+    },
+    {
+      "name": "Open ASR English avg WER (leaderboard rank 16 of 69)",
+      "score": 6.13,
+      "kind": "independent",
+      "source": "https://huggingface.co/spaces/hf-audio/open_asr_leaderboard",
+      "date": "2026-11-19",
+      "harness": "Open ASR Leaderboard English track, read 2026-11-19",
+      "unit": "% WER"
+    },
+    {
+      "name": "RTFx on the leaderboard (English track, leaderboard GPU)",
+      "score": 472.62,
+      "kind": "independent",
+      "source": "https://huggingface.co/spaces/hf-audio/open_asr_leaderboard",
+      "date": "2026-11-19",
+      "harness": "Open ASR Leaderboard, read 2026-11-19"
+    },
+    {
+      "name": "German WER, FP8 variant, Open ASR multilingual track (8 of 8 datasets)",
+      "score": 2.82,
+      "kind": "independent",
+      "source": "https://huggingface.co/spaces/hf-audio/open_asr_leaderboard",
+      "date": "2026-11-19",
+      "variant": "NVIDIA-Nemotron-3.5-Transcribe-30B-A4B-FP8",
+      "harness": "Open ASR Leaderboard multilingual track, German column (WER %), read from the Space config JSON 2026-11-19; rows differ in how many of the 8 datasets they cover",
+      "unit": "% WER"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "Best listed open-weight WER on English and multilingual Open ASR (vendor table, no independent evaluation at release)",
+      "German rated 'Leading' by the vendor, 2.81% mean",
+      "Speaker-attributed transcription and word timestamps in one model",
+      "Up to 1 hour per file, 65,536-token context"
+    ],
+    "weaknesses": [
+      "30 GB class: no fit beside a coder on 16 GB",
+      "Offline only, not streaming",
+      "Rare generation loops, vendor recommends a post-processing guardrail",
+      "Word timestamps not available with DFlash2; first requests slow while kernels warm up",
+      "Open runtimes beyond vLLM/NeMo-Speech.cpp not confirmed"
+    ],
+    "behavior": "Instruction-following speech LLM; reasoning toggle via chat template; audio understanding evaluated in English only.",
+    "best_for": [
+      "Long German or multilingual meeting recordings with speaker labels on a 24-32 GB machine"
+    ],
+    "avoid_for": [
+      "Live dictation",
+      "16 GB cards shared with a coding model"
+    ],
+    "maturity": "NVIDIA, major vendor with regular releases; this checkpoint is about 6 weeks old (HF createdAt 2026-10-07).",
+    "user_reports": [
+      {
+        "summary": "The NVFP4 and FP8 repos linked from the card returned 404 at release; NVIDIA replied they would follow and they were live by 2026-11-01.",
+        "source": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Transcribe-30B-A4B/discussions/8",
+        "date": "2026-10-29",
+        "sentiment": "mixed"
+      },
+      {
+        "summary": "Community post: audio.cpp v0.9.4 runs it with about 7 GB VRAM using CPU offloading (not verified by us).",
+        "source": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Transcribe-30B-A4B/discussions/17",
+        "date": "2026-11-05",
+        "sentiment": "positive"
+      }
+    ]
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "Best independent German of any open model (2.79, all 8 sets, FP8 2.82; only commercial APIs are ahead), permissive OpenMDW license, built-in speaker attribution. Hardware: 14-20 GB at 4 bit, marginal on 16-24 GB classes, fine from 32 GB. Decoder is derived from Nemotron 3.5 Lightning 30B-A3B (Nemotron-H): a Tona Nemotron-H backend would serve it plus an audio encoder; until then NeMo-Speech.cpp / audio.cpp / vLLM.",
+    "blockers": [
+      "no Nemotron-H backend and no audio encoder in Tona",
+      "only NVIDIA-targeted GGML runtimes known"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Transcribe-30B-A4B",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://research.nvidia.com/labs/nemotron/NVIDIA-Nemotron-3.5-Transcribe/",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/api/models?search=transcribe&author=nvidia&sort=lastModified&limit=10",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "variant list"
+    },
+    {
+      "url": "https://alphasignal.ai/news/atomicchat-makes-nvidia-s-nemotron-3-5-transcribe-run-on-consumer-gpus",
+      "kind": "secondary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "research/52-purpose-models.md",
+      "kind": "own",
+      "checked": "2026-11-19",
+      "note": "own research note, sizes of third-party GGUF"
+    },
+    {
+      "url": "https://huggingface.co/spaces/hf-audio/open_asr_leaderboard",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "Space /config JSON read directly"
+    }
+  ],
+  "open_questions": [
+    "Layer and expert counts of the decoder are not on the card (read config.json)",
+    "Single-request RTF on a 16-24 GB consumer card unknown",
+    "Does a GGML runtime for AMD exist? Card lists NVIDIA GPUs only",
+    "Last 45k characters of the model card (bias, safety) not read"
+  ],
+  "last_checked": "2026-11-19"
+}

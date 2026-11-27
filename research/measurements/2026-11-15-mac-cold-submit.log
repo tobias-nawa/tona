@@ -1,0 +1,61 @@
+== hw_report
+### Test conditions
+
+- CPU: Apple M1 Max, 10 cores / 10 threads
+- GPU: Apple M1 Max, 32.0 GiB unified memory
+- RAM: 32.0 GiB
+- OS: macOS 27.0.1, kernel 27.0.0 (arm64)
+- Driver and toolkit: no toolkit found
+- TONA_* variables: none set
+- cgroup limits of this shell: none set
+- Load average (1, 5, 15 min): 2.86, 2.22, 1.62
+- CPU use by other programs over 0.5 s: 4.8 % of all threads
+- sandbox: no
+- Commit: `af22809` (dirty tree)
+== before: quiet check 07:28:17 ok
+== runs (scratch harness: one server, the 8000-token request of ab.py's server workload with 100 tokens, then three short code requests of 400; TONA_GPU_GAPS=2)
+-- t1
+=== 8000 1794724107.183
+GPU gaps per target pass: busy 47.93 ms, idle 90.51 ms (65.4 %): wake 0.18, backend 0.07, outside 0.20, inputs 0.99 (history 0.01, n-gram rows 0.02, positions 0.00, MTP inputs 0.01, encoding target 0.05, other 0.91), submit 0.30, split 88.77 (committed late 0.00, 50.0 % of passes over 0.1 ms, longest 177.5)
+GPU gaps per target pass: busy 55.69 ms, idle 9.35 ms (14.4 %): wake 0.27, backend 0.25, outside 0.69, inputs 1.49 (history 0.00, n-gram rows 0.19, positions 0.00, MTP inputs 0.01, encoding target 0.86, other 0.42), submit 6.60, split 0.04 (committed late 0.00, 0.0 % of passes over 0.1 ms, longest 0.0)
+-- k0
+=== 8000 1794724482.123
+GPU gaps per target pass: busy 46.68 ms, idle 1.68 ms (3.5 %): wake 0.17, backend 0.06, outside 0.11, inputs 1.07 (history 0.00, n-gram rows 0.03, positions 0.00, MTP inputs 0.01, encoding target 0.40, other 0.62), submit 0.27, split 0.00 (committed late 0.00, 0.0 % of passes over 0.1 ms, longest 0.0); first command buffer after a pause: longest submit 242.7
+GPU gaps per target pass: busy 55.25 ms, idle 12.31 ms (18.2 %): wake 0.28, backend 0.28, outside 0.69, inputs 2.83 (history 0.00, n-gram rows 0.20, positions 0.00, MTP inputs 0.01, encoding target 2.18, other 0.43), submit 8.24, split 0.00 (committed late 0.00, 0.0 % of passes over 0.1 ms, longest 0.0); first command buffer after a pause: longest submit 0.0
+-- k2
+=== 8000 1794724581.504
+GPU gaps per target pass: busy 46.56 ms, idle 119.54 ms (72.0 %): wake 0.17, backend 0.07, outside 0.15, inputs 0.56 (history 0.01, n-gram rows 0.02, positions 0.01, MTP inputs 0.01, encoding target 0.07, other 0.44), submit 0.15, split 118.43 (committed late 0.00, 50.0 % of passes over 0.1 ms, longest 236.8); first command buffer after a pause: longest submit 45.2
+GPU gaps per target pass: busy 56.19 ms, idle 15.11 ms (21.2 %): wake 0.31, backend 0.27, outside 0.71, inputs 1.67 (history 0.00, n-gram rows 0.21, positions 0.00, MTP inputs 0.01, encoding target 0.91, other 0.54), submit 12.11, split 0.03 (committed late 0.00, 0.0 % of passes over 0.1 ms, longest 0.0); first command buffer after a pause: longest submit 0.0
+== after
+- Quiet check (2026-11-15 07:38:00): warning
+  - warning: load average 2.86 is high (it lags a minute)
+== plan (written before the run): the same harness with TONA_METAL_PIN=rset (all weight buffers in a residency set
+   on the queue), twice, against the k = 2 servers above. Expectation: if the stall is residency of mapped pages,
+   the first decode pass's stall falls under 50 ms; if a power state or scheduler effect, it stays 0.2 s.
+   result: rset1 first waits 42.1 ms, then split 188.2 ms; rset2 48.9 and 179.6 ms (21.49 GB in the set): unchanged, not residency
+== plan (written before the runs): prefill command buffers (TONA_METAL_CB_LOG=1 now also prints the GPU idle
+   between a chunk's command buffers) and the stall against the prompt length (1000, 2000, 4000, 8000 tokens, 60
+   decode tokens each, one server). Expectation: if the stall follows the length of the GPU load, it grows with it.
+   result: longest stall of the first decode passes 25.3 / 22.1 / 57.6 / 78.7 ms (earlier lengths run: 16.7 / 18.9 /
+   36.8 / 116.8), plus a first command buffer waiting up to 44 ms. Inside the prefill chunks the GPU idles 7 ms per
+   146 command buffers (0.12 ms longest), except in the first chunk after a decode phase: 30 to 38 ms once.
+   The server reports 2.6 GB free RAM and the load logs of the A/B runs about 12 GB compressed: our own buffers
+   (state, KV, scratch; shared storage, not the mapped weights) that decode uses and the prefill does not sit
+   unused for the length of the prefill, and the first decode pass waits until they are back.
+== plan: probe TONA_METAL_PIN_OWN=1 (every buffer of Device::floats in a residency set on the queue; the weights
+   stay out), the lengths run twice. Expectation: the stall goes under 5 ms if the cause is our own buffers.
+   result: longest split 0.0 and 0.1 ms, longest first submit 0.5 and 0.2 ms over all lengths (against 78.7 and
+   44.4 without); the 30 to 38 ms in the first prefill chunk after decode gone as well (once 8.5 ms in the first
+   chunk of a fresh server). 8000-token prefill 48.7 and 49.4 s against 46.2 s (one request each, unchecked).
+== plan: the agent case (the coordinator's question): the 8000-token prompt, then three tool steps, each the whole
+   conversation plus the answer and a short tool result (prefix cache hit, about 36 new tokens), 3 s or 30 s between
+   the steps; without and with the probe. Expectation: shorter stalls than after the long prefill, longer after 30 s.
+   result without: cache hits (7822 of 7858 tokens reused, 36 computed in 1.4 s); per step longest split 17.1 to
+   17.7 ms (3 s between) and 28.1 to 37.1 ms plus a first command buffer waiting up to 40.2 ms (30 s between).
+   With TONA_METAL_PIN_OWN=1: no split and no first submit over 3 ms in any step, at 3 s and at 30 s.
+== wired memory (vm_stat, server up and idle for 20 s): without the probe 2.84 -> 2.85 GB, with it 2.83 -> 3.02 GB:
+   the residency set wires about 0.17 GB at rest, not the 3.9 GB of our buffers.
+- Quiet check (2026-11-15 08:10:39): do not measure
+  - do not measure: the GPU is 99 % busy
+- Quiet check (2026-11-15 08:11:05): warning
+  - warning: load average 2.52 is high (it lags a minute)

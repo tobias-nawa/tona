@@ -1,0 +1,152 @@
+{
+  "id": "hidream-i1",
+  "name": "HiDream-I1 (Full, Dev, Fast)",
+  "vendor": "HiDream.ai",
+  "release_date": "2025-04-06",
+  "purpose": "Open 17B text-to-image foundation model aiming at state-of-the-art quality and prompt following with commercial use.",
+  "tasks": [
+    "image-generation"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "image"
+    ]
+  },
+  "license": {
+    "name": "MIT (transformer); text encoders carry their own licenses",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "MIT License text (Copyright 2025 HiDream.ai) read in the HiDream-I1 GitHub repo LICENSE. Required text encoder Llama-3.1-8B-Instruct is under the Llama community license, which is a separate obligation."
+  },
+  "architecture": {
+    "kind": "sparse diffusion transformer (MoE per paper title)",
+    "params_total_b": 17
+  },
+  "variants": [
+    {
+      "repo": "HiDream-ai/HiDream-I1-Full",
+      "format": "safetensors",
+      "official": true,
+      "notes": "Dev and Fast are distilled"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "no",
+      "basis": "estimate",
+      "notes": "17B plus T5-XXL and Llama 8B encoders"
+    },
+    "pc-16gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "notes": "quant and offload No consumer-GPU seconds-per-image figure found in searches on 2026-11-19."
+    },
+    "pc-24gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "quantized"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-32gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "diffusers",
+      "ComfyUI"
+    ],
+    "notes": "Not listed in the stable-diffusion.cpp README on 2026-11-15."
+  },
+  "benchmarks": [
+    {
+      "name": "GenEval",
+      "score": 0.83,
+      "kind": "vendor",
+      "variant": "Full",
+      "source": "https://huggingface.co/HiDream-ai/HiDream-I1-Full"
+    },
+    {
+      "name": "DPG-Bench",
+      "score": 85.89,
+      "kind": "vendor",
+      "variant": "Full",
+      "source": "https://huggingface.co/HiDream-ai/HiDream-I1-Full"
+    },
+    {
+      "name": "HPSv2.1",
+      "score": 33.82,
+      "kind": "vendor",
+      "variant": "Full",
+      "source": "https://huggingface.co/HiDream-ai/HiDream-I1-Full"
+    }
+  ],
+  "soft": {
+    "weaknesses": [
+      "older (2025-04), below Nucleus-Image on the same benchmarks (vendor numbers)",
+      "heavy text encoder stack"
+    ],
+    "maturity": "HiDream.ai, technical report May 2025."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "MIT weights and a strong 2025 GenEval/DPG score, but 17B plus an 8B Llama encoder makes it a quantized-only fit at 16 GB and the 2026 small models (Z-Image Turbo, FLUX.2 klein) reach similar quality at a fraction of the size.",
+    "blockers": [
+      "Tona has no image engine",
+      "needs Llama-3.1-8B encoder under a second license"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/HiDream-ai/HiDream-I1-Full",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "research/52-purpose-models.md",
+      "kind": "own",
+      "checked": "2026-11-19",
+      "note": "our research note 52, facts fetched 2026-11-15, not a measurement"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/HiDream-ai/HiDream-I1/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "MIT text, read through a summarizer"
+    },
+    {
+      "url": "https://huggingface.co/api/models/HiDream-ai/HiDream-I1-Full",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "createdAt 2025-04-06"
+    }
+  ],
+  "open_questions": [
+    "VRAM and step counts not on the card",
+    "Why-this-design not on the card",
+    "No consumer-GPU speed found (searched 2026-11-19)"
+  ],
+  "last_checked": "2026-11-19"
+}

@@ -1,0 +1,179 @@
+{
+  "id": "granite-speech-5.0-2b",
+  "name": "Granite Speech 5.0 2B",
+  "vendor": "IBM",
+  "release_date": "2026-10-20",
+  "purpose": "Compact speech-language model for multilingual ASR and bidirectional speech translation (card).",
+  "tasks": [
+    "audio-transcription",
+    "translation"
+  ],
+  "modalities": {
+    "input": [
+      "audio"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en",
+      "fr",
+      "de",
+      "es",
+      "pt",
+      "ja"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card metadata: apache-2.0; no LICENSE file in the repo. Canonical Apache-2.0 text read in the Qwen repo (canonical Apache-2.0 text read in https://github.com/QwenLM/Qwen3-ASR/blob/main/LICENSE)."
+  },
+  "architecture": {
+    "kind": "AUTOREGRESSIVE: 16-block Conformer CTC encoder + window Q-Former projector (10 Hz) + granite-4.0-1b-base LLM",
+    "params_total_b": 2.0,
+    "context_native": 16384
+  },
+  "variants": [
+    {
+      "repo": "ibm-granite/granite-speech-5.0-2b-GGUF",
+      "format": "GGUF",
+      "official": true
+    },
+    {
+      "repo": "ibm-granite/granite-speech-5.0-470m-turboctc",
+      "format": "CTC 470M, non-autoregressive",
+      "official": true,
+      "notes": "a -nc variant is CC-BY-NC-SA"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "Transformers",
+      "vLLM",
+      "Ollama",
+      "mlx-audio",
+      "LiteRT-LM",
+      "transcribe.cpp"
+    ],
+    "notes": "Official GGUF; llama.cpp listed on the card"
+  },
+  "soft": {
+    "strengths": [
+      "Official GGUF and broad runtime list incl. llama.cpp",
+      "granite-speech-4.1-2b-plus adds speaker labels and word timing (per the 4.1 NAR card)"
+    ],
+    "weaknesses": [
+      "Segments of about 2 min; split longer audio with VAD",
+      "No German WER in text; no diarization or timestamps on the 5.0 card"
+    ],
+    "maturity": "IBM; 10+ speech repos updated in Oct-Nov 2026.",
+    "user_reports": [
+      {
+        "summary": "User measured about 12-17x realtime on long-form audio on V100/RTX 3060, decode-bound.",
+        "source": "https://huggingface.co/ibm-granite/granite-speech-5.0-2b/discussions/3",
+        "date": "2026-10-28",
+        "sentiment": "mixed"
+      }
+    ]
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "Apache-2.0, 2B on a 1B Granite LLM, fits every class, official llama.cpp GGUF path and English leaderboard 6.68 (rank 21 of 69), German coverage official; but no German row on the independent leaderboard and the vendor German WER chart is an image. Missing Tona support is only a blocker.",
+    "blockers": [
+      "no Tona audio module",
+      "no independent German WER"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/ibm-granite/granite-speech-5.0-2b",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/ibm-granite/granite-speech-4.1-2b-nar",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/api/models?search=granite-speech&author=ibm-granite&sort=lastModified&limit=10",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/spaces/hf-audio/open_asr_leaderboard",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "Space /config JSON read directly"
+    }
+  ],
+  "open_questions": [
+    "Speed on consumer hardware",
+    "German WER of 5.0-2b is not on the multilingual leaderboard (only 4.1-2b-nar, 4 sets, 4.32); check the card image or run CommonVoice-DE ourselves"
+  ],
+  "last_checked": "2026-11-19",
+  "benchmarks": [
+    {
+      "name": "Open ASR English avg WER (leaderboard rank 21 of 69)",
+      "score": 6.68,
+      "kind": "independent",
+      "source": "https://huggingface.co/spaces/hf-audio/open_asr_leaderboard",
+      "date": "2026-11-19",
+      "harness": "Open ASR Leaderboard English track, read 2026-11-19",
+      "unit": "% WER"
+    },
+    {
+      "name": "RTFx on the leaderboard (English track, leaderboard GPU)",
+      "score": 548.43,
+      "kind": "independent",
+      "source": "https://huggingface.co/spaces/hf-audio/open_asr_leaderboard",
+      "date": "2026-11-19",
+      "harness": "Open ASR Leaderboard, read 2026-11-19"
+    },
+    {
+      "name": "CommonVoice German punctuation error rate / Cap-F1 (capitalization of nouns)",
+      "score": "3.65 / 99.51",
+      "kind": "vendor",
+      "source": "https://huggingface.co/ibm-granite/granite-speech-5.0-2b",
+      "date": "2026-11-19",
+      "unit": "PER % / F1"
+    }
+  ]
+}

@@ -1,0 +1,588 @@
+{
+  "config": {
+    "A": {
+      "build": "merged",
+      "env": {},
+      "tooling": {
+        "HIP_PATH": "./work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+        "IE_EXPERT_PROFILE": "./work/profile/experts-coder.bin",
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0"
+      },
+      "commit": "v0.0.2-137-ge4c1010521"
+    },
+    "B": {
+      "build": "w83",
+      "env": {
+        "HSA_USERPTR_FOR_PAGED_MEM": "1"
+      },
+      "tooling": {
+        "HIP_PATH": "./work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+        "HSA_USERPTR_FOR_PAGED_MEM": "1",
+        "IE_EXPERT_PROFILE": "./work/profile/experts-coder.bin",
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0"
+      },
+      "commit": "v0.0.2-151-g34303236b1"
+    },
+    "workload": "mid,short",
+    "targets": "2000:400 2000:write:400 30000:200 at --ctx 140000",
+    "deterministic": false,
+    "plan_info": {
+      "expect": [
+        [
+          "decode",
+          -1.2,
+          -0.2
+        ],
+        [
+          "prefill",
+          -1.0,
+          1.0
+        ]
+      ],
+      "source": "arms of 2026-11-02-86-ab-prefill.md (-0.9, -1.2) minus 2026-11-02-86-ab-memmodel.md (-0.1, -0.8)",
+      "workload": "mid,short",
+      "targets": "2000:400 2000:write:400 30000:200 at --ctx 140000",
+      "primary": "decode",
+      "why_size": "the same workloads as the earlier arms, so the three runs add up",
+      "decode_tokens": 200,
+      "noise": {
+        "prefill@2000": [
+          0.09,
+          4,
+          "research/measurements/2026-11-02-ab-tool.md: run 7, short, A/A merged against merged, 5 rounds with warm-up"
+        ],
+        "decode@2000": [
+          0.231,
+          4,
+          "research/measurements/2026-11-02-ab-tool.md: run 7, short, A/A merged against merged, 5 rounds with warm-up"
+        ],
+        "prefill@2000:write": [
+          0.163,
+          4,
+          "research/measurements/2026-11-02-ab-tool.md: run 7, short, A/A merged against merged, 5 rounds with warm-up"
+        ],
+        "decode@2000:write": [
+          0.605,
+          4,
+          "research/measurements/2026-11-02-ab-tool.md: run 7, short, A/A merged against merged, 5 rounds with warm-up"
+        ],
+        "prefill@30000": [
+          0.04,
+          9,
+          "research/measurements/2026-11-02-ab-tool.md: first A/A run (rounds 2-6; round 1 had no warm-up); second A/A run with warm-up (6 rounds)"
+        ],
+        "decode@30000": [
+          0.279,
+          9,
+          "research/measurements/2026-11-02-ab-tool.md: first A/A run (rounds 2-6; round 1 had no warm-up); second A/A run with warm-up (6 rounds)"
+        ]
+      },
+      "warmup": true,
+      "A": {
+        "build": "merged",
+        "env": {},
+        "tooling": {
+          "HIP_PATH": "./work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+          "IE_EXPERT_PROFILE": "./work/profile/experts-coder.bin",
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0"
+        },
+        "commit": "v0.0.2-137-ge4c1010521"
+      },
+      "B": {
+        "build": "w83",
+        "env": {
+          "HSA_USERPTR_FOR_PAGED_MEM": "1"
+        },
+        "tooling": {
+          "HIP_PATH": "./work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+          "HSA_USERPTR_FOR_PAGED_MEM": "1",
+          "IE_EXPERT_PROFILE": "./work/profile/experts-coder.bin",
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0"
+        },
+        "commit": "v0.0.2-151-g34303236b1"
+      }
+    },
+    "reference_sha": {},
+    "corpus_sha256": "e13a800340859f7d39c63712d90383faae7e5a47c3865f0811e40d912612d38e",
+    "corpus_is_reference": true,
+    "commit": "3430323",
+    "noise": {
+      "prefill@2000": [
+        0.09,
+        4
+      ],
+      "decode@2000": [
+        0.231,
+        4
+      ],
+      "prefill@2000:write": [
+        0.163,
+        4
+      ],
+      "decode@2000:write": [
+        0.605,
+        4
+      ],
+      "prefill@30000": [
+        0.04,
+        9
+      ],
+      "decode@30000": [
+        0.279,
+        9
+      ]
+    }
+  },
+  "rounds": [
+    {
+      "order": "AB",
+      "sha": {
+        "A": {
+          "2000": "f6573f396c15300f",
+          "2000:write": "a6f07fd6fb86e448",
+          "30000": "cde3f1093dce48a1"
+        },
+        "B": {
+          "2000": "f6573f396c15300f",
+          "2000:write": "a6f07fd6fb86e448",
+          "30000": "cde3f1093dce48a1"
+        }
+      },
+      "A": {
+        "prefill@2000": 1330.3216666750793,
+        "decode@2000": 65.96903698587481,
+        "prefill@2000:write": 1541.5114601526159,
+        "decode@2000:write": 118.16599054026771,
+        "prefill@30000": 1783.9145819570765,
+        "decode@30000": 69.81980965663446
+      },
+      "counters": {
+        "A": {
+          "2000": {
+            "expert_hits": 131811,
+            "expert_misses": 19885
+          },
+          "2000:write": {
+            "expert_hits": 82992,
+            "expert_misses": 25567
+          },
+          "30000": {
+            "expert_hits": 71024,
+            "expert_misses": 10531
+          }
+        },
+        "B": {
+          "2000": {
+            "expert_hits": 131811,
+            "expert_misses": 19885
+          },
+          "2000:write": {
+            "expert_hits": 82992,
+            "expert_misses": 25567
+          },
+          "30000": {
+            "expert_hits": 71024,
+            "expert_misses": 10531
+          }
+        }
+      },
+      "B": {
+        "prefill@2000": 1325.1231997837333,
+        "decode@2000": 66.09330439493108,
+        "prefill@2000:write": 1542.9389554231561,
+        "decode@2000:write": 117.93305873518864,
+        "prefill@30000": 1783.8092694402512,
+        "decode@30000": 69.8778900083774
+      },
+      "seconds": 104.5293991699582
+    },
+    {
+      "order": "BA",
+      "sha": {
+        "B": {
+          "2000": "f6573f396c15300f",
+          "2000:write": "a6f07fd6fb86e448",
+          "30000": "cde3f1093dce48a1"
+        },
+        "A": {
+          "2000": "f6573f396c15300f",
+          "2000:write": "a6f07fd6fb86e448",
+          "30000": "cde3f1093dce48a1"
+        }
+      },
+      "B": {
+        "prefill@2000": 1328.1199739474778,
+        "decode@2000": 65.99106976378543,
+        "prefill@2000:write": 1543.565529326134,
+        "decode@2000:write": 117.87751414812928,
+        "prefill@30000": 1783.3073033285684,
+        "decode@30000": 70.11992543883275
+      },
+      "counters": {
+        "B": {
+          "2000": {
+            "expert_hits": 131811,
+            "expert_misses": 19885
+          },
+          "2000:write": {
+            "expert_hits": 82992,
+            "expert_misses": 25567
+          },
+          "30000": {
+            "expert_hits": 71024,
+            "expert_misses": 10531
+          }
+        },
+        "A": {
+          "2000": {
+            "expert_hits": 131811,
+            "expert_misses": 19885
+          },
+          "2000:write": {
+            "expert_hits": 82992,
+            "expert_misses": 25567
+          },
+          "30000": {
+            "expert_hits": 71024,
+            "expert_misses": 10531
+          }
+        }
+      },
+      "A": {
+        "prefill@2000": 1324.7576768532626,
+        "decode@2000": 65.77548752267516,
+        "prefill@2000:write": 1545.1597720389711,
+        "decode@2000:write": 117.77466920175229,
+        "prefill@30000": 1783.4153742610365,
+        "decode@30000": 69.88518946591188
+      },
+      "seconds": 104.56417448900174
+    },
+    {
+      "order": "AB",
+      "sha": {
+        "A": {
+          "2000": "f6573f396c15300f",
+          "2000:write": "a6f07fd6fb86e448",
+          "30000": "cde3f1093dce48a1"
+        },
+        "B": {
+          "2000": "f6573f396c15300f",
+          "2000:write": "a6f07fd6fb86e448",
+          "30000": "cde3f1093dce48a1"
+        }
+      },
+      "A": {
+        "prefill@2000": 1327.9987928532173,
+        "decode@2000": 65.72408195970567,
+        "prefill@2000:write": 1540.7187854603408,
+        "decode@2000:write": 117.45411639380406,
+        "prefill@30000": 1783.1912890568685,
+        "decode@30000": 69.86133878164588
+      },
+      "counters": {
+        "A": {
+          "2000": {
+            "expert_hits": 131811,
+            "expert_misses": 19885
+          },
+          "2000:write": {
+            "expert_hits": 82992,
+            "expert_misses": 25567
+          },
+          "30000": {
+            "expert_hits": 71024,
+            "expert_misses": 10531
+          }
+        },
+        "B": {
+          "2000": {
+            "expert_hits": 131811,
+            "expert_misses": 19885
+          },
+          "2000:write": {
+            "expert_hits": 82992,
+            "expert_misses": 25567
+          },
+          "30000": {
+            "expert_hits": 71024,
+            "expert_misses": 10531
+          }
+        }
+      },
+      "B": {
+        "prefill@2000": 1328.5551601985758,
+        "decode@2000": 65.86851906414766,
+        "prefill@2000:write": 1544.072636156117,
+        "decode@2000:write": 117.94433265746119,
+        "prefill@30000": 1783.9433297600385,
+        "decode@30000": 70.023260140992
+      },
+      "seconds": 104.6343471709406
+    },
+    {
+      "order": "BA",
+      "sha": {
+        "B": {
+          "2000": "f6573f396c15300f",
+          "2000:write": "a6f07fd6fb86e448",
+          "30000": "cde3f1093dce48a1"
+        },
+        "A": {
+          "2000": "f6573f396c15300f",
+          "2000:write": "a6f07fd6fb86e448",
+          "30000": "cde3f1093dce48a1"
+        }
+      },
+      "B": {
+        "prefill@2000": 1328.1673018538656,
+        "decode@2000": 65.99489893543827,
+        "prefill@2000:write": 1540.9191334692505,
+        "decode@2000:write": 117.48098552553695,
+        "prefill@30000": 1783.2472179677284,
+        "decode@30000": 69.97824694353658
+      },
+      "counters": {
+        "B": {
+          "2000": {
+            "expert_hits": 131811,
+            "expert_misses": 19885
+          },
+          "2000:write": {
+            "expert_hits": 82992,
+            "expert_misses": 25567
+          },
+          "30000": {
+            "expert_hits": 71024,
+            "expert_misses": 10531
+          }
+        },
+        "A": {
+          "2000": {
+            "expert_hits": 131811,
+            "expert_misses": 19885
+          },
+          "2000:write": {
+            "expert_hits": 82992,
+            "expert_misses": 25567
+          },
+          "30000": {
+            "expert_hits": 71024,
+            "expert_misses": 10531
+          }
+        }
+      },
+      "A": {
+        "prefill@2000": 1328.456924690799,
+        "decode@2000": 65.81843260706222,
+        "prefill@2000:write": 1543.4296848494214,
+        "decode@2000:write": 116.94526044404887,
+        "prefill@30000": 1783.029388161782,
+        "decode@30000": 69.9947404447143
+      },
+      "seconds": 104.68211736599915
+    },
+    {
+      "order": "AB",
+      "sha": {
+        "A": {
+          "2000": "f6573f396c15300f",
+          "2000:write": "a6f07fd6fb86e448",
+          "30000": "cde3f1093dce48a1"
+        },
+        "B": {
+          "2000": "f6573f396c15300f",
+          "2000:write": "a6f07fd6fb86e448",
+          "30000": "cde3f1093dce48a1"
+        }
+      },
+      "A": {
+        "prefill@2000": 1328.577326932672,
+        "decode@2000": 65.95216950847276,
+        "prefill@2000:write": 1541.068267708514,
+        "decode@2000:write": 117.73340048265678,
+        "prefill@30000": 1782.5799864940454,
+        "decode@30000": 69.8829657568244
+      },
+      "counters": {
+        "A": {
+          "2000": {
+            "expert_hits": 131811,
+            "expert_misses": 19885
+          },
+          "2000:write": {
+            "expert_hits": 82992,
+            "expert_misses": 25567
+          },
+          "30000": {
+            "expert_hits": 71024,
+            "expert_misses": 10531
+          }
+        },
+        "B": {
+          "2000": {
+            "expert_hits": 131811,
+            "expert_misses": 19885
+          },
+          "2000:write": {
+            "expert_hits": 82992,
+            "expert_misses": 25567
+          },
+          "30000": {
+            "expert_hits": 71024,
+            "expert_misses": 10531
+          }
+        }
+      },
+      "B": {
+        "prefill@2000": 1328.4565359608905,
+        "decode@2000": 65.95600175865448,
+        "prefill@2000:write": 1542.4732678553091,
+        "decode@2000:write": 117.66314351367497,
+        "prefill@30000": 1782.126337695784,
+        "decode@30000": 70.10676238104571
+      },
+      "seconds": 104.6631790070096
+    },
+    {
+      "order": "BA",
+      "sha": {
+        "B": {
+          "2000": "f6573f396c15300f",
+          "2000:write": "a6f07fd6fb86e448",
+          "30000": "cde3f1093dce48a1"
+        },
+        "A": {
+          "2000": "f6573f396c15300f",
+          "2000:write": "a6f07fd6fb86e448",
+          "30000": "cde3f1093dce48a1"
+        }
+      },
+      "B": {
+        "prefill@2000": 1328.8486838581398,
+        "decode@2000": 65.83090266736336,
+        "prefill@2000:write": 1542.4206424260965,
+        "decode@2000:write": 118.44098161244325,
+        "prefill@30000": 1783.0599335922664,
+        "decode@30000": 69.9329561805415
+      },
+      "counters": {
+        "B": {
+          "2000": {
+            "expert_hits": 131811,
+            "expert_misses": 19885
+          },
+          "2000:write": {
+            "expert_hits": 82992,
+            "expert_misses": 25567
+          },
+          "30000": {
+            "expert_hits": 71024,
+            "expert_misses": 10531
+          }
+        },
+        "A": {
+          "2000": {
+            "expert_hits": 131811,
+            "expert_misses": 19885
+          },
+          "2000:write": {
+            "expert_hits": 82992,
+            "expert_misses": 25567
+          },
+          "30000": {
+            "expert_hits": 71024,
+            "expert_misses": 10531
+          }
+        }
+      },
+      "A": {
+        "prefill@2000": 1326.3979382294876,
+        "decode@2000": 65.8243229920015,
+        "prefill@2000:write": 1544.2331320323972,
+        "decode@2000:write": 117.99021229125533,
+        "prefill@30000": 1783.426365548283,
+        "decode@30000": 69.89704675261781
+      },
+      "seconds": 104.71179229696281
+    }
+  ],
+  "stop_reason": "6 rounds (undecided metrics stay open)",
+  "wall_seconds": 681.9099768180167,
+  "warmup": {
+    "prefill@2000": 1323.071635337092,
+    "decode@2000": 65.98008161713432,
+    "prefill@2000:write": 1310.243055606286,
+    "decode@2000:write": 117.92999104714424,
+    "prefill@30000": 1761.7489978577714,
+    "decode@30000": 70.08599187807572
+  },
+  "plan": {
+    "alpha": 0.05,
+    "margin": 0.5,
+    "max_rounds": 6,
+    "min_rounds": 2,
+    "prior_sd": 0.5,
+    "prior_df": 4.0
+  },
+  "decisions": {
+    "prefill@2000": {
+      "decided_at_round": 1,
+      "decision": "B slower",
+      "mean_diff_percent": 0.00980099838635747,
+      "ci_diff_percent": [
+        -0.2534120939739023,
+        0.2730140907466172
+      ]
+    },
+    "decode@2000": {
+      "decided_at_round": 5,
+      "decision": "equal",
+      "mean_diff_percent": 0.1699678512982953,
+      "ci_diff_percent": [
+        -0.10139108489240553,
+        0.4413267874889961
+      ]
+    },
+    "prefill@2000:write": {
+      "decided_at_round": 2,
+      "decision": "equal",
+      "mean_diff_percent": 0.003041072008450977,
+      "ci_diff_percent": [
+        -0.22877788825116804,
+        0.23486003226806998
+      ]
+    },
+    "decode@2000:write": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": 0.18133887110899546,
+      "ci_diff_percent": [
+        -0.4882405342236452,
+        0.8509182764416362
+      ]
+    },
+    "prefill@30000": {
+      "decided_at_round": 1,
+      "decision": "equal",
+      "mean_diff_percent": -0.0005946726687022785,
+      "ci_diff_percent": [
+        -0.04777424529585617,
+        0.046584899958451616
+      ]
+    },
+    "decode@30000": {
+      "decided_at_round": 6,
+      "decision": "equal",
+      "mean_diff_percent": 0.1664841891326744,
+      "ci_diff_percent": [
+        -0.15548638882922092,
+        0.4884547670945697
+      ]
+    }
+  }
+}

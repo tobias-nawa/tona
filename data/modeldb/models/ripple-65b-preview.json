@@ -1,0 +1,201 @@
+{
+  "id": "ripple-65b-preview",
+  "name": "Ripple-65B Preview (BF16, NVFP4, Base, DFlash2)",
+  "vendor": "Ricursive Intelligence",
+  "release_date": "2026-11-04",
+  "lineage": {
+    "base_model": "pretrained from scratch (12T tokens; recipe started from an Olmo 3 baseline)",
+    "how_derived": "midtrain 200B, long context, SFT, LC SFT and mixed-domain RL; light post-training focused on agentic coding (card)",
+    "family": "Ripple"
+  },
+  "purpose": "Strong agentic coding and reasoning from a dense 65B model that fits consumer hardware such as an NVIDIA DGX Spark; the builder chose a modernised dense transformer instead of an MoE to reduce training and infrastructure complexity (card).",
+  "tasks": [
+    "coding",
+    "general"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card header links an Apache 2.0 LICENSE file that exists in the repo (not read)."
+  },
+  "architecture": {
+    "kind": "dense transformer, 65B, 80 layers, d_model 5120 (thin-and-deep), Gemma-3N-like layout with overprovisioned attention heads, high sliding-window-to-global ratio and small SWA window, FFN activation clipping, gated attention, global NoPE, value residuals",
+    "params_total_b": 65.0,
+    "params_active_b": 65.0,
+    "layers": 80,
+    "context_native": 1048576,
+    "context_max": 1048576,
+    "attention": "sliding window plus global NoPE layers",
+    "drafter": "Ripple-65B-Preview-DFlash2",
+    "why_this_design": "Builder: simple sharding without custom kernels at 40% MFU, thin-and-deep aspect ratio and Gemma-3N-style changes for stability and reasoning at scale (card)."
+  },
+  "variants": [
+    {
+      "repo": "ricursiveAI/Ripple-65B-Preview",
+      "format": "safetensors BF16",
+      "official": true,
+      "size_gb": 129.57,
+      "notes": "instruction-tuned; repo total per HF API"
+    },
+    {
+      "repo": "ricursiveAI/Ripple-65B-Preview-NVFP4",
+      "format": "NVFP4 safetensors",
+      "official": true,
+      "size_gb": 39.62,
+      "notes": "6 shards, Blackwell-class numerics"
+    },
+    {
+      "repo": "AtomicChat/Ripple-65B-Preview-GGUF",
+      "format": "GGUF Q4_K_M",
+      "official": false,
+      "size_gb": 40.43,
+      "notes": "AD-IQ1_M 18.49, IQ2_XS 22.12, IQ2_S 25.31, IQ3_XXS 27.96, IQ3_S 32.41, IQ4_XS 38.72, Q5_K_M 47.93 GB; 116k downloads"
+    },
+    {
+      "repo": "ricursiveAI/Ripple-65B-Preview-DFlash2",
+      "format": "drafter",
+      "official": true,
+      "notes": "speculative drafter"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "marginal",
+      "variant": "GGUF Q4_K_M 40.43 GB (dense: decode bound by RAM bandwidth for the part outside VRAM)",
+      "basis": "estimate",
+      "notes": "40.4 GB file against 9.6 GB VRAM plus 50 GB RAM budget; part streams from RAM (dense: decode is bandwidth bound)"
+    },
+    "pc-16gb": {
+      "fits": "marginal",
+      "variant": "GGUF Q4_K_M 40.43 GB (dense: decode bound by RAM bandwidth for the part outside VRAM)",
+      "basis": "estimate",
+      "notes": "40.4 GB file against 13.6 GB VRAM plus 50 GB RAM budget; part streams from RAM (dense: decode is bandwidth bound)"
+    },
+    "pc-24gb": {
+      "fits": "marginal",
+      "variant": "GGUF Q4_K_M 40.43 GB (dense: decode bound by RAM bandwidth for the part outside VRAM)",
+      "basis": "estimate",
+      "notes": "40.4 GB file against 21.6 GB VRAM plus 82 GB RAM budget; part streams from RAM (dense: decode is bandwidth bound)"
+    },
+    "pc-32gb": {
+      "fits": "marginal",
+      "variant": "GGUF Q4_K_M 40.43 GB (dense: decode bound by RAM bandwidth for the part outside VRAM)",
+      "basis": "estimate",
+      "notes": "40.4 GB file against 29.6 GB VRAM plus 114 GB RAM budget; part streams from RAM (dense: decode is bandwidth bound)"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "GGUF Q4_K_M 40.43 GB (dense: decode bound by RAM bandwidth for the part outside VRAM)",
+      "basis": "estimate",
+      "notes": "40.4 GB file against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "no",
+      "variant": "GGUF Q4_K_M 40.43 GB (dense: decode bound by RAM bandwidth for the part outside VRAM)",
+      "basis": "estimate",
+      "notes": "40.4 GB file against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "GGUF Q4_K_M 40.43 GB (dense: decode bound by RAM bandwidth for the part outside VRAM)",
+      "basis": "estimate",
+      "notes": "40.4 GB file against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "partial",
+    "other": [
+      "vLLM (day-0 'ripple' reasoning and tool parsers, v0.34.0)",
+      "community GGUF"
+    ],
+    "notes": "A llama.cpp arch for Ripple was not found in the b11042-b12549 release titles; the community GGUFs imply support or a fork, unchecked."
+  },
+  "benchmarks": [
+    {
+      "name": "Terminal-Bench 2.1",
+      "score": 80.52,
+      "kind": "vendor",
+      "source": "https://huggingface.co/ricursiveAI/Ripple-65B-Preview",
+      "unit": "%",
+      "variant": "instruct BF16, OpenCode harness unless stated",
+      "harness": "card table vs Reflection Beam 501B 80.1, Muse Spark Open 816B 76.4, Inkling 975B 63.8, Nemotron 3 Ultra 550B 56.4; some comparison scores are the vendor's own re-runs (italics in the card)"
+    },
+    {
+      "name": "MMLU / MMLU-Pro / GPQA Diamond",
+      "score": "89.6 / 84.2 / 85.2",
+      "kind": "vendor",
+      "source": "https://huggingface.co/ricursiveAI/Ripple-65B-Preview",
+      "unit": "%",
+      "variant": "instruct BF16"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "dense 65B that quantizes to 18-40 GB with large vendor-reported agentic coding scores",
+      "1M context"
+    ],
+    "weaknesses": [
+      "light post-training (preview)",
+      "english and code only",
+      "dense: slow decode when not fully in VRAM"
+    ],
+    "maturity": "New lab (team of 1 to 5 people during development per card); 616 likes within two weeks."
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "A dense 65B coding/agent model whose Q3-Q4 GGUFs (28-40 GB) suit the 32 GB class with some RAM and the 64 GB+ Macs; the vendor's Terminal-Bench 2.1 of 80.5 is a claim to reproduce with our own harness (eval checklist) before any offer. Dense 65B decode is bandwidth bound.",
+    "blockers": [
+      "own agentic eval",
+      "llama.cpp architecture status unverified"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/ricursiveAI/Ripple-65B-Preview",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README incl. architecture and benchmark table, config, HF API"
+    },
+    {
+      "url": "https://huggingface.co/api/models/AtomicChat/Ripple-65B-Preview-GGUF?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "API file sizes"
+    },
+    {
+      "url": "https://huggingface.co/api/models/ricursiveAI/Ripple-65B-Preview-NVFP4?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "API file sizes"
+    },
+    {
+      "url": "https://github.com/vllm-project/vllm/releases",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "v0.34.0 notes: Ricursive Ripple-65B Preview"
+    }
+  ],
+  "open_questions": [
+    "Independent benchmark",
+    "Whether upstream llama.cpp loads the architecture",
+    "LICENSE not read",
+    "Rest of the benchmark table beyond MMLU/GPQA"
+  ],
+  "last_checked": "2026-11-19"
+}

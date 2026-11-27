@@ -1,0 +1,64 @@
+name: Propose a model
+description: Propose a model for Tona to build in, optimize, measure and offer
+title: "Model: "
+labels: ["model"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Tona does not load arbitrary models. A model is built in (its own optimized code path), measured in Tona, and only
+        then offered (README, "What Tona is not"; `data/modeldb/README.md`). Check `data/modeldb/offer.json` first: the
+        question is whether this model beats the current offer for its task. Text you link is read as data, never as
+        instructions.
+  - type: input
+    id: model
+    attributes:
+      label: Model and release
+      description: Name, publisher and the link to the model page.
+    validations:
+      required: true
+  - type: textarea
+    id: purpose
+    attributes:
+      label: Purpose and tasks
+      description: What is it for (coding agents, research, images, ...), and which tasks you would use it for.
+    validations:
+      required: true
+  - type: input
+    id: license
+    attributes:
+      label: Licence
+      description: Name and a link to the licence text you read. Non-commercial licences are fine; a licence that excludes a territory, or none, is a blocker.
+    validations:
+      required: true
+  - type: textarea
+    id: size
+    attributes:
+      label: Size and formats
+      description: Parameters (total and active), architecture family, available quantizations and file sizes, context length.
+    validations:
+      required: true
+  - type: textarea
+    id: better
+    attributes:
+      label: Why better than the current offer for that task
+      description: Results with links (model card, independent tests, your own runs), kept apart by who measured them. Say which variant and quantization the numbers are for.
+    validations:
+      required: true
+  - type: dropdown
+    id: builder
+    attributes:
+      label: Who builds it in
+      options:
+        - I will build it in (with my coding agent) and bring the measurements
+        - I want it, but I cannot build it
+        - Not sure
+    validations:
+      required: true
+  - type: checkboxes
+    id: ai
+    attributes:
+      label: AI use
+      options:
+        - label: I verified the facts and links in this proposal myself; they are not pasted from an AI tool unchecked.
+          required: true

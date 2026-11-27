@@ -1,0 +1,197 @@
+{
+  "id": "fish-audio-drama-3",
+  "name": "Fish Audio Drama 3",
+  "vendor": "Fish Audio (39 AI, Inc.)",
+  "release_date": "2026-10-01",
+  "lineage": {
+    "family": "fish-audio",
+    "base_model": "Qwen3.5-MoE backbone (stated by the third-party GGUF card of LattifAI; Fish card says MoE text backbone with hybrid full and linear attention)"
+  },
+  "purpose": "New-generation text-to-speech model built for multi-character scenes and long-form content: multi-speaker generation (up to 16 speaker tags), voice cloning, natural-language control, point tags such as [sighs] and editing by continuation (card).",
+  "tasks": [
+    "speech-synthesis"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "audio"
+    ],
+    "output": [
+      "audio"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "zh",
+      "en",
+      "ja",
+      "ko",
+      "es",
+      "pt",
+      "ar",
+      "ru",
+      "fr",
+      "de",
+      "sv",
+      "it",
+      "tr",
+      "nl",
+      "pl",
+      "hi",
+      "th",
+      "vi",
+      "uk",
+      "many"
+    ]
+  },
+  "license": {
+    "name": "Fish Audio Community License v1.0 (2026-10-13)",
+    "verified": true,
+    "commercial_use": "limited",
+    "redistribution": "limited",
+    "notes": "LICENSE read (sections I to IV(c)): research and non-commercial use free; commercial use free only while Annual Revenue of the user and affiliates is below USD 500,000, otherwise separate written license; offering a Hosted Service (API, model hosting, TTS-primary app for third parties) always needs a separate license; own products that speak (assistant replies, narration) are not a Hosted Service. Distribution needs the license copy, a Notice file and 'Built with Fish Audio'. Output voices of identifiable persons without consent, watermark removal and training other speech models on the outputs are forbidden. Derivative GGUF repos keep the license. The HF header says license_name fish-audio-research-license; the LICENSE file itself is titled Community License. Verdict policy (README, 2026-11-19): this licence term does not lower tona_fit; kept here for an installer label."
+  },
+  "architecture": {
+    "kind": "MoE text backbone (hybrid full and linear attention) predicting semantic tokens, plus a codebook-MTP audio decoder (10 codebooks, decoded causally) and a Fish DAC codec; FishOmniModel",
+    "params_total_b": 35.9,
+    "params_active_b": 3,
+    "attention": "hybrid full plus linear attention (card)",
+    "drafter": "codebook MTP decoder produces the 10 codebooks per frame (4 layers in the config)",
+    "why_this_design": "Card lists the features (35B total / 3B active MoE, codebook-MTP decoder, FP8 experts) without stating reasons."
+  },
+  "variants": [
+    {
+      "repo": "fishaudio/drama-3",
+      "format": "safetensors FP8 experts + bf16 rest, plus codec.pth",
+      "size_gb": 41.5,
+      "official": true,
+      "notes": "sum of repo files; 35.9B parameters per HF API"
+    },
+    {
+      "repo": "LattifAI/Drama-3-GGUF",
+      "format": "GGUF ~4 bpw mixed (256 experts)",
+      "size_gb": 17.34,
+      "official": false,
+      "notes": "3 bpw (192 experts) 12.98 GB, 2 bpw (192 experts) 8.65 GB; mmproj Q8_0 with codebook tower, codec decoder and encoder 2.17 GB; for llama-tts; third-party quant, quality not evaluated by us"
+    },
+    {
+      "repo": "Infinix-io/drama-3-int4",
+      "format": "safetensors int4",
+      "size_gb": 24.03,
+      "official": false,
+      "notes": "third-party, not inspected beyond file sizes"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "marginal",
+      "variant": "GGUF 2 bpw + mmproj",
+      "basis": "estimate",
+      "notes": "8.65 + 2.17 GB; quality loss of the 192-expert pruning unknown"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "GGUF 3 bpw + mmproj",
+      "basis": "estimate",
+      "notes": "13 + 2.2 GB, or 4 bpw with expert offload"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "GGUF 4 bpw + mmproj",
+      "basis": "estimate",
+      "notes": "19.5 GB"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "GGUF 4 bpw or FP8 original",
+      "basis": "estimate"
+    },
+    "mac-16-24gb": {
+      "fits": "marginal",
+      "variant": "GGUF 2 or 3 bpw",
+      "basis": "estimate"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "GGUF 4 bpw",
+      "basis": "estimate"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "original FP8",
+      "basis": "estimate"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "partial",
+    "other": [
+      "SGLang-Omni",
+      "vLLM-Omni"
+    ],
+    "notes": "LattifAI GGUF card says mainline llama.cpp loads the backbone and llama-tts with a drama3_gen mmproj layout runs it; not tested by us."
+  },
+  "benchmarks": [
+    {
+      "name": "Streaming RTF, concurrency 1 (frames/s 166.7, TTFA p50 88.9 ms)",
+      "score": 0.131,
+      "kind": "vendor",
+      "variant": "original, one NVIDIA H200, Seed-TTS English prompts",
+      "source": "https://huggingface.co/fishaudio/drama-3",
+      "date": "2026-11-19"
+    },
+    {
+      "name": "Streaming RTF, concurrency 16 (TTFA p50 210 ms)",
+      "score": 0.373,
+      "kind": "vendor",
+      "variant": "original, one NVIDIA H200",
+      "source": "https://huggingface.co/fishaudio/drama-3"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "Up to 16 speakers in one text with speaker tags",
+      "Editing a word with context via previous takes, point tags for sighs and laughs",
+      "German is in the card language list"
+    ],
+    "weaknesses": [
+      "No quality benchmark (WER, speaker similarity, MOS) on the card; technical report arXiv 2610.18010 not read",
+      "Big for local use: 35.9B parameters, 41.5 GB original",
+      "Hosted services need a separate license"
+    ],
+    "best_for": [
+      "multi-character dialogue and audio drama",
+      "voice cloning for own product"
+    ],
+    "maturity": "Fish Audio (Fish Speech series, fish-s2-pro in this database); 44k downloads on the HF API on 2026-11-19."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Largest open TTS in this sweep with a MoE of only 3B active parameters, supports German and dialogue; but no published quality numbers on the card and a heavy download. Compare against fish-s2-pro and the smaller TTS records before any offer.",
+    "blockers": [
+      "no quality evidence beyond vendor demos",
+      "Qwen3.5-MoE backbone plus codebook-MTP decoder and DAC codec not in Tona"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/fishaudio/drama-3",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README, config.json, LICENSE read"
+    },
+    {
+      "url": "https://huggingface.co/LattifAI/Drama-3-GGUF",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "third-party GGUF card, sizes and backbone statement"
+    }
+  ],
+  "open_questions": [
+    "Quality evidence: WER, speaker similarity, MOS (technical report arXiv 2610.18010)",
+    "German naturalness (listening test)",
+    "Quality loss of the 192-expert 2 and 3 bpw GGUF",
+    "Release date exact (HF created 2026-10-01; license dated 2026-10-13)"
+  ],
+  "last_checked": "2026-11-19"
+}

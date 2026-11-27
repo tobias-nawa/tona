@@ -1,0 +1,125 @@
+{
+  "id": "winnow-12b",
+  "name": "Winnow-12B",
+  "vendor": "EldanRing",
+  "lineage": {
+    "family": "Winnow (E2B, E4B, 12B)",
+    "base_model": "google/gemma-4-12B-it",
+    "how_derived": "fine-tune for local typed decisions, chat and image input; merged GGUFs"
+  },
+  "purpose": "Local typed decisions: give a shared state and questions with known answer options, get probabilities per option via the Winnow server; also chat and image input (card).",
+  "tasks": [
+    "other",
+    "vision"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0 (card tag)",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card tag apache-2.0; LICENSE file present but text not read."
+  },
+  "architecture": {
+    "kind": "dense transformer (Gemma 4 12B)",
+    "params_total_b": 12,
+    "params_active_b": 12,
+    "drafter": "Gemma-4-12B-IT-Assistant GGUF (0.86 GB) shipped in the repo"
+  },
+  "variants": [
+    {
+      "repo": "EldanRing/Winnow-12B",
+      "format": "GGUF NVFP4",
+      "size_gb": 8.16,
+      "official": true,
+      "notes": "Q8_0 12.67, BF16 23.83 GB; mmproj 0.18 GB"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "marginal",
+      "variant": "official GGUF NVFP4",
+      "basis": "estimate",
+      "notes": "8.16 GB file against 9.6 GB VRAM plus 50 GB RAM budget; part of the dense weights stream from RAM (decode is bandwidth bound)"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "official GGUF NVFP4",
+      "basis": "estimate",
+      "notes": "8.16 GB file fits the VRAM budget (13.6 GB) with room for KV"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "official GGUF NVFP4",
+      "basis": "estimate",
+      "notes": "8.16 GB file fits the VRAM budget (21.6 GB) with room for KV"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "official GGUF NVFP4",
+      "basis": "estimate",
+      "notes": "8.16 GB file fits the VRAM budget (29.6 GB) with room for KV"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "variant": "official GGUF NVFP4",
+      "basis": "estimate",
+      "notes": "8.16 GB file against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "official GGUF NVFP4",
+      "basis": "estimate",
+      "notes": "8.16 GB file against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "official GGUF NVFP4",
+      "basis": "estimate",
+      "notes": "8.16 GB file against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "Winnow inference server"
+    ]
+  },
+  "benchmarks": [],
+  "soft": {
+    "maturity": "14.6k downloads, 84 likes (E4B 20k downloads)"
+  },
+  "tona_fit": {
+    "verdict": "reject",
+    "reason": "Decision-model fine-tune of Gemma 4 12B, not a coding worker.",
+    "blockers": [
+      "outside purpose"
+    ]
+  },
+  "open_questions": [
+    "benchmarks (docs link not opened)"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/EldanRing/Winnow-12B",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "API listing and README read; the base repo EldanRing/Winnow returned 401 earlier"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

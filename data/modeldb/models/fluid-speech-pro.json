@@ -1,0 +1,189 @@
+{
+  "id": "fluid-speech-pro",
+  "name": "Fluid Speech Pro",
+  "vendor": "FluidVoice Labs",
+  "release_date": "2026-10",
+  "lineage": {
+    "base_model": "nvidia/parakeet-tdt-0.6b-v3",
+    "how_derived": "fine-tune with one extra block between subsampling and first Conformer layer"
+  },
+  "purpose": "Fast multilingual speech-to-text (25 European languages) for the FluidVoice app; ranked #2 among open models on the Open ASR Leaderboard (card).",
+  "tasks": [
+    "audio-transcription"
+  ],
+  "modalities": {
+    "input": [
+      "audio"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "de",
+      "en",
+      "many"
+    ]
+  },
+  "license": {
+    "name": "CC-BY-4.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "LICENSE in the repo is the full CC BY 4.0 legal code; NOTICE requires the attribution \"Fluid Speech Pro by FluidVoice. Built on NVIDIA Parakeet TDT 0.6B v3 and Moondream Parakeet Ultra.\" Commercial use and redistribution allowed with attribution."
+  },
+  "architecture": {
+    "kind": "NON-AUTOREGRESSIVE FastConformer + TDT",
+    "params_total_b": 0.63
+  },
+  "variants": [
+    {
+      "repo": "FluidVoice-Labs/fluid-speech-pro-gguf",
+      "format": "GGUF (parakeet.cpp)",
+      "official": true
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "NeMo",
+      "Transformers",
+      "ONNX",
+      "MLX",
+      "parakeet.cpp GGUF",
+      "Core ML"
+    ]
+  },
+  "benchmarks": [
+    {
+      "name": "Open ASR average WER",
+      "score": 6.06,
+      "kind": "vendor",
+      "source": "https://huggingface.co/FluidVoice-Labs/fluid-speech-pro",
+      "unit": "% WER"
+    },
+    {
+      "name": "Open ASR multilingual average WER",
+      "score": 4.88,
+      "kind": "vendor",
+      "source": "https://huggingface.co/FluidVoice-Labs/fluid-speech-pro",
+      "unit": "% WER",
+      "harness": "Parakeet v3 5.52"
+    },
+    {
+      "name": "German WER, Open ASR multilingual",
+      "score": 3.76,
+      "kind": "vendor",
+      "source": "https://huggingface.co/FluidVoice-Labs/fluid-speech-pro",
+      "unit": "% WER"
+    },
+    {
+      "name": "FLEURS German WER",
+      "score": 3.52,
+      "kind": "vendor",
+      "source": "https://huggingface.co/FluidVoice-Labs/fluid-speech-pro",
+      "unit": "% WER"
+    },
+    {
+      "name": "RTFx",
+      "score": 3724,
+      "kind": "vendor",
+      "source": "https://huggingface.co/FluidVoice-Labs/fluid-speech-pro",
+      "unit": "x real time"
+    },
+    {
+      "name": "German WER, Open ASR multilingual track (6 of 8 datasets)",
+      "score": 3.76,
+      "kind": "independent",
+      "source": "https://huggingface.co/spaces/hf-audio/open_asr_leaderboard",
+      "date": "2026-11-19",
+      "harness": "Open ASR Leaderboard multilingual track, German column (WER %), read from the Space config JSON 2026-11-19; rows differ in how many of the 8 datasets they cover",
+      "unit": "% WER"
+    },
+    {
+      "name": "Open ASR English avg WER (leaderboard rank 13 of 69)",
+      "score": 6.06,
+      "kind": "independent",
+      "source": "https://huggingface.co/spaces/hf-audio/open_asr_leaderboard",
+      "date": "2026-11-19",
+      "harness": "Open ASR Leaderboard English track, read 2026-11-19",
+      "unit": "% WER"
+    },
+    {
+      "name": "RTFx on the leaderboard (English track, leaderboard GPU)",
+      "score": 3690.47,
+      "kind": "independent",
+      "source": "https://huggingface.co/spaces/hf-audio/open_asr_leaderboard",
+      "date": "2026-11-19",
+      "harness": "Open ASR Leaderboard, read 2026-11-19"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "Beats Parakeet v3 on German (3.52 vs 5.04 FLEURS, vendor numbers)",
+      "Same size and runtimes"
+    ],
+    "weaknesses": [
+      "'Clean mode' edits text, unsuitable for exact transcripts",
+      "Errors rise with noise, overlap, rare names"
+    ],
+    "maturity": "App vendor, 92 likes; one month old; no user reports found."
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "CC-BY-4.0, 0.6B, runs on every class; independent leaderboard German 3.76 (6 of 8 sets), 9% fewer errors than Parakeet v3 on the same rows. Compare with parakeet-primeline on our own German audio. Tona has no audio module (blocker only).",
+    "blockers": [
+      "no Tona audio module (engine none)"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/FluidVoice-Labs/fluid-speech-pro",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/spaces/hf-audio/open_asr_leaderboard",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "Space /config JSON read directly"
+    }
+  ],
+  "open_questions": [
+    "Own German comparison with primeline",
+    "Long-form behaviour not stated"
+  ],
+  "last_checked": "2026-11-19"
+}

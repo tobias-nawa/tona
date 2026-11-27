@@ -1,0 +1,235 @@
+{
+  "id": "lfm3-vl-2b",
+  "name": "LFM3-VL-2B (with the d1 decision models)",
+  "vendor": "Liquid AI",
+  "release_date": "2026-10-19",
+  "lineage": {
+    "base_model": "LiquidAI/LFM3-1.7B-Base (HF tag); d1-2B is finetuned from LFM3-VL-2B, d1-3B from LFM2.5-VL-3B",
+    "family": "LFM3",
+    "how_derived": "vision-language model with an in-house 164M-parameter vision encoder; d1 models are decision variants that answer a list of questions in one forward pass with calibrated probabilities"
+  },
+  "purpose": "Small vision-language model for edge and robotics use: general vision, documents and charts, GUI understanding, grounding, embodied reasoning and (new for Liquid) video input, with step-by-step thinking. The d1 decision models read a situation (text, images) plus a list of questions and return all answers with calibrated probabilities.",
+  "tasks": [
+    "vision",
+    "documents",
+    "general"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image",
+      "video"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en",
+      "ar",
+      "zh",
+      "fr",
+      "de",
+      "it",
+      "ja",
+      "ko",
+      "pt",
+      "es",
+      "vi",
+      "th",
+      "id",
+      "hi",
+      "ru",
+      "pl"
+    ]
+  },
+  "license": {
+    "name": "LFM Open License v1.0",
+    "verified": true,
+    "commercial_use": "limited",
+    "redistribution": "yes",
+    "notes": "LFM3-VL-2B card tag license:other (lfm1.0); the license text is the one read in lfm2.5-24b-a2b (identical file in the LFM3-1.7B repo). Commercial use only below 10 million USD annual revenue. The d1 repos carry the same tag; their LICENSE files were not compared. Verdict policy (README, 2026-11-19): this licence term does not lower tona_fit; kept here for an installer label."
+  },
+  "architecture": {
+    "kind": "dense tri-hybrid LFM3 language model + 164M vision encoder",
+    "gguf_arch": "lfm3 (with mmproj)",
+    "params_total_b": 1.9,
+    "params_active_b": 1.9,
+    "attention": "same tri-hybrid language stack as LFM3-1.7B (13 convolutions, 5 sliding-window, 6 global attention)",
+    "recurrent": "none (short convolutions)",
+    "why_this_design": "Blog: the new vision encoder uses 3x less compute than SigLIP2 and matches Qwen3.5-2B's encoder at 55.9 % average over 13 VLM benchmarks with 2.2x fewer FLOPs. The language-model reasons are those of lfm3-1.7b."
+  },
+  "variants": [
+    {
+      "repo": "LiquidAI/LFM3-VL-2B-GGUF",
+      "format": "GGUF Q4_K_M",
+      "size_gb": 1.1,
+      "official": true,
+      "notes": "language model only; Q8_0 1.85, BF16 3.47; a separate mmproj file is part of the repo (size not recorded)"
+    },
+    {
+      "repo": "LiquidAI/LFM3-VL-2B",
+      "format": "safetensors BF16",
+      "size_gb": 3.85,
+      "official": true
+    },
+    {
+      "repo": "LiquidAI/d1-2B-GGUF",
+      "format": "GGUF Q4_K_M + mmproj",
+      "size_gb": 1.1,
+      "official": true,
+      "notes": "decision model built on LFM3-VL-2B; mmproj BF16 0.38 GB, Q8_0 0.2 GB; BF16 repo LiquidAI/d1-2B 3.85 GB"
+    },
+    {
+      "repo": "LiquidAI/d1-3B",
+      "format": "safetensors BF16",
+      "size_gb": 6.27,
+      "official": true,
+      "notes": "earlier decision model (2026-10-05) on LFM2.5-VL-3B, replaced by d1-2B"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q8_0"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q8_0"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "BF16"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "BF16"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "BF16"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "BF16"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "BF16"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "vLLM",
+      "SGLang",
+      "Transformers",
+      "MLX",
+      "ONNX"
+    ],
+    "notes": "Official GGUF with mmproj files exists for llama.cpp; Tona has no vision path for it."
+  },
+  "benchmarks": [
+    {
+      "name": "VLM average over 62 evaluations",
+      "score": 71.4,
+      "kind": "vendor",
+      "source": "https://www.liquid.ai/blog/lfm3",
+      "unit": "(Qwen3.5-2B 64.0, Gemma 4 E2B 53.6, Gemma 4 12B 71.7, MiniCPM-V 4.7 1B 57.5)"
+    },
+    {
+      "name": "Document, OCR and chart (category mean)",
+      "score": 83.9,
+      "kind": "vendor",
+      "source": "https://www.liquid.ai/blog/lfm3",
+      "unit": "(Gemma 4 12B 85.7)"
+    },
+    {
+      "name": "GUI understanding (category mean)",
+      "score": 83.1,
+      "kind": "vendor",
+      "source": "https://www.liquid.ai/blog/lfm3"
+    },
+    {
+      "name": "Video (category mean)",
+      "score": 61.2,
+      "kind": "vendor",
+      "source": "https://www.liquid.ai/blog/lfm3"
+    },
+    {
+      "name": "d1-2B Decision Bench (enterprise records)",
+      "score": 85.2,
+      "kind": "vendor",
+      "source": "https://www.liquid.ai/blog/lfm3",
+      "unit": "(d1-3B 83.6)",
+      "variant": "d1-2B"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "Vision average at the level of Gemma 4 12B at 1.9B parameters (vendor, own 62-benchmark suite)",
+      "Document, OCR, GUI and grounding scores strong for the size (vendor)"
+    ],
+    "weaknesses": [
+      "Agentic category 42.5, far behind GPT-5.6 Luna 56.1 and Gemini 3.5 Flash Lite 62.4 (vendor table)",
+      "All numbers vendor-run on a vendor-selected suite"
+    ],
+    "behavior": "Step-by-step thinking available; d1 models output typed answers (point, read, estimate, pick, yes/no, score) with probabilities in one pass.",
+    "best_for": [
+      "on-device document, screen and image understanding",
+      "fine-tuning for narrow vision tasks (wind-turbine inspection demo in the blog)"
+    ],
+    "avoid_for": [
+      "agentic computer use as the only brain"
+    ],
+    "maturity": "Same vendor and release as lfm3-1.7b; 146k GGUF downloads in a month."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Tiny vision model that may serve document or screenshot subtasks beside a coding model; no independent evidence yet. Compare against other small VLMs in the documents-vision area before any decision.",
+    "blockers": [
+      "no vision path or lfm3 backend in Tona"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/LiquidAI/LFM3-VL-2B",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "metadata and file list through the HF API; README not read in full"
+    },
+    {
+      "url": "https://huggingface.co/LiquidAI/LFM3-VL-2B-GGUF",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "sizes from the HF API"
+    },
+    {
+      "url": "https://huggingface.co/LiquidAI/d1-2B-GGUF",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "sizes from the HF API"
+    },
+    {
+      "url": "https://www.liquid.ai/blog/lfm3",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "benchmark tables, encoder and d1 description read through a page summarizer (WebFetch)"
+    }
+  ],
+  "open_questions": [
+    "Independent vision, OCR or GUI results",
+    "Quality loss of Q4_K_M and the mmproj quantizations",
+    "License file of the d1 repositories compared with LFM Open License v1.0"
+  ],
+  "last_checked": "2026-11-19"
+}

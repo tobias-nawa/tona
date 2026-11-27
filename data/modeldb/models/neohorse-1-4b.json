@@ -1,0 +1,160 @@
+{
+  "id": "neohorse-1-4b",
+  "name": "NeoHorse-1-4B",
+  "vendor": "TokenRhythm",
+  "release_date": "2026-09-05",
+  "lineage": {
+    "family": "NeoHorse-1",
+    "base_model": "Qwen/Qwen3.5-4B",
+    "how_derived": "routing-guided agentic post-training (curriculum SFT and on-policy distillation from execution trajectories collected by a routing harness); language-model weights only, vision removed"
+  },
+  "purpose": "Initial prototype on the path toward recursive self-improvement: a 4B model post-trained for text-based agent harnesses, tool use, coding and instruction following (card).",
+  "tasks": [
+    "general",
+    "coding"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Apache License 2.0 text read in the repo LICENSE file: commercial use, modification and redistribution allowed with notice and patent grant."
+  },
+  "architecture": {
+    "kind": "hybrid Gated-DeltaNet plus full attention dense transformer (Qwen3.5-4B layout)",
+    "gguf_arch": "qwen35",
+    "params_total_b": 4.2,
+    "params_active_b": 4.2,
+    "layers": 32,
+    "attention": "full attention every 4th layer, 16 Q / 4 KV heads, head dim 256",
+    "recurrent": "Gated DeltaNet",
+    "context_native": 262144,
+    "drafter": "1 MTP layer in the config"
+  },
+  "variants": [
+    {
+      "repo": "TokenRhythm/NeoHorse-1-4B",
+      "format": "safetensors BF16",
+      "size_gb": 8.44,
+      "official": true
+    },
+    {
+      "repo": "TokenRhythm/NeoHorse-1-4B-GGUF",
+      "format": "GGUF Q4_K_M",
+      "size_gb": 2.71,
+      "official": true,
+      "notes": "Q8_0 4.48 GB; a 9B sibling GGUF repo exists (TokenRhythm/NeoHorse-1-9B-GGUF)"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "variant": "official GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "2.71 GB file fits the VRAM budget (9.6 GB) with room for KV"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "official GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "2.71 GB file fits the VRAM budget (13.6 GB) with room for KV"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "official GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "2.71 GB file fits the VRAM budget (21.6 GB) with room for KV"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "official GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "2.71 GB file fits the VRAM budget (29.6 GB) with room for KV"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "variant": "official GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "2.71 GB file against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "official GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "2.71 GB file against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "official GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "2.71 GB file against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "Transformers"
+    ],
+    "notes": "Qwen3.5-4B layout; official GGUF published."
+  },
+  "benchmarks": [
+    {
+      "name": "macro average over ten benchmarks",
+      "score": 64.87,
+      "kind": "vendor",
+      "variant": "BF16; Qwen3.5-4B 58.94 (+5.93)",
+      "source": "https://huggingface.co/TokenRhythm/NeoHorse-1-4B"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "+5.9 points macro average over its base in the vendor's own ten-benchmark set"
+    ],
+    "weaknesses": [
+      "the ten benchmarks are not named in the part of the card read; only the vendor's average"
+    ],
+    "maturity": "2.5k likes but only 2.5k downloads of the main repo; one technical report (arXiv tag 2609.08183)"
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "A 4B agent post-train of Qwen3.5-4B with an unverified average gain; at this size a stock Qwen3.5-4B or Gemma 4 E4B is the baseline to beat. Apache-2.0 (text read).",
+    "blockers": [
+      "no per-benchmark numbers read",
+      "no independent evidence"
+    ]
+  },
+  "open_questions": [
+    "which ten benchmarks and their individual scores",
+    "independent agentic evaluation",
+    "the 9B sibling"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/TokenRhythm/NeoHorse-1-4B",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README, config.json read"
+    },
+    {
+      "url": "https://huggingface.co/api/models/TokenRhythm/NeoHorse-1-4B-GGUF?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "GGUF sizes"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

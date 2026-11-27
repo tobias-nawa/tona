@@ -1,0 +1,287 @@
+{
+  "id": "qwen3-vl-8b-instruct",
+  "name": "Qwen3-VL-8B-Instruct",
+  "vendor": "Alibaba Qwen",
+  "release_date": "2025-10",
+  "lineage": {
+    "family": "Qwen3-VL"
+  },
+  "purpose": "Dense 8B member of Qwen3-VL for local document, screenshot and chart reading.",
+  "tasks": [
+    "vision",
+    "documents",
+    "general"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image",
+      "video"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "many"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "HF repo has no LICENSE file; card tag apache-2.0 and the QwenLM/Qwen3-VL GitHub LICENSE read is the unmodified Apache-2.0 text"
+  },
+  "architecture": {
+    "kind": "dense vision-language",
+    "params_total_b": 9,
+    "context_native": 262144,
+    "context_max": 1000000,
+    "why_this_design": "Same as the family: Interleaved-MRoPE, DeepStack (card)."
+  },
+  "variants": [
+    {
+      "repo": "Qwen/Qwen3-VL-8B-Instruct",
+      "format": "safetensors BF16",
+      "official": true
+    },
+    {
+      "repo": "GGUF Q4_K_M + mmproj Q8_0",
+      "format": "GGUF",
+      "size_gb": 5.8,
+      "official": false,
+      "notes": "5.03 GB model plus 0.75 GB mmproj, from research/52"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "vLLM",
+      "SGLang",
+      "Ollama"
+    ]
+  },
+  "benchmarks": [
+    {
+      "name": "ParseBench mean",
+      "score": 46.8,
+      "kind": "vendor",
+      "source": "https://huggingface.co/Qwen/Qwen3-VL-8B-Instruct"
+    },
+    {
+      "name": "MDPBench overall",
+      "score": 68.3,
+      "kind": "vendor",
+      "source": "https://huggingface.co/Qwen/Qwen3-VL-8B-Instruct"
+    },
+    {
+      "name": "DocVQA (roundup blog, vendor figure)",
+      "score": 96.1,
+      "kind": "vendor",
+      "source": "https://tinyweights.dev/posts/best-local-vision-language-models-2026/",
+      "harness": "secondary, unverified"
+    },
+    {
+      "name": "MDPBench German pages (DE column)",
+      "score": 73.7,
+      "kind": "independent",
+      "source": "https://huggingface.co/datasets/Delores-Lin/MDPBench",
+      "variant": "Qwen3-VL-8B-Instruct",
+      "date": "2026-07"
+    },
+    {
+      "name": "MDPBench overall (17 languages)",
+      "score": 68.3,
+      "kind": "independent",
+      "source": "https://huggingface.co/datasets/Delores-Lin/MDPBench",
+      "variant": "Qwen3-VL-8B-Instruct; photographed 65.0, digital 78.4",
+      "date": "2026-07"
+    },
+    {
+      "name": "DocVQA test",
+      "score": 96.1,
+      "kind": "vendor",
+      "source": "https://arxiv.org/pdf/2511.21631",
+      "variant": "Qwen3-VL-8B-Instruct",
+      "harness": "technical report table (Qwen), arXiv 2511.21631"
+    },
+    {
+      "name": "InfoVQA test",
+      "score": 83.1,
+      "kind": "vendor",
+      "source": "https://arxiv.org/pdf/2511.21631",
+      "variant": "Qwen3-VL-8B-Instruct",
+      "harness": "technical report table (Qwen), arXiv 2511.21631"
+    },
+    {
+      "name": "OCRBench",
+      "score": 896,
+      "kind": "vendor",
+      "source": "https://arxiv.org/pdf/2511.21631",
+      "variant": "Qwen3-VL-8B-Instruct",
+      "harness": "technical report table (Qwen), arXiv 2511.21631"
+    },
+    {
+      "name": "OCRBench v2 EN",
+      "score": 65.4,
+      "kind": "vendor",
+      "source": "https://arxiv.org/pdf/2511.21631",
+      "variant": "Qwen3-VL-8B-Instruct",
+      "harness": "technical report table (Qwen), arXiv 2511.21631"
+    },
+    {
+      "name": "OCRBench v2 ZH",
+      "score": 61.2,
+      "kind": "vendor",
+      "source": "https://arxiv.org/pdf/2511.21631",
+      "variant": "Qwen3-VL-8B-Instruct",
+      "harness": "technical report table (Qwen), arXiv 2511.21631"
+    },
+    {
+      "name": "CC-OCR",
+      "score": 79.9,
+      "kind": "vendor",
+      "source": "https://arxiv.org/pdf/2511.21631",
+      "variant": "Qwen3-VL-8B-Instruct",
+      "harness": "technical report table (Qwen), arXiv 2511.21631"
+    },
+    {
+      "name": "OmniDocBench EN (edit distance, lower is better)",
+      "score": 0.17,
+      "kind": "vendor",
+      "source": "https://arxiv.org/pdf/2511.21631",
+      "variant": "Qwen3-VL-8B-Instruct",
+      "harness": "technical report table (Qwen), arXiv 2511.21631"
+    },
+    {
+      "name": "OmniDocBench ZH (edit distance, lower is better)",
+      "score": 0.264,
+      "kind": "vendor",
+      "source": "https://arxiv.org/pdf/2511.21631",
+      "variant": "Qwen3-VL-8B-Instruct",
+      "harness": "technical report table (Qwen), arXiv 2511.21631"
+    },
+    {
+      "name": "CharXiv DQ",
+      "score": 83.0,
+      "kind": "vendor",
+      "source": "https://arxiv.org/pdf/2511.21631",
+      "variant": "Qwen3-VL-8B-Instruct",
+      "harness": "technical report table (Qwen), arXiv 2511.21631"
+    },
+    {
+      "name": "CharXiv RQ",
+      "score": 46.4,
+      "kind": "vendor",
+      "source": "https://arxiv.org/pdf/2511.21631",
+      "variant": "Qwen3-VL-8B-Instruct",
+      "harness": "technical report table (Qwen), arXiv 2511.21631"
+    },
+    {
+      "name": "MMLongBench-Doc",
+      "score": 47.9,
+      "kind": "vendor",
+      "source": "https://arxiv.org/pdf/2511.21631",
+      "variant": "Qwen3-VL-8B-Instruct",
+      "harness": "technical report table (Qwen), arXiv 2511.21631"
+    },
+    {
+      "name": "MMMU",
+      "score": 69.6,
+      "kind": "vendor",
+      "source": "https://arxiv.org/pdf/2511.21631",
+      "variant": "Qwen3-VL-8B-Instruct",
+      "harness": "technical report table (Qwen), arXiv 2511.21631"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "fits every PC class",
+      "general reading beyond transcription"
+    ],
+    "weaknesses": [
+      "dedicated 1B parsers beat it on OmniDocBench-style parsing (vendor tables)",
+      "MDPBench (independent): the 8B Instruct scores German 73.7, below the dedicated 1B parsers (GLM-OCR 82.7, PaddleOCR-VL-1.5 84.8) and drops on photographed pages (65.0)"
+    ],
+    "best_for": [
+      "screenshots, charts and Q&A on pages on 12-16 GB cards"
+    ],
+    "maturity": "see qwen3-vl-30b-a3b-instruct"
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "general VLM that also reads documents (DocVQA 96.1, OCRBench 896 vendor), Apache-2.0 verified, fits every 16 GB class at Q4; for German scans the dedicated 1B parsers score higher (MDPBench DE 73.7 vs 82.7-84.8), so it is the follow-up QA model rather than the parser"
+  },
+  "open_questions": [
+    "German accuracy on our own scan/photo pages (third-party German score exists only for the 8B)"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/Qwen/Qwen3-VL-8B-Instruct",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://tinyweights.dev/posts/best-local-vision-language-models-2026/",
+      "kind": "secondary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "research/52-purpose-models.md",
+      "kind": "own",
+      "checked": "2026-11-19",
+      "note": "GGUF sizes"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/QwenLM/Qwen3-VL/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://arxiv.org/pdf/2511.21631",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "technical report PDF, tables 3 and 4 read from the extracted text"
+    },
+    {
+      "url": "https://huggingface.co/datasets/Delores-Lin/MDPBench",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "MDPBench README table read directly; an earlier summarizer pass mislabeled the Latin-average column as DE, the DE values here come from the dataset README"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

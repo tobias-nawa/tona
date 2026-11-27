@@ -1,0 +1,15 @@
+Tona (tona-server) on http://127.0.0.1:8097 (Anthropic: /v1/messages, OpenAI: /v1/chat/completions), without key, loading ...
+host memory: GTT (probe 64 MB grew the GTT use by 64 MB; 0.1 of 32.5 GB in use)
+KV cache: budget 1.78 GB (VRAM free 15.75 GB, 0.30 GB per layer at 262144 cells): 128000 of 262144 cells of every attention layer in VRAM, MTP layer in VRAM
+evicted_ms counter: /sys/class/kfd/kfd/proc/626803/stats_7773/evicted_ms (0 ms so far), evictions do not count against the pass deadline
+PCIe link: 32 GT/s x16, GPU-direct expert priced at 15.0 us (TONA_GD_US overrides)
+Releasing page cache: 1.39 GB of file mappings removed from the address space
+loaded in 6.6 s: context 262144 (KV int8 3.02 GB in RAM), VRAM 14.15 GB, 103 expert slots per layer, 21.1 GB pinned
+00:46:51 Request: 1934 prompt tokens (0 reused, 1934 computed in 0.7 s, new conversation (stashing 0 ms), slot 0), 200 tokens in 1.7 s = 116.5 tok/s, 2.38 tokens per pass, 0 of 84 passes from the history (0.00 per pass)
+00:46:51 POST /v1/chat/completions → 200
+Conversation of 15547 tokens stashed: 283 MB (state 86, KV 197, pool 0, drafter 0) in 0.08 s
+00:46:57 Request: 15575 prompt tokens (0 reused, 15575 computed in 3.8 s, new conversation (stashing 80 ms), checkpoint at 15547 (before the fixed end), slot 1), 200 tokens in 2.0 s = 97.7 tok/s, 2.21 tokens per pass, 0 of 90 passes from the history (0.00 per pass)
+00:46:57 POST /v1/chat/completions → 200
+Conversation of 1934 tokens stashed: 110 MB (state 86, KV 25, pool 0, drafter 0) in 0.01 s
+00:47:15 Request: 63883 prompt tokens (15547 reused, 48336 computed in 16.3 s, conversation from RAM in 28 ms, slot 0), 100 tokens in 1.5 s = 65.5 tok/s, 2.08 tokens per pass, 0 of 48 passes from the history (0.00 per pass)
+00:47:15 POST /v1/chat/completions → 200

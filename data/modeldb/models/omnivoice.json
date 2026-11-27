@@ -1,0 +1,130 @@
+{
+  "id": "omnivoice",
+  "name": "OmniVoice",
+  "vendor": "k2-fsa",
+  "release_date": "2026-04-01",
+  "lineage": {
+    "base_model": "Qwen/Qwen3-0.6B-Base"
+  },
+  "purpose": "Massively multilingual zero-shot TTS with voice cloning and voice design (card).",
+  "tasks": [
+    "speech-synthesis"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "audio"
+    ],
+    "output": [
+      "audio"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "many"
+    ]
+  },
+  "license": {
+    "name": "CC-BY-NC (weights), Apache-2.0 (code)",
+    "verified": true,
+    "commercial_use": "no",
+    "redistribution": "limited",
+    "notes": "HF card (no LICENSE file in the repo): \"Our code is released under the Apache 2.0 License. The pre-trained model is licensed under the CC-BY-NC due to constraints from its training data (e.g., Emilia).\" The HF license tag is empty. Maintainer confirmed in discussion 37 (2026-09-14/18): weights non-commercial; Emilia has a CC BY-NC part, and the Higgs audio tokenizer dependency needs extra permission above 100k annual users. Code repo LICENSE (GitHub) is Apache-2.0. Verdict policy (README, 2026-11-19): this licence term does not lower tona_fit; kept here for an installer label."
+  },
+  "architecture": {
+    "kind": "diffusion-language-model style, NON-AUTOREGRESSIVE generation, fine-tuned from Qwen3-0.6B-Base",
+    "params_total_b": 0.6
+  },
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "omnivoice Python package (PyTorch)"
+    ]
+  },
+  "benchmarks": [
+    {
+      "name": "RTF (best case)",
+      "score": 0.025,
+      "kind": "vendor",
+      "source": "https://huggingface.co/k2-fsa/OmniVoice"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "600+ languages, very fast"
+    ],
+    "weaknesses": [
+      "Weights non-commercial",
+      "German not named on the card"
+    ],
+    "maturity": "k2-fsa (Next-gen Kaldi); 1717 likes, 4.2M downloads.",
+    "user_reports": [
+      {
+        "summary": "Maintainer: the model weights are non-commercial and cannot be used commercially; Emilia has a CC BY-NC part and another tokenizer dependency has its own terms.",
+        "source": "https://huggingface.co/k2-fsa/OmniVoice/discussions/37",
+        "date": "2026-09-18",
+        "sentiment": "negative"
+      }
+    ]
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "600+ languages including German in 0.6B (RTF 0.025, vendor) fits every class; no quality numbers beyond speed are recorded, so compare German output against the other TTS records before any offer.",
+    "blockers": [
+      "no Tona audio module"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/k2-fsa/OmniVoice",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/k2-fsa/OmniVoice/raw/main/README.md",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/k2-fsa/OmniVoice/discussions/37",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    }
+  ],
+  "open_questions": [
+    "German coverage",
+    "German quality: no independent numbers; one community benchmark thread (discussion 30, 2026-07-02) exists but was not read"
+  ],
+  "last_checked": "2026-11-19"
+}

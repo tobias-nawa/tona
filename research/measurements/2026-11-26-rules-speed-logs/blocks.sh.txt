@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+# n3 blocks; usage: blocks.sh <block>... ; run INSIDE a gpu_queue job (TONA_GPU_LOCK_HELD=1 set by the queue)
+W=<worktree>
+S=/var/tmp/claude/n3
+cd "$W" || exit 1
+# shellcheck disable=SC1091
+source toolchain/env.sh
+export TONA_DIAG=1
+M=<repo>/work/models
+tc() { { echo "## $2 $1 $(date +%F' '%T)"; python3 tools/hw_report.py; python3 tools/quiet_check.py; echo "quiet_check exit $?"; } >> "$S/$1.tc.log" 2>&1; }
+abb() { local l=$1; shift; tc "$l" before
+  python3 scripts/ab.py --load-log on --port 8171 --out "work/ab/n3-$l" "$@" > "$S/$l.out" 2>&1; tc "$l" after
+  grep -h "expert slots" work/ab/n3-"$l"-logs/* 2>/dev/null | sort | uniq -c | sed "s/^/SLOTS $l: /"; }
+for blk in "$@"; do
+ sleep 20
+ case $blk in
+ q1) abb q1-lint --a n3-main --b n3-pr --workload short,mid,long \
+   --expect decode:-0.5..+0.5% --expect prefill:-0.5..+0.5% \
+   --expect-source "bench/noise.toml A/A spreads (decode 0.23 to 0.42 %, prefill 0.02 to 0.09 %); the diff is host lint, no device code" \
+   --why-size "short: decode loop at 2K; mid and long: prefill and decode at 30K and 130K where attention dominates; the three workloads of the generator, scheduler and prompt cache paths the diff touches" ;;
+ q2) abb q2-harden --a n3-pr --b n3-hard --workload short,mid,long \
+   --expect decode:-0.5..+0.5% --expect prefill:-0.5..+0.5% \
+   --expect-source "bench/noise.toml A/A spreads; hardening acts on host code only (stack canary, CET, PIE), the loop waits on the GPU; decision limit 2 %" \
+   --why-size "same workloads as q1: decode at 2K, 30K, 130K and prefill at 30K and 130K; host overhead per token shows in decode" ;;
+ q2o) abb q2o-ornith --a n3-pr --b n3-hard --model $M/ornith-1.5-35b-a3b/Ornith-1.5-35B-Q4_K_M.gguf --drafter none \
+   --workload server --targets 30000:200 --ctx 140000 --no-noise \
+   --expect decode:-0.5..+0.5% --expect prefill:-0.5..+0.5% \
+   --expect-source "Coder expectation of q2; no noise table for Ornith (--no-noise), at least 2 rounds" \
+   --why-size "second model: decode after a 30K prompt, the decode rate is the one hardening could touch through the host loop" ;;
+ q1b) abb q1b-repeat --a n3-main --b n3-pr --workload mid,long \
+   --expect decode:-0.5..+0.5% --expect prefill:-0.5..+0.5% \
+   --expect-source "q1 of this file: prefill@130000 -0.12 % [-0.22, -0.02] (inside the margin, B slower), decode and prefill at 30K equal; repeat to see whether the small loss reproduces" \
+   --why-size "mid and long only: the two requests where q1 left a real or open difference" ;;
+ aa) abb aa-main --a n3-main --b n3-main --workload mid,long --max-rounds 4 --min-rounds 4 --fixed-rounds \
+   --expect decode:-0.5..+0.5% --expect prefill:-0.5..+0.5% \
+   --expect-source "A/A of the same build: 0 within the noise of bench/noise.toml; control for the -0.12 % of prefill@130000 in q1" \
+   --why-size "control: is a difference of 0.1 % between two starts of the same binary possible (start order, page cache); same two requests as q1b" ;;
+ q3) abb q3-huge --a n3-main --b n3-pr --workload huge --max-rounds 2 --min-rounds 2 --no-warmup --no-noise \
+   --expect decode:-1..+1% --expect prefill:-1..+1% \
+   --expect-source "2026-11-26-scale-run.md c4 (prefill 1,536 / 1,164, decode 60.8 / 57.2 at 512K / 1M); two rounds (ab.py minimum), no warm-up start, no noise table for huge" \
+   --why-size "select_checks.py names R7 for attn_wmma2.h, mega_seq.cpp, prefill_plan.cpp, prompt_cache.cpp: 512K and 1M are past 262K where 32-bit index overflows and plan limits would show" ;;
+ esac
+done

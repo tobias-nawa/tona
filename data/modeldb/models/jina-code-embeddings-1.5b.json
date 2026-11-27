@@ -1,0 +1,141 @@
+{
+  "id": "jina-code-embeddings-1.5b",
+  "name": "jina-code-embeddings 0.5B / 1.5B",
+  "vendor": "Jina AI (Elastic)",
+  "release_date": "2025-08",
+  "lineage": {
+    "base_model": "Qwen2.5-Coder-1.5B"
+  },
+  "purpose": "Code embeddings for text-to-code, code-to-code, code-to-text, code-to-completion and technical QA.",
+  "tasks": [
+    "embeddings"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "embedding"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en"
+    ]
+  },
+  "license": {
+    "name": "CC-BY-NC-4.0",
+    "verified": false,
+    "commercial_use": "no",
+    "redistribution": "limited",
+    "notes": "Card metadata tag only; the repo has no LICENSE file and the card has no license section, so the text was not read. CC BY-NC 4.0 forbids commercial use; for personal and research use it is open. Verdict policy (README, 2026-11-19): this licence term does not lower tona_fit; kept here for an installer label."
+  },
+  "architecture": {
+    "kind": "dense decoder transformer, last-token pooling",
+    "params_total_b": 1.54,
+    "context_native": 32768
+  },
+  "variants": [
+    {
+      "repo": "jinaai/jina-code-embeddings-1.5b",
+      "format": "safetensors BF16",
+      "official": true,
+      "notes": "1536-d, MRL 128..1536; 0.5B sibling exists; GGUF IQ4_NL 0.35 GB for 0.5B per research/52"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "Transformers"
+    ],
+    "notes": "GGUF conversions exist per research/52."
+  },
+  "soft": {
+    "weaknesses": [
+      "non-commercial license"
+    ],
+    "best_for": [
+      "research comparisons"
+    ],
+    "maturity": "Jina AI, now Elastic."
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "Strongest small code embedder by its own paper (1.5B, MTEB Code 78.94 vs 74.69 for Qwen3-0.6B), fits every class. Compare with Qwen3-Embedding on our own code retrieval before choosing the default.",
+    "blockers": [
+      "Tona has no embeddings route"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/jinaai/jina-code-embeddings-1.5b",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "research/52-purpose-models.md",
+      "kind": "own",
+      "checked": "2026-11-19",
+      "note": "our research note 52, facts fetched 2026-11-15, not a measurement"
+    },
+    {
+      "url": "https://arxiv.org/html/2508.21290",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "paper table read through a summarizer; nomic-embed-code is not in the table"
+    }
+  ],
+  "open_questions": [
+    "Independent numbers: none found",
+    "Official CoIR score not found"
+  ],
+  "last_checked": "2026-11-19",
+  "benchmarks": [
+    {
+      "name": "MTEB Code AVG (paper table)",
+      "score": 78.94,
+      "kind": "vendor",
+      "variant": "1.5B; 0.5B 78.72; Qwen3-Embedding-0.6B 74.69, voyage-code-3 79.84 in the same table (the paper's own evaluation, not CoIR)",
+      "source": "https://arxiv.org/html/2508.21290",
+      "unit": "%"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+# Test conditions of the M1 A/B (2026-11-15)
+
+### Test conditions
+
+- CPU: Apple M1 Max, 10 cores / 10 threads
+- GPU: Apple M1 Max, 32.0 GiB unified memory
+- RAM: 32.0 GiB
+- OS: macOS 27.0.1, kernel 27.0.0 (arm64)
+- Driver and toolkit: no toolkit found
+- TONA_* variables: none set
+- cgroup limits of this shell: none set
+- Load average (1, 5, 15 min): 5.04, 6.39, 7.2
+- CPU use by other programs over 0.5 s: 6.2 % of all threads
+- sandbox: no
+- Commit: `221ebd6` (dirty tree)
+== before
+- Quiet check (2026-11-15 13:56:14): warning
+  - warning: load average 5.04 is high (it lags a minute)
+== after
+- Quiet check (2026-11-15 15:14:56): do not measure
+  - do not measure: the GPU is 98 % busy
+- Quiet check (2026-11-15 15:15:48): ok

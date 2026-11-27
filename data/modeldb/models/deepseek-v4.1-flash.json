@@ -1,0 +1,107 @@
+{
+  "id": "deepseek-v4.1-flash",
+  "name": "DeepSeek-V4.1-Flash (with the 1017 update)",
+  "vendor": "DeepSeek",
+  "release_date": "2026-09-10",
+  "lineage": {
+    "family": "DeepSeek-V4.1",
+    "how_derived": "trained from scratch on 45T multimodal tokens, then SFT, RL and on-policy distillation (card). DeepSeek-V4.1-Flash-1017 (2026-10-17) is a minor update of the same architecture with better reasoning, coding, agent and visual scores and shorter outputs. No separate Base repository exists (the Base row in the card table is a benchmark column; the repo name DeepSeek-V4.1-Flash-Base does not resolve, 2026-11-19)."
+  },
+  "purpose": "The card presents a multimodal MoE whose point is KV-cache compression (title: Pushing the Limits of KV Cache Compression): a causal encoder-decoder activates only 8B parameters per token during prefill and 16B during decode, with 4x smaller global KV cache than DeepSeek-V4-Flash, for 1M-token agentic work. The 1017 release targets faster, cheaper task completion across agent harnesses.",
+  "tasks": ["coding", "general", "research", "vision"],
+  "modalities": {"input": ["text", "image"], "output": ["text"]},
+  "license": {
+    "name": "MIT",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "LICENSE read in both repos (identical, 1084 bytes): standard MIT, Copyright (c) 2023 DeepSeek, to use, copy, modify, merge, publish, distribute, sublicense and/or sell. The card states the repository and the model weights are under it."
+  },
+  "architecture": {
+    "kind": "multimodal sparse MoE with causal encoder-decoder (CED), compressed sparse attention 2 (CSA2), Single-Pass mHC, Engram memory tables and DSpark drafter",
+    "gguf_arch": "deepseek_v41 (supported by llama.cpp since release b11870, 2026-10-25, per the ISTA-DASLab card)",
+    "params_total_b": 763,
+    "params_active_b": 16,
+    "layers": 40,
+    "attention": "20-layer causal encoder then 20-layer decoder; MQA with 1 KV head of dim 512, sliding window 128, top-512 hierarchical sparse indexer, each layer in Full, Reindex or Reuse mode",
+    "recurrent": "none",
+    "experts": 384,
+    "experts_active": 6,
+    "context_native": 1048576,
+    "context_max": 1048576,
+    "drafter": "DSpark speculative decoding (semi-autoregressive draft, 3 MTP layers in config); standalone DSpark GGUFs of about 8 GB exist (unsloth, kyuz0)",
+    "why_this_design": "The card says CED lets the decoder's global KV cache come from the encoder's final hidden states, so only 8B parameters are active in prefill and 16B in decode; CSA2 shares main KV and indexer keys across layers and reuses top-K indices, giving about 4x and 437x smaller KV cache than DeepSeek-V4-Flash and DeepSeek-V1. 552B are the backbone, 196B (196.6B per ISTA) are Engram tables read sparsely per token, total 763B per the ISTA card."
+  },
+  "variants": [
+    {"repo": "deepseek-ai/DeepSeek-V4.1-Flash", "format": "safetensors (FP8 dense, FP4 routed experts per the ISTA card)", "size_gb": 510.31, "official": true, "notes": "2026-09-10"},
+    {"repo": "deepseek-ai/DeepSeek-V4.1-Flash-1017", "format": "safetensors (same format)", "size_gb": 510.31, "official": true, "notes": "2026-10-17, the current release; recommended over 0910 by its own scores"},
+    {"repo": "ISTA-DASLab/DeepSeek-V4.1-Flash-1017-GSQ-RCO-GGUF", "format": "GGUF GSQ-RCO IQ1_M (1.75 bpw)", "size_gb": 231.32, "official": false, "notes": "backbone 120.72 GB plus shared Engram file 110.60 GB (IQ4_NL, mmap, read per token, may sit on SSD); IQ2_XXS 138.24 + 110.60 = 248.84 GB (their recommended build), IQ2_XS 155.23 + 110.60 = 265.83 GB; mmproj 0.97 GB; llama.cpp b11870 or newer"},
+    {"repo": "unsloth/DeepSeek-V4.1-Flash-1017-GGUF", "format": "GGUF dynamic UD-IQ1_S", "size_gb": 232.98, "official": false, "notes": "UD-IQ1_M 250.4, UD-IQ2_XXS 300.48, UD-Q2_K_XL 334.79, UD-IQ3_XXS 394.74, UD-IQ3_S 423.63, UD-Q3_K_XL 485.07, UD-Q4_K_XL 500.71, UD-Q8_K_XL 508.38 GB (Engram stored as MXFP8, swappable); DSpark drafter Q8_0 7.98 GB, mmproj 0.97 GB; whether the Engram part is inside each file size was not checked"},
+    {"repo": "antirez/deepseek-v4.1-flash-gguf", "format": "GGUF Q2 (IQ2_XXS/Q2_K, imatrix) and MXFP4 experts", "size_gb": 365.71, "official": false, "notes": "MXFP4-experts 501.6 GB; most-downloaded derivative (about 767k downloads)"},
+    {"repo": "kyuz0/deepseek-v4.1-flash-gguf", "format": "GGUF Q2 365.71 GB for 0910 and 1017, DSpark MXFP4 drafter 7.97 GB", "size_gb": 365.71, "official": false},
+    {"repo": "pfeifferj/DeepSeek-V4.1-Flash-GSQ-RCO-GGUF", "format": "GGUF GSQ-RCO 3.0 bit for the 0910 release", "size_gb": 415.76, "official": false, "notes": "DSpark draft 9.32 GB"},
+    {"repo": "nvidia/DeepSeek-V4.1-Flash-1017-NVFP4", "format": "NVFP4 (Blackwell)", "official": false, "notes": "sizes not measured; also NVFP4 for 0910 and an Intel MXFP4 AutoRound repo"}
+  ],
+  "hardware_fit": {
+    "pc-12gb": {"fits": "no", "basis": "estimate", "notes": "smallest resident part is the GSQ-RCO IQ1_M backbone at 120.7 GB against about 60 GB (9.6 VRAM + 50 RAM), plus 110.6 GB Engram on SSD"},
+    "pc-16gb": {"fits": "no", "basis": "estimate", "notes": "120.7 GB against about 64 GB (13.6 VRAM + 50 RAM)"},
+    "pc-24gb": {"fits": "no", "basis": "estimate", "notes": "120.7 GB against 21.6 GB VRAM + about 82 GB RAM = 104 GB; the pruned derivative deepseek-v4.1-flash-1017-gsq-rco-coder (72 GB resident) is the only variant of this family that fits"},
+    "pc-32gb": {"fits": "yes", "variant": "GSQ-RCO IQ1_M 120.72 GB or IQ2_XXS 138.24 GB backbone (Engram 110.6 GB on SSD)", "basis": "estimate", "notes": "29.6 GB VRAM + 128 GB RAM = about 158 GB: IQ1_M leaves about 37 GB for KV and the OS, IQ2_XXS about 20 GB; both need the 110.6 GB Engram file on a fast SSD (read one row per token)"},
+    "mac-16-24gb": {"fits": "no", "basis": "estimate"},
+    "mac-32gb": {"fits": "no", "basis": "estimate"},
+    "mac-64gb+": {"fits": "no", "basis": "estimate", "notes": "120.7 GB backbone against about 52 GB GPU share on a 64 GB Mac; Macs with 128 GB or more not assessed"}
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": ["SGLang and vLLM (reference), Transformers 5.6", "deepseek-recipe Rust prompt library from the vendor (the release has no Jinja chat template)"],
+    "notes": "llama.cpp supports DeepSeek-V4.1 including images since b11870 (2026-10-25) per the ISTA card; the vendor release ships no Jinja template, only a Python encoder and the deepseek-recipe library, so chat templates in GGUFs come from the quantisers."
+  },
+  "benchmarks": [
+    {"name": "Terminal-Bench 2.1", "score": 90.6, "kind": "vendor", "unit": "pass@1", "variant": "0910, max reasoning effort, DeepSeek Harness minimal mode, 1M context (Opus-5.0 89.1, GPT-5.6 Sol 88.8)", "harness": "DSH Minimal; with the Claude Code harness 88.0", "source": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash"},
+    {"name": "DeepSWE v1.1", "score": 74.2, "kind": "vendor", "unit": "resolved", "variant": "0910, max effort", "harness": "mini-SWE agent", "source": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash"},
+    {"name": "NL2Repo-Bench", "score": 64.0, "kind": "vendor", "variant": "0910, max effort", "source": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash"},
+    {"name": "Terminal-Bench 4.0", "score": 31.2, "kind": "vendor", "unit": "pass@1", "variant": "0910, max effort", "source": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash"},
+    {"name": "GPQA Diamond", "score": 90.9, "kind": "vendor", "unit": "pass@1", "variant": "0910, max effort", "source": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash"},
+    {"name": "Codeforces rating", "score": 3471, "kind": "vendor", "variant": "0910, max effort", "source": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash"},
+    {"name": "Terminal-Bench 4.0", "score": 42.3, "kind": "vendor", "unit": "pass@1", "variant": "1017 (0910: 31.2; Opus 5 51.8)", "source": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017"},
+    {"name": "DeepSWE v1.1", "score": 77.0, "kind": "vendor", "unit": "resolved", "variant": "1017 (0910: 74.2; Opus 5 74.0)", "source": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017"},
+    {"name": "NL2Repo-Bench", "score": 68.2, "kind": "vendor", "variant": "1017 (0910: 65.4 in the 1017 table; Opus 5 75.3)", "source": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017"},
+    {"name": "AutomationBench v1.0.6", "score": 60.5, "kind": "vendor", "variant": "1017 (0910: 54.8)", "source": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017"},
+    {"name": "Terminal-Bench 2.1", "score": 87.6, "kind": "independent", "unit": "pass@1", "variant": "1017, as listed by Shanghai AI Laboratory on a competing model's card (method not stated)", "source": "https://huggingface.co/internlm/Sage-S2.1-Flash"},
+    {"name": "SWE-bench Pro", "score": 61.8, "kind": "independent", "variant": "1017, as listed by Shanghai AI Laboratory on a competing model's card (method not stated)", "source": "https://huggingface.co/internlm/Sage-S2.1-Flash"},
+    {"name": "AIME25 / GPQA-Diamond / LiveCodeBench v6 at reasoning effort 50", "score": "100.00 / 88.38 / 88.57", "kind": "independent", "variant": "1017 GSQ-RCO IQ1_M GGUF, 1.75 bpw (base FP8/FP4: 100.00 / 90.91 / 89.71; task average 92.32 vs 93.54, recovery 98.7 %)", "harness": "run by the quantisation authors (ISTA-DASLab), single run per cell as far as the card shows", "source": "https://huggingface.co/ISTA-DASLab/DeepSeek-V4.1-Flash-1017-GSQ-RCO-GGUF"},
+    {"name": "AIME25 / GPQA-Diamond / LiveCodeBench v6 at reasoning effort 50", "score": "100.00 / 90.91 / 89.71", "kind": "independent", "variant": "1017 GSQ-RCO IQ2_XXS GGUF, 2.00 bpw (equals the base, recovery 100.0 %)", "harness": "run by the quantisation authors (ISTA-DASLab)", "source": "https://huggingface.co/ISTA-DASLab/DeepSeek-V4.1-Flash-1017-GSQ-RCO-GGUF"}
+  ],
+  "soft": {
+    "strengths": ["Very high vendor agent and coding numbers (max effort) for a model that has quants fitting 128 GB of RAM", "Tiny KV cache and 16B active parameters in decode", "MIT licence text verified", "Quantises well with GSQ-RCO: IQ2_XXS matches the base on three benchmarks (quantisers' own run)"],
+    "weaknesses": ["552B backbone plus 196B Engram: the best fit is the 32 GB VRAM + 128 GB RAM class only", "All headline scores are vendor scores at maximum reasoning effort with 1M-token contexts; local runs will use less", "Engram tables need a fast SSD"],
+    "behavior": "Recommended sampling temperature 1.0, top_p 0.95 or 1.0, max_tokens at least 256K (card); reasoning effort is a continuous 1 to 100 setting, vendor results use 100, the ISTA quant evaluation used 50. No Jinja template in the release.",
+    "best_for": ["agentic coding and terminal work on the 32 GB VRAM + 128 GB RAM class", "long-context work (1M)"],
+    "avoid_for": ["machines under about 128 GB of RAM"],
+    "maturity": "DeepSeek is an established lab; the V4.1 line has two releases in five weeks, a Pareto-update (1017) and a large quant ecosystem (about 100 derivatives on the HF API for each release)."
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "Best vendor agent and coding numbers combined with a verified MIT licence and quants that hold their quality at 1.75 to 2 bits (quantisers' own test); it fits only the 32 GB VRAM + 128 GB RAM class (120.7 GB backbone). For the 24 GB and smaller classes only the pruned coder derivative (72 GB resident) comes close and still does not fit below 24 GB. Judged on quality, licence and hardware class; Tona has no module for it yet.",
+    "blockers": ["Tona has no DeepSeek-V4 module (MQA, indexer, hyper-connections, Engram): engine support, not quality", "no independent agent evaluation of the quants beyond the quantisers' three benchmarks", "does not fit the 16 GB + 64 GB reference class"]
+  },
+  "sources": [
+    {"url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash", "kind": "primary", "checked": "2026-11-19", "note": "README with base and instruct tables, config.json, LICENSE, repo created 2026-09-10 and file sizes via the HF API"},
+    {"url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017", "kind": "primary", "checked": "2026-11-19", "note": "README with the 1017 comparison table, LICENSE, repo created 2026-10-17"},
+    {"url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-Base", "kind": "primary", "checked": "2026-11-19", "note": "HTTP 401 from the API (repo does not exist)"},
+    {"url": "https://huggingface.co/ISTA-DASLab/DeepSeek-V4.1-Flash-1017-GSQ-RCO-GGUF", "kind": "primary", "checked": "2026-11-19", "note": "card with sizes and the three-benchmark recovery table; file sizes via the HF tree API"},
+    {"url": "https://huggingface.co/unsloth/DeepSeek-V4.1-Flash-1017-GGUF", "kind": "primary", "checked": "2026-11-19", "note": "card head and file sizes via the HF tree API"},
+    {"url": "https://huggingface.co/antirez/deepseek-v4.1-flash-gguf", "kind": "primary", "checked": "2026-11-19", "note": "file sizes via the HF tree API"},
+    {"url": "https://huggingface.co/kyuz0/deepseek-v4.1-flash-gguf", "kind": "primary", "checked": "2026-11-19", "note": "file sizes via the HF tree API"},
+    {"url": "https://huggingface.co/pfeifferj/DeepSeek-V4.1-Flash-GSQ-RCO-GGUF", "kind": "primary", "checked": "2026-11-19", "note": "file sizes via the HF tree API"},
+    {"url": "https://huggingface.co/internlm/Sage-S2.1-Flash", "kind": "primary", "checked": "2026-11-19", "note": "competing card that lists DeepSeek-V4.1-Flash-1017 scores"}
+  ],
+  "open_questions": [
+    "Independent agent or coding evaluation of the 1017 GGUFs on a standard harness (all current numbers are vendor or quantiser runs)",
+    "Whether the unsloth file sizes include the Engram tables, and how much RAM a run needs when the Engram file is mmapped from SSD",
+    "Decode speed on a 32 GB VRAM + 128 GB RAM machine with the 120.7 GB IQ1_M backbone (no measurement found)",
+    "A community repo shashanth-27xA9/DeepSeek-V4.1-Flash-SuperExpert-8GB claims a 4.2 GB GGUF with 95 % retention; a 552B backbone cannot fit 4.2 GB at any real quantisation (even 1 bit per weight is about 69 GB), so the claim is treated as unverified and not recorded as a variant"
+  ],
+  "last_checked": "2026-11-19"
+}

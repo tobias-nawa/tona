@@ -1,0 +1,333 @@
+{
+  "id": "gemma-4-31b-it",
+  "name": "Gemma 4 31B (instruction-tuned)",
+  "vendor": "Google DeepMind",
+  "release_date": "2026-04",
+  "lineage": {
+    "family": "Gemma 4"
+  },
+  "purpose": "Gemma 4 is a family of open models for text generation, coding, reasoning and multimodal understanding, from high-end phones to laptops and servers; the 31B dense model targets consumer GPUs, workstations and servers.",
+  "tasks": [
+    "general",
+    "documents",
+    "vision",
+    "math",
+    "translation"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image",
+      "video"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "many"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Gemma 4 repos carry no LICENSE file; the card links ai.google.dev/gemma/docs/gemma_4_license, which redirects to gemma.ai/resources/apache-2/ (Google DeepMind, read through a summarizer 2026-11-19): plain Apache License 2.0 text ('perpetual, worldwide, non-exclusive, no-charge, royalty-free, irrevocable' grant), no Gemma-specific terms and no prohibited-use policy. The older Gemma Terms of Use (Gemma 1-3, TranslateGemma) are a different, restrictive text."
+  },
+  "architecture": {
+    "kind": "dense transformer, hybrid local/global attention, vision encoder",
+    "gguf_arch": "gemma4",
+    "params_total_b": 30.7,
+    "params_active_b": 30.7,
+    "layers": 60,
+    "attention": "sliding window 1024 interleaved with global layers (last always global), unified K/V and p-RoPE in global layers",
+    "recurrent": "none",
+    "context_native": 262144,
+    "drafter": "assistant checkpoints exist (gemma-4-31B-it-qat-q4_0-unquantized-assistant)",
+    "why_this_design": "Card: hybrid attention interleaves local sliding-window with full global attention (final layer always global) to 'deliver the processing speed and low memory footprint of a lightweight model without sacrificing the deep awareness required for complex, long-context tasks'."
+  },
+  "variants": [
+    {
+      "repo": "google/gemma-4-31B-it",
+      "format": "safetensors BF16",
+      "official": true
+    },
+    {
+      "repo": "google/gemma-4-31B-it-qat-w4a16-ct",
+      "format": "QAT W4A16 compressed-tensors",
+      "official": true
+    },
+    {
+      "repo": "unsloth/gemma-4-31B-it-GGUF",
+      "format": "GGUF Q3_K_M",
+      "size_gb": 14.74,
+      "official": false
+    },
+    {
+      "repo": "unsloth/gemma-4-31B-it-GGUF",
+      "format": "GGUF Q4_K_M",
+      "size_gb": 18.32,
+      "official": false
+    },
+    {
+      "repo": "unsloth/gemma-4-31B-it-GGUF",
+      "format": "GGUF Q8_0",
+      "size_gb": 32.64,
+      "official": false
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "no",
+      "basis": "estimate",
+      "notes": "Q3_K_S 13.2 GB leaves no KV."
+    },
+    "pc-16gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "variant": "Q3_K_M 14.7 GB",
+      "notes": "Little KV room; dense."
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q4_K_M 18.3 GB"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q6 comfortable; Q8_0 32.6 GB marginal"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "basis": "estimate"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q4_K_M"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q8_0"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "vLLM",
+      "Transformers"
+    ],
+    "notes": "No Gemma 4 module in Tona (ArchId list: Qwen4Exp, Qwen35Moe, NemotronHMoe)."
+  },
+  "benchmarks": [
+    {
+      "name": "MMLU-Pro",
+      "score": 85.2,
+      "kind": "vendor",
+      "source": "https://huggingface.co/google/gemma-4-31B-it",
+      "unit": "%"
+    },
+    {
+      "name": "GPQA Diamond",
+      "score": 84.3,
+      "kind": "vendor",
+      "source": "https://huggingface.co/google/gemma-4-31B-it",
+      "unit": "%"
+    },
+    {
+      "name": "AIME 2026 no tools",
+      "score": 89.2,
+      "kind": "vendor",
+      "source": "https://huggingface.co/google/gemma-4-31B-it",
+      "unit": "%"
+    },
+    {
+      "name": "HLE no tools / with search",
+      "score": "19.5 / 26.5",
+      "kind": "vendor",
+      "source": "https://huggingface.co/google/gemma-4-31B-it",
+      "unit": "%"
+    },
+    {
+      "name": "MMMLU (multilingual)",
+      "score": 88.4,
+      "kind": "vendor",
+      "source": "https://huggingface.co/google/gemma-4-31B-it",
+      "unit": "%"
+    },
+    {
+      "name": "MRCR v2 8-needle 128K",
+      "score": 66.4,
+      "kind": "vendor",
+      "source": "https://huggingface.co/google/gemma-4-31B-it",
+      "unit": "%"
+    },
+    {
+      "name": "Tau2 avg",
+      "score": 76.9,
+      "kind": "vendor",
+      "source": "https://huggingface.co/google/gemma-4-31B-it",
+      "unit": "%"
+    },
+    {
+      "name": "AA-Omniscience v1.1",
+      "score": -49,
+      "kind": "independent",
+      "source": "https://artificialanalysis.ai/models/comparisons/qwen3-8-27b-vs-gemma-4-31b",
+      "variant": "hosted, reasoning",
+      "harness": "Artificial Analysis"
+    },
+    {
+      "name": "MMLU-ProX (German, PeerBench DACH)",
+      "score": 82.1,
+      "kind": "independent",
+      "source": "https://dach.peerbench.ai/api/leaderboard.json",
+      "variant": "bf16",
+      "harness": "PeerBench DACH German Language LLM Index, run by PeerBench",
+      "date": "2026-06-11"
+    },
+    {
+      "name": "INCLUDE (German, PeerBench DACH)",
+      "score": 68.3,
+      "kind": "independent",
+      "source": "https://dach.peerbench.ai/api/leaderboard.json",
+      "variant": "bf16",
+      "harness": "PeerBench DACH German Language LLM Index, run by PeerBench",
+      "date": "2026-06-11"
+    },
+    {
+      "name": "GermEval NER (German, PeerBench DACH)",
+      "score": 82.6,
+      "kind": "independent",
+      "source": "https://dach.peerbench.ai/api/leaderboard.json",
+      "variant": "bf16",
+      "harness": "PeerBench DACH German Language LLM Index, run by PeerBench",
+      "date": "2026-06-11"
+    },
+    {
+      "name": "ScaLA (German, PeerBench DACH)",
+      "score": 71.0,
+      "kind": "independent",
+      "source": "https://dach.peerbench.ai/api/leaderboard.json",
+      "variant": "bf16",
+      "harness": "PeerBench DACH German Language LLM Index, run by PeerBench",
+      "date": "2026-06-11"
+    },
+    {
+      "name": "SB10K (German, PeerBench DACH)",
+      "score": 61.0,
+      "kind": "independent",
+      "source": "https://dach.peerbench.ai/api/leaderboard.json",
+      "variant": "bf16",
+      "harness": "PeerBench DACH German Language LLM Index, run by PeerBench",
+      "date": "2026-06-11"
+    },
+    {
+      "name": "MuSR (German, PeerBench DACH)",
+      "score": 83.5,
+      "kind": "independent",
+      "source": "https://dach.peerbench.ai/api/leaderboard.json",
+      "variant": "bf16",
+      "harness": "PeerBench DACH German Language LLM Index, run by PeerBench",
+      "date": "2026-06-11"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "Highest vendor MMMLU (88.4) and MRCR long-context (66.4) among the consumer-GPU models in this set",
+      "Apache-2.0 and a very large user base",
+      "140+ languages in pre-training, 35+ out of the box"
+    ],
+    "weaknesses": [
+      "Worst AA-Omniscience on the comparison page (-49 against -6 for Qwen3.8-27B): hallucinates more",
+      "Local agent use: tool-call template and parser problems reported"
+    ],
+    "behavior": "Thinking is switched on by <|think|> at the start of the system prompt; without it an empty thought block is still emitted. Sampling T=1.0, top_p 0.95, top_k 64. Earlier thoughts leave the history except in tool-call turns.",
+    "best_for": [
+      "Multilingual chat and long-document Q&A",
+      "Image and document understanding"
+    ],
+    "avoid_for": [
+      "Unaided factual recall",
+      "Long autonomous tool loops (reports below)"
+    ],
+    "user_reports": [
+      {
+        "summary": "Under long context plus reasoning the Gemma 4 family malforms tool calls and loops; commenters blame templates, GGUF packaging and parsers more than the weights.",
+        "sentiment": "negative",
+        "source": "https://discuss.huggingface.co/t/gemma-4-bug-fixes-and-research-request/176979",
+        "date": "2026-04"
+      },
+      {
+        "summary": "GGUF users (Q4_K_M, Q6, Q8, official QAT) report the model stops reasoning and answers directly at 29-31K tokens of chat depth; the reporter closed the thread without a confirmed cause (template, llama.cpp or model undetermined).",
+        "sentiment": "negative",
+        "source": "https://huggingface.co/google/gemma-4-31B-it/discussions/143",
+        "date": "2026-08-16"
+      }
+    ],
+    "maturity": "Google DeepMind: long-running open family, official QAT builds, many community GGUFs; the first GGUFs had template bugs and a redownload was advised (search summary, 2026-07)."
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "Best published German and long-context numbers of the dense models that fit 24 GB (independent MMLU-ProX DE 82.1, GermEval 82.6; PeerBench Elo 1477), Apache-2.0 (text read). Weak spots: independent hallucination score (AA-Omniscience -49) and INCLUDE DE 68.3 (Qwen3.8-27B: 87.9). Missing Tona module is only a blocker.",
+    "blockers": [
+      "no Gemma 4 module in Tona",
+      "AA-Omniscience -49"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/google/gemma-4-31B-it",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "model card"
+    },
+    {
+      "url": "https://huggingface.co/api/models/unsloth/gemma-4-31B-it-GGUF?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "GGUF sizes"
+    },
+    {
+      "url": "https://artificialanalysis.ai/models/comparisons/qwen3-8-27b-vs-gemma-4-31b",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "Artificial Analysis comparison page, read through a summarizer"
+    },
+    {
+      "url": "https://discuss.huggingface.co/t/gemma-4-bug-fixes-and-research-request/176979",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "search result, not opened"
+    },
+    {
+      "url": "https://huggingface.co/api/models?author=google&sort=createdAt&direction=-1&limit=25",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "QAT variants listing"
+    },
+    {
+      "url": "https://gemma.ai/resources/apache-2/",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "Gemma 4 license page (plain Apache-2.0), summarizer read"
+    },
+    {
+      "url": "https://dach.peerbench.ai/api/leaderboard.json",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "PeerBench DACH JSON export (generated 2026-10-25, last run 2026-10-16), read directly"
+    }
+  ],
+  "open_questions": [
+    "Exact release date (card has none; research/49 says April)",
+    "SimpleQA or FACTS not reported by Google",
+    "Cause of the INCLUDE DE gap to Qwen3.8-27B (68.3 vs 87.9)"
+  ],
+  "last_checked": "2026-11-19"
+}

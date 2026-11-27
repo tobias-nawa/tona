@@ -1,0 +1,364 @@
+{
+  "config": {
+    "A": {
+      "build": "work/build/mtl",
+      "env": {
+        "TONA_GPU_GAPS": "500"
+      },
+      "tooling": {
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0",
+        "TONA_GPU_GAPS": "500"
+      },
+      "commit": "stand-2026-10-25-1009-g320afeebb6-dirty",
+      "model": "<repo>/work/models/coder-dmt/coder-DMT-164e-00001-of-00002.gguf"
+    },
+    "B": {
+      "build": "work/build/mtl",
+      "env": {
+        "TONA_GPU_GAPS": "500"
+      },
+      "tooling": {
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0",
+        "TONA_GPU_GAPS": "500"
+      },
+      "commit": "stand-2026-10-25-1009-g320afeebb6-dirty",
+      "model": "<repo>/work/models/coder-dmt/coder-DMT-164e-00001-of-00002.gguf"
+    },
+    "workload": "set",
+    "targets": "bench-set at --ctx 32768",
+    "deterministic": false,
+    "plan_info": {
+      "expect": [
+        [
+          "decode-code",
+          -3.0,
+          3.0
+        ],
+        [
+          "decode-text",
+          -3.0,
+          3.0
+        ]
+      ],
+      "source": "research/measurements/2026-11-14-mac-ab-order.md",
+      "workload": "set",
+      "targets": "bench-set at --ctx 32768",
+      "primary": "",
+      "why_size": "A/A, not a speed comparison: the starts supply the gap lines of the probe",
+      "decode_tokens": 200,
+      "noise": {},
+      "warmup": true,
+      "round_warmup": true,
+      "load_log": true,
+      "A": {
+        "build": "work/build/mtl",
+        "env": {
+          "TONA_GPU_GAPS": "500"
+        },
+        "tooling": {
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0",
+          "TONA_GPU_GAPS": "500"
+        },
+        "commit": "stand-2026-10-25-1009-g320afeebb6-dirty",
+        "model": "<repo>/work/models/coder-dmt/coder-DMT-164e-00001-of-00002.gguf"
+      },
+      "B": {
+        "build": "work/build/mtl",
+        "env": {
+          "TONA_GPU_GAPS": "500"
+        },
+        "tooling": {
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0",
+          "TONA_GPU_GAPS": "500"
+        },
+        "commit": "stand-2026-10-25-1009-g320afeebb6-dirty",
+        "model": "<repo>/work/models/coder-dmt/coder-DMT-164e-00001-of-00002.gguf"
+      }
+    },
+    "reference_sha": {},
+    "corpus_sha256": "e13a800340859f7d39c63712d90383faae7e5a47c3865f0811e40d912612d38e",
+    "corpus_is_reference": true,
+    "commit": "320afee",
+    "noise": {}
+  },
+  "rounds": [
+    {
+      "order": "AB",
+      "sha": {
+        "A": {},
+        "B": {}
+      },
+      "A": {
+        "decode-code": 38.6,
+        "decode-text": 27.0
+      },
+      "counters": {
+        "A": {},
+        "B": {}
+      },
+      "B": {
+        "decode-code": 38.7,
+        "decode-text": 27.1
+      },
+      "seconds": 549.7903844579123
+    },
+    {
+      "order": "BA",
+      "sha": {
+        "B": {},
+        "A": {}
+      },
+      "B": {
+        "decode-code": 38.2,
+        "decode-text": 26.7
+      },
+      "counters": {
+        "B": {},
+        "A": {}
+      },
+      "A": {
+        "decode-code": 38.1,
+        "decode-text": 26.7
+      },
+      "seconds": 552.7566492080223
+    }
+  ],
+  "stop_reason": "2 rounds (undecided metrics stay open)",
+  "wall_seconds": 1249.5892522088252,
+  "loads": [
+    {
+      "start": 1,
+      "arm": "A",
+      "cpu_own": 6.0,
+      "cpu_system": 24.7,
+      "cpu_other": 7.8,
+      "gpu_own": 88.2,
+      "gpu_system": 0.1,
+      "gpu_other": 0.1,
+      "pageins": 21574.7,
+      "swapins": 4.2,
+      "compressions": 3975.1,
+      "level_min": 8,
+      "backup_share": 0.41,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 145,
+      "idle_before_s": null,
+      "ready_s": 2.0
+    },
+    {
+      "start": 2,
+      "arm": "A",
+      "cpu_own": 5.7,
+      "cpu_system": 52.6,
+      "cpu_other": 8.3,
+      "gpu_own": 93.6,
+      "gpu_system": 0.1,
+      "gpu_other": 0.1,
+      "pageins": 1164.9,
+      "swapins": 3.2,
+      "compressions": 3233.8,
+      "level_min": 7,
+      "backup_share": 1.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 135,
+      "idle_before_s": 0.1,
+      "ready_s": 2.0
+    },
+    {
+      "start": 3,
+      "arm": "A",
+      "cpu_own": 6.4,
+      "cpu_system": 67.0,
+      "cpu_other": 9.4,
+      "gpu_own": 93.1,
+      "gpu_system": 0.1,
+      "gpu_other": 0.1,
+      "pageins": 3003.0,
+      "swapins": 55.9,
+      "compressions": 8873.2,
+      "level_min": 5,
+      "backup_share": 1.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 138,
+      "idle_before_s": 0.1,
+      "ready_s": 2.0
+    },
+    {
+      "start": 4,
+      "arm": "B",
+      "cpu_own": 5.3,
+      "cpu_system": 60.9,
+      "cpu_other": 7.9,
+      "gpu_own": 94.0,
+      "gpu_system": 0.1,
+      "gpu_other": 0.1,
+      "pageins": 1498.5,
+      "swapins": 18.6,
+      "compressions": 1830.9,
+      "level_min": 9,
+      "backup_share": 1.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 135,
+      "idle_before_s": 0.1,
+      "ready_s": 2.0
+    },
+    {
+      "start": 5,
+      "arm": "B",
+      "cpu_own": 5.6,
+      "cpu_system": 68.1,
+      "cpu_other": 8.0,
+      "gpu_own": 93.7,
+      "gpu_system": 0.1,
+      "gpu_other": 0.1,
+      "pageins": 943.8,
+      "swapins": 37.1,
+      "compressions": 2626.3,
+      "level_min": 9,
+      "backup_share": 0.72,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 135,
+      "idle_before_s": 0.1,
+      "ready_s": 2.0
+    },
+    {
+      "start": 6,
+      "arm": "B",
+      "cpu_own": 5.4,
+      "cpu_system": 21.9,
+      "cpu_other": 7.9,
+      "gpu_own": 94.2,
+      "gpu_system": 0.1,
+      "gpu_other": 0.1,
+      "pageins": 305.8,
+      "swapins": 5.0,
+      "compressions": 2475.3,
+      "level_min": 9,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 135,
+      "idle_before_s": 0.1,
+      "ready_s": 2.0
+    },
+    {
+      "start": 7,
+      "arm": "B",
+      "cpu_own": 4.6,
+      "cpu_system": 13.9,
+      "cpu_other": 7.4,
+      "gpu_own": 94.8,
+      "gpu_system": 0.1,
+      "gpu_other": 0.1,
+      "pageins": 146.4,
+      "swapins": 5.5,
+      "compressions": 1055.6,
+      "level_min": 8,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 138,
+      "idle_before_s": 0.1,
+      "ready_s": 2.0
+    },
+    {
+      "start": 8,
+      "arm": "A",
+      "cpu_own": 4.9,
+      "cpu_system": 18.8,
+      "cpu_other": 12.2,
+      "gpu_own": 94.5,
+      "gpu_system": 0.1,
+      "gpu_other": 0.1,
+      "pageins": 879.6,
+      "swapins": 290.2,
+      "compressions": 4112.4,
+      "level_min": 9,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 136,
+      "idle_before_s": 0.1,
+      "ready_s": 2.0
+    },
+    {
+      "start": 9,
+      "arm": "A",
+      "cpu_own": 4.8,
+      "cpu_system": 14.5,
+      "cpu_other": 7.0,
+      "gpu_own": 94.5,
+      "gpu_system": 0.1,
+      "gpu_other": 0.1,
+      "pageins": 502.0,
+      "swapins": 4.8,
+      "compressions": 1820.5,
+      "level_min": 8,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 138,
+      "idle_before_s": 0.1,
+      "ready_s": 2.0
+    }
+  ],
+  "warmup": {
+    "decode-code": 38.2,
+    "decode-text": 27.0
+  },
+  "plan": {
+    "alpha": 0.05,
+    "margin": 0.5,
+    "max_rounds": 2,
+    "min_rounds": 2,
+    "prior_sd": 0.5,
+    "prior_df": 4.0
+  },
+  "decisions": {
+    "decode-code": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": 0.26076727455700555,
+      "ci_diff_percent": [
+        -0.5521244257072898,
+        1.073658974821301
+      ]
+    },
+    "decode-text": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": 0.18518518518518823,
+      "ci_diff_percent": [
+        -0.655118753272177,
+        1.0254891236425534
+      ]
+    }
+  }
+}

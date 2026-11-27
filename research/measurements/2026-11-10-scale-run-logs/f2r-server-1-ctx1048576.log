@@ -1,0 +1,22 @@
+Tona (tona-server) on http://127.0.0.1:8097 (Anthropic: /v1/messages, OpenAI: /v1/chat/completions), without key, loading ...
+warning: --ctx 1048576 is beyond the native context of 262144 tokens and TONA_ROPE_YARN is off; quality beyond 262144 is not measured
+host memory: GTT (probe 64 MB grew the GTT use by 64 MB; 0.3 of 32.5 GB in use)
+evicted_ms counter: /sys/class/kfd/kfd/proc/3956299/stats_7773/evicted_ms (0 ms so far), evictions do not count against the pass deadline
+Initialization: 512 MTP experts as Q2_0, converted on the GPU (708 MB) in 0.9 s
+host memory: 11.7 GB of the pinned experts do not fit the GTT and are registered as userptr
+Releasing page cache: 8.25 GB of file mappings removed from the address space
+loaded in 19.8 s: context 1048576 (KV int8 14.50 GB in RAM), VRAM 14.41 GB, 72 expert slots per layer, 25.1 GB pinned
+07:42:54 POST /v1/messages/count_tokens → 200
+07:42:54 POST /v1/messages/count_tokens → 200
+07:42:54 POST /v1/messages/count_tokens → 200
+07:42:55 POST /v1/messages/count_tokens → 200
+07:42:55 POST /v1/messages/count_tokens → 200
+07:42:55 POST /v1/messages/count_tokens → 200
+07:42:56 POST /v1/messages/count_tokens → 200
+07:42:56 POST /v1/messages/count_tokens → 200
+07:42:56 POST /v1/messages/count_tokens → 200
+07:42:57 POST /v1/messages/count_tokens → 200
+07:42:57 POST /v1/messages/count_tokens → 200
+07:42:57 POST /v1/messages/count_tokens → 200
+07:57:51 Request: 998910 prompt tokens (0 reused, 998910 computed in 893.0 s, new conversation (stashing 0 ms)), 26 tokens in 0.6 s = 46.2 tok/s, 2.36 tokens per pass, 0 of 11 passes from the history (0.00 per pass)
+07:57:51 POST /v1/chat/completions → 200

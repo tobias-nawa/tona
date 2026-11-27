@@ -1,0 +1,77 @@
+{
+  "id": "apertus-v1.5-base",
+  "name": "Apertus 1.5 Base (8B and 70B, long-context checkpoints)",
+  "vendor": "Swiss AI Initiative (swiss-ai)",
+  "release_date": "2026-09-23",
+  "lineage": {
+    "family": "Apertus 1.5 (SFT, DPO and RL instruct variants were published 2026-07-24 and 2026-08-22, before the sweep window and not recorded here)",
+    "how_derived": "long-context-extended checkpoint of the pre-training pipeline (base model, no chat template)"
+  },
+  "purpose": "Pre-training base models of the open Swiss national LLM family, for plain-text completion and as starting points for fine-tuning; separate SFT, RL and DPO repos cover instruction following and thinking mode (card via a page summarizer).",
+  "tasks": ["general"],
+  "modalities": {"input": ["text", "image", "audio"], "output": ["text"]},
+  "languages": {"natural": ["many"]},
+  "license": {
+    "name": "Apache-2.0 plus Acceptable Use Policy",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "unknown",
+    "notes": "Tags and the card summary say Apache-2.0 with use also governed by an Acceptable Use Policy; files are gated behind a form sharing email and username with the authors, so no license text was read."
+  },
+  "architecture": {
+    "kind": "dense transformer (details not on the visible card)",
+    "params_total_b": 9,
+    "params_active_b": 9,
+    "context_native": 262144,
+    "context_max": 262144,
+    "drafter": "none stated",
+    "why_this_design": "not stated on the visible card; the family card is summarized by a page summarizer only"
+  },
+  "variants": [
+    {"repo": "swiss-ai/Apertus-v1.5-8B-base", "format": "safetensors BF16/F32 (HF metadata says 9B parameters)", "size_gb": 18.19, "official": true, "notes": "gated"},
+    {"repo": "swiss-ai/Apertus-v1.5-70B-base", "format": "safetensors", "size_gb": 144.39, "official": true, "notes": "gated"}
+  ],
+  "hardware_fit": {
+    "pc-12gb": {"fits": "no", "basis": "estimate", "variant": "8B base BF16 18 GB", "notes": "no GGUF found; a base model is also not the target of Tona"},
+    "pc-16gb": {"fits": "marginal", "basis": "estimate", "variant": "8B base BF16"},
+    "pc-24gb": {"fits": "yes", "basis": "estimate", "variant": "8B base BF16"},
+    "pc-32gb": {"fits": "yes", "basis": "estimate", "variant": "8B base BF16", "notes": "70B base (144 GB) does not fit"},
+    "mac-16-24gb": {"fits": "marginal", "basis": "estimate", "variant": "8B base BF16"},
+    "mac-32gb": {"fits": "yes", "basis": "estimate", "variant": "8B base BF16"},
+    "mac-64gb+": {"fits": "yes", "basis": "estimate", "variant": "8B base BF16", "notes": "70B base 144 GB does not fit"}
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "unknown",
+    "other": ["Transformers", "vLLM"],
+    "notes": "Not checked beyond the card summary."
+  },
+  "benchmarks": [
+    {"name": "HumanEval", "score": 81.8, "kind": "vendor", "variant": "Apertus 1.5 8B (Apertus 1.0 48.6, Llama 3.1 8B 75.7)", "source": "https://huggingface.co/swiss-ai/Apertus-v1.5-8B-base"},
+    {"name": "GSM8K", "score": 66.2, "kind": "vendor", "variant": "8B", "source": "https://huggingface.co/swiss-ai/Apertus-v1.5-8B-base"},
+    {"name": "MMLU-Pro", "score": 38.5, "kind": "vendor", "variant": "8B", "source": "https://huggingface.co/swiss-ai/Apertus-v1.5-8B-base"},
+    {"name": "RULER 256K", "score": 54.8, "kind": "vendor", "variant": "8B", "source": "https://huggingface.co/swiss-ai/Apertus-v1.5-8B-base"}
+  ],
+  "soft": {
+    "strengths": ["Fully open Swiss effort with an Apache-2.0 tag", "Big gains over Apertus 1.0 (HumanEval 48.6 to 81.8, vendor)"],
+    "weaknesses": ["Qwen3.5-9B scores higher on most reasoning, math and knowledge tasks in the card comparison", "Gated download"],
+    "best_for": ["fine-tuning on European-language data"],
+    "avoid_for": ["direct use as an assistant (base model)"],
+    "maturity": "National research initiative; the 8B base has 3.2k downloads, the 70B base 86."
+  },
+  "tona_fit": {
+    "verdict": "reject",
+    "reason": "Base checkpoints, gated, not stronger than the Qwen3.5 class in the vendor's own comparison; not a coding agent model. The RL instruct variants (earlier release) would be the ones to judge, outside this sweep.",
+    "blockers": ["base model", "gated files"]
+  },
+  "sources": [
+    {"url": "https://huggingface.co/swiss-ai/Apertus-v1.5-8B-base", "kind": "secondary", "checked": "2026-11-19", "note": "model card text read through a page summarizer (WebFetch); files gated, config and LICENSE not readable"},
+    {"url": "https://huggingface.co/api/models/swiss-ai/Apertus-v1.5-70B-base", "kind": "primary", "checked": "2026-11-19", "note": "metadata and sizes via the HF API"}
+  ],
+  "open_questions": [
+    "Architecture, tokens trained and language list (card details not retrieved)",
+    "Real license text behind the gate",
+    "Quality of the RL instruct 8B against Qwen3.5-9B"
+  ],
+  "last_checked": "2026-11-19"
+}

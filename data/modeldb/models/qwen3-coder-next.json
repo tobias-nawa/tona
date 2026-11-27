@@ -1,0 +1,197 @@
+{
+  "id": "qwen3-coder-next",
+  "name": "Qwen3-Coder-Next 80B-A3B",
+  "vendor": "Alibaba Qwen",
+  "release_date": "2026-02-03",
+  "lineage": {
+    "family": "Qwen3-Coder"
+  },
+  "purpose": "Qwen states: designed specifically for coding agents and local development; integrates with Claude Code, Qwen Code, Cline and Trae.",
+  "tasks": [
+    "coding"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en"
+    ],
+    "programming": {}
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card tag apache-2.0 with license_link to LICENSE; raw/main/LICENSE returns 404 and the file list has none (2026-11-19). The sibling Qwen3-Coder-30B-A3B repo carries the Apache text."
+  },
+  "architecture": {
+    "kind": "hybrid Gated DeltaNet + gated attention MoE",
+    "gguf_arch": "qwen3next",
+    "params_total_b": 80,
+    "params_active_b": 3,
+    "layers": 48,
+    "attention": "12 x (3 Gated DeltaNet-MoE + 1 gated attention-MoE), 16 Q / 2 KV heads, head dim 256",
+    "recurrent": "Gated DeltaNet",
+    "experts": 512,
+    "experts_active": 10,
+    "context_native": 262144,
+    "context_max": 262144,
+    "drafter": "none stated",
+    "why_this_design": "Card claims efficiency at 3B active parameters; no further rationale."
+  },
+  "variants": [
+    {
+      "repo": "Qwen/Qwen3-Coder-Next-GGUF",
+      "format": "GGUF Q4_K_M 48.4 GB, Q5_K_M 56.7 GB, Q8_0 84.8 GB",
+      "official": true,
+      "notes": "sizes not read size_gb is the Q4_K_M file",
+      "size_gb": 48.4
+    },
+    {
+      "repo": "unsloth/Qwen3-Coder-Next-GGUF",
+      "format": "GGUF dynamic quants",
+      "official": false
+    },
+    {
+      "repo": "Qwen/Qwen3-Coder-Next-FP8",
+      "format": "FP8",
+      "official": true
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "variant": "Q4_K_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (48.4 GB) against the budget of docs/hardware: 9.6 GB VRAM plus 50 GB RAM = 60 GB; about 20% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that)"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "Q4_K_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (48.4 GB) against the budget of docs/hardware: 13.6 GB VRAM plus 50 GB RAM = 64 GB; about 28% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that)"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "Q4_K_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (48.4 GB) against the budget of docs/hardware: 21.6 GB VRAM plus 82 GB RAM = 104 GB; about 45% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that)"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "Q4_K_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (48.4 GB) against the budget of docs/hardware: 29.6 GB VRAM plus 114 GB RAM = 144 GB; about 61% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that)"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "Q4_K_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (48.4 GB) against the GPU share of docs/hardware (about 12 GB)"
+    },
+    "mac-32gb": {
+      "fits": "no",
+      "variant": "Q4_K_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (48.4 GB) against the GPU share of docs/hardware (about 22 GB)"
+    },
+    "mac-64gb+": {
+      "fits": "marginal",
+      "variant": "Q4_K_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (48.4 GB) against the GPU share of docs/hardware (about 52 GB)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "vLLM >= 0.15",
+      "SGLang >= 0.5.8"
+    ],
+    "notes": "GGUF repos exist; architecture is close to the qwen35moe path Tona already runs, not checked"
+  },
+  "benchmarks": [
+    {
+      "name": "SWE-bench Verified",
+      "score": 70.6,
+      "kind": "vendor",
+      "source": "https://huggingface.co/Qwen/Qwen3-Coder-Next",
+      "variant": "BF16"
+    },
+    {
+      "name": "SWE-bench Multilingual",
+      "score": 64.3,
+      "kind": "vendor",
+      "source": "https://huggingface.co/Qwen/Qwen3-Coder-Next",
+      "variant": "BF16"
+    },
+    {
+      "name": "SWE-bench Pro",
+      "score": 44.3,
+      "kind": "vendor",
+      "source": "https://huggingface.co/Qwen/Qwen3-Coder-Next",
+      "variant": "BF16"
+    },
+    {
+      "name": "Terminal-Bench 2.0",
+      "score": 36.2,
+      "kind": "vendor",
+      "source": "https://huggingface.co/Qwen/Qwen3-Coder-Next",
+      "variant": "BF16"
+    },
+    {
+      "name": "MMLU-Pro",
+      "score": 80.52,
+      "kind": "vendor",
+      "source": "https://huggingface.co/Qwen/Qwen3-Coder-Next",
+      "variant": "BF16"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "Official coder from the Qwen team with Apache-2.0",
+      "Non-thinking: short outputs for agent loops",
+      "Likely FIM-capable family (tokenizers define FIM tokens per research/52)"
+    ],
+    "weaknesses": [
+      "Older than Ornith and Flash-Next, lower SWE-bench Pro (44.3)",
+      "Non-thinking only"
+    ],
+    "behavior": "Sampling T 1.0, top_p 0.95, top_k 40; no think blocks.",
+    "maturity": "Qwen: 1749 likes, 336k downloads; 120 quantized versions listed."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Apache-2.0 by card (text file missing), Q4_K_M 48.4 GB fits the 24 GB + 96 GB class and 16 GB + 64 GB marginally; superseded in vendor agent quality by Ornith-1.5-35B-A3B (SWE-bench Multilingual 64.3 against 71.4) at a smaller size. Keep as the Apache reference for 24 to 32 GB classes.",
+    "blockers": []
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/Qwen/Qwen3-Coder-Next",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "page text read through a summarizer (WebFetch)"
+    },
+    {
+      "url": "research/52-purpose-models.md",
+      "kind": "own",
+      "checked": "2026-11-19",
+      "note": "FIM tokens"
+    }
+  ],
+  "open_questions": [
+    "GGUF sizes",
+    "Programming language evidence",
+    "Real-user agent reports",
+    "Per-language quality and independent coding evidence: the Aider polyglot board is stale (mirrors: last update 2025-11-20, no entry for any model of this database), LiveCodeBench and swebench.com publish no per-language numbers for it that we could retrieve. Check: our own Exercism polyglot run per language."
+  ],
+  "last_checked": "2026-11-19"
+}

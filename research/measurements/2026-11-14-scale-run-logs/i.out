@@ -1,0 +1,36 @@
+VRAM-desktop i-llama 20:46:25 1467 MiB
+Starting llamacpp-hip, log: work/logs/20261114-204625-llamacpp-hip.log
+ready after 6 s
+Warning: Swap in use before start: 987 MiB
+[short-code] warm-up 1/1: TTFT 1.77 s, prefill 57.2 tok/s, decode 21.2 tok/s (client 21.3), 101→144 tokens, cache 0, expected ok
+[short-code] run 1/3: TTFT 1.13 s, prefill 92.4 tok/s, decode 21.4 tok/s (client 21.5), 99→185 tokens, cache 0, expected ok
+[short-code] run 2/3: TTFT 1.13 s, prefill 93.4 tok/s, decode 21.4 tok/s (client 21.4), 100→300 tokens, cache 0, expected ok
+[short-code] run 3/3: TTFT 1.10 s, prefill 97.7 tok/s, decode 21.7 tok/s (client 21.8), 101→250 tokens, cache 0, expected ok
+[long-decode] warm-up 1/1: TTFT 1.11 s, prefill 99.7 tok/s, decode 22.5 tok/s (client 22.5), 104→1024 tokens, cache 0, expected WRONG
+[long-decode] run 1/3: TTFT 1.13 s, prefill 99.8 tok/s, decode 22.2 tok/s (client 22.2), 106→1024 tokens, cache 0, expected WRONG
+[long-decode] run 2/3: TTFT 1.08 s, prefill 102.4 tok/s, decode 22.4 tok/s (client 22.4), 104→1024 tokens, cache 0, expected WRONG
+[long-decode] run 3/3: TTFT 1.12 s, prefill 99.1 tok/s, decode 22.4 tok/s (client 22.4), 105→1024 tokens, cache 0, expected WRONG
+[needle-30k] warm-up 1/1: TTFT 75.54 s, prefill 410.1 tok/s, decode 17.4 tok/s (client 17.4), 30943→768 tokens, cache 0, expected WRONG
+[needle-30k] run 1/3: TTFT 75.43 s, prefill 411.3 tok/s, decode 17.4 tok/s (client 17.4), 30944→768 tokens, cache 0, expected WRONG
+[needle-30k] run 2/3: TTFT 75.38 s, prefill 411.6 tok/s, decode 17.3 tok/s (client 17.3), 30946→768 tokens, cache 0, expected WRONG
+[needle-30k] run 3/3: TTFT 75.22 s, prefill 412.4 tok/s, decode 17.4 tok/s (client 17.4), 30942→768 tokens, cache 0, expected WRONG
+Report: <worktree>/research/measurements/2026-11-14-ibench-llamacpp-hip-base-scale-1114.md
+Raw data: <worktree>/research/measurements/2026-11-14-ibench-llamacpp-hip-base-scale-1114.json
+VRAM-desktop i-tona 20:58:53 1565 MiB
+Warning: Swap in use before start: 982 MiB
+Warning: Repository has uncommitted changes
+[short-code] warm-up 1/1: TTFT 0.39 s, prefill - tok/s, decode 91.2 tok/s (client 89.8), 65→62 tokens, cache 0, expected ok
+[short-code] run 1/3: TTFT 0.31 s, prefill - tok/s, decode 108.3 tok/s (client 106.7), 65→62 tokens, cache 0, expected ok
+[short-code] run 2/3: TTFT 0.31 s, prefill - tok/s, decode 109.3 tok/s (client 107.6), 66→62 tokens, cache 0, expected ok
+[short-code] run 3/3: TTFT 0.31 s, prefill - tok/s, decode 110.1 tok/s (client 108.4), 64→62 tokens, cache 0, expected ok
+[long-decode] warm-up 1/1: TTFT 0.32 s, prefill - tok/s, decode 74.3 tok/s (client 74.2), 69→1024 tokens, cache 0, expected ok
+[long-decode] run 1/3: TTFT 0.32 s, prefill - tok/s, decode 72.5 tok/s (client 72.4), 69→1024 tokens, cache 0, expected ok
+[long-decode] run 2/3: TTFT 0.32 s, prefill - tok/s, decode 77.9 tok/s (client 77.9), 69→1024 tokens, cache 0, expected ok
+[long-decode] run 3/3: TTFT 0.32 s, prefill - tok/s, decode 73.7 tok/s (client 73.6), 68→1024 tokens, cache 0, expected ok
+[needle-30k] warm-up 1/1: TTFT 16.03 s, prefill - tok/s, decode 60.9 tok/s (client 60.8), 30909→678 tokens, cache 0, expected ok
+[needle-30k] run 1/3: TTFT 16.01 s, prefill - tok/s, decode 60.4 tok/s (client 60.7), 30909→663 tokens, cache 0, expected ok
+[needle-30k] run 2/3: TTFT 16.25 s, prefill - tok/s, decode 60.8 tok/s (client 61.1), 30909→614 tokens, cache 0, expected ok
+[needle-30k] run 3/3: TTFT 16.35 s, prefill - tok/s, decode 64.9 tok/s (client 64.9), 30909→768 tokens, cache 0, expected ok
+Report: <worktree>/research/measurements/2026-11-14-ibench-tona-base-tona-scale-1114.md
+Raw data: <worktree>/research/measurements/2026-11-14-ibench-tona-base-tona-scale-1114.json
+SLOTS i-tona: loaded in 8.8 s: context 65536 (KV int8 0.91 GB in RAM), VRAM 13.96 GB, 82 expert slots per layer, 26.3 GB pinned

@@ -1,0 +1,207 @@
+{
+  "id": "swift-1.5-qwen3.8-flash-next",
+  "name": "Swift 1.5 (UkisAI fine-tune of Qwen3.8-Flash-Next)",
+  "vendor": "UkisAI",
+  "release_date": "2026-09-24",
+  "lineage": {
+    "base_model": "Qwen/Qwen3.8-Flash-Next",
+    "how_derived": "tokens linked to pathological overthinking are penalized, accuracy recovered with RL and on-policy distillation"
+  },
+  "purpose": "UkisAI states: a reasoning-efficient derivative with shorter reasoning traces and fewer overthinking errors at near-base accuracy, post-trained for coding and long-horizon agent work (personal agents, terminal use, software engineering).",
+  "tasks": [
+    "coding",
+    "general"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en",
+      "zh"
+    ],
+    "programming": {}
+  },
+  "license": {
+    "name": "Swift Open License 1.0 (free up to USD 1M annual revenue) on top of the Qwen Community License 1.0",
+    "verified": false,
+    "commercial_use": "limited",
+    "redistribution": "unknown",
+    "notes": "Swift Open License 1.0 on top of the Qwen Community License 1.0; the repository README was unreadable (29 bytes) on 2026-11-19, so the Swift text was not read. Qwen text read (see the Gyro record): condition 2 applies. Verdict policy (README, 2026-11-19): this licence term does not lower tona_fit; kept here for an installer label."
+  },
+  "architecture": {
+    "kind": "hybrid Gated DeltaNet + QSA MoE with n-gram table (qwen4_exp), 512 experts",
+    "gguf_arch": "qwen4_exp",
+    "params_total_b": 125,
+    "params_active_b": 6,
+    "context_native": 262144,
+    "drafter": "MTP (disabled in the vendor benchmarks)",
+    "why_this_design": "Same architecture as the base; the change is training only, to cut overthinking tokens."
+  },
+  "variants": [
+    {
+      "repo": "ukisai/Swift-1.5-Qwen3.8-Flash-Next-GGUF",
+      "format": "GGUF IQ1_S 70.1 GB to Q8_0 188.3 GB (IQ4_XS 97.7 GB, Q4_K_M 119.6 GB)",
+      "size_gb": 70.1,
+      "official": true,
+      "notes": "card recommends IQ4_XS for 128 GB unified memory"
+    },
+    {
+      "repo": "ukisai/Swift-1.5-Qwen3.8-Flash-Next-GSQ-RCO-GGUF",
+      "format": "GGUF GSQ-RCO Q2_0 / IQ2_XS",
+      "size_gb": 68.2,
+      "official": true,
+      "notes": "IQ2_XS 68 GB in toolchain/models.toml (fetched for comparison only, never ran in Tona)"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "no",
+      "variant": "GSQ-RCO Q2_0 / IQ2_XS",
+      "basis": "estimate",
+      "notes": "estimate from the file size (68.2 GB) against the budget of docs/hardware: 9.6 GB VRAM plus 50 GB RAM = 60 GB; about 14% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that)"
+    },
+    "pc-16gb": {
+      "fits": "marginal",
+      "variant": "GSQ-RCO Q2_0 / IQ2_XS",
+      "basis": "estimate",
+      "notes": "estimate from the file size (68.2 GB) against the budget of docs/hardware: 13.6 GB VRAM plus 50 GB RAM = 64 GB; about 20% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that)"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "GSQ-RCO Q2_0 / IQ2_XS",
+      "basis": "estimate",
+      "notes": "estimate from the file size (68.2 GB) against the budget of docs/hardware: 21.6 GB VRAM plus 82 GB RAM = 104 GB; about 32% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that)"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "GSQ-RCO Q2_0 / IQ2_XS",
+      "basis": "estimate",
+      "notes": "estimate from the file size (68.2 GB) against the budget of docs/hardware: 29.6 GB VRAM plus 114 GB RAM = 144 GB; about 43% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that)"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "GSQ-RCO Q2_0 / IQ2_XS",
+      "basis": "estimate",
+      "notes": "estimate from the file size (68.2 GB) against the GPU share of docs/hardware (about 12 GB)"
+    },
+    "mac-32gb": {
+      "fits": "no",
+      "variant": "GSQ-RCO Q2_0 / IQ2_XS",
+      "basis": "estimate",
+      "notes": "estimate from the file size (68.2 GB) against the GPU share of docs/hardware (about 22 GB)"
+    },
+    "mac-64gb+": {
+      "fits": "no",
+      "variant": "GSQ-RCO Q2_0 / IQ2_XS",
+      "basis": "estimate",
+      "notes": "estimate from the file size (68.2 GB) against the GPU share of docs/hardware (about 52 GB)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "notes": "same tensors as the base; Tona's Coder backend would load a 512-expert file (flash-next-512-q2_0 in test)"
+  },
+  "benchmarks": [
+    {
+      "name": "Terminal-Bench 2.1",
+      "score": 69.66,
+      "kind": "vendor",
+      "source": "https://huggingface.co/ukisai/Swift-1.5-Qwen3.8-Flash-Next-GGUF",
+      "variant": "BF16, Swift 1.5 (base 67.64)",
+      "harness": "Harbor 0.20.0, Terminus-2, 89 tasks, five seeds",
+      "unit": "%"
+    },
+    {
+      "name": "LiveCodeBench v6",
+      "score": 90.39,
+      "kind": "vendor",
+      "source": "https://huggingface.co/ukisai/Swift-1.5-Qwen3.8-Flash-Next-GGUF",
+      "variant": "BF16 (base 88.40)",
+      "harness": "five seeds"
+    },
+    {
+      "name": "GPQA Diamond",
+      "score": 89.6,
+      "kind": "vendor",
+      "source": "https://huggingface.co/ukisai/Swift-1.5-Qwen3.8-Flash-Next-GGUF",
+      "variant": "BF16 (base 89.8)"
+    },
+    {
+      "name": "IFBench",
+      "score": 70.13,
+      "kind": "vendor",
+      "source": "https://huggingface.co/ukisai/Swift-1.5-Qwen3.8-Flash-Next-GGUF",
+      "variant": "BF16 (base 73.20)"
+    },
+    {
+      "name": "AA Coding Index (aggregator mirror), Qwen3.8-Flash-Next base",
+      "score": 73.0,
+      "kind": "independent",
+      "source": "https://benchlm.ai/benchmarks/aacodingindex",
+      "variant": "base model, not Swift",
+      "unit": "%",
+      "date": "2026-11-19",
+      "harness": "aggregator mirror of the Artificial Analysis Coding Index, read 2026-11-19; no per-row dates; upstream AA pages not reachable"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "Thinking tokens cut by 31 to 57 % on reasoning benchmarks at near-equal accuracy (vendor)",
+      "Slightly better LiveCodeBench and Terminal-Bench than the base (vendor)"
+    ],
+    "weaknesses": [
+      "On Terminal-Bench it produced more total output tokens (45,428 vs 40,591)",
+      "At medium and low reasoning effort accuracy drops about 2.5 points",
+      "IFBench down 3 points; no SWE-bench; no coder prune exists for it"
+    ],
+    "behavior": "Benchmarks at effort xhigh, T 1.0 / top_p 0.95 / top_k 20.",
+    "maturity": "Small vendor; license is custom; all numbers self-reported."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Zero kernel work in principle (same tensors) and shorter thinking saves wall time, but 512 experts cache poorly in 16 GB VRAM and there is no coder prune; revisit if someone prunes it with code calibration.",
+    "blockers": [
+      "68 GB file"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/ukisai/Swift-1.5-Qwen3.8-Flash-Next-GGUF",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "page text read through a summarizer (WebFetch)"
+    },
+    {
+      "url": "toolchain/models.toml",
+      "kind": "own",
+      "checked": "2026-11-19",
+      "note": "swift-iq2_xs entry"
+    },
+    {
+      "url": "research/08-models.md",
+      "kind": "own",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://benchlm.ai/benchmarks/aacodingindex",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "aggregator mirror of the Artificial Analysis Coding Index, read 2026-11-19; no per-row dates; upstream AA pages not reachable"
+    }
+  ],
+  "open_questions": [
+    "Agentic performance beyond Terminal-Bench",
+    "Programming languages",
+    "Real user reports",
+    "Per-language quality and independent coding evidence: the Aider polyglot board is stale (mirrors: last update 2025-11-20, no entry for any model of this database), LiveCodeBench and swebench.com publish no per-language numbers for it that we could retrieve. Check: our own Exercism polyglot run per language."
+  ],
+  "last_checked": "2026-11-19"
+}

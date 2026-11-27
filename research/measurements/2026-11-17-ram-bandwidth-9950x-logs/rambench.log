@@ -1,0 +1,848 @@
+## pin=compact 02:22:16
+{"cpus":32,"buffer_mib":2048,"pin":"compact"}
+{"test":"ram","var":"read","param":1,"unit":"GB/s","value":54.5347}
+{"test":"ram","var":"read","param":1,"unit":"GB/s","value":55.5926}
+{"test":"ram","var":"read","param":1,"unit":"GB/s","value":55.8981}
+{"test":"ram","var":"read","param":1,"unit":"GB/s","value":55.8867}
+{"test":"ram","var":"read","param":1,"unit":"GB/s","value":55.9468}
+{"test":"ram","var":"read","param":1,"unit":"GB/s","value":55.9503}
+{"test":"ram","var":"read","param":1,"unit":"GB/s","value":55.9091}
+{"test":"ram","var":"write (stream)","param":1,"unit":"GB/s","value":30.9057}
+{"test":"ram","var":"write (stream)","param":1,"unit":"GB/s","value":31.2849}
+{"test":"ram","var":"write (stream)","param":1,"unit":"GB/s","value":31.2602}
+{"test":"ram","var":"write (stream)","param":1,"unit":"GB/s","value":31.3407}
+{"test":"ram","var":"write (stream)","param":1,"unit":"GB/s","value":31.3665}
+{"test":"ram","var":"write (stream)","param":1,"unit":"GB/s","value":31.3753}
+{"test":"ram","var":"write (stream)","param":1,"unit":"GB/s","value":31.3663}
+{"test":"ram","var":"copy (stream)","param":1,"unit":"GB/s","value":53.5564}
+{"test":"ram","var":"copy (stream)","param":1,"unit":"GB/s","value":53.7031}
+{"test":"ram","var":"copy (stream)","param":1,"unit":"GB/s","value":53.7059}
+{"test":"ram","var":"copy (stream)","param":1,"unit":"GB/s","value":53.7565}
+{"test":"ram","var":"copy (stream)","param":1,"unit":"GB/s","value":53.7657}
+{"test":"ram","var":"copy (stream)","param":1,"unit":"GB/s","value":52.8913}
+{"test":"ram","var":"copy (stream)","param":1,"unit":"GB/s","value":53.7713}
+{"test":"ram","var":"read","param":2,"unit":"GB/s","value":56.5577}
+{"test":"ram","var":"read","param":2,"unit":"GB/s","value":55.9285}
+{"test":"ram","var":"read","param":2,"unit":"GB/s","value":56.6832}
+{"test":"ram","var":"read","param":2,"unit":"GB/s","value":56.6723}
+{"test":"ram","var":"read","param":2,"unit":"GB/s","value":56.7222}
+{"test":"ram","var":"read","param":2,"unit":"GB/s","value":56.5202}
+{"test":"ram","var":"read","param":2,"unit":"GB/s","value":56.6864}
+{"test":"ram","var":"write (stream)","param":2,"unit":"GB/s","value":30.7994}
+{"test":"ram","var":"write (stream)","param":2,"unit":"GB/s","value":31.1307}
+{"test":"ram","var":"write (stream)","param":2,"unit":"GB/s","value":31.1253}
+{"test":"ram","var":"write (stream)","param":2,"unit":"GB/s","value":31.0601}
+{"test":"ram","var":"write (stream)","param":2,"unit":"GB/s","value":31.1096}
+{"test":"ram","var":"write (stream)","param":2,"unit":"GB/s","value":31.1123}
+{"test":"ram","var":"write (stream)","param":2,"unit":"GB/s","value":31.1258}
+{"test":"ram","var":"copy (stream)","param":2,"unit":"GB/s","value":53.4362}
+{"test":"ram","var":"copy (stream)","param":2,"unit":"GB/s","value":53.5567}
+{"test":"ram","var":"copy (stream)","param":2,"unit":"GB/s","value":53.5745}
+{"test":"ram","var":"copy (stream)","param":2,"unit":"GB/s","value":53.4778}
+{"test":"ram","var":"copy (stream)","param":2,"unit":"GB/s","value":53.4589}
+{"test":"ram","var":"copy (stream)","param":2,"unit":"GB/s","value":53.5219}
+{"test":"ram","var":"copy (stream)","param":2,"unit":"GB/s","value":53.441}
+{"test":"ram","var":"read","param":3,"unit":"GB/s","value":56.5535}
+{"test":"ram","var":"read","param":3,"unit":"GB/s","value":56.6147}
+{"test":"ram","var":"read","param":3,"unit":"GB/s","value":56.577}
+{"test":"ram","var":"read","param":3,"unit":"GB/s","value":56.3807}
+{"test":"ram","var":"read","param":3,"unit":"GB/s","value":56.3865}
+{"test":"ram","var":"read","param":3,"unit":"GB/s","value":56.6472}
+{"test":"ram","var":"read","param":3,"unit":"GB/s","value":56.5554}
+{"test":"ram","var":"write (stream)","param":3,"unit":"GB/s","value":30.1897}
+{"test":"ram","var":"write (stream)","param":3,"unit":"GB/s","value":30.1597}
+{"test":"ram","var":"write (stream)","param":3,"unit":"GB/s","value":30.1629}
+{"test":"ram","var":"write (stream)","param":3,"unit":"GB/s","value":30.1712}
+{"test":"ram","var":"write (stream)","param":3,"unit":"GB/s","value":30.1816}
+{"test":"ram","var":"write (stream)","param":3,"unit":"GB/s","value":30.1843}
+{"test":"ram","var":"write (stream)","param":3,"unit":"GB/s","value":30.165}
+{"test":"ram","var":"copy (stream)","param":3,"unit":"GB/s","value":53.4319}
+{"test":"ram","var":"copy (stream)","param":3,"unit":"GB/s","value":53.4499}
+{"test":"ram","var":"copy (stream)","param":3,"unit":"GB/s","value":53.4757}
+{"test":"ram","var":"copy (stream)","param":3,"unit":"GB/s","value":53.5882}
+{"test":"ram","var":"copy (stream)","param":3,"unit":"GB/s","value":53.5385}
+{"test":"ram","var":"copy (stream)","param":3,"unit":"GB/s","value":53.4853}
+{"test":"ram","var":"copy (stream)","param":3,"unit":"GB/s","value":53.5867}
+{"test":"ram","var":"read","param":4,"unit":"GB/s","value":56.6319}
+{"test":"ram","var":"read","param":4,"unit":"GB/s","value":56.6547}
+{"test":"ram","var":"read","param":4,"unit":"GB/s","value":56.6497}
+{"test":"ram","var":"read","param":4,"unit":"GB/s","value":56.5688}
+{"test":"ram","var":"read","param":4,"unit":"GB/s","value":56.5734}
+{"test":"ram","var":"read","param":4,"unit":"GB/s","value":55.1768}
+{"test":"ram","var":"read","param":4,"unit":"GB/s","value":55.8543}
+{"test":"ram","var":"write (stream)","param":4,"unit":"GB/s","value":29.6443}
+{"test":"ram","var":"write (stream)","param":4,"unit":"GB/s","value":29.6739}
+{"test":"ram","var":"write (stream)","param":4,"unit":"GB/s","value":29.6466}
+{"test":"ram","var":"write (stream)","param":4,"unit":"GB/s","value":29.6781}
+{"test":"ram","var":"write (stream)","param":4,"unit":"GB/s","value":29.693}
+{"test":"ram","var":"write (stream)","param":4,"unit":"GB/s","value":29.6829}
+{"test":"ram","var":"write (stream)","param":4,"unit":"GB/s","value":29.6743}
+{"test":"ram","var":"copy (stream)","param":4,"unit":"GB/s","value":52.8167}
+{"test":"ram","var":"copy (stream)","param":4,"unit":"GB/s","value":53.0276}
+{"test":"ram","var":"copy (stream)","param":4,"unit":"GB/s","value":53.0734}
+{"test":"ram","var":"copy (stream)","param":4,"unit":"GB/s","value":53.0717}
+{"test":"ram","var":"copy (stream)","param":4,"unit":"GB/s","value":53.0664}
+{"test":"ram","var":"copy (stream)","param":4,"unit":"GB/s","value":53.0376}
+{"test":"ram","var":"copy (stream)","param":4,"unit":"GB/s","value":53.0955}
+{"test":"ram","var":"read","param":6,"unit":"GB/s","value":56.4728}
+{"test":"ram","var":"read","param":6,"unit":"GB/s","value":55.9314}
+{"test":"ram","var":"read","param":6,"unit":"GB/s","value":56.5325}
+{"test":"ram","var":"read","param":6,"unit":"GB/s","value":56.6276}
+{"test":"ram","var":"read","param":6,"unit":"GB/s","value":56.606}
+{"test":"ram","var":"read","param":6,"unit":"GB/s","value":56.6334}
+{"test":"ram","var":"read","param":6,"unit":"GB/s","value":56.4349}
+{"test":"ram","var":"write (stream)","param":6,"unit":"GB/s","value":31.8929}
+{"test":"ram","var":"write (stream)","param":6,"unit":"GB/s","value":31.8999}
+{"test":"ram","var":"write (stream)","param":6,"unit":"GB/s","value":31.9088}
+{"test":"ram","var":"write (stream)","param":6,"unit":"GB/s","value":31.8788}
+{"test":"ram","var":"write (stream)","param":6,"unit":"GB/s","value":31.8803}
+{"test":"ram","var":"write (stream)","param":6,"unit":"GB/s","value":31.8886}
+{"test":"ram","var":"write (stream)","param":6,"unit":"GB/s","value":31.906}
+{"test":"ram","var":"copy (stream)","param":6,"unit":"GB/s","value":52.3866}
+{"test":"ram","var":"copy (stream)","param":6,"unit":"GB/s","value":47.6086}
+{"test":"ram","var":"copy (stream)","param":6,"unit":"GB/s","value":49.7967}
+{"test":"ram","var":"copy (stream)","param":6,"unit":"GB/s","value":52.4403}
+{"test":"ram","var":"copy (stream)","param":6,"unit":"GB/s","value":52.2588}
+{"test":"ram","var":"copy (stream)","param":6,"unit":"GB/s","value":52.4731}
+{"test":"ram","var":"copy (stream)","param":6,"unit":"GB/s","value":52.4567}
+{"test":"ram","var":"read","param":8,"unit":"GB/s","value":56.5293}
+{"test":"ram","var":"read","param":8,"unit":"GB/s","value":56.3303}
+{"test":"ram","var":"read","param":8,"unit":"GB/s","value":56.5023}
+{"test":"ram","var":"read","param":8,"unit":"GB/s","value":56.1537}
+{"test":"ram","var":"read","param":8,"unit":"GB/s","value":56.0616}
+{"test":"ram","var":"read","param":8,"unit":"GB/s","value":56.5023}
+{"test":"ram","var":"read","param":8,"unit":"GB/s","value":56.4703}
+{"test":"ram","var":"write (stream)","param":8,"unit":"GB/s","value":31.8191}
+{"test":"ram","var":"write (stream)","param":8,"unit":"GB/s","value":31.8394}
+{"test":"ram","var":"write (stream)","param":8,"unit":"GB/s","value":31.8421}
+{"test":"ram","var":"write (stream)","param":8,"unit":"GB/s","value":31.8393}
+{"test":"ram","var":"write (stream)","param":8,"unit":"GB/s","value":31.6327}
+{"test":"ram","var":"write (stream)","param":8,"unit":"GB/s","value":31.8429}
+{"test":"ram","var":"write (stream)","param":8,"unit":"GB/s","value":31.8373}
+{"test":"ram","var":"copy (stream)","param":8,"unit":"GB/s","value":52.6027}
+{"test":"ram","var":"copy (stream)","param":8,"unit":"GB/s","value":52.7371}
+{"test":"ram","var":"copy (stream)","param":8,"unit":"GB/s","value":52.6926}
+{"test":"ram","var":"copy (stream)","param":8,"unit":"GB/s","value":52.7371}
+{"test":"ram","var":"copy (stream)","param":8,"unit":"GB/s","value":52.7044}
+{"test":"ram","var":"copy (stream)","param":8,"unit":"GB/s","value":52.6493}
+{"test":"ram","var":"copy (stream)","param":8,"unit":"GB/s","value":52.7564}
+{"test":"ram","var":"read","param":12,"unit":"GB/s","value":64.5288}
+{"test":"ram","var":"read","param":12,"unit":"GB/s","value":65.4979}
+{"test":"ram","var":"read","param":12,"unit":"GB/s","value":65.4184}
+{"test":"ram","var":"read","param":12,"unit":"GB/s","value":65.1089}
+{"test":"ram","var":"read","param":12,"unit":"GB/s","value":65.1388}
+{"test":"ram","var":"read","param":12,"unit":"GB/s","value":65.1973}
+{"test":"ram","var":"read","param":12,"unit":"GB/s","value":64.777}
+{"test":"ram","var":"write (stream)","param":12,"unit":"GB/s","value":45.8328}
+{"test":"ram","var":"write (stream)","param":12,"unit":"GB/s","value":45.8599}
+{"test":"ram","var":"write (stream)","param":12,"unit":"GB/s","value":45.8735}
+{"test":"ram","var":"write (stream)","param":12,"unit":"GB/s","value":45.8138}
+{"test":"ram","var":"write (stream)","param":12,"unit":"GB/s","value":45.7852}
+{"test":"ram","var":"write (stream)","param":12,"unit":"GB/s","value":45.7983}
+{"test":"ram","var":"write (stream)","param":12,"unit":"GB/s","value":45.8661}
+{"test":"ram","var":"copy (stream)","param":12,"unit":"GB/s","value":60.4744}
+{"test":"ram","var":"copy (stream)","param":12,"unit":"GB/s","value":60.5218}
+{"test":"ram","var":"copy (stream)","param":12,"unit":"GB/s","value":60.6971}
+{"test":"ram","var":"copy (stream)","param":12,"unit":"GB/s","value":60.5977}
+{"test":"ram","var":"copy (stream)","param":12,"unit":"GB/s","value":60.4206}
+{"test":"ram","var":"copy (stream)","param":12,"unit":"GB/s","value":60.6948}
+{"test":"ram","var":"copy (stream)","param":12,"unit":"GB/s","value":60.6852}
+{"test":"ram","var":"read","param":16,"unit":"GB/s","value":68.4163}
+{"test":"ram","var":"read","param":16,"unit":"GB/s","value":68.3189}
+{"test":"ram","var":"read","param":16,"unit":"GB/s","value":68.4023}
+{"test":"ram","var":"read","param":16,"unit":"GB/s","value":68.1923}
+{"test":"ram","var":"read","param":16,"unit":"GB/s","value":68.2897}
+{"test":"ram","var":"read","param":16,"unit":"GB/s","value":68.485}
+{"test":"ram","var":"read","param":16,"unit":"GB/s","value":68.3813}
+{"test":"ram","var":"write (stream)","param":16,"unit":"GB/s","value":57.7191}
+{"test":"ram","var":"write (stream)","param":16,"unit":"GB/s","value":57.7681}
+{"test":"ram","var":"write (stream)","param":16,"unit":"GB/s","value":57.7495}
+{"test":"ram","var":"write (stream)","param":16,"unit":"GB/s","value":57.7481}
+{"test":"ram","var":"write (stream)","param":16,"unit":"GB/s","value":57.8164}
+{"test":"ram","var":"write (stream)","param":16,"unit":"GB/s","value":57.6311}
+{"test":"ram","var":"write (stream)","param":16,"unit":"GB/s","value":57.8159}
+{"test":"ram","var":"copy (stream)","param":16,"unit":"GB/s","value":63.6771}
+{"test":"ram","var":"copy (stream)","param":16,"unit":"GB/s","value":63.7765}
+{"test":"ram","var":"copy (stream)","param":16,"unit":"GB/s","value":63.6762}
+{"test":"ram","var":"copy (stream)","param":16,"unit":"GB/s","value":63.7052}
+{"test":"ram","var":"copy (stream)","param":16,"unit":"GB/s","value":63.3982}
+{"test":"ram","var":"copy (stream)","param":16,"unit":"GB/s","value":63.7572}
+{"test":"ram","var":"copy (stream)","param":16,"unit":"GB/s","value":63.7234}
+{"test":"ram","var":"read","param":24,"unit":"GB/s","value":64.1338}
+{"test":"ram","var":"read","param":24,"unit":"GB/s","value":64.0679}
+{"test":"ram","var":"read","param":24,"unit":"GB/s","value":64.1815}
+{"test":"ram","var":"read","param":24,"unit":"GB/s","value":64.1251}
+{"test":"ram","var":"read","param":24,"unit":"GB/s","value":64.1081}
+{"test":"ram","var":"read","param":24,"unit":"GB/s","value":69.8748}
+{"test":"ram","var":"read","param":24,"unit":"GB/s","value":62.3941}
+{"test":"ram","var":"write (stream)","param":24,"unit":"GB/s","value":45.5036}
+{"test":"ram","var":"write (stream)","param":24,"unit":"GB/s","value":45.4654}
+{"test":"ram","var":"write (stream)","param":24,"unit":"GB/s","value":45.4716}
+{"test":"ram","var":"write (stream)","param":24,"unit":"GB/s","value":45.4366}
+{"test":"ram","var":"write (stream)","param":24,"unit":"GB/s","value":45.5322}
+{"test":"ram","var":"write (stream)","param":24,"unit":"GB/s","value":48.2853}
+{"test":"ram","var":"write (stream)","param":24,"unit":"GB/s","value":45.4809}
+{"test":"ram","var":"copy (stream)","param":24,"unit":"GB/s","value":59.1557}
+{"test":"ram","var":"copy (stream)","param":24,"unit":"GB/s","value":59.3113}
+{"test":"ram","var":"copy (stream)","param":24,"unit":"GB/s","value":59.23}
+{"test":"ram","var":"copy (stream)","param":24,"unit":"GB/s","value":59.158}
+{"test":"ram","var":"copy (stream)","param":24,"unit":"GB/s","value":60.4173}
+{"test":"ram","var":"copy (stream)","param":24,"unit":"GB/s","value":59.8443}
+{"test":"ram","var":"copy (stream)","param":24,"unit":"GB/s","value":60.7616}
+{"test":"ram","var":"read","param":32,"unit":"GB/s","value":74.3569}
+{"test":"ram","var":"read","param":32,"unit":"GB/s","value":74.1534}
+{"test":"ram","var":"read","param":32,"unit":"GB/s","value":73.9103}
+{"test":"ram","var":"read","param":32,"unit":"GB/s","value":74.1018}
+{"test":"ram","var":"read","param":32,"unit":"GB/s","value":74.2044}
+{"test":"ram","var":"read","param":32,"unit":"GB/s","value":74.1356}
+{"test":"ram","var":"read","param":32,"unit":"GB/s","value":74.2338}
+{"test":"ram","var":"write (stream)","param":32,"unit":"GB/s","value":61.7631}
+{"test":"ram","var":"write (stream)","param":32,"unit":"GB/s","value":61.9371}
+{"test":"ram","var":"write (stream)","param":32,"unit":"GB/s","value":61.8571}
+{"test":"ram","var":"write (stream)","param":32,"unit":"GB/s","value":59.4024}
+{"test":"ram","var":"write (stream)","param":32,"unit":"GB/s","value":61.8006}
+{"test":"ram","var":"write (stream)","param":32,"unit":"GB/s","value":61.8996}
+{"test":"ram","var":"write (stream)","param":32,"unit":"GB/s","value":66.4416}
+{"test":"ram","var":"copy (stream)","param":32,"unit":"GB/s","value":60.9895}
+{"test":"ram","var":"copy (stream)","param":32,"unit":"GB/s","value":63.5502}
+{"test":"ram","var":"copy (stream)","param":32,"unit":"GB/s","value":63.687}
+{"test":"ram","var":"copy (stream)","param":32,"unit":"GB/s","value":63.3054}
+{"test":"ram","var":"copy (stream)","param":32,"unit":"GB/s","value":63.6675}
+{"test":"ram","var":"copy (stream)","param":32,"unit":"GB/s","value":63.6304}
+{"test":"ram","var":"copy (stream)","param":32,"unit":"GB/s","value":63.6826}
+## pin=spread 02:22:29
+{"cpus":32,"buffer_mib":2048,"pin":"spread"}
+{"test":"ram","var":"read","param":1,"unit":"GB/s","value":55.2465}
+{"test":"ram","var":"read","param":1,"unit":"GB/s","value":55.7238}
+{"test":"ram","var":"read","param":1,"unit":"GB/s","value":55.419}
+{"test":"ram","var":"read","param":1,"unit":"GB/s","value":55.7708}
+{"test":"ram","var":"read","param":1,"unit":"GB/s","value":55.8484}
+{"test":"ram","var":"read","param":1,"unit":"GB/s","value":55.6455}
+{"test":"ram","var":"read","param":1,"unit":"GB/s","value":55.8248}
+{"test":"ram","var":"write (stream)","param":1,"unit":"GB/s","value":30.6751}
+{"test":"ram","var":"write (stream)","param":1,"unit":"GB/s","value":31.1596}
+{"test":"ram","var":"write (stream)","param":1,"unit":"GB/s","value":30.8097}
+{"test":"ram","var":"write (stream)","param":1,"unit":"GB/s","value":30.5206}
+{"test":"ram","var":"write (stream)","param":1,"unit":"GB/s","value":31.1763}
+{"test":"ram","var":"write (stream)","param":1,"unit":"GB/s","value":31.1229}
+{"test":"ram","var":"write (stream)","param":1,"unit":"GB/s","value":31.2524}
+{"test":"ram","var":"copy (stream)","param":1,"unit":"GB/s","value":53.2481}
+{"test":"ram","var":"copy (stream)","param":1,"unit":"GB/s","value":53.3902}
+{"test":"ram","var":"copy (stream)","param":1,"unit":"GB/s","value":53.6601}
+{"test":"ram","var":"copy (stream)","param":1,"unit":"GB/s","value":53.6855}
+{"test":"ram","var":"copy (stream)","param":1,"unit":"GB/s","value":53.551}
+{"test":"ram","var":"copy (stream)","param":1,"unit":"GB/s","value":53.7201}
+{"test":"ram","var":"copy (stream)","param":1,"unit":"GB/s","value":53.7095}
+{"test":"ram","var":"read","param":2,"unit":"GB/s","value":71.2435}
+{"test":"ram","var":"read","param":2,"unit":"GB/s","value":72.1723}
+{"test":"ram","var":"read","param":2,"unit":"GB/s","value":72.1465}
+{"test":"ram","var":"read","param":2,"unit":"GB/s","value":72.0995}
+{"test":"ram","var":"read","param":2,"unit":"GB/s","value":72.2239}
+{"test":"ram","var":"read","param":2,"unit":"GB/s","value":72.2599}
+{"test":"ram","var":"read","param":2,"unit":"GB/s","value":72.221}
+{"test":"ram","var":"write (stream)","param":2,"unit":"GB/s","value":56.8666}
+{"test":"ram","var":"write (stream)","param":2,"unit":"GB/s","value":57.3895}
+{"test":"ram","var":"write (stream)","param":2,"unit":"GB/s","value":57.2004}
+{"test":"ram","var":"write (stream)","param":2,"unit":"GB/s","value":57.351}
+{"test":"ram","var":"write (stream)","param":2,"unit":"GB/s","value":57.3931}
+{"test":"ram","var":"write (stream)","param":2,"unit":"GB/s","value":57.3239}
+{"test":"ram","var":"write (stream)","param":2,"unit":"GB/s","value":56.3439}
+{"test":"ram","var":"copy (stream)","param":2,"unit":"GB/s","value":66.7329}
+{"test":"ram","var":"copy (stream)","param":2,"unit":"GB/s","value":66.9147}
+{"test":"ram","var":"copy (stream)","param":2,"unit":"GB/s","value":66.5593}
+{"test":"ram","var":"copy (stream)","param":2,"unit":"GB/s","value":66.8706}
+{"test":"ram","var":"copy (stream)","param":2,"unit":"GB/s","value":66.628}
+{"test":"ram","var":"copy (stream)","param":2,"unit":"GB/s","value":66.8284}
+{"test":"ram","var":"copy (stream)","param":2,"unit":"GB/s","value":66.8154}
+{"test":"ram","var":"read","param":3,"unit":"GB/s","value":66.7759}
+{"test":"ram","var":"read","param":3,"unit":"GB/s","value":67.293}
+{"test":"ram","var":"read","param":3,"unit":"GB/s","value":67.3009}
+{"test":"ram","var":"read","param":3,"unit":"GB/s","value":67.337}
+{"test":"ram","var":"read","param":3,"unit":"GB/s","value":67.3073}
+{"test":"ram","var":"read","param":3,"unit":"GB/s","value":67.1066}
+{"test":"ram","var":"read","param":3,"unit":"GB/s","value":67.2707}
+{"test":"ram","var":"write (stream)","param":3,"unit":"GB/s","value":44.5813}
+{"test":"ram","var":"write (stream)","param":3,"unit":"GB/s","value":44.6723}
+{"test":"ram","var":"write (stream)","param":3,"unit":"GB/s","value":44.7673}
+{"test":"ram","var":"write (stream)","param":3,"unit":"GB/s","value":44.6857}
+{"test":"ram","var":"write (stream)","param":3,"unit":"GB/s","value":44.632}
+{"test":"ram","var":"write (stream)","param":3,"unit":"GB/s","value":44.6989}
+{"test":"ram","var":"write (stream)","param":3,"unit":"GB/s","value":44.5437}
+{"test":"ram","var":"copy (stream)","param":3,"unit":"GB/s","value":62.2315}
+{"test":"ram","var":"copy (stream)","param":3,"unit":"GB/s","value":62.1152}
+{"test":"ram","var":"copy (stream)","param":3,"unit":"GB/s","value":62.0811}
+{"test":"ram","var":"copy (stream)","param":3,"unit":"GB/s","value":62.2094}
+{"test":"ram","var":"copy (stream)","param":3,"unit":"GB/s","value":62.1337}
+{"test":"ram","var":"copy (stream)","param":3,"unit":"GB/s","value":62.2957}
+{"test":"ram","var":"copy (stream)","param":3,"unit":"GB/s","value":62.3399}
+{"test":"ram","var":"read","param":4,"unit":"GB/s","value":71.7709}
+{"test":"ram","var":"read","param":4,"unit":"GB/s","value":71.7956}
+{"test":"ram","var":"read","param":4,"unit":"GB/s","value":71.7614}
+{"test":"ram","var":"read","param":4,"unit":"GB/s","value":71.8666}
+{"test":"ram","var":"read","param":4,"unit":"GB/s","value":71.6684}
+{"test":"ram","var":"read","param":4,"unit":"GB/s","value":71.2715}
+{"test":"ram","var":"read","param":4,"unit":"GB/s","value":66.6471}
+{"test":"ram","var":"write (stream)","param":4,"unit":"GB/s","value":56.2037}
+{"test":"ram","var":"write (stream)","param":4,"unit":"GB/s","value":55.6924}
+{"test":"ram","var":"write (stream)","param":4,"unit":"GB/s","value":55.6819}
+{"test":"ram","var":"write (stream)","param":4,"unit":"GB/s","value":55.7713}
+{"test":"ram","var":"write (stream)","param":4,"unit":"GB/s","value":55.6552}
+{"test":"ram","var":"write (stream)","param":4,"unit":"GB/s","value":55.6874}
+{"test":"ram","var":"write (stream)","param":4,"unit":"GB/s","value":55.4994}
+{"test":"ram","var":"copy (stream)","param":4,"unit":"GB/s","value":65.9358}
+{"test":"ram","var":"copy (stream)","param":4,"unit":"GB/s","value":66.0706}
+{"test":"ram","var":"copy (stream)","param":4,"unit":"GB/s","value":65.7209}
+{"test":"ram","var":"copy (stream)","param":4,"unit":"GB/s","value":66.0782}
+{"test":"ram","var":"copy (stream)","param":4,"unit":"GB/s","value":65.7222}
+{"test":"ram","var":"copy (stream)","param":4,"unit":"GB/s","value":66.0727}
+{"test":"ram","var":"copy (stream)","param":4,"unit":"GB/s","value":66.0504}
+{"test":"ram","var":"read","param":6,"unit":"GB/s","value":71.773}
+{"test":"ram","var":"read","param":6,"unit":"GB/s","value":71.7897}
+{"test":"ram","var":"read","param":6,"unit":"GB/s","value":71.805}
+{"test":"ram","var":"read","param":6,"unit":"GB/s","value":71.7485}
+{"test":"ram","var":"read","param":6,"unit":"GB/s","value":71.8407}
+{"test":"ram","var":"read","param":6,"unit":"GB/s","value":71.9223}
+{"test":"ram","var":"read","param":6,"unit":"GB/s","value":71.6217}
+{"test":"ram","var":"write (stream)","param":6,"unit":"GB/s","value":54.9098}
+{"test":"ram","var":"write (stream)","param":6,"unit":"GB/s","value":54.9729}
+{"test":"ram","var":"write (stream)","param":6,"unit":"GB/s","value":55.0034}
+{"test":"ram","var":"write (stream)","param":6,"unit":"GB/s","value":55.0295}
+{"test":"ram","var":"write (stream)","param":6,"unit":"GB/s","value":54.952}
+{"test":"ram","var":"write (stream)","param":6,"unit":"GB/s","value":55.1193}
+{"test":"ram","var":"write (stream)","param":6,"unit":"GB/s","value":54.9845}
+{"test":"ram","var":"copy (stream)","param":6,"unit":"GB/s","value":65.6845}
+{"test":"ram","var":"copy (stream)","param":6,"unit":"GB/s","value":65.6702}
+{"test":"ram","var":"copy (stream)","param":6,"unit":"GB/s","value":65.6383}
+{"test":"ram","var":"copy (stream)","param":6,"unit":"GB/s","value":65.594}
+{"test":"ram","var":"copy (stream)","param":6,"unit":"GB/s","value":65.788}
+{"test":"ram","var":"copy (stream)","param":6,"unit":"GB/s","value":65.3597}
+{"test":"ram","var":"copy (stream)","param":6,"unit":"GB/s","value":65.7067}
+{"test":"ram","var":"read","param":8,"unit":"GB/s","value":70.9196}
+{"test":"ram","var":"read","param":8,"unit":"GB/s","value":70.5438}
+{"test":"ram","var":"read","param":8,"unit":"GB/s","value":70.8884}
+{"test":"ram","var":"read","param":8,"unit":"GB/s","value":70.9244}
+{"test":"ram","var":"read","param":8,"unit":"GB/s","value":70.7938}
+{"test":"ram","var":"read","param":8,"unit":"GB/s","value":70.701}
+{"test":"ram","var":"read","param":8,"unit":"GB/s","value":70.7897}
+{"test":"ram","var":"write (stream)","param":8,"unit":"GB/s","value":54.4549}
+{"test":"ram","var":"write (stream)","param":8,"unit":"GB/s","value":54.6054}
+{"test":"ram","var":"write (stream)","param":8,"unit":"GB/s","value":54.6565}
+{"test":"ram","var":"write (stream)","param":8,"unit":"GB/s","value":54.6296}
+{"test":"ram","var":"write (stream)","param":8,"unit":"GB/s","value":54.5996}
+{"test":"ram","var":"write (stream)","param":8,"unit":"GB/s","value":54.6057}
+{"test":"ram","var":"write (stream)","param":8,"unit":"GB/s","value":54.633}
+{"test":"ram","var":"copy (stream)","param":8,"unit":"GB/s","value":65.4476}
+{"test":"ram","var":"copy (stream)","param":8,"unit":"GB/s","value":65.4558}
+{"test":"ram","var":"copy (stream)","param":8,"unit":"GB/s","value":65.4235}
+{"test":"ram","var":"copy (stream)","param":8,"unit":"GB/s","value":65.4446}
+{"test":"ram","var":"copy (stream)","param":8,"unit":"GB/s","value":65.2796}
+{"test":"ram","var":"copy (stream)","param":8,"unit":"GB/s","value":65.468}
+{"test":"ram","var":"copy (stream)","param":8,"unit":"GB/s","value":65.1794}
+{"test":"ram","var":"read","param":12,"unit":"GB/s","value":68.2719}
+{"test":"ram","var":"read","param":12,"unit":"GB/s","value":69.3446}
+{"test":"ram","var":"read","param":12,"unit":"GB/s","value":69.0665}
+{"test":"ram","var":"read","param":12,"unit":"GB/s","value":69.2957}
+{"test":"ram","var":"read","param":12,"unit":"GB/s","value":69.3522}
+{"test":"ram","var":"read","param":12,"unit":"GB/s","value":69.4951}
+{"test":"ram","var":"read","param":12,"unit":"GB/s","value":69.2699}
+{"test":"ram","var":"write (stream)","param":12,"unit":"GB/s","value":58.4337}
+{"test":"ram","var":"write (stream)","param":12,"unit":"GB/s","value":58.5149}
+{"test":"ram","var":"write (stream)","param":12,"unit":"GB/s","value":58.3858}
+{"test":"ram","var":"write (stream)","param":12,"unit":"GB/s","value":58.2369}
+{"test":"ram","var":"write (stream)","param":12,"unit":"GB/s","value":57.4418}
+{"test":"ram","var":"write (stream)","param":12,"unit":"GB/s","value":58.0622}
+{"test":"ram","var":"write (stream)","param":12,"unit":"GB/s","value":58.524}
+{"test":"ram","var":"copy (stream)","param":12,"unit":"GB/s","value":64.0464}
+{"test":"ram","var":"copy (stream)","param":12,"unit":"GB/s","value":64.1585}
+{"test":"ram","var":"copy (stream)","param":12,"unit":"GB/s","value":64.4385}
+{"test":"ram","var":"copy (stream)","param":12,"unit":"GB/s","value":64.4243}
+{"test":"ram","var":"copy (stream)","param":12,"unit":"GB/s","value":64.3583}
+{"test":"ram","var":"copy (stream)","param":12,"unit":"GB/s","value":64.2423}
+{"test":"ram","var":"copy (stream)","param":12,"unit":"GB/s","value":64.2741}
+{"test":"ram","var":"read","param":16,"unit":"GB/s","value":67.1897}
+{"test":"ram","var":"read","param":16,"unit":"GB/s","value":68.2242}
+{"test":"ram","var":"read","param":16,"unit":"GB/s","value":68.557}
+{"test":"ram","var":"read","param":16,"unit":"GB/s","value":68.3796}
+{"test":"ram","var":"read","param":16,"unit":"GB/s","value":68.2837}
+{"test":"ram","var":"read","param":16,"unit":"GB/s","value":68.3603}
+{"test":"ram","var":"read","param":16,"unit":"GB/s","value":68.3176}
+{"test":"ram","var":"write (stream)","param":16,"unit":"GB/s","value":57.7151}
+{"test":"ram","var":"write (stream)","param":16,"unit":"GB/s","value":57.7943}
+{"test":"ram","var":"write (stream)","param":16,"unit":"GB/s","value":57.8765}
+{"test":"ram","var":"write (stream)","param":16,"unit":"GB/s","value":57.7113}
+{"test":"ram","var":"write (stream)","param":16,"unit":"GB/s","value":57.8396}
+{"test":"ram","var":"write (stream)","param":16,"unit":"GB/s","value":57.8996}
+{"test":"ram","var":"write (stream)","param":16,"unit":"GB/s","value":57.7684}
+{"test":"ram","var":"copy (stream)","param":16,"unit":"GB/s","value":63.7998}
+{"test":"ram","var":"copy (stream)","param":16,"unit":"GB/s","value":63.752}
+{"test":"ram","var":"copy (stream)","param":16,"unit":"GB/s","value":63.8744}
+{"test":"ram","var":"copy (stream)","param":16,"unit":"GB/s","value":63.6409}
+{"test":"ram","var":"copy (stream)","param":16,"unit":"GB/s","value":63.6898}
+{"test":"ram","var":"copy (stream)","param":16,"unit":"GB/s","value":63.5914}
+{"test":"ram","var":"copy (stream)","param":16,"unit":"GB/s","value":63.8224}
+{"test":"ram","var":"read","param":24,"unit":"GB/s","value":64.1172}
+{"test":"ram","var":"read","param":24,"unit":"GB/s","value":63.7867}
+{"test":"ram","var":"read","param":24,"unit":"GB/s","value":64.0246}
+{"test":"ram","var":"read","param":24,"unit":"GB/s","value":64.0835}
+{"test":"ram","var":"read","param":24,"unit":"GB/s","value":70.1485}
+{"test":"ram","var":"read","param":24,"unit":"GB/s","value":63.8988}
+{"test":"ram","var":"read","param":24,"unit":"GB/s","value":64.0666}
+{"test":"ram","var":"write (stream)","param":24,"unit":"GB/s","value":45.4112}
+{"test":"ram","var":"write (stream)","param":24,"unit":"GB/s","value":45.5153}
+{"test":"ram","var":"write (stream)","param":24,"unit":"GB/s","value":45.5325}
+{"test":"ram","var":"write (stream)","param":24,"unit":"GB/s","value":45.5129}
+{"test":"ram","var":"write (stream)","param":24,"unit":"GB/s","value":45.5302}
+{"test":"ram","var":"write (stream)","param":24,"unit":"GB/s","value":45.5362}
+{"test":"ram","var":"write (stream)","param":24,"unit":"GB/s","value":45.5323}
+{"test":"ram","var":"copy (stream)","param":24,"unit":"GB/s","value":61.5505}
+{"test":"ram","var":"copy (stream)","param":24,"unit":"GB/s","value":59.3139}
+{"test":"ram","var":"copy (stream)","param":24,"unit":"GB/s","value":60.5754}
+{"test":"ram","var":"copy (stream)","param":24,"unit":"GB/s","value":59.1093}
+{"test":"ram","var":"copy (stream)","param":24,"unit":"GB/s","value":60.1855}
+{"test":"ram","var":"copy (stream)","param":24,"unit":"GB/s","value":59.3045}
+{"test":"ram","var":"copy (stream)","param":24,"unit":"GB/s","value":59.0349}
+{"test":"ram","var":"read","param":32,"unit":"GB/s","value":67.8956}
+{"test":"ram","var":"read","param":32,"unit":"GB/s","value":70.843}
+{"test":"ram","var":"read","param":32,"unit":"GB/s","value":74.255}
+{"test":"ram","var":"read","param":32,"unit":"GB/s","value":74.0108}
+{"test":"ram","var":"read","param":32,"unit":"GB/s","value":73.3454}
+{"test":"ram","var":"read","param":32,"unit":"GB/s","value":74.2407}
+{"test":"ram","var":"read","param":32,"unit":"GB/s","value":71.414}
+{"test":"ram","var":"write (stream)","param":32,"unit":"GB/s","value":61.746}
+{"test":"ram","var":"write (stream)","param":32,"unit":"GB/s","value":61.9614}
+{"test":"ram","var":"write (stream)","param":32,"unit":"GB/s","value":61.8564}
+{"test":"ram","var":"write (stream)","param":32,"unit":"GB/s","value":61.7089}
+{"test":"ram","var":"write (stream)","param":32,"unit":"GB/s","value":61.6423}
+{"test":"ram","var":"write (stream)","param":32,"unit":"GB/s","value":61.9863}
+{"test":"ram","var":"write (stream)","param":32,"unit":"GB/s","value":61.8326}
+{"test":"ram","var":"copy (stream)","param":32,"unit":"GB/s","value":62.9204}
+{"test":"ram","var":"copy (stream)","param":32,"unit":"GB/s","value":63.6091}
+{"test":"ram","var":"copy (stream)","param":32,"unit":"GB/s","value":62.3229}
+{"test":"ram","var":"copy (stream)","param":32,"unit":"GB/s","value":62.2745}
+{"test":"ram","var":"copy (stream)","param":32,"unit":"GB/s","value":61.0984}
+{"test":"ram","var":"copy (stream)","param":32,"unit":"GB/s","value":60.9103}
+{"test":"ram","var":"copy (stream)","param":32,"unit":"GB/s","value":63.4516}
+## pin=compact 02:22:39
+{"cpus":32,"buffer_mib":2048,"pin":"compact"}
+{"test":"ram","var":"read","param":1,"unit":"GB/s","value":55.2972}
+{"test":"ram","var":"read","param":1,"unit":"GB/s","value":55.1196}
+{"test":"ram","var":"read","param":1,"unit":"GB/s","value":55.5004}
+{"test":"ram","var":"read","param":1,"unit":"GB/s","value":55.7642}
+{"test":"ram","var":"read","param":1,"unit":"GB/s","value":55.3903}
+{"test":"ram","var":"read","param":1,"unit":"GB/s","value":55.624}
+{"test":"ram","var":"read","param":1,"unit":"GB/s","value":55.7531}
+{"test":"ram","var":"write (stream)","param":1,"unit":"GB/s","value":30.7552}
+{"test":"ram","var":"write (stream)","param":1,"unit":"GB/s","value":31.1998}
+{"test":"ram","var":"write (stream)","param":1,"unit":"GB/s","value":31.2201}
+{"test":"ram","var":"write (stream)","param":1,"unit":"GB/s","value":31.2348}
+{"test":"ram","var":"write (stream)","param":1,"unit":"GB/s","value":31.2399}
+{"test":"ram","var":"write (stream)","param":1,"unit":"GB/s","value":31.2532}
+{"test":"ram","var":"write (stream)","param":1,"unit":"GB/s","value":31.2688}
+{"test":"ram","var":"copy (stream)","param":1,"unit":"GB/s","value":52.9024}
+{"test":"ram","var":"copy (stream)","param":1,"unit":"GB/s","value":53.0374}
+{"test":"ram","var":"copy (stream)","param":1,"unit":"GB/s","value":53.0856}
+{"test":"ram","var":"copy (stream)","param":1,"unit":"GB/s","value":53.5828}
+{"test":"ram","var":"copy (stream)","param":1,"unit":"GB/s","value":53.6176}
+{"test":"ram","var":"copy (stream)","param":1,"unit":"GB/s","value":52.9793}
+{"test":"ram","var":"copy (stream)","param":1,"unit":"GB/s","value":53.4335}
+{"test":"ram","var":"read","param":2,"unit":"GB/s","value":56.4556}
+{"test":"ram","var":"read","param":2,"unit":"GB/s","value":56.4697}
+{"test":"ram","var":"read","param":2,"unit":"GB/s","value":56.445}
+{"test":"ram","var":"read","param":2,"unit":"GB/s","value":56.2912}
+{"test":"ram","var":"read","param":2,"unit":"GB/s","value":56.6425}
+{"test":"ram","var":"read","param":2,"unit":"GB/s","value":56.6005}
+{"test":"ram","var":"read","param":2,"unit":"GB/s","value":56.655}
+{"test":"ram","var":"write (stream)","param":2,"unit":"GB/s","value":30.7975}
+{"test":"ram","var":"write (stream)","param":2,"unit":"GB/s","value":30.6433}
+{"test":"ram","var":"write (stream)","param":2,"unit":"GB/s","value":30.8827}
+{"test":"ram","var":"write (stream)","param":2,"unit":"GB/s","value":31.1033}
+{"test":"ram","var":"write (stream)","param":2,"unit":"GB/s","value":31.1087}
+{"test":"ram","var":"write (stream)","param":2,"unit":"GB/s","value":31.1068}
+{"test":"ram","var":"write (stream)","param":2,"unit":"GB/s","value":31.0938}
+{"test":"ram","var":"copy (stream)","param":2,"unit":"GB/s","value":53.5241}
+{"test":"ram","var":"copy (stream)","param":2,"unit":"GB/s","value":53.5911}
+{"test":"ram","var":"copy (stream)","param":2,"unit":"GB/s","value":53.4562}
+{"test":"ram","var":"copy (stream)","param":2,"unit":"GB/s","value":53.5217}
+{"test":"ram","var":"copy (stream)","param":2,"unit":"GB/s","value":53.5641}
+{"test":"ram","var":"copy (stream)","param":2,"unit":"GB/s","value":53.5053}
+{"test":"ram","var":"copy (stream)","param":2,"unit":"GB/s","value":53.5011}
+{"test":"ram","var":"read","param":3,"unit":"GB/s","value":56.5996}
+{"test":"ram","var":"read","param":3,"unit":"GB/s","value":56.7434}
+{"test":"ram","var":"read","param":3,"unit":"GB/s","value":56.6854}
+{"test":"ram","var":"read","param":3,"unit":"GB/s","value":56.7153}
+{"test":"ram","var":"read","param":3,"unit":"GB/s","value":56.673}
+{"test":"ram","var":"read","param":3,"unit":"GB/s","value":56.6761}
+{"test":"ram","var":"read","param":3,"unit":"GB/s","value":56.543}
+{"test":"ram","var":"write (stream)","param":3,"unit":"GB/s","value":30.1841}
+{"test":"ram","var":"write (stream)","param":3,"unit":"GB/s","value":30.1462}
+{"test":"ram","var":"write (stream)","param":3,"unit":"GB/s","value":30.1272}
+{"test":"ram","var":"write (stream)","param":3,"unit":"GB/s","value":30.1537}
+{"test":"ram","var":"write (stream)","param":3,"unit":"GB/s","value":30.1576}
+{"test":"ram","var":"write (stream)","param":3,"unit":"GB/s","value":30.1099}
+{"test":"ram","var":"write (stream)","param":3,"unit":"GB/s","value":30.1481}
+{"test":"ram","var":"copy (stream)","param":3,"unit":"GB/s","value":53.4351}
+{"test":"ram","var":"copy (stream)","param":3,"unit":"GB/s","value":53.5994}
+{"test":"ram","var":"copy (stream)","param":3,"unit":"GB/s","value":53.5666}
+{"test":"ram","var":"copy (stream)","param":3,"unit":"GB/s","value":53.5219}
+{"test":"ram","var":"copy (stream)","param":3,"unit":"GB/s","value":53.5569}
+{"test":"ram","var":"copy (stream)","param":3,"unit":"GB/s","value":53.5709}
+{"test":"ram","var":"copy (stream)","param":3,"unit":"GB/s","value":53.49}
+{"test":"ram","var":"read","param":4,"unit":"GB/s","value":56.6802}
+{"test":"ram","var":"read","param":4,"unit":"GB/s","value":56.6562}
+{"test":"ram","var":"read","param":4,"unit":"GB/s","value":56.5353}
+{"test":"ram","var":"read","param":4,"unit":"GB/s","value":56.6397}
+{"test":"ram","var":"read","param":4,"unit":"GB/s","value":56.7212}
+{"test":"ram","var":"read","param":4,"unit":"GB/s","value":56.3698}
+{"test":"ram","var":"read","param":4,"unit":"GB/s","value":56.6751}
+{"test":"ram","var":"write (stream)","param":4,"unit":"GB/s","value":29.683}
+{"test":"ram","var":"write (stream)","param":4,"unit":"GB/s","value":29.6418}
+{"test":"ram","var":"write (stream)","param":4,"unit":"GB/s","value":29.6688}
+{"test":"ram","var":"write (stream)","param":4,"unit":"GB/s","value":29.6653}
+{"test":"ram","var":"write (stream)","param":4,"unit":"GB/s","value":29.66}
+{"test":"ram","var":"write (stream)","param":4,"unit":"GB/s","value":29.6769}
+{"test":"ram","var":"write (stream)","param":4,"unit":"GB/s","value":29.4844}
+{"test":"ram","var":"copy (stream)","param":4,"unit":"GB/s","value":52.9674}
+{"test":"ram","var":"copy (stream)","param":4,"unit":"GB/s","value":52.9931}
+{"test":"ram","var":"copy (stream)","param":4,"unit":"GB/s","value":53.0745}
+{"test":"ram","var":"copy (stream)","param":4,"unit":"GB/s","value":52.9901}
+{"test":"ram","var":"copy (stream)","param":4,"unit":"GB/s","value":53.0394}
+{"test":"ram","var":"copy (stream)","param":4,"unit":"GB/s","value":52.9192}
+{"test":"ram","var":"copy (stream)","param":4,"unit":"GB/s","value":53.0242}
+{"test":"ram","var":"read","param":6,"unit":"GB/s","value":56.1863}
+{"test":"ram","var":"read","param":6,"unit":"GB/s","value":56.5034}
+{"test":"ram","var":"read","param":6,"unit":"GB/s","value":56.6065}
+{"test":"ram","var":"read","param":6,"unit":"GB/s","value":56.5097}
+{"test":"ram","var":"read","param":6,"unit":"GB/s","value":56.5899}
+{"test":"ram","var":"read","param":6,"unit":"GB/s","value":56.5254}
+{"test":"ram","var":"read","param":6,"unit":"GB/s","value":56.6162}
+{"test":"ram","var":"write (stream)","param":6,"unit":"GB/s","value":31.897}
+{"test":"ram","var":"write (stream)","param":6,"unit":"GB/s","value":31.9065}
+{"test":"ram","var":"write (stream)","param":6,"unit":"GB/s","value":31.9046}
+{"test":"ram","var":"write (stream)","param":6,"unit":"GB/s","value":31.9048}
+{"test":"ram","var":"write (stream)","param":6,"unit":"GB/s","value":31.9082}
+{"test":"ram","var":"write (stream)","param":6,"unit":"GB/s","value":31.9094}
+{"test":"ram","var":"write (stream)","param":6,"unit":"GB/s","value":31.91}
+{"test":"ram","var":"copy (stream)","param":6,"unit":"GB/s","value":52.3961}
+{"test":"ram","var":"copy (stream)","param":6,"unit":"GB/s","value":52.4002}
+{"test":"ram","var":"copy (stream)","param":6,"unit":"GB/s","value":52.4317}
+{"test":"ram","var":"copy (stream)","param":6,"unit":"GB/s","value":52.368}
+{"test":"ram","var":"copy (stream)","param":6,"unit":"GB/s","value":52.3991}
+{"test":"ram","var":"copy (stream)","param":6,"unit":"GB/s","value":52.4433}
+{"test":"ram","var":"copy (stream)","param":6,"unit":"GB/s","value":52.4389}
+{"test":"ram","var":"read","param":8,"unit":"GB/s","value":56.4181}
+{"test":"ram","var":"read","param":8,"unit":"GB/s","value":56.2416}
+{"test":"ram","var":"read","param":8,"unit":"GB/s","value":56.4712}
+{"test":"ram","var":"read","param":8,"unit":"GB/s","value":56.5372}
+{"test":"ram","var":"read","param":8,"unit":"GB/s","value":56.3357}
+{"test":"ram","var":"read","param":8,"unit":"GB/s","value":56.5261}
+{"test":"ram","var":"read","param":8,"unit":"GB/s","value":56.5227}
+{"test":"ram","var":"write (stream)","param":8,"unit":"GB/s","value":31.854}
+{"test":"ram","var":"write (stream)","param":8,"unit":"GB/s","value":31.8491}
+{"test":"ram","var":"write (stream)","param":8,"unit":"GB/s","value":31.8369}
+{"test":"ram","var":"write (stream)","param":8,"unit":"GB/s","value":31.8595}
+{"test":"ram","var":"write (stream)","param":8,"unit":"GB/s","value":31.7712}
+{"test":"ram","var":"write (stream)","param":8,"unit":"GB/s","value":31.8225}
+{"test":"ram","var":"write (stream)","param":8,"unit":"GB/s","value":31.8336}
+{"test":"ram","var":"copy (stream)","param":8,"unit":"GB/s","value":52.6839}
+{"test":"ram","var":"copy (stream)","param":8,"unit":"GB/s","value":52.768}
+{"test":"ram","var":"copy (stream)","param":8,"unit":"GB/s","value":52.6791}
+{"test":"ram","var":"copy (stream)","param":8,"unit":"GB/s","value":52.5385}
+{"test":"ram","var":"copy (stream)","param":8,"unit":"GB/s","value":52.4923}
+{"test":"ram","var":"copy (stream)","param":8,"unit":"GB/s","value":52.7272}
+{"test":"ram","var":"copy (stream)","param":8,"unit":"GB/s","value":52.7319}
+{"test":"ram","var":"read","param":12,"unit":"GB/s","value":64.4715}
+{"test":"ram","var":"read","param":12,"unit":"GB/s","value":65.2836}
+{"test":"ram","var":"read","param":12,"unit":"GB/s","value":65.4407}
+{"test":"ram","var":"read","param":12,"unit":"GB/s","value":64.9598}
+{"test":"ram","var":"read","param":12,"unit":"GB/s","value":65.3381}
+{"test":"ram","var":"read","param":12,"unit":"GB/s","value":65.3498}
+{"test":"ram","var":"read","param":12,"unit":"GB/s","value":65.2207}
+{"test":"ram","var":"write (stream)","param":12,"unit":"GB/s","value":45.6935}
+{"test":"ram","var":"write (stream)","param":12,"unit":"GB/s","value":45.8142}
+{"test":"ram","var":"write (stream)","param":12,"unit":"GB/s","value":45.8202}
+{"test":"ram","var":"write (stream)","param":12,"unit":"GB/s","value":45.4557}
+{"test":"ram","var":"write (stream)","param":12,"unit":"GB/s","value":45.8587}
+{"test":"ram","var":"write (stream)","param":12,"unit":"GB/s","value":45.8239}
+{"test":"ram","var":"write (stream)","param":12,"unit":"GB/s","value":45.8187}
+{"test":"ram","var":"copy (stream)","param":12,"unit":"GB/s","value":60.4962}
+{"test":"ram","var":"copy (stream)","param":12,"unit":"GB/s","value":60.6636}
+{"test":"ram","var":"copy (stream)","param":12,"unit":"GB/s","value":60.5879}
+{"test":"ram","var":"copy (stream)","param":12,"unit":"GB/s","value":60.6307}
+{"test":"ram","var":"copy (stream)","param":12,"unit":"GB/s","value":60.624}
+{"test":"ram","var":"copy (stream)","param":12,"unit":"GB/s","value":60.5828}
+{"test":"ram","var":"copy (stream)","param":12,"unit":"GB/s","value":60.711}
+{"test":"ram","var":"read","param":16,"unit":"GB/s","value":68.2854}
+{"test":"ram","var":"read","param":16,"unit":"GB/s","value":67.6429}
+{"test":"ram","var":"read","param":16,"unit":"GB/s","value":68.236}
+{"test":"ram","var":"read","param":16,"unit":"GB/s","value":67.9875}
+{"test":"ram","var":"read","param":16,"unit":"GB/s","value":68.4613}
+{"test":"ram","var":"read","param":16,"unit":"GB/s","value":66.6073}
+{"test":"ram","var":"read","param":16,"unit":"GB/s","value":68.1582}
+{"test":"ram","var":"write (stream)","param":16,"unit":"GB/s","value":57.7175}
+{"test":"ram","var":"write (stream)","param":16,"unit":"GB/s","value":57.7184}
+{"test":"ram","var":"write (stream)","param":16,"unit":"GB/s","value":57.536}
+{"test":"ram","var":"write (stream)","param":16,"unit":"GB/s","value":57.7579}
+{"test":"ram","var":"write (stream)","param":16,"unit":"GB/s","value":57.791}
+{"test":"ram","var":"write (stream)","param":16,"unit":"GB/s","value":57.7382}
+{"test":"ram","var":"write (stream)","param":16,"unit":"GB/s","value":57.7641}
+{"test":"ram","var":"copy (stream)","param":16,"unit":"GB/s","value":63.6031}
+{"test":"ram","var":"copy (stream)","param":16,"unit":"GB/s","value":63.6676}
+{"test":"ram","var":"copy (stream)","param":16,"unit":"GB/s","value":63.6722}
+{"test":"ram","var":"copy (stream)","param":16,"unit":"GB/s","value":63.7335}
+{"test":"ram","var":"copy (stream)","param":16,"unit":"GB/s","value":63.769}
+{"test":"ram","var":"copy (stream)","param":16,"unit":"GB/s","value":63.809}
+{"test":"ram","var":"copy (stream)","param":16,"unit":"GB/s","value":63.8203}
+{"test":"ram","var":"read","param":24,"unit":"GB/s","value":64.065}
+{"test":"ram","var":"read","param":24,"unit":"GB/s","value":68.7908}
+{"test":"ram","var":"read","param":24,"unit":"GB/s","value":64.077}
+{"test":"ram","var":"read","param":24,"unit":"GB/s","value":65.6985}
+{"test":"ram","var":"read","param":24,"unit":"GB/s","value":64.0928}
+{"test":"ram","var":"read","param":24,"unit":"GB/s","value":64.1359}
+{"test":"ram","var":"read","param":24,"unit":"GB/s","value":63.7058}
+{"test":"ram","var":"write (stream)","param":24,"unit":"GB/s","value":45.4499}
+{"test":"ram","var":"write (stream)","param":24,"unit":"GB/s","value":45.4864}
+{"test":"ram","var":"write (stream)","param":24,"unit":"GB/s","value":45.4687}
+{"test":"ram","var":"write (stream)","param":24,"unit":"GB/s","value":45.4714}
+{"test":"ram","var":"write (stream)","param":24,"unit":"GB/s","value":45.5375}
+{"test":"ram","var":"write (stream)","param":24,"unit":"GB/s","value":45.56}
+{"test":"ram","var":"write (stream)","param":24,"unit":"GB/s","value":45.5351}
+{"test":"ram","var":"copy (stream)","param":24,"unit":"GB/s","value":59.2263}
+{"test":"ram","var":"copy (stream)","param":24,"unit":"GB/s","value":60.4354}
+{"test":"ram","var":"copy (stream)","param":24,"unit":"GB/s","value":60.0828}
+{"test":"ram","var":"copy (stream)","param":24,"unit":"GB/s","value":59.3017}
+{"test":"ram","var":"copy (stream)","param":24,"unit":"GB/s","value":59.3825}
+{"test":"ram","var":"copy (stream)","param":24,"unit":"GB/s","value":59.5262}
+{"test":"ram","var":"copy (stream)","param":24,"unit":"GB/s","value":59.4277}
+{"test":"ram","var":"read","param":32,"unit":"GB/s","value":67.0817}
+{"test":"ram","var":"read","param":32,"unit":"GB/s","value":74.2889}
+{"test":"ram","var":"read","param":32,"unit":"GB/s","value":74.2524}
+{"test":"ram","var":"read","param":32,"unit":"GB/s","value":72.9772}
+{"test":"ram","var":"read","param":32,"unit":"GB/s","value":69.2108}
+{"test":"ram","var":"read","param":32,"unit":"GB/s","value":70.5095}
+{"test":"ram","var":"read","param":32,"unit":"GB/s","value":70.6655}
+{"test":"ram","var":"write (stream)","param":32,"unit":"GB/s","value":61.6296}
+{"test":"ram","var":"write (stream)","param":32,"unit":"GB/s","value":61.3512}
+{"test":"ram","var":"write (stream)","param":32,"unit":"GB/s","value":57.1573}
+{"test":"ram","var":"write (stream)","param":32,"unit":"GB/s","value":62.0605}
+{"test":"ram","var":"write (stream)","param":32,"unit":"GB/s","value":59.3791}
+{"test":"ram","var":"write (stream)","param":32,"unit":"GB/s","value":61.928}
+{"test":"ram","var":"write (stream)","param":32,"unit":"GB/s","value":61.8833}
+{"test":"ram","var":"copy (stream)","param":32,"unit":"GB/s","value":61.0227}
+{"test":"ram","var":"copy (stream)","param":32,"unit":"GB/s","value":62.3315}
+{"test":"ram","var":"copy (stream)","param":32,"unit":"GB/s","value":61.0693}
+{"test":"ram","var":"copy (stream)","param":32,"unit":"GB/s","value":63.716}
+{"test":"ram","var":"copy (stream)","param":32,"unit":"GB/s","value":63.7165}
+{"test":"ram","var":"copy (stream)","param":32,"unit":"GB/s","value":61.1941}
+{"test":"ram","var":"copy (stream)","param":32,"unit":"GB/s","value":63.6432}
+## pin=spread 02:22:52
+{"cpus":32,"buffer_mib":2048,"pin":"spread"}
+{"test":"ram","var":"read","param":1,"unit":"GB/s","value":55.2547}
+{"test":"ram","var":"read","param":1,"unit":"GB/s","value":55.9399}
+{"test":"ram","var":"read","param":1,"unit":"GB/s","value":55.9945}
+{"test":"ram","var":"read","param":1,"unit":"GB/s","value":55.9843}
+{"test":"ram","var":"read","param":1,"unit":"GB/s","value":55.7264}
+{"test":"ram","var":"read","param":1,"unit":"GB/s","value":55.4402}
+{"test":"ram","var":"read","param":1,"unit":"GB/s","value":55.7282}
+{"test":"ram","var":"write (stream)","param":1,"unit":"GB/s","value":30.7553}
+{"test":"ram","var":"write (stream)","param":1,"unit":"GB/s","value":31.2062}
+{"test":"ram","var":"write (stream)","param":1,"unit":"GB/s","value":31.2147}
+{"test":"ram","var":"write (stream)","param":1,"unit":"GB/s","value":31.2149}
+{"test":"ram","var":"write (stream)","param":1,"unit":"GB/s","value":31.1832}
+{"test":"ram","var":"write (stream)","param":1,"unit":"GB/s","value":31.2232}
+{"test":"ram","var":"write (stream)","param":1,"unit":"GB/s","value":31.2469}
+{"test":"ram","var":"copy (stream)","param":1,"unit":"GB/s","value":52.8548}
+{"test":"ram","var":"copy (stream)","param":1,"unit":"GB/s","value":52.8809}
+{"test":"ram","var":"copy (stream)","param":1,"unit":"GB/s","value":52.3989}
+{"test":"ram","var":"copy (stream)","param":1,"unit":"GB/s","value":52.9494}
+{"test":"ram","var":"copy (stream)","param":1,"unit":"GB/s","value":52.9871}
+{"test":"ram","var":"copy (stream)","param":1,"unit":"GB/s","value":53.003}
+{"test":"ram","var":"copy (stream)","param":1,"unit":"GB/s","value":53.0174}
+{"test":"ram","var":"read","param":2,"unit":"GB/s","value":70.837}
+{"test":"ram","var":"read","param":2,"unit":"GB/s","value":72.1878}
+{"test":"ram","var":"read","param":2,"unit":"GB/s","value":71.8226}
+{"test":"ram","var":"read","param":2,"unit":"GB/s","value":72.1551}
+{"test":"ram","var":"read","param":2,"unit":"GB/s","value":71.5773}
+{"test":"ram","var":"read","param":2,"unit":"GB/s","value":72.0662}
+{"test":"ram","var":"read","param":2,"unit":"GB/s","value":71.9501}
+{"test":"ram","var":"write (stream)","param":2,"unit":"GB/s","value":56.8448}
+{"test":"ram","var":"write (stream)","param":2,"unit":"GB/s","value":57.0565}
+{"test":"ram","var":"write (stream)","param":2,"unit":"GB/s","value":57.4039}
+{"test":"ram","var":"write (stream)","param":2,"unit":"GB/s","value":57.3787}
+{"test":"ram","var":"write (stream)","param":2,"unit":"GB/s","value":57.3848}
+{"test":"ram","var":"write (stream)","param":2,"unit":"GB/s","value":57.4543}
+{"test":"ram","var":"write (stream)","param":2,"unit":"GB/s","value":57.3367}
+{"test":"ram","var":"copy (stream)","param":2,"unit":"GB/s","value":66.7593}
+{"test":"ram","var":"copy (stream)","param":2,"unit":"GB/s","value":66.8629}
+{"test":"ram","var":"copy (stream)","param":2,"unit":"GB/s","value":66.8372}
+{"test":"ram","var":"copy (stream)","param":2,"unit":"GB/s","value":66.8779}
+{"test":"ram","var":"copy (stream)","param":2,"unit":"GB/s","value":66.9053}
+{"test":"ram","var":"copy (stream)","param":2,"unit":"GB/s","value":66.849}
+{"test":"ram","var":"copy (stream)","param":2,"unit":"GB/s","value":66.8331}
+{"test":"ram","var":"read","param":3,"unit":"GB/s","value":66.2588}
+{"test":"ram","var":"read","param":3,"unit":"GB/s","value":67.3232}
+{"test":"ram","var":"read","param":3,"unit":"GB/s","value":66.972}
+{"test":"ram","var":"read","param":3,"unit":"GB/s","value":67.2792}
+{"test":"ram","var":"read","param":3,"unit":"GB/s","value":67.4005}
+{"test":"ram","var":"read","param":3,"unit":"GB/s","value":67.3815}
+{"test":"ram","var":"read","param":3,"unit":"GB/s","value":66.9196}
+{"test":"ram","var":"write (stream)","param":3,"unit":"GB/s","value":44.5984}
+{"test":"ram","var":"write (stream)","param":3,"unit":"GB/s","value":44.7236}
+{"test":"ram","var":"write (stream)","param":3,"unit":"GB/s","value":44.5202}
+{"test":"ram","var":"write (stream)","param":3,"unit":"GB/s","value":44.5647}
+{"test":"ram","var":"write (stream)","param":3,"unit":"GB/s","value":44.6534}
+{"test":"ram","var":"write (stream)","param":3,"unit":"GB/s","value":44.7063}
+{"test":"ram","var":"write (stream)","param":3,"unit":"GB/s","value":44.5679}
+{"test":"ram","var":"copy (stream)","param":3,"unit":"GB/s","value":62.2127}
+{"test":"ram","var":"copy (stream)","param":3,"unit":"GB/s","value":62.2612}
+{"test":"ram","var":"copy (stream)","param":3,"unit":"GB/s","value":62.3512}
+{"test":"ram","var":"copy (stream)","param":3,"unit":"GB/s","value":62.2887}
+{"test":"ram","var":"copy (stream)","param":3,"unit":"GB/s","value":62.3468}
+{"test":"ram","var":"copy (stream)","param":3,"unit":"GB/s","value":62.3614}
+{"test":"ram","var":"copy (stream)","param":3,"unit":"GB/s","value":62.2596}
+{"test":"ram","var":"read","param":4,"unit":"GB/s","value":71.8355}
+{"test":"ram","var":"read","param":4,"unit":"GB/s","value":71.6576}
+{"test":"ram","var":"read","param":4,"unit":"GB/s","value":71.7841}
+{"test":"ram","var":"read","param":4,"unit":"GB/s","value":72.0056}
+{"test":"ram","var":"read","param":4,"unit":"GB/s","value":71.8289}
+{"test":"ram","var":"read","param":4,"unit":"GB/s","value":71.3127}
+{"test":"ram","var":"read","param":4,"unit":"GB/s","value":71.8641}
+{"test":"ram","var":"write (stream)","param":4,"unit":"GB/s","value":56.2636}
+{"test":"ram","var":"write (stream)","param":4,"unit":"GB/s","value":55.5532}
+{"test":"ram","var":"write (stream)","param":4,"unit":"GB/s","value":55.2946}
+{"test":"ram","var":"write (stream)","param":4,"unit":"GB/s","value":55.753}
+{"test":"ram","var":"write (stream)","param":4,"unit":"GB/s","value":55.5303}
+{"test":"ram","var":"write (stream)","param":4,"unit":"GB/s","value":55.557}
+{"test":"ram","var":"write (stream)","param":4,"unit":"GB/s","value":55.5181}
+{"test":"ram","var":"copy (stream)","param":4,"unit":"GB/s","value":65.9792}
+{"test":"ram","var":"copy (stream)","param":4,"unit":"GB/s","value":66.1098}
+{"test":"ram","var":"copy (stream)","param":4,"unit":"GB/s","value":66.0246}
+{"test":"ram","var":"copy (stream)","param":4,"unit":"GB/s","value":64.5073}
+{"test":"ram","var":"copy (stream)","param":4,"unit":"GB/s","value":65.9022}
+{"test":"ram","var":"copy (stream)","param":4,"unit":"GB/s","value":65.8976}
+{"test":"ram","var":"copy (stream)","param":4,"unit":"GB/s","value":66.1286}
+{"test":"ram","var":"read","param":6,"unit":"GB/s","value":71.8553}
+{"test":"ram","var":"read","param":6,"unit":"GB/s","value":71.7055}
+{"test":"ram","var":"read","param":6,"unit":"GB/s","value":71.9002}
+{"test":"ram","var":"read","param":6,"unit":"GB/s","value":71.5773}
+{"test":"ram","var":"read","param":6,"unit":"GB/s","value":71.7865}
+{"test":"ram","var":"read","param":6,"unit":"GB/s","value":71.987}
+{"test":"ram","var":"read","param":6,"unit":"GB/s","value":71.9401}
+{"test":"ram","var":"write (stream)","param":6,"unit":"GB/s","value":54.9089}
+{"test":"ram","var":"write (stream)","param":6,"unit":"GB/s","value":54.9775}
+{"test":"ram","var":"write (stream)","param":6,"unit":"GB/s","value":55.0683}
+{"test":"ram","var":"write (stream)","param":6,"unit":"GB/s","value":55.043}
+{"test":"ram","var":"write (stream)","param":6,"unit":"GB/s","value":54.7343}
+{"test":"ram","var":"write (stream)","param":6,"unit":"GB/s","value":54.9655}
+{"test":"ram","var":"write (stream)","param":6,"unit":"GB/s","value":55.1338}
+{"test":"ram","var":"copy (stream)","param":6,"unit":"GB/s","value":65.3264}
+{"test":"ram","var":"copy (stream)","param":6,"unit":"GB/s","value":65.761}
+{"test":"ram","var":"copy (stream)","param":6,"unit":"GB/s","value":65.6943}
+{"test":"ram","var":"copy (stream)","param":6,"unit":"GB/s","value":65.7316}
+{"test":"ram","var":"copy (stream)","param":6,"unit":"GB/s","value":65.7024}
+{"test":"ram","var":"copy (stream)","param":6,"unit":"GB/s","value":65.7691}
+{"test":"ram","var":"copy (stream)","param":6,"unit":"GB/s","value":65.7263}
+{"test":"ram","var":"read","param":8,"unit":"GB/s","value":70.9454}
+{"test":"ram","var":"read","param":8,"unit":"GB/s","value":70.8723}
+{"test":"ram","var":"read","param":8,"unit":"GB/s","value":70.8068}
+{"test":"ram","var":"read","param":8,"unit":"GB/s","value":70.6584}
+{"test":"ram","var":"read","param":8,"unit":"GB/s","value":70.9098}
+{"test":"ram","var":"read","param":8,"unit":"GB/s","value":70.3146}
+{"test":"ram","var":"read","param":8,"unit":"GB/s","value":70.7658}
+{"test":"ram","var":"write (stream)","param":8,"unit":"GB/s","value":54.4585}
+{"test":"ram","var":"write (stream)","param":8,"unit":"GB/s","value":54.4728}
+{"test":"ram","var":"write (stream)","param":8,"unit":"GB/s","value":54.6439}
+{"test":"ram","var":"write (stream)","param":8,"unit":"GB/s","value":54.5415}
+{"test":"ram","var":"write (stream)","param":8,"unit":"GB/s","value":54.4976}
+{"test":"ram","var":"write (stream)","param":8,"unit":"GB/s","value":54.3206}
+{"test":"ram","var":"write (stream)","param":8,"unit":"GB/s","value":54.6363}
+{"test":"ram","var":"copy (stream)","param":8,"unit":"GB/s","value":65.3554}
+{"test":"ram","var":"copy (stream)","param":8,"unit":"GB/s","value":65.3397}
+{"test":"ram","var":"copy (stream)","param":8,"unit":"GB/s","value":65.4343}
+{"test":"ram","var":"copy (stream)","param":8,"unit":"GB/s","value":65.4093}
+{"test":"ram","var":"copy (stream)","param":8,"unit":"GB/s","value":65.1331}
+{"test":"ram","var":"copy (stream)","param":8,"unit":"GB/s","value":65.49}
+{"test":"ram","var":"copy (stream)","param":8,"unit":"GB/s","value":65.4479}
+{"test":"ram","var":"read","param":12,"unit":"GB/s","value":69.272}
+{"test":"ram","var":"read","param":12,"unit":"GB/s","value":69.2751}
+{"test":"ram","var":"read","param":12,"unit":"GB/s","value":69.399}
+{"test":"ram","var":"read","param":12,"unit":"GB/s","value":69.278}
+{"test":"ram","var":"read","param":12,"unit":"GB/s","value":69.322}
+{"test":"ram","var":"read","param":12,"unit":"GB/s","value":69.2408}
+{"test":"ram","var":"read","param":12,"unit":"GB/s","value":68.8597}
+{"test":"ram","var":"write (stream)","param":12,"unit":"GB/s","value":58.3366}
+{"test":"ram","var":"write (stream)","param":12,"unit":"GB/s","value":58.544}
+{"test":"ram","var":"write (stream)","param":12,"unit":"GB/s","value":58.6469}
+{"test":"ram","var":"write (stream)","param":12,"unit":"GB/s","value":58.2037}
+{"test":"ram","var":"write (stream)","param":12,"unit":"GB/s","value":58.7144}
+{"test":"ram","var":"write (stream)","param":12,"unit":"GB/s","value":58.6084}
+{"test":"ram","var":"write (stream)","param":12,"unit":"GB/s","value":58.57}
+{"test":"ram","var":"copy (stream)","param":12,"unit":"GB/s","value":64.0903}
+{"test":"ram","var":"copy (stream)","param":12,"unit":"GB/s","value":64.3909}
+{"test":"ram","var":"copy (stream)","param":12,"unit":"GB/s","value":64.3756}
+{"test":"ram","var":"copy (stream)","param":12,"unit":"GB/s","value":64.2906}
+{"test":"ram","var":"copy (stream)","param":12,"unit":"GB/s","value":64.4285}
+{"test":"ram","var":"copy (stream)","param":12,"unit":"GB/s","value":62.7929}
+{"test":"ram","var":"copy (stream)","param":12,"unit":"GB/s","value":64.3398}
+{"test":"ram","var":"read","param":16,"unit":"GB/s","value":68.4508}
+{"test":"ram","var":"read","param":16,"unit":"GB/s","value":68.3497}
+{"test":"ram","var":"read","param":16,"unit":"GB/s","value":68.576}
+{"test":"ram","var":"read","param":16,"unit":"GB/s","value":68.286}
+{"test":"ram","var":"read","param":16,"unit":"GB/s","value":68.3675}
+{"test":"ram","var":"read","param":16,"unit":"GB/s","value":68.2347}
+{"test":"ram","var":"read","param":16,"unit":"GB/s","value":68.2363}
+{"test":"ram","var":"write (stream)","param":16,"unit":"GB/s","value":57.6847}
+{"test":"ram","var":"write (stream)","param":16,"unit":"GB/s","value":57.6565}
+{"test":"ram","var":"write (stream)","param":16,"unit":"GB/s","value":57.8358}
+{"test":"ram","var":"write (stream)","param":16,"unit":"GB/s","value":57.74}
+{"test":"ram","var":"write (stream)","param":16,"unit":"GB/s","value":57.5548}
+{"test":"ram","var":"write (stream)","param":16,"unit":"GB/s","value":57.8026}
+{"test":"ram","var":"write (stream)","param":16,"unit":"GB/s","value":57.8151}
+{"test":"ram","var":"copy (stream)","param":16,"unit":"GB/s","value":63.1663}
+{"test":"ram","var":"copy (stream)","param":16,"unit":"GB/s","value":63.5645}
+{"test":"ram","var":"copy (stream)","param":16,"unit":"GB/s","value":63.7099}
+{"test":"ram","var":"copy (stream)","param":16,"unit":"GB/s","value":63.7226}
+{"test":"ram","var":"copy (stream)","param":16,"unit":"GB/s","value":63.7591}
+{"test":"ram","var":"copy (stream)","param":16,"unit":"GB/s","value":63.7125}
+{"test":"ram","var":"copy (stream)","param":16,"unit":"GB/s","value":63.6527}
+{"test":"ram","var":"read","param":24,"unit":"GB/s","value":64.1753}
+{"test":"ram","var":"read","param":24,"unit":"GB/s","value":64.2072}
+{"test":"ram","var":"read","param":24,"unit":"GB/s","value":64.1967}
+{"test":"ram","var":"read","param":24,"unit":"GB/s","value":63.0844}
+{"test":"ram","var":"read","param":24,"unit":"GB/s","value":64.0873}
+{"test":"ram","var":"read","param":24,"unit":"GB/s","value":64.0473}
+{"test":"ram","var":"read","param":24,"unit":"GB/s","value":64.0193}
+{"test":"ram","var":"write (stream)","param":24,"unit":"GB/s","value":45.4529}
+{"test":"ram","var":"write (stream)","param":24,"unit":"GB/s","value":45.462}
+{"test":"ram","var":"write (stream)","param":24,"unit":"GB/s","value":48.3683}
+{"test":"ram","var":"write (stream)","param":24,"unit":"GB/s","value":45.5153}
+{"test":"ram","var":"write (stream)","param":24,"unit":"GB/s","value":45.4722}
+{"test":"ram","var":"write (stream)","param":24,"unit":"GB/s","value":47.8207}
+{"test":"ram","var":"write (stream)","param":24,"unit":"GB/s","value":45.4381}
+{"test":"ram","var":"copy (stream)","param":24,"unit":"GB/s","value":59.197}
+{"test":"ram","var":"copy (stream)","param":24,"unit":"GB/s","value":59.2532}
+{"test":"ram","var":"copy (stream)","param":24,"unit":"GB/s","value":59.3231}
+{"test":"ram","var":"copy (stream)","param":24,"unit":"GB/s","value":59.3972}
+{"test":"ram","var":"copy (stream)","param":24,"unit":"GB/s","value":60.7812}
+{"test":"ram","var":"copy (stream)","param":24,"unit":"GB/s","value":59.2801}
+{"test":"ram","var":"copy (stream)","param":24,"unit":"GB/s","value":59.3609}
+{"test":"ram","var":"read","param":32,"unit":"GB/s","value":74.269}
+{"test":"ram","var":"read","param":32,"unit":"GB/s","value":67.6372}
+{"test":"ram","var":"read","param":32,"unit":"GB/s","value":74.2012}
+{"test":"ram","var":"read","param":32,"unit":"GB/s","value":74.3032}
+{"test":"ram","var":"read","param":32,"unit":"GB/s","value":74.1049}
+{"test":"ram","var":"read","param":32,"unit":"GB/s","value":74.3588}
+{"test":"ram","var":"read","param":32,"unit":"GB/s","value":73.7398}
+{"test":"ram","var":"write (stream)","param":32,"unit":"GB/s","value":61.6642}
+{"test":"ram","var":"write (stream)","param":32,"unit":"GB/s","value":61.9382}
+{"test":"ram","var":"write (stream)","param":32,"unit":"GB/s","value":61.7301}
+{"test":"ram","var":"write (stream)","param":32,"unit":"GB/s","value":61.7562}
+{"test":"ram","var":"write (stream)","param":32,"unit":"GB/s","value":61.8963}
+{"test":"ram","var":"write (stream)","param":32,"unit":"GB/s","value":61.8238}
+{"test":"ram","var":"write (stream)","param":32,"unit":"GB/s","value":61.6277}
+{"test":"ram","var":"copy (stream)","param":32,"unit":"GB/s","value":63.4469}
+{"test":"ram","var":"copy (stream)","param":32,"unit":"GB/s","value":63.6913}
+{"test":"ram","var":"copy (stream)","param":32,"unit":"GB/s","value":62.3536}
+{"test":"ram","var":"copy (stream)","param":32,"unit":"GB/s","value":63.7072}
+{"test":"ram","var":"copy (stream)","param":32,"unit":"GB/s","value":63.6988}
+{"test":"ram","var":"copy (stream)","param":32,"unit":"GB/s","value":63.0573}
+{"test":"ram","var":"copy (stream)","param":32,"unit":"GB/s","value":61.6613}

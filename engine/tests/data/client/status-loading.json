@@ -1,0 +1,41 @@
+{
+ "ready": false,
+ "uptime": 41.0,
+ "phases": [
+  {
+   "name": "Read the model file",
+   "done": 1,
+   "total": 1,
+   "t0": 0,
+   "t1": 12.0
+  },
+  {
+   "name": "Fill the expert slots",
+   "done": 300,
+   "total": 500,
+   "t0": 12.0,
+   "t1": null
+  }
+ ],
+ "system": {
+  "gpu": {
+   "vram_used": 15100000000.0,
+   "vram_total": 17160000000.0,
+   "busy": 87,
+   "power_w": 150,
+   "power_cap_w": 160,
+   "sclk_mhz": 2900,
+   "temp_c": 62,
+   "temp_junction_c": 71
+  },
+  "ram": {
+   "total": 64000000000.0,
+   "available": 15000000000.0
+  }
+ },
+ "config": {
+  "model": "Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf",
+  "drafter": "mtp",
+  "n_ctx": 262144
+ }
+}

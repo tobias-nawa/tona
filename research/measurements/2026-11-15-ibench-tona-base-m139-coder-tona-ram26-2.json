@@ -1,0 +1,354 @@
+{
+ "tool": "ibench",
+ "suite": {
+  "name": "base",
+  "description": "Baseline measurement: short prompt, long decode, needle in 10K/30K/60K context, warm prefix at 30K. Context sizes are in characters (Qwen3.8 tokenizer: ~4.6 characters per token, counted with llama-tokenize); the real token counts are in the report.",
+  "file": "bench/suites/base.toml"
+ },
+ "env": {
+  "time": "2026-11-15T11:03:32+01:00",
+  "kernel": "7.2.15-200.fc44.x86_64",
+  "os": "Fedora Linux 44 (Workstation Edition)",
+  "python": "3.14.10",
+  "cpu": "AMD Ryzen 5 9600X 6-Core Processor",
+  "cpu_governor": "performance",
+  "cpu_epp": "performance",
+  "mem_total_gib": 60.5,
+  "mem_avail_gib": 51.4,
+  "swap_used_mib": 2017,
+  "gpu": {
+   "sysfs": "/sys/devices/pci0000:00/0000:00:01.1/0000:01:00.0/0000:02:00.0/0000:03:00.0",
+   "vram_total_mib": 16304,
+   "vram_used_mib": 15644,
+   "vbios_version": "113-R906XTGO-F2",
+   "current_link_speed": "32.0 GT/s PCIe",
+   "current_link_width": "16",
+   "power_dpm_force_performance_level": "auto",
+   "pci_id": "1002:7590"
+  },
+  "packages": {
+   "rocm-runtime": "7.1.1-6.fc44",
+   "rocm-hip": "7.1.1-4.fc44",
+   "hipblaslt": "7.1.1-7.fc44",
+   "rocblas": "7.1.1-7.fc44",
+   "kernel": "7.2.15-200.fc44"
+  },
+  "git": {
+   "commit": "4caacd0",
+   "dirty": true
+  },
+  "target": {
+   "name": "tona",
+   "url": "http://127.0.0.1:8091",
+   "api": "openai",
+   "model": "default",
+   "extra": {}
+  },
+  "server": {
+   "/v1/models": {
+    "object": "list",
+    "data": [
+     {
+      "id": "qwen3.8-flash-next-coder",
+      "object": "model",
+      "type": "model",
+      "owned_by": "local",
+      "display_name": "Qwen3.8 Flash Next Coder (local)",
+      "created_at": "2026-10-23T00:00:00Z",
+      "meta": {
+       "n_ctx": 65536
+      }
+     }
+    ],
+    "has_more": false
+   }
+  },
+  "warnings": [
+   "Swap in use before start: 2017 MiB",
+   "Repository has uncommitted changes"
+  ]
+ },
+ "cases": [
+  {
+   "case": {
+    "name": "needle-30k",
+    "description": "",
+    "runs": 1,
+    "warmup": 1,
+    "cache": "cold",
+    "temperature": 0.0,
+    "max_tokens": 768,
+    "expect": "osprey-2093",
+    "min_decode_tokens": 64,
+    "pause_s": 0.0,
+    "extra": {},
+    "prompt": null,
+    "context_chars": 141000,
+    "needle": "osprey-2093",
+    "needle_depth": 0.3,
+    "question": "The file above defines a constant SECRET_DEPLOY_TOKEN. First state its exact value. Then explain in detail what the code around it does, in at least 400 words.",
+    "trace": null
+   },
+   "runs": [
+    {
+     "index": -1,
+     "warmup": true,
+     "nonce": "2307b0b37a28",
+     "steps": [
+      {
+       "ok": true,
+       "error": null,
+       "finish": "stop",
+       "prompt_tokens": 30910,
+       "cached_tokens": 0,
+       "completion_tokens": 646,
+       "tool_calls": 0,
+       "reasoning_tokens": null,
+       "reasoning_chars": 0,
+       "e2e_s": 69.47360875899903,
+       "prefill_tps_server": null,
+       "decode_tps_server": 46.86163428185791,
+       "timings": {
+        "cache_n": 0,
+        "prompt_n": 30910,
+        "prompt_ms": 55670.941657999996,
+        "predicted_n": 646,
+        "predicted_ms": 13785.263998999999,
+        "predicted_per_second": 46.86163428185791
+       },
+       "ttft_s": 55.68836507899687,
+       "prefill_tps_client": 555.0531059073568,
+       "decode_tps_client": 46.79067207912659,
+       "itl_p50_ms": 0.03422000372665934,
+       "itl_p99_ms": 118.00452901727112,
+       "expect_ok": true,
+       "output_sha": "0d5ebd0245e5",
+       "text_head": "The exact value of the constant is:\n`osprey-2093`\n\nThe code surrounding this constant is located within the `argparse.py` module, specifically inside the `__call__` method of the `_VersionAction` class. This class is an internal implementation detail of the `argparse` library, designed to handle the behavior of the `--version` command-line option. When a user invokes a program with `--version`, th",
+       "vram_peak_mib": 15693.015625,
+       "gtt_peak_mib": 5576.109375,
+       "ram_avail_min_mib": 52588.9765625,
+       "swap_used_max_mib": 2016.98046875,
+       "gpu_busy_mean": 68.9796511627907,
+       "power_mean_w": 61.01744186046512,
+       "temp_max_c": 64.0,
+       "sclk_mean_mhz": 2065.9404069767443,
+       "samples": 688
+      }
+     ]
+    },
+    {
+     "index": 0,
+     "warmup": false,
+     "nonce": "e8a89a01d392",
+     "steps": [
+      {
+       "ok": true,
+       "error": null,
+       "finish": "stop",
+       "prompt_tokens": 30909,
+       "cached_tokens": 0,
+       "completion_tokens": 601,
+       "tool_calls": 0,
+       "reasoning_tokens": null,
+       "reasoning_chars": 0,
+       "e2e_s": 54.87522938499751,
+       "prefill_tps_server": null,
+       "decode_tps_server": 49.61080877297807,
+       "timings": {
+        "cache_n": 0,
+        "prompt_n": 30909,
+        "prompt_ms": 42743.629822,
+        "predicted_n": 601,
+        "predicted_ms": 12114.295551,
+        "predicted_per_second": 49.61080877297807
+       },
+       "ttft_s": 42.761047113999666,
+       "prefill_tps_client": 722.8307557015041,
+       "decode_tps_client": 49.53052837457321,
+       "itl_p50_ms": 0.03132499841740355,
+       "itl_p99_ms": 104.10312104293577,
+       "expect_ok": true,
+       "output_sha": "248c6f7f392e",
+       "text_head": "The exact value of the constant is:\n`osprey-2093`\n\nThe code surrounding this constant is located within the `argparse.py` module, specifically inside the `__call__` method of the `_VersionAction` class. This class is an internal implementation detail of the `argparse` library, designed to handle the behavior of the `--version` command-line option. When a user invokes a program with `--version`, th",
+       "vram_peak_mib": 15693.015625,
+       "gtt_peak_mib": 5576.109375,
+       "ram_avail_min_mib": 52583.2265625,
+       "swap_used_max_mib": 2016.96875,
+       "gpu_busy_mean": 79.8658088235294,
+       "power_mean_w": 68.99264705882354,
+       "temp_max_c": 63.0,
+       "sclk_mean_mhz": 2122.7775735294117,
+       "samples": 544
+      }
+     ]
+    }
+   ],
+   "summary": {
+    "steps": [
+     {
+      "n": 1,
+      "ok": 1,
+      "metrics": {
+       "ttft_s": {
+        "n": 1,
+        "median": 42.761047113999666,
+        "mean": 42.761047113999666,
+        "stdev": 0.0,
+        "min": 42.761047113999666,
+        "max": 42.761047113999666
+       },
+       "prefill_tps_client": {
+        "n": 1,
+        "median": 722.8307557015041,
+        "mean": 722.8307557015041,
+        "stdev": 0.0,
+        "min": 722.8307557015041,
+        "max": 722.8307557015041
+       },
+       "decode_tps_client": {
+        "n": 1,
+        "median": 49.53052837457321,
+        "mean": 49.53052837457321,
+        "stdev": 0.0,
+        "min": 49.53052837457321,
+        "max": 49.53052837457321
+       },
+       "decode_tps_server": {
+        "n": 1,
+        "median": 49.61080877297807,
+        "mean": 49.61080877297807,
+        "stdev": 0.0,
+        "min": 49.61080877297807,
+        "max": 49.61080877297807
+       },
+       "e2e_s": {
+        "n": 1,
+        "median": 54.87522938499751,
+        "mean": 54.87522938499751,
+        "stdev": 0.0,
+        "min": 54.87522938499751,
+        "max": 54.87522938499751
+       },
+       "prompt_tokens": {
+        "n": 1,
+        "median": 30909.0,
+        "mean": 30909.0,
+        "stdev": 0.0,
+        "min": 30909.0,
+        "max": 30909.0
+       },
+       "cached_tokens": {
+        "n": 1,
+        "median": 0.0,
+        "mean": 0.0,
+        "stdev": 0.0,
+        "min": 0.0,
+        "max": 0.0
+       },
+       "completion_tokens": {
+        "n": 1,
+        "median": 601.0,
+        "mean": 601.0,
+        "stdev": 0.0,
+        "min": 601.0,
+        "max": 601.0
+       },
+       "itl_p50_ms": {
+        "n": 1,
+        "median": 0.03132499841740355,
+        "mean": 0.03132499841740355,
+        "stdev": 0.0,
+        "min": 0.03132499841740355,
+        "max": 0.03132499841740355
+       },
+       "itl_p99_ms": {
+        "n": 1,
+        "median": 104.10312104293577,
+        "mean": 104.10312104293577,
+        "stdev": 0.0,
+        "min": 104.10312104293577,
+        "max": 104.10312104293577
+       },
+       "vram_peak_mib": {
+        "n": 1,
+        "median": 15693.015625,
+        "mean": 15693.015625,
+        "stdev": 0.0,
+        "min": 15693.015625,
+        "max": 15693.015625
+       },
+       "gtt_peak_mib": {
+        "n": 1,
+        "median": 5576.109375,
+        "mean": 5576.109375,
+        "stdev": 0.0,
+        "min": 5576.109375,
+        "max": 5576.109375
+       },
+       "ram_avail_min_mib": {
+        "n": 1,
+        "median": 52583.2265625,
+        "mean": 52583.2265625,
+        "stdev": 0.0,
+        "min": 52583.2265625,
+        "max": 52583.2265625
+       },
+       "swap_used_max_mib": {
+        "n": 1,
+        "median": 2016.96875,
+        "mean": 2016.96875,
+        "stdev": 0.0,
+        "min": 2016.96875,
+        "max": 2016.96875
+       },
+       "gpu_busy_mean": {
+        "n": 1,
+        "median": 79.8658088235294,
+        "mean": 79.8658088235294,
+        "stdev": 0.0,
+        "min": 79.8658088235294,
+        "max": 79.8658088235294
+       },
+       "power_mean_w": {
+        "n": 1,
+        "median": 68.99264705882354,
+        "mean": 68.99264705882354,
+        "stdev": 0.0,
+        "min": 68.99264705882354,
+        "max": 68.99264705882354
+       },
+       "temp_max_c": {
+        "n": 1,
+        "median": 63.0,
+        "mean": 63.0,
+        "stdev": 0.0,
+        "min": 63.0,
+        "max": 63.0
+       },
+       "sclk_mean_mhz": {
+        "n": 1,
+        "median": 2122.7775735294117,
+        "mean": 2122.7775735294117,
+        "stdev": 0.0,
+        "min": 2122.7775735294117,
+        "max": 2122.7775735294117
+       }
+      },
+      "expect_pass": 1,
+      "expect_n": 1,
+      "distinct_outputs": 1
+     }
+    ],
+    "warnings": [],
+    "run_e2e_s": {
+     "n": 1,
+     "median": 54.87522938499751,
+     "mean": 54.87522938499751,
+     "stdev": 0.0,
+     "min": 54.87522938499751,
+     "max": 54.87522938499751
+    }
+   }
+  }
+ ]
+}

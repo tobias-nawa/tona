@@ -1,0 +1,169 @@
+{
+  "id": "teleocr-1.2b",
+  "name": "TeleOCR (formerly NaviDC-OCR)",
+  "vendor": "XingChen-AGI (China Telecom Xingchen Lab per secondary sources)",
+  "release_date": "2026-08-17",
+  "lineage": {
+    "family": "TeleOCR",
+    "base_model": "Qwen2.5-VL vision encoder + Qwen3 decoder (card: built upon Qwen2.5-VL and Qwen3)",
+    "how_derived": "four-stage training with pseudo-labels from multi-node consensus voting"
+  },
+  "purpose": "Lightweight document parser that handles both digital and camera-captured (curved, crumpled, photographed) pages in one model without a dewarping step.",
+  "languages": {
+    "natural": [
+      "zh",
+      "en"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "LICENSE file of the model repo is the unmodified Apache License 2.0 text (Copyright 2026 China Telecom AI Technology Co., Ltd.); training-data terms not stated"
+  },
+  "architecture": {
+    "kind": "vision-language, Qwen2.5-VL style encoder + small Qwen3 decoder (secondary: 0.6B LM)",
+    "params_total_b": 1.2,
+    "why_this_design": "Geometry-aware modelling and content-structure decoupled learning so that photographed pages parse without rectification (card)."
+  },
+  "variants": [
+    {
+      "repo": "XingChen-AGI/TeleOCR",
+      "format": "safetensors BF16",
+      "official": true
+    },
+    {
+      "repo": "community GGUF (12 quantizations listed on the card)",
+      "format": "GGUF",
+      "official": false
+    }
+  ],
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "partial",
+    "other": [
+      "transformers (trust_remote_code)",
+      "vLLM",
+      "SGLang"
+    ],
+    "notes": "only community GGUF builds; compatibility with llama.cpp mtmd unchecked"
+  },
+  "benchmarks": [
+    {
+      "name": "OmniDocBench v1.6 overall",
+      "score": 96.87,
+      "kind": "vendor",
+      "source": "https://huggingface.co/XingChen-AGI/TeleOCR"
+    },
+    {
+      "name": "Wild_OmniDocBench overall",
+      "score": 88.53,
+      "kind": "vendor",
+      "source": "https://huggingface.co/XingChen-AGI/TeleOCR"
+    },
+    {
+      "name": "Dr.DocBench overall",
+      "score": 67.96,
+      "kind": "vendor",
+      "source": "https://huggingface.co/XingChen-AGI/TeleOCR"
+    },
+    {
+      "name": "PureDocBench real degraded",
+      "score": 70.85,
+      "kind": "vendor",
+      "source": "https://huggingface.co/XingChen-AGI/TeleOCR"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "best listed score on photographed documents (Wild_OmniDocBench)",
+      "phone photos of paper without a separate dewarping model"
+    ],
+    "weaknesses": [
+      "Chinese and English only on the card",
+      "self-reported numbers, not independently verified",
+      "canonical repo moved and renamed (mirrors under other accounts exist)"
+    ],
+    "best_for": [
+      "photos of receipts, letters and pages taken with a phone"
+    ],
+    "maturity": "new (August 2026), one report, renamed once"
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "best vendor numbers for camera captures, Apache-2.0 verified, but German unverified, no independent result and community-only GGUFs",
+    "blockers": [
+      "German accuracy unknown",
+      "no official GGUF"
+    ]
+  },
+  "open_questions": [
+    "German accuracy",
+    "which repo is canonical",
+    "llama.cpp compatibility of community GGUFs"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/XingChen-AGI/TeleOCR",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://fourweekmba.com/ai-teleocr-1b-document-parsing-benchmark/",
+      "kind": "secondary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/XingChen-AGI/TeleOCR/raw/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    }
+  ],
+  "tasks": [
+    "documents",
+    "vision"
+  ],
+  "modalities": {
+    "input": [
+      "image",
+      "document"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "about 1B parameters, BF16 about 2 GB"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "BF16 about 2 GB; Tona runs one model at a time, so it replaces the resident model while it works"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate"
+    }
+  },
+  "last_checked": "2026-11-19"
+}

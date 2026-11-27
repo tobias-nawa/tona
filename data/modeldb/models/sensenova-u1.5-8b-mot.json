@@ -1,0 +1,151 @@
+{
+  "id": "sensenova-u1.5-8b-mot",
+  "name": "SenseNova-U1.5-8B-MoT (and TailSteer)",
+  "vendor": "SenseTime (OpenSenseNova)",
+  "release_date": "2026-08-19",
+  "lineage": {
+    "how_derived": "NEO-unify native unified multimodal architecture, Qwen3 LLM component per config; U1.5 strengthens patchify layers, data, task formulation, prompt enhancement and post-training (card)",
+    "family": "SenseNova-U1 (U1, U1.5, U1.5-TailSteer)"
+  },
+  "purpose": "Native unified multimodal model for visual creation: higher-quality image generation, text rendering and infographics, efficient native 4K, reliable image editing, complex-instruction following and region-level control (card).",
+  "tasks": [
+    "image-generation",
+    "vision"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image"
+    ],
+    "output": [
+      "text",
+      "image"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en",
+      "zh"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card tag and badge say Apache 2.0; repo LICENSE not opened."
+  },
+  "architecture": {
+    "kind": "unified autoregressive/diffusion multimodal model with a Qwen3 text backbone (NEOChatModel, custom code), mixture-of-transformers (MoT)",
+    "params_total_b": 8.0
+  },
+  "variants": [
+    {
+      "repo": "sensenova/SenseNova-U1.5-8B-MoT",
+      "format": "safetensors",
+      "official": true,
+      "size_gb": 35.07,
+      "notes": "repo total per HF API (BF16 weights are about 16 GB per the 8B name; remainder not itemised)"
+    },
+    {
+      "repo": "sensenova/SenseNova-U1.5-8B-MoT-TailSteer",
+      "format": "safetensors",
+      "official": true,
+      "notes": "better multi-turn editing stability"
+    },
+    {
+      "repo": "realrebelai/SenseNova-U1.5-8B_GGUFs",
+      "format": "GGUF (community)",
+      "official": false,
+      "notes": "4.2k downloads"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "marginal",
+      "variant": "BF16 (estimate 8B x 2 bytes)",
+      "basis": "estimate",
+      "notes": "16.0 GB file against 9.6 GB VRAM plus 50 GB RAM budget; part streams from RAM (dense: decode is bandwidth bound)"
+    },
+    "pc-16gb": {
+      "fits": "marginal",
+      "variant": "BF16 (estimate 8B x 2 bytes)",
+      "basis": "estimate",
+      "notes": "16.0 GB file against 13.6 GB VRAM plus 50 GB RAM budget; part streams from RAM (dense: decode is bandwidth bound)"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "BF16 (estimate 8B x 2 bytes)",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (21.6 GB)"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "BF16 (estimate 8B x 2 bytes)",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (29.6 GB)"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "BF16 (estimate 8B x 2 bytes)",
+      "basis": "estimate",
+      "notes": "16.0 GB file against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "BF16 (estimate 8B x 2 bytes)",
+      "basis": "estimate",
+      "notes": "16.0 GB file against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "BF16 (estimate 8B x 2 bytes)",
+      "basis": "estimate",
+      "notes": "16.0 GB file against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "upstream SenseNova-U1 repository (PyTorch 2.8, CUDA 12.8)"
+    ],
+    "notes": "llama.cpp b11801 'model: Add support for SenseNova U1 model' (2026-10-21)."
+  },
+  "benchmarks": [],
+  "soft": {
+    "strengths": [
+      "image generation and editing in an 8B model with GGUF community builds"
+    ],
+    "weaknesses": [
+      "benchmark results are images in the card; no numbers extracted"
+    ],
+    "maturity": "SenseTime; 282 likes."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "One 8B model for image generation, editing and understanding is attractive for the 16 GB class, and llama.cpp now loads the architecture; unverified quality, so compare with Qwen-Image-2.1-Turbo and Z-Image-Turbo first.",
+    "blockers": [
+      "quality unknown"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/sensenova/SenseNova-U1.5-8B-MoT",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README, config, HF API"
+    },
+    {
+      "url": "https://github.com/ggml-org/llama.cpp/releases",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "b11801"
+    }
+  ],
+  "open_questions": [
+    "Benchmark numbers (images)",
+    "Exact parameter count and VRAM use for 4K generation"
+  ],
+  "last_checked": "2026-11-19"
+}

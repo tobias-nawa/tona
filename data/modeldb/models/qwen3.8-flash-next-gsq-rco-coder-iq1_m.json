@@ -1,0 +1,399 @@
+{
+  "id": "qwen3.8-flash-next-gsq-rco-coder-iq1_m",
+  "name": "Qwen3.8-Flash-Next GSQ-RCO Coder IQ1_M (ISTA-DASLab), the Tona Coder",
+  "vendor": "ISTA-DASLab (compression of a Qwen model)",
+  "release_date": "2026-09-26",
+  "lineage": {
+    "base_model": "Qwen/Qwen3.8-Flash-Next",
+    "family": "Qwen3.8-Flash-Next (qwen4_exp architecture)",
+    "how_derived": "50 % of the routed experts removed (RCO selection by KL divergence on code, agentic and vision calibration data), remaining weights quantized with GSQ; shard 1 replaced on 2026-10-17 (pinned by us: 2026-10-19)"
+  },
+  "purpose": "ISTA's stated goal: a compressed Flash-Next for code, agentic tool use, vision and spatial reasoning, small enough for a single GPU (58.4 GB instead of 354 GB BF16). The card recommends the unpruned GSQ-RCO releases for general-purpose use. For Tona it is the production model of the reference platform (16 GB VRAM, 64 GB RAM).",
+  "tasks": [
+    "coding",
+    "general",
+    "vision"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en"
+    ],
+    "programming": {
+      "C#": {
+        "level": "strong",
+        "evidence": "our eval: 82/100 Exercism C# exercises within 4 attempts with test feedback (58/100 for the older shard); ISTA names C# as preserved",
+        "sources": [
+          "research/measurements/2026-11-18-agent-eval-shard.md",
+          "research/69-coder-rust-evidence.md"
+        ]
+      },
+      "JavaScript": {
+        "level": "good",
+        "evidence": "our eval: 18/27 Exercism JS within 4 attempts (both shards)",
+        "sources": [
+          "research/measurements/2026-11-18-agent-eval-shard.md"
+        ]
+      },
+      "Python": {
+        "level": "good",
+        "evidence": "our eval: 13/18 Exercism Python within 4 attempts (new shard); 93.3 HumanEval+ reported by a user for the same line (HF discussion 19)",
+        "sources": [
+          "research/measurements/2026-11-18-agent-eval-shard.md",
+          "research/69-coder-rust-evidence.md"
+        ]
+      },
+      "Go": {
+        "level": "weak",
+        "evidence": "our eval: 1/17 (agent eval, new shard), 7/39 within 4 attempts on Tona (rerun 2026-11-19); llama.cpp cross-check of the old shard 4/17: a model property, not an engine bug",
+        "sources": [
+          "research/measurements/2026-11-18-agent-eval-shard.md",
+          "research/measurements/2026-11-19-rust-go-ornith-bolt.md"
+        ]
+      },
+      "Rust": {
+        "level": "weak",
+        "evidence": "our eval: 0/10 (agent eval), 2/22 within 4 attempts (rerun 2026-11-19); ISTA states Rust was not preserved by the expert selection (HF discussion 28)",
+        "sources": [
+          "research/measurements/2026-11-18-agent-eval-shard.md",
+          "research/measurements/2026-11-19-rust-go-ornith-bolt.md",
+          "research/69-coder-rust-evidence.md"
+        ]
+      },
+      "C": {
+        "level": "unknown",
+        "evidence": "one user got 5 of 6 one-shot C tasks on an iGPU (HF discussion 30, anecdote); not measured by us",
+        "sources": [
+          "research/69-coder-rust-evidence.md"
+        ]
+      }
+    }
+  },
+  "license": {
+    "name": "Qwen Community License 1.0 (inherited; the card YAML tag says apache-2.0, which contradicts the card text)",
+    "verified": true,
+    "commercial_use": "limited",
+    "redistribution": "yes",
+    "notes": "Qwen license text read (research/42-model-licenses.md): condition 2 needs a separate license for Model-as-a-Service and AI Work Assistant businesses; ISTA repo has no LICENSE file. Free internal use and self-hosting are not affected by the wording. Re-read 2026-11-19 from Qwen/Qwen3.8-Flash-Next LICENSE: condition 2 defines an AI Work Assistant as an independent product primarily designed for AI-assisted coding; a coding assistant sold as a product therefore needs a separate Qwen license. Verdict policy (README, 2026-11-19): this licence term does not lower tona_fit; kept here for an installer label."
+  },
+  "architecture": {
+    "kind": "hybrid Gated DeltaNet + Qwen Sparse Attention MoE with n-gram embedding table (qwen4_exp)",
+    "gguf_arch": "qwen4_exp",
+    "params_total_b": 125,
+    "params_active_b": 6,
+    "layers": 48,
+    "attention": "3 Gated DeltaNet : 1 QSA (block-sparse attention, 24 Q / 2 KV heads, head dim 256) per block, 12 blocks",
+    "recurrent": "Gated DeltaNet",
+    "experts": 256,
+    "experts_active": 10,
+    "context_native": 262144,
+    "context_max": 1000000,
+    "drafter": "MTP head (ggml-org Q8_0) used by Tona; DFlash2 drafter as alternative",
+    "why_this_design": "Base builder (Qwen): QSA works on micro-blocks, which cuts long-context latency for agentic workloads; the n-gram embedding (20M bigrams/trigrams) is a parameter-scaling axis that is easier to offload than experts; gated residual gives finer expressiveness at low inference cost. Qwen calls the base the preview of the architecture that will underpin Qwen4. Parameter count above is the base (125B + 51B n-gram + 4B MTP); the 50 % expert prune leaves 256 of 512 experts."
+  },
+  "variants": [
+    {
+      "repo": "ISTA-DASLab/Qwen3.8-Flash-Next-GSQ-RCO-Coder-GGUF",
+      "revision": "bba88856f8c3c0c9e40e45f82d05e228b814ac43",
+      "format": "GGUF IQ1_M (shard 1 29.6 GB resident, shard 2 n-gram table IQ4_NL 28.8 GB, can be served from disk)",
+      "size_gb": 58.4,
+      "bits_per_weight": 1.89,
+      "official": false,
+      "notes": "pinned by Tona (2026-10-19); 1.89 bit per parameter of the original transformer (pruning plus quantization combined)"
+    },
+    {
+      "repo": "ISTA-DASLab/Qwen3.8-Flash-Next-GSQ-RCO-GGUF",
+      "format": "GGUF GSQ-RCO unpruned (512 experts, Q2_0 to IQ3 tiers)",
+      "size_gb": 66.4,
+      "official": false,
+      "notes": "the card recommends these for general-purpose use; Tona runs the Q2_0 file in test (flash-next-512-q2_0, unpublished repack)"
+    },
+    {
+      "repo": "UNPUBLISHED (toolchain/models.toml coder-dmt-164)",
+      "format": "GGUF 164 of 256 experts, Q6_K tiled",
+      "size_gb": 20.5,
+      "official": false,
+      "notes": "Tona's Mac model, code KLD 0.053 against the 256-expert Coder; part 2 shared with the ISTA file"
+    },
+    {
+      "repo": "agentionai/Qwen3.8-Flash-Next-Gyro-Coder-GGUF",
+      "format": "trellis TQ2_0 / TQ3_0",
+      "size_gb": 21.4,
+      "official": false,
+      "notes": "alternative pruned coder, needs a llama.cpp fork (see gyro-coder record)"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "notes": "29.6 GB resident part must stream through a smaller expert cache; concept in docs/hardware/pc-12gb-vram.md, not measured"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "measured",
+      "variant": "IQ1_M",
+      "notes": "reference platform with 64 GB RAM: 76 expert slots per layer in VRAM (13.37 GB VRAM in the 2026-11-19 run), decode 64 tok/s in the agent run and up to 107 tok/s with MTP on a 2.1k-token reply (research/measurements/2026-11-19-rust-go-ornith-bolt.md); 32 GB RAM emulated and measured, 16 GB RAM not measured"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "concept only (docs/hardware/pc-24gb-and-larger.md)"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "concept only; the whole resident shard fits in VRAM"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "basis": "estimate",
+      "notes": "even the 164-expert cut is 20.5 GB plus the n-gram table path"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "measured",
+      "variant": "coder-dmt-164 (164 experts, Q6_K tiled)",
+      "notes": "runs in the Metal backend on an M1 Max 32 GB (toolchain/models.toml, tested = true); the repository for part 1 is unpublished"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "the IQ1_M file (58.4 GB) is above the 52 GB GPU share, the 164-expert cut fits"
+    }
+  },
+  "engine_support": {
+    "tona": "runs",
+    "llama_cpp": "yes",
+    "other": [
+      "agentionai llama.cpp fork for the Gyro variants only"
+    ],
+    "notes": "llama.cpp loads both shards when given the first; Tona has a dedicated megakernel backend with MTP, expert cache and kernel prefill"
+  },
+  "benchmarks": [
+    {
+      "name": "SWE-bench Verified",
+      "score": 79.2,
+      "kind": "vendor",
+      "source": "https://huggingface.co/ISTA-DASLab/Qwen3.8-Flash-Next-GSQ-RCO-Coder-GGUF",
+      "variant": "GSQ-RCO Coder, first shard of 2026-10-17",
+      "harness": "reasoning effort xhigh, harness not stated",
+      "unit": "%",
+      "date": "2026-10-17"
+    },
+    {
+      "name": "SWE-bench Verified",
+      "score": 82.8,
+      "kind": "vendor",
+      "source": "https://huggingface.co/ISTA-DASLab/Qwen3.8-Flash-Next-GSQ-RCO-Coder-GGUF",
+      "variant": "BF16 base (354 GB)",
+      "harness": "xhigh",
+      "unit": "%",
+      "date": "2026-10-17"
+    },
+    {
+      "name": "LiveCodeBench v6",
+      "score": 87.43,
+      "kind": "vendor",
+      "source": "https://huggingface.co/ISTA-DASLab/Qwen3.8-Flash-Next-GSQ-RCO-Coder-GGUF",
+      "variant": "GSQ-RCO Coder",
+      "harness": "xhigh",
+      "unit": "%",
+      "date": "2026-10-17"
+    },
+    {
+      "name": "SWE-bench Verified, 17-task subset",
+      "score": "12/17",
+      "kind": "ours",
+      "source": "research/measurements/2026-11-18-agent-eval-shard.md",
+      "variant": "pinned shard 2026-10-19, IQ1_M on Tona",
+      "harness": "mini-swe-agent, 100 step limit, 40 min cap, one run, rootless sandbox",
+      "date": "2026-11-18"
+    },
+    {
+      "name": "Exercism polyglot, Python (4 attempts with test feedback)",
+      "score": "13/18",
+      "kind": "ours",
+      "source": "research/measurements/2026-11-18-agent-eval-shard.md",
+      "variant": "pinned shard",
+      "harness": "bench/polyglot, whole files, 4 attempts",
+      "date": "2026-11-18"
+    },
+    {
+      "name": "Exercism polyglot, JavaScript (4 attempts)",
+      "score": "18/27",
+      "kind": "ours",
+      "source": "research/measurements/2026-11-18-agent-eval-shard.md",
+      "variant": "pinned shard",
+      "harness": "bench/polyglot",
+      "date": "2026-11-18"
+    },
+    {
+      "name": "Exercism C# (4 attempts)",
+      "score": "82/100",
+      "kind": "ours",
+      "source": "research/measurements/2026-11-18-agent-eval-shard.md",
+      "variant": "pinned shard",
+      "harness": "bench/agent csharp suite",
+      "date": "2026-11-18"
+    },
+    {
+      "name": "Exercism polyglot, Go (4 attempts)",
+      "score": "7/39",
+      "kind": "ours",
+      "source": "research/measurements/2026-11-19-rust-go-ornith-bolt.md",
+      "variant": "pinned shard on Tona with MTP",
+      "harness": "bench/polyglot, parser fallback, thinking off",
+      "date": "2026-11-19"
+    },
+    {
+      "name": "Exercism polyglot, Rust (4 attempts)",
+      "score": "2/22",
+      "kind": "ours",
+      "source": "research/measurements/2026-11-19-rust-go-ornith-bolt.md",
+      "variant": "pinned shard on Tona with MTP",
+      "harness": "bench/polyglot, parser fallback, thinking off",
+      "date": "2026-11-19"
+    },
+    {
+      "name": "tool-call JSON suite",
+      "score": "32/32",
+      "kind": "ours",
+      "source": "research/measurements/2026-11-18-agent-eval-shard.md",
+      "variant": "pinned shard",
+      "harness": "bench/agent json suite",
+      "date": "2026-11-18"
+    },
+    {
+      "name": "AA Coding Index (aggregator mirror), Qwen3.8-Flash-Next full precision",
+      "score": 73.0,
+      "kind": "independent",
+      "source": "https://benchlm.ai/benchmarks/aacodingindex",
+      "variant": "unpruned base via API, NOT the pruned 1.5 bpw Coder",
+      "unit": "%",
+      "date": "2026-11-19",
+      "harness": "aggregator mirror of the Artificial Analysis Coding Index, read 2026-11-19; no per-row dates; upstream AA pages not reachable"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "Strong on C# (82 % of exercises within 4 attempts), good on JavaScript and Python in our evals",
+      "Fast decode on the reference platform because only 6 B parameters are active and MTP drafts several tokens per pass",
+      "Well-formed tool calls: 32 of 32 JSON cases, 100 % in our suite",
+      "Keeps vision capability (calibration included vision data)"
+    ],
+    "weaknesses": [
+      "Rust and Go are weak: Rust 0/10 and 2/22, Go 1/17 and 7/39 in our evals (maker: Rust was not preserved by the expert selection)",
+      "Factual knowledge and natural languages outside English degrade (HF discussions: answers switch to garbled CJK, 63.3 vs 32.9 % knowledge against the unpruned IQ3_XXS)",
+      "Multi-step agentic tasks lose more than single-problem code (maker statement)",
+      "Occasional repetition loops in long agent tasks (one SWE task of 17 on the old shard)"
+    ],
+    "behavior": "Often answers with a plain fenced code block instead of the requested FILE: header (44 attempts of the first Rust/Go run); our harness takes the longest fenced block when exactly one file is editable. Thinking can be turned off for polyglot-style runs.",
+    "best_for": [
+      "C#, JavaScript and Python coding agents on a 16 GB GPU with 64 GB RAM",
+      "tool-calling agent workers (JSON reliability)"
+    ],
+    "avoid_for": [
+      "Rust and Go projects (use another model, see ornith-1.5-35b-a3b)",
+      "general knowledge Q&A and non-English chat (maker recommends the unpruned releases)"
+    ],
+    "user_reports": [
+      {
+        "summary": "Bad Rust output on a new project: mixes Rust with Python/C++, invents that Rust 2024 is a dialect; ISTA answers Rust was dropped by the pruning and will be added in future models",
+        "sentiment": "negative",
+        "source": "https://huggingface.co/ISTA-DASLab/Qwen3.8-Flash-Next-GSQ-RCO-Coder-GGUF/discussions/28",
+        "date": "2026-11"
+      },
+      {
+        "summary": "HumanEval+ 93.3 vs 93.9 against the unpruned IQ3_XXS (one quant tier each), but factual knowledge 63.3 vs 32.9 %",
+        "sentiment": "mixed",
+        "source": "https://huggingface.co/ISTA-DASLab/Qwen3.8-Flash-Next-GSQ-RCO-Coder-GGUF/discussions/19",
+        "date": "2026-10-01"
+      },
+      {
+        "summary": "5 of 6 one-shot C tasks solved on an iGPU",
+        "sentiment": "positive",
+        "source": "https://huggingface.co/ISTA-DASLab/Qwen3.8-Flash-Next-GSQ-RCO-Coder-GGUF/discussions/30",
+        "date": "2026-11"
+      }
+    ],
+    "maturity": "ISTA-DASLab is an academic group that publishes the GSQ and RCO methods (arXiv 2604.18556, 2605.00649) and updates shards within weeks (09-26, 10-17); the card calls the release experimental. About 854k downloads and 642 likes. The base vendor Qwen is established."
+  },
+  "tona_fit": {
+    "verdict": "offer",
+    "reason": "Production model of the reference platform: best measured coding agent quality that fits 16 GB VRAM plus 64 GB RAM, with our own backend. Installer text per language: C#, JavaScript, Python recommended; Rust and Go not recommended.",
+    "blockers": [
+      "Rust and Go weak"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/ISTA-DASLab/Qwen3.8-Flash-Next-GSQ-RCO-Coder-GGUF",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "page text read through a summarizer (WebFetch)"
+    },
+    {
+      "url": "https://huggingface.co/Qwen/Qwen3.8-Flash-Next",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "page text read through a summarizer (WebFetch)"
+    },
+    {
+      "url": "toolchain/models.toml",
+      "kind": "own",
+      "checked": "2026-11-19",
+      "note": "pinned revision, file sizes, Mac variant"
+    },
+    {
+      "url": "research/measurements/2026-11-18-agent-eval-shard.md",
+      "kind": "own",
+      "checked": "2026-11-19",
+      "note": "agent eval of both shards, per language, C#, llama.cpp cross-check"
+    },
+    {
+      "url": "research/measurements/2026-11-19-rust-go-ornith-bolt.md",
+      "kind": "own",
+      "checked": "2026-11-19",
+      "note": "Rust and Go rerun on Tona"
+    },
+    {
+      "url": "research/69-coder-rust-evidence.md",
+      "kind": "own",
+      "checked": "2026-11-19",
+      "note": "public evidence on weak Rust, HF discussions 19, 28, 30"
+    },
+    {
+      "url": "research/42-model-licenses.md",
+      "kind": "own",
+      "checked": "2026-11-19",
+      "note": "license text read"
+    },
+    {
+      "url": "https://huggingface.co/Qwen/Qwen3.8-Flash-Next/raw/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://benchlm.ai/benchmarks/aacodingindex",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "aggregator mirror of the Artificial Analysis Coding Index, read 2026-11-19; no per-row dates; upstream AA pages not reachable"
+    }
+  ],
+  "open_questions": [
+    "Per-language numbers for the unpruned IQ3_S on our eval (would separate pruning from 1-bit quantization)",
+    "Whether C and C++ are good (maker lists C++ as preserved; untested by us)",
+    "Exact context behaviour of the pruned model beyond 64K in agent tasks",
+    "Per-language quality and independent coding evidence: the Aider polyglot board is stale (mirrors: last update 2025-11-20, no entry for any model of this database), LiveCodeBench and swebench.com publish no per-language numbers for it that we could retrieve. Check: our own Exercism polyglot run per language."
+  ],
+  "last_checked": "2026-11-19"
+}

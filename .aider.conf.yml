@@ -1,0 +1,2 @@
+# Aider does not read AGENTS.md on its own; this loads it read-only into every session (agents.md, aider.chat/docs/config).
+read: AGENTS.md

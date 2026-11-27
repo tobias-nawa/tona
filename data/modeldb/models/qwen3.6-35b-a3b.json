@@ -1,0 +1,295 @@
+{
+  "id": "qwen3.6-35b-a3b",
+  "name": "Qwen3.6-35B-A3B",
+  "vendor": "Alibaba Qwen",
+  "release_date": "2026-04",
+  "lineage": {
+    "family": "Qwen3.6 (qwen35moe)",
+    "base_model": "Qwen3.5-35B-A3B",
+    "how_derived": "successor release on the same architecture (the card compares directly)"
+  },
+  "purpose": "The card highlights stronger agentic coding, frontend and repository-level reasoning, and an option to preserve reasoning from earlier messages. It states no separate target-user sentence.",
+  "tasks": [
+    "general",
+    "coding",
+    "research",
+    "vision"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image",
+      "video"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "many"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "LICENSE file in the repo read: Apache License 2.0 with the vendor copyright appendix ('Copyright 2026 Alibaba Cloud'), no additional terms. (11,343 bytes; same md5 as the Qwen-AgentWorld LICENSE)."
+  },
+  "architecture": {
+    "kind": "hybrid Gated DeltaNet + gated attention MoE, vision encoder",
+    "gguf_arch": "qwen35moe",
+    "params_total_b": 35,
+    "params_active_b": 3,
+    "layers": 40,
+    "attention": "10 x (3 Gated DeltaNet + 1 gated attention), hidden 2048",
+    "recurrent": "Gated DeltaNet",
+    "experts": 256,
+    "experts_active": 9,
+    "context_native": 262144,
+    "context_max": 1010000,
+    "drafter": "MTP trained",
+    "why_this_design": "Card: 'Efficient Hybrid Architecture: Gated Delta Networks combined with sparse Mixture-of-Experts deliver high-throughput inference with minimal latency and cost overhead.' (Qwen3.6 card shares the Qwen3.5 layout)"
+  },
+  "variants": [
+    {
+      "repo": "Qwen/Qwen3.6-35B-A3B",
+      "format": "safetensors BF16",
+      "official": true
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "variant": "Q4_K_M 22 GB, experts in RAM",
+      "notes": "Needs 32+ GB RAM."
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q4_K_M 22 GB, experts partly in RAM",
+      "notes": "Tona's primary machinery, 3 B active."
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q4_K_M"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q6 or Q8"
+    },
+    "mac-16-24gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "variant": "Q3 class",
+      "notes": "The 22 GB file does not fit 16 GB."
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q4_K_M"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q8"
+    }
+  },
+  "engine_support": {
+    "tona": "in-progress",
+    "llama_cpp": "yes",
+    "other": [
+      "vLLM",
+      "SGLang",
+      "KTransformers"
+    ],
+    "notes": "Tona has ArchId::Qwen35Moe (engine/model/arch.h; Ornith family); this checkpoint not measured by us."
+  },
+  "benchmarks": [
+    {
+      "name": "MMLU-Pro",
+      "score": 85.2,
+      "kind": "vendor",
+      "source": "https://huggingface.co/Qwen/Qwen3.6-35B-A3B"
+    },
+    {
+      "name": "GPQA",
+      "score": 86.0,
+      "kind": "vendor",
+      "source": "https://huggingface.co/Qwen/Qwen3.6-35B-A3B"
+    },
+    {
+      "name": "HLE with CoT",
+      "score": 21.4,
+      "kind": "vendor",
+      "source": "https://huggingface.co/Qwen/Qwen3.6-35B-A3B"
+    },
+    {
+      "name": "TAU3-Bench",
+      "score": 67.2,
+      "kind": "vendor",
+      "source": "https://huggingface.co/Qwen/Qwen3.6-35B-A3B"
+    },
+    {
+      "name": "MCP-Atlas",
+      "score": 62.8,
+      "kind": "vendor",
+      "source": "https://huggingface.co/Qwen/Qwen3.6-35B-A3B"
+    },
+    {
+      "name": "SWE-bench Verified",
+      "score": 73.4,
+      "kind": "vendor",
+      "source": "https://huggingface.co/Qwen/Qwen3.6-35B-A3B"
+    },
+    {
+      "name": "MMLU-ProX (German, PeerBench DACH)",
+      "score": 80.0,
+      "kind": "independent",
+      "source": "https://dach.peerbench.ai/api/leaderboard.json",
+      "variant": "fp8",
+      "harness": "PeerBench DACH German Language LLM Index, run by PeerBench",
+      "date": "2026-05-31"
+    },
+    {
+      "name": "INCLUDE (German, PeerBench DACH)",
+      "score": 68.3,
+      "kind": "independent",
+      "source": "https://dach.peerbench.ai/api/leaderboard.json",
+      "variant": "fp8",
+      "harness": "PeerBench DACH German Language LLM Index, run by PeerBench",
+      "date": "2026-06-02"
+    },
+    {
+      "name": "GermEval NER (German, PeerBench DACH)",
+      "score": 79.9,
+      "kind": "independent",
+      "source": "https://dach.peerbench.ai/api/leaderboard.json",
+      "variant": "fp8",
+      "harness": "PeerBench DACH German Language LLM Index, run by PeerBench",
+      "date": "2026-06-09"
+    },
+    {
+      "name": "ScaLA (German, PeerBench DACH)",
+      "score": 64.2,
+      "kind": "independent",
+      "source": "https://dach.peerbench.ai/api/leaderboard.json",
+      "variant": "fp8",
+      "harness": "PeerBench DACH German Language LLM Index, run by PeerBench",
+      "date": "2026-06-09"
+    },
+    {
+      "name": "SB10K (German, PeerBench DACH)",
+      "score": 58.4,
+      "kind": "independent",
+      "source": "https://dach.peerbench.ai/api/leaderboard.json",
+      "variant": "fp8",
+      "harness": "PeerBench DACH German Language LLM Index, run by PeerBench",
+      "date": "2026-06-09"
+    },
+    {
+      "name": "GPQA Diamond (thinking on)",
+      "score": 81.31,
+      "kind": "independent",
+      "source": "https://huggingface.co/Qwen/Qwen3.6-35B-A3B/discussions/80",
+      "variant": "nvidia/Qwen3.6-35B-A3B-NVFP4, 131,072 context",
+      "harness": "community benchmark server llmbenchmarks.io on 2x RTX 5060 Ti with vLLM 0.29 (single-author post; a reader called the page low quality)",
+      "date": "2026-10-29",
+      "unit": "%"
+    },
+    {
+      "name": "SimpleQA Verified (thinking on)",
+      "score": 19.4,
+      "kind": "independent",
+      "source": "https://huggingface.co/Qwen/Qwen3.6-35B-A3B/discussions/80",
+      "variant": "nvidia/Qwen3.6-35B-A3B-NVFP4, 131,072 context",
+      "harness": "community benchmark server llmbenchmarks.io on 2x RTX 5060 Ti with vLLM 0.29 (single-author post; a reader called the page low quality)",
+      "date": "2026-10-29",
+      "unit": "%"
+    },
+    {
+      "name": "IFEval (thinking on)",
+      "score": 86.69,
+      "kind": "independent",
+      "source": "https://huggingface.co/Qwen/Qwen3.6-35B-A3B/discussions/80",
+      "variant": "nvidia/Qwen3.6-35B-A3B-NVFP4, 131,072 context",
+      "harness": "community benchmark server llmbenchmarks.io on 2x RTX 5060 Ti with vLLM 0.29 (single-author post; a reader called the page low quality)",
+      "date": "2026-10-29",
+      "unit": "%"
+    },
+    {
+      "name": "MCP-Atlas (thinking on)",
+      "score": 52.82,
+      "kind": "independent",
+      "source": "https://huggingface.co/Qwen/Qwen3.6-35B-A3B/discussions/80",
+      "variant": "nvidia/Qwen3.6-35B-A3B-NVFP4, 131,072 context",
+      "harness": "community benchmark server llmbenchmarks.io on 2x RTX 5060 Ti with vLLM 0.29 (single-author post; a reader called the page low quality)",
+      "date": "2026-10-29",
+      "unit": "%"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "Agentic coding and tool use improved over Qwen3.5 (SWE-bench Verified 70.0 to 73.4, Terminal-Bench 2.0 40.5 to 51.5; vendor)",
+      "NVIDIA's Lightning card uses it as the strongest listed yardstick on most rows"
+    ],
+    "weaknesses": [
+      "Knowledge numbers flat or lower than Qwen3.5 (MMLU-Pro 85.3 to 85.2, HLE 22.4 to 21.4, TAU3 68.9 to 67.2)"
+    ],
+    "best_for": [
+      "General assistant that also codes, in one model"
+    ],
+    "maturity": "Qwen: large community.",
+    "user_reports": [
+      {
+        "summary": "Community benchmark of the NVFP4 build on two RTX 5060 Ti with vLLM: 210 tok/s aggregate, GPQA Diamond 81.3 with thinking, SimpleQA Verified only 19.4 (low factual recall), thinking-off overall drops from 60.9 to 40.5 percent. Single author, one reader objected to the quality of the linked page.",
+        "sentiment": "mixed",
+        "source": "https://huggingface.co/Qwen/Qwen3.6-35B-A3B/discussions/80",
+        "date": "2026-10-29"
+      }
+    ]
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "Same machinery and license as the 3.5 sibling with an agentic-coding gain; independent German is a step up on MMLU-ProX (80.0 vs 73.4 for the 9B) but INCLUDE DE is only 68.3 and the SimpleQA Verified score is low (19.4), so pick between 3.5 and 3.6 by a knowledge test. Apache-2.0 (text read).",
+    "blockers": [
+      "measure on the reference box"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/Qwen/Qwen3.6-35B-A3B",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "model card"
+    },
+    {
+      "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "NVIDIA table uses it as yardstick"
+    },
+    {
+      "url": "https://huggingface.co/Qwen/Qwen3.6-35B-A3B/raw/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "LICENSE file"
+    },
+    {
+      "url": "https://dach.peerbench.ai/api/leaderboard.json",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "PeerBench DACH JSON export (generated 2026-10-25, last run 2026-10-16), read directly"
+    }
+  ],
+  "open_questions": [
+    "Languages count not on this card",
+    "GGUF sizes not collected (assume near the 22 GB of Qwen3.5-35B-A3B)",
+    "No AA-LCR, BrowseComp or MMMLU on the card"
+  ],
+  "last_checked": "2026-11-19"
+}

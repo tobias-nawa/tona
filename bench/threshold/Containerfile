@@ -1,0 +1,4 @@
+# Sandbox for the foreign repositories' tests: dependencies only, never the repositories themselves. Built once with
+# network; every test run uses --network=none (see README.md).
+FROM docker.io/library/python@sha256:37134a49d21d2120e4c4d73bb76f8a4ab9aef31f096f7ec2ead48c2feead4332
+RUN pip install --no-cache-dir pytest==9.2.0 coverage==7.17.0 typing_extensions==4.16.0

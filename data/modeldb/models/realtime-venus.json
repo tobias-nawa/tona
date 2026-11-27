@@ -1,0 +1,124 @@
+{
+  "id": "realtime-venus",
+  "name": "Realtime-Venus (Omni and Audio checkpoints)",
+  "vendor": "inclusionAI (Ant Group)",
+  "release_date": "2026-09-16",
+  "purpose": "Full-duplex interaction system with asynchronous delegation: keeps perceiving while speaking, proactively responds to audio-video events, emits in-stream <delegate> requests to external tools and has a training-free long-video memory (card).",
+  "tasks": [
+    "general",
+    "audio-transcription"
+  ],
+  "modalities": {
+    "input": [
+      "audio",
+      "video",
+      "text"
+    ],
+    "output": [
+      "text",
+      "audio"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en",
+      "zh"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "LICENSE file in the repo is the Apache License 2.0 (header opened)."
+  },
+  "architecture": {
+    "kind": "streaming multimodal causal model with custom Transformers code; parameter count not read"
+  },
+  "variants": [
+    {
+      "repo": "inclusionAI/Realtime-Venus",
+      "format": "safetensors",
+      "official": true,
+      "notes": "HF API reports 640 GB for the repo (it also carries data/benchmark arrays), so the weights' size is not derivable from that"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "unknown",
+      "basis": "estimate",
+      "notes": "model size not determined"
+    },
+    "pc-16gb": {
+      "fits": "unknown",
+      "basis": "estimate",
+      "notes": "model size not determined"
+    },
+    "pc-24gb": {
+      "fits": "unknown",
+      "basis": "estimate",
+      "notes": "model size not determined"
+    },
+    "pc-32gb": {
+      "fits": "unknown",
+      "basis": "estimate",
+      "notes": "model size not determined"
+    },
+    "mac-16-24gb": {
+      "fits": "unknown",
+      "basis": "estimate",
+      "notes": "model size not determined"
+    },
+    "mac-32gb": {
+      "fits": "unknown",
+      "basis": "estimate",
+      "notes": "model size not determined"
+    },
+    "mac-64gb+": {
+      "fits": "unknown",
+      "basis": "estimate",
+      "notes": "model size not determined"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "Transformers custom code; Realtime-Venus-Harness for delegation in the project's repository"
+    ]
+  },
+  "benchmarks": [],
+  "soft": {
+    "strengths": [
+      "native full duplex, proactive responses on video"
+    ],
+    "weaknesses": [
+      "card text read does not give size or benchmark numbers"
+    ],
+    "maturity": "arXiv 2609.13814; 2.4k downloads, 138 likes."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Interesting full-duplex design, but nothing readable about size or quality; revisit when a size is known."
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/inclusionAI/Realtime-Venus",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README top part, HF API, LICENSE header"
+    },
+    {
+      "url": "https://arxiv.org/abs/2609.13814",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "paper tagged on the card; not opened"
+    }
+  ],
+  "open_questions": [
+    "Parameter count and base LLM",
+    "Benchmarks",
+    "Weights size (repo is 640 GB because of bundled data)"
+  ],
+  "last_checked": "2026-11-19"
+}

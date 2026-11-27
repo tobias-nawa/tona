@@ -1,0 +1,10 @@
+Here is a summary of the provided code, organized by its functional components:
+
+### **Python Inference Benchmarking Harness (`ibench`)**
+*   **CLI Interface (`cli.py`)**:
+    *   Provides subcommands: `run` (measure a suite), `compare` (diff two reports), `proxy` (record traffic), and `env` (print environment info).
+    *   Loads target configurations from `targets.toml` or accepts ad-hoc URLs/APIs.
+    *   Selects test cases from suite files, allowing overrides for run counts, warm-up iterations, and specific case filtering.
+*   **Client (`client.py`)**:
+    *   Implements streaming HTTP requests to OpenAI-compatible (`/v1/chat/completions`) and Anthropic-compatible (`/v1/messages`) APIs.
+    *   Parses Server-Sent Events (SSE) to extract text, reasoning, tool calls, and usage metrics (

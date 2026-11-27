@@ -1,0 +1,184 @@
+{
+  "id": "beam-1.0-501b-a23b",
+  "name": "Beam 1.0 (501B-A23B)",
+  "vendor": "Reflection",
+  "release_date": "2026-10-07",
+  "purpose": "Open frontier-size model for agentic coding, tool use and reasoning with token-efficient reasoning (about 3x fewer reasoning tokens than leading open models, vendor claim) (card).",
+  "tasks": [
+    "coding",
+    "general",
+    "research"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Apache License 2.0 text read in the repo LICENSE file: commercial use, modification and redistribution allowed with notice and patent grant."
+  },
+  "architecture": {
+    "kind": "sparse MoE, 3 dense plus 49 MoE layers, gated GQA with sliding window",
+    "params_total_b": 501.3,
+    "params_active_b": 23.4,
+    "layers": 52,
+    "attention": "gated GQA 48 Q / 8 KV heads plus sliding window 512",
+    "recurrent": "none",
+    "experts": 256,
+    "experts_active": 8,
+    "context_native": 1048576,
+    "drafter": "DFlash2 draft repo exists (reflection/Beam-1.0-501B-A23B-DFlash2)"
+  },
+  "variants": [
+    {
+      "repo": "reflection/Beam-1.0-501B-A23B",
+      "format": "safetensors BF16",
+      "size_gb": 1002.68,
+      "official": true,
+      "notes": "FP8 and NVFP4 repos exist"
+    },
+    {
+      "repo": "unsloth/Beam-1.0-501B-A23B-GGUF",
+      "format": "GGUF UD-IQ2_XXS",
+      "size_gb": 134,
+      "official": false,
+      "notes": "UD-IQ2_M about 165, UD-Q2_K_XL about 227, UD-Q4_K_XL about 306, UD-Q6_K_XL about 500, Q8_0 about 650 GB (sums of parts)"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "no",
+      "variant": "unsloth GGUF UD-IQ2_XXS",
+      "basis": "estimate",
+      "notes": "134 GB file exceeds the 9.6 GB VRAM plus 50 GB RAM budget"
+    },
+    "pc-16gb": {
+      "fits": "no",
+      "variant": "unsloth GGUF UD-IQ2_XXS",
+      "basis": "estimate",
+      "notes": "134 GB file exceeds the 13.6 GB VRAM plus 50 GB RAM budget"
+    },
+    "pc-24gb": {
+      "fits": "no",
+      "variant": "unsloth GGUF UD-IQ2_XXS",
+      "basis": "estimate",
+      "notes": "134 GB file exceeds the 21.6 GB VRAM plus 82 GB RAM budget"
+    },
+    "pc-32gb": {
+      "fits": "no",
+      "variant": "unsloth GGUF UD-IQ2_XXS",
+      "basis": "estimate",
+      "notes": "134 GB file exceeds the 29.6 GB VRAM plus 82 GB RAM budget"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "unsloth GGUF UD-IQ2_XXS",
+      "basis": "estimate",
+      "notes": "134 GB file against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "no",
+      "variant": "unsloth GGUF UD-IQ2_XXS",
+      "basis": "estimate",
+      "notes": "134 GB file against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "no",
+      "variant": "unsloth GGUF UD-IQ2_XXS",
+      "basis": "estimate",
+      "notes": "134 GB file against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "vLLM/SGLang (not checked)"
+    ],
+    "notes": "GGUFs from unsloth, bartowski and others exist."
+  },
+  "benchmarks": [
+    {
+      "name": "SWE-bench Verified",
+      "score": 81.6,
+      "kind": "vendor",
+      "variant": "BF16; FP8 80.2, NVFP4 80.7; temp 0.7",
+      "source": "https://huggingface.co/reflection/Beam-1.0-501B-A23B"
+    },
+    {
+      "name": "Terminal-Bench 2.1",
+      "score": 80.1,
+      "kind": "vendor",
+      "variant": "BF16; FP8 78.9, NVFP4 78.4",
+      "source": "https://huggingface.co/reflection/Beam-1.0-501B-A23B"
+    },
+    {
+      "name": "SWE-bench Pro v1",
+      "score": 66.1,
+      "kind": "vendor",
+      "variant": "BF16",
+      "source": "https://huggingface.co/reflection/Beam-1.0-501B-A23B"
+    },
+    {
+      "name": "GPQA Diamond",
+      "score": 90.6,
+      "kind": "vendor",
+      "variant": "BF16",
+      "source": "https://huggingface.co/reflection/Beam-1.0-501B-A23B"
+    },
+    {
+      "name": "LiveCodeBench",
+      "score": 88.3,
+      "kind": "vendor",
+      "variant": "BF16",
+      "source": "https://huggingface.co/reflection/Beam-1.0-501B-A23B"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "open-weight frontier-class agentic coding numbers (vendor)"
+    ],
+    "weaknesses": [
+      "no quant under 134 GB: out of reach for every hardware class we serve"
+    ],
+    "maturity": "13k downloads, 325 likes; technical report still announced as coming"
+  },
+  "tona_fit": {
+    "verdict": "reject",
+    "reason": "Frontier size (134 GB at 2 bits, 306 GB at Q4) exceeds every class including the 128 GB RAM PC and 64 GB Macs. Recorded as a reference for what open models reach. Apache-2.0 (text read).",
+    "blockers": [
+      "size"
+    ]
+  },
+  "open_questions": [
+    "independent results",
+    "distilled smaller Beam models"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/reflection/Beam-1.0-501B-A23B",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README, config.json read"
+    },
+    {
+      "url": "https://huggingface.co/api/models/unsloth/Beam-1.0-501B-A23B-GGUF?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "GGUF part sizes summed"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

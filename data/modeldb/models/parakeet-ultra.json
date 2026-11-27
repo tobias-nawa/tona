@@ -1,0 +1,74 @@
+{
+  "id": "parakeet-ultra",
+  "name": "Moondream Parakeet Ultra",
+  "vendor": "Moondream",
+  "release_date": "2026-09-22",
+  "lineage": {
+    "base_model": "nvidia/parakeet-tdt-0.6b-v3",
+    "how_derived": "post-training of the same architecture, tokenizer and parameter count (card)",
+    "family": "parakeet"
+  },
+  "purpose": "Better accuracy than parakeet-tdt-0.6b-v3 on English and the 25 European languages, in background noise and on long-form audio, at the same size and with faster inference than NeMo (card).",
+  "tasks": ["audio-transcription"],
+  "modalities": {"input": ["audio"], "output": ["text"]},
+  "languages": {"natural": ["en","de","fr","es","it","pt","ru","uk","hr","sl","lv","lt","et","fi","sv","da","nl","pl","cs","sk","hu","ro","bg","el","mt"]},
+  "license": {
+    "name": "CC-BY-4.0",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card states CC-BY-4.0, same as the original; no LICENSE file opened. CC-BY-4.0 requires attribution."
+  },
+  "architecture": {
+    "kind": "FastConformer encoder with TDT transducer decoder plus a small voice-activity head on the encoder subsampler",
+    "params_total_b": 0.627,
+    "recurrent": "none",
+    "why_this_design": "Same architecture as parakeet-tdt-0.6b-v3; the added VAD head lets the model cut long recordings at pauses into segments of at most 30 seconds, so no external VAD model is needed (card)."
+  },
+  "variants": [
+    {"repo": "moondream/parakeet-ultra", "format": "safetensors (F16/BF16 scale)", "size_gb": 1.26, "official": true, "notes": "runs with the vendor's Photon runtime on NVIDIA GPU"},
+    {"repo": "handy-computer/parakeet-ultra-gguf", "format": "GGUF Q8_0", "size_gb": 0.74, "official": false, "notes": "for transcribe.cpp; Q6_K 0.61, Q5_K_M 0.55, Q4_K_M 0.49, F16 1.26 GB; ported from upstream commit 73175eb, 2.2M downloads on HF API 2026-11-19"}
+  ],
+  "hardware_fit": {
+    "pc-12gb": {"fits": "yes", "variant": "GGUF Q8_0", "basis": "estimate"},
+    "pc-16gb": {"fits": "yes", "variant": "GGUF Q8_0", "basis": "estimate"},
+    "pc-24gb": {"fits": "yes", "basis": "estimate"},
+    "pc-32gb": {"fits": "yes", "basis": "estimate"},
+    "mac-16-24gb": {"fits": "yes", "variant": "GGUF Q8_0", "basis": "estimate"},
+    "mac-32gb": {"fits": "yes", "basis": "estimate"},
+    "mac-64gb+": {"fits": "yes", "basis": "estimate"}
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": ["Photon (Moondream runtime, NVIDIA GPU)", "transcribe.cpp (CPU, Metal, Vulkan; HIP listed in its README per the audio inbox)"],
+    "notes": "transcribe.cpp card metadata: no streaming, no translation, language detection yes, token timestamps."
+  },
+  "benchmarks": [
+    {"name": "Open ASR Leaderboard 7 English sets, average WER", "score": 5.8, "unit": "% WER", "kind": "vendor", "variant": "safetensors in Photon on NVIDIA GPU (v3 baseline 6.26 in NeMo bf16)", "harness": "Open ASR Leaderboard pipeline as of 2026-09", "source": "https://huggingface.co/moondream/parakeet-ultra", "date": "2026-11-19"},
+    {"name": "FLEURS German WER", "score": 3.61, "unit": "% WER", "kind": "vendor", "variant": "safetensors in Photon (v3 baseline 4.13)", "source": "https://huggingface.co/moondream/parakeet-ultra"},
+    {"name": "FLEURS 25-language average WER", "score": 9.55, "unit": "% WER", "kind": "vendor", "variant": "safetensors in Photon (v3 baseline 11.62)", "source": "https://huggingface.co/moondream/parakeet-ultra"},
+    {"name": "FLEURS German WER with MUSAN noise 0 dB", "score": 12.08, "unit": "% WER", "kind": "vendor", "variant": "safetensors in Photon (v3 baseline 14.45); 5 dB 6.91, 10 dB 4.98", "source": "https://huggingface.co/moondream/parakeet-ultra"},
+    {"name": "TED-LIUM 3 long-form, 11 talks", "score": 1.94, "unit": "% WER", "kind": "vendor", "variant": "safetensors in Photon (v3 baseline 2.71)", "source": "https://huggingface.co/moondream/parakeet-ultra"},
+    {"name": "FLEURS German WER", "score": 4.58, "unit": "% WER", "kind": "independent", "variant": "GGUF Q8_0 in transcribe.cpp", "harness": "third-party port, own normalization, validated against the Photon reference", "source": "https://huggingface.co/handy-computer/parakeet-ultra-gguf", "date": "2026-10-05"},
+    {"name": "LibriSpeech test-clean WER", "score": 1.8, "unit": "% WER", "kind": "independent", "variant": "GGUF Q8_0 (Q4_K_M 1.82)", "harness": "transcribe.cpp", "source": "https://huggingface.co/handy-computer/parakeet-ultra-gguf", "date": "2026-10-05"},
+    {"name": "RTF-style speed on M4 Max, Metal", "score": 189.12, "unit": "x real time", "kind": "independent", "variant": "GGUF in transcribe.cpp (CPU 35.03; Ryzen 4750U CPU 13.29, Vulkan 23.0)", "source": "https://huggingface.co/handy-computer/parakeet-ultra-gguf", "date": "2026-10-05"}
+  ],
+  "soft": {
+    "strengths": ["Better than parakeet-tdt-0.6b-v3 on every benchmark group the builder shows", "German FLEURS 3.61% (builder) / 4.58% (transcribe.cpp measurement, different normalization)", "Q4_K_M of 0.49 GB loses 0.02 absolute WER on LibriSpeech in the third-party table", "Built-in VAD head for long audio"],
+    "weaknesses": ["All accuracy numbers on the original card are the builder's own run in its own runtime", "Greek, Latvian, Lithuanian, Slovene remain weak (FLEURS 16 to 32% WER)", "No streaming in the transcribe.cpp build"],
+    "best_for": ["fast multilingual European transcription incl. German on any hardware class"],
+    "maturity": "Moondream, built on the NVIDIA Parakeet line; 18k downloads for the original and 2.2M for the GGUF port on the HF API."
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "0.6B, CC-BY-4.0, German FLEURS 3.61% versus 4.13% for the v3 it improves; runs on the smallest hardware class. Same FastConformer-TDT architecture as parakeet-tdt-0.6b-v3 (record exists), so engine work for v3 carries over. Compare against parakeet-primeline (German fine-tune) and Qwen3-ASR/Rumble on German with our own test set.",
+    "blockers": ["FastConformer plus TDT decoder not in Tona", "Photon runtime is the vendor's reference; weights are open"]
+  },
+  "sources": [
+    {"url": "https://huggingface.co/moondream/parakeet-ultra", "kind": "primary", "checked": "2026-11-19", "note": "README read"},
+    {"url": "https://huggingface.co/handy-computer/parakeet-ultra-gguf", "kind": "primary", "checked": "2026-11-19", "note": "GGUF card metadata with transcribe.cpp measurements"}
+  ],
+  "open_questions": ["What post-training data and recipe were used (card refers to a blog post not read)", "German accuracy on our own audio (spontaneous speech, dialects)", "License text file"],
+  "last_checked": "2026-11-19"
+}

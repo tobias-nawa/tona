@@ -1,0 +1,240 @@
+{
+  "config": {
+    "A": {
+      "build": "merged",
+      "env": {
+        "TONA_DIAG": "1"
+      },
+      "tooling": {
+        "HIP_PATH": "<repo>/work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0",
+        "TONA_DIAG": "1",
+        "TONA_EXPERT_PROFILE": "<repo>/work/profile/experts-coder.bin"
+      },
+      "commit": "v0.0.2-358-g67c4210a46"
+    },
+    "B": {
+      "build": "merged",
+      "env": {
+        "TONA_DIAG": "1",
+        "TONA_EXPERT_POLICY": "classlru"
+      },
+      "tooling": {
+        "HIP_PATH": "<repo>/work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0",
+        "TONA_DIAG": "1",
+        "TONA_EXPERT_POLICY": "classlru",
+        "TONA_EXPERT_PROFILE": "<repo>/work/profile/experts-coder.bin"
+      },
+      "commit": "v0.0.2-358-g67c4210a46"
+    },
+    "workload": "huge",
+    "targets": "512000:200 1000000:200 at --ctx 1048576, TONA_SEQS=1",
+    "deterministic": false,
+    "plan_info": {
+      "expect": [
+        [
+          "decode",
+          -1.5,
+          3.0
+        ],
+        [
+          "prefill",
+          -2.0,
+          2.0
+        ]
+      ],
+      "source": "plan 2026-11-10-scale-run.md block g, S4 2026-11-02-classlru.md",
+      "workload": "huge",
+      "targets": "512000:200 1000000:200 at --ctx 1048576, TONA_SEQS=1",
+      "primary": "",
+      "why_size": "huge = 512K and 1M prompts, the sizes where expert misses dominate and the policy can matter; 2 rounds as the ticket sets (plan block g)",
+      "decode_tokens": 200,
+      "noise": {},
+      "warmup": false,
+      "A": {
+        "build": "merged",
+        "env": {
+          "TONA_DIAG": "1"
+        },
+        "tooling": {
+          "HIP_PATH": "<repo>/work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0",
+          "TONA_DIAG": "1",
+          "TONA_EXPERT_PROFILE": "<repo>/work/profile/experts-coder.bin"
+        },
+        "commit": "v0.0.2-358-g67c4210a46"
+      },
+      "B": {
+        "build": "merged",
+        "env": {
+          "TONA_DIAG": "1",
+          "TONA_EXPERT_POLICY": "classlru"
+        },
+        "tooling": {
+          "HIP_PATH": "<repo>/work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0",
+          "TONA_DIAG": "1",
+          "TONA_EXPERT_POLICY": "classlru",
+          "TONA_EXPERT_PROFILE": "<repo>/work/profile/experts-coder.bin"
+        },
+        "commit": "v0.0.2-358-g67c4210a46"
+      }
+    },
+    "reference_sha": {},
+    "corpus_sha256": "e13a800340859f7d39c63712d90383faae7e5a47c3865f0811e40d912612d38e",
+    "corpus_is_reference": true,
+    "commit": "67c4210",
+    "noise": {}
+  },
+  "rounds": [
+    {
+      "order": "AB",
+      "sha": {
+        "A": {
+          "512000": "c90d9618b85844c0",
+          "1000000": "e5c950ff2fae95bc"
+        },
+        "B": {
+          "512000": "c90d9618b85844c0",
+          "1000000": "e5c950ff2fae95bc"
+        }
+      },
+      "A": {
+        "prefill@512000": 1386.1145478551525,
+        "decode@512000": 60.061110227670575,
+        "prefill@1000000": 1039.557916751076,
+        "decode@1000000": 46.166990660984226
+      },
+      "counters": {
+        "A": {
+          "512000": {
+            "expert_hits": 65194,
+            "expert_misses": 10361
+          },
+          "1000000": {
+            "expert_hits": 9381,
+            "expert_misses": 1006
+          }
+        },
+        "B": {
+          "512000": {
+            "expert_hits": 65705,
+            "expert_misses": 9850
+          },
+          "1000000": {
+            "expert_hits": 9469,
+            "expert_misses": 918
+          }
+        }
+      },
+      "B": {
+        "prefill@512000": 1390.8352703196663,
+        "decode@512000": 60.66021891345511,
+        "prefill@1000000": 1040.9124605751526,
+        "decode@1000000": 46.33441352929803
+      },
+      "seconds": 2719.131051297998
+    },
+    {
+      "order": "BA",
+      "sha": {
+        "B": {
+          "512000": "c90d9618b85844c0",
+          "1000000": "e5c950ff2fae95bc"
+        },
+        "A": {
+          "512000": "c90d9618b85844c0",
+          "1000000": "e5c950ff2fae95bc"
+        }
+      },
+      "B": {
+        "prefill@512000": 1392.1872573242813,
+        "decode@512000": 60.52367645626713,
+        "prefill@1000000": 1041.011261899923,
+        "decode@1000000": 47.00729247631831
+      },
+      "counters": {
+        "B": {
+          "512000": {
+            "expert_hits": 65705,
+            "expert_misses": 9850
+          },
+          "1000000": {
+            "expert_hits": 9469,
+            "expert_misses": 918
+          }
+        },
+        "A": {
+          "512000": {
+            "expert_hits": 65194,
+            "expert_misses": 10361
+          },
+          "1000000": {
+            "expert_hits": 9381,
+            "expert_misses": 1006
+          }
+        }
+      },
+      "A": {
+        "prefill@512000": 1392.3935003296995,
+        "decode@512000": 60.55740001923751,
+        "prefill@1000000": 1040.733053288493,
+        "decode@1000000": 46.52163871448896
+      },
+      "seconds": 2712.3367006520275
+    }
+  ],
+  "stop_reason": "2 rounds (undecided metrics stay open)",
+  "wall_seconds": 5431.473123094998,
+  "plan": {
+    "alpha": 0.05,
+    "margin": 0.5,
+    "max_rounds": 2,
+    "min_rounds": 2,
+    "prior_sd": 0.5,
+    "prior_df": 4.0
+  },
+  "decisions": {
+    "prefill@512000": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": 0.1628800993431545,
+      "ci_diff_percent": [
+        -0.6752829523288894,
+        1.0010431510151983
+      ]
+    },
+    "decode@512000": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": 0.4709049645131358,
+      "ci_diff_percent": [
+        -0.5426352430359171,
+        1.4844451720621887
+      ]
+    },
+    "prefill@1000000": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": 0.0785159860682394,
+      "ci_diff_percent": [
+        -0.736550280305476,
+        0.8935822524419548
+      ]
+    },
+    "decode@1000000": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": 0.703288583713535,
+      "ci_diff_percent": [
+        -0.1990092133242639,
+        1.6055863807513338
+      ]
+    }
+  }
+}

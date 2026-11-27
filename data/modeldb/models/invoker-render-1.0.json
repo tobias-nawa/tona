@@ -1,0 +1,112 @@
+{
+  "id": "invoker-render-1.0",
+  "name": "Invoker-Render 1.0 (Code World Model 2.0)",
+  "vendor": "inclusionAI",
+  "release_date": "2026-11",
+  "purpose": "Proxy-conditioned video rendering for Code World Model 2.0: an upstream engine keeps the world state, visual proxies fix camera path, scene layout and object motion, and the video model generates the appearance, as an unbounded streaming session (card).",
+  "tasks": [
+    "video-generation"
+  ],
+  "modalities": {
+    "input": [
+      "video",
+      "image",
+      "text"
+    ],
+    "output": [
+      "video"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0 and CC BY-NC 4.0 (card metadata: license other, apache-2.0-and-cc-by-nc-4.0)",
+    "verified": false,
+    "commercial_use": "no",
+    "redistribution": "unknown",
+    "notes": "Card states the repository is subject to Apache-2.0 and CC BY-NC 4.0 (non-commercial) terms; the license_link points to an acknowledgements section of the GitHub repository, which could not be read (raw README of the GitHub repo returned 404 / empty). Which files fall under which license is not stated on the card, so commercial use is treated as no. Verdict policy (README, 2026-11-19): this licence term does not lower tona_fit; kept here for an installer label."
+  },
+  "architecture": {
+    "kind": "causal streaming diffusion transformer (config identifier MiniMaxH3Transformer3DModel), four-step streaming generation, built on MiniMax-H3",
+    "params_total_b": 33.12,
+    "why_this_design": "Card: a fixed appearance anchor and a bounded history window let a session run for as long as proxy frames arrive."
+  },
+  "variants": [
+    {
+      "repo": "inclusionAI/invoker-render-1.0",
+      "format": "safetensors FP32",
+      "size_gb": 135,
+      "official": true,
+      "notes": "root weights about 132.5 GB (card) in 29 shards plus bidirectional_lora/teacher-live.safetensors 2.48 GB (a LoRA of the bidirectional teacher on MiniMax-H3, not to be applied to the root weights); VAE, Qwen text model, causal decoder and a prepared inference bundle are not included"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "no",
+      "basis": "estimate",
+      "notes": "33.12B parameters; the vendor's default production profile uses eight NVIDIA GPUs on one node"
+    },
+    "pc-16gb": {
+      "fits": "no",
+      "basis": "estimate"
+    },
+    "pc-24gb": {
+      "fits": "no",
+      "basis": "estimate"
+    },
+    "pc-32gb": {
+      "fits": "no",
+      "basis": "estimate"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "basis": "estimate"
+    },
+    "mac-32gb": {
+      "fits": "no",
+      "basis": "estimate"
+    },
+    "mac-64gb+": {
+      "fits": "no",
+      "basis": "estimate",
+      "notes": "even a 4-bit copy of 33B parameters would not leave room for the streaming workload at video speed; no quantization exists"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "companion CodeWorldModel inference code (SGLang, SGLang-Omni, MiniMax-H3)"
+    ]
+  },
+  "soft": {
+    "strengths": [
+      "Long-horizon streaming with multi-granularity control (semantic maps, 3D boxes, subject masks, shaded geometry, skeletons)"
+    ],
+    "weaknesses": [
+      "Non-commercial terms",
+      "Eight-GPU default profile",
+      "Inputs 1344x768 first image and 24 FPS proxy video with 17*N+5 frames"
+    ]
+  },
+  "tona_fit": {
+    "verdict": "reject",
+    "reason": "A 33B video world-model renderer for an eight-GPU node; it has no role for a local coding worker and fits no hardware class.",
+    "blockers": [
+      "fits no class",
+      "no Tona video engine"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/inclusionAI/invoker-render-1.0",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "card and file sizes"
+    }
+  ],
+  "open_questions": [
+    "Exact license split between Apache-2.0 and CC BY-NC 4.0: GitHub acknowledgements section not read",
+    "Quality evidence: the card gives no benchmark; the paper (arXiv 2611.22925) was not read",
+    "Exact release date: HF createdAt not fetched"
+  ],
+  "last_checked": "2026-11-19"
+}

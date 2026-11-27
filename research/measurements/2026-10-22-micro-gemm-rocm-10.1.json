@@ -1,0 +1,816 @@
+{
+ "tool": "micro",
+ "rocm": "venv",
+ "env": {
+  "time": "2026-10-22T21:35:01+02:00",
+  "host": "reference-pc",
+  "kernel": "7.2.11-200.fc44.x86_64",
+  "os": "Fedora Linux 44 (Workstation Edition)",
+  "python": "3.14.8",
+  "cpu": "AMD Ryzen 5 9600X 6-Core Processor",
+  "cpu_governor": "performance",
+  "cpu_epp": "performance",
+  "mem_total_gib": 30.5,
+  "mem_avail_gib": 23.8,
+  "swap_used_mib": 0,
+  "gpu": {
+   "sysfs": "/sys/devices/pci0000:00/0000:00:01.1/0000:01:00.0/0000:02:00.0/0000:03:00.0",
+   "vram_total_mib": 16304,
+   "vram_used_mib": 1824,
+   "vbios_version": "113-R906XTGO-F2",
+   "current_link_speed": "32.0 GT/s PCIe",
+   "current_link_width": "16",
+   "power_dpm_force_performance_level": "auto",
+   "pci_id": "1002:7590"
+  },
+  "packages": {
+   "rocm-runtime": "7.1.1-6.fc44",
+   "rocm-hip": "7.1.1-3.fc44",
+   "hipblaslt": "7.1.1-7.fc44",
+   "rocblas": "7.1.1-7.fc44",
+   "kernel": "7.2.11-200.fc44"
+  },
+  "git": {
+   "commit": "b0e7892",
+   "dirty": true
+  },
+  "target": null,
+  "server": {},
+  "warnings": [
+   "repository has uncommitted changes"
+  ]
+ },
+ "meta": {
+  "gpu": {
+   "device": "AMD Radeon RX 9060 XT",
+   "arch": "gfx1200",
+   "cus": 16,
+   "clock_khz": 2780000,
+   "mem_clock_khz": 1258000,
+   "bus_bits": 128,
+   "l2_bytes": 4194304,
+   "hip_runtime": 71626385,
+   "hip_headers": 71626385
+  },
+  "parts": {
+   "gemm": {
+    "vram_peak_mib": 2654.3359375,
+    "gtt_peak_mib": 126.15234375,
+    "ram_avail_min_mib": 24047.0,
+    "swap_used_max_mib": 0.0,
+    "gpu_busy_mean": 91.83333333333333,
+    "power_mean_w": 138.0,
+    "temp_max_c": 77.0,
+    "sclk_mean_mhz": 2621.7380952380954,
+    "samples": 42
+   }
+  }
+ },
+ "system": {
+  "vram_peak_mib": 2654.3359375,
+  "gtt_peak_mib": 126.15234375,
+  "ram_avail_min_mib": 24047.0,
+  "swap_used_max_mib": 0.0,
+  "gpu_busy_mean": 89.74418604651163,
+  "power_mean_w": 135.2093023255814,
+  "temp_max_c": 77.0,
+  "sclk_mean_mhz": 2561.1627906976746,
+  "samples": 43
+ },
+ "rows": [
+  {
+   "test": "gemm",
+   "var": "f16 8192x4096x4096 (quadratisch 4096)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "n": 7,
+   "median": 49.5896,
+   "mean": 49.128485714285716,
+   "stdev": 2.9318362485130782,
+   "min": 44.6018,
+   "max": 52.6399
+  },
+  {
+   "test": "gemm",
+   "var": "f16 8192x2560x2560 (Projektion 2560)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "n": 7,
+   "median": 56.0311,
+   "mean": 56.08105714285715,
+   "stdev": 1.4366273871550024,
+   "min": 53.8538,
+   "max": 58.1657
+  },
+  {
+   "test": "gemm",
+   "var": "f16 8192x1280x2560 (Experte gate/up 2560→1280)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "n": 7,
+   "median": 27.7072,
+   "mean": 27.665300000000002,
+   "stdev": 0.16668277255513397,
+   "min": 27.4248,
+   "max": 27.8901
+  },
+  {
+   "test": "gemm",
+   "var": "f16 8192x2560x640 (Experte down 640→2560)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "n": 7,
+   "median": 48.0094,
+   "mean": 48.42707142857143,
+   "stdev": 0.980223761383569,
+   "min": 47.6352,
+   "max": 50.0682
+  },
+  {
+   "test": "gemm",
+   "var": "f16 512x640x2560 (Experte, 512 Tokens)",
+   "param": 512,
+   "unit": "TFLOPS",
+   "n": 7,
+   "median": 49.2691,
+   "mean": 49.220371428571426,
+   "stdev": 0.15254973740047045,
+   "min": 48.9202,
+   "max": 49.3802
+  },
+  {
+   "test": "gemm",
+   "var": "f16 8192x8192x8192 (large 8192)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "n": 7,
+   "median": 44.7464,
+   "mean": 44.77084285714285,
+   "stdev": 0.19455095182790313,
+   "min": 44.4888,
+   "max": 45.1143
+  },
+  {
+   "test": "gemm",
+   "var": "bf16 8192x4096x4096 (quadratisch 4096)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "n": 7,
+   "median": 42.4955,
+   "mean": 42.66231428571429,
+   "stdev": 0.3671209947168711,
+   "min": 42.3689,
+   "max": 43.3262
+  },
+  {
+   "test": "gemm",
+   "var": "bf16 8192x2560x2560 (Projektion 2560)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "n": 7,
+   "median": 49.9719,
+   "mean": 49.14478571428572,
+   "stdev": 3.5911208888166444,
+   "min": 43.702,
+   "max": 54.527
+  },
+  {
+   "test": "gemm",
+   "var": "bf16 8192x1280x2560 (Experte gate/up 2560→1280)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "n": 7,
+   "median": 28.1162,
+   "mean": 28.125542857142857,
+   "stdev": 0.4045688975405097,
+   "min": 27.5128,
+   "max": 28.5895
+  },
+  {
+   "test": "gemm",
+   "var": "bf16 8192x2560x640 (Experte down 640→2560)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "n": 7,
+   "median": 45.4239,
+   "mean": 46.27214285714285,
+   "stdev": 1.6955705066015792,
+   "min": 44.9514,
+   "max": 48.8839
+  },
+  {
+   "test": "gemm",
+   "var": "bf16 512x640x2560 (Experte, 512 Tokens)",
+   "param": 512,
+   "unit": "TFLOPS",
+   "n": 7,
+   "median": 49.0888,
+   "mean": 48.66517142857143,
+   "stdev": 0.7580560571054662,
+   "min": 47.5475,
+   "max": 49.3069
+  },
+  {
+   "test": "gemm",
+   "var": "bf16 8192x8192x8192 (large 8192)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "n": 7,
+   "median": 44.7699,
+   "mean": 45.15092857142857,
+   "stdev": 0.967347105428527,
+   "min": 44.4787,
+   "max": 47.2467
+  }
+ ],
+ "samples": [
+  {
+   "test": "gemm",
+   "var": "f16 8192x4096x4096 (quadratisch 4096)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 44.6018
+  },
+  {
+   "test": "gemm",
+   "var": "f16 8192x4096x4096 (quadratisch 4096)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 46.2382
+  },
+  {
+   "test": "gemm",
+   "var": "f16 8192x4096x4096 (quadratisch 4096)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 48.2404
+  },
+  {
+   "test": "gemm",
+   "var": "f16 8192x4096x4096 (quadratisch 4096)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 49.5896
+  },
+  {
+   "test": "gemm",
+   "var": "f16 8192x4096x4096 (quadratisch 4096)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 51.2154
+  },
+  {
+   "test": "gemm",
+   "var": "f16 8192x4096x4096 (quadratisch 4096)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 51.3741
+  },
+  {
+   "test": "gemm",
+   "var": "f16 8192x4096x4096 (quadratisch 4096)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 52.6399
+  },
+  {
+   "test": "gemm",
+   "var": "f16 8192x2560x2560 (Projektion 2560)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 53.8538
+  },
+  {
+   "test": "gemm",
+   "var": "f16 8192x2560x2560 (Projektion 2560)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 55.1433
+  },
+  {
+   "test": "gemm",
+   "var": "f16 8192x2560x2560 (Projektion 2560)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 55.4262
+  },
+  {
+   "test": "gemm",
+   "var": "f16 8192x2560x2560 (Projektion 2560)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 57.2676
+  },
+  {
+   "test": "gemm",
+   "var": "f16 8192x2560x2560 (Projektion 2560)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 58.1657
+  },
+  {
+   "test": "gemm",
+   "var": "f16 8192x2560x2560 (Projektion 2560)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 56.6797
+  },
+  {
+   "test": "gemm",
+   "var": "f16 8192x2560x2560 (Projektion 2560)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 56.0311
+  },
+  {
+   "test": "gemm",
+   "var": "f16 8192x1280x2560 (Experte gate/up 2560→1280)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 27.8901
+  },
+  {
+   "test": "gemm",
+   "var": "f16 8192x1280x2560 (Experte gate/up 2560→1280)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 27.7354
+  },
+  {
+   "test": "gemm",
+   "var": "f16 8192x1280x2560 (Experte gate/up 2560→1280)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 27.4248
+  },
+  {
+   "test": "gemm",
+   "var": "f16 8192x1280x2560 (Experte gate/up 2560→1280)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 27.4739
+  },
+  {
+   "test": "gemm",
+   "var": "f16 8192x1280x2560 (Experte gate/up 2560→1280)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 27.7853
+  },
+  {
+   "test": "gemm",
+   "var": "f16 8192x1280x2560 (Experte gate/up 2560→1280)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 27.7072
+  },
+  {
+   "test": "gemm",
+   "var": "f16 8192x1280x2560 (Experte gate/up 2560→1280)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 27.6404
+  },
+  {
+   "test": "gemm",
+   "var": "f16 8192x2560x640 (Experte down 640→2560)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 50.0682
+  },
+  {
+   "test": "gemm",
+   "var": "f16 8192x2560x640 (Experte down 640→2560)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 49.5234
+  },
+  {
+   "test": "gemm",
+   "var": "f16 8192x2560x640 (Experte down 640→2560)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 48.3575
+  },
+  {
+   "test": "gemm",
+   "var": "f16 8192x2560x640 (Experte down 640→2560)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 47.6924
+  },
+  {
+   "test": "gemm",
+   "var": "f16 8192x2560x640 (Experte down 640→2560)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 47.7034
+  },
+  {
+   "test": "gemm",
+   "var": "f16 8192x2560x640 (Experte down 640→2560)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 48.0094
+  },
+  {
+   "test": "gemm",
+   "var": "f16 8192x2560x640 (Experte down 640→2560)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 47.6352
+  },
+  {
+   "test": "gemm",
+   "var": "f16 512x640x2560 (Experte, 512 Tokens)",
+   "param": 512,
+   "unit": "TFLOPS",
+   "value": 49.1494
+  },
+  {
+   "test": "gemm",
+   "var": "f16 512x640x2560 (Experte, 512 Tokens)",
+   "param": 512,
+   "unit": "TFLOPS",
+   "value": 49.2691
+  },
+  {
+   "test": "gemm",
+   "var": "f16 512x640x2560 (Experte, 512 Tokens)",
+   "param": 512,
+   "unit": "TFLOPS",
+   "value": 49.3802
+  },
+  {
+   "test": "gemm",
+   "var": "f16 512x640x2560 (Experte, 512 Tokens)",
+   "param": 512,
+   "unit": "TFLOPS",
+   "value": 49.2044
+  },
+  {
+   "test": "gemm",
+   "var": "f16 512x640x2560 (Experte, 512 Tokens)",
+   "param": 512,
+   "unit": "TFLOPS",
+   "value": 48.9202
+  },
+  {
+   "test": "gemm",
+   "var": "f16 512x640x2560 (Experte, 512 Tokens)",
+   "param": 512,
+   "unit": "TFLOPS",
+   "value": 49.296
+  },
+  {
+   "test": "gemm",
+   "var": "f16 512x640x2560 (Experte, 512 Tokens)",
+   "param": 512,
+   "unit": "TFLOPS",
+   "value": 49.3233
+  },
+  {
+   "test": "gemm",
+   "var": "f16 8192x8192x8192 (large 8192)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 44.8161
+  },
+  {
+   "test": "gemm",
+   "var": "f16 8192x8192x8192 (large 8192)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 44.8553
+  },
+  {
+   "test": "gemm",
+   "var": "f16 8192x8192x8192 (large 8192)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 44.4888
+  },
+  {
+   "test": "gemm",
+   "var": "f16 8192x8192x8192 (large 8192)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 44.6331
+  },
+  {
+   "test": "gemm",
+   "var": "f16 8192x8192x8192 (large 8192)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 44.7464
+  },
+  {
+   "test": "gemm",
+   "var": "f16 8192x8192x8192 (large 8192)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 45.1143
+  },
+  {
+   "test": "gemm",
+   "var": "f16 8192x8192x8192 (large 8192)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 44.7419
+  },
+  {
+   "test": "gemm",
+   "var": "bf16 8192x4096x4096 (quadratisch 4096)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 42.9975
+  },
+  {
+   "test": "gemm",
+   "var": "bf16 8192x4096x4096 (quadratisch 4096)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 42.4226
+  },
+  {
+   "test": "gemm",
+   "var": "bf16 8192x4096x4096 (quadratisch 4096)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 42.6532
+  },
+  {
+   "test": "gemm",
+   "var": "bf16 8192x4096x4096 (quadratisch 4096)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 42.3723
+  },
+  {
+   "test": "gemm",
+   "var": "bf16 8192x4096x4096 (quadratisch 4096)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 42.4955
+  },
+  {
+   "test": "gemm",
+   "var": "bf16 8192x4096x4096 (quadratisch 4096)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 42.3689
+  },
+  {
+   "test": "gemm",
+   "var": "bf16 8192x4096x4096 (quadratisch 4096)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 43.3262
+  },
+  {
+   "test": "gemm",
+   "var": "bf16 8192x2560x2560 (Projektion 2560)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 43.702
+  },
+  {
+   "test": "gemm",
+   "var": "bf16 8192x2560x2560 (Projektion 2560)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 45.9953
+  },
+  {
+   "test": "gemm",
+   "var": "bf16 8192x2560x2560 (Projektion 2560)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 47.939
+  },
+  {
+   "test": "gemm",
+   "var": "bf16 8192x2560x2560 (Projektion 2560)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 50.5597
+  },
+  {
+   "test": "gemm",
+   "var": "bf16 8192x2560x2560 (Projektion 2560)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 49.9719
+  },
+  {
+   "test": "gemm",
+   "var": "bf16 8192x2560x2560 (Projektion 2560)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 51.3186
+  },
+  {
+   "test": "gemm",
+   "var": "bf16 8192x2560x2560 (Projektion 2560)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 54.527
+  },
+  {
+   "test": "gemm",
+   "var": "bf16 8192x1280x2560 (Experte gate/up 2560→1280)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 27.5128
+  },
+  {
+   "test": "gemm",
+   "var": "bf16 8192x1280x2560 (Experte gate/up 2560→1280)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 28.1162
+  },
+  {
+   "test": "gemm",
+   "var": "bf16 8192x1280x2560 (Experte gate/up 2560→1280)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 28.3946
+  },
+  {
+   "test": "gemm",
+   "var": "bf16 8192x1280x2560 (Experte gate/up 2560→1280)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 28.5895
+  },
+  {
+   "test": "gemm",
+   "var": "bf16 8192x1280x2560 (Experte gate/up 2560→1280)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 28.4959
+  },
+  {
+   "test": "gemm",
+   "var": "bf16 8192x1280x2560 (Experte gate/up 2560→1280)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 28.0664
+  },
+  {
+   "test": "gemm",
+   "var": "bf16 8192x1280x2560 (Experte gate/up 2560→1280)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 27.7034
+  },
+  {
+   "test": "gemm",
+   "var": "bf16 8192x2560x640 (Experte down 640→2560)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 48.8839
+  },
+  {
+   "test": "gemm",
+   "var": "bf16 8192x2560x640 (Experte down 640→2560)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 48.5483
+  },
+  {
+   "test": "gemm",
+   "var": "bf16 8192x2560x640 (Experte down 640→2560)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 45.827
+  },
+  {
+   "test": "gemm",
+   "var": "bf16 8192x2560x640 (Experte down 640→2560)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 45.4239
+  },
+  {
+   "test": "gemm",
+   "var": "bf16 8192x2560x640 (Experte down 640→2560)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 45.1512
+  },
+  {
+   "test": "gemm",
+   "var": "bf16 8192x2560x640 (Experte down 640→2560)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 44.9514
+  },
+  {
+   "test": "gemm",
+   "var": "bf16 8192x2560x640 (Experte down 640→2560)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 45.1193
+  },
+  {
+   "test": "gemm",
+   "var": "bf16 512x640x2560 (Experte, 512 Tokens)",
+   "param": 512,
+   "unit": "TFLOPS",
+   "value": 47.5475
+  },
+  {
+   "test": "gemm",
+   "var": "bf16 512x640x2560 (Experte, 512 Tokens)",
+   "param": 512,
+   "unit": "TFLOPS",
+   "value": 47.6038
+  },
+  {
+   "test": "gemm",
+   "var": "bf16 512x640x2560 (Experte, 512 Tokens)",
+   "param": 512,
+   "unit": "TFLOPS",
+   "value": 48.8279
+  },
+  {
+   "test": "gemm",
+   "var": "bf16 512x640x2560 (Experte, 512 Tokens)",
+   "param": 512,
+   "unit": "TFLOPS",
+   "value": 49.1069
+  },
+  {
+   "test": "gemm",
+   "var": "bf16 512x640x2560 (Experte, 512 Tokens)",
+   "param": 512,
+   "unit": "TFLOPS",
+   "value": 49.0888
+  },
+  {
+   "test": "gemm",
+   "var": "bf16 512x640x2560 (Experte, 512 Tokens)",
+   "param": 512,
+   "unit": "TFLOPS",
+   "value": 49.1744
+  },
+  {
+   "test": "gemm",
+   "var": "bf16 512x640x2560 (Experte, 512 Tokens)",
+   "param": 512,
+   "unit": "TFLOPS",
+   "value": 49.3069
+  },
+  {
+   "test": "gemm",
+   "var": "bf16 8192x8192x8192 (large 8192)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 47.2467
+  },
+  {
+   "test": "gemm",
+   "var": "bf16 8192x8192x8192 (large 8192)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 44.6249
+  },
+  {
+   "test": "gemm",
+   "var": "bf16 8192x8192x8192 (large 8192)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 44.7699
+  },
+  {
+   "test": "gemm",
+   "var": "bf16 8192x8192x8192 (large 8192)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 44.6953
+  },
+  {
+   "test": "gemm",
+   "var": "bf16 8192x8192x8192 (large 8192)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 44.4787
+  },
+  {
+   "test": "gemm",
+   "var": "bf16 8192x8192x8192 (large 8192)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 44.8568
+  },
+  {
+   "test": "gemm",
+   "var": "bf16 8192x8192x8192 (large 8192)",
+   "param": 8192,
+   "unit": "TFLOPS",
+   "value": 45.3842
+  }
+ ]
+}

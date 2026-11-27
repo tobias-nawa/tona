@@ -1,0 +1,166 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tona.local/modeldb/schema.json",
+  "title": "Tona model database record",
+  "description": "One file per model family release in data/modeldb/models/<id>.json. Facts carry their sources; vendor claims, independent results and our own measurements stay apart.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "name", "vendor", "tasks", "license", "architecture", "sources", "last_checked"],
+  "$defs": {
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["url", "kind", "checked"],
+      "properties": {
+        "url": {"type": "string"},
+        "kind": {"enum": ["primary", "secondary", "own"], "description": "primary: model card, config, paper, repo opened directly; secondary: blog, aggregator, search summary; own: our measurement file"},
+        "checked": {"type": "string", "format": "date"},
+        "note": {"type": "string"}
+      }
+    },
+    "sourceRefs": {"type": "array", "items": {"type": "string"}, "description": "urls that also appear in the top-level sources list"},
+    "level": {"enum": ["strong", "good", "weak", "unusable", "unknown"]}
+  },
+  "properties": {
+    "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]*$", "description": "file name without .json"},
+    "name": {"type": "string"},
+    "vendor": {"type": "string"},
+    "release_date": {"type": "string", "description": "YYYY-MM-DD or YYYY-MM"},
+    "lineage": {
+      "type": "object", "additionalProperties": false,
+      "properties": {
+        "base_model": {"type": "string"},
+        "how_derived": {"type": "string", "description": "e.g. continued pretraining, expert pruning, distillation, quantization-aware training"},
+        "family": {"type": "string"}
+      }
+    },
+    "purpose": {"type": "string", "description": "why the model exists: the builder's stated goal and target users, in two to four sentences"},
+    "tasks": {
+      "type": "array", "minItems": 1,
+      "items": {"enum": ["coding", "general", "research", "documents", "vision", "audio-transcription", "speech-synthesis", "image-generation", "video-generation", "embeddings", "reranking", "autocomplete", "translation", "math", "other"]}
+    },
+    "modalities": {
+      "type": "object", "additionalProperties": false,
+      "properties": {
+        "input": {"type": "array", "items": {"enum": ["text", "image", "audio", "video", "document"]}},
+        "output": {"type": "array", "items": {"enum": ["text", "image", "audio", "video", "embedding"]}}
+      }
+    },
+    "languages": {
+      "type": "object", "additionalProperties": false,
+      "properties": {
+        "natural": {"type": "array", "items": {"type": "string"}, "description": "ISO 639-1 codes the vendor names, or 'many'"},
+        "programming": {
+          "type": "object", "description": "language -> level, only with evidence",
+          "additionalProperties": {
+            "type": "object", "additionalProperties": false, "required": ["level"],
+            "properties": {"level": {"$ref": "#/$defs/level"}, "evidence": {"type": "string"}, "sources": {"$ref": "#/$defs/sourceRefs"}}
+          }
+        }
+      }
+    },
+    "license": {
+      "type": "object", "additionalProperties": false, "required": ["name", "verified"],
+      "properties": {
+        "name": {"type": "string"},
+        "verified": {"type": "boolean", "description": "true only if the license text itself was read"},
+        "commercial_use": {"enum": ["yes", "limited", "no", "unknown"]},
+        "redistribution": {"enum": ["yes", "limited", "no", "unknown"]},
+        "notes": {"type": "string"}
+      }
+    },
+    "architecture": {
+      "type": "object", "additionalProperties": false, "required": ["kind"],
+      "properties": {
+        "kind": {"type": "string", "description": "e.g. dense transformer, hybrid DeltaNet+attention MoE, hybrid Mamba-2+attention MoE, diffusion transformer, encoder-decoder"},
+        "gguf_arch": {"type": "string"},
+        "params_total_b": {"type": "number"},
+        "params_active_b": {"type": "number"},
+        "layers": {"type": "integer"},
+        "attention": {"type": "string", "description": "full, GQA, sliding window, sparse/indexed, linear/recurrent mix with ratio"},
+        "recurrent": {"type": "string", "description": "none, DeltaNet, Mamba-2, ..."},
+        "experts": {"type": "integer"},
+        "experts_active": {"type": "integer"},
+        "context_native": {"type": "integer"},
+        "context_max": {"type": "integer"},
+        "drafter": {"type": "string", "description": "MTP head, separate drafter (name), none"},
+        "why_this_design": {"type": "string", "description": "the builder's stated reasons for the architecture choices"}
+      }
+    },
+    "variants": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false, "required": ["repo", "format"],
+        "properties": {
+          "repo": {"type": "string"},
+          "revision": {"type": "string"},
+          "format": {"type": "string", "description": "GGUF Q4_K_M, IQ1_M, NVFP4, safetensors BF16, MLX 4bit ..."},
+          "size_gb": {"type": "number"},
+          "bits_per_weight": {"type": "number"},
+          "official": {"type": "boolean"},
+          "notes": {"type": "string"}
+        }
+      }
+    },
+    "hardware_fit": {
+      "type": "object", "description": "class -> fit, classes as in docs/hardware/ (pc-12gb, pc-16gb, pc-24gb, pc-32gb with RAM size, mac-16-24gb, mac-32gb, mac-64gb+)",
+      "additionalProperties": {
+        "type": "object", "additionalProperties": false, "required": ["fits"],
+        "properties": {"fits": {"enum": ["yes", "marginal", "no", "unknown"]}, "variant": {"type": "string"}, "basis": {"enum": ["measured", "estimate"]}, "notes": {"type": "string"}}
+      }
+    },
+    "engine_support": {
+      "type": "object", "additionalProperties": false,
+      "properties": {
+        "tona": {"enum": ["runs", "in-progress", "planned", "none"]},
+        "llama_cpp": {"enum": ["yes", "partial", "no", "unknown"]},
+        "other": {"type": "array", "items": {"type": "string"}},
+        "notes": {"type": "string"}
+      }
+    },
+    "benchmarks": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false, "required": ["name", "score", "kind", "source"],
+        "properties": {
+          "name": {"type": "string", "description": "e.g. SWE-bench Verified, Terminal-Bench 2.1, Aider polyglot, GPQA, WER LibriSpeech"},
+          "score": {"type": ["number", "string"]},
+          "unit": {"type": "string"},
+          "kind": {"enum": ["vendor", "independent", "ours"]},
+          "variant": {"type": "string", "description": "which weights or quant was measured"},
+          "harness": {"type": "string"},
+          "date": {"type": "string"},
+          "source": {"type": "string"}
+        }
+      }
+    },
+    "soft": {
+      "type": "object", "additionalProperties": false,
+      "description": "qualitative knowledge: what it is good for, how it behaves, what users report",
+      "properties": {
+        "strengths": {"type": "array", "items": {"type": "string"}},
+        "weaknesses": {"type": "array", "items": {"type": "string"}},
+        "behavior": {"type": "string", "description": "verbosity, thinking length, looping, tool-call reliability, refusals, style"},
+        "best_for": {"type": "array", "items": {"type": "string"}},
+        "avoid_for": {"type": "array", "items": {"type": "string"}},
+        "user_reports": {
+          "type": "array",
+          "items": {"type": "object", "additionalProperties": false, "required": ["summary", "source"], "properties": {"summary": {"type": "string"}, "sentiment": {"enum": ["positive", "mixed", "negative"]}, "source": {"type": "string"}, "date": {"type": "string"}}}
+        },
+        "maturity": {"type": "string", "description": "vendor track record, community size, update cadence"}
+      }
+    },
+    "tona_fit": {
+      "type": "object", "additionalProperties": false,
+      "description": "our view: does it fit Tona and its users",
+      "properties": {
+        "verdict": {"enum": ["offer", "candidate", "watch", "reject", "unknown"]},
+        "reason": {"type": "string"},
+        "blockers": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "sources": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/source"}},
+    "open_questions": {"type": "array", "items": {"type": "string"}},
+    "last_checked": {"type": "string", "format": "date"}
+  }
+}

@@ -1,0 +1,8 @@
+#!/bin/bash
+# usage: build.sh <src> <builddir name> [extra cmake flags]
+set -eo pipefail
+src=$1; name=$2; shift 2
+cd "$src"
+source toolchain/env.sh
+cmake -S engine -B work/build/$name -G Ninja "$@" >/dev/null
+cmake --build work/build/$name --target tona-server

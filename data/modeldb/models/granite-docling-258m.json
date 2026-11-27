@@ -1,0 +1,155 @@
+{
+  "id": "granite-docling-258m",
+  "name": "Granite-Docling-258M",
+  "vendor": "IBM",
+  "release_date": "2025-09-17",
+  "lineage": {
+    "family": "Granite",
+    "base_model": "Idefics3 with SigLIP2-base-patch16-512 and Granite 165M",
+    "how_derived": "successor to SmolDocling-256M-preview"
+  },
+  "purpose": "Efficient document conversion inside the Docling library (DoclingDocument, DocTags); not meant for general image understanding.",
+  "languages": {
+    "natural": [
+      "en"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "card \"License\" section links Apache 2.0 and the metadata says apache-2.0; the HF repo has no separate LICENSE file; the Docling pipeline code (docling-project/docling LICENSE read) is MIT"
+  },
+  "architecture": {
+    "kind": "Idefics3 vision-language, SigLIP2 encoder, Granite 165M decoder, pixel-shuffle projector",
+    "params_total_b": 0.258,
+    "why_this_design": "Consolidates several single-purpose document models into one compact model for Docling; DocTags in fine-tuning data speed convergence (card)."
+  },
+  "variants": [
+    {
+      "repo": "ibm-granite/granite-docling-258M",
+      "format": "safetensors BF16",
+      "official": true
+    },
+    {
+      "repo": "ibm-granite MLX repo",
+      "format": "MLX",
+      "official": true
+    }
+  ],
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "partial",
+    "other": [
+      "transformers",
+      "vLLM (untied revision)",
+      "SGLang",
+      "MLX",
+      "ONNX"
+    ],
+    "notes": "card links quantized builds for llama.cpp/Ollama; mtmd support not confirmed on docs page"
+  },
+  "benchmarks": [
+    {
+      "name": "Table TEDS structure / with content",
+      "score": "0.97 / 0.96",
+      "kind": "vendor",
+      "source": "https://huggingface.co/ibm-granite/granite-docling-258M"
+    },
+    {
+      "name": "OCRBench",
+      "score": 500,
+      "kind": "vendor",
+      "source": "https://huggingface.co/ibm-granite/granite-docling-258M"
+    },
+    {
+      "name": "Full-page OCR edit distance (lower better)",
+      "score": 0.45,
+      "kind": "vendor",
+      "source": "https://huggingface.co/ibm-granite/granite-docling-258M"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "tiny, runs on CPU",
+      "Docling integration (PDF text layer plus layout)",
+      "stable against infinite loops (stated)"
+    ],
+    "weaknesses": [
+      "English-centred, German not listed",
+      "hallucination risk grows with small size",
+      "only for Docling use"
+    ],
+    "best_for": [
+      "CPU-only structure extraction, tables"
+    ],
+    "maturity": "IBM Granite line, steady cadence"
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "smallest option (258M) and Docling handles text PDFs without OCR, but German is not claimed (card lists English plus experimental Japanese, Arabic, Chinese) and no third-party German score exists; as the text-layer/structure branch it stays useful regardless of the VLM."
+  },
+  "open_questions": [
+    "German accuracy",
+    "German accuracy: run on our German sample set"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/ibm-granite/granite-docling-258M",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/docling-project/docling/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    }
+  ],
+  "tasks": [
+    "documents",
+    "vision"
+  ],
+  "modalities": {
+    "input": [
+      "image",
+      "document"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "about 1B parameters, BF16 about 2 GB"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "BF16 about 2 GB; Tona runs one model at a time, so it replaces the resident model while it works"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate"
+    }
+  },
+  "last_checked": "2026-11-19"
+}

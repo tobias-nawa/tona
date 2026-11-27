@@ -1,0 +1,213 @@
+{
+  "id": "holo-3.1",
+  "name": "Holo3.1 (0.8B, 4B, 9B, 35B-A3B)",
+  "vendor": "H Company",
+  "release_date": "2026-06-01",
+  "lineage": {
+    "family": "Holo3",
+    "base_model": "Qwen3.5-0.8B / 4B / 9B and Qwen3.6-35B-A3B",
+    "how_derived": "fine-tuned for computer use and UI grounding (card; training details not given)"
+  },
+  "purpose": "Vision-language models for computer-use agents on web, desktop and mobile; adds mobile support, native function calling and quantized checkpoints for local deployment (card, blog).",
+  "tasks": [
+    "vision",
+    "other"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "card metadata and card text both say Apache 2.0; the repos have no LICENSE file; base models are Qwen (Apache-2.0)"
+  },
+  "architecture": {
+    "kind": "Qwen3.5 / Qwen3.6 based vision-language (qwen3_5 dense for 0.8B/4B/9B, qwen3_5_moe for 35B-A3B)",
+    "params_total_b": 35,
+    "params_active_b": 3,
+    "why_this_design": "not stated beyond \"building on Holo3\"; the benchmark table is an image on the card"
+  },
+  "variants": [
+    {
+      "repo": "Hcompany/Holo-3.1-35B-A3B-GGUF",
+      "format": "GGUF Q4_K_M + mmproj F16",
+      "size_gb": 22.2,
+      "official": true,
+      "notes": "q4_k_m 21.3 GB, mmproj 0.90 GB, bf16 69.4 GB, imatrix; 72,147 downloads"
+    },
+    {
+      "repo": "Hcompany/Holo-3.1-35B-A3B-FP8",
+      "format": "FP8",
+      "official": true
+    },
+    {
+      "repo": "Hcompany/Holo-3.1-35B-A3B-NVFP4",
+      "format": "NVFP4",
+      "official": true
+    },
+    {
+      "repo": "Hcompany/Holo-3.1-4B",
+      "format": "safetensors BF16",
+      "size_gb": 10.3,
+      "official": true,
+      "notes": "5.17B parameters per the HF API (vision tower included); research/52 listed a 3.07 GB Q4_K_M GGUF of the 4B"
+    },
+    {
+      "repo": "Hcompany/Holo-3.1-9B",
+      "format": "safetensors BF16",
+      "official": true
+    },
+    {
+      "repo": "Hcompany/Holo-3.1-0.8B",
+      "format": "safetensors BF16",
+      "official": true
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "0.8B/4B/9B quantized"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "4B/9B quantized; the 35B-A3B Q4 (21 GB) needs expert offload"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "35B-A3B Q4_K_M 21.3 GB plus mmproj is tight with context"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "4B/9B"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate"
+    }
+  },
+  "engine_support": {
+    "tona": "planned",
+    "llama_cpp": "yes",
+    "other": [
+      "transformers",
+      "vLLM (FP8/NVFP4)",
+      "H Company hub quickstart"
+    ],
+    "notes": "qwen3.5 family architecture already runs in Tona for text (qwen35moe); vision tower and mmproj are not loaded; official GGUF with mmproj exists"
+  },
+  "benchmarks": [
+    {
+      "name": "AndroidWorld (35B-A3B)",
+      "score": 79.3,
+      "kind": "vendor",
+      "unit": "%",
+      "source": "https://www.hcompany.ai/holo3.1",
+      "variant": "was 67% for Holo3"
+    },
+    {
+      "name": "AndroidWorld (4B and 9B)",
+      "score": 71,
+      "kind": "vendor",
+      "unit": "%",
+      "source": "https://www.hcompany.ai/holo3.1",
+      "variant": "was 58% for Holo3"
+    },
+    {
+      "name": "OSWorld (35B-A3B BF16)",
+      "score": 80.0,
+      "kind": "vendor",
+      "unit": "%",
+      "source": "https://www.hcompany.ai/holo3.1",
+      "variant": "FP8 and NVFP4 about 77.8; blog text only, other numbers are in images"
+    },
+    {
+      "name": "overall average over computer use, mobile, workflows, grounding (35B-A3B)",
+      "score": 78.3,
+      "kind": "vendor",
+      "source": "https://www.hcompany.ai/holo3.1",
+      "unit": "%"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "purpose-built for UI grounding and computer use, native function calling",
+      "small sizes (0.8B, 4B) for local agents",
+      "quantized checkpoints published by the vendor"
+    ],
+    "weaknesses": [
+      "not a document reader; English only stated",
+      "benchmark tables on the card are images, numbers need confirmation"
+    ],
+    "best_for": [
+      "agents that click through screens and screenshots"
+    ],
+    "avoid_for": [
+      "document OCR and parsing (use a parser from this database)"
+    ],
+    "maturity": "H Company, successive Holo releases (Holo3 in March 2026, 3.1 in May/June 2026)"
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "Apache-2.0, sizes for every hardware class, same architecture family Tona already runs for text; relevant for computer-use agents, not for document work. Missing vision loading is a blocker only.",
+    "blockers": [
+      "vision tower / mmproj not loaded by Tona"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/Hcompany/Holo-3.1-35B-A3B",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "raw README via the HF raw path after the first fetch returned 401"
+    },
+    {
+      "url": "https://huggingface.co/Hcompany/Holo-3.1-35B-A3B-GGUF",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "file tree via HF API"
+    },
+    {
+      "url": "https://huggingface.co/Hcompany/Holo-3.1-4B",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "HF API"
+    },
+    {
+      "url": "https://www.hcompany.ai/holo3.1",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "blog read through a summarizer; says release 2026-06-01"
+    }
+  ],
+  "open_questions": [
+    "benchmark values that appear only as images on the card (ScreenSpot-Pro, OSWorld-G, per-size tables)",
+    "languages other than English",
+    "license text (no LICENSE file in the repos)"
+  ],
+  "last_checked": "2026-11-19"
+}

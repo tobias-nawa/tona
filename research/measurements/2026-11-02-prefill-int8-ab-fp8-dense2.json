@@ -1,0 +1,580 @@
+{
+  "config": {
+    "A": {
+      "build": "w100",
+      "env": {
+        "IE_DIAG": "1"
+      },
+      "tooling": {
+        "HIP_PATH": "./work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+        "IE_DIAG": "1",
+        "IE_EXPERT_PROFILE": "./work/profile/experts-coder.bin",
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0"
+      },
+      "commit": "v0.0.2-240-g04843157d6-dirty"
+    },
+    "B": {
+      "build": "w100",
+      "env": {
+        "IE_DIAG": "1",
+        "IE_PREFILL_FP8": "1"
+      },
+      "tooling": {
+        "HIP_PATH": "./work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+        "IE_DIAG": "1",
+        "IE_EXPERT_PROFILE": "./work/profile/experts-coder.bin",
+        "IE_PREFILL_FP8": "1",
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0"
+      },
+      "commit": "v0.0.2-240-g04843157d6-dirty"
+    },
+    "workload": "server",
+    "targets": "2000:400 13000:200 30000:200 at --ctx 140000",
+    "deterministic": false,
+    "plan_info": {
+      "expect": [
+        [
+          "prefill",
+          5.0,
+          10.0
+        ],
+        [
+          "decode",
+          -1.0,
+          1.0
+        ]
+      ],
+      "source": "profile with the switch: window 6.40 s against 6.88 s (-7 %), k_gemm2 + k_gemm8 1.85 -> 1.29 s, extra k_dequant_fp8 0.14 s and k_to_fp8",
+      "workload": "server",
+      "targets": "2000:400 13000:200 30000:200 at --ctx 140000",
+      "primary": "",
+      "why_size": "same sizes as before; same build in both arms, only the switch differs; second attempt after fusing the weight conversion (dequant_fp8) and keeping the hc paths in f16",
+      "decode_tokens": 200,
+      "noise": {
+        "prefill@2000": [
+          0.09,
+          4,
+          "research/measurements/2026-11-02-ab-tool.md: run 7, short, A/A merged against merged, 5 rounds with warm-up"
+        ],
+        "decode@2000": [
+          0.231,
+          4,
+          "research/measurements/2026-11-02-ab-tool.md: run 7, short, A/A merged against merged, 5 rounds with warm-up"
+        ],
+        "prefill@30000": [
+          0.04,
+          9,
+          "research/measurements/2026-11-02-ab-tool.md: first A/A run (rounds 2-6; round 1 had no warm-up); second A/A run with warm-up (6 rounds)"
+        ],
+        "decode@30000": [
+          0.279,
+          9,
+          "research/measurements/2026-11-02-ab-tool.md: first A/A run (rounds 2-6; round 1 had no warm-up); second A/A run with warm-up (6 rounds)"
+        ]
+      },
+      "warmup": true,
+      "A": {
+        "build": "w100",
+        "env": {
+          "IE_DIAG": "1"
+        },
+        "tooling": {
+          "HIP_PATH": "./work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+          "IE_DIAG": "1",
+          "IE_EXPERT_PROFILE": "./work/profile/experts-coder.bin",
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0"
+        },
+        "commit": "v0.0.2-240-g04843157d6-dirty"
+      },
+      "B": {
+        "build": "w100",
+        "env": {
+          "IE_DIAG": "1",
+          "IE_PREFILL_FP8": "1"
+        },
+        "tooling": {
+          "HIP_PATH": "./work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+          "IE_DIAG": "1",
+          "IE_EXPERT_PROFILE": "./work/profile/experts-coder.bin",
+          "IE_PREFILL_FP8": "1",
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0"
+        },
+        "commit": "v0.0.2-240-g04843157d6-dirty"
+      }
+    },
+    "reference_sha": {},
+    "corpus_sha256": "e13a800340859f7d39c63712d90383faae7e5a47c3865f0811e40d912612d38e",
+    "corpus_is_reference": true,
+    "commit": "0484315",
+    "noise": {
+      "prefill@2000": [
+        0.09,
+        4
+      ],
+      "decode@2000": [
+        0.231,
+        4
+      ],
+      "prefill@30000": [
+        0.04,
+        9
+      ],
+      "decode@30000": [
+        0.279,
+        9
+      ]
+    }
+  },
+  "rounds": [
+    {
+      "order": "AB",
+      "sha": {
+        "A": {
+          "2000": "f6573f396c15300f",
+          "13000": "4d9fec82a483ee97",
+          "30000": "1fad1ead2f1ac34c"
+        },
+        "B": {
+          "2000": "a1c43447d6e6c021",
+          "13000": "d3a8e69dc4cfb94d",
+          "30000": "9aaec77fd9926cc1"
+        }
+      },
+      "A": {
+        "prefill@2000": 1346.457732592024,
+        "decode@2000": 66.56985047577339,
+        "prefill@13000": 1732.5039787900705,
+        "decode@13000": 69.47674811683491,
+        "prefill@30000": 1751.5678048416512,
+        "decode@30000": 68.40245591548417
+      },
+      "counters": {
+        "A": {
+          "2000": {
+            "expert_hits": 134222,
+            "expert_misses": 17474
+          },
+          "13000": {
+            "expert_hits": 70584,
+            "expert_misses": 7888
+          },
+          "30000": {
+            "expert_hits": 69329,
+            "expert_misses": 8203
+          }
+        },
+        "B": {
+          "2000": {
+            "expert_hits": 112921,
+            "expert_misses": 14181
+          },
+          "13000": {
+            "expert_hits": 70124,
+            "expert_misses": 7456
+          },
+          "30000": {
+            "expert_hits": 62958,
+            "expert_misses": 7489
+          }
+        }
+      },
+      "B": {
+        "prefill@2000": 1370.0758896936686,
+        "decode@2000": 65.59616402022098,
+        "prefill@13000": 1781.8924633219199,
+        "decode@13000": 69.12745481179151,
+        "prefill@30000": 1807.4666871125746,
+        "decode@30000": 74.27345533307404
+      },
+      "seconds": 98.16676114301663
+    },
+    {
+      "order": "BA",
+      "sha": {
+        "B": {
+          "2000": "a1c43447d6e6c021",
+          "13000": "d3a8e69dc4cfb94d",
+          "30000": "9aaec77fd9926cc1"
+        },
+        "A": {
+          "2000": "f6573f396c15300f",
+          "13000": "4d9fec82a483ee97",
+          "30000": "1fad1ead2f1ac34c"
+        }
+      },
+      "B": {
+        "prefill@2000": 1370.3048866021693,
+        "decode@2000": 65.5341520194361,
+        "prefill@13000": 1782.496136001601,
+        "decode@13000": 69.30516435832001,
+        "prefill@30000": 1808.7066241406485,
+        "decode@30000": 74.30507556437568
+      },
+      "counters": {
+        "B": {
+          "2000": {
+            "expert_hits": 112921,
+            "expert_misses": 14181
+          },
+          "13000": {
+            "expert_hits": 70124,
+            "expert_misses": 7456
+          },
+          "30000": {
+            "expert_hits": 62958,
+            "expert_misses": 7489
+          }
+        },
+        "A": {
+          "2000": {
+            "expert_hits": 134222,
+            "expert_misses": 17474
+          },
+          "13000": {
+            "expert_hits": 70584,
+            "expert_misses": 7888
+          },
+          "30000": {
+            "expert_hits": 69329,
+            "expert_misses": 8203
+          }
+        }
+      },
+      "A": {
+        "prefill@2000": 1347.7904285037566,
+        "decode@2000": 66.42721735338208,
+        "prefill@13000": 1731.8007073028236,
+        "decode@13000": 69.3750350109786,
+        "prefill@30000": 1752.4825260432358,
+        "decode@30000": 67.89668177686046
+      },
+      "seconds": 98.19530600006692
+    },
+    {
+      "order": "AB",
+      "sha": {
+        "A": {
+          "2000": "f6573f396c15300f",
+          "13000": "4d9fec82a483ee97",
+          "30000": "1fad1ead2f1ac34c"
+        },
+        "B": {
+          "2000": "a1c43447d6e6c021",
+          "13000": "d3a8e69dc4cfb94d",
+          "30000": "9aaec77fd9926cc1"
+        }
+      },
+      "A": {
+        "prefill@2000": 1348.0923355867842,
+        "decode@2000": 65.74210756920392,
+        "prefill@13000": 1733.0212620596894,
+        "decode@13000": 68.95764313455926,
+        "prefill@30000": 1754.3738807305178,
+        "decode@30000": 67.46199788246638
+      },
+      "counters": {
+        "A": {
+          "2000": {
+            "expert_hits": 134222,
+            "expert_misses": 17474
+          },
+          "13000": {
+            "expert_hits": 70584,
+            "expert_misses": 7888
+          },
+          "30000": {
+            "expert_hits": 69329,
+            "expert_misses": 8203
+          }
+        },
+        "B": {
+          "2000": {
+            "expert_hits": 112921,
+            "expert_misses": 14181
+          },
+          "13000": {
+            "expert_hits": 70124,
+            "expert_misses": 7456
+          },
+          "30000": {
+            "expert_hits": 62958,
+            "expert_misses": 7489
+          }
+        }
+      },
+      "B": {
+        "prefill@2000": 1370.6335137624471,
+        "decode@2000": 65.3693416117534,
+        "prefill@13000": 1785.3623293593746,
+        "decode@13000": 69.24587324717402,
+        "prefill@30000": 1807.564202907684,
+        "decode@30000": 73.81194018134367
+      },
+      "seconds": 98.35071636398789
+    },
+    {
+      "order": "BA",
+      "sha": {
+        "B": {
+          "2000": "a1c43447d6e6c021",
+          "13000": "d3a8e69dc4cfb94d",
+          "30000": "9aaec77fd9926cc1"
+        },
+        "A": {
+          "2000": "f6573f396c15300f",
+          "13000": "4d9fec82a483ee97",
+          "30000": "1fad1ead2f1ac34c"
+        }
+      },
+      "B": {
+        "prefill@2000": 1366.1440319733424,
+        "decode@2000": 65.5863995289884,
+        "prefill@13000": 1784.010893640721,
+        "decode@13000": 69.03656793928536,
+        "prefill@30000": 1841.598262509736,
+        "decode@30000": 74.11043817215173
+      },
+      "counters": {
+        "B": {
+          "2000": {
+            "expert_hits": 112921,
+            "expert_misses": 14181
+          },
+          "13000": {
+            "expert_hits": 70124,
+            "expert_misses": 7456
+          },
+          "30000": {
+            "expert_hits": 62958,
+            "expert_misses": 7489
+          }
+        },
+        "A": {
+          "2000": {
+            "expert_hits": 134222,
+            "expert_misses": 17474
+          },
+          "13000": {
+            "expert_hits": 70584,
+            "expert_misses": 7888
+          },
+          "30000": {
+            "expert_hits": 69329,
+            "expert_misses": 8203
+          }
+        }
+      },
+      "A": {
+        "prefill@2000": 1339.4633492589292,
+        "decode@2000": 66.42470938188674,
+        "prefill@13000": 1731.9067403776755,
+        "decode@13000": 69.25913597479078,
+        "prefill@30000": 1785.0577540858894,
+        "decode@30000": 67.81058009144249
+      },
+      "seconds": 97.92492361494806
+    },
+    {
+      "order": "AB",
+      "sha": {
+        "A": {
+          "2000": "f6573f396c15300f",
+          "13000": "4d9fec82a483ee97",
+          "30000": "1fad1ead2f1ac34c"
+        },
+        "B": {
+          "2000": "a1c43447d6e6c021",
+          "13000": "d3a8e69dc4cfb94d",
+          "30000": "9aaec77fd9926cc1"
+        }
+      },
+      "A": {
+        "prefill@2000": 1345.6667461827687,
+        "decode@2000": 66.5369395526146,
+        "prefill@13000": 1731.7285037285785,
+        "decode@13000": 69.110681582773,
+        "prefill@30000": 1784.2140395073166,
+        "decode@30000": 68.45511390565575
+      },
+      "counters": {
+        "A": {
+          "2000": {
+            "expert_hits": 134222,
+            "expert_misses": 17474
+          },
+          "13000": {
+            "expert_hits": 70584,
+            "expert_misses": 7888
+          },
+          "30000": {
+            "expert_hits": 69329,
+            "expert_misses": 8203
+          }
+        },
+        "B": {
+          "2000": {
+            "expert_hits": 112921,
+            "expert_misses": 14181
+          },
+          "13000": {
+            "expert_hits": 70124,
+            "expert_misses": 7456
+          },
+          "30000": {
+            "expert_hits": 62958,
+            "expert_misses": 7489
+          }
+        }
+      },
+      "B": {
+        "prefill@2000": 1361.7273328433037,
+        "decode@2000": 65.44311696683359,
+        "prefill@13000": 1784.3657601832153,
+        "decode@13000": 69.08550802483082,
+        "prefill@30000": 1842.4549614623086,
+        "decode@30000": 74.11179560559665
+      },
+      "seconds": 97.8657746979734
+    },
+    {
+      "order": "BA",
+      "sha": {
+        "B": {
+          "2000": "a1c43447d6e6c021",
+          "13000": "d3a8e69dc4cfb94d",
+          "30000": "9aaec77fd9926cc1"
+        },
+        "A": {
+          "2000": "f6573f396c15300f",
+          "13000": "4d9fec82a483ee97",
+          "30000": "1fad1ead2f1ac34c"
+        }
+      },
+      "B": {
+        "prefill@2000": 1366.8832484928314,
+        "decode@2000": 65.20025057847526,
+        "prefill@13000": 1783.2702469435299,
+        "decode@13000": 69.13627549782568,
+        "prefill@30000": 1842.1790859278676,
+        "decode@30000": 74.03704280184911
+      },
+      "counters": {
+        "B": {
+          "2000": {
+            "expert_hits": 112921,
+            "expert_misses": 14181
+          },
+          "13000": {
+            "expert_hits": 70124,
+            "expert_misses": 7456
+          },
+          "30000": {
+            "expert_hits": 62958,
+            "expert_misses": 7489
+          }
+        },
+        "A": {
+          "2000": {
+            "expert_hits": 134222,
+            "expert_misses": 17474
+          },
+          "13000": {
+            "expert_hits": 70584,
+            "expert_misses": 7888
+          },
+          "30000": {
+            "expert_hits": 69329,
+            "expert_misses": 8203
+          }
+        }
+      },
+      "A": {
+        "prefill@2000": 1346.278614808253,
+        "decode@2000": 66.36684070629147,
+        "prefill@13000": 1732.9723416890179,
+        "decode@13000": 69.09197093902988,
+        "prefill@30000": 1785.047486122218,
+        "decode@30000": 67.88029310988874
+      },
+      "seconds": 97.93125836795662
+    }
+  ],
+  "stop_reason": "6 rounds (undecided metrics stay open)",
+  "wall_seconds": 640.1931443930371,
+  "warmup": {
+    "prefill@2000": 1344.025310884799,
+    "decode@2000": 66.57339500435697,
+    "prefill@13000": 1684.862973230975,
+    "decode@13000": 69.16669211914478,
+    "prefill@30000": 1731.3036148905894,
+    "decode@30000": 68.14313659094864
+  },
+  "plan": {
+    "alpha": 0.05,
+    "margin": 0.5,
+    "max_rounds": 6,
+    "min_rounds": 2,
+    "prior_sd": 0.5,
+    "prior_df": 4.0
+  },
+  "decisions": {
+    "prefill@2000": {
+      "decided_at_round": 2,
+      "decision": "B faster",
+      "mean_diff_percent": 1.635422109909827,
+      "ci_diff_percent": [
+        1.3307288650020093,
+        1.9401153548176446
+      ]
+    },
+    "decode@2000": {
+      "decided_at_round": 2,
+      "decision": "B slower",
+      "mean_diff_percent": -1.3396436337738922,
+      "ci_diff_percent": [
+        -1.8561658938857617,
+        -0.8231213736620228
+      ]
+    },
+    "prefill@13000": {
+      "decided_at_round": 2,
+      "decision": "B faster",
+      "mean_diff_percent": 2.9581192734024966,
+      "ci_diff_percent": [
+        2.4584136602257796,
+        3.4578248865792136
+      ]
+    },
+    "decode@13000": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": -0.07985632601792969,
+      "ci_diff_percent": [
+        -0.6849116898952203,
+        0.525199037859361
+      ]
+    },
+    "prefill@30000": {
+      "decided_at_round": 2,
+      "decision": "B faster",
+      "mean_diff_percent": 3.177286358358722,
+      "ci_diff_percent": [
+        3.1016419756225417,
+        3.252930741094902
+      ]
+    },
+    "decode@30000": {
+      "decided_at_round": 2,
+      "decision": "B faster",
+      "mean_diff_percent": 9.009637609786873,
+      "ci_diff_percent": [
+        8.521703472853783,
+        9.497571746719963
+      ]
+    }
+  }
+}

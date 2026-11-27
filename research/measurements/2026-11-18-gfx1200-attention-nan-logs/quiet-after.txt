@@ -1,0 +1,4 @@
+- Quiet check (2026-11-18 18:03:34): do not measure
+  - warning: other programs use 18.3 % of all CPU threads
+  - warning: load average 23.27 is high (it lags a minute)
+  - do not measure: 14.88 GiB of 15.9 GiB VRAM are held by others

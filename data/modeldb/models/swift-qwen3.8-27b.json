@@ -1,0 +1,144 @@
+{
+  "id": "swift-qwen3.8-27b",
+  "name": "Swift-Qwen3.8-27B",
+  "vendor": "UkisAI",
+  "release_date": "2026-09-08",
+  "lineage": {
+    "family": "Qwen3.8",
+    "base_model": "Qwen/Qwen3.8-27B",
+    "how_derived": "LoRA adapter trained to penalize reasoning-marker tokens that trigger overthinking, plus a transfer component from ThinkingCap-Qwen3.6-27B; sibling of swift-1.5-qwen3.8-flash-next in this database"
+  },
+  "purpose": "Reasoning-efficient Qwen3.8-27B: 58.3 percent fewer thinking tokens with under 1 percent loss, about 1.95x faster on several tasks (card).",
+  "tasks": [
+    "general",
+    "coding"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en"
+    ]
+  },
+  "license": {
+    "name": "Swift Open License v1.0 (Apache-2.0-based with a commercial-use limit)",
+    "verified": true,
+    "commercial_use": "limited",
+    "redistribution": "yes",
+    "notes": "LICENSE read in part: Apache-style copyright and patent grants and redistribution terms; defines Commercial Use and a Threshold of US$1,000,000 gross revenue over the last fiscal year (with affiliates) and a Commercial Use limitation in section 5 (not read in full); non-profit and research use are carved out. Base Model licence Apache-2.0 shipped as LICENSE-APACHE-2.0. Repo is gated."
+  },
+  "architecture": {
+    "kind": "hybrid Gated-DeltaNet plus full attention dense transformer (Qwen3.8-27B layout)",
+    "gguf_arch": "qwen35",
+    "params_total_b": 27,
+    "params_active_b": 27,
+    "attention": "full attention every 4th layer, hidden 5120, head dim 256",
+    "recurrent": "Gated DeltaNet",
+    "drafter": "not stated"
+  },
+  "variants": [
+    {
+      "repo": "ukisai/Swift-Qwen3.8-27b",
+      "format": "safetensors BF16 with LoRA",
+      "size_gb": 55.59,
+      "official": true,
+      "notes": "the card links a GGUF repo (not checked)"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "marginal",
+      "variant": "Q4_K_M by analogy to Arete-27B (17.2 GB); no quant checked",
+      "basis": "estimate",
+      "notes": "17.2 GB file against 9.6 GB VRAM plus 50 GB RAM budget; part of the dense weights stream from RAM (decode is bandwidth bound)"
+    },
+    "pc-16gb": {
+      "fits": "marginal",
+      "variant": "Q4_K_M by analogy to Arete-27B (17.2 GB); no quant checked",
+      "basis": "estimate",
+      "notes": "17.2 GB file against 13.6 GB VRAM plus 50 GB RAM budget; part of the dense weights stream from RAM (decode is bandwidth bound)"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "Q4_K_M by analogy to Arete-27B (17.2 GB); no quant checked",
+      "basis": "estimate",
+      "notes": "17.2 GB file fits the VRAM budget (21.6 GB) with room for KV"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "Q4_K_M by analogy to Arete-27B (17.2 GB); no quant checked",
+      "basis": "estimate",
+      "notes": "17.2 GB file fits the VRAM budget (29.6 GB) with room for KV"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "Q4_K_M by analogy to Arete-27B (17.2 GB); no quant checked",
+      "basis": "estimate",
+      "notes": "17.2 GB file against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "Q4_K_M by analogy to Arete-27B (17.2 GB); no quant checked",
+      "basis": "estimate",
+      "notes": "17.2 GB file against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "Q4_K_M by analogy to Arete-27B (17.2 GB); no quant checked",
+      "basis": "estimate",
+      "notes": "17.2 GB file against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [],
+    "notes": "Qwen3.8-27B layout."
+  },
+  "benchmarks": [
+    {
+      "name": "thinking tokens versus base",
+      "score": -58.3,
+      "unit": "%",
+      "kind": "vendor",
+      "variant": "BF16 base vs base plus Swift adapter; under 1 percent score loss",
+      "source": "https://huggingface.co/ukisai/Swift-Qwen3.8-27b"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "largest reported thinking-token cut among the Qwen3.8-27B variants read"
+    ],
+    "weaknesses": [
+      "per-benchmark table is HTML not parsed here"
+    ],
+    "maturity": "2.6k downloads, 641 likes"
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "58 percent fewer thinking tokens at under 1 percent loss (vendor) is the same lever as ThinkingCap and directly speeds agent loops on a bandwidth-bound card; test against the stock model and ThinkingCap in our harness.",
+    "blockers": [
+      "vendor-only benchmarks"
+    ]
+  },
+  "open_questions": [
+    "per-benchmark scores",
+    "behaviour on long agent traces"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/ukisai/Swift-Qwen3.8-27b",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README read; LICENSE partly read"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

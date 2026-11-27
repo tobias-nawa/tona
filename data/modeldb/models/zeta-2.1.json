@@ -1,0 +1,162 @@
+{
+  "id": "zeta-2.1",
+  "name": "Zeta 2.1 (Zed edit prediction)",
+  "vendor": "Zed Industries",
+  "release_date": "2026-05-07",
+  "tasks": [
+    "autocomplete",
+    "coding"
+  ],
+  "purpose": "Zed Industries states: a code edit-prediction (next-edit suggestion) model; given code context, edit history and an editable region around the cursor it predicts the rewritten content of that region.",
+  "lineage": {
+    "base_model": "ByteDance-Seed/Seed-Coder-8B-Base",
+    "how_derived": "fine-tune (model version 0323-multi-region-filtered-r3) with numbered multi-region markers",
+    "family": "Zeta"
+  },
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0 (card)",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card says \"License: Apache-2.0\"; the repository has no LICENSE file (checked 2026-11-19). The base model Seed-Coder-8B-Base license was not read."
+  },
+  "architecture": {
+    "kind": "dense transformer (Llama architecture)",
+    "gguf_arch": "llama",
+    "params_total_b": 8,
+    "params_active_b": 8,
+    "layers": 32,
+    "attention": "GQA, 32 heads, 8 KV heads",
+    "context_native": 32768,
+    "context_max": 32768,
+    "drafter": "none",
+    "why_this_design": "The card states no architecture reasons; it documents the prompt format (suffix-prefix-middle FIM tokens plus edit history and editable-region markers) the model was trained on."
+  },
+  "variants": [
+    {
+      "repo": "zed-industries/zeta-2.1",
+      "format": "safetensors BF16",
+      "size_gb": 16.5,
+      "official": true
+    },
+    {
+      "repo": "mradermacher/zeta-2.1-GGUF",
+      "format": "GGUF Q4_K_M",
+      "size_gb": 5.1,
+      "official": false
+    },
+    {
+      "repo": "mradermacher/zeta-2.1-GGUF",
+      "format": "GGUF Q8_0",
+      "size_gb": 8.8,
+      "official": false
+    }
+  ],
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "notes": "Llama architecture; GGUFs exist (mradermacher, bartowski for zeta-2)."
+  },
+  "soft": {
+    "strengths": [
+      "Purpose-built for next-edit prediction with Zed's prompt format",
+      "small enough (5 GB at Q4_K_M) to share a 16 GB GPU with a coder"
+    ],
+    "weaknesses": [
+      "No benchmark numbers on the card",
+      "prompt format is tied to Zed's editor protocol"
+    ],
+    "best_for": [
+      "next-edit suggestions in an editor"
+    ],
+    "avoid_for": [
+      "chat or agent work"
+    ],
+    "maturity": "Zed Industries: zeta (2025-01), zeta-2, zeta-2.1; 2k downloads for 2.1, 517k for the first zeta."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Right purpose for autocomplete next to the coder and Apache by card, but no quality numbers and an editor-specific prompt protocol; sweep-next-edit-1.5b is 3x smaller. Revisit with an autocomplete test plan (research/52).",
+    "blockers": [
+      "no quality numbers",
+      "no license text",
+      "Tona has no dense Llama module for 8B autocomplete serving (engine support, not quality)"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/zed-industries/zeta-2.1/raw/main/README.md",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/zed-industries/zeta-2.1/raw/main/config.json",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/api/models/mradermacher/zeta-2.1-GGUF/tree/main",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "file sizes"
+    }
+  ],
+  "open_questions": [
+    "Edit-prediction quality against Sweep Next-Edit 1.5B: no comparison found. Check: both on one next-edit test set.",
+    "Seed-Coder-8B-Base license. Check: its LICENSE file.",
+    "Per-language quality: no public per-language numbers found. Check: our own polyglot run per language."
+  ],
+  "last_checked": "2026-11-19",
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "variant": "Q4_K_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (5.1 GB) against the budget of docs/hardware: 9.6 GB VRAM plus 50 GB RAM = 60 GB; about 100% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that)"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "Q4_K_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (5.1 GB) against the budget of docs/hardware: 13.6 GB VRAM plus 50 GB RAM = 64 GB; about 100% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that)"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "Q4_K_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (5.1 GB) against the budget of docs/hardware: 21.6 GB VRAM plus 82 GB RAM = 104 GB; about 100% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that)"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "Q4_K_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (5.1 GB) against the budget of docs/hardware: 29.6 GB VRAM plus 114 GB RAM = 144 GB; about 100% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that)"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "variant": "Q4_K_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (5.1 GB) against the GPU share of docs/hardware (about 12 GB)"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "Q4_K_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (5.1 GB) against the GPU share of docs/hardware (about 22 GB)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "Q4_K_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (5.1 GB) against the GPU share of docs/hardware (about 52 GB)"
+    }
+  }
+}

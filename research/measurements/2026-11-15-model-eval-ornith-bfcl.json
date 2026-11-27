@@ -1,0 +1,67 @@
+[
+ {
+  "category": "BFCL_v4_multi_turn_base_score",
+  "summary": {
+   "accuracy": 0.6923076923076923,
+   "correct_count": 9,
+   "total_count": 13
+  },
+  "failed_cases": {
+   "multi_turn_base_152": "multi_turn:instance_state_mismatch",
+   "multi_turn_base_178": "multi_turn:instance_state_mismatch",
+   "multi_turn_base_188": "multi_turn:empty_turn_model_response",
+   "multi_turn_base_197": "multi_turn:instance_state_mismatch"
+  }
+ },
+ {
+  "category": "BFCL_v4_multi_turn_long_context_score",
+  "summary": {
+   "accuracy": 0.5384615384615384,
+   "correct_count": 7,
+   "total_count": 13
+  },
+  "failed_cases": {
+   "multi_turn_long_context_32": "multi_turn:instance_state_mismatch",
+   "multi_turn_long_context_43": "multi_turn:instance_state_mismatch",
+   "multi_turn_long_context_152": "multi_turn:instance_state_mismatch",
+   "multi_turn_long_context_178": "multi_turn:instance_state_mismatch",
+   "multi_turn_long_context_188": "multi_turn:execution_response_mismatch",
+   "multi_turn_long_context_197": "multi_turn:instance_state_mismatch"
+  }
+ },
+ {
+  "category": "BFCL_v4_multi_turn_miss_func_score",
+  "summary": {
+   "accuracy": 0.3076923076923077,
+   "correct_count": 4,
+   "total_count": 13
+  },
+  "failed_cases": {
+   "multi_turn_miss_func_31": "multi_turn:execution_response_mismatch",
+   "multi_turn_miss_func_32": "multi_turn:instance_state_mismatch",
+   "multi_turn_miss_func_55": "multi_turn:execution_response_mismatch",
+   "multi_turn_miss_func_79": "multi_turn:instance_state_mismatch",
+   "multi_turn_miss_func_86": "multi_turn:instance_state_mismatch",
+   "multi_turn_miss_func_152": "multi_turn:instance_state_mismatch",
+   "multi_turn_miss_func_178": "multi_turn:instance_state_mismatch",
+   "multi_turn_miss_func_188": "multi_turn:execution_response_mismatch",
+   "multi_turn_miss_func_197": "multi_turn:instance_state_mismatch"
+  }
+ },
+ {
+  "category": "BFCL_v4_multi_turn_miss_param_score",
+  "summary": {
+   "accuracy": 0.5384615384615384,
+   "correct_count": 7,
+   "total_count": 13
+  },
+  "failed_cases": {
+   "multi_turn_miss_param_32": "multi_turn:instance_state_mismatch",
+   "multi_turn_miss_param_55": "multi_turn:instance_state_mismatch",
+   "multi_turn_miss_param_152": "multi_turn:instance_state_mismatch",
+   "multi_turn_miss_param_178": "multi_turn:instance_state_mismatch",
+   "multi_turn_miss_param_188": "multi_turn:empty_turn_model_response",
+   "multi_turn_miss_param_197": "multi_turn:instance_state_mismatch"
+  }
+ }
+]

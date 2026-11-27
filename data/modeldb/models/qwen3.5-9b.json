@@ -1,0 +1,283 @@
+{
+  "id": "qwen3.5-9b",
+  "name": "Qwen3.5-9B",
+  "vendor": "Alibaba Qwen",
+  "release_date": "2026-02",
+  "lineage": {
+    "family": "Qwen3.5 (qwen3_5 dense)"
+  },
+  "purpose": "Small dense member of Qwen3.5, described on the card as a unified vision-language foundation model; no target-user statement.",
+  "tasks": [
+    "general",
+    "documents",
+    "vision",
+    "research"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image",
+      "video"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "many"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "LICENSE file in the repo read: Apache License 2.0 with the vendor copyright appendix ('Copyright 2026 Alibaba Cloud'), no additional terms. Same md5 as the Qwen3.5-35B-A3B and Qwen3.8-27B LICENSE files."
+  },
+  "architecture": {
+    "kind": "dense hybrid Gated DeltaNet + gated attention, vision encoder",
+    "gguf_arch": "qwen35",
+    "params_total_b": 9,
+    "params_active_b": 9,
+    "layers": 32,
+    "attention": "8 x (3 Gated DeltaNet + 1 gated attention); 16 Q / 4 KV heads, head dim 256",
+    "recurrent": "Gated DeltaNet",
+    "context_native": 262144,
+    "context_max": 1010000,
+    "drafter": "MTP trained",
+    "why_this_design": "Card: 'Efficient Hybrid Architecture: Gated Delta Networks combined with sparse Mixture-of-Experts deliver high-throughput inference with minimal latency and cost overhead.'"
+  },
+  "variants": [
+    {
+      "repo": "Qwen/Qwen3.5-9B",
+      "format": "safetensors BF16",
+      "official": true
+    },
+    {
+      "repo": "unsloth/Qwen3.5-9B-GGUF",
+      "format": "GGUF Q4_K_M",
+      "size_gb": 5.68,
+      "official": false,
+      "notes": "size from research/52-purpose-models.md"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q4_K_M 5.7 GB",
+      "notes": "Fits with long-context KV."
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q6 or Q8",
+      "notes": "Leaves room for a second model."
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q8"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "BF16"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q4_K_M",
+      "notes": "The practical general model for 16 GB Macs."
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q8"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "BF16"
+    }
+  },
+  "engine_support": {
+    "tona": "planned",
+    "llama_cpp": "yes",
+    "other": [
+      "vLLM",
+      "SGLang"
+    ],
+    "notes": "Dense qwen3_5 module not built in Tona."
+  },
+  "benchmarks": [
+    {
+      "name": "MMLU-Pro",
+      "score": 82.5,
+      "kind": "vendor",
+      "source": "https://huggingface.co/Qwen/Qwen3.5-9B"
+    },
+    {
+      "name": "GPQA Diamond",
+      "score": 81.7,
+      "kind": "vendor",
+      "source": "https://huggingface.co/Qwen/Qwen3.5-9B"
+    },
+    {
+      "name": "AA-LCR",
+      "score": 63.0,
+      "kind": "vendor",
+      "source": "https://huggingface.co/Qwen/Qwen3.5-9B"
+    },
+    {
+      "name": "LongBench v2",
+      "score": 55.2,
+      "kind": "vendor",
+      "source": "https://huggingface.co/Qwen/Qwen3.5-9B"
+    },
+    {
+      "name": "MMMLU",
+      "score": 81.2,
+      "kind": "vendor",
+      "source": "https://huggingface.co/Qwen/Qwen3.5-9B"
+    },
+    {
+      "name": "MMLU-ProX",
+      "score": 76.3,
+      "kind": "vendor",
+      "source": "https://huggingface.co/Qwen/Qwen3.5-9B"
+    },
+    {
+      "name": "INCLUDE",
+      "score": 75.6,
+      "kind": "vendor",
+      "source": "https://huggingface.co/Qwen/Qwen3.5-9B"
+    },
+    {
+      "name": "WMT24++",
+      "score": 72.6,
+      "kind": "vendor",
+      "source": "https://huggingface.co/Qwen/Qwen3.5-9B"
+    },
+    {
+      "name": "BFCL-V4",
+      "score": 66.1,
+      "kind": "vendor",
+      "source": "https://huggingface.co/Qwen/Qwen3.5-9B"
+    },
+    {
+      "name": "TAU2-Bench",
+      "score": 79.1,
+      "kind": "vendor",
+      "source": "https://huggingface.co/Qwen/Qwen3.5-9B"
+    },
+    {
+      "name": "MMLU-ProX (German, PeerBench DACH)",
+      "score": 73.4,
+      "kind": "independent",
+      "source": "https://dach.peerbench.ai/api/leaderboard.json",
+      "variant": "bf16",
+      "harness": "PeerBench DACH German Language LLM Index, run by PeerBench",
+      "date": "2026-06-11"
+    },
+    {
+      "name": "INCLUDE (German, PeerBench DACH)",
+      "score": 64.7,
+      "kind": "independent",
+      "source": "https://dach.peerbench.ai/api/leaderboard.json",
+      "variant": "bf16",
+      "harness": "PeerBench DACH German Language LLM Index, run by PeerBench",
+      "date": "2026-06-11"
+    },
+    {
+      "name": "GermEval NER (German, PeerBench DACH)",
+      "score": 72.6,
+      "kind": "independent",
+      "source": "https://dach.peerbench.ai/api/leaderboard.json",
+      "variant": "bf16",
+      "harness": "PeerBench DACH German Language LLM Index, run by PeerBench",
+      "date": "2026-06-11"
+    },
+    {
+      "name": "ScaLA (German, PeerBench DACH)",
+      "score": 62.4,
+      "kind": "independent",
+      "source": "https://dach.peerbench.ai/api/leaderboard.json",
+      "variant": "bf16",
+      "harness": "PeerBench DACH German Language LLM Index, run by PeerBench",
+      "date": "2026-06-10"
+    },
+    {
+      "name": "SB10K (German, PeerBench DACH)",
+      "score": 55.7,
+      "kind": "independent",
+      "source": "https://dach.peerbench.ai/api/leaderboard.json",
+      "variant": "bf16",
+      "harness": "PeerBench DACH German Language LLM Index, run by PeerBench",
+      "date": "2026-06-11"
+    },
+    {
+      "name": "MuSR (German, PeerBench DACH)",
+      "score": 80.9,
+      "kind": "independent",
+      "source": "https://dach.peerbench.ai/api/leaderboard.json",
+      "variant": "bf16",
+      "harness": "PeerBench DACH German Language LLM Index, run by PeerBench",
+      "date": "2026-06-11"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "Close to the 35B-A3B on vendor knowledge numbers at a quarter of the file size",
+      "201 languages claimed; 1M context via YaRN"
+    ],
+    "weaknesses": [
+      "Vendor numbers only",
+      "Dense 9B reads 5.7 GB per token at Q4: slower decode than the 3 B-active MoE on a card that holds both"
+    ],
+    "behavior": "Thinking on by default; enable_thinking=false for direct answers; T=1.0, top_p 0.95, top_k 20, presence_penalty 1.5.",
+    "best_for": [
+      "12 GB cards and 16 GB Macs",
+      "Small always-on assistant next to a larger model"
+    ],
+    "maturity": "Qwen: large community."
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "The small Apache-2.0 (text read) option that fits every class; independent German scores are middling (PeerBench Elo 1060; Gemma 4 12B 1299 is ahead on GermEval, INCLUDE and ScaLA), so it is the pick for 12 GB or 16 GB RAM mainly through the Qwen toolchain. Missing dense qwen3_5 module is only a blocker.",
+    "blockers": [
+      "dense qwen3_5 module"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/Qwen/Qwen3.5-9B",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "model card"
+    },
+    {
+      "url": "research/52-purpose-models.md",
+      "kind": "own",
+      "checked": "2026-11-19",
+      "note": "size, recommendation"
+    },
+    {
+      "url": "https://huggingface.co/Qwen/Qwen3.5-9B/raw/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "LICENSE file"
+    },
+    {
+      "url": "https://dach.peerbench.ai/api/leaderboard.json",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "PeerBench DACH JSON export (generated 2026-10-25, last run 2026-10-16), read directly"
+    }
+  ],
+  "open_questions": [
+    "Our own rates"
+  ],
+  "last_checked": "2026-11-19"
+}

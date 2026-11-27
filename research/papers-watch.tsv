@@ -1,0 +1,119 @@
+key	title	state	created	checked
+sgl-project/sglang#46190	[Feat] spec: confidence-scheduled compact verify for DFLASH	merged	2026-10-24	2026-11-20
+sgl-project/sglang#46189	[Feat] gdn: run target verify on packed ragged tokens (ReplaySSM)	open	2026-10-24	2026-11-20
+sgl-project/sglang#46182	[Feat] spec: DFlash adaptive verification integration (do not merge)	closed	2026-10-24	2026-11-20
+vllm-project/vllm#63578	[Feature][KV Offload] Add mamba_aware_lru CPU-tier eviction policy for hybrid models	open	2026-10-25	2026-11-20
+vllm-project/vllm#63562	[ROCm][Bugfix][Perf] Route AutoAWQ checkpoints to the RDNA W4A16 kernel and retune gfx12 small-M tiles	open	2026-10-25	2026-11-20
+vllm-project/vllm#63532	[Spec Decode] Support AdaFlash length heads with DFlash adaptive verification	open	2026-10-25	2026-11-20
+vllm-project/vllm#63808	[Perf][Core] Add mamba_aware_lru GPU prefix-cache eviction policy for hybrid models	open	2026-10-26	2026-11-20
+sgl-project/sglang#46512	[Feat] mem_cache: marconi eviction policy for the mamba radix cache	open	2026-10-26	2026-11-20
+vllm-project/vllm#64123	[ROCm][Qwen3.8-Flash-Next] mxfp4_qsa main KV cache for the AMD QSA path: format, writer and portable reader	open	2026-10-27	2026-11-20
+vllm-project/vllm#64055	[ROCm][RDNA][Perf][MoE] Use w2 scatter + topk sum for the tk 3.8 OAI MoE combine on RDNA	merged	2026-10-27	2026-11-20
+sgl-project/sglang#46702	[Feat] linear-attn: Bole spec-verify for GDN (drop per-draft SSM snapshots)	open	2026-10-27	2026-11-20
+ggml-org/llama.cpp#31323	vulkan: optimize prompt processing Flash Attention for RDNA3 and RDNA4	merged	2026-10-28	2026-11-20
+sgl-project/sglang#46909	[Feat] [AMD] sgl-kernel: accept gfx1101, gfx1102 and gfx1200 in the ROCm AOT build	closed	2026-10-28	2026-11-20
+sgl-project/sglang#47254	[Fix] [AMD] attention: default consumer RDNA to Triton attention	open	2026-10-29	2026-11-20
+ggml-org/llama.cpp#31420	ggml-cpu : fully unroll the AVX2 iq1_s, iq1_m, iq2_xxs, iq2_s block loops with clang	open	2026-10-30	2026-11-20
+vllm-project/vllm#64699	[Feature][MRV2] Enable Qwen3.5 GDN ReplaySSM standard decode	open	2026-10-30	2026-11-20
+ggml-org/llama.cpp#31502	server : checkpoint shared prefixes for decision tasks	open	2026-11-01	2026-11-20
+vllm-project/vllm#65202	[ROCm][RDNA] Add gfx1170 and gfx1171 support	open	2026-11-02	2026-11-20
+ggml-org/llama.cpp#31669	GDN: use replay instead of rollback [WIP]	open	2026-11-04	2026-11-20
+vllm-project/vllm#65754	[ROCm][RDNA][MoE] Add hybrid W4A16 MoE backend for gfx115x (HIP decode + Triton prefill)	open	2026-11-04	2026-11-20
+vllm-project/vllm#65657	[Mamba] Add FlashInfer FP16 GDN ReplaySSM for Qwen3.5 and Qwen4	open	2026-11-04	2026-11-20
+ggml-org/llama.cpp#31732	spec : add self-speculative decoding support	open	2026-11-05	2026-11-20
+vllm-project/vllm#65953	[Feat][KV Offload] Add Hybrid KV Backend with bounded SSD streaming	open	2026-11-05	2026-11-20
+sgl-project/sglang#48682	[Fix] gdn: Add opt-in FP32 prefix-cache snapshots	open	2026-11-05	2026-11-20
+sgl-project/sglang#48558	[Feat] mem_cache: Support INT8 Mamba checkpoints in HiCache L1/L2	open	2026-11-05	2026-11-20
+ggml-org/llama.cpp#31804	vulkan: improve RDNA4 MMVQ performance for Q3_K, Q5_K and IQ4_XS	open	2026-11-06	2026-11-20
+vllm-project/vllm#66084	[ROCm][Spec Decode] Support draft_lm_head_quantization on RDNA (int4 drafter head, 18% faster MTP decode)	open	2026-11-06	2026-11-20
+vllm-project/vllm#66138	[Prefix Cache] Learn shared Mamba checkpoints for DSpark sibling prompts	open	2026-11-06	2026-11-20
+vllm-project/vllm#66130	[ROCm] Add a FlyDSL MXFP4 linear backend for RDNA4	open	2026-11-06	2026-11-20
+vllm-project/vllm#66881	[Core][Perf] Exact-end Mamba checkpoints and GreedyDual-Size eviction for hybrid prefix caching	open	2026-11-10	2026-11-20
+sgl-project/sglang#49512	[Feat] [AMD] sgl-kernel: Enable gfx11xx/gfx12xx (RDNA3/RDNA4) AOT builds	open	2026-11-10	2026-11-20
+sgl-project/sglang#49430	[Feat] mem_cache: Evict Mamba states by GreedyDual-Size (--radix-eviction-policy gds)	merged	2026-11-10	2026-11-20
+sgl-project/sglang#41968	[Feat] [NVIDIA] mamba2: Add compact speculative-state replay	open	2026-10-01	2026-11-20
+ggml-org/llama.cpp#29963	ggml : pipeline parallelism with MoE experts in host RAM	open	2026-10-04	2026-11-20
+vllm-project/vllm#60400	[ROCm][Perf] GDN packed decode: tuned launch configs for gfx1100 and gfx1201	open	2026-10-07	2026-11-20
+vllm-project/vllm#60603	[Hybrid KV Cache] [2/N] Support finalized decode checkpoints with hidden-state drafting	closed	2026-10-08	2026-11-20
+ggml-org/llama.cpp#30207	vulkan: chunked GATED_DELTA_NET implementation	merged	2026-10-09	2026-11-20
+sgl-project/sglang#43679	[Feat] [AMD] sgl-kernel: support gfx1201 (RDNA4) and size wave-dependent launches by the device wave size	open	2026-10-11	2026-11-20
+vllm-project/vllm#61309	[Spec Decode][Qwen3.5] RecoverSSM for Qwen3.5 / Qwen3-Next GDN	open	2026-10-13	2026-11-20
+ggml-org/llama.cpp#30594	llama : hybrid MoE expert cache with profile prefilling and zero-upload inference	open	2026-10-15	2026-11-20
+vllm-project/vllm#62004	[Kernel] ReplaySSM: cache SSM inputs for faster Gated DeltaNet standard decode	open	2026-10-16	2026-11-20
+vllm-project/vllm#62256	[Docs] Add ROCm decode megakernel (MonoKernel) authoring guide	open	2026-10-18	2026-11-20
+vllm-project/vllm#62480	[ROCm][Kernel] Add W4A8 MoE decode kernel for RDNA3/RDNA3.5 (gfx11)	merged	2026-10-19	2026-11-20
+vllm-project/vllm#62799	[ROCm][Perf] Add Triton skinny GEMM for 6-128 rows on RDNA4	open	2026-10-21	2026-11-20
+ggml-org/llama.cpp#30971	llama : add adaptive single-graph MoE offload	open	2026-10-22	2026-11-20
+ggml-org/llama.cpp#29918	server : add --cache-reuse-hybrid for recurrent/hybrid models	open	2026-10-03	2026-11-20
+ggml-org/llama.cpp#30370	ggml-cuda: Add HIP sparse fattn	open	2026-10-12	2026-11-20
+ggml-org/llama.cpp#30021	ggml-cuda: hip: tune GCN MMQ configs	merged	2026-10-05	2026-11-20
+ggml-org/llama.cpp#30344	ggml-cuda: hip: Feature fattn tile GCN tune config	open	2026-10-11	2026-11-20
+ggml-org/llama.cpp#31011	llama, ggml: FP16 activations (--act-type f16)	open	2026-10-23	2026-11-20
+ggml-org/llama.cpp#30139	graph : read recurrent states in place instead of copying (#28841)	open	2026-10-08	2026-11-20
+ggml-org/llama.cpp#30970	server : share prompt prefix cells between slots (--slot-attach)	open	2026-10-22	2026-11-20
+ggml-org/llama.cpp#28447	CUDA/HIP: RDNA4 optimizations for GDN	open	2026-09-05	2026-11-20
+ggml-org/llama.cpp#29191	streams experts from qwen 3.8 moe with gpu prefill on vulkan and hip	open	2026-09-20	2026-11-20
+ggml-org/llama.cpp#28507	vulkan: enable FA shmem staging on AMD RDNA (scalar path)	open	2026-09-06	2026-11-20
+ggml-org/llama.cpp#29536	hip : fix build with stock LLVM 23 and avoid MMQ spills on RDNA4	closed	2026-09-27	2026-11-20
+ggml-org/llama.cpp#29195	feat: add a mmap-on-demand that uses pure mmap without prefetch	open	2026-09-21	2026-11-20
+ggml-org/llama.cpp#29578	Server/pinned prefix preload	open	2026-09-28	2026-11-20
+ggml-org/llama.cpp#29738	feat(server): session-keyed automatic slot save/restore	open	2026-09-30	2026-11-20
+ggml-org/llama.cpp#29599	llama: llama_prefetch_rows	merged	2026-09-28	2026-11-20
+ggml-org/llama.cpp#25294	llama : stream MoE routed experts from disk 	open	2026-07-04	2026-11-20
+vllm-project/vllm#48505	feat(mxfp4): add MXFP4 expert cache support to DeepSeek V4	open	2026-07-13	2026-11-20
+ggml-org/llama.cpp#25726	spec: add initial adaptive draft length heuristic (curently mtp only)	open	2026-07-15	2026-11-20
+ggml-org/llama.cpp#25940	HIP: RDNA 4 MUL_MAT optimizations	open	2026-07-20	2026-11-20
+vllm-project/vllm#49321	[Feature][MoE]W4A16 cold-expert CPU offload via in-graph HIP gather (experimental)	open	2026-07-21	2026-11-20
+ggml-org/llama.cpp#26283	Suffix decode	open	2026-07-29	2026-11-20
+ggml-org/llama.cpp#24386	ggml: tune RDNA4 MMVQ warps for K-quants	open	2026-06-10	2026-11-20
+vllm-project/vllm#45559	[ROCm][Kernel] Extend skinny gemm N=5 to N=8 cases on GFX12 (RDNA4) using  SWMMAC optimization	merged	2026-06-14	2026-11-20
+ggml-org/llama.cpp#25004	recurrent : support equal splits for recurrent-state rollback	open	2026-06-25	2026-11-20
+ggml-org/llama.cpp#26419	ggml-cuda: enable MMA FlashAttention for head dim 256 on AMD RDNA	open	2026-08-01	2026-11-20
+ggml-org/llama.cpp#26414	llama-hot-experts: pin hottest MoE experts in RAM via --pin-hot-experts	open	2026-08-01	2026-11-20
+ggml-org/llama.cpp#26617	llama: add forward-telescoping rollback engine for recurrent models (prep for #22746)	open	2026-08-05	2026-11-20
+vllm-project/vllm#52196	[Mamba][Quantization] Add Stage 1 (CPU-only, reference) int8 quantization utilities for SSM state	open	2026-08-13	2026-11-20
+ggml-org/llama.cpp#27218	ggml-hrx: add AMD ROCm HRX native ggml backend	open	2026-08-17	2026-11-20
+ggml-org/llama.cpp#27210	spec : add adaptive MTP draft depth (draft-mtp-adaptive)	open	2026-08-17	2026-11-20
+vllm-project/vllm#52962	[Mamba] Add shared FP8/INT8 FlashInfer ReplaySSM checkpoints	open	2026-08-19	2026-11-20
+ggml-org/llama.cpp#27836	qwen4exp : add NextN/MTP draft head (--spec-type draft-mtp) for Qwen3.8-Flash-Next	open	2026-08-27	2026-11-20
+sgl-project/sglang#36627	[Docs] Qwen3.8-Flash-Next: use a float32 SSM state for the H200 speculative cells	open	2026-08-27	2026-11-20
+ggml-org/llama.cpp#27861	llama: GPU-resident LRU cache for host-offloaded MoE expert weights	open	2026-08-28	2026-11-20
+sgl-project/sglang#36788	[Feat] [AMD] quantization: Add dense NVFP4 support for gfx1201	open	2026-08-28	2026-11-20
+vllm-project/vllm#54612	[Perf] Qwen3-Next (GDN): decode-path kernel optimizations for all-mode prefix caching + MTP	open	2026-08-31	2026-11-20
+ggml-org/llama.cpp#21897	ggml-cuda: enable concurrent streams for linear attention	open	2026-04-14	2026-11-20
+vllm-project/vllm#40827	[ROCm] Fix two RDNA4 correctness bugs in the LLMM1 skinny-GEMM kernel	open	2026-04-24	2026-11-20
+ggml-org/llama.cpp#22587	CUDA: row-per-warp kernel for GATED_DELTA_NET	open	2026-05-01	2026-11-20
+ggml-org/llama.cpp#22692	llama: add pshard runtime for plan switching and streamed weights	open	2026-05-04	2026-11-20
+ggml-org/llama.cpp#22939	ggml-cpu: avoid treating all host RAM as free	open	2026-05-11	2026-11-20
+ggml-org/llama.cpp#23440	MoE disk offloading for Metal	open	2026-05-20	2026-11-20
+ggml-org/llama.cpp#21067	ggml: allow prefetching tensor overrides	open	2026-03-27	2026-11-20
+ggml-org/llama.cpp#20623	Speed up claude-code by prevent adding system message that starts with x-anthropic-	open	2026-03-16	2026-11-20
+ggml-org/llama.cpp#20596	ggml-cpu: improve --n-cpu-moe TG performance	open	2026-03-15	2026-11-20
+vllm-project/vllm#37190	[MoE][Offload] Run MoE models exceeding VRAM via expert CPU offloading with GPU cache	open	2026-03-16	2026-11-20
+vllm-project/vllm#36659	[ROCm] Enable FP8 inference on gfx1201 AMD RDNA4 with aiter kernels	open	2026-03-10	2026-11-20
+ml-explore/mlx-lm#990	Native MTP speculative decoding (Qwen3.5/3.6 reference implementation)	open	2026-03-13	2026-11-20
+ggml-org/llama.cpp#18816	HIP: tune mmq/rocblas switching for RDNA4	open	2026-01-13	2026-11-20
+ggml-org/llama.cpp#19167	model : support LongCat-Flash-Lite (ngram embeddings)	open	2026-01-28	2026-11-20
+vllm-project/vllm#34741	[ROCm] Enable FP8 KV-cache and relax constraints for RDNA4 custom paged attention	open	2026-02-17	2026-11-20
+vllm-project/vllm#35551	feat: batch-aware expert pruning (XShare) for MoE models	open	2026-02-27	2026-11-20
+ggml-org/llama.cpp#16143	[metal] Add fused RMS_NORM + MUL + SWIGLU for Qwen3Next	open	2025-09-21	2026-11-20
+ggml-org/llama.cpp#32114	ggml : FFN chunking to permit larger ubatch	closed	2026-11-11	2026-11-20
+ggml-org/llama.cpp#32082	ggml : layer-first prefill (layers first, then tokens)	closed	2026-11-11	2026-11-20
+ggml-org/llama.cpp#32081	llama,ggml,tests: batch invariance support	open	2026-11-11	2026-11-20
+ggml-org/llama.cpp#32076	llama_moe_cache: run everything without syncs	open	2026-11-11	2026-11-20
+ggml-org/llama.cpp#18102	ggml-cuda: Delta-Net linear attention for Qwen3-Next	open	2025-12-16	2026-11-20
+ggml-org/llama.cpp#17034	common: "Profile Guided Speculative Decoding"	open	2025-11-05	2026-11-20
+ggml-org/llama.cpp#17044	Add MoE dynamic routing with expert caching	open	2025-11-06	2026-11-20
+sgl-project/sglang#12892	[GDN/Qwen3-Next] Avoid SSM and conv state copy for speculative decoding - up to 9.47% e2e speedup	open	2025-11-08	2026-11-20
+ml-explore/mlx#2300	[Experiment] ROCm backend	open	2025-06-16	2026-11-20
+ggml-org/llama.cpp#13079	ggml: Implement yield barrier using futex for improved thread scheduling efficiency	open	2025-04-23	2026-11-20
+ggml-org/llama.cpp#13206	Introduce New Lookup-Table(LUT)-Based Matrix Multiplication Method (TMAC)	open	2025-04-30	2026-11-20
+ggml-org/llama.cpp#32212	Add --moe-router-export: stream MoE router top-k picks to a SHM ring	open	2026-11-13	2026-11-20
+sgl-project/sglang#50253	[Feat] gdn: add opt-in cross-round DFLASH ReplaySSM commits	open	2026-11-13	2026-11-20
+vllm-project/vllm#67590	[Spec Decode][Mamba] RecoverSSM for Qwen GDN alongside KDA (port of #58863 stack)	open	2026-11-14	2026-11-20
+ggml-org/llama.cpp#32337	[RFC]: ragged batching for GDN hybrid models	open	2026-11-15	2026-11-20
+sgl-project/sglang#50601	[Feat] spec-decoding: Tree verify without per-node state snapshots for GDN layers	open	2026-11-15	2026-11-20
+vllm-project/vllm#67844	[ROCm] Enable Octave KV on RDNA4 with native HIP kernels	open	2026-11-16	2026-11-20
+vllm-project/vllm#68060	[ROCm][Perf] W4A16: serve deep-K skinny GEMM shapes with the chunked HIP kernel on gfx12	open	2026-11-17	2026-11-20
+sgl-project/sglang#51065	[Perf] ple: back the pinned PLE host table with transparent huge pages (Qwen3.8 Perf 18/18)	open	2026-11-17	2026-11-20
+sgl-project/sglang#51242	[Perf] qsa: Share compressed-key reads across draft-extend rows	open	2026-11-18	2026-11-20

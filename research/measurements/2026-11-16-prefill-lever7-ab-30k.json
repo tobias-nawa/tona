@@ -1,0 +1,195 @@
+{
+  "config": {
+    "A": {
+      "build": "<worktree>/work/build/w7",
+      "env": {
+        "TONA_DETERMINISTIC": "1",
+        "TONA_GEMMQ_T128_MIN": "0"
+      },
+      "tooling": {
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0",
+        "TONA_DETERMINISTIC": "1",
+        "TONA_EXPERT_PROFILE": "<repo>/work/profile/experts-coder.bin",
+        "TONA_GEMMQ_T128_MIN": "0"
+      },
+      "commit": "v0.0.2-950-g5ea5e6418f-dirty",
+      "model": "<repo>/work/models/coder-iq1_m/Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf",
+      "drafter": "<repo>/work/models/draft/mtp-Qwen3.8-Flash-Next-Q8_0.gguf"
+    },
+    "B": {
+      "build": "<worktree>/work/build/w7",
+      "env": {
+        "TONA_DETERMINISTIC": "1"
+      },
+      "tooling": {
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0",
+        "TONA_DETERMINISTIC": "1",
+        "TONA_EXPERT_PROFILE": "<repo>/work/profile/experts-coder.bin"
+      },
+      "commit": "v0.0.2-950-g5ea5e6418f-dirty",
+      "model": "<repo>/work/models/coder-iq1_m/Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf",
+      "drafter": "<repo>/work/models/draft/mtp-Qwen3.8-Flash-Next-Q8_0.gguf"
+    },
+    "workload": "mid",
+    "targets": "30000:200 at --ctx 140000",
+    "deterministic": true,
+    "plan_info": {
+      "expect": [
+        [
+          "prefill@30000",
+          -1.0,
+          1.0
+        ],
+        [
+          "decode",
+          -0.5,
+          0.5
+        ]
+      ],
+      "source": "research/measurements/2026-11-16-prefill-lever7-state.md and qbench of 2026-11-16: 4 to 13 % faster at 100 and 200 tokens per segment, 5 to 13 % slower at 160, expert GEMM about a quarter of prefill",
+      "workload": "mid",
+      "targets": "30000:200 at --ctx 140000",
+      "primary": "prefill",
+      "why_size": "30K is the shortest prompt whose chunks have the token counts per expert where the wide tile pays or loses",
+      "decode_tokens": 200,
+      "noise": {
+        "prefill@30000": [
+          0.04,
+          9,
+          "research/measurements/2026-11-02-ab-tool.md: first A/A run (rounds 2-6; round 1 had no warm-up); second A/A run with warm-up (6 rounds)"
+        ],
+        "decode@30000": [
+          0.279,
+          9,
+          "research/measurements/2026-11-02-ab-tool.md: first A/A run (rounds 2-6; round 1 had no warm-up); second A/A run with warm-up (6 rounds)"
+        ]
+      },
+      "warmup": true,
+      "round_warmup": false,
+      "load_log": false,
+      "A": {
+        "build": "<worktree>/work/build/w7",
+        "env": {
+          "TONA_DETERMINISTIC": "1",
+          "TONA_GEMMQ_T128_MIN": "0"
+        },
+        "tooling": {
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0",
+          "TONA_DETERMINISTIC": "1",
+          "TONA_EXPERT_PROFILE": "<repo>/work/profile/experts-coder.bin",
+          "TONA_GEMMQ_T128_MIN": "0"
+        },
+        "commit": "v0.0.2-950-g5ea5e6418f-dirty",
+        "model": "<repo>/work/models/coder-iq1_m/Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf",
+        "drafter": "<repo>/work/models/draft/mtp-Qwen3.8-Flash-Next-Q8_0.gguf"
+      },
+      "B": {
+        "build": "<worktree>/work/build/w7",
+        "env": {
+          "TONA_DETERMINISTIC": "1"
+        },
+        "tooling": {
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0",
+          "TONA_DETERMINISTIC": "1",
+          "TONA_EXPERT_PROFILE": "<repo>/work/profile/experts-coder.bin"
+        },
+        "commit": "v0.0.2-950-g5ea5e6418f-dirty",
+        "model": "<repo>/work/models/coder-iq1_m/Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf",
+        "drafter": "<repo>/work/models/draft/mtp-Qwen3.8-Flash-Next-Q8_0.gguf"
+      }
+    },
+    "reference_sha": {
+      "30000": "ee58880d3f5b558f",
+      "130000": "7d2996546076d1b0"
+    },
+    "corpus_sha256": "e13a800340859f7d39c63712d90383faae7e5a47c3865f0811e40d912612d38e",
+    "corpus_is_reference": true,
+    "commit": "027342f",
+    "noise": {
+      "prefill@30000": [
+        0.04,
+        9
+      ],
+      "decode@30000": [
+        0.279,
+        9
+      ]
+    }
+  },
+  "rounds": [
+    {
+      "order": "AB",
+      "sha": {
+        "A": {
+          "30000": "ee58880d3f5b558f"
+        },
+        "B": {
+          "30000": "ee58880d3f5b558f"
+        }
+      },
+      "A": {
+        "prefill@30000": 1933.4565656052157,
+        "decode@30000": 70.45454928711281
+      },
+      "counters": {
+        "A": {
+          "30000": {
+            "expert_hits": 71275,
+            "expert_misses": 8030
+          }
+        },
+        "B": {
+          "30000": {
+            "expert_hits": 71275,
+            "expert_misses": 8030
+          }
+        }
+      },
+      "B": {
+        "prefill@30000": 1945.522227207487,
+        "decode@30000": 70.50953464195062
+      },
+      "seconds": 76.53553793800529
+    }
+  ],
+  "discarded": [],
+  "stop_reason": "all metrics decided after round 1",
+  "wall_seconds": 115.44363826801418,
+  "loads": [],
+  "warmup": {
+    "prefill@30000": 1931.4293193636704,
+    "decode@30000": 69.55145875802056
+  },
+  "plan": {
+    "alpha": 0.05,
+    "margin": 0.5,
+    "max_rounds": 6,
+    "min_rounds": 2,
+    "prior_sd": 0.5,
+    "prior_df": 4.0
+  },
+  "decisions": {
+    "prefill@30000": {
+      "decided_at_round": 1,
+      "decision": "B faster",
+      "mean_diff_percent": 0.6240461677242015,
+      "ci_diff_percent": [
+        0.49978987496443333,
+        0.7483024604839696
+      ]
+    },
+    "decode@30000": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": 0.07804372520181513,
+      "ci_diff_percent": [
+        -0.788643916797568,
+        0.9447313672011982
+      ]
+    }
+  }
+}

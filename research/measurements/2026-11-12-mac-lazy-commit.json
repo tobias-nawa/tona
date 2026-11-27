@@ -1,0 +1,150 @@
+{
+  "config": {
+    "A": {
+      "build": "work/build/mtl-base",
+      "env": {},
+      "tooling": {
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0"
+      },
+      "commit": "unknown",
+      "model": "<repo>/work/models/coder-dmix/coder-DM-164e-00001-of-00002.gguf"
+    },
+    "B": {
+      "build": "work/build/mtl",
+      "env": {},
+      "tooling": {
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0"
+      },
+      "commit": "stand-2026-10-25-832-ge6a556c5b3",
+      "model": "<repo>/work/models/coder-dmix/coder-DM-164e-00001-of-00002.gguf"
+    },
+    "workload": "set",
+    "targets": "bench-set at --ctx 32768",
+    "deterministic": false,
+    "plan_info": {
+      "expect": [
+        [
+          "decode-code",
+          6.0,
+          12.0
+        ],
+        [
+          "decode-text",
+          3.0,
+          10.0
+        ]
+      ],
+      "source": "research/measurements/2026-11-12-mac-commit-replay.md",
+      "workload": "set",
+      "targets": "bench-set at --ctx 32768",
+      "primary": "",
+      "why_size": "bench-set: the decode of the production path, 11 code and 3 text prompts",
+      "decode_tokens": 200,
+      "noise": {},
+      "warmup": true,
+      "A": {
+        "build": "work/build/mtl-base",
+        "env": {},
+        "tooling": {
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0"
+        },
+        "commit": "unknown",
+        "model": "<repo>/work/models/coder-dmix/coder-DM-164e-00001-of-00002.gguf"
+      },
+      "B": {
+        "build": "work/build/mtl",
+        "env": {},
+        "tooling": {
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0"
+        },
+        "commit": "stand-2026-10-25-832-ge6a556c5b3",
+        "model": "<repo>/work/models/coder-dmix/coder-DM-164e-00001-of-00002.gguf"
+      }
+    },
+    "reference_sha": {},
+    "corpus_sha256": "e13a800340859f7d39c63712d90383faae7e5a47c3865f0811e40d912612d38e",
+    "corpus_is_reference": true,
+    "commit": "e6a556c",
+    "noise": {}
+  },
+  "rounds": [
+    {
+      "order": "AB",
+      "sha": {
+        "A": {},
+        "B": {}
+      },
+      "A": {
+        "decode-code": 27.5,
+        "decode-text": 19.6
+      },
+      "counters": {
+        "A": {},
+        "B": {}
+      },
+      "B": {
+        "decode-code": 30.7,
+        "decode-text": 23.6
+      },
+      "seconds": 374.04450845799875
+    },
+    {
+      "order": "BA",
+      "sha": {
+        "B": {},
+        "A": {}
+      },
+      "B": {
+        "decode-code": 30.8,
+        "decode-text": 23.8
+      },
+      "counters": {
+        "B": {},
+        "A": {}
+      },
+      "A": {
+        "decode-code": 28.1,
+        "decode-text": 20.3
+      },
+      "seconds": 367.9243132920237
+    }
+  ],
+  "stop_reason": "all metrics decided after round 2",
+  "wall_seconds": 938.9257139579859,
+  "warmup": {
+    "decode-code": 28.0,
+    "decode-text": 20.6
+  },
+  "plan": {
+    "alpha": 0.05,
+    "margin": 0.5,
+    "max_rounds": 6,
+    "min_rounds": 2,
+    "prior_sd": 0.5,
+    "prior_df": 4.0
+  },
+  "decisions": {
+    "decode-code": {
+      "decided_at_round": 2,
+      "decision": "B faster",
+      "mean_diff_percent": 10.622452280815274,
+      "ci_diff_percent": [
+        8.824613973748026,
+        12.420290587882523
+      ]
+    },
+    "decode-text": {
+      "decided_at_round": 2,
+      "decision": "B faster",
+      "mean_diff_percent": 18.82477128782547,
+      "ci_diff_percent": [
+        16.302668640099252,
+        21.346873935551688
+      ]
+    }
+  }
+}

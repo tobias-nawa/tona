@@ -1,0 +1,168 @@
+{
+  "id": "iquest-coder-v1-40b",
+  "name": "IQuest-Coder-V1-40B (Instruct and Loop-Instruct)",
+  "vendor": "IQuestLab",
+  "release_date": "2025-12-30",
+  "lineage": {
+    "family": "IQuest-Coder-V1"
+  },
+  "purpose": "IQuestLab states: advance autonomous software engineering and code intelligence; the Instruct variant targets general coding assistance and instruction following.",
+  "tasks": [
+    "coding"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en"
+    ],
+    "programming": {}
+  },
+  "license": {
+    "name": "Modified MIT (iquestcoder)",
+    "verified": true,
+    "commercial_use": "limited",
+    "redistribution": "yes",
+    "notes": "LICENSE read: MIT with one change: \"if the Software (or any derivative works thereof) is used for any of your commercial products or services, you shall prominently display \\\"IQuest Coder\\\" on the user interface of such product or service.\" Card tag is \"other / iquestcoder\", consistent with the text. Verdict policy (README, 2026-11-19): this licence term does not lower tona_fit; kept here for an installer label."
+  },
+  "architecture": {
+    "kind": "dense transformer (Loop variant shares parameters across two iterations)",
+    "params_total_b": 40,
+    "layers": 80,
+    "attention": "GQA 40 Q / 8 KV",
+    "recurrent": "none",
+    "context_native": 128000,
+    "context_max": 128000,
+    "why_this_design": "Loop variant: recurrent design with shared parameters across two iterations to trade capacity against deployment footprint."
+  },
+  "variants": [
+    {
+      "repo": "IQuestLab/IQuest-Coder-V1-40B-Loop-Instruct",
+      "format": "safetensors BF16",
+      "official": true,
+      "size_gb": 79.6
+    },
+    {
+      "repo": "IQuestLab/IQuest-Coder-V1-40B-Instruct",
+      "format": "safetensors BF16",
+      "official": true,
+      "notes": "13 quantized versions listed"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "no",
+      "basis": "estimate",
+      "notes": "estimate from file size against the budget of docs/hardware (12 GB VRAM with 64 GB RAM)",
+      "variant": "Q4_K_M class (size estimated from 40B)"
+    },
+    "pc-16gb": {
+      "fits": "no",
+      "basis": "estimate",
+      "notes": "estimate from file size against the budget of docs/hardware (16 GB VRAM with 64 GB RAM (reference))",
+      "variant": "Q4_K_M class (size estimated from 40B)"
+    },
+    "pc-24gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "notes": "estimate from file size against the budget of docs/hardware (24 GB VRAM with 96 GB RAM); dense model, weights must sit in VRAM for speed",
+      "variant": "Q4_K_M class (size estimated from 40B)"
+    },
+    "pc-32gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "notes": "estimate from file size against the budget of docs/hardware (32 GB VRAM with 128 GB RAM); dense model, weights must sit in VRAM for speed",
+      "variant": "Q4_K_M class (size estimated from 40B)"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "basis": "estimate",
+      "notes": "estimate from file size against the budget of docs/hardware (unified memory 16-24 GB, GPU share about 12 GB)",
+      "variant": "Q4_K_M class (size estimated from 40B)"
+    },
+    "mac-32gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "notes": "estimate from file size against the budget of docs/hardware (unified 32 GB, GPU share about 22 GB)",
+      "variant": "Q4_K_M class (size estimated from 40B)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "estimate from file size against the budget of docs/hardware (unified 64 GB, GPU share about 52 GB)",
+      "variant": "Q4_K_M class (size estimated from 40B)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "unknown",
+    "notes": "GGUF quants listed; loading not verified"
+  },
+  "benchmarks": [
+    {
+      "name": "SWE-bench Verified",
+      "score": 76.2,
+      "kind": "vendor",
+      "source": "https://huggingface.co/IQuestLab/IQuest-Coder-V1-40B-Instruct",
+      "variant": "family highlight, size and variant not stated",
+      "unit": "%"
+    },
+    {
+      "name": "LiveCodeBench v6",
+      "score": 81.1,
+      "kind": "vendor",
+      "source": "https://huggingface.co/IQuestLab/IQuest-Coder-V1-40B-Instruct",
+      "variant": "family highlight"
+    },
+    {
+      "name": "BigCodeBench",
+      "score": 49.9,
+      "kind": "vendor",
+      "source": "https://huggingface.co/IQuestLab/IQuest-Coder-V1-40B-Instruct",
+      "variant": "family highlight"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "Dense 40B with a published SWE-bench Verified near 76 (vendor)"
+    ],
+    "weaknesses": [
+      "Dense 40B: slow on 16 to 24 GB cards",
+      "Low adoption (about 1k downloads), custom license, scores not tied to a variant"
+    ],
+    "behavior": "Code is not executed by the model; validate output.",
+    "maturity": "Little community signal."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Dense 40B (79.6 GB BF16, about 24 GB at 4 bit, estimate) is slow on 16 GB classes and has less evidence and adoption than the MoE coders; vendor LiveCodeBench v6 81.1 and SWE-bench Verified 76.2 are strong.",
+    "blockers": [
+      "dense 40B bandwidth cost"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/IQuestLab/IQuest-Coder-V1-40B-Instruct",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "page text read through a summarizer (WebFetch)"
+    },
+    {
+      "url": "https://huggingface.co/IQuestLab/IQuest-Coder-V1-40B-Instruct/raw/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    }
+  ],
+  "open_questions": [
+    "Which variant the benchmarks belong to",
+    "License terms",
+    "Per-language quality and independent coding evidence: the Aider polyglot board is stale (mirrors: last update 2025-11-20, no entry for any model of this database), LiveCodeBench and swebench.com publish no per-language numbers for it that we could retrieve. Check: our own Exercism polyglot run per language."
+  ],
+  "last_checked": "2026-11-19"
+}

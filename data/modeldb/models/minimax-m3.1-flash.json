@@ -1,0 +1,276 @@
+{
+  "id": "minimax-m3.1-flash",
+  "name": "MiniMax-M3.1-Flash",
+  "vendor": "MiniMax",
+  "release_date": "2026-10-17",
+  "tasks": [
+    "coding",
+    "general"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/MiniMaxAI/MiniMax-M3.1-Flash/raw/main/README.md",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "raw card text"
+    },
+    {
+      "url": "https://huggingface.co/MiniMaxAI/MiniMax-M3.1-Flash/raw/main/config.json",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/MiniMaxAI/MiniMax-M3.1-Flash/raw/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/api/models/unsloth/MiniMax-M3.1-Flash-GGUF/tree/main",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "file sizes"
+    },
+    {
+      "url": "https://huggingface.co/MiniMaxAI/MiniMax-M3.1-Flash/discussions",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://benchlm.ai/benchmarks/aacodingindex",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "aggregator mirror of the Artificial Analysis Coding Index, read 2026-11-19; no per-row dates; upstream AA pages not reachable"
+    },
+    {
+      "url": "research/49-moe-models-2026-11.md",
+      "kind": "own",
+      "checked": "2026-11-19"
+    }
+  ],
+  "last_checked": "2026-11-19",
+  "purpose": "MiniMax states: a native multimodal MoE model for coding, agentic workflows, computer use and cybersecurity, with text, image and video input and up to 1 M tokens of context.",
+  "modalities": {
+    "input": [
+      "text",
+      "image",
+      "video"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "lineage": {
+    "base_model": "MiniMax-M3",
+    "family": "MiniMax-M3",
+    "how_derived": "M3 decoder geometry kept; first three full-attention layers replaced by sparse attention; quantization-aware training of routed experts and attention paths; DSpark draft head instead of the earlier MTP"
+  },
+  "license": {
+    "name": "MiniMax Community License (minimax-community)",
+    "verified": true,
+    "commercial_use": "limited",
+    "redistribution": "limited",
+    "notes": "LICENSE read. Grant is \"for non-commercial purposes\". Commercial Use needs (1) the notice \"Built with MiniMax M3.1-Flash\" and (2) a one-time notice to MiniMax, or a prior written authorization when the product earns more than USD 20 million a year. \"Commercial Use\" includes offering products or services for a fee and deploying fine-tuned or modified weights for any commercial purpose. Appendix of prohibited uses includes any military purpose. Not an open-source license. Verdict policy (README, 2026-11-19): this licence term does not lower tona_fit; kept here for an installer label."
+  },
+  "architecture": {
+    "kind": "sparse-attention MoE with vision encoder (MiniMaxM3SparseForCausalLM)",
+    "params_total_b": 428,
+    "params_active_b": 23,
+    "layers": 60,
+    "attention": "MiniMax Sparse Attention on every layer (64 heads, 4 KV heads)",
+    "experts": 128,
+    "experts_active": 4,
+    "context_native": 1048576,
+    "context_max": 1048576,
+    "drafter": "DSpark draft head (separate file dspark/, GGUF dspark-...Q8_0 2.1 GB in the unsloth repo)",
+    "why_this_design": "MiniMax states: sparse attention throughout, quantization-aware training and DSpark speculative decoding improve inference efficiency; DSpark replaces the earlier EAGLE-like MTP approach."
+  },
+  "variants": [
+    {
+      "repo": "MiniMaxAI/MiniMax-M3.1-Flash",
+      "format": "safetensors (QAT, FP8/FP4 mixed)",
+      "size_gb": 250.1,
+      "official": true
+    },
+    {
+      "repo": "unsloth/MiniMax-M3.1-Flash-GGUF",
+      "format": "GGUF UD-IQ1_M",
+      "size_gb": 129.4,
+      "official": false
+    },
+    {
+      "repo": "unsloth/MiniMax-M3.1-Flash-GGUF",
+      "format": "GGUF UD-IQ2_XXS",
+      "size_gb": 134.9,
+      "official": false
+    },
+    {
+      "repo": "unsloth/MiniMax-M3.1-Flash-GGUF",
+      "format": "GGUF UD-Q2_K_XL",
+      "size_gb": 143.9,
+      "official": false
+    },
+    {
+      "repo": "amd/MiniMax-M3.1-Flash-Quark-MXFP4",
+      "format": "MXFP4 (Quark)",
+      "official": false,
+      "notes": "by AMD, size not read"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "no",
+      "variant": "UD-IQ1_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (129.4 GB) against the budget of docs/hardware: 9.6 GB VRAM plus 50 GB RAM = 60 GB; about 7% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that)"
+    },
+    "pc-16gb": {
+      "fits": "no",
+      "variant": "UD-IQ1_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (129.4 GB) against the budget of docs/hardware: 13.6 GB VRAM plus 50 GB RAM = 64 GB; about 11% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that)"
+    },
+    "pc-24gb": {
+      "fits": "no",
+      "variant": "UD-IQ1_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (129.4 GB) against the budget of docs/hardware: 21.6 GB VRAM plus 82 GB RAM = 104 GB; about 17% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that)"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "UD-IQ1_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (129.4 GB) against the budget of docs/hardware: 29.6 GB VRAM plus 114 GB RAM = 144 GB; about 23% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that)"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "UD-IQ1_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (129.4 GB) against the GPU share of docs/hardware (about 12 GB)"
+    },
+    "mac-32gb": {
+      "fits": "no",
+      "variant": "UD-IQ1_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (129.4 GB) against the GPU share of docs/hardware (about 22 GB)"
+    },
+    "mac-64gb+": {
+      "fits": "no",
+      "variant": "UD-IQ1_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (129.4 GB) against the GPU share of docs/hardware (about 52 GB)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "vLLM",
+      "SGLang",
+      "TokenSpeed"
+    ],
+    "notes": "GGUFs exist (unsloth, 2026-10-23); a Blackwell-only C++/CUDA engine reports 17 tok/s decode on a single RTX 5090 (HF discussion 14). Tona would need a new module (MSA with indexer, 128 experts, DSpark)."
+  },
+  "benchmarks": [
+    {
+      "name": "DeepSWE v1.1",
+      "score": 73.7,
+      "kind": "vendor",
+      "source": "https://huggingface.co/MiniMaxAI/MiniMax-M3.1-Flash/raw/main/README.md",
+      "variant": "official weights",
+      "harness": "mini-SWE-agent 2.4.5, 512K context",
+      "date": "2026-10-17"
+    },
+    {
+      "name": "NL2Repo-Bench",
+      "score": 61.2,
+      "kind": "vendor",
+      "source": "https://huggingface.co/MiniMaxAI/MiniMax-M3.1-Flash/raw/main/README.md",
+      "variant": "official weights",
+      "harness": "Claude Code 2.1.233, 512K context",
+      "date": "2026-10-17"
+    },
+    {
+      "name": "Terminal Bench 4.0",
+      "score": 38.1,
+      "kind": "vendor",
+      "source": "https://huggingface.co/MiniMaxAI/MiniMax-M3.1-Flash/raw/main/README.md",
+      "variant": "official weights",
+      "harness": "Codex 0.149.1",
+      "date": "2026-10-17"
+    },
+    {
+      "name": "SWE Refactor Bench",
+      "score": 23.0,
+      "kind": "vendor",
+      "source": "https://huggingface.co/MiniMaxAI/MiniMax-M3.1-Flash/raw/main/README.md",
+      "variant": "official weights",
+      "harness": "Claude Code 2.1.220, 200K context",
+      "date": "2026-10-17"
+    },
+    {
+      "name": "Agents' Last Exam",
+      "score": 29.6,
+      "kind": "vendor",
+      "source": "https://huggingface.co/MiniMaxAI/MiniMax-M3.1-Flash/raw/main/README.md",
+      "variant": "official weights",
+      "harness": "see card",
+      "date": "2026-10-17"
+    },
+    {
+      "name": "OSWorld 2.0",
+      "score": 61.7,
+      "kind": "vendor",
+      "source": "https://huggingface.co/MiniMaxAI/MiniMax-M3.1-Flash/raw/main/README.md",
+      "variant": "official weights",
+      "harness": "see card",
+      "date": "2026-10-17"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "Vendor table puts it level with GPT-5.6 Sol on DeepSWE v1.1 (73.7 against 73.0) and above GLM-5.3 (66.9)",
+      "long-running tasks with good memory and focus (one user report)"
+    ],
+    "weaknesses": [
+      "Smallest quant is 129 GB: only 32 GB VRAM + 128 GB RAM class machines can hold it",
+      "Commercial use carries notice and attribution duties; above USD 20 M revenue written authorization",
+      "No independent score found (not in the Artificial Analysis Coding Index mirror, only MiniMax M3 at 58.6)"
+    ],
+    "behavior": "reasoning_effort low / medium / high / xhigh / max; recommended temperature 1.0, top_p 0.95.",
+    "best_for": [
+      "long-running agentic coding on large unified-memory or 128 GB RAM machines"
+    ],
+    "avoid_for": [
+      "16 GB VRAM classes",
+      "users who cannot meet the commercial notice terms"
+    ],
+    "maturity": "MiniMax: established vendor (M2.x, M3); 110k downloads of the main repo, 15 discussions.",
+    "user_reports": [
+      {
+        "summary": "Positive long-task impression: good memory, good focus, \"underrated\" next to DeepSeek and GLM recent models",
+        "sentiment": "positive",
+        "source": "https://huggingface.co/MiniMaxAI/MiniMax-M3.1-Flash/discussions/16",
+        "date": "2026-11-10"
+      },
+      {
+        "summary": "Blackwell-only C++/CUDA engine runs it at 17 tok/s decode on one RTX 5090; a reader calls that unusable for agentic coding",
+        "sentiment": "mixed",
+        "source": "https://huggingface.co/MiniMaxAI/MiniMax-M3.1-Flash/discussions/14",
+        "date": "2026-10-31"
+      }
+    ]
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Vendor agent numbers are strong, but the smallest GGUF (129 GB) fits only the 32 GB VRAM + 128 GB RAM class marginally and there is no independent evidence. Revisit with an independent coding score or a smaller quant.",
+    "blockers": [
+      "Tona has no module for MiniMax Sparse Attention and DSpark (engine support, not a quality judgement)",
+      "no independent score"
+    ]
+  },
+  "open_questions": [
+    "Independent coding score: not found. Check: Artificial Analysis page for the model, SWE-bench / DeepSWE leaderboards after release.",
+    "Quality of UD-IQ1_M on code. Check: our own polyglot run on the quant.",
+    "Per-language coding quality: no public per-language numbers found (vendor tables are aggregates; swebench.com per-language view not retrievable). Check: run our Exercism polyglot set per language on the model."
+  ]
+}

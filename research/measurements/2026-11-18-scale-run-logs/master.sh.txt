@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+# Scale run 2026-11-18: blocks a, b, c1, c3, c4, e, f, f2, i (no g). First scale run on the Ryzen 9 9950X; compared with 2026-11-14 (9600X).
+# Differs from the 11-14 drivers only in paths, build name and OMP_NUM_THREADS (no longer fixed to 6: the server sets the 16 physical cores). Start as its own background job.
+# Every GPU step goes through the GPU line (run.sh, the golden scripts and baseline.sh take their own turn).
+S=/var/tmp/claude/scale1118; R="$S/run.sh"; W=<worktree>
+cd "$W" || exit 1
+# shellcheck disable=SC1091
+source toolchain/env.sh; export TONA_DIAG=1
+B=work/build/scale1118
+vram() { echo "VRAM-desktop $1 $(date +%T) $(( $(cat /sys/class/drm/card1/device/mem_info_vram_used) / 1048576 )) MiB"; }
+step() { echo "STEP $1 $(date +%T)"; vram "$1"; }
+# test conditions of a block, before and after, into the block's own log (sums only, no program names)
+tc() { { echo "## $2 $1 $(date +%F' '%T)"; python3 tools/hw_report.py; python3 tools/quiet_check.py; echo "quiet_check exit $?"; } >> "$S/$1.tc.log" 2>&1; }
+gold() { local s rc; s=$(date +%s); echo "=== $1 $(date +%T)"; shift; "$@"; rc=$?; echo "=== rc=$rc $(( $(date +%s)-s )) s"; return $rc; }
+step a; tc a before
+{
+gold "prefill dflash" env GOLDEN_MODE=prefill GOLDEN_DRAFTER=dflash scripts/golden.sh compare "$B" &&
+gold "gpu" scripts/golden.sh compare "$B" &&
+gold "cpu plan" env GOLDEN_PLAN=cpu scripts/golden.sh compare "$B" &&
+gold "server" scripts/golden-server.sh compare "$B" &&
+gold "prefill NB=1" env GOLDEN_MODE=prefill GOLDEN_PROMPT_NB=1 scripts/golden.sh compare "$B" && echo ALLOK
+} > "$S/a.log" 2>&1
+tc a after
+grep -q ALLOK "$S/a.log" || { echo "golden failed"; exit 1; }
+cv() {
+  local l=$1; shift; sleep 60; step "$l"; tc "$l" before
+  RUN_LABEL=$l "$R" python3 -I "$S/curve.py" "$l" scale1118 "$@" > "$S/$l.out" 2>&1; tc "$l" after
+  grep -h "expert slots" "$S/$l"-server-*.log | sed "s/^/SLOTS $l: /"
+  grep -h "huge pages" "$S/$l"-server-*.log | sed "s/^/HUGE $l: /"
+}
+cv b mid,long --env TONA_DETERMINISTIC=1 --env TONA_DIAG=1
+cv c1 set --env TONA_DIAG=1
+cv c3 mid,long --env TONA_DIAG=1
+cv c4 huge --env TONA_DIAG=1
+# e: R8 at ctx 262144 (the service default, DRIVE_CTX default in drive.py): the overflow of the pinned experts is registered there
+sleep 60; step e; tc e before; RUN_LABEL=e "$R" python3 -I "$S/drive.py" press 10 r8 scale1118 DRIVE_ULIMIT_C=unlimited TONA_DIAG=1 > "$S/r8.out" 2>&1; tc e after
+grep -h "expert slots" "$S/r8.server.log" | sed "s/^/SLOTS e: /"; grep -h "huge pages" "$S/r8.server.log" | sed "s/^/HUGE e: /"
+cv f server --targets 250000:100 --ctx 262144 --env TONA_DIAG=1
+rm -f "$S/route1m.trace"
+cv f2 server --targets 1000000:200 --ctx 1048576 --env TONA_SEQS=1 --env TONA_DIAG=1 --env "TONA_ROUTE_TRACE=$S/route1m.trace"
+sleep 60; step i; tc i before
+bash "$S/i.sh" > "$S/i.out" 2>&1
+tc i after
+step finished

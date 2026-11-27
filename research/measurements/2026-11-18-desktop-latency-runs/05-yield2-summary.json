@@ -1,0 +1,41 @@
+{
+  "arm": "yield2",
+  "env": {
+    "TONA_MEGA_YIELD_MS": "2"
+  },
+  "canary_priority": "medium",
+  "build": "b164t",
+  "phases": {
+    "idle": {
+      "seconds": 20.0,
+      "canary_submissions": 945,
+      "canary_us_p50": 846,
+      "canary_us_p99": 1192,
+      "canary_us_max": 1381,
+      "frame_hit_rate": 1.0,
+      "tona_requests": 0,
+      "tona_tok_s_mean": null
+    },
+    "decode": {
+      "seconds": 40.0,
+      "canary_submissions": 975,
+      "canary_us_p50": 18900,
+      "canary_us_p99": 46698,
+      "canary_us_max": 53761,
+      "frame_hit_rate": 0.4062,
+      "tona_requests": 8,
+      "tona_tok_s_mean": 82.86
+    },
+    "prefill": {
+      "seconds": 40.0,
+      "canary_submissions": 1775,
+      "canary_us_p50": 245,
+      "canary_us_p99": 30558,
+      "canary_us_max": 56301,
+      "frame_hit_rate": 0.9386,
+      "tona_requests": 28,
+      "tona_tok_s_mean": 1712.45
+    }
+  },
+  "stop_reason": null
+}

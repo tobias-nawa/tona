@@ -1,0 +1,68 @@
+{
+  "id": "rumble-2-flash",
+  "name": "Rumble-2-Flash",
+  "vendor": "Reson8",
+  "release_date": "2026-10-14",
+  "lineage": {
+    "base_model": "Qwen3-ASR architecture (Qwen3ASRForConditionalGeneration; 0.5B decoder, 18-layer audio encoder)",
+    "family": "qwen3-asr"
+  },
+  "purpose": "Small multilingual speech recognition model (45 languages) with Transformers and vLLM support and transcription switches for digits, fillers and verbatim mode (card). The card states no further motivation.",
+  "tasks": ["audio-transcription"],
+  "modalities": {"input": ["audio"], "output": ["text"]},
+  "languages": {"natural": ["af","ar","bn","bs","ca","ceb","cs","da","de","el","en","es","eu","fa","fi","fil","fr","hi","hr","hu","id","is","it","ja","ko","lt","lv","mk","ms","mt","nb","nl","pl","pt","ro","ru","sq","sr","sv","th","tr","uk","vi","yue","zh"]},
+  "license": {
+    "name": "Apache-2.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "LICENSE file in the HF repo read: Apache License 2.0 text."
+  },
+  "architecture": {
+    "kind": "audio encoder (18 layers, d_model 896) plus Qwen3-style decoder (hidden 1024), CTC head file in repo",
+    "params_total_b": 0.509,
+    "why_this_design": "Card gives none."
+  },
+  "variants": [
+    {"repo": "Reson8/Rumble-2-Flash", "format": "safetensors BF16", "size_gb": 1.39, "official": true, "notes": "model 1.02 GB plus ctc head 0.36 GB"},
+    {"repo": "kaptionai/Rumble-2-Flash-GGUF", "format": "GGUF", "size_gb": 0.5, "official": false, "notes": "third-party, created 2026-11-19, card not inspected"}
+  ],
+  "hardware_fit": {
+    "pc-12gb": {"fits": "yes", "basis": "estimate"},
+    "pc-16gb": {"fits": "yes", "basis": "estimate"},
+    "pc-24gb": {"fits": "yes", "basis": "estimate"},
+    "pc-32gb": {"fits": "yes", "basis": "estimate"},
+    "mac-16-24gb": {"fits": "yes", "basis": "estimate"},
+    "mac-32gb": {"fits": "yes", "basis": "estimate"},
+    "mac-64gb+": {"fits": "yes", "basis": "estimate"}
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "unknown",
+    "other": ["Transformers", "vLLM (audio)"],
+    "notes": "Third-party GGUF repos (kaptionai, cstr) exist; support in a given runtime not tested."
+  },
+  "benchmarks": [
+    {"name": "Open ASR Leaderboard English average WER (7 public splits plus private)", "score": 6.6, "unit": "% WER", "kind": "vendor", "variant": "BF16 on H200 with vLLM", "harness": "Open ASR Leaderboard v1.16.1, release 2026-11-18; RTFx 6338", "source": "https://huggingface.co/Reson8/Rumble-2-Flash", "date": "2026-11-18"},
+    {"name": "Open ASR Leaderboard German average WER (FLEURS 4.77, Common Voice 6.28)", "score": 5.52, "unit": "% WER", "kind": "vendor", "variant": "BF16 on H200 with vLLM", "harness": "Open ASR Leaderboard v1.16.1 multilingual track", "source": "https://huggingface.co/Reson8/Rumble-2-Flash", "date": "2026-11-18"},
+    {"name": "Open ASR Leaderboard Spanish average WER", "score": 3.73, "unit": "% WER", "kind": "vendor", "variant": "BF16", "source": "https://huggingface.co/Reson8/Rumble-2-Flash"},
+    {"name": "Open ASR Leaderboard French average WER", "score": 7.21, "unit": "% WER", "kind": "vendor", "variant": "BF16", "source": "https://huggingface.co/Reson8/Rumble-2-Flash"}
+  ],
+  "soft": {
+    "strengths": ["0.5B parameters with German 5.52% average WER on the Open ASR Leaderboard multilingual track", "Switches for digits, fillers, verbatim output"],
+    "weaknesses": ["The leaderboard numbers were produced and reported by the builder; no independent run seen", "German leaderboard average here is higher than parakeet-ultra FLEURS German (3.61%), but datasets differ (leaderboard averages FLEURS and Common Voice)", "Hindi 14.11% WER"],
+    "best_for": ["small multilingual ASR where a Qwen3-ASR-based stack is already available"],
+    "maturity": "Reson8; 929 downloads and 151 likes on HF API 2026-11-19, first release 2026-10-14."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Apache-2.0, 1.4 GB, German supported with 5.5% on the leaderboard mix; shares the Qwen3-ASR architecture of qwen3-asr-1.7b (record exists), so work on that carries over. Needs a head-to-head on German with parakeet-ultra, Qwen3-ASR 1.7B and whisper-large-v3-turbo-german before any offer.",
+    "blockers": ["vendor-run numbers only", "Qwen3-ASR architecture not in Tona"]
+  },
+  "sources": [
+    {"url": "https://huggingface.co/Reson8/Rumble-2-Flash", "kind": "primary", "checked": "2026-11-19", "note": "README, config.json, LICENSE read"},
+    {"url": "https://huggingface.co/spaces/hf-audio/open_asr_leaderboard", "kind": "secondary", "checked": "2026-11-19", "note": "referenced by the card, leaderboard page itself not opened"}
+  ],
+  "open_questions": ["Training data and recipe (card gives none)", "Independent German evaluation", "Relation between Rumble-2-Flash and larger Rumble models", "Why this design (builder gives none)"],
+  "last_checked": "2026-11-19"
+}

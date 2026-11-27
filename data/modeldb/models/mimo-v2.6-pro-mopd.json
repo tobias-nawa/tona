@@ -1,0 +1,75 @@
+{
+  "id": "mimo-v2.6-pro-mopd",
+  "name": "MiMo-V2.6-Pro-MOPD",
+  "vendor": "Xiaomi MiMo",
+  "release_date": "2026-09-27",
+  "lineage": {
+    "base_model": "MiMo-V2.6-Pro-RL",
+    "family": "MiMo-V2.6",
+    "how_derived": "multi-teacher on-policy distillation (MOPD2, technical report section 5.6) on top of the RL checkpoint, plus a short specialized-teacher run against tool-call repetition"
+  },
+  "purpose": "The builder presents it as the MOPD upgrade of MiMo-V2.6-Pro-RL: it fuses domain-specialized teachers into one model, extends to domains where training-time verification is hard (long-horizon game development, scientific research, embodied intelligence) and mitigates tool-call repetition, a failure mode in which the model keeps issuing the same tool calls.",
+  "tasks": ["general", "coding", "research"],
+  "modalities": {"input": ["text", "image", "audio", "video"], "output": ["text"]},
+  "languages": {"natural": ["en", "zh"]},
+  "license": {
+    "name": "MIT",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card tag license mit; no LICENSE file in the repo (404, 2026-11-19), text not read."
+  },
+  "architecture": {
+    "kind": "sparse MoE with hybrid sliding-window attention, omni encoders",
+    "gguf_arch": "unknown",
+    "params_total_b": 1020,
+    "params_active_b": 42,
+    "layers": 70,
+    "attention": "60 sliding-window layers (window 128) and 10 global-attention layers, 128 Q / 8 KV heads",
+    "recurrent": "none",
+    "experts": 384,
+    "experts_active": 8,
+    "context_native": 1048576,
+    "context_max": 1048576,
+    "drafter": "MTP speculative decoder, 5 SWA layers (window 1024)",
+    "why_this_design": "The card lists the configuration but gives no reasons for the sliding-window to global ratio or the expert count."
+  },
+  "variants": [
+    {"repo": "XiaomiMiMo/MiMo-V2.6-Pro-MOPD", "format": "safetensors (weights about 573 GB in total)", "size_gb": 573.49, "official": true, "notes": "MiMo-V2.6-Pro-RL is the predecessor; no GGUF opened"}
+  ],
+  "hardware_fit": {
+    "pc-12gb": {"fits": "no", "basis": "estimate", "notes": "573 GB weights against about 60 GB RAM budget"},
+    "pc-16gb": {"fits": "no", "basis": "estimate"},
+    "pc-24gb": {"fits": "no", "basis": "estimate"},
+    "pc-32gb": {"fits": "no", "basis": "estimate", "notes": "even at 128 GB RAM, only a very low-bit quant of a 1T model could be stored"},
+    "mac-16-24gb": {"fits": "no", "basis": "estimate"},
+    "mac-32gb": {"fits": "no", "basis": "estimate"},
+    "mac-64gb+": {"fits": "no", "basis": "estimate"}
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "unknown",
+    "other": ["Transformers (trust remote code, model_type mimo_v2)"],
+    "notes": "Not checked beyond the card."
+  },
+  "benchmarks": [],
+  "soft": {
+    "strengths": ["Tool-call repetition fix as a documented, measured failure mode (vendor blog)"],
+    "weaknesses": ["Far too large for any consumer class"],
+    "behavior": "Vendor describes tool-call repetition in the RL-stage Pro model and a response-level repetition reduction for this checkpoint across context lengths and harnesses (figure only).",
+    "maturity": "Established lab; the Flash sibling is recorded as mimo-v2.6-flash-mopd."
+  },
+  "tona_fit": {
+    "verdict": "reject",
+    "reason": "1.02T parameters at 573 GB is outside every hardware class. The technique (MOPD against tool-call repetition) is the useful part and is already covered by the Flash record.",
+    "blockers": ["size"]
+  },
+  "sources": [
+    {"url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-MOPD", "kind": "primary", "checked": "2026-11-19", "note": "README head, config.json and file sizes via the HF API"}
+  ],
+  "open_questions": [
+    "Benchmark table of the checkpoint (not captured; see the technical report and the card figures)",
+    "Whether any community GGUF below 300 GB exists"
+  ],
+  "last_checked": "2026-11-19"
+}

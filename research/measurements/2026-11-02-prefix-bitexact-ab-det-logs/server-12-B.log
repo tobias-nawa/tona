@@ -1,0 +1,12 @@
+ie-server on http://127.0.0.1:8097 (Anthropic: /v1/messages, OpenAI: /v1/chat/completions), without key, loading ...
+host memory: GTT (probe 64 MB grew the GTT use by 64 MB; 1.2 of 32.5 GB in use)
+Initialization: 512 MTP experts as Q2_0, converted on the GPU (708 MB) in 0.9 s
+host memory: 1.2 GB of the pinned experts do not fit the GTT and are registered as userptr
+Releasing page cache: 8.25 GB of file mappings removed from the address space
+loaded in 19.1 s: context 140000 (KV int8 1.94 GB in RAM), VRAM 14.45 GB, 84 expert slots per layer, 27.4 GB pinned
+12:09:04 Request: 29642 prompt tokens (0 reused, 29642 computed in 16.4 s, new conversation (stashing 0 ms), slot 0), 200 tokens in 2.8 s = 71.4 tok/s, 2.97 tokens per pass, 0 of 67 passes from the history (0.00 per pass)
+12:09:04 POST /v1/chat/completions → 200
+Conversation of 29615 tokens stashed: 642 MB (state 149, KV 444, pool 49, drafter 0) in 0.17 s
+Conversation of 129770 tokens stashed: 2309 MB (state 149, KV 1943, pool 216, drafter 0) in 0.35 s
+12:10:23 Request: 129797 prompt tokens (0 reused, 129797 computed in 75.6 s, new conversation (stashing 530 ms), checkpoint at 129770 (before the fixed end), slot 1), 200 tokens in 3.1 s = 64.5 tok/s, 2.82 tokens per pass, 0 of 71 passes from the history (0.00 per pass)
+12:10:23 POST /v1/chat/completions → 200

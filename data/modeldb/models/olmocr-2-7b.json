@@ -1,0 +1,166 @@
+{
+  "id": "olmocr-2-7b",
+  "name": "olmOCR-2-7B-1025",
+  "vendor": "Allen Institute for AI (Ai2)",
+  "release_date": "2025-10",
+  "lineage": {
+    "family": "olmOCR",
+    "base_model": "Qwen2.5-VL-7B-Instruct",
+    "how_derived": "fine-tuned on olmOCR-mix-1025, then GRPO on olmOCR-synthmix-1025"
+  },
+  "purpose": "Convert page images to plain text at scale for research and educational use, tuned for math, tables and hard OCR cases.",
+  "languages": {
+    "natural": [
+      "en"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "allenai/olmocr GitHub LICENSE read is the unmodified Apache-2.0 text, card agrees; the card adds \"intended for research and educational use in accordance with Ai2 Responsible Use Guidelines\", a statement of intent, not a license term"
+  },
+  "architecture": {
+    "kind": "dense vision-language (qwen2_5_vl), 8B",
+    "params_total_b": 8.0,
+    "why_this_design": "RL targets math, tables and hard OCR; the olmOCR toolkit does rendering, rotation and retries (card)."
+  },
+  "variants": [
+    {
+      "repo": "allenai/olmOCR-2-7B-1025",
+      "format": "safetensors BF16",
+      "official": true
+    },
+    {
+      "repo": "allenai/olmOCR-2-7B-1025-FP8",
+      "format": "FP8",
+      "official": true,
+      "notes": "recommended by the card"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "notes": "8B at Q4 about 5 GB, vision tower and page tokens add more"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "vLLM",
+      "SGLang",
+      "olmOCR toolkit"
+    ],
+    "notes": "Qwen2.5-VL is supported in llama.cpp (docs/multimodal.md); GGUF of olmOCR 2 itself not confirmed"
+  },
+  "benchmarks": [
+    {
+      "name": "olmOCR-Bench overall",
+      "score": "82.3 +/- 1.1",
+      "kind": "vendor",
+      "variant": "BF16 (FP8: 82.4)",
+      "source": "https://huggingface.co/allenai/olmOCR-2-7B-1025"
+    },
+    {
+      "name": "olmOCR-Bench Old Scans",
+      "score": 48.3,
+      "kind": "vendor",
+      "source": "https://huggingface.co/allenai/olmOCR-2-7B-1025"
+    },
+    {
+      "name": "MDPBench German pages (DE column)",
+      "score": 75.7,
+      "kind": "independent",
+      "source": "https://huggingface.co/datasets/Delores-Lin/MDPBench",
+      "variant": "olmOCR2",
+      "date": "2026-07"
+    },
+    {
+      "name": "MDPBench overall (17 languages)",
+      "score": 70.4,
+      "kind": "independent",
+      "source": "https://huggingface.co/datasets/Delores-Lin/MDPBench",
+      "variant": "olmOCR2; photographed 67.2, digital 79.9",
+      "date": "2026-07"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "open data and recipe",
+      "FP8 gives the same score as BF16 (82.3 vs 82.4)",
+      "although described as English-focused, third-party German pages score 75.7 (MDPBench), better than Qwen3-VL-8B (73.7)"
+    ],
+    "weaknesses": [
+      "English only",
+      "about eight times larger than the 1B parsers with no clear gain",
+      "weak on old scans (48)"
+    ],
+    "maturity": "Ai2 is a research institute with fully open releases"
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "raised from reject: the English-only assumption does not hold in third-party tests (German 75.7), Apache-2.0 verified, strongest bulk-batch tooling; still 7B and outscored by the 1B parsers on German (GLM-OCR 82.7, PaddleOCR-VL 84.8), so it is not first choice"
+  },
+  "open_questions": [
+    "GGUF conversion quality"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/allenai/olmOCR-2-7B-1025",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/allenai/olmocr/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/datasets/Delores-Lin/MDPBench",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "MDPBench README table read directly; an earlier summarizer pass mislabeled the Latin-average column as DE, the DE values here come from the dataset README"
+    }
+  ],
+  "tasks": [
+    "documents",
+    "vision"
+  ],
+  "modalities": {
+    "input": [
+      "image",
+      "document"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "last_checked": "2026-11-19"
+}

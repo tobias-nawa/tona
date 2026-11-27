@@ -1,0 +1,6 @@
+# Device code indexes with 32-bit ints on purpose: a 64-bit multiply costs extra instructions in the hot loops of
+# every kernel. The widening check would demand a cast at each of these sites; overflow is instead reviewed where a
+# buffer can exceed 2^31 elements (expert pool, PLE table), and those offsets are computed in 64 bit explicitly.
+InheritParentConfig: true
+Checks: >
+  -bugprone-implicit-widening-of-multiplication-result

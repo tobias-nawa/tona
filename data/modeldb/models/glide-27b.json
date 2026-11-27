@@ -1,0 +1,165 @@
+{
+  "id": "glide-27b",
+  "name": "GLiDE 27B",
+  "vendor": "Fastino",
+  "release_date": "2026-10-19",
+  "lineage": {
+    "base_model": "Qwen/Qwen3.8-27B (modified)",
+    "how_derived": "decision model with a 255-way readout head; probabilities for every option in one forward pass"
+  },
+  "purpose": "Classification, routing and scoring as typed decisions over text, JSON and images through the System One format; also sold as a hosted API (card).",
+  "tasks": [
+    "other",
+    "vision"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en"
+    ]
+  },
+  "license": {
+    "name": "Fastino Community License",
+    "verified": true,
+    "commercial_use": "limited",
+    "redistribution": "limited",
+    "notes": "LICENSE read: free to use, but an entity with more than 10M USD annual revenue (with affiliates) that uses it in Production for any Commercial Use needs a separate written commercial agreement; commercial use must display 'Built with Fastino GLiDE'; production is any deployment serving users or supporting business operations, including internal tools, free of charge; Qwen3.8 base remains Apache-2.0. Verdict policy (README, 2026-11-19): this licence term does not lower tona_fit; kept here for an installer label."
+  },
+  "architecture": {
+    "kind": "Qwen3.8-27B vision-language backbone with a 255-way readout (2.6 MB); linear-attention layers need flash-linear-attention for speed",
+    "params_total_b": 27.0,
+    "context_native": 40000,
+    "why_this_design": "not stated beyond one forward pass per question"
+  },
+  "variants": [
+    {
+      "repo": "fastino/GLiDE-27B",
+      "format": "safetensors BF16",
+      "size_gb": 52.2,
+      "official": true,
+      "notes": "51.2 GB language model, 0.92 GB vision encoder; card says one GPU with 80 GB or more"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "no",
+      "variant": "BF16 (52.2 GB, no quantization)",
+      "basis": "estimate",
+      "notes": "52.2 GB against a VRAM budget of 9.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-16gb": {
+      "fits": "no",
+      "variant": "BF16 (52.2 GB, no quantization)",
+      "basis": "estimate",
+      "notes": "52.2 GB against a VRAM budget of 13.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-24gb": {
+      "fits": "no",
+      "variant": "BF16 (52.2 GB, no quantization)",
+      "basis": "estimate",
+      "notes": "52.2 GB against a VRAM budget of 21.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-32gb": {
+      "fits": "no",
+      "variant": "BF16 (52.2 GB, no quantization)",
+      "basis": "estimate",
+      "notes": "52.2 GB against a VRAM budget of 29.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "BF16 (52.2 GB, no quantization)",
+      "basis": "estimate",
+      "notes": "52.2 GB against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "no",
+      "variant": "BF16 (52.2 GB, no quantization)",
+      "basis": "estimate",
+      "notes": "52.2 GB against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "no",
+      "variant": "BF16 (52.2 GB, no quantization)",
+      "basis": "estimate",
+      "notes": "52.2 GB against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "transformers with the repo's glide package",
+      "HTTP server speaking POST /v1/systemone",
+      "Fastino hosted API"
+    ]
+  },
+  "benchmarks": [
+    {
+      "name": "Decision Index 0.3.1 public suite",
+      "score": 72.49,
+      "kind": "vendor",
+      "variant": "BF16, official kit, one RTX PRO 6000",
+      "source": "https://huggingface.co/fastino/GLiDE-27B"
+    },
+    {
+      "name": "median latency per request",
+      "score": 112,
+      "unit": "ms",
+      "kind": "vendor",
+      "variant": "same GPU",
+      "source": "https://huggingface.co/fastino/GLiDE-27B"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "A decision model reads a state (text, JSON, images) and a schema of typed questions and returns calibrated probabilities for every option in one forward pass; it does not generate text."
+    ],
+    "weaknesses": [
+      "52 GB BF16 and a revenue-capped licence with attribution duty",
+      "up to 40,000 tokens per question prompt by default"
+    ],
+    "best_for": [
+      "server-side routing and scoring"
+    ],
+    "maturity": "vendor with hosted service; 3.6k downloads, 102 likes"
+  },
+  "tona_fit": {
+    "verdict": "reject",
+    "reason": "Larger than any consumer class in BF16 and no quantization is published, with the same class limits as other decision models; the alternatives (jev-27b-vl, xing-vl2.0-decision, clef) are smaller.",
+    "blockers": [
+      "size"
+    ]
+  },
+  "open_questions": [
+    "Decision Index placement on the independent vision board"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/fastino/GLiDE-27B",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README read"
+    },
+    {
+      "url": "https://huggingface.co/fastino/GLiDE-27B/raw/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "licence text read"
+    },
+    {
+      "url": "https://huggingface.co/api/models/fastino/GLiDE-27B?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "sizes"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

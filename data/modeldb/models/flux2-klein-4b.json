@@ -1,0 +1,236 @@
+{
+  "id": "flux2-klein-4b",
+  "name": "FLUX.2 [klein] 4B",
+  "vendor": "Black Forest Labs",
+  "lineage": {
+    "family": "FLUX.2 klein",
+    "how_derived": "distilled (card: 4 steps)"
+  },
+  "purpose": "Fastest image model of the vendor: text-to-image and image editing in one compact model for interactive workflows, local development and edge deployment on consumer hardware.",
+  "tasks": [
+    "image-generation"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image"
+    ],
+    "output": [
+      "image"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Apache License 2.0 text read in LICENSE.md of black-forest-labs/FLUX.2-klein-4B. The 9B klein is under the FLUX Non-Commercial License v2.1 (text read in a mirror): licence limited to non-commercial purposes, outputs may be used commercially, outputs may not train competing models."
+  },
+  "architecture": {
+    "kind": "rectified flow transformer, dense",
+    "params_total_b": 4,
+    "why_this_design": "Unifies generation and editing in one small checkpoint for real-time generation without quality loss (vendor wording)."
+  },
+  "variants": [
+    {
+      "repo": "black-forest-labs/FLUX.2-klein-4B",
+      "format": "safetensors BF16",
+      "official": true,
+      "notes": "card: about 13 GB VRAM"
+    },
+    {
+      "repo": "unsloth/FLUX.2-klein-4B-GGUF",
+      "format": "GGUF Q4_K_M",
+      "official": false,
+      "size_gb": 2.6,
+      "notes": "Q2_K 1.83, Q3_K_M 2.12, Q5_K_M 3.07, Q6_K 3.41, Q8_0 4.3, BF16 7.75 GB; text encoder and VAE are separate files"
+    },
+    {
+      "repo": "unsloth/FLUX.2-klein-9B-GGUF",
+      "format": "GGUF Q4_K_M",
+      "official": false,
+      "size_gb": 5.67,
+      "notes": "9B (non-commercial licence): Q2_K 3.4, Q5_K_M 7.02, Q8_0 10.25, BF16 18.16 GB"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "GGUF; BF16 needs about 13 GB per card"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "BF16 about 13 GB per card; beside the coder only after VRAM is released No seconds-per-image figure for RDNA3 or RDNA4 (or any AMD card) for this model found in web searches on 2026-11-19."
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "Q4 GGUF"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "stable-diffusion.cpp (GGUF, ROCm/HIP and Metal builds)",
+      "ComfyUI",
+      "diffusers",
+      "mflux (MLX)"
+    ],
+    "notes": "Tona has no image path; plan in research/52 is stable-diffusion.cpp as a separate backend (one model at a time). No seconds-per-image was measured on gfx1200 yet."
+  },
+  "benchmarks": [
+    {
+      "name": "VDEBench local (PaddleOCR-VL, n=3506)",
+      "score": 0.77,
+      "kind": "vendor",
+      "variant": "BF16",
+      "source": "https://huggingface.co/black-forest-labs/FLUX.2-klein-4B"
+    },
+    {
+      "name": "VDEBench global",
+      "score": 0.81,
+      "kind": "vendor",
+      "variant": "BF16",
+      "source": "https://huggingface.co/black-forest-labs/FLUX.2-klein-4B"
+    },
+    {
+      "name": "Seconds per image, distilled 4B, 4 steps",
+      "score": 1.2,
+      "kind": "vendor",
+      "variant": "RTX 5090, per the ComfyUI documentation (not a consumer mid-range card)",
+      "source": "https://docs.comfy.org/tutorials/flux/flux-2-klein",
+      "unit": "s"
+    },
+    {
+      "name": "Seconds per image, distilled 9B, 4 steps",
+      "score": 4.4,
+      "kind": "independent",
+      "variant": "GB10 (DGX Spark class, not a consumer GPU), 1024x1024",
+      "source": "https://forums.developer.nvidia.com/t/image-diffusion-speeds/369095",
+      "unit": "s",
+      "date": "2026-05-18"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "4 steps, guidance 1.0",
+      "editing and multi-reference editing in the same checkpoint",
+      "Apache-2.0"
+    ],
+    "weaknesses": [
+      "card: rendered text may be inaccurate or distorted; prompt-following depends on prompting style"
+    ],
+    "best_for": [
+      "fast local generation and simple edits",
+      "default image model for 12-16 GB"
+    ],
+    "maturity": "Black Forest Labs: established vendor (FLUX.1 family), large community (87 adapters, 81 quants on the Hub at read time).",
+    "user_reports": [
+      {
+        "summary": "RDNA4 reference, not klein: a Radeon RX 9070 XT user measured FLUX.2 (variant not stated) at 4.24 s/it with fp8 at 1440x810 (2026-01-05) and 2.9 s/it after system updates (2026-02-12); first runs took minutes to hours while kernels were tuned. A klein-specific AMD number was not found.",
+        "sentiment": "mixed",
+        "source": "https://github.com/ROCm/ROCm/issues/4846",
+        "date": "2026-02-12"
+      },
+      {
+        "summary": "Hands-on comparisons (secondary): FLUX.2 klein 4B has stronger prompt adherence, Z-Image Turbo edges it on photorealism per step; a Chinese test found the 9B weaker than Z-Image on realism and Chinese text.",
+        "sentiment": "mixed",
+        "source": "https://sales.communityimpact.com/flux-2-klein-vs-z-image-the-truth-after-real-testing.html",
+        "date": "2026"
+      }
+    ]
+  },
+  "tona_fit": {
+    "verdict": "offer",
+    "reason": "Apache-2.0 verified, 4B, generation and editing in one checkpoint, ~2.6 GB at Q4_K_M; alternate to Z-Image Turbo for the 16 GB class and first choice where editing is wanted.",
+    "blockers": [
+      "Tona has no image engine",
+      "no measured speed on gfx1200"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/black-forest-labs/FLUX.2-klein-4B",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "research/52-purpose-models.md",
+      "kind": "own",
+      "checked": "2026-11-19",
+      "note": "our research note 52, facts fetched 2026-11-15, not a measurement"
+    },
+    {
+      "url": "https://huggingface.co/black-forest-labs/FLUX.2-klein-4B/raw/main/LICENSE.md",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "Apache-2.0 text"
+    },
+    {
+      "url": "https://huggingface.co/ModelsLab/FLUX.2-klein-9B/raw/main/LICENSE.md",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "mirror of the gated BFL 9B LICENSE.md (FLUX Non-Commercial License v2.1)"
+    },
+    {
+      "url": "https://huggingface.co/api/models/unsloth/FLUX.2-klein-4B-GGUF",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "file sizes via blobs=true"
+    },
+    {
+      "url": "https://huggingface.co/api/models/unsloth/FLUX.2-klein-9B-GGUF",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "file sizes via blobs=true"
+    },
+    {
+      "url": "https://docs.comfy.org/tutorials/flux/flux-2-klein",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "ComfyUI docs: ~1.2 s distilled 4B on RTX 5090, 8.4 GB VRAM (via search summary)"
+    },
+    {
+      "url": "https://forums.developer.nvidia.com/t/image-diffusion-speeds/369095",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "user measurement for the 9B on a DGX Spark class GB10; read through a summarizer"
+    },
+    {
+      "url": "https://github.com/ROCm/ROCm/issues/4846",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "RDNA4 9070 XT ComfyUI timings, FLUX.2 (variant not stated); read through a summarizer"
+    }
+  ],
+  "open_questions": [
+    "Seconds per image on gfx1200; No seconds-per-image figure for RDNA3 or RDNA4 (or any AMD card) for this model found in web searches on 2026-11-19.",
+    "Text encoder not named on the card (FLUX.3 klein uses Qwen3-VL-4B; check config of the 4B repo)",
+    "Is the 9B worth a record of its own (non-commercial, 18 GB BF16, 5.67 GB Q4_K_M)?"
+  ],
+  "last_checked": "2026-11-19",
+  "release_date": "2026-01-14"
+}

@@ -1,0 +1,298 @@
+{
+  "id": "qwen3-embedding",
+  "name": "Qwen3-Embedding (0.6B, 4B, 8B)",
+  "vendor": "Alibaba Qwen",
+  "release_date": "2025-06-03",
+  "lineage": {
+    "family": "Qwen3",
+    "base_model": "Qwen3 base models",
+    "how_derived": "fine-tuned for embedding (last-token pooling)"
+  },
+  "purpose": "Text embedding and ranking: retrieval, code retrieval, classification, clustering, bitext mining; part of a series with Qwen3-Reranker.",
+  "tasks": [
+    "embeddings"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "embedding"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "many"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Apache License 2.0 text read in LICENSE of Qwen/Qwen3-Embedding-8B (HF API createdAt 2025-06-03 for 0.6B/4B/8B). Tag and text agree."
+  },
+  "architecture": {
+    "kind": "dense decoder transformer used as encoder, last-token pooling",
+    "gguf_arch": "qwen3",
+    "params_total_b": 8,
+    "layers": 36,
+    "context_native": 32768,
+    "why_this_design": "Built on Qwen3 foundation models to inherit multilingual understanding; instruction-aware so queries carry a task sentence (1-5% retrieval gain per card). MRL output dims 32 to 4096. Sizes 0.6B (28 layers, 1024-d), 4B (2560-d), 8B (4096-d)."
+  },
+  "variants": [
+    {
+      "repo": "Qwen/Qwen3-Embedding-0.6B-GGUF",
+      "format": "GGUF Q8_0",
+      "size_gb": 0.64,
+      "official": true,
+      "notes": "F16 1.2 GB; llama.cpp needs --pooling last and -ub 8192"
+    },
+    {
+      "repo": "Qwen/Qwen3-Embedding-4B-GGUF",
+      "format": "GGUF Q4_K_M",
+      "official": true,
+      "size_gb": 2.5,
+      "notes": "Q5_K_M 2.89, Q6_K 3.31, Q8_0 4.28, f16 8.05 GB"
+    },
+    {
+      "repo": "Qwen/Qwen3-Embedding-8B-GGUF",
+      "format": "GGUF Q4_K_M",
+      "official": true,
+      "size_gb": 4.68,
+      "notes": "Q5_K_M 5.42, Q6_K 6.21, Q8_0 8.05, f16 15.14 GB"
+    },
+    {
+      "repo": "Qwen/Qwen3-Embedding-8B",
+      "format": "safetensors BF16",
+      "official": true,
+      "notes": "full precision"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "0.6B Q8_0 0.64 GB or 4B Q4_K_M 2.5 GB; 0.6B can run on CPU"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "0.6B Q8_0 0.64 GB, 4B Q8_0 4.28 GB, 8B Q4_K_M 4.68 GB (file sizes read from the GGUF repos)"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "8B Q8_0 8.05 GB"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "8B"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "0.6B/4B"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "8B Q4"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "llama.cpp /v1/embeddings and /reranking",
+      "vLLM",
+      "TEI",
+      "Sentence Transformers"
+    ],
+    "notes": "Tona serves neither embeddings nor reranking today (research/52); llama-server would run as a separate process."
+  },
+  "benchmarks": [
+    {
+      "name": "MTEB Multilingual (mean task)",
+      "score": 64.33,
+      "kind": "vendor",
+      "variant": "0.6B",
+      "source": "https://huggingface.co/Qwen/Qwen3-Embedding-8B"
+    },
+    {
+      "name": "MTEB Multilingual (mean task)",
+      "score": 69.45,
+      "kind": "vendor",
+      "variant": "4B",
+      "source": "https://huggingface.co/Qwen/Qwen3-Embedding-8B"
+    },
+    {
+      "name": "MTEB Multilingual (mean task)",
+      "score": 70.58,
+      "kind": "vendor",
+      "variant": "8B",
+      "source": "https://huggingface.co/Qwen/Qwen3-Embedding-8B"
+    },
+    {
+      "name": "MTEB English v2",
+      "score": 70.7,
+      "kind": "vendor",
+      "variant": "0.6B",
+      "source": "https://huggingface.co/Qwen/Qwen3-Embedding-8B"
+    },
+    {
+      "name": "MTEB English v2",
+      "score": 75.22,
+      "kind": "vendor",
+      "variant": "8B",
+      "source": "https://huggingface.co/Qwen/Qwen3-Embedding-8B"
+    },
+    {
+      "name": "C-MTEB",
+      "score": 73.84,
+      "kind": "vendor",
+      "variant": "8B",
+      "source": "https://huggingface.co/Qwen/Qwen3-Embedding-8B"
+    },
+    {
+      "name": "MTEB Code",
+      "score": 75.42,
+      "kind": "independent",
+      "variant": "0.6B",
+      "source": "https://fourweekmba.com/ai-google-paper-embeddinggemma-2-trails-qwen-on-text-not-code/"
+    },
+    {
+      "name": "MTEB Code v1 (nDCG@10)",
+      "score": 75.41,
+      "kind": "vendor",
+      "variant": "0.6B",
+      "source": "https://arxiv.org/html/2506.05176"
+    },
+    {
+      "name": "MTEB Code v1 (nDCG@10)",
+      "score": 80.06,
+      "kind": "vendor",
+      "variant": "4B",
+      "source": "https://arxiv.org/html/2506.05176"
+    },
+    {
+      "name": "MTEB Code v1 (nDCG@10)",
+      "score": 80.68,
+      "kind": "vendor",
+      "variant": "8B",
+      "source": "https://arxiv.org/html/2506.05176"
+    },
+    {
+      "name": "In-house code retrieval nDCG@10 (30 queries over 60 passages, 10 code)",
+      "score": "97.90 (0.6B), 99.64 (8B)",
+      "kind": "independent",
+      "variant": "0.6B local llama.cpp, 8B via hosted API; run by a vendor of hosted Qwen embeddings, small set",
+      "source": "https://regolo.ai/embeddinggemma-2-vs-qwen3-embedding-benchmarks.md",
+      "unit": "%",
+      "harness": "regolo tutorials",
+      "date": "2026-10-15"
+    },
+    {
+      "name": "MRL truncation, nDCG@10 on the same in-house set",
+      "score": "98.27 (4096d), 97.52 (512d), 97.27 (128d)",
+      "kind": "independent",
+      "variant": "8B",
+      "source": "https://regolo.ai/embeddinggemma-2-vs-qwen3-embedding-benchmarks.md",
+      "unit": "%",
+      "date": "2026-10-15"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "MMTEB 70.58 at 8B; 0.6B reaches 64.33 (vendor)",
+      "32K context, MRL, instruction-aware",
+      "same family has rerankers"
+    ],
+    "weaknesses": [
+      "queries need an instruction sentence; transformers >= 4.51",
+      "0.6B is larger than 300M-class embedders"
+    ],
+    "best_for": [
+      "code and document search, German and other languages"
+    ],
+    "user_reports": [
+      {
+        "summary": "Small local code-RAG benchmark: qwen3-embedding:0.6b scored well; chunk size mattered as much as model choice.",
+        "sentiment": "positive",
+        "source": "https://dev.to/miftakhov/a-cognitive-benchmark-for-code-rag-retrieval-part-2-why-model-rankings-depend-on-the-pipeline-12a4"
+      },
+      {
+        "summary": "On an Apple M1 Ultra via Ollama the 0.6B model used 5.8 GB (the default 32K context pre-allocates its KV cache) versus 542 MB for EmbeddingGemma 2; with llama.cpp and a smaller -c the footprint is much lower.",
+        "sentiment": "mixed",
+        "source": "https://regolo.ai/embeddinggemma-2-vs-qwen3-embedding-benchmarks.md",
+        "date": "2026-10-15"
+      }
+    ],
+    "maturity": "Qwen: large vendor, paper arXiv 2506.05176, very large community (47 quants listed on the 8B page)."
+  },
+  "tona_fit": {
+    "verdict": "offer",
+    "reason": "Best-measured open embedder for code and documents under a clean Apache-2.0 license (MTEB Code 80.68 at 8B, 75.41 at 0.6B, MMTEB 70.58), 100+ languages, a size ladder from 0.64 GB to 8 GB and a matching reranker; the default for the search stack.",
+    "blockers": [
+      "Tona has no embeddings route; llama-server as a side process"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/Qwen/Qwen3-Embedding-8B",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/Qwen/Qwen3-Embedding-0.6B-GGUF",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://dev.to/miftakhov/a-cognitive-benchmark-for-code-rag-retrieval-part-2-why-model-rankings-depend-on-the-pipeline-12a4",
+      "kind": "secondary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://fourweekmba.com/ai-google-paper-embeddinggemma-2-trails-qwen-on-text-not-code/",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "third-party summary of Google's report; MTEB Code figure unverified"
+    },
+    {
+      "url": "research/52-purpose-models.md",
+      "kind": "own",
+      "checked": "2026-11-19",
+      "note": "our research note 52, facts fetched 2026-11-15, not a measurement"
+    },
+    {
+      "url": "https://huggingface.co/Qwen/Qwen3-Embedding-8B/raw/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "license text"
+    },
+    {
+      "url": "https://arxiv.org/html/2506.05176",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "technical report, read through a summarizer: MTEB-Code table; no stand-alone CoIR score"
+    },
+    {
+      "url": "https://regolo.ai/embeddinggemma-2-vs-qwen3-embedding-benchmarks.md",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "benchmark by a vendor that sells hosted Qwen embeddings; 60 passages, 30 queries; treat as a weak independent check"
+    }
+  ],
+  "open_questions": [
+    "Our own retrieval test on a real code base",
+    "Official CoIR score: the report gives MTEB-Code only (it contains CoIR-derived subtasks); no CoIR leaderboard entry found on 2026-11-19"
+  ],
+  "last_checked": "2026-11-19"
+}

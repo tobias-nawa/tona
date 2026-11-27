@@ -1,0 +1,635 @@
+{
+ "tool": "ibench",
+ "suite": {
+  "name": "base",
+  "description": "Baseline measurement: short prompt, long decode, needle in 10K/30K/60K context, warm prefix at 30K. Context sizes are in characters (Qwen3.8 tokenizer: ~4.6 characters per token, counted with llama-tokenize); the real token counts are in the report.",
+  "file": "bench/suites/base.toml"
+ },
+ "env": {
+  "time": "2026-11-15T10:40:36+01:00",
+  "kernel": "7.2.15-200.fc44.x86_64",
+  "os": "Fedora Linux 44 (Workstation Edition)",
+  "python": "3.14.10",
+  "cpu": "AMD Ryzen 5 9600X 6-Core Processor",
+  "cpu_governor": "performance",
+  "cpu_epp": "performance",
+  "mem_total_gib": 60.5,
+  "mem_avail_gib": 35.9,
+  "swap_used_mib": 1666,
+  "gpu": {
+   "sysfs": "/sys/devices/pci0000:00/0000:00:01.1/0000:01:00.0/0000:02:00.0/0000:03:00.0",
+   "vram_total_mib": 16304,
+   "vram_used_mib": 15663,
+   "vbios_version": "113-R906XTGO-F2",
+   "current_link_speed": "32.0 GT/s PCIe",
+   "current_link_width": "16",
+   "power_dpm_force_performance_level": "auto",
+   "pci_id": "1002:7590"
+  },
+  "packages": {
+   "rocm-runtime": "7.1.1-6.fc44",
+   "rocm-hip": "7.1.1-4.fc44",
+   "hipblaslt": "7.1.1-7.fc44",
+   "rocblas": "7.1.1-7.fc44",
+   "kernel": "7.2.15-200.fc44"
+  },
+  "git": {
+   "commit": "4caacd0",
+   "dirty": true
+  },
+  "target": {
+   "name": "tona",
+   "url": "http://127.0.0.1:8091",
+   "api": "openai",
+   "model": "default",
+   "extra": {}
+  },
+  "server": {
+   "/v1/models": {
+    "object": "list",
+    "data": [
+     {
+      "id": "qwen3.8-flash-next-coder",
+      "object": "model",
+      "type": "model",
+      "owned_by": "local",
+      "display_name": "Qwen3.8 Flash Next Coder (local)",
+      "created_at": "2026-10-23T00:00:00Z",
+      "meta": {
+       "n_ctx": 65536
+      }
+     }
+    ],
+    "has_more": false
+   }
+  },
+  "warnings": [
+   "Swap in use before start: 1666 MiB",
+   "Repository has uncommitted changes"
+  ]
+ },
+ "cases": [
+  {
+   "case": {
+    "name": "short-code",
+    "description": "Short prompt, short answer. Matches the Fibonacci measurement of 22 Oct.",
+    "runs": 1,
+    "warmup": 1,
+    "cache": "cold",
+    "temperature": 0.0,
+    "max_tokens": 300,
+    "expect": "def\\s+fib\\s*\\(",
+    "min_decode_tokens": 32,
+    "pause_s": 0.0,
+    "extra": {},
+    "prompt": "Write a Python function `fib(n)` that returns the n-th Fibonacci number iteratively. Only the code, no explanation.",
+    "context_chars": 0,
+    "needle": null,
+    "needle_depth": 0.5,
+    "question": null,
+    "trace": null
+   },
+   "runs": [
+    {
+     "index": -1,
+     "warmup": true,
+     "nonce": "0eb45e349169",
+     "steps": [
+      {
+       "ok": true,
+       "error": null,
+       "finish": "stop",
+       "prompt_tokens": 65,
+       "cached_tokens": 0,
+       "completion_tokens": 43,
+       "tool_calls": 0,
+       "reasoning_tokens": null,
+       "reasoning_chars": 0,
+       "e2e_s": 1.0628341470001033,
+       "prefill_tps_server": null,
+       "decode_tps_server": 73.45614767320538,
+       "timings": {
+        "cache_n": 0,
+        "prompt_n": 65,
+        "prompt_ms": 476.99278,
+        "predicted_n": 43,
+        "predicted_ms": 585.383271,
+        "predicted_per_second": 73.45614767320538
+       },
+       "ttft_s": 0.4775272650003899,
+       "prefill_tps_client": 136.11788219034347,
+       "decode_tps_client": 71.84614439662748,
+       "itl_p50_ms": 0.01365999924018979,
+       "itl_p99_ms": 113.41466482117539,
+       "expect_ok": true,
+       "output_sha": "6ac589c4152f",
+       "text_head": "```python\ndef fib(n):\n    a, b = 0, 1\n    for _ in range(n):\n        a, b = b, a + b\n    return a\n```",
+       "vram_peak_mib": 15680.11328125,
+       "gtt_peak_mib": 21040.1015625,
+       "ram_avail_min_mib": 36807.67578125,
+       "swap_used_max_mib": 1666.1640625,
+       "gpu_busy_mean": 96.0,
+       "power_mean_w": 63.4,
+       "temp_max_c": 50.0,
+       "sclk_mean_mhz": 2025.4,
+       "samples": 10
+      }
+     ]
+    },
+    {
+     "index": 0,
+     "warmup": false,
+     "nonce": "572c28229d44",
+     "steps": [
+      {
+       "ok": true,
+       "error": null,
+       "finish": "stop",
+       "prompt_tokens": 66,
+       "cached_tokens": 0,
+       "completion_tokens": 43,
+       "tool_calls": 0,
+       "reasoning_tokens": null,
+       "reasoning_chars": 0,
+       "e2e_s": 0.6260768360007205,
+       "prefill_tps_server": null,
+       "decode_tps_server": 121.07279211050943,
+       "timings": {
+        "cache_n": 0,
+        "prompt_n": 66,
+        "prompt_ms": 270.476098,
+        "predicted_n": 43,
+        "predicted_ms": 355.15824200000003,
+        "predicted_per_second": 121.07279211050943
+       },
+       "ttft_s": 0.2709250449988758,
+       "prefill_tps_client": 243.60981466395572,
+       "decode_tps_client": 118.40358643347813,
+       "itl_p50_ms": 0.010249998013023287,
+       "itl_p99_ms": 61.02335766416218,
+       "expect_ok": true,
+       "output_sha": "6ac589c4152f",
+       "text_head": "```python\ndef fib(n):\n    a, b = 0, 1\n    for _ in range(n):\n        a, b = b, a + b\n    return a\n```",
+       "vram_peak_mib": 15680.11328125,
+       "gtt_peak_mib": 21040.1015625,
+       "ram_avail_min_mib": 36806.4765625,
+       "swap_used_max_mib": 1666.1640625,
+       "gpu_busy_mean": 99.0,
+       "power_mean_w": 111.66666666666667,
+       "temp_max_c": 60.0,
+       "sclk_mean_mhz": 3001.5,
+       "samples": 6
+      }
+     ]
+    }
+   ],
+   "summary": {
+    "steps": [
+     {
+      "n": 1,
+      "ok": 1,
+      "metrics": {
+       "ttft_s": {
+        "n": 1,
+        "median": 0.2709250449988758,
+        "mean": 0.2709250449988758,
+        "stdev": 0.0,
+        "min": 0.2709250449988758,
+        "max": 0.2709250449988758
+       },
+       "prefill_tps_client": {
+        "n": 1,
+        "median": 243.60981466395572,
+        "mean": 243.60981466395572,
+        "stdev": 0.0,
+        "min": 243.60981466395572,
+        "max": 243.60981466395572
+       },
+       "decode_tps_client": {
+        "n": 1,
+        "median": 118.40358643347813,
+        "mean": 118.40358643347813,
+        "stdev": 0.0,
+        "min": 118.40358643347813,
+        "max": 118.40358643347813
+       },
+       "decode_tps_server": {
+        "n": 1,
+        "median": 121.07279211050943,
+        "mean": 121.07279211050943,
+        "stdev": 0.0,
+        "min": 121.07279211050943,
+        "max": 121.07279211050943
+       },
+       "e2e_s": {
+        "n": 1,
+        "median": 0.6260768360007205,
+        "mean": 0.6260768360007205,
+        "stdev": 0.0,
+        "min": 0.6260768360007205,
+        "max": 0.6260768360007205
+       },
+       "prompt_tokens": {
+        "n": 1,
+        "median": 66.0,
+        "mean": 66.0,
+        "stdev": 0.0,
+        "min": 66.0,
+        "max": 66.0
+       },
+       "cached_tokens": {
+        "n": 1,
+        "median": 0.0,
+        "mean": 0.0,
+        "stdev": 0.0,
+        "min": 0.0,
+        "max": 0.0
+       },
+       "completion_tokens": {
+        "n": 1,
+        "median": 43.0,
+        "mean": 43.0,
+        "stdev": 0.0,
+        "min": 43.0,
+        "max": 43.0
+       },
+       "itl_p50_ms": {
+        "n": 1,
+        "median": 0.010249998013023287,
+        "mean": 0.010249998013023287,
+        "stdev": 0.0,
+        "min": 0.010249998013023287,
+        "max": 0.010249998013023287
+       },
+       "itl_p99_ms": {
+        "n": 1,
+        "median": 61.02335766416218,
+        "mean": 61.02335766416218,
+        "stdev": 0.0,
+        "min": 61.02335766416218,
+        "max": 61.02335766416218
+       },
+       "vram_peak_mib": {
+        "n": 1,
+        "median": 15680.11328125,
+        "mean": 15680.11328125,
+        "stdev": 0.0,
+        "min": 15680.11328125,
+        "max": 15680.11328125
+       },
+       "gtt_peak_mib": {
+        "n": 1,
+        "median": 21040.1015625,
+        "mean": 21040.1015625,
+        "stdev": 0.0,
+        "min": 21040.1015625,
+        "max": 21040.1015625
+       },
+       "ram_avail_min_mib": {
+        "n": 1,
+        "median": 36806.4765625,
+        "mean": 36806.4765625,
+        "stdev": 0.0,
+        "min": 36806.4765625,
+        "max": 36806.4765625
+       },
+       "swap_used_max_mib": {
+        "n": 1,
+        "median": 1666.1640625,
+        "mean": 1666.1640625,
+        "stdev": 0.0,
+        "min": 1666.1640625,
+        "max": 1666.1640625
+       },
+       "gpu_busy_mean": {
+        "n": 1,
+        "median": 99.0,
+        "mean": 99.0,
+        "stdev": 0.0,
+        "min": 99.0,
+        "max": 99.0
+       },
+       "power_mean_w": {
+        "n": 1,
+        "median": 111.66666666666667,
+        "mean": 111.66666666666667,
+        "stdev": 0.0,
+        "min": 111.66666666666667,
+        "max": 111.66666666666667
+       },
+       "temp_max_c": {
+        "n": 1,
+        "median": 60.0,
+        "mean": 60.0,
+        "stdev": 0.0,
+        "min": 60.0,
+        "max": 60.0
+       },
+       "sclk_mean_mhz": {
+        "n": 1,
+        "median": 3001.5,
+        "mean": 3001.5,
+        "stdev": 0.0,
+        "min": 3001.5,
+        "max": 3001.5
+       }
+      },
+      "expect_pass": 1,
+      "expect_n": 1,
+      "distinct_outputs": 1
+     }
+    ],
+    "warnings": [],
+    "run_e2e_s": {
+     "n": 1,
+     "median": 0.6260768360007205,
+     "mean": 0.6260768360007205,
+     "stdev": 0.0,
+     "min": 0.6260768360007205,
+     "max": 0.6260768360007205
+    }
+   }
+  },
+  {
+   "case": {
+    "name": "long-decode",
+    "description": "Short prompt, long answer: pure decode rate at small context.",
+    "runs": 1,
+    "warmup": 1,
+    "cache": "cold",
+    "temperature": 0.0,
+    "max_tokens": 1024,
+    "expect": "(?i)semaphore",
+    "min_decode_tokens": 64,
+    "pause_s": 0.0,
+    "extra": {},
+    "prompt": "Explain in detail how a mutex differs from a semaphore. Give a complete C example for each. Write at least 800 words.",
+    "context_chars": 0,
+    "needle": null,
+    "needle_depth": 0.5,
+    "question": null,
+    "trace": null
+   },
+   "runs": [
+    {
+     "index": -1,
+     "warmup": true,
+     "nonce": "00255f9fe4d1",
+     "steps": [
+      {
+       "ok": true,
+       "error": null,
+       "finish": "length",
+       "prompt_tokens": 69,
+       "cached_tokens": 0,
+       "completion_tokens": 1024,
+       "tool_calls": 0,
+       "reasoning_tokens": null,
+       "reasoning_chars": 0,
+       "e2e_s": 14.02552189299604,
+       "prefill_tps_server": null,
+       "decode_tps_server": 74.37160667097851,
+       "timings": {
+        "cache_n": 0,
+        "prompt_n": 69,
+        "prompt_ms": 256.3095,
+        "predicted_n": 1024,
+        "predicted_ms": 13768.695418,
+        "predicted_per_second": 74.37160667097851
+       },
+       "ttft_s": 0.25690979399951175,
+       "prefill_tps_client": 268.5767596704824,
+       "decode_tps_client": 74.30136824616356,
+       "itl_p50_ms": 0.030629998946096748,
+       "itl_p99_ms": 60.423000002629124,
+       "expect_ok": true,
+       "output_sha": "3a6537811c67",
+       "text_head": "Mutexes and semaphores are both synchronization primitives used in multithreaded or multiprocess programs to coordinate access to shared resources, but they differ in semantics, ownership, and intended use. A mutex is a binary lock that enforces mutual exclusion and is typically owned by a single thread or process; it is designed to protect a critical section so that only one thread can execute th",
+       "vram_peak_mib": 15696.640625,
+       "gtt_peak_mib": 21040.1015625,
+       "ram_avail_min_mib": 36785.21484375,
+       "swap_used_max_mib": 1666.1640625,
+       "gpu_busy_mean": 98.02877697841727,
+       "power_mean_w": 143.05755395683454,
+       "temp_max_c": 70.0,
+       "sclk_mean_mhz": 3382.2589928057555,
+       "samples": 139
+      }
+     ]
+    },
+    {
+     "index": 0,
+     "warmup": false,
+     "nonce": "dd06519f01da",
+     "steps": [
+      {
+       "ok": true,
+       "error": null,
+       "finish": "length",
+       "prompt_tokens": 67,
+       "cached_tokens": 0,
+       "completion_tokens": 1024,
+       "tool_calls": 0,
+       "reasoning_tokens": null,
+       "reasoning_chars": 0,
+       "e2e_s": 12.961135079996893,
+       "prefill_tps_server": null,
+       "decode_tps_server": 80.47538067938707,
+       "timings": {
+        "cache_n": 0,
+        "prompt_n": 67,
+        "prompt_ms": 235.950291,
+        "predicted_n": 1024,
+        "predicted_ms": 12724.388395,
+        "predicted_per_second": 80.47538067938707
+       },
+       "ttft_s": 0.236672446000739,
+       "prefill_tps_client": 283.0916785293663,
+       "decode_tps_client": 80.5876931017187,
+       "itl_p50_ms": 0.03271950117778033,
+       "itl_p99_ms": 62.00845204984943,
+       "expect_ok": true,
+       "output_sha": "391da97ca9e1",
+       "text_head": "Mutexes and semaphores are both synchronization primitives used in multithreaded programming to coordinate access to shared resources, but they differ in semantics, usage patterns, and guarantees. A mutex is a binary lock that enforces mutual exclusion: at most one thread may hold the lock at any time, and ownership is typically tied to the thread that acquired it. A semaphore is a counter-based p",
+       "vram_peak_mib": 15696.640625,
+       "gtt_peak_mib": 21040.1015625,
+       "ram_avail_min_mib": 36780.19140625,
+       "swap_used_max_mib": 1666.1640625,
+       "gpu_busy_mean": 98.02325581395348,
+       "power_mean_w": 148.24806201550388,
+       "temp_max_c": 70.0,
+       "sclk_mean_mhz": 3411.1627906976746,
+       "samples": 129
+      }
+     ]
+    }
+   ],
+   "summary": {
+    "steps": [
+     {
+      "n": 1,
+      "ok": 1,
+      "metrics": {
+       "ttft_s": {
+        "n": 1,
+        "median": 0.236672446000739,
+        "mean": 0.236672446000739,
+        "stdev": 0.0,
+        "min": 0.236672446000739,
+        "max": 0.236672446000739
+       },
+       "prefill_tps_client": {
+        "n": 1,
+        "median": 283.0916785293663,
+        "mean": 283.0916785293663,
+        "stdev": 0.0,
+        "min": 283.0916785293663,
+        "max": 283.0916785293663
+       },
+       "decode_tps_client": {
+        "n": 1,
+        "median": 80.5876931017187,
+        "mean": 80.5876931017187,
+        "stdev": 0.0,
+        "min": 80.5876931017187,
+        "max": 80.5876931017187
+       },
+       "decode_tps_server": {
+        "n": 1,
+        "median": 80.47538067938707,
+        "mean": 80.47538067938707,
+        "stdev": 0.0,
+        "min": 80.47538067938707,
+        "max": 80.47538067938707
+       },
+       "e2e_s": {
+        "n": 1,
+        "median": 12.961135079996893,
+        "mean": 12.961135079996893,
+        "stdev": 0.0,
+        "min": 12.961135079996893,
+        "max": 12.961135079996893
+       },
+       "prompt_tokens": {
+        "n": 1,
+        "median": 67.0,
+        "mean": 67.0,
+        "stdev": 0.0,
+        "min": 67.0,
+        "max": 67.0
+       },
+       "cached_tokens": {
+        "n": 1,
+        "median": 0.0,
+        "mean": 0.0,
+        "stdev": 0.0,
+        "min": 0.0,
+        "max": 0.0
+       },
+       "completion_tokens": {
+        "n": 1,
+        "median": 1024.0,
+        "mean": 1024.0,
+        "stdev": 0.0,
+        "min": 1024.0,
+        "max": 1024.0
+       },
+       "itl_p50_ms": {
+        "n": 1,
+        "median": 0.03271950117778033,
+        "mean": 0.03271950117778033,
+        "stdev": 0.0,
+        "min": 0.03271950117778033,
+        "max": 0.03271950117778033
+       },
+       "itl_p99_ms": {
+        "n": 1,
+        "median": 62.00845204984943,
+        "mean": 62.00845204984943,
+        "stdev": 0.0,
+        "min": 62.00845204984943,
+        "max": 62.00845204984943
+       },
+       "vram_peak_mib": {
+        "n": 1,
+        "median": 15696.640625,
+        "mean": 15696.640625,
+        "stdev": 0.0,
+        "min": 15696.640625,
+        "max": 15696.640625
+       },
+       "gtt_peak_mib": {
+        "n": 1,
+        "median": 21040.1015625,
+        "mean": 21040.1015625,
+        "stdev": 0.0,
+        "min": 21040.1015625,
+        "max": 21040.1015625
+       },
+       "ram_avail_min_mib": {
+        "n": 1,
+        "median": 36780.19140625,
+        "mean": 36780.19140625,
+        "stdev": 0.0,
+        "min": 36780.19140625,
+        "max": 36780.19140625
+       },
+       "swap_used_max_mib": {
+        "n": 1,
+        "median": 1666.1640625,
+        "mean": 1666.1640625,
+        "stdev": 0.0,
+        "min": 1666.1640625,
+        "max": 1666.1640625
+       },
+       "gpu_busy_mean": {
+        "n": 1,
+        "median": 98.02325581395348,
+        "mean": 98.02325581395348,
+        "stdev": 0.0,
+        "min": 98.02325581395348,
+        "max": 98.02325581395348
+       },
+       "power_mean_w": {
+        "n": 1,
+        "median": 148.24806201550388,
+        "mean": 148.24806201550388,
+        "stdev": 0.0,
+        "min": 148.24806201550388,
+        "max": 148.24806201550388
+       },
+       "temp_max_c": {
+        "n": 1,
+        "median": 70.0,
+        "mean": 70.0,
+        "stdev": 0.0,
+        "min": 70.0,
+        "max": 70.0
+       },
+       "sclk_mean_mhz": {
+        "n": 1,
+        "median": 3411.1627906976746,
+        "mean": 3411.1627906976746,
+        "stdev": 0.0,
+        "min": 3411.1627906976746,
+        "max": 3411.1627906976746
+       }
+      },
+      "expect_pass": 1,
+      "expect_n": 1,
+      "distinct_outputs": 1
+     }
+    ],
+    "warnings": [],
+    "run_e2e_s": {
+     "n": 1,
+     "median": 12.961135079996893,
+     "mean": 12.961135079996893,
+     "stdev": 0.0,
+     "min": 12.961135079996893,
+     "max": 12.961135079996893
+    }
+   }
+  }
+ ]
+}

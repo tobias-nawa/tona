@@ -1,0 +1,230 @@
+{
+  "id": "ming-3.0-audio",
+  "name": "Ming-3.0-audio (flash 126B-A6.5B and tiny 9.3B-A2.7B)",
+  "vendor": "inclusionAI",
+  "release_date": "2026-09-03",
+  "lineage": {
+    "family": "Ming-3.0"
+  },
+  "purpose": "Native audio-language model: takes audio plus a text instruction and returns text, or text with optional synthesized speech (Talker); covers speech recognition, spoken question answering, audio understanding and reasoning (card).",
+  "tasks": [
+    "audio-transcription",
+    "speech-synthesis",
+    "general"
+  ],
+  "modalities": {
+    "input": [
+      "audio",
+      "text"
+    ],
+    "output": [
+      "text",
+      "audio"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en",
+      "zh"
+    ]
+  },
+  "license": {
+    "name": "MIT",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "LICENSE of the GitHub code repository read (MIT, Copyright 2025 inclusionAI); the HF cards state MIT for the weights. The HF repos have no LICENSE file of their own (raw/main/LICENSE returns 404). The talker folder ships a lid.176 language-ID file with its own license file (lid.176.LICENSE.md, not read)."
+  },
+  "architecture": {
+    "kind": "audio encoder (Whisper-style, 32 layers, width 1280) plus projector plus MoE language backbone with linear-attention (KDA) and MLA layers, optional Talker for speech output (config.json: model_type bailing_moe_v3_audio)",
+    "params_total_b": 126,
+    "params_active_b": 6.5,
+    "layers": 42,
+    "experts": 512,
+    "experts_active": 8,
+    "context_native": 131072,
+    "attention": "MLA (kv_lora_rank 512) mixed with KDA linear attention, layer_group_size 6 (flash config); 1 MTP layer in config",
+    "drafter": "config has num_nextn_predict_layers 1; a community DFlash drafter repo exists (wilsonzheng0327/Ming-3.0-audio-flash-dflash, not read)"
+  },
+  "variants": [
+    {
+      "repo": "inclusionAI/Ming-3.0-audio-flash",
+      "format": "safetensors BF16",
+      "size_gb": 259.41,
+      "official": true,
+      "notes": "126B total / 6.5B active (card); 256.37 GB safetensors plus 3.01 GB talker. Reference serving profile: four 80 GB H800 GPUs (card)"
+    },
+    {
+      "repo": "inclusionAI/Ming-3.0-audio-tiny",
+      "format": "safetensors BF16",
+      "size_gb": 20.78,
+      "official": true,
+      "notes": "9.3B total / 2.7B active (card); 17.74 GB safetensors plus 3.01 GB talker; text config: 24 layers, hidden 1536, 128 experts, 8 active"
+    },
+    {
+      "repo": "audio-cpp/Ming-3.0-Audio-Tiny-GGUF",
+      "format": "GGUF Q4_K (Thinker experts; Q8_0 output head)",
+      "size_gb": 9.97,
+      "official": false,
+      "notes": "single GGUF with audio encoder, Thinker, Talker, VAE and speaker encoder; Q8_0 13.67 GB, BF16 20.18 GB; runs in audio.cpp (CUDA backend in the card examples); MIT per card"
+    },
+    {
+      "repo": "mlx-community/Ming-3.0-audio-tiny-4bit",
+      "format": "MLX 4bit",
+      "size_gb": 8.77,
+      "official": false,
+      "notes": "5.77 GB weights plus 3.0 GB talker; 8bit 12.71 GB"
+    },
+    {
+      "repo": "twangodev/Ming-3.0-audio-flash-NVFP4",
+      "format": "NVFP4",
+      "size_gb": 85.76,
+      "official": false,
+      "notes": "82.75 GB safetensors plus 3.01 GB talker; third-party quantization, not evaluated here"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "marginal",
+      "variant": "tiny Q4_K",
+      "basis": "estimate",
+      "notes": "9.97 GB file against about 9.6 GB VRAM budget; the audio.cpp card measured 11.6 GB peak VRAM in fully resident mode on CUDA, so expert offload to RAM would be needed. Flash: no."
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "tiny Q4_K",
+      "basis": "estimate",
+      "notes": "11.6 GB peak VRAM reported by the audio.cpp card (CUDA, resident mode) against about 13.6 GB budget. Flash: no (NVFP4 85.76 GB)."
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "tiny Q8_0",
+      "basis": "estimate",
+      "notes": "Flash: no."
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "tiny BF16",
+      "basis": "estimate",
+      "notes": "Flash: no; the only quantization found, NVFP4 85.76 GB, exceeds the roughly 80 GB budget."
+    },
+    "mac-16-24gb": {
+      "fits": "marginal",
+      "variant": "tiny MLX 4bit",
+      "basis": "estimate",
+      "notes": "8.77 GB against about 12 GB GPU share. Flash: no."
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "tiny MLX 8bit",
+      "basis": "estimate",
+      "notes": "Flash: no."
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "tiny BF16",
+      "basis": "estimate",
+      "notes": "Flash: no (85.76 GB NVFP4 against about 52 GB GPU share); a 64 GB Mac cannot hold it, a larger Mac might (not checked)."
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "audio.cpp (family ming3_audio, tiny GGUF)",
+      "vLLM-Omni",
+      "SGLang (text output)",
+      "SGLang-Omni",
+      "Transformers (custom code)",
+      "MLX (mlx-community tiny)"
+    ],
+    "notes": "Backbone is a Ling-style MoE with KDA linear attention and MLA, the same family as ming-3.0-tts-tiny."
+  },
+  "benchmarks": [
+    {
+      "name": "Big Bench Audio (Artificial Analysis speech reasoning)",
+      "score": 99.8,
+      "unit": "%",
+      "kind": "vendor",
+      "variant": "flash, non-thinking mode (README of the code repository)",
+      "source": "https://huggingface.co/inclusionAI/Ming-3.0-audio-flash",
+      "harness": "Artificial Analysis leaderboard as cited by the card"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "One model for ASR, audio understanding, audio reasoning and optional speech reply, with voice cloning from a reference voice (card)",
+      "Tiny variant has a single-file GGUF with every component and a published speed figure",
+      "MIT license"
+    ],
+    "weaknesses": [
+      "Primary languages Chinese and English only; German is not named",
+      "Flash needs a multi-GPU node by the vendor's own reference profile",
+      "ASR, audio-intelligence and text benchmark tables on the cards are images; only the Big Bench Audio number is given as text"
+    ],
+    "behavior": "The validated ASR prompt asks for the language label and the transcription separated by a tab; run with a no-repeat n-gram size of 10 in the card example.",
+    "maturity": "inclusionAI (Ant Group); repos last modified 2026-11-18; several community quantizations within weeks."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Tiny (2.7B active, MIT, one GGUF with ASR plus speech reply) is the first open audio-to-audio model that fits a 16 GB card, but the languages are Chinese and English only, so German users get no benefit; flash does not fit any hardware class. Revisit if German or other languages are added, or as a source for a Ling-MoE/KDA backend that also serves ming-3.0-tts-tiny.",
+    "blockers": [
+      "no German",
+      "flash is beyond every class",
+      "no Tona audio module"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/inclusionAI/Ming-3.0-audio-flash",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "card, config.json, file sizes from the HF API"
+    },
+    {
+      "url": "https://huggingface.co/inclusionAI/Ming-3.0-audio-tiny",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "card, config.json, file sizes from the HF API"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/inclusionAI/Ming-3.0-audio-flash/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "MIT license text read"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/inclusionAI/Ming-3.0-audio-flash/main/README.md",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "benchmark section (image tables), model list"
+    },
+    {
+      "url": "https://huggingface.co/audio-cpp/Ming-3.0-Audio-Tiny-GGUF",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "community GGUF card, file sizes, 11.6 GB peak VRAM claim"
+    },
+    {
+      "url": "https://huggingface.co/mlx-community/Ming-3.0-audio-tiny-4bit",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "file sizes only"
+    },
+    {
+      "url": "https://huggingface.co/twangodev/Ming-3.0-audio-flash-NVFP4",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "file sizes only"
+    }
+  ],
+  "open_questions": [
+    "ASR word/character error rates and audio-intelligence scores are only in card images; no text numbers read",
+    "No German or other European language support stated; not tested",
+    "No independent evaluation found",
+    "Speed of the tiny GGUF on AMD/ROCm or Metal: audio.cpp card gives CUDA numbers only (real-time factor 0.024 for Q4_K in resident mode, vendor-of-the-port figure)",
+    "Purpose and architecture rationale: the cards state no design reasons beyond the feature list",
+    "Whether the DFlash drafter for flash is useful: community repo not read"
+  ],
+  "last_checked": "2026-11-19"
+}

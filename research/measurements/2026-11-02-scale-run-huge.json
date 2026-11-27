@@ -1,0 +1,240 @@
+{
+  "config": {
+    "A": {
+      "build": "merged",
+      "env": {
+        "IE_DIAG": "1"
+      },
+      "tooling": {
+        "HIP_PATH": "./work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+        "HSA_COREDUMP_PATTERN": "./work/diag/gpucore-%p.core",
+        "IE_DIAG": "1",
+        "IE_EXPERT_PROFILE": "./work/profile/experts-coder.bin",
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0"
+      },
+      "commit": "v0.0.2-148-g8a08c6b73e"
+    },
+    "B": {
+      "build": "w83",
+      "env": {
+        "IE_DIAG": "1"
+      },
+      "tooling": {
+        "HIP_PATH": "./work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+        "HSA_COREDUMP_PATTERN": "./work/diag/gpucore-%p.core",
+        "IE_DIAG": "1",
+        "IE_EXPERT_PROFILE": "./work/profile/experts-coder.bin",
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0"
+      },
+      "commit": "v0.0.2-167-g2a12ac4a5e"
+    },
+    "workload": "huge",
+    "targets": "512000:200 1000000:200 at --ctx 1048576, IE_SEQS=1",
+    "deterministic": false,
+    "plan_info": {
+      "expect": [
+        [
+          "decode",
+          -2.0,
+          0.0
+        ],
+        [
+          "prefill",
+          -2.0,
+          1.0
+        ]
+      ],
+      "source": "2026-10-31-long-context-topk.md (512K: prefill 1434, decode 60.5) and -yarn.md section 2 (1M); 2026-11-01-slow-decode.md (register route)",
+      "workload": "huge",
+      "targets": "512000:200 1000000:200 at --ctx 1048576, IE_SEQS=1",
+      "primary": "decode,prefill",
+      "why_size": "past 262K the registered share of the pinned experts grows (1.2 GB at 140K, 4.7 GB at 262K); 512K and 1M are the sizes where earlier notes have numbers",
+      "decode_tokens": 200,
+      "noise": {},
+      "warmup": false,
+      "A": {
+        "build": "merged",
+        "env": {
+          "IE_DIAG": "1"
+        },
+        "tooling": {
+          "HIP_PATH": "./work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+          "HSA_COREDUMP_PATTERN": "./work/diag/gpucore-%p.core",
+          "IE_DIAG": "1",
+          "IE_EXPERT_PROFILE": "./work/profile/experts-coder.bin",
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0"
+        },
+        "commit": "v0.0.2-148-g8a08c6b73e"
+      },
+      "B": {
+        "build": "w83",
+        "env": {
+          "IE_DIAG": "1"
+        },
+        "tooling": {
+          "HIP_PATH": "./work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+          "HSA_COREDUMP_PATTERN": "./work/diag/gpucore-%p.core",
+          "IE_DIAG": "1",
+          "IE_EXPERT_PROFILE": "./work/profile/experts-coder.bin",
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0"
+        },
+        "commit": "v0.0.2-167-g2a12ac4a5e"
+      }
+    },
+    "reference_sha": {},
+    "corpus_sha256": "e13a800340859f7d39c63712d90383faae7e5a47c3865f0811e40d912612d38e",
+    "corpus_is_reference": true,
+    "commit": "2a12ac4",
+    "noise": {}
+  },
+  "rounds": [
+    {
+      "order": "AB",
+      "sha": {
+        "A": {
+          "512000": "f7f5488a6a60d401",
+          "1000000": "f12ab3b48409a583"
+        },
+        "B": {
+          "512000": "f7f5488a6a60d401",
+          "1000000": "f12ab3b48409a583"
+        }
+      },
+      "A": {
+        "prefill@512000": 1398.277908060071,
+        "decode@512000": 60.59097343531432,
+        "prefill@1000000": 1099.8704999174665,
+        "decode@1000000": 63.85239822414757
+      },
+      "counters": {
+        "A": {
+          "512000": {
+            "expert_hits": 65890,
+            "expert_misses": 10202
+          },
+          "1000000": {
+            "expert_hits": 63776,
+            "expert_misses": 15081
+          }
+        },
+        "B": {
+          "512000": {
+            "expert_hits": 65890,
+            "expert_misses": 10202
+          },
+          "1000000": {
+            "expert_hits": 63776,
+            "expert_misses": 15081
+          }
+        }
+      },
+      "B": {
+        "prefill@512000": 1408.0248578181904,
+        "decode@512000": 60.46224960633286,
+        "prefill@1000000": 1101.7914378211613,
+        "decode@1000000": 63.65049255860468
+      },
+      "seconds": 2615.908672324964
+    },
+    {
+      "order": "BA",
+      "sha": {
+        "B": {
+          "512000": "f7f5488a6a60d401",
+          "1000000": "f12ab3b48409a583"
+        },
+        "A": {
+          "512000": "f7f5488a6a60d401",
+          "1000000": "f12ab3b48409a583"
+        }
+      },
+      "B": {
+        "prefill@512000": 1408.1829872640983,
+        "decode@512000": 59.75962604149491,
+        "prefill@1000000": 1101.8060999246247,
+        "decode@1000000": 63.09516380481394
+      },
+      "counters": {
+        "B": {
+          "512000": {
+            "expert_hits": 65890,
+            "expert_misses": 10202
+          },
+          "1000000": {
+            "expert_hits": 63776,
+            "expert_misses": 15081
+          }
+        },
+        "A": {
+          "512000": {
+            "expert_hits": 65890,
+            "expert_misses": 10202
+          },
+          "1000000": {
+            "expert_hits": 63776,
+            "expert_misses": 15081
+          }
+        }
+      },
+      "A": {
+        "prefill@512000": 1398.116814242321,
+        "decode@512000": 60.60159718824298,
+        "prefill@1000000": 1100.1361764744483,
+        "decode@1000000": 63.36078389029158
+      },
+      "seconds": 2606.3385968980147
+    }
+  ],
+  "stop_reason": "2 rounds (undecided metrics stay open)",
+  "wall_seconds": 5222.249165686895,
+  "plan": {
+    "alpha": 0.05,
+    "margin": 0.5,
+    "max_rounds": 2,
+    "min_rounds": 2,
+    "prior_sd": 0.5,
+    "prior_df": 4.0
+  },
+  "decisions": {
+    "prefill@512000": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": 0.7085244825182913,
+      "ci_diff_percent": [
+        -0.1044715517172885,
+        1.521520516753871
+      ]
+    },
+    "decode@512000": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": -0.8009009585839,
+      "ci_diff_percent": [
+        -1.8584558343205053,
+        0.25665391715270536
+      ]
+    },
+    "prefill@1000000": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": 0.16322185553823143,
+      "ci_diff_percent": [
+        -0.6497736779221683,
+        0.9762173889986312
+      ]
+    },
+    "decode@1000000": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": -0.3677126482233173,
+      "ci_diff_percent": [
+        -1.182755616811547,
+        0.4473303203649124
+      ]
+    }
+  }
+}

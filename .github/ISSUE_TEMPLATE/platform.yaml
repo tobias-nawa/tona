@@ -1,0 +1,29 @@
+name: Backend proposal
+description: Propose a backend for a GPU or CPU that is not supported yet, and name who maintains it
+title: "Backend: "
+labels: ["backend"]
+body:
+  - type: markdown
+    attributes:
+      value: Read docs/backends/README.md (tiers, interface, checks) first. A backend without a named owner who has the hardware is not accepted.
+  - type: input
+    id: hardware
+    attributes:
+      label: Hardware
+      description: GPU (architecture, VRAM, bandwidth), CPU, RAM, link (PCIe generation and width).
+    validations:
+      required: true
+  - type: textarea
+    id: plan
+    attributes:
+      label: Approach
+      description: Toolkit, what you reuse from the reference, expected ceiling (tok/s) and why.
+    validations:
+      required: true
+  - type: checkboxes
+    id: maintain
+    attributes:
+      label: Maintenance
+      options:
+        - label: I own this hardware and will run the checks and measurements for every release.
+          required: true

@@ -1,0 +1,87 @@
+{
+  "id": "kimi-k3.1-pro",
+  "name": "Kimi K3.1 Pro",
+  "vendor": "Moonshot AI",
+  "release_date": "2026-11-02",
+  "lineage": {
+    "family": "Kimi K3",
+    "base_model": "Kimi K3",
+    "how_derived": "post-trained from Kimi K3 with large-scale joint reinforcement learning across hundreds of downstream domains; the first model of the K3.1 series (card)"
+  },
+  "purpose": "The card calls it Moonshot's most capable 3T-class, natively multimodal open-weight agentic model, improved over K3 in coding, 3D creation, financial research and factual accuracy, with a 1M-token context.",
+  "tasks": ["coding", "general", "research", "vision"],
+  "modalities": {"input": ["text", "image"], "output": ["text"]},
+  "license": {
+    "name": "Kimi K3.1-Pro License (modified MIT)",
+    "verified": true,
+    "commercial_use": "limited",
+    "redistribution": "yes",
+    "notes": "LICENSE text read (3.1 KB). MIT-style grant including weights. Conditions: (2) a Model-as-a-Service business whose and affiliates' revenue exceeds US$20 million over 12 months needs a separate agreement with Moonshot before commercial use; (3) commercial products with more than 100 million monthly active users or more than US$20 million monthly revenue must display 'Kimi K3.1-Pro' in the UI; (4) internal use that does not expose the model to third parties is exempt. No territory exclusion. Contact license@moonshot.ai."
+  },
+  "architecture": {
+    "kind": "sparse MoE with Kimi Delta Attention and gated DSA, latent MoE, MoonViT-V2 vision encoder",
+    "params_total_b": 2800,
+    "params_active_b": 104,
+    "layers": 93,
+    "attention": "69 KDA linear-attention layers and 24 gated DSA (sparse indexed) layers, 96 heads, hidden 7168, DSA index top-k 2048",
+    "recurrent": "Kimi Delta Attention",
+    "experts": 896,
+    "experts_active": 16,
+    "context_native": 1048576,
+    "context_max": 1048576,
+    "drafter": "none shipped (num_nextn_predict_layers 0); a community drafter RadixArk/Kimi-K3.1-Dflash2-Preview exists",
+    "why_this_design": "The card lists the configuration (2 shared experts, latent MoE dimension 3584, SiTU-GLU activation, MXFP4 weights with MXFP8 activations from quantisation-aware training) but gives no reasons for the layer split."
+  },
+  "variants": [
+    {"repo": "moonshotai/Kimi-K3.1-Pro", "format": "compressed-tensors, MXFP4 weights / MXFP8 activations (QAT)", "size_gb": 1561.36, "official": true},
+    {"repo": "KarLexAI/Kimi-K3.1-Pro-GGUF", "format": "GGUF KLX-IQ1_S", "size_gb": 592.68, "official": false, "notes": "KLX-IQ1_M 647.87, KLX-IQ2_XXS 709.88 GB; file sizes only"},
+    {"repo": "DevQuasar/moonshotai.Kimi-K3.1-Pro-GGUF", "format": "GGUF Q2_K", "size_gb": 1009.32, "official": false, "notes": "MXFP4_MOE 1508.9 GB; file sizes only"},
+    {"repo": "RadixArk/Kimi-K3.1-Dflash2-Preview", "format": "speculative drafter (finetune of the base per HF tags)", "official": false, "notes": "community drafter, not opened"},
+    {"repo": "local-inference-lab/Kimi-K3.1-Pro-EXL3-2bit", "format": "EXL3 2-bit", "official": false, "notes": "also nvidia NVFP4 and MLX repos; sizes not measured"}
+  ],
+  "hardware_fit": {
+    "pc-12gb": {"fits": "no", "basis": "estimate", "notes": "smallest GGUF 592.7 GB against about 60 GB"},
+    "pc-16gb": {"fits": "no", "basis": "estimate"},
+    "pc-24gb": {"fits": "no", "basis": "estimate"},
+    "pc-32gb": {"fits": "no", "basis": "estimate", "notes": "592.7 GB (IQ1_S) against about 158 GB (29.6 VRAM + 128 RAM); even 1 bit per weight of 2.8T parameters is about 350 GB"},
+    "mac-16-24gb": {"fits": "no", "basis": "estimate"},
+    "mac-32gb": {"fits": "no", "basis": "estimate"},
+    "mac-64gb+": {"fits": "no", "basis": "estimate"}
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "unknown",
+    "other": ["vLLM", "SGLang", "TokenSpeed"],
+    "notes": "Community GGUFs exist; llama.cpp support was not verified. The card recommends vLLM, SGLang and TokenSpeed."
+  },
+  "benchmarks": [
+    {"name": "Terminal-Bench 4.0", "score": 65.7, "kind": "vendor", "variant": "max effort, Claude Code harness (Opus 5.5 66.4, DeepSeek-V4.1-Flash-1017 42.3)", "source": "https://huggingface.co/moonshotai/Kimi-K3.1-Pro"},
+    {"name": "DeepSWE v1.1", "score": 75.5, "kind": "vendor", "variant": "max effort (DeepSeek-V4.1-Flash-1017 77.0, Opus 5.5 74.2)", "source": "https://huggingface.co/moonshotai/Kimi-K3.1-Pro"},
+    {"name": "SWE Marathon v1.1", "score": 51.7, "kind": "vendor", "variant": "max effort (DeepSeek-V4.1-Flash-1017 40.0)", "source": "https://huggingface.co/moonshotai/Kimi-K3.1-Pro"},
+    {"name": "Program Bench", "score": 31.5, "kind": "vendor", "variant": "max effort (DeepSeek-V4.1-Flash-1017 29.1)", "source": "https://huggingface.co/moonshotai/Kimi-K3.1-Pro"},
+    {"name": "HLE-Full with tools", "score": 70.0, "kind": "vendor", "variant": "max effort", "source": "https://huggingface.co/moonshotai/Kimi-K3.1-Pro"},
+    {"name": "BrowseComp", "score": 92.1, "kind": "vendor", "variant": "max effort", "source": "https://huggingface.co/moonshotai/Kimi-K3.1-Pro"}
+  ],
+  "soft": {
+    "strengths": ["Vendor lead among the open models on terminal and long-horizon coding tasks", "Native MXFP4 QAT weights, so the 1.56 TB file is the intended precision"],
+    "weaknesses": ["2.8T parameters: nothing below a multi-GPU server can hold it", "On DeepSWE and Program Bench the vendor's own table shows the 552B DeepSeek-V4.1-Flash-1017 at or above it"],
+    "behavior": "reasoning_effort low, high or max (default max); multi-turn use requires passing back the full assistant message including reasoning_content and tool_calls (card).",
+    "maturity": "Moonshot K-series with a quick successor cadence (K3 then K3.1 Pro); about 46 derivatives on the HF API within weeks."
+  },
+  "tona_fit": {
+    "verdict": "reject",
+    "reason": "2.8T parameters and 104B active are outside every hardware class (smallest GGUF 593 GB). The vendor's own table shows the far smaller DeepSeek-V4.1-Flash-1017 within a few points on DeepSWE and Program Bench, so a local user loses little by choosing that model (see deepseek-v4.1-flash).",
+    "blockers": ["size"]
+  },
+  "sources": [
+    {"url": "https://huggingface.co/moonshotai/Kimi-K3.1-Pro", "kind": "primary", "checked": "2026-11-19", "note": "README with specification and benchmark tables, config.json, LICENSE, file sizes via the HF API"},
+    {"url": "https://huggingface.co/KarLexAI/Kimi-K3.1-Pro-GGUF", "kind": "primary", "checked": "2026-11-19", "note": "file sizes via the HF tree API"},
+    {"url": "https://huggingface.co/DevQuasar/moonshotai.Kimi-K3.1-Pro-GGUF", "kind": "primary", "checked": "2026-11-19", "note": "file sizes via the HF tree API"}
+  ],
+  "open_questions": [
+    "Independent evaluation of K3.1 Pro",
+    "Whether llama.cpp supports the KDA plus DSA architecture",
+    "Which smaller K3.1 models follow (the card calls this the first of the series)"
+  ],
+  "last_checked": "2026-11-19"
+}

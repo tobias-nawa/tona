@@ -1,0 +1,344 @@
+{
+  "config": {
+    "A": {
+      "build": "shard",
+      "env": {
+        "TONA_DETERMINISTIC": "1",
+        "TONA_EXPERT_PROFILE": "<worktree>/work/profile/experts-coder-0929.bin"
+      },
+      "tooling": {
+        "HIP_PATH": "<repo>/work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0",
+        "TONA_DETERMINISTIC": "1",
+        "TONA_EXPERT_PROFILE": "<worktree>/work/profile/experts-coder-0929.bin"
+      },
+      "commit": "v0.0.2-490-gb6dd58cd44",
+      "model": "<worktree>/work/models/coder-iq1_m-0929/Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf"
+    },
+    "B": {
+      "build": "shard",
+      "env": {
+        "TONA_DETERMINISTIC": "1",
+        "TONA_EXPERT_PROFILE": "<worktree>/work/profile/experts-coder.bin"
+      },
+      "tooling": {
+        "HIP_PATH": "<repo>/work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0",
+        "TONA_DETERMINISTIC": "1",
+        "TONA_EXPERT_PROFILE": "<worktree>/work/profile/experts-coder.bin"
+      },
+      "commit": "v0.0.2-490-gb6dd58cd44",
+      "model": "<worktree>/work/models/coder-iq1_m/Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf"
+    },
+    "workload": "mid,long",
+    "targets": "30000:200 130000:200 at --ctx 140000",
+    "deterministic": true,
+    "plan_info": {
+      "expect": [
+        [
+          "prefill",
+          -0.1,
+          0.1
+        ],
+        [
+          "decode@30000",
+          6.0,
+          10.0
+        ],
+        [
+          "decode@130000",
+          -1.0,
+          1.0
+        ]
+      ],
+      "source": "2026-11-12-coder-1019.md section 2a (4 rounds, old against new shard)",
+      "workload": "mid,long",
+      "targets": "30000:200 130000:200 at --ctx 140000",
+      "primary": "",
+      "why_size": "mid (30K) for prefill at full groups, long (130K) where attention dominates; the shards share shapes and types, so these two rates decide whether the switch changed speed",
+      "decode_tokens": 200,
+      "noise": {
+        "prefill@30000": [
+          0.04,
+          9,
+          "research/measurements/2026-11-02-ab-tool.md: first A/A run (rounds 2-6; round 1 had no warm-up); second A/A run with warm-up (6 rounds)"
+        ],
+        "decode@30000": [
+          0.279,
+          9,
+          "research/measurements/2026-11-02-ab-tool.md: first A/A run (rounds 2-6; round 1 had no warm-up); second A/A run with warm-up (6 rounds)"
+        ],
+        "prefill@130000": [
+          0.018,
+          9,
+          "research/measurements/2026-11-02-ab-tool.md: first A/A run (rounds 2-6; round 1 had no warm-up); second A/A run with warm-up (6 rounds)"
+        ],
+        "decode@130000": [
+          0.42,
+          9,
+          "research/measurements/2026-11-02-ab-tool.md: first A/A run (rounds 2-6; round 1 had no warm-up); second A/A run with warm-up (6 rounds)"
+        ]
+      },
+      "warmup": true,
+      "A": {
+        "build": "shard",
+        "env": {
+          "TONA_DETERMINISTIC": "1",
+          "TONA_EXPERT_PROFILE": "<worktree>/work/profile/experts-coder-0929.bin"
+        },
+        "tooling": {
+          "HIP_PATH": "<repo>/work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0",
+          "TONA_DETERMINISTIC": "1",
+          "TONA_EXPERT_PROFILE": "<worktree>/work/profile/experts-coder-0929.bin"
+        },
+        "commit": "v0.0.2-490-gb6dd58cd44",
+        "model": "<worktree>/work/models/coder-iq1_m-0929/Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf"
+      },
+      "B": {
+        "build": "shard",
+        "env": {
+          "TONA_DETERMINISTIC": "1",
+          "TONA_EXPERT_PROFILE": "<worktree>/work/profile/experts-coder.bin"
+        },
+        "tooling": {
+          "HIP_PATH": "<repo>/work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0",
+          "TONA_DETERMINISTIC": "1",
+          "TONA_EXPERT_PROFILE": "<worktree>/work/profile/experts-coder.bin"
+        },
+        "commit": "v0.0.2-490-gb6dd58cd44",
+        "model": "<worktree>/work/models/coder-iq1_m/Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf"
+      }
+    },
+    "reference_sha": {
+      "30000": "5b4e7ef2b0fc2495",
+      "130000": "9340252c318b7217"
+    },
+    "corpus_sha256": "e13a800340859f7d39c63712d90383faae7e5a47c3865f0811e40d912612d38e",
+    "corpus_is_reference": true,
+    "commit": "b6dd58c",
+    "noise": {
+      "prefill@30000": [
+        0.04,
+        9
+      ],
+      "decode@30000": [
+        0.279,
+        9
+      ],
+      "prefill@130000": [
+        0.018,
+        9
+      ],
+      "decode@130000": [
+        0.42,
+        9
+      ]
+    }
+  },
+  "rounds": [
+    {
+      "order": "AB",
+      "sha": {
+        "A": {
+          "30000": "5b4e7ef2b0fc2495",
+          "130000": "9340252c318b7217"
+        },
+        "B": {
+          "30000": "ee58880d3f5b558f",
+          "130000": "7d2996546076d1b0"
+        }
+      },
+      "A": {
+        "prefill@30000": 1878.2841756752741,
+        "decode@30000": 66.14993039955692,
+        "prefill@130000": 1747.164707568333,
+        "decode@130000": 63.803597988380005
+      },
+      "counters": {
+        "A": {
+          "30000": {
+            "expert_hits": 75602,
+            "expert_misses": 6927
+          },
+          "130000": {
+            "expert_hits": 72219,
+            "expert_misses": 7691
+          }
+        },
+        "B": {
+          "30000": {
+            "expert_hits": 70386,
+            "expert_misses": 7308
+          },
+          "130000": {
+            "expert_hits": 77516,
+            "expert_misses": 6497
+          }
+        }
+      },
+      "B": {
+        "prefill@30000": 1884.5038071363294,
+        "decode@30000": 72.16070124955502,
+        "prefill@130000": 1749.5800034276776,
+        "decode@130000": 63.392951791647214
+      },
+      "seconds": 234.55766919604503
+    },
+    {
+      "order": "BA",
+      "sha": {
+        "B": {
+          "30000": "ee58880d3f5b558f",
+          "130000": "7d2996546076d1b0"
+        },
+        "A": {
+          "30000": "5b4e7ef2b0fc2495",
+          "130000": "9340252c318b7217"
+        }
+      },
+      "B": {
+        "prefill@30000": 1884.8031315962955,
+        "decode@30000": 72.89726352609928,
+        "prefill@130000": 1748.8946976584223,
+        "decode@130000": 64.94615710610621
+      },
+      "counters": {
+        "B": {
+          "30000": {
+            "expert_hits": 70386,
+            "expert_misses": 7308
+          },
+          "130000": {
+            "expert_hits": 77516,
+            "expert_misses": 6497
+          }
+        },
+        "A": {
+          "30000": {
+            "expert_hits": 75706,
+            "expert_misses": 6823
+          },
+          "130000": {
+            "expert_hits": 72351,
+            "expert_misses": 7559
+          }
+        }
+      },
+      "A": {
+        "prefill@30000": 1892.3877353037274,
+        "decode@30000": 66.00222606301863,
+        "prefill@130000": 1753.4095073706517,
+        "decode@130000": 63.92560481305211
+      },
+      "seconds": 236.72932495793793
+    },
+    {
+      "order": "AB",
+      "sha": {
+        "A": {
+          "30000": "5b4e7ef2b0fc2495",
+          "130000": "9340252c318b7217"
+        },
+        "B": {
+          "30000": "ee58880d3f5b558f",
+          "130000": "7d2996546076d1b0"
+        }
+      },
+      "A": {
+        "prefill@30000": 1893.3975425571577,
+        "decode@30000": 66.71454556115044,
+        "prefill@130000": 1755.2523107498246,
+        "decode@130000": 64.40830742716079
+      },
+      "counters": {
+        "A": {
+          "30000": {
+            "expert_hits": 75706,
+            "expert_misses": 6823
+          },
+          "130000": {
+            "expert_hits": 72351,
+            "expert_misses": 7559
+          }
+        },
+        "B": {
+          "30000": {
+            "expert_hits": 70476,
+            "expert_misses": 7218
+          },
+          "130000": {
+            "expert_hits": 77626,
+            "expert_misses": 6387
+          }
+        }
+      },
+      "B": {
+        "prefill@30000": 1891.6098104603377,
+        "decode@30000": 73.18444019718301,
+        "prefill@130000": 1755.2397109536048,
+        "decode@130000": 64.74942572471711
+      },
+      "seconds": 231.62951849901583
+    }
+  ],
+  "stop_reason": "3 rounds (undecided metrics stay open)",
+  "wall_seconds": 823.2123954660492,
+  "warmup": {
+    "prefill@30000": 1860.939214431922,
+    "decode@30000": 65.76733254922407,
+    "prefill@130000": 1738.9735475499224,
+    "decode@130000": 63.79397345343743
+  },
+  "plan": {
+    "alpha": 0.05,
+    "margin": 0.5,
+    "max_rounds": 3,
+    "min_rounds": 2,
+    "prior_sd": 0.5,
+    "prior_df": 4.0
+  },
+  "decisions": {
+    "prefill@30000": {
+      "decided_at_round": 3,
+      "decision": "equal",
+      "mean_diff_percent": -0.05469367609020429,
+      "ci_diff_percent": [
+        -0.3343896364973099,
+        0.2250022843169013
+      ]
+    },
+    "decode@30000": {
+      "decided_at_round": 1,
+      "decision": "B faster",
+      "mean_diff_percent": 9.743712673390174,
+      "ci_diff_percent": [
+        9.074659946805816,
+        10.412765399974532
+      ]
+    },
+    "prefill@130000": {
+      "decided_at_round": 3,
+      "decision": "equal",
+      "mean_diff_percent": -0.03998814016958896,
+      "ci_diff_percent": [
+        -0.19150758559966602,
+        0.1115313052604881
+      ]
+    },
+    "decode@130000": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": 0.49415914356203405,
+      "ci_diff_percent": [
+        -0.56719023640265,
+        1.555508523526718
+      ]
+    }
+  }
+}

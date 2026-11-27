@@ -1,0 +1,236 @@
+{
+  "config": {
+    "A": {
+      "build": "w81-base",
+      "env": {},
+      "tooling": {
+        "HIP_PATH": "./work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+        "IE_EXPERT_PROFILE": "./work/profile/experts-coder.bin",
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0"
+      },
+      "commit": "v0.0.2-204-g98dc08946e"
+    },
+    "B": {
+      "build": "w81",
+      "env": {},
+      "tooling": {
+        "HIP_PATH": "./work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+        "IE_EXPERT_PROFILE": "./work/profile/experts-coder.bin",
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0"
+      },
+      "commit": "v0.0.2-208-ga810892b7a-dirty"
+    },
+    "workload": "mid",
+    "targets": "30000:200 at --ctx 140000",
+    "deterministic": false,
+    "plan_info": {
+      "expect": [
+        [
+          "prefill",
+          -0.5,
+          0.5
+        ],
+        [
+          "decode",
+          -0.5,
+          0.5
+        ]
+      ],
+      "source": "single cold request, no stash to fork from: the old code path; first run of this question (2026-11-02-prefix-bitexact-ab.md) was inside the expectation for every metric except decode@30000, which had another text",
+      "workload": "mid",
+      "targets": "30000:200 at --ctx 140000",
+      "primary": "",
+      "why_size": "control for the decode@30000 finding of the first run: there the 30K request followed the 2K requests on the same server and wrote a fork/tail checkpoint (cold start of the server does not); alone it is a cold request without a checkpoint, so both arms must give the same SHA and equal rates",
+      "decode_tokens": 200,
+      "noise": {
+        "prefill@30000": [
+          0.04,
+          9,
+          "research/measurements/2026-11-02-ab-tool.md: first A/A run (rounds 2-6; round 1 had no warm-up); second A/A run with warm-up (6 rounds)"
+        ],
+        "decode@30000": [
+          0.279,
+          9,
+          "research/measurements/2026-11-02-ab-tool.md: first A/A run (rounds 2-6; round 1 had no warm-up); second A/A run with warm-up (6 rounds)"
+        ]
+      },
+      "warmup": true,
+      "A": {
+        "build": "w81-base",
+        "env": {},
+        "tooling": {
+          "HIP_PATH": "./work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+          "IE_EXPERT_PROFILE": "./work/profile/experts-coder.bin",
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0"
+        },
+        "commit": "v0.0.2-204-g98dc08946e"
+      },
+      "B": {
+        "build": "w81",
+        "env": {},
+        "tooling": {
+          "HIP_PATH": "./work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+          "IE_EXPERT_PROFILE": "./work/profile/experts-coder.bin",
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0"
+        },
+        "commit": "v0.0.2-208-ga810892b7a-dirty"
+      }
+    },
+    "reference_sha": {},
+    "corpus_sha256": "e13a800340859f7d39c63712d90383faae7e5a47c3865f0811e40d912612d38e",
+    "corpus_is_reference": true,
+    "commit": "a810892",
+    "noise": {
+      "prefill@30000": [
+        0.04,
+        9
+      ],
+      "decode@30000": [
+        0.279,
+        9
+      ]
+    }
+  },
+  "rounds": [
+    {
+      "order": "AB",
+      "sha": {
+        "A": {
+          "30000": "1fad1ead2f1ac34c"
+        },
+        "B": {
+          "30000": "1fad1ead2f1ac34c"
+        }
+      },
+      "A": {
+        "prefill@30000": 1806.0720504134233,
+        "decode@30000": 67.70850772153204
+      },
+      "counters": {
+        "A": {
+          "30000": {
+            "expert_hits": 67592,
+            "expert_misses": 9940
+          }
+        },
+        "B": {
+          "30000": {
+            "expert_hits": 67592,
+            "expert_misses": 9940
+          }
+        }
+      },
+      "B": {
+        "prefill@30000": 1806.2631806517293,
+        "decode@30000": 67.82553534618745
+      },
+      "seconds": 79.1321021419717
+    },
+    {
+      "order": "BA",
+      "sha": {
+        "B": {
+          "30000": "1fad1ead2f1ac34c"
+        },
+        "A": {
+          "30000": "1fad1ead2f1ac34c"
+        }
+      },
+      "B": {
+        "prefill@30000": 1807.3076787454977,
+        "decode@30000": 67.69353654869825
+      },
+      "counters": {
+        "B": {
+          "30000": {
+            "expert_hits": 67592,
+            "expert_misses": 9940
+          }
+        },
+        "A": {
+          "30000": {
+            "expert_hits": 67592,
+            "expert_misses": 9940
+          }
+        }
+      },
+      "A": {
+        "prefill@30000": 1805.7519145605293,
+        "decode@30000": 67.6522186861054
+      },
+      "seconds": 79.11045105196536
+    },
+    {
+      "order": "AB",
+      "sha": {
+        "A": {
+          "30000": "1fad1ead2f1ac34c"
+        },
+        "B": {
+          "30000": "1fad1ead2f1ac34c"
+        }
+      },
+      "A": {
+        "prefill@30000": 1807.3022901804463,
+        "decode@30000": 67.79591614614519
+      },
+      "counters": {
+        "A": {
+          "30000": {
+            "expert_hits": 67592,
+            "expert_misses": 9940
+          }
+        },
+        "B": {
+          "30000": {
+            "expert_hits": 67592,
+            "expert_misses": 9940
+          }
+        }
+      },
+      "B": {
+        "prefill@30000": 1806.9143144322984,
+        "decode@30000": 67.61490590533558
+      },
+      "seconds": 79.0531692779623
+    }
+  ],
+  "stop_reason": "all metrics decided after round 3",
+  "wall_seconds": 277.3664495929843,
+  "warmup": {
+    "prefill@30000": 1803.926899821384,
+    "decode@30000": 67.73525520794651
+  },
+  "plan": {
+    "alpha": 0.05,
+    "margin": 0.5,
+    "max_rounds": 6,
+    "min_rounds": 2,
+    "prior_sd": 0.5,
+    "prior_df": 4.0
+  },
+  "decisions": {
+    "prefill@30000": {
+      "decided_at_round": 1,
+      "decision": "equal",
+      "mean_diff_percent": 0.025090519657577914,
+      "ci_diff_percent": [
+        -0.05483132550882912,
+        0.10501236482398495
+      ]
+    },
+    "decode@30000": {
+      "decided_at_round": 3,
+      "decision": "equal",
+      "mean_diff_percent": -0.011026187678216578,
+      "ci_diff_percent": [
+        -0.5117942119974995,
+        0.48974183664106635
+      ]
+    }
+  }
+}

@@ -1,0 +1,196 @@
+{
+  "id": "jev-27b-vl",
+  "name": "JEV-27B-VL (repo AutoTrust-Decider-Pro-Vision-27B)",
+  "vendor": "AutoTrust",
+  "release_date": "2026-09-30",
+  "lineage": {
+    "family": "Jev decision models",
+    "base_model": "Qwen/Qwen3.8-27B",
+    "how_derived": "System 1: LoRA adapter plus decision head trained on text only (distillation corpus jev-distill-corpus-v3, labels from the hosted TypeSafe Jev 1.13); System 2 is the unmodified Qwen3.8-27B"
+  },
+  "purpose": "One decision model instead of a ranking team: typed decisions (yes/no, pick one of 2-256 options, rate 0-5) over text and images with calibrated probabilities (System 1), escalating to normal thinking generation (System 2) when confidence is low (card).",
+  "tasks": [
+    "other",
+    "vision",
+    "general"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "LICENSE read (Apache License 2.0); base Qwen3.8-27B is Apache-2.0."
+  },
+  "architecture": {
+    "kind": "Qwen3.8-27B vision-language with a LoRA System 1 adapter and a 255-way decision head; served with vLLM plus a /v1/decide endpoint",
+    "params_total_b": 27.0,
+    "context_native": 262144,
+    "why_this_design": "card: System 1 gives a calibrated probability per option in one forward pass (about half a second for a ranking), System 2 reasons only below a confidence threshold; the vision encoder is unchanged and the adapter was trained on text only"
+  },
+  "variants": [
+    {
+      "repo": "autotrust/AutoTrust-Decider-Pro-Vision-27B",
+      "format": "safetensors BF16 plus LoRA adapter_vllm",
+      "size_gb": 56.0,
+      "official": true
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "no",
+      "variant": "BF16 (56 GB total, no quantization found)",
+      "basis": "estimate",
+      "notes": "56 GB against a VRAM budget of 9.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-16gb": {
+      "fits": "no",
+      "variant": "BF16 (56 GB total, no quantization found)",
+      "basis": "estimate",
+      "notes": "56 GB against a VRAM budget of 13.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-24gb": {
+      "fits": "no",
+      "variant": "BF16 (56 GB total, no quantization found)",
+      "basis": "estimate",
+      "notes": "56 GB against a VRAM budget of 21.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-32gb": {
+      "fits": "no",
+      "variant": "BF16 (56 GB total, no quantization found)",
+      "basis": "estimate",
+      "notes": "56 GB against a VRAM budget of 29.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "BF16 (56 GB total, no quantization found)",
+      "basis": "estimate",
+      "notes": "56 GB against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "no",
+      "variant": "BF16 (56 GB total, no quantization found)",
+      "basis": "estimate",
+      "notes": "56 GB against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "no",
+      "variant": "BF16 (56 GB total, no quantization found)",
+      "basis": "estimate",
+      "notes": "56 GB against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "vLLM with serve.sh and POST /v1/decide"
+    ]
+  },
+  "benchmarks": [
+    {
+      "name": "Jev Decision Index 0.3 Vision board, Full score",
+      "score": 69.82,
+      "kind": "independent",
+      "variant": "board by a community Space; as quoted on the card (rank 1 of 20; public 72.78, private 66.86, ECE 0.019; Solomon v1.1 67.66, Xor 1.2 64.30)",
+      "date": "2026-10-07",
+      "source": "https://huggingface.co/autotrust/AutoTrust-Decider-Pro-Vision-27B"
+    },
+    {
+      "name": "ERQA (embodied reasoning QA, 400 questions)",
+      "score": "53.8 one pass / 61.5 with thinking",
+      "unit": "%",
+      "kind": "vendor",
+      "variant": "BF16, one B200",
+      "source": "https://huggingface.co/autotrust/AutoTrust-Decider-Pro-Vision-27B"
+    },
+    {
+      "name": "six public decision benchmarks, mean",
+      "score": 84.07,
+      "kind": "vendor",
+      "variant": "JEV-27B text; TypeSafe Jev 1.13 hosted 83.85, NeoHorse-Jev-4B 77.70",
+      "source": "https://huggingface.co/autotrust/AutoTrust-Decider-Pro-Vision-27B"
+    },
+    {
+      "name": "VL-RewardBench accuracy",
+      "score": 78.3,
+      "unit": "%",
+      "kind": "vendor",
+      "variant": "System 1",
+      "source": "https://huggingface.co/autotrust/AutoTrust-Decider-Pro-Vision-27B"
+    },
+    {
+      "name": "HumanEval pass@1 (System 2)",
+      "score": 78.0,
+      "unit": "%",
+      "kind": "vendor",
+      "variant": "identical to Qwen3.8-27B",
+      "source": "https://huggingface.co/autotrust/AutoTrust-Decider-Pro-Vision-27B"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "A decision model reads a state (text, JSON, images) and a schema of typed questions and returns calibrated probabilities for every option in one forward pass; it does not generate text.",
+      "zero-shot image decisions although the adapter saw only text",
+      "calibration error 0.019 on the vision board"
+    ],
+    "weaknesses": [
+      "benchmark claims lean on the vendor's own demo corpus and a labelled-by-teacher distillation (KL to the teacher's distributions)",
+      "56 GB BF16 with no quantized release"
+    ],
+    "best_for": [
+      "ranking, routing, moderation and judging steps; computer-use step selection from screenshots as demonstrated by the vendor"
+    ],
+    "avoid_for": [
+      "chat and coding as a replacement for a worker model"
+    ],
+    "maturity": "992k downloads and 5.8k likes within seven weeks, the highest traction among the decision models; repo renamed (card header says JEV-27B-VL)"
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Top of the community vision decision board with permissive Apache and an unmodified generator behind it, but a 27B BF16 decision classifier is a pipeline component, not a worker; no quantized form. Worth a look as a local router/judge if Tona adds typed-decision endpoints.",
+    "blockers": [
+      "needs a custom /v1/decide decoding path",
+      "no quantization, 56 GB"
+    ]
+  },
+  "open_questions": [
+    "why traction is far above the other decision models (download counts not explained)",
+    "independent confirmation of the board score (the board page itself was not opened)",
+    "quality after Q4/Q8 quantization"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/autotrust/AutoTrust-Decider-Pro-Vision-27B",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README read; the card is titled autotrust/JEV-27B-VL"
+    },
+    {
+      "url": "https://huggingface.co/autotrust/AutoTrust-Decider-Pro-Vision-27B/raw/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "Apache text"
+    },
+    {
+      "url": "https://huggingface.co/api/models/autotrust/AutoTrust-Decider-Pro-Vision-27B?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "size"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

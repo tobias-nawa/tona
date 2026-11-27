@@ -1,0 +1,192 @@
+{
+  "id": "audio8-tts-realistic-air",
+  "name": "Audio8-TTS-Realistic-Air (0.6B)",
+  "vendor": "Edge0",
+  "release_date": "2026-10-14",
+  "lineage": {
+    "base_model": "Audio8-TTS-Preview-0.6b",
+    "how_derived": "successor with improved realism and 12 more languages (card)",
+    "family": "Audio8"
+  },
+  "purpose": "More realistic speech and more languages in a compact 0.6B model with zero-shot voice cloning (card).",
+  "tasks": [
+    "speech-synthesis"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "audio"
+    ],
+    "output": [
+      "audio"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "zh",
+      "en",
+      "ja",
+      "ko",
+      "de",
+      "fr",
+      "es",
+      "it",
+      "ru",
+      "ar",
+      "fi",
+      "hi",
+      "id",
+      "ms",
+      "nl",
+      "no",
+      "pl"
+    ],
+    "programming": {}
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "LICENSE file in the HF repo is the Apache License 2.0 (header opened); card tag apache-2.0. Not read in full."
+  },
+  "architecture": {
+    "kind": "autoregressive codec-token TTS (custom ArkttsModel, attention QKV bias, codebook 4096) with a separate 44.1 kHz neural codec; 601M main-model parameters",
+    "params_total_b": 0.601
+  },
+  "variants": [
+    {
+      "repo": "Edge0/Audio8-TTS-Realistic-Air",
+      "format": "safetensors + codec",
+      "official": true,
+      "size_gb": 6.33,
+      "notes": "repo total per HF API (includes codec, GGUF bundle under llama-cpp/)"
+    },
+    {
+      "repo": "Edge0/Audio8-TTS-Realistic-Air",
+      "format": "llama.cpp F32 bundle",
+      "official": true,
+      "notes": "native local inference with voice cloning and streaming through the project's llama.cpp patch"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "variant": "0.6B model, GGUF bundle F32",
+      "basis": "estimate",
+      "notes": "6.3 GB repo total including all formats; the 0.6B model itself is far smaller"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "0.6B model, GGUF bundle F32",
+      "basis": "estimate",
+      "notes": "6.3 GB repo total including all formats; the 0.6B model itself is far smaller"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "0.6B model, GGUF bundle F32",
+      "basis": "estimate",
+      "notes": "6.3 GB repo total including all formats; the 0.6B model itself is far smaller"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "0.6B model, GGUF bundle F32",
+      "basis": "estimate",
+      "notes": "6.3 GB repo total including all formats; the 0.6B model itself is far smaller"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "variant": "0.6B model, GGUF bundle F32",
+      "basis": "estimate",
+      "notes": "6.3 GB repo total including all formats; the 0.6B model itself is far smaller"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "0.6B model, GGUF bundle F32",
+      "basis": "estimate",
+      "notes": "6.3 GB repo total including all formats; the 0.6B model itself is far smaller"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "0.6B model, GGUF bundle F32",
+      "basis": "estimate",
+      "notes": "6.3 GB repo total including all formats; the 0.6B model itself is far smaller"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "partial",
+    "other": [
+      "SGLang Omni adapter (paged attention, batching, OpenAI-compatible speech API)",
+      "Transformers custom code"
+    ],
+    "notes": "Card: use the project's own 'Audio8 runtime and patch' for llama.cpp; macOS: CPU, Metal experimental."
+  },
+  "benchmarks": [
+    {
+      "name": "Seed-TTS English/Chinese error (WER/CER)",
+      "score": 1.25,
+      "kind": "vendor",
+      "source": "https://huggingface.co/Edge0/Audio8-TTS-Realistic-Air",
+      "unit": "% error",
+      "variant": "Realistic Air 0.6B",
+      "harness": "card's own report; speaker similarity 0.704"
+    },
+    {
+      "name": "CV3 9 core languages error",
+      "score": 4.86,
+      "kind": "vendor",
+      "source": "https://huggingface.co/Edge0/Audio8-TTS-Realistic-Air",
+      "unit": "% error",
+      "variant": "Realistic Air",
+      "harness": "same table: Qwen3-TTS-1.7B 7.73, Fish S2 Pro 4.49, Higgs Audio v3 4.41, VoxCPM2 5.35; mixed evaluation pipelines per card"
+    },
+    {
+      "name": "MiniMax 24-language error",
+      "score": 5.89,
+      "kind": "vendor",
+      "source": "https://huggingface.co/Edge0/Audio8-TTS-Realistic-Air",
+      "unit": "% error",
+      "variant": "Realistic Air",
+      "harness": "Higgs Audio v3 2.74, Fish S2 Pro 4.40, MOSS-TTS-v1.5 3.78 in the same table"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "23 languages including German, 0.6B, zero-shot cloning, Apache-2.0",
+      "native llama.cpp-based local runtime"
+    ],
+    "weaknesses": [
+      "card warns metrics measure intelligibility and similarity, not perceived realism",
+      "language quality varies"
+    ],
+    "maturity": "24k downloads, 534 likes in 5 weeks; the Edge0 org has several Audio8 models and the ASR above."
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "Small, Apache-2.0, German supported, cloning, and a llama.cpp-style native runtime: a strong small TTS candidate next to Qwen3-TTS and Fish S2 Pro. Needs a German listening test and an A/B against those before an offer; the card's comparison mixes evaluation pipelines.",
+    "blockers": [
+      "needs the vendor llama.cpp patch / Tona audio module"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/Edge0/Audio8-TTS-Realistic-Air",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README incl. evaluation tables, config.json, HF API"
+    },
+    {
+      "url": "https://huggingface.co/Edge0/Audio8-TTS-Realistic-Air/raw/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "header"
+    }
+  ],
+  "open_questions": [
+    "Own listening test for German",
+    "Language list in the front matter is truncated in the tags I read (23 supported per card text)",
+    "arXiv 2610.14776 not read"
+  ],
+  "last_checked": "2026-11-19"
+}

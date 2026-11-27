@@ -1,0 +1,146 @@
+{
+  "id": "inkling-2-small",
+  "name": "Inkling 2 Small",
+  "vendor": "Thinking Machines",
+  "release_date": "2026-11-04",
+  "purpose": "General-purpose multimodal model (text and image input) for developers building agentic and tool-use systems, coding assistants, chatbots and RAG (card).",
+  "tasks": [
+    "general",
+    "coding",
+    "vision"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en",
+      "many"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0 (card tag and license_link)",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card links the Apache-2.0 text; no LICENSE file in the repo; an acceptable-use policy is linked. Text not read."
+  },
+  "architecture": {
+    "kind": "multimodal MoE, 48 layers, hybrid local and global attention",
+    "params_total_b": 594,
+    "params_active_b": 17,
+    "layers": 48,
+    "attention": "GQA 48 Q / 8 KV heads, head dim 128, hybrid local and global layers",
+    "recurrent": "none",
+    "experts": 384,
+    "experts_active": 8,
+    "context_native": 1048576,
+    "drafter": "none stated"
+  },
+  "variants": [
+    {
+      "repo": "thinkingmachines/Inkling-2-Small",
+      "format": "safetensors MXFP8",
+      "size_gb": 393.51,
+      "official": true,
+      "notes": "an NVFP4 repo also exists; the card names MXFP8 and NVFP4 numerics"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "no",
+      "variant": "MXFP8 safetensors",
+      "basis": "estimate",
+      "notes": "393.51 GB file exceeds the 9.6 GB VRAM plus 50 GB RAM budget"
+    },
+    "pc-16gb": {
+      "fits": "no",
+      "variant": "MXFP8 safetensors",
+      "basis": "estimate",
+      "notes": "393.51 GB file exceeds the 13.6 GB VRAM plus 50 GB RAM budget"
+    },
+    "pc-24gb": {
+      "fits": "no",
+      "variant": "MXFP8 safetensors",
+      "basis": "estimate",
+      "notes": "393.51 GB file exceeds the 21.6 GB VRAM plus 82 GB RAM budget"
+    },
+    "pc-32gb": {
+      "fits": "no",
+      "variant": "MXFP8 safetensors",
+      "basis": "estimate",
+      "notes": "393.51 GB file exceeds the 29.6 GB VRAM plus 82 GB RAM budget"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "MXFP8 safetensors",
+      "basis": "estimate",
+      "notes": "393.51 GB file against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "no",
+      "variant": "MXFP8 safetensors",
+      "basis": "estimate",
+      "notes": "393.51 GB file against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "no",
+      "variant": "MXFP8 safetensors",
+      "basis": "estimate",
+      "notes": "393.51 GB file against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "unknown",
+    "other": [
+      "SGLang",
+      "vLLM",
+      "TokenSpeed",
+      "Unsloth"
+    ],
+    "notes": "Recipes for several server engines."
+  },
+  "benchmarks": [],
+  "soft": {
+    "strengths": [
+      "the teacher Nous Research chose for Arete-27B, 'the best open model' for its target per that card"
+    ],
+    "weaknesses": [
+      "594B total: beyond all our classes"
+    ],
+    "maturity": "37k downloads, 565 likes"
+  },
+  "tona_fit": {
+    "verdict": "reject",
+    "reason": "Frontier size (394 GB at MXFP8). Recorded because it is the distillation teacher for Arete-27B and a reference for open models.",
+    "blockers": [
+      "size"
+    ]
+  },
+  "open_questions": [
+    "benchmark table (the card table did not parse)",
+    "smaller Inkling models"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/thinkingmachines/Inkling-2-Small",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README, config.json read"
+    },
+    {
+      "url": "https://huggingface.co/NousResearch/Arete-27B",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "names Inkling as teacher"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

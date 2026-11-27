@@ -1,0 +1,168 @@
+{
+  "id": "arete-27b",
+  "name": "Arete-27B",
+  "vendor": "Nous Research",
+  "release_date": "2026-11-06",
+  "lineage": {
+    "family": "Qwen3.8",
+    "base_model": "Qwen/Qwen3.8-27B",
+    "how_derived": "supervised fine-tuning only (52.8M tokens, 2 epochs, 1,202 steps, 64k context, text-only, all LM weights, MTP head disabled) on 20k prompts answered by the open teacher Inkling"
+  },
+  "purpose": "Post-train Qwen3.8-27B to reduce refusals, deflections and CCP-framed answers on politically sensitive topics (seven value categories); intended for general assistance and agentic work where users want this viewpoint change, and for research on how post-training shifts values (card).",
+  "tasks": [
+    "general"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Apache License 2.0 text read in the repo LICENSE file."
+  },
+  "architecture": {
+    "kind": "hybrid Gated-DeltaNet plus full attention dense transformer (Qwen3.8-27B layout, 3:1)",
+    "gguf_arch": "qwen35",
+    "params_total_b": 27,
+    "params_active_b": 27,
+    "attention": "linear attention with a full-attention layer every 4th layer, head dim 256, hidden 5120",
+    "recurrent": "Gated DeltaNet",
+    "drafter": "MTP head exists in the base but was disabled during training"
+  },
+  "variants": [
+    {
+      "repo": "NousResearch/Arete-27B",
+      "format": "safetensors BF16",
+      "size_gb": 54.74,
+      "official": true
+    },
+    {
+      "repo": "bartowski/NousResearch_Arete-27B-GGUF",
+      "format": "GGUF Q4_K_M",
+      "size_gb": 17.2,
+      "official": false,
+      "notes": "IQ4_XS 15.24, Q3_K_M 13.17, IQ2_M 10.28, Q6_K 23.62, Q8_0 28.67 GB; 92k downloads"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "marginal",
+      "variant": "bartowski GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "17.2 GB file against 9.6 GB VRAM plus 50 GB RAM budget; part of the dense weights stream from RAM (decode is bandwidth bound)"
+    },
+    "pc-16gb": {
+      "fits": "marginal",
+      "variant": "bartowski GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "17.2 GB file against 13.6 GB VRAM plus 50 GB RAM budget; part of the dense weights stream from RAM (decode is bandwidth bound)"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "bartowski GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "17.2 GB file fits the VRAM budget (21.6 GB) with room for KV"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "bartowski GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "17.2 GB file fits the VRAM budget (29.6 GB) with room for KV"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "bartowski GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "17.2 GB file against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "bartowski GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "17.2 GB file against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "bartowski GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "17.2 GB file against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "same architecture as Qwen3.8-27B"
+    ],
+    "notes": "Identical layout to the base, so whatever runs Qwen3.8-27B runs it; the card does not say whether the vision encoder is kept in the GGUF (mmproj not checked)."
+  },
+  "benchmarks": [
+    {
+      "name": "Propaganda_Eval fact score (0-5, 803 prompts)",
+      "score": 2.98,
+      "kind": "vendor",
+      "variant": "BF16, step 1,202; Qwen3.8-27B base 2.32; LLM judge Grok 4.7",
+      "source": "https://huggingface.co/NousResearch/Arete-27B"
+    },
+    {
+      "name": "Propaganda_Eval share of answers with propaganda",
+      "score": 0.9,
+      "unit": "%",
+      "kind": "vendor",
+      "variant": "BF16; base 22%",
+      "source": "https://huggingface.co/NousResearch/Arete-27B"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "same machinery and memory as Qwen3.8-27B",
+      "vendor reports no meaningful regression on general-capability and agentic benchmarks it ran (numbers not read)"
+    ],
+    "weaknesses": [
+      "a values-alignment fine-tune of one viewpoint: its purpose is a behaviour change, not better coding or reasoning",
+      "the evaluation and the judge are the vendor's"
+    ],
+    "behavior": "SFT only, no RL; teacher is Inkling, training data text-only",
+    "maturity": "Nous Research is an established open-model lab; 13k downloads of the main repo, 92k of the bartowski GGUF, 775 likes"
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "For the coding-worker use case there is no gain over Qwen3.8-27B; it only matters for users who want its viewpoint behaviour on political topics. Apache-2.0, 17 GB at Q4_K_M, runs wherever the base runs.",
+    "blockers": [
+      "no coding or agentic regression numbers read"
+    ]
+  },
+  "open_questions": [
+    "the general and agentic regression table from the blog",
+    "whether the released training dataset exists and its licence",
+    "vision weights preserved or not"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/NousResearch/Arete-27B",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README, config.json, LICENSE read"
+    },
+    {
+      "url": "https://huggingface.co/api/models/bartowski/NousResearch_Arete-27B-GGUF?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "GGUF sizes"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

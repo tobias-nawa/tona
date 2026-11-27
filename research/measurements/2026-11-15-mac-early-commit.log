@@ -1,0 +1,81 @@
+== hw_report
+### Test conditions
+
+- CPU: Apple M1 Max, 10 cores / 10 threads
+- GPU: Apple M1 Max, 32.0 GiB unified memory
+- RAM: 32.0 GiB
+- OS: macOS 27.0.1, kernel 27.0.0 (arm64)
+- Driver and toolkit: no toolkit found
+- TONA_* variables: none set
+- cgroup limits of this shell: none set
+- Load average (1, 5, 15 min): 1.27, 3.95, 3.55
+- CPU use by other programs over 0.5 s: 4.2 % of all threads
+- sandbox: no
+- Commit: `c3a3f53` (dirty tree)
+== before
+- Quiet check (2026-11-15 03:44:52): ok
+== after
+- Quiet check (2026-11-15 05:03:57): do not measure
+  - do not measure: the GPU is 98 % busy
+- Quiet check (2026-11-15 05:04:17): ok
+== hw_report
+### Test conditions
+
+- CPU: Apple M1 Max, 10 cores / 10 threads
+- GPU: Apple M1 Max, 32.0 GiB unified memory
+- RAM: 32.0 GiB
+- OS: macOS 27.0.1, kernel 27.0.0 (arm64)
+- Driver and toolkit: no toolkit found
+- TONA_* variables: none set
+- cgroup limits of this shell: none set
+- Load average (1, 5, 15 min): 0.95, 1.21, 1.32
+- CPU use by other programs over 0.5 s: 4.2 % of all threads
+- sandbox: no
+- Commit: `c3a3f53` (dirty tree)
+== before
+- Quiet check (2026-11-15 05:07:11): ok
+== after
+- Quiet check (2026-11-15 06:04:02): do not measure
+  - do not measure: the GPU is 98 % busy
+- Quiet check (2026-11-15 06:04:22): ok
+== hw_report
+### Test conditions
+
+- CPU: Apple M1 Max, 10 cores / 10 threads
+- GPU: Apple M1 Max, 32.0 GiB unified memory
+- RAM: 32.0 GiB
+- OS: macOS 27.0.1, kernel 27.0.0 (arm64)
+- Driver and toolkit: no toolkit found
+- TONA_* variables: none set
+- cgroup limits of this shell: none set
+- Load average (1, 5, 15 min): 1.5, 3.41, 3.71
+- CPU use by other programs over 0.5 s: 2.9 % of all threads
+- sandbox: no
+- Commit: `af22809` (dirty tree)
+== before
+- Quiet check (2026-11-15 06:25:34): ok
+== after
+- Quiet check (2026-11-15 06:54:39): do not measure
+  - do not measure: the GPU is 98 % busy
+- Quiet check (2026-11-15 06:54:59): ok
+== hw_report
+### Test conditions
+
+- CPU: Apple M1 Max, 10 cores / 10 threads
+- GPU: Apple M1 Max, 32.0 GiB unified memory
+- RAM: 32.0 GiB
+- OS: macOS 27.0.1, kernel 27.0.0 (arm64)
+- Driver and toolkit: no toolkit found
+- TONA_* variables: none set
+- cgroup limits of this shell: none set
+- Load average (1, 5, 15 min): 1.84, 1.66, 1.82
+- CPU use by other programs over 0.5 s: 4.1 % of all threads
+- sandbox: no
+- Commit: `af22809` (dirty tree)
+== before
+- Quiet check (2026-11-15 06:57:54): ok
+== after
+- Quiet check (2026-11-15 07:26:59): do not measure
+  - do not measure: the GPU is 98 % busy
+- Quiet check (2026-11-15 07:27:20): warning
+  - warning: other programs use 8.4 % of all CPU threads

@@ -1,0 +1,96 @@
+{
+  "id": "hy4-flash",
+  "name": "Hy4 flash",
+  "vendor": "Tencent",
+  "release_date": "2026-11-17",
+  "lineage": {
+    "family": "Hy4",
+    "base_model": "tencent/Hy4-flash-base",
+    "how_derived": "post-training of the pre-trained Hy4 flash base: self-distillation from Hy4, then reinforcement learning that cuts average end-to-end output tokens by 50 % (card)"
+  },
+  "purpose": "The card calls it Tencent's most cost-effective Hy model to date, tuned for everyday productivity tasks: deep search, document processing, slide creation, simple frontend demos and computer use. The vendor recommends the larger Hy4 for complex long-horizon software engineering.",
+  "tasks": ["general", "documents", "coding", "vision"],
+  "modalities": {"input": ["text", "image"], "output": ["text"]},
+  "license": {
+    "name": "Tencent Hy License, Version 1.0",
+    "verified": true,
+    "commercial_use": "limited",
+    "redistribution": "yes",
+    "notes": "LICENSE text read (13.9 KB, Apache-2.0 derived). Use, reproduction and distribution are granted as in Apache-2.0. Section 10 adds one commercial condition: whoever operates a Model-as-a-Service business (third parties get remote inference or fine-tuning access, e.g. via API) needs a separate written licence from Tencent if worldwide gross revenue exceeds US$50 million in any 12 months, or before use in a product with more than 100 million monthly active users. Internal use is exempt (10.3). No territory exclusion found in the text. Contact hy_partners@tencent.com. For a local single-user engine like Tona the MaaS clause does not bite."
+  },
+  "architecture": {
+    "kind": "sparse MoE with LatentMoE, hybrid sparse (IndexPool) and sliding-window MLA attention, Engram n-gram embedding tables, identity Hyper-Connections, vision encoder",
+    "gguf_arch": "unknown (llama.cpp support is in the open PR #32517)",
+    "params_total_b": 220,
+    "params_active_b": 12,
+    "layers": 42,
+    "attention": "Multi-head Latent Attention: 12 sparse layers (selection of up to 2048 tokens, 32 heads) and 30 sliding-window layers (512 tokens, 64 heads) in a 1:3 interleave, layer pattern 2 sparse then 10 times (3 SWA + 1 sparse)",
+    "recurrent": "none",
+    "experts": 512,
+    "experts_active": 16,
+    "context_native": 1048576,
+    "context_max": 1048576,
+    "drafter": "DFly2, built-in 5-layer drafter of 0.85B parameters that shares the target's KV cache and sparse indices (card); public GGUFs from the vendor do not need it, the public checkpoint has no MTP block (AtomicChat card)",
+    "why_this_design": "The card gives the reasons: hybrid attention, LatentMoE and Engram together reduce the KV cache to 1/24 of Hy3 and 1/6 of Hy4, aiming at cost per task. 155.5B parameters are the network (11.3B active text), 63.5B are Engram tables, 0.43B ViT, 0.85B DFly2."
+  },
+  "variants": [
+    {"repo": "tencent/Hy4-flash", "format": "safetensors BF16", "size_gb": 440.53, "official": true},
+    {"repo": "tencent/Hy4-flash-FP8", "format": "safetensors FP8", "size_gb": 287.07, "official": true},
+    {"repo": "AngelSlim/Hy4-flash-GGUF", "format": "GGUF IQ2_AH (about 3.6 bits per weight excluding Engram)", "size_gb": 135.0, "official": true, "notes": "Tencent's AngelSlim team, linked from the card for end-to-end tests. In RAM about 71.6 GB without the Engram table (63.4 GB, read per token, may stay on SSD). Other files: Q3_K 155.37 GB (92.0 GB resident), Q4_K_M 168.35 GB (105.0 GB resident), SPARK-4Bit 162.51 GB, SPARK-4Bit-Fast 159.61 GB, mmproj 1.04 GB. Speed (vendor, M5 Max 128 GB, 4K to 32K context): Q4_K_M decode 48 to 44 tok/s, prefill 630 to 419 tok/s; Q3_K decode 50 to 47 tok/s"},
+    {"repo": "AtomicChat/Hy4-flash-GGUF", "format": "GGUF experts about 2.3 bits (IQ2_S/IQ2_XXS), rest Q8_0, Engram Q4_0 in a second file", "size_gb": 84.7, "official": false, "notes": "49.05 GB resident (everything but Engram) plus 35.64 GB Engram that stays on SSD, mmproj F16 0.97 GB. Built for 64 GB machines; experimental. Measured against BF16: mean KLD 0.725, same top token 76.4 % (Tencent Q4_K_M 0.198 and 89.3 %, IQ2_AH 0.651 and 77.9 %)"},
+    {"repo": "Xylolabs/Hy4-flash-GGUF", "format": "GGUF IQ2_M to Q8_0", "size_gb": 119.62, "official": false, "notes": "IQ2_M 119.62, Q2_K 125.15, IQ3_XXS 128.25, IQ3_M 135.85, Q3_K_M 141.94, IQ4_XS 150.3, Q4_K_S 155.55, Q4_K_M 161.17, Q5_K_M 176.73, Q6_K 193.25, Q8_0 228.86 GB (Engram included in these sizes)"},
+    {"repo": "nace-ai/Hy4-flash-GGUF", "format": "GGUF Q3_K_M 107.49 GB, Q4_K_M 127.22 GB", "size_gb": 107.49, "official": false},
+    {"repo": "Baekpica/Hy4-flash-Mixed-Quant-GGUF", "format": "GGUF mixed quant, experts Q5, Engram as FP8 files on SSD", "size_gb": 103.93, "official": false, "notes": "MQ-Q5-Q8-SSD-ENGRAM-FP8 103.93 GB plus four Engram files of 16.48 GB each and a DFly2 drafter (Q8_0 1.02 GB); MQ-Q5-SSD-ENGRAM-FP8 106.21 GB; not opened beyond file sizes"}
+  ],
+  "hardware_fit": {
+    "pc-12gb": {"fits": "marginal", "variant": "AtomicChat 2.3-bit, 49.1 GB resident", "basis": "estimate", "notes": "49.1 GB against a budget of 9.6 GB VRAM + about 50 GB RAM = 60 GB leaves about 11 GB for KV and the OS; the 35.6 GB Engram table stays on SSD; quality at this size is poor (top-token agreement 76.4 % vs BF16)"},
+    "pc-16gb": {"fits": "marginal", "variant": "AtomicChat 2.3-bit, 49.1 GB resident", "basis": "estimate", "notes": "49.1 GB against 13.6 GB VRAM + about 50 GB RAM = 64 GB; Tencent IQ2_AH (71.6 GB resident) does not fit"},
+    "pc-24gb": {"fits": "marginal", "variant": "Tencent IQ2_AH, 71.6 GB resident", "basis": "estimate", "notes": "21.6 GB VRAM + about 82 GB RAM = 104 GB: IQ2_AH 71.6 GB fits with room; Q3_K (92 GB resident) is tight; Q4_K_M 105 GB resident does not; 2-bit quality (KLD 0.65) is poor"},
+    "pc-32gb": {"fits": "yes", "variant": "Tencent Q4_K_M, 105.0 GB resident", "basis": "estimate", "notes": "29.6 GB VRAM + 128 GB RAM = about 158 GB: Q4_K_M 105 GB resident plus 63.4 GB Engram on SSD fits; best quality of the public files (KLD 0.198, top-token 89.3 %)"},
+    "mac-16-24gb": {"fits": "no", "basis": "estimate", "notes": "smallest public file 49.1 GB resident against about 12 GB GPU share"},
+    "mac-32gb": {"fits": "no", "basis": "estimate", "notes": "49.1 GB resident against about 22 GB GPU share"},
+    "mac-64gb+": {"fits": "marginal", "variant": "AtomicChat 2.3-bit on 64 GB; Q4_K_M on 128 GB", "basis": "estimate", "notes": "64 GB Mac has about 52 GB GPU share against 49.1 GB resident plus KV (AtomicChat says it is built for 64 GB and raises iogpu.wired_limit_mb to 57344, not measured on a Mac); Tencent measured Q4_K_M and Q3_K on an M5 Max with 128 GB at 44 to 50 tok/s decode"}
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "partial",
+    "other": ["vLLM", "SGLang", "Transformers 5.23", "MLX (TensorFold 4-bit and 8-bit MTP repos, community)", "EXL3 (LibertAIDAI 3 to 4 bpw, community)"],
+    "notes": "llama.cpp support is in the open pull request ggml-org/llama.cpp#32517 (not merged as of the card dates 2026-11-16 to 11-18); stock llama.cpp, LM Studio and Ollama do not load the GGUFs yet (AtomicChat card). The model has an Engram table that must be handled by an engine (hashed n-gram lookups, mostly cold)."
+  },
+  "benchmarks": [
+    {"name": "WorkIndex (internal, 8 office and productivity sets)", "score": 42.1, "kind": "vendor", "unit": "score (Hy4 preview 39.7, Hy4 51.4)", "variant": "BF16", "source": "https://huggingface.co/tencent/Hy4-flash"},
+    {"name": "Blind user evaluation, 85 internal users, 259 tasks", "score": "2.79/4 (Claude Haiku 5.5 2.81/4)", "kind": "vendor", "unit": "satisfaction; median completion 6.7 min; RMB 0.26 per task", "variant": "BF16", "source": "https://huggingface.co/tencent/Hy4-flash"},
+    {"name": "MMLU-Pro (base, 5-shot)", "score": 71.1, "kind": "vendor", "variant": "Hy4 flash Base (DeepSeek-V4-flash-Base 68.6)", "source": "https://huggingface.co/tencent/Hy4-flash"},
+    {"name": "MBPP-plus (base, 3-shot)", "score": 73.7, "kind": "vendor", "variant": "Hy4 flash Base (DeepSeek-V4-flash-Base 76.8, Hy4 Base 74.0)", "source": "https://huggingface.co/tencent/Hy4-flash"}
+  ],
+  "soft": {
+    "strengths": ["12B active parameters and a small KV cache for 1M context (vendor)", "Engram table (63.5B) is read sparsely, so only about 49 to 105 GB must be resident in the public GGUFs", "Built-in speculative drafter and vendor-reported decode past 150 tok/s on datacenter serving"],
+    "weaknesses": ["Unusually sensitive to quantisation: even Q8_0 picks a different top token than BF16 on 8.2 % of tokens (AtomicChat, KLD study), their reading is that rounding changes expert routing", "Vendor positions it below Hy4 for long-horizon software engineering", "Benchmark figures on the card are images; no independent score found"],
+    "behavior": "Recommended sampling temperature 0.9, top_p 1.0 (card). Reasoning on by default; with reasoning_effort no_think the 2.3-bit AtomicChat file answered in prose instead of calling a tool, while its Q8_0 called the tool in both modes (AtomicChat card).",
+    "best_for": ["document and slide work", "deep search and computer-use agents", "64 to 128 GB machines that can hold a 2- to 4-bit build"],
+    "avoid_for": ["long-horizon software engineering (vendor recommends Hy4)", "tool calling in no_think mode at 2-bit"],
+    "maturity": "Tencent Hunyuan line, new family (card compares with Hy3 preview and Hy4); repos created 2026-11-16 to 11-17, so community experience is days old."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Attractive size for the 64 GB class (12B active, 49 GB resident at 2.3 bits), licence is permissive for local use, but there is no independent score, the vendor itself points coding-heavy users to the larger Hy4, quantisation damage is large for this model, and llama.cpp support is an unmerged pull request. Revisit when independent coding numbers and a Q3/Q4 quality study exist.",
+    "blockers": ["Tona has no module for Engram, LatentMoE and iHC (engine support, not a quality judgement)", "no independent benchmark", "high quantisation sensitivity"]
+  },
+  "sources": [
+    {"url": "https://huggingface.co/tencent/Hy4-flash", "kind": "primary", "checked": "2026-11-19", "note": "README, config.json, LICENSE, repo created 2026-11-17 via HF API, file sizes"},
+    {"url": "https://huggingface.co/tencent/Hy4-flash/blob/main/LICENSE", "kind": "primary", "checked": "2026-11-19", "note": "Tencent Hy License 1.0 read in full (section 10 MaaS terms)"},
+    {"url": "https://huggingface.co/AngelSlim/Hy4-flash-GGUF", "kind": "primary", "checked": "2026-11-19", "note": "card with sizes, speed on M5 Max 128 GB, and PR link; file sizes via the HF tree API"},
+    {"url": "https://huggingface.co/AtomicChat/Hy4-flash-GGUF", "kind": "primary", "checked": "2026-11-19", "note": "card with KLD table and run notes; file sizes via the HF tree API"},
+    {"url": "https://huggingface.co/Xylolabs/Hy4-flash-GGUF", "kind": "primary", "checked": "2026-11-19", "note": "file sizes via the HF tree API only"},
+    {"url": "https://huggingface.co/nace-ai/Hy4-flash-GGUF", "kind": "primary", "checked": "2026-11-19", "note": "file sizes via the HF tree API only"},
+    {"url": "https://huggingface.co/Baekpica/Hy4-flash-Mixed-Quant-GGUF", "kind": "primary", "checked": "2026-11-19", "note": "file sizes via the HF tree API only"},
+    {"url": "https://huggingface.co/tencent/Hy4-flash-FP8", "kind": "primary", "checked": "2026-11-19", "note": "file size via the HF tree API only"}
+  ],
+  "open_questions": [
+    "Independent coding and agent benchmarks (the card's benchmark appendix is an image)",
+    "Whether llama.cpp PR #32517 is merged and which quantisation holds quality for the router-sensitive experts",
+    "Task-level quality of the 2.3-bit AtomicChat file (only KLD and hand checks exist)",
+    "Whether the larger Hy4 sibling is open-weight and how it compares (the card compares with it but links only flash and flash-base)"
+  ],
+  "last_checked": "2026-11-19"
+}

@@ -1,0 +1,238 @@
+{
+  "id": "nanbeige4.3-33b",
+  "name": "Nanbeige4.3-33B",
+  "vendor": "Nanbeige LLM Lab (Boss Zhipin)",
+  "release_date": "2026-10-24",
+  "lineage": {
+    "family": "Nanbeige4.3",
+    "base_model": "Nanbeige/Nanbeige4.3-33B-Base",
+    "how_derived": "post-trained flagship teacher agent; a small-model distillation pipeline (for example Nanbeige4.3-3B) is announced"
+  },
+  "purpose": "Push the boundaries of lightweight agents: build a high-capacity teacher agent first, then distil advanced agentic capabilities into smaller models; also offered as a cost-effective model for direct deployment, strong in complex coding and professional cowork tasks (card).",
+  "tasks": [
+    "coding",
+    "general",
+    "math"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en",
+      "zh"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card tag apache-2.0; the repo has no LICENSE file, text not read."
+  },
+  "architecture": {
+    "kind": "dense transformer (Llama architecture in the config)",
+    "gguf_arch": "llama",
+    "params_total_b": 33,
+    "params_active_b": 33,
+    "layers": 52,
+    "attention": "GQA 56 Q / 8 KV heads, head dim 128, hidden 7168",
+    "recurrent": "none",
+    "context_native": 524288,
+    "drafter": "none stated"
+  },
+  "variants": [
+    {
+      "repo": "Nanbeige/Nanbeige4.3-33B",
+      "format": "safetensors BF16",
+      "size_gb": 66.26,
+      "official": true
+    },
+    {
+      "repo": "bartowski/Nanbeige_Nanbeige4.3-33B-GGUF",
+      "format": "GGUF Q4_K_M",
+      "size_gb": 20.79,
+      "official": false,
+      "notes": "IQ4_XS 18.64, IQ3_M 17.8, IQ2_M 12.19, Q6_K 29.02, Q8_0 35.2 GB; 165k downloads"
+    },
+    {
+      "repo": "AtomicChat/Nanbeige4.3-33B-GGUF",
+      "format": "GGUF",
+      "official": false,
+      "notes": "68k downloads; sizes not checked"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "marginal",
+      "variant": "bartowski GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "20.8 GB file against 9.6 GB VRAM plus 50 GB RAM budget; part streams from RAM (dense: decode is bandwidth bound)"
+    },
+    "pc-16gb": {
+      "fits": "marginal",
+      "variant": "bartowski GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "20.8 GB file against 13.6 GB VRAM plus 50 GB RAM budget; part streams from RAM (dense: decode is bandwidth bound)"
+    },
+    "pc-24gb": {
+      "fits": "marginal",
+      "variant": "bartowski GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "20.8 GB file against 21.6 GB VRAM plus 82 GB RAM budget; part streams from RAM (dense: decode is bandwidth bound)"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "bartowski GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (29.6 GB)"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "bartowski GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "20.8 GB file against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "marginal",
+      "variant": "bartowski GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "20.8 GB file against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "bartowski GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "20.8 GB file against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "Transformers",
+      "vLLM/SGLang (not checked)"
+    ],
+    "notes": "Plain Llama architecture; chat template has enable_thinking, preserve_thinking and tool_call_format (xml recommended)."
+  },
+  "benchmarks": [
+    {
+      "name": "Terminal-Bench 2.1 (Terminus 2)",
+      "score": 80.9,
+      "kind": "vendor",
+      "variant": "BF16, highest thinking effort; Qwen3.8-27B 73.0, Muse-Glimmer-30B 61.8, Gemma4-31B 47.2 under the same harness",
+      "source": "https://huggingface.co/Nanbeige/Nanbeige4.3-33B"
+    },
+    {
+      "name": "SWE-Bench Pro",
+      "score": 60.3,
+      "kind": "vendor",
+      "variant": "mini-swe-agent; Qwen3.8-27B 61.7",
+      "source": "https://huggingface.co/Nanbeige/Nanbeige4.3-33B"
+    },
+    {
+      "name": "DeepSWE",
+      "score": 65.5,
+      "kind": "vendor",
+      "variant": "Qwen3.8-27B 42.5",
+      "source": "https://huggingface.co/Nanbeige/Nanbeige4.3-33B"
+    },
+    {
+      "name": "Terminal-Bench 4.0",
+      "score": 23.8,
+      "kind": "vendor",
+      "variant": "Qwen3.8-27B 6.3",
+      "source": "https://huggingface.co/Nanbeige/Nanbeige4.3-33B"
+    },
+    {
+      "name": "NL2Repo (Claude Code harness)",
+      "score": 53.0,
+      "kind": "vendor",
+      "variant": "Qwen3.8-27B 48.3",
+      "source": "https://huggingface.co/Nanbeige/Nanbeige4.3-33B"
+    },
+    {
+      "name": "Toolathlon-Verified",
+      "score": 70.4,
+      "kind": "vendor",
+      "variant": "Qwen3.8-27B 68.5",
+      "source": "https://huggingface.co/Nanbeige/Nanbeige4.3-33B"
+    },
+    {
+      "name": "GPQA Diamond",
+      "score": 89.5,
+      "kind": "vendor",
+      "variant": "Qwen3.8-27B 89.2",
+      "source": "https://huggingface.co/Nanbeige/Nanbeige4.3-33B"
+    },
+    {
+      "name": "AIME 2026",
+      "score": 95.2,
+      "kind": "vendor",
+      "variant": "Qwen3.8-27B 94.5",
+      "source": "https://huggingface.co/Nanbeige/Nanbeige4.3-33B"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "vendor table beats Qwen3.8-27B on most agentic coding rows under one harness",
+      "512K context",
+      "recommended sampling for agent work temperature 1.0, top_p 0.95, 65,536 new tokens"
+    ],
+    "weaknesses": [
+      "all numbers are the vendor's; a 2026-10-27 hands-on review reports failures (see user_reports)",
+      "dense 33B: 20.8 GB at Q4_K_M, bandwidth-bound on 16 GB cards"
+    ],
+    "behavior": "thinking on by default; preserve_thinking=true recommended for multi-turn tool use and code agents (the vendor table uses it)",
+    "user_reports": [
+      {
+        "summary": "MindStudio hands-on test by one reviewer, run locally with vLLM: did not find an inverted yield calculation after more than an hour (flagged 14 to 15 unrelated issues, repeated context compactions) and spent 45 minutes reasoning on an HTML animation task without working code. Single-author test, methodology not published; reported through the af.net write-up.",
+        "sentiment": "negative",
+        "source": "https://af.net/realtime/boss-zhipins-nanbeige-4-3-33b-tops-benchmark-charts-but-fails-real-world-debugging-test/",
+        "date": "2026-10-27"
+      }
+    ],
+    "maturity": "third-generation family from a company outside the usual lab list; 24k downloads of the main repo, 165k of the bartowski GGUF"
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "Vendor evidence is the strongest dense 30B-class agentic table seen beside Qwen3.8-27B (Terminal-Bench 2.1 80.9 vs 73.0, DeepSWE 65.5 vs 42.5), Apache-tagged, plain Llama architecture so the GGUF runs today. Must be tested against Qwen3.8-27B with our own harness before any offer, because the only hands-on report is negative about long looping thinking.",
+    "blockers": [
+      "no independent benchmark",
+      "license text not read",
+      "thinking-loop risk reported once"
+    ]
+  },
+  "open_questions": [
+    "independent agentic benchmark (Artificial Analysis or SWE-bench leaderboards)",
+    "reproduction of the hands-on failure with the recommended sampling",
+    "German quality (card lists English and Chinese)",
+    "builder's reasons for the dense Llama layout"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/Nanbeige/Nanbeige4.3-33B",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README, config.json read"
+    },
+    {
+      "url": "https://huggingface.co/api/models/bartowski/Nanbeige_Nanbeige4.3-33B-GGUF?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "GGUF sizes"
+    },
+    {
+      "url": "https://af.net/realtime/boss-zhipins-nanbeige-4-3-33b-tops-benchmark-charts-but-fails-real-world-debugging-test/",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "news write-up of a MindStudio hands-on test, opened via fetch"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

@@ -1,0 +1,181 @@
+{
+  "id": "ling-3.0-tiny",
+  "name": "Ling-3.0-tiny",
+  "vendor": "inclusionAI (Ant Group)",
+  "release_date": "2026-08-10",
+  "lineage": {
+    "family": "Ling-3.0",
+    "how_derived": "hybrid reasoning MoE; a UBTree tree-speculative-decoding draft (Ling-3.0-tiny-UBTree, 0.37 GB, DFlash backbone with a learned bigram selector, MIT) exists for SGLang"
+  },
+  "purpose": "Strong reasoning and agentic capability at low inference cost for local and resource-constrained deployment (card).",
+  "tasks": [
+    "general",
+    "coding"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en",
+      "zh"
+    ]
+  },
+  "license": {
+    "name": "MIT (card tag)",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card tag mit; no LICENSE file in the repo, text not read."
+  },
+  "architecture": {
+    "kind": "hybrid linear-attention MoE (3 Kimi Delta Attention : 1 MLA per 4-layer block)",
+    "params_total_b": 7.9,
+    "params_active_b": 1.3,
+    "attention": "KDA and MLA 3:1",
+    "recurrent": "Kimi Delta Attention",
+    "experts": 128,
+    "experts_active": 8,
+    "drafter": "UBTree draft model (separate repo)"
+  },
+  "variants": [
+    {
+      "repo": "inclusionAI/Ling-3.0-tiny",
+      "format": "safetensors BF16",
+      "size_gb": 15.8,
+      "official": true,
+      "notes": "FP8 and INT4 weights also provided"
+    },
+    {
+      "repo": "inclusionAI/Ling-3.0-tiny-GGUF",
+      "format": "GGUF Q4_K_M",
+      "size_gb": 4.82,
+      "official": true,
+      "notes": "Q8_0 8.41 GB; 12.7k downloads; a community GGUF has 242k"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "variant": "official GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "4.82 GB file fits the VRAM budget (9.6 GB) with room for KV"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "official GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "4.82 GB file fits the VRAM budget (13.6 GB) with room for KV"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "official GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "4.82 GB file fits the VRAM budget (21.6 GB) with room for KV"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "official GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "4.82 GB file fits the VRAM budget (29.6 GB) with room for KV"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "variant": "official GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "4.82 GB file against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "official GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "4.82 GB file against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "official GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "4.82 GB file against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "SGLang",
+      "MLX 4-bit (community, 425k downloads)"
+    ],
+    "notes": "Official GGUF published; KDA support in llama.cpp not verified."
+  },
+  "benchmarks": [
+    {
+      "name": "Artificial Analysis Intelligence Index v4.1.1",
+      "score": 25,
+      "kind": "vendor",
+      "variant": "as cited by the vendor from Artificial Analysis testing",
+      "source": "https://huggingface.co/inclusionAI/Ling-3.0-tiny"
+    },
+    {
+      "name": "Artificial Analysis Agentic Index",
+      "score": 16,
+      "kind": "vendor",
+      "variant": "as cited by the vendor",
+      "source": "https://huggingface.co/inclusionAI/Ling-3.0-tiny"
+    },
+    {
+      "name": "decode speed FP8",
+      "score": "86-90",
+      "unit": "tok/s",
+      "kind": "vendor",
+      "variant": "M4 Pro MacBook, about 8.34 GiB peak at 8K context; DGX Spark 100-105",
+      "source": "https://huggingface.co/inclusionAI/Ling-3.0-tiny"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "1.3B active, 4.8 GB at Q4_K_M: fits any class and runs fast on Macs"
+    ],
+    "weaknesses": [
+      "AA index 25 is far below the 27B to 35B class"
+    ],
+    "maturity": "13k downloads, 591 likes of the main repo"
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "A candidate small helper or draft-class model for 12 GB and Mac 16 GB users; not a primary coding worker at an Intelligence Index of 25.",
+    "blockers": [
+      "licence text not read",
+      "benchmark table is an image"
+    ]
+  },
+  "open_questions": [
+    "coding benchmark values",
+    "llama.cpp KDA/MLA support"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/inclusionAI/Ling-3.0-tiny",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README read"
+    },
+    {
+      "url": "https://huggingface.co/api/models/inclusionAI/Ling-3.0-tiny-GGUF?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "GGUF sizes"
+    },
+    {
+      "url": "https://huggingface.co/inclusionAI/Ling-3.0-tiny-UBTree",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README read"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

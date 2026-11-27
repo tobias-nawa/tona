@@ -1,0 +1,22 @@
+## quiet before 21:26:24
+- Quiet check (2026-11-17 21:26:25): warning
+  - warning: 1.27 GiB of 15.9 GiB VRAM are held by others
+vram used before run 1: 1367101440
+## quiet after run 1 (32 CUs) 21:27:30
+- Quiet check (2026-11-17 21:27:31): warning
+  - warning: 2.24 GiB of 15.9 GiB VRAM are held by others
+  - warning: the system is swapping (11 pages in 1 s)
+vram used before run 2: 1367101440
+## quiet after run 2 (16 CUs) 21:30:26
+- Quiet check (2026-11-17 21:30:27): warning
+  - warning: 2.46 GiB of 15.9 GiB VRAM are held by others
+  - warning: the system is swapping (1 pages in 1 s)
+vram used before run 3: 1367101440
+## quiet after run 3 (16 CUs) 21:33:11
+- Quiet check (2026-11-17 21:33:12): warning
+  - warning: 2.8 GiB of 15.9 GiB VRAM are held by others
+vram used before run 4: 1369198592
+## quiet after run 4 (32 CUs) 21:37:49
+- Quiet check (2026-11-17 21:37:50): warning
+  - warning: 1.28 GiB of 15.9 GiB VRAM are held by others
+DONE

@@ -1,0 +1,152 @@
+{
+  "id": "vela-1.0-embedding-307m",
+  "name": "Vela-1.0 Embedding 307M",
+  "vendor": "vLLM Semantic Router project (vllm-sr)",
+  "release_date": "2026-09-12",
+  "lineage": {
+    "base_model": "vllm-sr/Vela-1.0-Encoder-307M (mmBERT-based; compared with the earlier vllm-sr/mmbert-embed-32k-2d-matryoshka)",
+    "how_derived": "embedding fine-tune of the Vela encoder",
+    "family": "Vela"
+  },
+  "purpose": "Multilingual semantic matching, retrieval and memory inside the vLLM Semantic Router: connects requests with the right context (card).",
+  "tasks": [
+    "embeddings"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "embedding"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en",
+      "ar",
+      "es",
+      "ja",
+      "zh"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0 (card tag)",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card tag; licence file not opened."
+  },
+  "architecture": {
+    "kind": "ModernBERT-style encoder, 22 layers, 768 dim, 307M parameters, 32K context, Matryoshka",
+    "params_total_b": 0.307,
+    "layers": 22,
+    "context_max": 32768
+  },
+  "variants": [
+    {
+      "repo": "vllm-sr/Vela-1.0-Encoder-307M-Embedding",
+      "format": "safetensors FP32 + ONNX",
+      "official": true,
+      "size_gb": 2.49,
+      "notes": "repo total per HF API"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "variant": "2.5 GB repo, 307M parameters",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "2.5 GB repo, 307M parameters",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "2.5 GB repo, 307M parameters",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "2.5 GB repo, 307M parameters",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "variant": "2.5 GB repo, 307M parameters",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "2.5 GB repo, 307M parameters",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "2.5 GB repo, 307M parameters",
+      "basis": "estimate",
+      "notes": "tiny model, fits every class with room for a resident LLM"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "unknown",
+    "other": [
+      "sentence-transformers",
+      "text-embeddings-inference",
+      "ONNX"
+    ]
+  },
+  "benchmarks": [
+    {
+      "name": "MTEB 2.21.0 selected tasks vs the original mmBERT embedding",
+      "score": "e.g. Banking77 74.04 (72.26), MASSIVE-en 68.12 (63.51), PAWS-X-en 71.74 (62.98), SciFact 48.28 (46.81), NFCorpus 26.13 (26.38)",
+      "kind": "vendor",
+      "source": "https://huggingface.co/vllm-sr/Vela-1.0-Encoder-307M-Embedding",
+      "unit": "x100",
+      "variant": "Vela vs original mmBERT (in brackets); only a selection of tasks"
+    },
+    {
+      "name": "SummScreenFD long-document retrieval (336 queries)",
+      "score": 88.36,
+      "kind": "vendor",
+      "source": "https://huggingface.co/vllm-sr/Vela-1.0-Encoder-307M-Embedding",
+      "unit": "nDCG@10",
+      "variant": "Vela (original mmBERT: 76.99)"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "32K context in 307M parameters"
+    ],
+    "weaknesses": [
+      "German is not among the listed languages",
+      "selected-task comparison only against its own predecessor"
+    ],
+    "maturity": "6.5k downloads; project-internal model for a routing layer."
+  },
+  "tona_fit": {
+    "verdict": "reject",
+    "reason": "German not listed and no comparison against bge-m3 / Qwen3-Embedding / EmbeddingGemma on MTEB multilingual; no reason to prefer it."
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/vllm-sr/Vela-1.0-Encoder-307M-Embedding",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README, HF API"
+    }
+  ],
+  "open_questions": [
+    "German retrieval behaviour unknown",
+    "Base encoder card not read"
+  ],
+  "last_checked": "2026-11-19"
+}

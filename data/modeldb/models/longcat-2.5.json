@@ -1,0 +1,82 @@
+{
+  "id": "longcat-2.5",
+  "name": "LongCat-2.5",
+  "vendor": "Meituan LongCat",
+  "release_date": "2026-11-04",
+  "lineage": {
+    "family": "LongCat",
+    "base_model": "LongCat-2.0",
+    "how_derived": "the card says it builds on LongCat-2.0 (2026-07-05) and adds visual understanding; trained with long-sequence training, large-scale RL and multi-teacher learning (full-vocabulary KL distillation from specialised agent, reasoning and interaction teachers)"
+  },
+  "purpose": "The card presents a native multimodal MoE for long-horizon agentic tasks: complex codebase development, full-project builds, creative design and 3D tasks, with long-horizon agentic RL and a W4A4 expert quantisation made for domestic AI accelerators (NPU).",
+  "tasks": ["coding", "general", "research", "vision"],
+  "modalities": {"input": ["text", "image"], "output": ["text"]},
+  "license": {
+    "name": "MIT",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "LICENSE read in both repos (identical): standard MIT, Copyright (c) 2026 Meituan, rights to use, copy, modify, merge, publish, distribute, sublicense and/or sell."
+  },
+  "architecture": {
+    "kind": "multimodal MoE with MLA, an indexer for sparse attention, 128 identity (zero-computation) experts and 3 MTP layers per config.json (model_type pro_v)",
+    "params_total_b": 1600,
+    "params_active_b": 48,
+    "layers": 38,
+    "attention": "MLA (kv_lora_rank 512) with an indexer (32 index heads, top-k 2048, local window 1024 tokens per config), 64 heads, hidden 8192",
+    "recurrent": "none",
+    "experts": 768,
+    "experts_active": 12,
+    "context_native": 524288,
+    "context_max": 1048576,
+    "drafter": "3 MTP layers in config (mtp_num_layers 3)",
+    "why_this_design": "The card describes training and infrastructure motives (long-sequence efficiency, bitwise-identical log-probs between training and inference, KV cache optimisation that nearly doubles decode KV capacity) but gives no reasons for the expert or layer counts. config max_position_embeddings is 524288 while the evaluation notes use up to 1M sequence length."
+  },
+  "variants": [
+    {"repo": "meituan-longcat/LongCat-2.5", "format": "safetensors (config dtype BF16)", "size_gb": 3562.01, "official": true},
+    {"repo": "meituan-longcat/LongCat-2.5-W4A4", "format": "safetensors, W4A4 expert quantisation for INT4 NPU compute (FlatQuant-style transforms)", "size_gb": 1336.05, "official": true, "notes": "the card says it keeps accuracy comparable to the unquantised model on the evaluated benchmarks and targets domestic AI accelerators"}
+  ],
+  "hardware_fit": {
+    "pc-12gb": {"fits": "no", "basis": "estimate", "notes": "smallest official file 1336 GB; no GGUF or other quantised derivative exists (HF API lists 0 derivatives for both repos, 2026-11-19). Even 1 bit per weight of 1.6T parameters is about 200 GB"},
+    "pc-16gb": {"fits": "no", "basis": "estimate"},
+    "pc-24gb": {"fits": "no", "basis": "estimate"},
+    "pc-32gb": {"fits": "no", "basis": "estimate", "notes": "1 bit per weight of 1.6T parameters is about 200 GB, above the about 158 GB (29.6 VRAM + 128 RAM) budget"},
+    "mac-16-24gb": {"fits": "no", "basis": "estimate"},
+    "mac-32gb": {"fits": "no", "basis": "estimate"},
+    "mac-64gb+": {"fits": "no", "basis": "estimate"}
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": ["SGLang-FluentLLM NPU branch (card: deployed on NPU platforms)"],
+    "notes": "The card documents only NPU deployment with the vendor's SGLang fork."
+  },
+  "benchmarks": [
+    {"name": "Terminal Bench v2.1", "score": 88.4, "kind": "vendor", "variant": "BF16, in-house (DeepSeek-V4.1-Flash 90.6 cited, Opus-5 89.1 cited)", "source": "https://huggingface.co/meituan-longcat/LongCat-2.5"},
+    {"name": "Terminal Bench v4.0", "score": 38.5, "kind": "vendor", "variant": "BF16, in-house (DeepSeek-V4.1-Flash 31.2 cited)", "source": "https://huggingface.co/meituan-longcat/LongCat-2.5"},
+    {"name": "DeepSWE v1.1", "score": 64.6, "kind": "vendor", "unit": "mini-swe-agent, 3 runs, up to 1M sequence", "variant": "BF16, in-house (DeepSeek-V4.1-Flash 74.2 cited)", "source": "https://huggingface.co/meituan-longcat/LongCat-2.5"},
+    {"name": "NL2Repo", "score": 60.5, "kind": "vendor", "variant": "BF16, in-house (DeepSeek-V4.1-Flash 65.4 cited)", "source": "https://huggingface.co/meituan-longcat/LongCat-2.5"},
+    {"name": "BrowseComp", "score": 91.9, "kind": "vendor", "variant": "BF16, in-house", "source": "https://huggingface.co/meituan-longcat/LongCat-2.5"},
+    {"name": "HLE with tools", "score": 63.1, "kind": "vendor", "variant": "BF16, in-house", "source": "https://huggingface.co/meituan-longcat/LongCat-2.5"}
+  ],
+  "soft": {
+    "strengths": ["Vendor scores close to frontier models on terminal and browsing tasks", "MIT licence text verified"],
+    "weaknesses": ["1.6T parameters: no consumer class can hold it", "On coding the vendor's own table puts it behind the much smaller DeepSeek-V4.1-Flash on DeepSWE and NL2Repo"],
+    "maturity": "Meituan LongCat is a regular releaser (LongCat-2.0 two months earlier, LongCat-Flash-Lite and Lite-Sparse, video and audio models)."
+  },
+  "tona_fit": {
+    "verdict": "reject",
+    "reason": "1.6T parameters, 48B active and 1.3 TB even in the W4A4 form with no community quant; out of reach of every class. Its useful smaller relative for our users is longcat-flash-lite-sparse; the coding peer that does fit the large PC class is deepseek-v4.1-flash, which the vendor's own table ranks above LongCat-2.5 on DeepSWE and NL2Repo.",
+    "blockers": ["size"]
+  },
+  "sources": [
+    {"url": "https://huggingface.co/meituan-longcat/LongCat-2.5", "kind": "primary", "checked": "2026-11-19", "note": "README with benchmark table, config.json, LICENSE, file sizes via the HF API"},
+    {"url": "https://huggingface.co/meituan-longcat/LongCat-2.5-W4A4", "kind": "primary", "checked": "2026-11-19", "note": "README, LICENSE (identical to the main repo), file sizes via the HF API"},
+    {"url": "https://huggingface.co/api/models?author=meituan-longcat&sort=createdAt", "kind": "primary", "checked": "2026-11-19", "note": "organisation listing: LongCat-2.0 (and its FP8 and INT8 repos) and LongCat-Flash-Lite-Sparse are the other text LLMs"}
+  ],
+  "open_questions": [
+    "Whether a community GGUF below 300 GB appears",
+    "Independent evaluation of LongCat-2.5 (all scores are in-house or cited)"
+  ],
+  "last_checked": "2026-11-19"
+}

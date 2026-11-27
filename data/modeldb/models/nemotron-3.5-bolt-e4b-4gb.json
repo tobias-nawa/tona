@@ -1,0 +1,89 @@
+{
+  "id": "nemotron-3.5-bolt-e4b-4gb",
+  "name": "NVIDIA-Nemotron-3.5-Bolt-E4B-4GB",
+  "vendor": "NVIDIA",
+  "release_date": "2026-10-23",
+  "lineage": {
+    "base_model": "google/gemma-4-E4B-it",
+    "family": "Nemotron 3.5 Bolt (E4B; the 74B-A9B record is a different model)",
+    "how_derived": "multi-environment reinforcement learning (GRPO, NeMo RL and NeMo Gym) on Gemma-4-E4B-it for instruction following, multi-step tool use, multi-turn conversation and structured output; the 4GB repo is the BF16 model quantized to Q4_K_M"
+  },
+  "purpose": "NVIDIA states it is designed for fast local voice and device assistants, interactive personas and embedded interfaces, with emphasis on multi-turn tool use, instruction following and input grounding.",
+  "tasks": ["general"],
+  "modalities": {"input": ["text"], "output": ["text"]},
+  "languages": {"natural": ["en", "es", "fr", "de", "it", "ja", "ar", "zh", "ko", "ru", "pt", "hi", "many"]},
+  "license": {
+    "name": "OpenMDW-1.1",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Read the OpenMDW-1.1 text (github OpenMDW/OpenMDW 1.1, 2026-11-19): permission to deal in the Model Materials without restriction (copyright, patent, database, trade secret) free of charge; distribution must keep the agreement and notices; patent or copyright suit against others terminates the grant; no restrictions on outputs; no warranty. The card says the model was post-trained on Gemma 4 whose terms it names as Apache-2.0."
+  },
+  "architecture": {
+    "kind": "Gemma-4-E4B (dense, per-layer embeddings, 4B effective parameters)",
+    "gguf_arch": "gemma4",
+    "params_total_b": 8,
+    "params_active_b": 4,
+    "context_native": 65536,
+    "context_max": 65536,
+    "drafter": "separate DFlash drafter (nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB-DFlash, 0.74 GB GGUF BF16; llama.cpp --spec-type draft-dflash)",
+    "why_this_design": "The card gives no architecture reasons: the model is Gemma-4-E4B-it further post-trained; only the training method (asynchronous RL with GRPO) is described."
+  },
+  "variants": [
+    {"repo": "nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB", "format": "GGUF Q4_K_M", "size_gb": 6.18, "official": true, "notes": "6.2 GB because the Gemma 4 E4B per-layer embeddings are large; hence the '4GB' name refers to the 4B effective parameters"},
+    {"repo": "nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-BF16", "format": "safetensors BF16", "size_gb": 16.06, "official": true},
+    {"repo": "nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB-DFlash", "format": "GGUF BF16 drafter", "size_gb": 0.74, "official": true}
+  ],
+  "hardware_fit": {
+    "pc-12gb": {"fits": "yes", "basis": "estimate", "variant": "Q4_K_M", "notes": "6.2 GB file; BF16 16 GB would not fit"},
+    "pc-16gb": {"fits": "yes", "basis": "estimate", "variant": "Q4_K_M"},
+    "pc-24gb": {"fits": "yes", "basis": "estimate", "variant": "BF16", "notes": "16 GB BF16 plus KV"},
+    "pc-32gb": {"fits": "yes", "basis": "estimate", "variant": "BF16"},
+    "mac-16-24gb": {"fits": "yes", "basis": "estimate", "variant": "Q4_K_M"},
+    "mac-32gb": {"fits": "yes", "basis": "estimate", "variant": "Q4_K_M"},
+    "mac-64gb+": {"fits": "yes", "basis": "estimate", "variant": "BF16"}
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": ["PyTorch/Transformers", "Ollama (needs the gemma4 renderer and parser re-registered, user report)"],
+    "notes": "Card quick start uses llama.cpp server image b11459, also with DFlash drafter; the card table says 'llama.cpp (recipe pending)'. Gemma 4 E4B itself is in the database (gemma-4-e4b-it)."
+  },
+  "benchmarks": [
+    {"name": "MultiChallenge", "score": 55.6, "kind": "vendor", "variant": "Q4_K_M, reasoning mode, NeMo Gym", "source": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB", "unit": "(Gemma 4 E4B Q4_K_M 39.36, Qwen3.5 4B 52.23)"},
+    {"name": "IFBench", "score": 64.0, "kind": "vendor", "variant": "Q4_K_M", "source": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB", "unit": "(Gemma 4 E4B 42.67, Qwen3.5 4B 66.67)"},
+    {"name": "BFCL v3", "score": 67.31, "kind": "vendor", "variant": "Q4_K_M", "source": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB", "unit": "(Qwen3.5 4B 70.56)"},
+    {"name": "Tau2-Bench", "score": 52.32, "kind": "vendor", "variant": "Q4_K_M", "source": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB", "unit": "(Qwen3.5 4B 61.74)"},
+    {"name": "RULER 64K", "score": 85.76, "kind": "vendor", "variant": "Q4_K_M", "source": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB", "unit": "(Qwen3.5 4B 95.37)"},
+    {"name": "Korean document QA, 299 questions, thinking off", "score": "63.2 % (Gemma 4 E4B 65.2 %)", "kind": "independent", "variant": "Q4_K_M", "date": "2026-10-26", "source": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB/discussions/1", "unit": "difference not significant (McNemar p=0.31)"}
+  ],
+  "soft": {
+    "strengths": ["Instruction following and multi-turn constraints much better than the Gemma 4 E4B base (MultiChallenge 55.6 against 39.4, vendor)", "Short answers (brevity), reliable JSON in one user's tests", "Small and fast enough for voice and device assistants"],
+    "weaknesses": ["No gain over Gemma 4 E4B on Korean document QA (independent, not significant)", "Long-context and agent tasks behind Qwen3.5 4B in the vendor table (RULER 64K, Tau2, BFCL)", "Text only, 64K context"],
+    "behavior": "Thinking via enable_thinking and a runtime thinking budget; conversational_mode template switch; recommended sampling temperature 1.0 top_p 0.95 in both modes; answers are shorter than the base.",
+    "best_for": ["local voice or device assistants", "structured extraction and classification", "small tool-calling worker"],
+    "avoid_for": ["coding agents (not a target of the card)"],
+    "user_reports": [
+      {"summary": "Korean document-QA test against the Gemma 4 E4B base: 63.2 vs 65.2 % without thinking, 67.2 vs 69.6 % with thinking, not significant; shorter answers; Ollama needs the gemma4 renderer and parser to enable thinking", "sentiment": "mixed", "source": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB/discussions/1", "date": "2026-10-26"},
+      {"summary": "Consistently valid JSON even in complex extraction and classification cases", "sentiment": "positive", "source": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB/discussions/1", "date": "2026-10-27"}
+    ],
+    "maturity": "NVIDIA first-party, technical report and blog linked from the card; 172k downloads of the 4GB repo in about 6 weeks."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "A fine small assistant and tool-use model, but its base (Gemma 4 E4B) is already in the database and independent evidence shows little gain beyond instruction following; not a coding model. Permissive license.",
+    "blockers": ["no gemma4 E4B backend in Tona"]
+  },
+  "sources": [
+    {"url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB", "kind": "primary", "checked": "2026-11-19", "note": "README read"},
+    {"url": "https://github.com/OpenMDW/OpenMDW/blob/main/1.1/LICENSE.OpenMDW-1.1", "kind": "primary", "checked": "2026-11-19", "note": "raw license text read; the repo has no LICENSE file of its own"},
+    {"url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB/discussions/1", "kind": "primary", "checked": "2026-11-19", "note": "discussion text via the HF API"},
+    {"url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB-DFlash", "kind": "primary", "checked": "2026-11-19", "note": "size from the HF API; card not read"}
+  ],
+  "open_questions": [
+    "Coding quality against Gemma 4 E4B (no coding benchmark on the card)",
+    "DFlash drafter speed-up on consumer GPUs",
+    "Why the E2B or vision variants asked about in the discussions do not exist"
+  ],
+  "last_checked": "2026-11-19"
+}

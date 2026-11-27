@@ -1,0 +1,173 @@
+{
+  "id": "youtu-parsing-omni",
+  "name": "Youtu-Parsing-Omni",
+  "vendor": "Tencent (Youtu)",
+  "release_date": "2026-10-09",
+  "lineage": {
+    "family": "Youtu",
+    "base_model": "Youtu-LLM decoder with a Youtu-Omni-Encoder initialised from a text language model",
+    "how_derived": "omni-modal parsing model; successor of Youtu-Parsing (2.5B)"
+  },
+  "purpose": "One compact model that parses documents, natural images, charts and flowcharts, geometry, audio and audio-visual video into one structured JSON envelope covering perception (layout, text, tables, formulas, boxes, ASR, timestamps) and cognition (captions, narratives, reports).",
+  "tasks": [
+    "documents",
+    "vision",
+    "audio-transcription"
+  ],
+  "modalities": {
+    "input": [
+      "image",
+      "document",
+      "audio",
+      "video"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "many"
+    ]
+  },
+  "license": {
+    "name": "Youtu-Parsing License (Apache-2.0-style with a territorial exclusion)",
+    "verified": true,
+    "commercial_use": "limited",
+    "redistribution": "yes",
+    "notes": "LICENSE text read. Clause 0: \"Youtu-Parsing IS NOT INTENDED FOR USE WITHIN THE EUROPEAN UNION\", and the clause prevails in a conflict. Sections 2-4 grant copyright and patent licenses and redistribution as in Apache-2.0. The exclusion makes it unusable for EU users and for a project that distributes in the EU."
+  },
+  "architecture": {
+    "kind": "omni-modal single-tower encoder plus Youtu-LLM decoder emitting OmniSchema JSON",
+    "params_total_b": 5.0,
+    "context_native": 1048576,
+    "why_this_design": "Card: the usual separate vision and audio towers are replaced by one Youtu-Omni-Encoder, initialised from a pre-trained text language model to strengthen text reading; modalities meet inside the language model."
+  },
+  "variants": [
+    {
+      "repo": "tencent/Youtu-Parsing-Omni",
+      "format": "safetensors BF16",
+      "size_gb": 10.67,
+      "official": true
+    },
+    {
+      "repo": "cguldogan/Youtu-Parsing-Omni-mlx-4bit",
+      "format": "MLX 4bit",
+      "official": false,
+      "notes": "community; size not checked"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "marginal",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "10.7 GB file against 9.6 GB VRAM plus 50 GB RAM budget; part streams from RAM (dense: decode is bandwidth bound)"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (13.6 GB)"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (21.6 GB)"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (29.6 GB)"
+    },
+    "mac-16-24gb": {
+      "fits": "marginal",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "10.7 GB file against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "10.7 GB file against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "10.7 GB file against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "vLLM plugin (official)",
+      "Transformers (custom code)",
+      "MLX community"
+    ],
+    "notes": "custom architecture youtu_vita; no GGUF seen."
+  },
+  "benchmarks": [
+    {
+      "name": "OmniDocBench v1.6 Overall",
+      "score": 96.96,
+      "kind": "vendor",
+      "source": "https://huggingface.co/tencent/Youtu-Parsing-Omni",
+      "variant": "Youtu-Parsing-Omni 5B (Youtu-Parsing 2.5B: 93.74)"
+    },
+    {
+      "name": "OmniParsingBench average",
+      "score": 75.08,
+      "kind": "vendor",
+      "source": "https://huggingface.co/tencent/Youtu-Parsing-Omni",
+      "variant": "best open-weight model per the card, second to Gemini-3-Pro"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "highest OmniDocBench v1.6 score found (vendor)",
+      "one model for documents, charts, chemistry structures, music scores, audio, video"
+    ],
+    "weaknesses": [
+      "EU exclusion in the license",
+      "vendor-only evidence"
+    ]
+  },
+  "tona_fit": {
+    "verdict": "reject",
+    "reason": "Quality is top-tier (vendor 96.96 OmniDocBench v1.6) but clause 0 of the license excludes use within the European Union; Tona cannot offer it to its users there.",
+    "blockers": [
+      "license (EU exclusion)",
+      "custom architecture, no GGUF"
+    ]
+  },
+  "open_questions": [
+    "independent confirmation of the OmniDocBench number",
+    "German quality"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/tencent/Youtu-Parsing-Omni",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README and config.json read"
+    },
+    {
+      "url": "https://huggingface.co/tencent/Youtu-Parsing-Omni/raw/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "license text read"
+    },
+    {
+      "url": "https://arxiv.org/abs/2610.39301",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "linked from card, not opened"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

@@ -1,0 +1,305 @@
+{
+  "id": "gemma-4-12b-it",
+  "name": "Gemma 4 12B Unified (instruction-tuned)",
+  "vendor": "Google DeepMind",
+  "release_date": "2026-06",
+  "lineage": {
+    "family": "Gemma 4"
+  },
+  "purpose": "General-purpose reasoning, coding, agentic workflows and multimodal understanding for consumer GPUs and local deployment.",
+  "tasks": [
+    "general",
+    "documents",
+    "vision",
+    "audio-transcription",
+    "translation"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image",
+      "video",
+      "audio"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "many"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Gemma 4 repos carry no LICENSE file; the card links ai.google.dev/gemma/docs/gemma_4_license, which redirects to gemma.ai/resources/apache-2/ (Google DeepMind, read through a summarizer 2026-11-19): plain Apache License 2.0 text ('perpetual, worldwide, non-exclusive, no-charge, royalty-free, irrevocable' grant), no Gemma-specific terms and no prohibited-use policy. The older Gemma Terms of Use (Gemma 1-3, TranslateGemma) are a different, restrictive text."
+  },
+  "architecture": {
+    "kind": "dense transformer, encoder-free multimodal ('Unified')",
+    "gguf_arch": "gemma4",
+    "params_total_b": 11.95,
+    "params_active_b": 11.95,
+    "layers": 48,
+    "attention": "sliding window 1024 interleaved with global layers (last global)",
+    "recurrent": "none",
+    "context_native": 262144,
+    "drafter": "MTP file in the GGUF repo (mtp-gemma-4-12b-it.gguf, 0.47 GB)",
+    "why_this_design": "Card: the 'Unified' 12B is encoder-free: it projects raw image patches and audio waveforms directly into the LLM embedding space through lightweight linear layers so that all modalities flow through one model. Card: hybrid attention interleaves local sliding-window with full global attention (final layer always global) to 'deliver the processing speed and low memory footprint of a lightweight model without sacrificing the deep awareness required for complex, long-context tasks'."
+  },
+  "variants": [
+    {
+      "repo": "google/gemma-4-12B-it",
+      "format": "safetensors BF16",
+      "official": true
+    },
+    {
+      "repo": "google/gemma-4-12B-it-qat-q4_0-gguf",
+      "format": "GGUF QAT q4_0",
+      "official": true
+    },
+    {
+      "repo": "unsloth/gemma-4-12B-it-GGUF",
+      "format": "GGUF Q4_K_M",
+      "size_gb": 7.12,
+      "official": false
+    },
+    {
+      "repo": "unsloth/gemma-4-12B-it-GGUF",
+      "format": "GGUF Q8_0",
+      "size_gb": 12.67,
+      "official": false,
+      "notes": "mmproj 0.18 GB extra"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q4_K_M 7.1 GB or Q6 9.8 GB"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q8_0 12.7 GB"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q8_0"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "BF16 marginal"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q4_K_M"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q8_0"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q8_0"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "vLLM",
+      "Transformers"
+    ],
+    "notes": "No Gemma 4 module in Tona (ArchId list: Qwen4Exp, Qwen35Moe, NemotronHMoe)."
+  },
+  "benchmarks": [
+    {
+      "name": "MMLU-Pro",
+      "score": 77.2,
+      "kind": "vendor",
+      "source": "https://huggingface.co/google/gemma-4-12B-it",
+      "unit": "%"
+    },
+    {
+      "name": "GPQA Diamond",
+      "score": 78.8,
+      "kind": "vendor",
+      "source": "https://huggingface.co/google/gemma-4-12B-it",
+      "unit": "%"
+    },
+    {
+      "name": "AIME 2026 no tools",
+      "score": 77.5,
+      "kind": "vendor",
+      "source": "https://huggingface.co/google/gemma-4-12B-it",
+      "unit": "%"
+    },
+    {
+      "name": "HLE no tools",
+      "score": 5.2,
+      "kind": "vendor",
+      "source": "https://huggingface.co/google/gemma-4-12B-it",
+      "unit": "%"
+    },
+    {
+      "name": "MMMLU",
+      "score": 83.4,
+      "kind": "vendor",
+      "source": "https://huggingface.co/google/gemma-4-12B-it",
+      "unit": "%"
+    },
+    {
+      "name": "MRCR v2 8-needle 128K",
+      "score": 43.4,
+      "kind": "vendor",
+      "source": "https://huggingface.co/google/gemma-4-12B-it",
+      "unit": "%"
+    },
+    {
+      "name": "Tau2 avg",
+      "score": 69.0,
+      "kind": "vendor",
+      "source": "https://huggingface.co/google/gemma-4-12B-it",
+      "unit": "%"
+    },
+    {
+      "name": "FLEURS WER (lower is better)",
+      "score": 0.069,
+      "kind": "vendor",
+      "source": "https://huggingface.co/google/gemma-4-12B-it",
+      "variant": "audio input"
+    },
+    {
+      "name": "MMLU-ProX (German, PeerBench DACH)",
+      "score": 73.1,
+      "kind": "independent",
+      "source": "https://dach.peerbench.ai/api/leaderboard.json",
+      "variant": "bf16",
+      "harness": "PeerBench DACH German Language LLM Index, run by PeerBench",
+      "date": "2026-06-11"
+    },
+    {
+      "name": "INCLUDE (German, PeerBench DACH)",
+      "score": 69.1,
+      "kind": "independent",
+      "source": "https://dach.peerbench.ai/api/leaderboard.json",
+      "variant": "bf16",
+      "harness": "PeerBench DACH German Language LLM Index, run by PeerBench",
+      "date": "2026-06-11"
+    },
+    {
+      "name": "GermEval NER (German, PeerBench DACH)",
+      "score": 79.6,
+      "kind": "independent",
+      "source": "https://dach.peerbench.ai/api/leaderboard.json",
+      "variant": "bf16",
+      "harness": "PeerBench DACH German Language LLM Index, run by PeerBench",
+      "date": "2026-06-11"
+    },
+    {
+      "name": "ScaLA (German, PeerBench DACH)",
+      "score": 64.1,
+      "kind": "independent",
+      "source": "https://dach.peerbench.ai/api/leaderboard.json",
+      "variant": "bf16",
+      "harness": "PeerBench DACH German Language LLM Index, run by PeerBench",
+      "date": "2026-06-11"
+    },
+    {
+      "name": "SB10K (German, PeerBench DACH)",
+      "score": 62.2,
+      "kind": "independent",
+      "source": "https://dach.peerbench.ai/api/leaderboard.json",
+      "variant": "bf16",
+      "harness": "PeerBench DACH German Language LLM Index, run by PeerBench",
+      "date": "2026-06-11"
+    },
+    {
+      "name": "MuSR (German, PeerBench DACH)",
+      "score": 81.6,
+      "kind": "independent",
+      "source": "https://dach.peerbench.ai/api/leaderboard.json",
+      "variant": "bf16",
+      "harness": "PeerBench DACH German Language LLM Index, run by PeerBench",
+      "date": "2026-06-11"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "Audio input (30 s clips) and video (60 s) in a 12B dense model that fits 12 GB at Q4-Q6",
+      "Official QAT GGUF; MMMLU 83.4 and GPQA 78.8 at this size (vendor)"
+    ],
+    "weaknesses": [
+      "HLE 5.2: little long-tail knowledge",
+      "Same Gemma 4 tool-call template problems as its siblings (reports on the 12B discussion board exist, content not read)"
+    ],
+    "behavior": "Configurable thinking, T=1.0, top_p 0.95, top_k 64.",
+    "best_for": [
+      "12 GB cards: multilingual chat, voice and image questions"
+    ],
+    "avoid_for": [
+      "Knowledge-heavy questions",
+      "Long-document retrieval (MRCR 43.4)"
+    ],
+    "maturity": "Google DeepMind; technical report arXiv 2607.02770 (July 2026).",
+    "user_reports": [
+      {
+        "summary": "Single-operator measurement on one RTX 5070 Ti with llama.cpp: MTP depth 6 on QAT Q4_0 raises 12B decode from 89 to 226 tok/s at -0.83 points macro quality, but about 45 percent of completions differ textually from normal decoding (112/200 byte-identical).",
+        "sentiment": "mixed",
+        "source": "https://huggingface.co/google/gemma-4-12B-it/discussions/52",
+        "date": "2026-08-27"
+      }
+    ]
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "Best published all-round 12 GB-class model with audio input, Apache-2.0 (text read), and the German scores of the independent PeerBench index are ahead of Qwen3.5-9B and Qwen3 14B in the same index (GermEval 79.6 vs 72.6 and 73.0, MuSR 81.6 vs 80.9 and 69.7; MMLU-ProX DE 73.1 vs 73.4 and 64.1). Missing Tona module is only a blocker.",
+    "blockers": [
+      "no Gemma 4 module in Tona"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/google/gemma-4-12B-it",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "model card"
+    },
+    {
+      "url": "https://huggingface.co/api/models/unsloth/gemma-4-12B-it-GGUF?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "GGUF sizes"
+    },
+    {
+      "url": "https://huggingface.co/api/models?author=google&sort=createdAt&direction=-1&limit=25",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "repo dates 2026-06"
+    },
+    {
+      "url": "https://gemma.ai/resources/apache-2/",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "Gemma 4 license page (plain Apache-2.0), summarizer read"
+    },
+    {
+      "url": "https://dach.peerbench.ai/api/leaderboard.json",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "PeerBench DACH JSON export (generated 2026-10-25, last run 2026-10-16), read directly"
+    }
+  ],
+  "open_questions": [
+    "Exact release date (QAT repos created 2026-06-04/05; the instruct repo date was not read)"
+  ],
+  "last_checked": "2026-11-19"
+}

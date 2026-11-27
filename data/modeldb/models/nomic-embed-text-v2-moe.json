@@ -1,0 +1,141 @@
+{
+  "id": "nomic-embed-text-v2-moe",
+  "name": "nomic-embed-text-v2-moe",
+  "vendor": "Nomic AI",
+  "release_date": "2025-02",
+  "purpose": "First general-purpose MoE text embedding model: multilingual retrieval with lower latency and memory than larger dense embedders, so RAG systems can ingest more data.",
+  "tasks": [
+    "embeddings"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "embedding"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "many"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card tag apache-2.0; the HF repo has no LICENSE file, so the text was not read; verified stays false."
+  },
+  "architecture": {
+    "kind": "MoE bert-style encoder, 8 experts top-2",
+    "params_total_b": 0.475,
+    "params_active_b": 0.305,
+    "experts": 8,
+    "experts_active": 2,
+    "context_native": 512,
+    "why_this_design": "MoE keeps quality while reducing latency and memory versus bigger embedders (card). 768-d, MRL to 256."
+  },
+  "variants": [
+    {
+      "repo": "nomic-ai/nomic-embed-text-v2-moe",
+      "format": "safetensors F32",
+      "official": true,
+      "notes": "19 community quants; needs trust_remote_code; prefixes search_query:/search_document:"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "unknown",
+    "other": [
+      "Sentence Transformers"
+    ],
+    "notes": "llama.cpp support not verified."
+  },
+  "benchmarks": [
+    {
+      "name": "BEIR",
+      "score": 52.86,
+      "kind": "vendor",
+      "variant": "fp32",
+      "source": "https://huggingface.co/nomic-ai/nomic-embed-text-v2-moe"
+    },
+    {
+      "name": "MIRACL",
+      "score": 65.8,
+      "kind": "vendor",
+      "variant": "fp32",
+      "source": "https://huggingface.co/nomic-ai/nomic-embed-text-v2-moe"
+    }
+  ],
+  "soft": {
+    "weaknesses": [
+      "512-token context",
+      "behind Arctic Embed v2 Large on BEIR (55.65) and BGE-M3 on MIRACL (69.2), per the card",
+      "not code-specific"
+    ],
+    "maturity": "Nomic: active open vendor."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Apache-2.0 by tag and a small MoE multilingual embedder, but no independent numbers and weaker documented quality than Qwen3-Embedding-0.6B; revisit with an own test.",
+    "blockers": [
+      "Tona has no embeddings route"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/nomic-ai/nomic-embed-text-v2-moe",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "research/52-purpose-models.md",
+      "kind": "own",
+      "checked": "2026-11-19",
+      "note": "our research note 52, facts fetched 2026-11-15, not a measurement"
+    }
+  ],
+  "open_questions": [
+    "MMTEB score",
+    "llama.cpp support"
+  ],
+  "last_checked": "2026-11-19"
+}

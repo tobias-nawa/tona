@@ -1,0 +1,199 @@
+{
+  "id": "nemotron-3.5-embed",
+  "name": "Nemotron-3.5-Embed (1B, 8B)",
+  "vendor": "NVIDIA",
+  "release_date": "2026-10-07",
+  "lineage": {
+    "family": "Nemotron retriever",
+    "base_model": "Ministral-3-3B-Instruct-2512 (1B) / Ministral-3-8B-Instruct-2512 (8B)",
+    "how_derived": "8B: language tower initialised from Nemotron-3-Embed-8B and kept frozen, vision encoder and projector trained on top; 1B: distilled from the 8B teacher with cosine plus MSE loss"
+  },
+  "purpose": "Multimodal and multilingual question-answering retrieval: embeds a document page as image, text or both (tables, charts, infographics) so a text query can retrieve pages without OCR; target is vision-RAG and agentic retrieval pipelines (card).",
+  "tasks": [
+    "embeddings"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image"
+    ],
+    "output": [
+      "embedding"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "many"
+    ]
+  },
+  "license": {
+    "name": "OpenMDW-1.1",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "LICENSE text read (the rerank repo carries it; the embed repos link the same OpenMDW-1.1): 'permission is hereby granted, free of charge, to deal in the Model Materials without restriction'; redistribution needs the agreement text and notices; rights end if you sue over patent or copyright infringement by the materials; no restriction on outputs. The Ministral-3 base models are Apache-2.0. Card tag 'other' with license_name openmdw-1.1 agrees."
+  },
+  "architecture": {
+    "kind": "Pixtral vision encoder plus bidirectional Ministral-3 text tower, mean pooling, L2-normalised",
+    "params_total_b": 8.38,
+    "why_this_design": "Reuses the text retrieval strength of Nemotron-3-Embed for pages shown as images; the 1B is distilled from the 8B so small deployments keep most of the quality. Sizes 1.55B (2048-d) and 8.38B (4096-d), dynamic embedding size supported (card)."
+  },
+  "variants": [
+    {
+      "repo": "nvidia/Nemotron-3.5-Embed-1B-BF16",
+      "format": "safetensors BF16",
+      "size_gb": 3.11,
+      "official": true
+    },
+    {
+      "repo": "nvidia/Nemotron-3.5-Embed-1B-NVFP4",
+      "format": "safetensors NVFP4",
+      "size_gb": 1.27,
+      "official": true,
+      "notes": "NVFP4 is a Blackwell format; not usable on RDNA4"
+    },
+    {
+      "repo": "nvidia/Nemotron-3.5-Embed-8B-BF16",
+      "format": "safetensors BF16",
+      "size_gb": 16.75,
+      "official": true
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "1B BF16 3.11 GB"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "1B BF16; 8B BF16 16.75 GB does not fit, needs quantization"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "8B BF16 16.75 GB"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "8B"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "1B"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "8B BF16"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "unknown",
+    "other": [
+      "vLLM",
+      "Sentence Transformers",
+      "transformers"
+    ],
+    "notes": "Pixtral vision encoder plus Ministral-3 text tower; no GGUF or llama.cpp support seen on the card (card documents vLLM 0.32 and transformers 5.20 only)."
+  },
+  "benchmarks": [
+    {
+      "name": "ViDoRe V3 nDCG@10 (image / text / image+text)",
+      "score": "60.39 / 60.65 / 61.47",
+      "kind": "vendor",
+      "variant": "8B; Qwen3-VL-Embedding-8B 58.29 / 53.69 / 57.03",
+      "source": "https://huggingface.co/nvidia/Nemotron-3.5-Embed-8B-BF16"
+    },
+    {
+      "name": "ViDoRe V3 nDCG@10 (image / text / image+text)",
+      "score": "58.02 / 57.80 / 58.82",
+      "kind": "vendor",
+      "variant": "1B; Qwen3-VL-Embedding-2B 52.89 / 48.31 / 51.97",
+      "source": "https://huggingface.co/nvidia/Nemotron-3.5-Embed-1B-BF16"
+    },
+    {
+      "name": "MIRACL-VISION nDCG@10 (image)",
+      "score": 72.64,
+      "kind": "vendor",
+      "variant": "8B; 1B 68.93; Qwen3-VL-Embedding-8B 68.33",
+      "source": "https://huggingface.co/nvidia/Nemotron-3.5-Embed-8B-BF16"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "page-image retrieval without OCR",
+      "permissive OpenMDW-1.1",
+      "34 evaluated text languages",
+      "1B distilled size"
+    ],
+    "weaknesses": [
+      "no text-only code retrieval number on the card",
+      "no GGUF; vLLM and transformers only",
+      "8B BF16 needs 16.75 GB"
+    ],
+    "best_for": [
+      "searching PDFs, slides and screenshots by text query"
+    ],
+    "avoid_for": [
+      "pure code search (use Qwen3-Embedding)"
+    ],
+    "maturity": "NVIDIA, Nemotron retriever line (Nemotron-3-Embed predecessor); released 2026-10-07; downloads 27.8k (1B) and 13.2k (8B) on 2026-11-19 per the HF API. No independent evaluation or user report found."
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "Permissive license and the strongest documented visual-document retriever here; the 1B fits any class. It serves document pages, not code, so it complements Qwen3-Embedding rather than replacing it.",
+    "blockers": [
+      "Tona has no embeddings route",
+      "no GGUF / llama.cpp path seen"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/nvidia/Nemotron-3.5-Embed-8B-BF16",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "card read 2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/nvidia/Nemotron-3.5-Embed-1B-BF16",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "card read"
+    },
+    {
+      "url": "https://openmdw.ai/license/1-1/",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "license page read through a summarizer"
+    },
+    {
+      "url": "https://huggingface.co/nvidia/Nemotron-3.5-Rerank-8B-BF16/raw/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "OpenMDW-1.1 text"
+    },
+    {
+      "url": "https://huggingface.co/api/models/nvidia/Nemotron-3.5-Embed-8B-BF16",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "createdAt and sizes"
+    }
+  ],
+  "open_questions": [
+    "Text-only retrieval and MTEB Code numbers: not on the card (blog post not read)",
+    "Is there a llama.cpp or GGUF path for the Ministral3-based architecture?",
+    "Independent evaluation and user reports: none found",
+    "Maximum context for the embedder not read"
+  ],
+  "last_checked": "2026-11-19"
+}

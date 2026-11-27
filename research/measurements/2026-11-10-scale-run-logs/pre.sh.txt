@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# new references for the two goldens #106 changes, then the master run
+S=/var/tmp/claude/scale1110; cd <repo>; source toolchain/env.sh; export TONA_DIAG=1
+B=work/build/merged
+echo "pre $(date +%T) VRAM $(( $(cat /sys/class/drm/card1/device/mem_info_vram_used) / 1048576 )) MiB"
+echo "--- prefill dflash compare with the OLD reference (expected: differs with #106)"
+GOLDEN_MODE=prefill GOLDEN_DRAFTER=dflash scripts/golden.sh compare $B; echo "rc=$?"
+echo "--- record prefill dflash (new)"
+GOLDEN_FORCE=1 GOLDEN_MODE=prefill GOLDEN_DRAFTER=dflash scripts/golden.sh record $B; echo "rc=$?"
+echo "--- record server (new)"
+GOLDEN_FORCE=1 scripts/golden-server.sh record $B; echo "rc=$?"
+echo "pre done $(date +%T)"

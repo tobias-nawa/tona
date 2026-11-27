@@ -1,0 +1,425 @@
+{
+  "config": {
+    "A": {
+      "build": "work/build/mtl",
+      "env": {
+        "TONA_METAL_ARENA_GB": "auto",
+        "TONA_EXPERT_PROFILE": "<repo>/work/profiles/dmt-12.bin",
+        "TONA_METAL_ARENA_GOVERN": "1",
+        "TONA_METAL_ARENA_CEILING": "1"
+      },
+      "tooling": {
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0",
+        "TONA_EXPERT_PROFILE": "<repo>/work/profiles/dmt-12.bin",
+        "TONA_METAL_ARENA_CEILING": "1",
+        "TONA_METAL_ARENA_GB": "auto",
+        "TONA_METAL_ARENA_GOVERN": "1"
+      },
+      "commit": "stand-2026-10-25-1172-g3bcdae3336-dirty",
+      "model": "<repo>/work/models/coder-dmt/coder-DMT-164e-00001-of-00002.gguf",
+      "drafter": "<repo>/work/models/mtp-164/mtp-Qwen3.8-Flash-Next-Q8_0-164e.gguf"
+    },
+    "B": {
+      "build": "work/build/mtl",
+      "env": {
+        "TONA_METAL_ARENA_GB": "auto",
+        "TONA_EXPERT_PROFILE": "<repo>/work/profiles/dmt-12.bin",
+        "TONA_METAL_ARENA_GOVERN": "1",
+        "TONA_METAL_ARENA_PURGEABLE": "1",
+        "TONA_METAL_ARENA_LOG": "500"
+      },
+      "tooling": {
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0",
+        "TONA_EXPERT_PROFILE": "<repo>/work/profiles/dmt-12.bin",
+        "TONA_METAL_ARENA_GB": "auto",
+        "TONA_METAL_ARENA_GOVERN": "1",
+        "TONA_METAL_ARENA_LOG": "500",
+        "TONA_METAL_ARENA_PURGEABLE": "1"
+      },
+      "commit": "stand-2026-10-25-1172-g3bcdae3336-dirty",
+      "model": "<repo>/work/models/coder-dmt/coder-DMT-164e-00001-of-00002.gguf",
+      "drafter": "<repo>/work/models/mtp-164/mtp-Qwen3.8-Flash-Next-Q8_0-164e.gguf"
+    },
+    "workload": "server",
+    "targets": "8000:16 at --ctx 32768",
+    "deterministic": false,
+    "plan_info": {
+      "expect": [
+        [
+          "prefill@8000",
+          -1.0,
+          1.0
+        ],
+        [
+          "decode@8000",
+          -3.0,
+          3.0
+        ]
+      ],
+      "source": "2026-11-16-mac-purgeable-prefill-server-ab.md (v2: -2.50 % [-4.11, -0.89] in 2 rounds) and a diagnosis start with the build that derives the idle time (-0.71 % [-2.02, +0.59]); the arena counters of B every 500 stops",
+      "workload": "server",
+      "targets": "8000:16 at --ctx 32768",
+      "primary": "prefill@8000",
+      "why_size": "prefill@8000 alone decides whether the purgeable arena's wakes cost prefill (cost A/B: -1.6 to -5.4 % in 3 of 4 calm rounds); 16 decode tokens only to end each request",
+      "decode_tokens": 200,
+      "noise": {},
+      "warmup": true,
+      "round_warmup": true,
+      "load_log": true,
+      "A": {
+        "build": "work/build/mtl",
+        "env": {
+          "TONA_METAL_ARENA_GB": "auto",
+          "TONA_EXPERT_PROFILE": "<repo>/work/profiles/dmt-12.bin",
+          "TONA_METAL_ARENA_GOVERN": "1",
+          "TONA_METAL_ARENA_CEILING": "1"
+        },
+        "tooling": {
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0",
+          "TONA_EXPERT_PROFILE": "<repo>/work/profiles/dmt-12.bin",
+          "TONA_METAL_ARENA_CEILING": "1",
+          "TONA_METAL_ARENA_GB": "auto",
+          "TONA_METAL_ARENA_GOVERN": "1"
+        },
+        "commit": "stand-2026-10-25-1172-g3bcdae3336-dirty",
+        "model": "<repo>/work/models/coder-dmt/coder-DMT-164e-00001-of-00002.gguf",
+        "drafter": "<repo>/work/models/mtp-164/mtp-Qwen3.8-Flash-Next-Q8_0-164e.gguf"
+      },
+      "B": {
+        "build": "work/build/mtl",
+        "env": {
+          "TONA_METAL_ARENA_GB": "auto",
+          "TONA_EXPERT_PROFILE": "<repo>/work/profiles/dmt-12.bin",
+          "TONA_METAL_ARENA_GOVERN": "1",
+          "TONA_METAL_ARENA_PURGEABLE": "1",
+          "TONA_METAL_ARENA_LOG": "500"
+        },
+        "tooling": {
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0",
+          "TONA_EXPERT_PROFILE": "<repo>/work/profiles/dmt-12.bin",
+          "TONA_METAL_ARENA_GB": "auto",
+          "TONA_METAL_ARENA_GOVERN": "1",
+          "TONA_METAL_ARENA_LOG": "500",
+          "TONA_METAL_ARENA_PURGEABLE": "1"
+        },
+        "commit": "stand-2026-10-25-1172-g3bcdae3336-dirty",
+        "model": "<repo>/work/models/coder-dmt/coder-DMT-164e-00001-of-00002.gguf",
+        "drafter": "<repo>/work/models/mtp-164/mtp-Qwen3.8-Flash-Next-Q8_0-164e.gguf"
+      }
+    },
+    "reference_sha": {},
+    "corpus_sha256": "e13a800340859f7d39c63712d90383faae7e5a47c3865f0811e40d912612d38e",
+    "corpus_is_reference": true,
+    "commit": "3bcdae3",
+    "noise": {}
+  },
+  "rounds": [
+    {
+      "order": "AB",
+      "sha": {
+        "A": {
+          "8000": "307a5dbf3d13c067"
+        },
+        "B": {
+          "8000": "307a5dbf3d13c067"
+        }
+      },
+      "A": {
+        "prefill@8000": 169.31697505949117,
+        "decode@8000": 12.668508061761878
+      },
+      "counters": {
+        "A": {
+          "8000": {
+            "expert_hits": 0,
+            "expert_misses": 0
+          }
+        },
+        "B": {
+          "8000": {
+            "expert_hits": 0,
+            "expert_misses": 0
+          }
+        }
+      },
+      "B": {
+        "prefill@8000": 167.3835884988088,
+        "decode@8000": 12.336909031176582
+      },
+      "seconds": 205.13369212509133
+    },
+    {
+      "order": "BA",
+      "sha": {
+        "B": {
+          "8000": "307a5dbf3d13c067"
+        },
+        "A": {
+          "8000": "307a5dbf3d13c067"
+        }
+      },
+      "B": {
+        "prefill@8000": 165.92593986888096,
+        "decode@8000": 12.62061479158944
+      },
+      "counters": {
+        "B": {
+          "8000": {
+            "expert_hits": 0,
+            "expert_misses": 0
+          }
+        },
+        "A": {
+          "8000": {
+            "expert_hits": 0,
+            "expert_misses": 0
+          }
+        }
+      },
+      "A": {
+        "prefill@8000": 169.6857137168148,
+        "decode@8000": 12.87909221563969
+      },
+      "seconds": 205.9940798340831
+    }
+  ],
+  "discarded": [],
+  "stop_reason": "all metrics decided after round 2",
+  "wall_seconds": 463.7095722500235,
+  "loads": [
+    {
+      "start": 1,
+      "arm": "A",
+      "cpu_own": 13.1,
+      "cpu_system": 14.4,
+      "cpu_other": 9.5,
+      "gpu_own": 82.0,
+      "gpu_system": 0.5,
+      "gpu_other": 0.8,
+      "pageins": 362.5,
+      "swapins": 1.8,
+      "compressions": 10996.3,
+      "level_min": 13,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 50,
+      "idle_before_s": null,
+      "ready_s": 4.0
+    },
+    {
+      "start": 2,
+      "arm": "A",
+      "cpu_own": 12.5,
+      "cpu_system": 18.6,
+      "cpu_other": 8.7,
+      "gpu_own": 83.3,
+      "gpu_system": 0.4,
+      "gpu_other": 0.8,
+      "pageins": 262.7,
+      "swapins": 2.1,
+      "compressions": 10367.8,
+      "level_min": 7,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 51,
+      "idle_before_s": 0.2,
+      "ready_s": 4.0
+    },
+    {
+      "start": 3,
+      "arm": "A",
+      "cpu_own": 12.6,
+      "cpu_system": 14.2,
+      "cpu_other": 9.6,
+      "gpu_own": 83.0,
+      "gpu_system": 0.5,
+      "gpu_other": 0.9,
+      "pageins": 304.9,
+      "swapins": 0.9,
+      "compressions": 10358.5,
+      "level_min": 7,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 50,
+      "idle_before_s": 0.2,
+      "ready_s": 4.0
+    },
+    {
+      "start": 4,
+      "arm": "B",
+      "cpu_own": 12.5,
+      "cpu_system": 14.4,
+      "cpu_other": 8.6,
+      "gpu_own": 83.2,
+      "gpu_system": 0.4,
+      "gpu_other": 0.9,
+      "pageins": 230.8,
+      "swapins": 2.1,
+      "compressions": 9603.0,
+      "level_min": 7,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 51,
+      "idle_before_s": 0.2,
+      "ready_s": 4.0
+    },
+    {
+      "start": 5,
+      "arm": "B",
+      "cpu_own": 12.7,
+      "cpu_system": 15.0,
+      "cpu_other": 9.1,
+      "gpu_own": 82.7,
+      "gpu_system": 0.4,
+      "gpu_other": 0.7,
+      "pageins": 262.7,
+      "swapins": 1.7,
+      "compressions": 9976.6,
+      "level_min": 7,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 50,
+      "idle_before_s": 0.2,
+      "ready_s": 4.0
+    },
+    {
+      "start": 6,
+      "arm": "B",
+      "cpu_own": 12.8,
+      "cpu_system": 14.5,
+      "cpu_other": 8.8,
+      "gpu_own": 82.4,
+      "gpu_system": 0.4,
+      "gpu_other": 0.7,
+      "pageins": 230.5,
+      "swapins": 0.7,
+      "compressions": 9631.3,
+      "level_min": 7,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 50,
+      "idle_before_s": 0.2,
+      "ready_s": 4.0
+    },
+    {
+      "start": 7,
+      "arm": "B",
+      "cpu_own": 12.8,
+      "cpu_system": 14.5,
+      "cpu_other": 8.4,
+      "gpu_own": 82.3,
+      "gpu_system": 0.4,
+      "gpu_other": 0.7,
+      "pageins": 204.6,
+      "swapins": 1.3,
+      "compressions": 9567.1,
+      "level_min": 7,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 51,
+      "idle_before_s": 0.2,
+      "ready_s": 4.0
+    },
+    {
+      "start": 8,
+      "arm": "A",
+      "cpu_own": 12.1,
+      "cpu_system": 14.3,
+      "cpu_other": 8.6,
+      "gpu_own": 83.6,
+      "gpu_system": 0.4,
+      "gpu_other": 0.7,
+      "pageins": 62.3,
+      "swapins": 1.3,
+      "compressions": 9143.5,
+      "level_min": 7,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 50,
+      "idle_before_s": 0.2,
+      "ready_s": 4.0
+    },
+    {
+      "start": 9,
+      "arm": "A",
+      "cpu_own": 12.0,
+      "cpu_system": 14.5,
+      "cpu_other": 8.6,
+      "gpu_own": 83.7,
+      "gpu_system": 0.4,
+      "gpu_other": 0.5,
+      "pageins": 237.1,
+      "swapins": 1.4,
+      "compressions": 9030.9,
+      "level_min": 7,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 51,
+      "idle_before_s": 0.2,
+      "ready_s": 4.0
+    }
+  ],
+  "warmup": {
+    "prefill@8000": 167.44859156989983,
+    "decode@8000": 12.163028678309058
+  },
+  "plan": {
+    "alpha": 0.05,
+    "margin": 0.5,
+    "max_rounds": 6,
+    "min_rounds": 2,
+    "prior_sd": 0.5,
+    "prior_df": 4.0
+  },
+  "decisions": {
+    "prefill@8000": {
+      "decided_at_round": 2,
+      "decision": "B slower",
+      "mean_diff_percent": -1.6788010065119985,
+      "ci_diff_percent": [
+        -2.9701089249620054,
+        -0.3874930880619918
+      ]
+    },
+    "decode@8000": {
+      "decided_at_round": 2,
+      "decision": "B slower",
+      "mean_diff_percent": -2.312230158470446,
+      "ci_diff_percent": [
+        -3.432402654795461,
+        -1.1920576621454313
+      ]
+    }
+  }
+}

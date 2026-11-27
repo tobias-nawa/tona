@@ -1,0 +1,396 @@
+{
+  "config": {
+    "A": {
+      "build": "merged",
+      "env": {},
+      "tooling": {
+        "HIP_PATH": "./work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+        "IE_EXPERT_PROFILE": "./work/profile/experts-coder.bin",
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0"
+      },
+      "commit": "v0.0.2-137-ge4c1010521"
+    },
+    "B": {
+      "build": "w83",
+      "env": {},
+      "tooling": {
+        "HIP_PATH": "./work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+        "IE_EXPERT_PROFILE": "./work/profile/experts-coder.bin",
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0"
+      },
+      "commit": "v0.0.2-152-g20e8aa4462"
+    },
+    "workload": "mid,short",
+    "targets": "2000:400 2000:write:400 30000:200 at --ctx 140000",
+    "deterministic": false,
+    "plan_info": {
+      "expect": [
+        [
+          "decode",
+          -1.5,
+          -0.5
+        ],
+        [
+          "prefill",
+          -1.0,
+          1.0
+        ]
+      ],
+      "source": "2026-11-02-86-ab-prefill.md: decode@2000 -0.91 %, decode@30000 -1.23 %",
+      "workload": "mid,short",
+      "targets": "2000:400 2000:write:400 30000:200 at --ctx 140000",
+      "primary": "decode",
+      "why_size": "the same workloads as run 1, to see whether its decode loss repeats",
+      "decode_tokens": 200,
+      "noise": {
+        "prefill@2000": [
+          0.09,
+          4,
+          "research/measurements/2026-11-02-ab-tool.md: run 7, short, A/A merged against merged, 5 rounds with warm-up"
+        ],
+        "decode@2000": [
+          0.231,
+          4,
+          "research/measurements/2026-11-02-ab-tool.md: run 7, short, A/A merged against merged, 5 rounds with warm-up"
+        ],
+        "prefill@2000:write": [
+          0.163,
+          4,
+          "research/measurements/2026-11-02-ab-tool.md: run 7, short, A/A merged against merged, 5 rounds with warm-up"
+        ],
+        "decode@2000:write": [
+          0.605,
+          4,
+          "research/measurements/2026-11-02-ab-tool.md: run 7, short, A/A merged against merged, 5 rounds with warm-up"
+        ],
+        "prefill@30000": [
+          0.04,
+          9,
+          "research/measurements/2026-11-02-ab-tool.md: first A/A run (rounds 2-6; round 1 had no warm-up); second A/A run with warm-up (6 rounds)"
+        ],
+        "decode@30000": [
+          0.279,
+          9,
+          "research/measurements/2026-11-02-ab-tool.md: first A/A run (rounds 2-6; round 1 had no warm-up); second A/A run with warm-up (6 rounds)"
+        ]
+      },
+      "warmup": true,
+      "A": {
+        "build": "merged",
+        "env": {},
+        "tooling": {
+          "HIP_PATH": "./work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+          "IE_EXPERT_PROFILE": "./work/profile/experts-coder.bin",
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0"
+        },
+        "commit": "v0.0.2-137-ge4c1010521"
+      },
+      "B": {
+        "build": "w83",
+        "env": {},
+        "tooling": {
+          "HIP_PATH": "./work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+          "IE_EXPERT_PROFILE": "./work/profile/experts-coder.bin",
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0"
+        },
+        "commit": "v0.0.2-152-g20e8aa4462"
+      }
+    },
+    "reference_sha": {},
+    "corpus_sha256": "e13a800340859f7d39c63712d90383faae7e5a47c3865f0811e40d912612d38e",
+    "corpus_is_reference": true,
+    "commit": "20e8aa4",
+    "noise": {
+      "prefill@2000": [
+        0.09,
+        4
+      ],
+      "decode@2000": [
+        0.231,
+        4
+      ],
+      "prefill@2000:write": [
+        0.163,
+        4
+      ],
+      "decode@2000:write": [
+        0.605,
+        4
+      ],
+      "prefill@30000": [
+        0.04,
+        9
+      ],
+      "decode@30000": [
+        0.279,
+        9
+      ]
+    }
+  },
+  "rounds": [
+    {
+      "order": "AB",
+      "sha": {
+        "A": {
+          "2000": "f6573f396c15300f",
+          "2000:write": "a6f07fd6fb86e448",
+          "30000": "cde3f1093dce48a1"
+        },
+        "B": {
+          "2000": "f6573f396c15300f",
+          "2000:write": "a6f07fd6fb86e448",
+          "30000": "cde3f1093dce48a1"
+        }
+      },
+      "A": {
+        "prefill@2000": 1328.6084846377728,
+        "decode@2000": 65.89926141898582,
+        "prefill@2000:write": 1540.7663900138316,
+        "decode@2000:write": 117.46298689525803,
+        "prefill@30000": 1782.9229720681103,
+        "decode@30000": 69.89865170813152
+      },
+      "counters": {
+        "A": {
+          "2000": {
+            "expert_hits": 131811,
+            "expert_misses": 19885
+          },
+          "2000:write": {
+            "expert_hits": 82992,
+            "expert_misses": 25567
+          },
+          "30000": {
+            "expert_hits": 71024,
+            "expert_misses": 10531
+          }
+        },
+        "B": {
+          "2000": {
+            "expert_hits": 131811,
+            "expert_misses": 19885
+          },
+          "2000:write": {
+            "expert_hits": 82992,
+            "expert_misses": 25567
+          },
+          "30000": {
+            "expert_hits": 71024,
+            "expert_misses": 10531
+          }
+        }
+      },
+      "B": {
+        "prefill@2000": 1330.0496328927188,
+        "decode@2000": 65.65868177438911,
+        "prefill@2000:write": 1542.3316030697001,
+        "decode@2000:write": 118.55558380649495,
+        "prefill@30000": 1779.0178935955591,
+        "decode@30000": 68.77930351468463
+      },
+      "seconds": 105.7113896429073
+    },
+    {
+      "order": "BA",
+      "sha": {
+        "B": {
+          "2000": "f6573f396c15300f",
+          "2000:write": "a6f07fd6fb86e448",
+          "30000": "cde3f1093dce48a1"
+        },
+        "A": {
+          "2000": "f6573f396c15300f",
+          "2000:write": "a6f07fd6fb86e448",
+          "30000": "cde3f1093dce48a1"
+        }
+      },
+      "B": {
+        "prefill@2000": 1289.5962355803035,
+        "decode@2000": 65.02274867422979,
+        "prefill@2000:write": 1525.2235426541752,
+        "decode@2000:write": 118.92205763521432,
+        "prefill@30000": 1773.006246417464,
+        "decode@30000": 68.6035565499693
+      },
+      "counters": {
+        "B": {
+          "2000": {
+            "expert_hits": 131811,
+            "expert_misses": 19885
+          },
+          "2000:write": {
+            "expert_hits": 82992,
+            "expert_misses": 25567
+          },
+          "30000": {
+            "expert_hits": 71024,
+            "expert_misses": 10531
+          }
+        },
+        "A": {
+          "2000": {
+            "expert_hits": 131811,
+            "expert_misses": 19885
+          },
+          "2000:write": {
+            "expert_hits": 82992,
+            "expert_misses": 25567
+          },
+          "30000": {
+            "expert_hits": 71024,
+            "expert_misses": 10531
+          }
+        }
+      },
+      "A": {
+        "prefill@2000": 1326.17535283797,
+        "decode@2000": 65.76147279376981,
+        "prefill@2000:write": 1543.129754354307,
+        "decode@2000:write": 117.18344818773608,
+        "prefill@30000": 1781.9309925486727,
+        "decode@30000": 69.73217776301644
+      },
+      "seconds": 103.81801600300241
+    },
+    {
+      "order": "AB",
+      "sha": {
+        "A": {
+          "2000": "f6573f396c15300f",
+          "2000:write": "a6f07fd6fb86e448",
+          "30000": "cde3f1093dce48a1"
+        },
+        "B": {
+          "2000": "f6573f396c15300f",
+          "2000:write": "a6f07fd6fb86e448",
+          "30000": "cde3f1093dce48a1"
+        }
+      },
+      "A": {
+        "prefill@2000": 1328.271766271476,
+        "decode@2000": 65.89508068649833,
+        "prefill@2000:write": 1543.5640441419778,
+        "decode@2000:write": 116.80132795914928,
+        "prefill@30000": 1783.5108306031525,
+        "decode@30000": 69.86890114846591
+      },
+      "counters": {
+        "A": {
+          "2000": {
+            "expert_hits": 131811,
+            "expert_misses": 19885
+          },
+          "2000:write": {
+            "expert_hits": 82992,
+            "expert_misses": 25567
+          },
+          "30000": {
+            "expert_hits": 71024,
+            "expert_misses": 10531
+          }
+        },
+        "B": {
+          "2000": {
+            "expert_hits": 131811,
+            "expert_misses": 19885
+          },
+          "2000:write": {
+            "expert_hits": 82992,
+            "expert_misses": 25567
+          },
+          "30000": {
+            "expert_hits": 71024,
+            "expert_misses": 10531
+          }
+        }
+      },
+      "B": {
+        "prefill@2000": 1304.6817512302227,
+        "decode@2000": 65.17667887204273,
+        "prefill@2000:write": 1525.2437840982484,
+        "decode@2000:write": 118.2014486485863,
+        "prefill@30000": 1772.45844455316,
+        "decode@30000": 69.2885045780888
+      },
+      "seconds": 107.82440621894784
+    }
+  ],
+  "stop_reason": "all metrics decided after round 3",
+  "wall_seconds": 371.5332632130012,
+  "warmup": {
+    "prefill@2000": 1327.4908971756145,
+    "decode@2000": 65.88282422634285,
+    "prefill@2000:write": 1309.6391797518659,
+    "decode@2000:write": 117.43761784716318,
+    "prefill@30000": 1762.144922643983,
+    "decode@30000": 69.99196208457863
+  },
+  "plan": {
+    "alpha": 0.05,
+    "margin": 0.5,
+    "max_rounds": 6,
+    "min_rounds": 2,
+    "prior_sd": 0.5,
+    "prior_df": 4.0
+  },
+  "decisions": {
+    "prefill@2000": {
+      "decided_at_round": 1,
+      "decision": "equal",
+      "mean_diff_percent": -1.4752546609682022,
+      "ci_diff_percent": [
+        -3.3567537776088017,
+        0.406244455672397
+      ]
+    },
+    "decode@2000": {
+      "decided_at_round": 3,
+      "decision": "B slower",
+      "mean_diff_percent": -0.8595437714377688,
+      "ci_diff_percent": [
+        -1.5528471253243266,
+        -0.1662404175512111
+      ]
+    },
+    "prefill@2000:write": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": -0.7485588563711029,
+      "ci_diff_percent": [
+        -1.7413093055655509,
+        0.24419159282334502
+      ]
+    },
+    "decode@2000:write": {
+      "decided_at_round": 3,
+      "decision": "B faster",
+      "mean_diff_percent": 1.2041824164782093,
+      "ci_diff_percent": [
+        0.04719389721744194,
+        2.3611709357389765
+      ]
+    },
+    "prefill@30000": {
+      "decided_at_round": 1,
+      "decision": "B slower",
+      "mean_diff_percent": -0.446523982944913,
+      "ci_diff_percent": [
+        -0.6222111466592284,
+        -0.2708368192305976
+      ]
+    },
+    "decode@30000": {
+      "decided_at_round": 2,
+      "decision": "B slower",
+      "mean_diff_percent": -1.3501965291346878,
+      "ci_diff_percent": [
+        -1.9370109659871906,
+        -0.763382092282185
+      ]
+    }
+  }
+}

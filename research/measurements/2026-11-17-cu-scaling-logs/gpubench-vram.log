@@ -1,0 +1,516 @@
+## gpubench mask=off 20:57:07
+{"device":"AMD Radeon RX 9060 XT","arch":"gfx1200","cus":16,"clock_khz":2780000,"mem_clock_khz":1258000,"bus_bits":128,"l2_bytes":4194304,"hip_runtime":71626385,"hip_headers":71626385}
+{"test":"vram","var":"resident blocks per unit","param":8,"unit":"blocks","value":128}
+{"test":"vram","var":"read Nullen (Gegenprobe)","param":1024,"unit":"GB/s","value":315.802}
+{"test":"vram","var":"read Nullen (Gegenprobe)","param":1024,"unit":"GB/s","value":315.629}
+{"test":"vram","var":"read Nullen (Gegenprobe)","param":1024,"unit":"GB/s","value":315.54}
+{"test":"vram","var":"read Nullen (Gegenprobe)","param":1024,"unit":"GB/s","value":315.744}
+{"test":"vram","var":"read Nullen (Gegenprobe)","param":1024,"unit":"GB/s","value":315.797}
+{"test":"vram","var":"read Nullen (Gegenprobe)","param":1024,"unit":"GB/s","value":315.774}
+{"test":"vram","var":"read Nullen (Gegenprobe)","param":1024,"unit":"GB/s","value":315.914}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":2945.99}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":2949.55}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":3040.77}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":3095.92}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":3129.67}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":3023.47}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":2984.23}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":3507.19}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":3558.92}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":3610.14}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":3661.97}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":3632.85}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":3618.65}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":3601.78}
+{"test":"vram","var":"read Zufall","param":1,"unit":"GB/s","value":4033.68}
+{"test":"vram","var":"read Zufall","param":1,"unit":"GB/s","value":4068.22}
+{"test":"vram","var":"read Zufall","param":1,"unit":"GB/s","value":4085.71}
+{"test":"vram","var":"read Zufall","param":1,"unit":"GB/s","value":4058.38}
+{"test":"vram","var":"read Zufall","param":1,"unit":"GB/s","value":4029.59}
+{"test":"vram","var":"read Zufall","param":1,"unit":"GB/s","value":4004.8}
+{"test":"vram","var":"read Zufall","param":1,"unit":"GB/s","value":4047.21}
+{"test":"vram","var":"read Zufall","param":2,"unit":"GB/s","value":3418.75}
+{"test":"vram","var":"read Zufall","param":2,"unit":"GB/s","value":3477.54}
+{"test":"vram","var":"read Zufall","param":2,"unit":"GB/s","value":3533.27}
+{"test":"vram","var":"read Zufall","param":2,"unit":"GB/s","value":3548.92}
+{"test":"vram","var":"read Zufall","param":2,"unit":"GB/s","value":3554.32}
+{"test":"vram","var":"read Zufall","param":2,"unit":"GB/s","value":3561.99}
+{"test":"vram","var":"read Zufall","param":2,"unit":"GB/s","value":3564.47}
+{"test":"vram","var":"read Zufall","param":4,"unit":"GB/s","value":3679.92}
+{"test":"vram","var":"read Zufall","param":4,"unit":"GB/s","value":3584.94}
+{"test":"vram","var":"read Zufall","param":4,"unit":"GB/s","value":3582.79}
+{"test":"vram","var":"read Zufall","param":4,"unit":"GB/s","value":3637.41}
+{"test":"vram","var":"read Zufall","param":4,"unit":"GB/s","value":3655.24}
+{"test":"vram","var":"read Zufall","param":4,"unit":"GB/s","value":3659.35}
+{"test":"vram","var":"read Zufall","param":4,"unit":"GB/s","value":3647.04}
+{"test":"vram","var":"read Zufall","param":8,"unit":"GB/s","value":1004.94}
+{"test":"vram","var":"read Zufall","param":8,"unit":"GB/s","value":1024.65}
+{"test":"vram","var":"read Zufall","param":8,"unit":"GB/s","value":1103.6}
+{"test":"vram","var":"read Zufall","param":8,"unit":"GB/s","value":1174.59}
+{"test":"vram","var":"read Zufall","param":8,"unit":"GB/s","value":1193.91}
+{"test":"vram","var":"read Zufall","param":8,"unit":"GB/s","value":1195.49}
+{"test":"vram","var":"read Zufall","param":8,"unit":"GB/s","value":1192.47}
+{"test":"vram","var":"read Zufall","param":16,"unit":"GB/s","value":1181.76}
+{"test":"vram","var":"read Zufall","param":16,"unit":"GB/s","value":1186.95}
+{"test":"vram","var":"read Zufall","param":16,"unit":"GB/s","value":1190.2}
+{"test":"vram","var":"read Zufall","param":16,"unit":"GB/s","value":1189.15}
+{"test":"vram","var":"read Zufall","param":16,"unit":"GB/s","value":1188.62}
+{"test":"vram","var":"read Zufall","param":16,"unit":"GB/s","value":1189.87}
+{"test":"vram","var":"read Zufall","param":16,"unit":"GB/s","value":1189.79}
+{"test":"vram","var":"read Zufall","param":32,"unit":"GB/s","value":1137.58}
+{"test":"vram","var":"read Zufall","param":32,"unit":"GB/s","value":1185.26}
+{"test":"vram","var":"read Zufall","param":32,"unit":"GB/s","value":1189.09}
+{"test":"vram","var":"read Zufall","param":32,"unit":"GB/s","value":1173.04}
+{"test":"vram","var":"read Zufall","param":32,"unit":"GB/s","value":1164.27}
+{"test":"vram","var":"read Zufall","param":32,"unit":"GB/s","value":1192.22}
+{"test":"vram","var":"read Zufall","param":32,"unit":"GB/s","value":1189.71}
+{"test":"vram","var":"read Zufall","param":64,"unit":"GB/s","value":317.376}
+{"test":"vram","var":"read Zufall","param":64,"unit":"GB/s","value":317.63}
+{"test":"vram","var":"read Zufall","param":64,"unit":"GB/s","value":317.672}
+{"test":"vram","var":"read Zufall","param":64,"unit":"GB/s","value":317.772}
+{"test":"vram","var":"read Zufall","param":64,"unit":"GB/s","value":317.778}
+{"test":"vram","var":"read Zufall","param":64,"unit":"GB/s","value":317.712}
+{"test":"vram","var":"read Zufall","param":64,"unit":"GB/s","value":317.698}
+{"test":"vram","var":"read Zufall","param":128,"unit":"GB/s","value":315.897}
+{"test":"vram","var":"read Zufall","param":128,"unit":"GB/s","value":315.858}
+{"test":"vram","var":"read Zufall","param":128,"unit":"GB/s","value":315.711}
+{"test":"vram","var":"read Zufall","param":128,"unit":"GB/s","value":315.804}
+{"test":"vram","var":"read Zufall","param":128,"unit":"GB/s","value":315.882}
+{"test":"vram","var":"read Zufall","param":128,"unit":"GB/s","value":315.838}
+{"test":"vram","var":"read Zufall","param":128,"unit":"GB/s","value":315.735}
+{"test":"vram","var":"read Zufall","param":256,"unit":"GB/s","value":315.92}
+{"test":"vram","var":"read Zufall","param":256,"unit":"GB/s","value":315.911}
+{"test":"vram","var":"read Zufall","param":256,"unit":"GB/s","value":315.836}
+{"test":"vram","var":"read Zufall","param":256,"unit":"GB/s","value":314.946}
+{"test":"vram","var":"read Zufall","param":256,"unit":"GB/s","value":314.738}
+{"test":"vram","var":"read Zufall","param":256,"unit":"GB/s","value":315.833}
+{"test":"vram","var":"read Zufall","param":256,"unit":"GB/s","value":315.893}
+{"test":"vram","var":"read Zufall","param":512,"unit":"GB/s","value":316.023}
+{"test":"vram","var":"read Zufall","param":512,"unit":"GB/s","value":316.041}
+{"test":"vram","var":"read Zufall","param":512,"unit":"GB/s","value":316.029}
+{"test":"vram","var":"read Zufall","param":512,"unit":"GB/s","value":307.713}
+{"test":"vram","var":"read Zufall","param":512,"unit":"GB/s","value":316.5}
+{"test":"vram","var":"read Zufall","param":512,"unit":"GB/s","value":318.023}
+{"test":"vram","var":"read Zufall","param":512,"unit":"GB/s","value":317.908}
+{"test":"vram","var":"read Zufall","param":1024,"unit":"GB/s","value":318.692}
+{"test":"vram","var":"read Zufall","param":1024,"unit":"GB/s","value":315.481}
+{"test":"vram","var":"read Zufall","param":1024,"unit":"GB/s","value":306.124}
+{"test":"vram","var":"read Zufall","param":1024,"unit":"GB/s","value":316.376}
+{"test":"vram","var":"read Zufall","param":1024,"unit":"GB/s","value":316.098}
+{"test":"vram","var":"read Zufall","param":1024,"unit":"GB/s","value":315.73}
+{"test":"vram","var":"read Zufall","param":1024,"unit":"GB/s","value":315.413}
+{"test":"vram","var":"read Zufall","param":2048,"unit":"GB/s","value":312.866}
+{"test":"vram","var":"read Zufall","param":2048,"unit":"GB/s","value":315.891}
+{"test":"vram","var":"read Zufall","param":2048,"unit":"GB/s","value":314.606}
+{"test":"vram","var":"read Zufall","param":2048,"unit":"GB/s","value":315.591}
+{"test":"vram","var":"read Zufall","param":2048,"unit":"GB/s","value":315.626}
+{"test":"vram","var":"read Zufall","param":2048,"unit":"GB/s","value":315.49}
+{"test":"vram","var":"read Zufall","param":2048,"unit":"GB/s","value":310.198}
+{"test":"vram","var":"read Zufall","param":4096,"unit":"GB/s","value":315.904}
+{"test":"vram","var":"read Zufall","param":4096,"unit":"GB/s","value":315.943}
+{"test":"vram","var":"read Zufall","param":4096,"unit":"GB/s","value":315.398}
+{"test":"vram","var":"read Zufall","param":4096,"unit":"GB/s","value":315.554}
+{"test":"vram","var":"read Zufall","param":4096,"unit":"GB/s","value":313.26}
+{"test":"vram","var":"read Zufall","param":4096,"unit":"GB/s","value":315.869}
+{"test":"vram","var":"read Zufall","param":4096,"unit":"GB/s","value":314.484}
+{"test":"vram","var":"write","param":1024,"unit":"GB/s","value":273.214}
+{"test":"vram","var":"copy (lesen+schreiben)","param":1024,"unit":"GB/s","value":282.579}
+{"test":"vram","var":"write","param":1024,"unit":"GB/s","value":272.654}
+{"test":"vram","var":"copy (lesen+schreiben)","param":1024,"unit":"GB/s","value":281.449}
+{"test":"vram","var":"write","param":1024,"unit":"GB/s","value":276.486}
+{"test":"vram","var":"copy (lesen+schreiben)","param":1024,"unit":"GB/s","value":282.22}
+{"test":"vram","var":"write","param":1024,"unit":"GB/s","value":276.937}
+{"test":"vram","var":"copy (lesen+schreiben)","param":1024,"unit":"GB/s","value":281.058}
+{"test":"vram","var":"write","param":1024,"unit":"GB/s","value":276.553}
+{"test":"vram","var":"copy (lesen+schreiben)","param":1024,"unit":"GB/s","value":282.216}
+{"test":"vram","var":"write","param":1024,"unit":"GB/s","value":276.345}
+{"test":"vram","var":"copy (lesen+schreiben)","param":1024,"unit":"GB/s","value":277.847}
+{"test":"vram","var":"write","param":1024,"unit":"GB/s","value":277.74}
+{"test":"vram","var":"copy (lesen+schreiben)","param":1024,"unit":"GB/s","value":282.1}
+## gpubench mask=on 20:57:08
+{"device":"AMD Radeon RX 9060 XT","arch":"gfx1200","cus":16,"clock_khz":2780000,"mem_clock_khz":1258000,"bus_bits":128,"l2_bytes":4194304,"hip_runtime":71626385,"hip_headers":71626385}
+{"test":"vram","var":"resident blocks per unit","param":8,"unit":"blocks","value":128}
+{"test":"vram","var":"read Nullen (Gegenprobe)","param":1024,"unit":"GB/s","value":312.063}
+{"test":"vram","var":"read Nullen (Gegenprobe)","param":1024,"unit":"GB/s","value":307.611}
+{"test":"vram","var":"read Nullen (Gegenprobe)","param":1024,"unit":"GB/s","value":318.391}
+{"test":"vram","var":"read Nullen (Gegenprobe)","param":1024,"unit":"GB/s","value":311.687}
+{"test":"vram","var":"read Nullen (Gegenprobe)","param":1024,"unit":"GB/s","value":311.702}
+{"test":"vram","var":"read Nullen (Gegenprobe)","param":1024,"unit":"GB/s","value":308.283}
+{"test":"vram","var":"read Nullen (Gegenprobe)","param":1024,"unit":"GB/s","value":311.616}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":2765.69}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":2696.79}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":2497.56}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":2379.55}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":2444.56}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":2453.67}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":2516.88}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":2907.93}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":2874}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":2867.93}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":2876.38}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":2857.17}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":2837.09}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":2824.26}
+{"test":"vram","var":"read Zufall","param":1,"unit":"GB/s","value":3195.42}
+{"test":"vram","var":"read Zufall","param":1,"unit":"GB/s","value":3303.97}
+{"test":"vram","var":"read Zufall","param":1,"unit":"GB/s","value":3264.99}
+{"test":"vram","var":"read Zufall","param":1,"unit":"GB/s","value":3250.56}
+{"test":"vram","var":"read Zufall","param":1,"unit":"GB/s","value":3191.34}
+{"test":"vram","var":"read Zufall","param":1,"unit":"GB/s","value":3158.29}
+{"test":"vram","var":"read Zufall","param":1,"unit":"GB/s","value":3207.54}
+{"test":"vram","var":"read Zufall","param":2,"unit":"GB/s","value":2552.42}
+{"test":"vram","var":"read Zufall","param":2,"unit":"GB/s","value":2673.62}
+{"test":"vram","var":"read Zufall","param":2,"unit":"GB/s","value":2754.2}
+{"test":"vram","var":"read Zufall","param":2,"unit":"GB/s","value":2749.83}
+{"test":"vram","var":"read Zufall","param":2,"unit":"GB/s","value":2687.47}
+{"test":"vram","var":"read Zufall","param":2,"unit":"GB/s","value":2496.05}
+{"test":"vram","var":"read Zufall","param":2,"unit":"GB/s","value":2525.88}
+{"test":"vram","var":"read Zufall","param":4,"unit":"GB/s","value":2675.82}
+{"test":"vram","var":"read Zufall","param":4,"unit":"GB/s","value":2731.15}
+{"test":"vram","var":"read Zufall","param":4,"unit":"GB/s","value":2776.06}
+{"test":"vram","var":"read Zufall","param":4,"unit":"GB/s","value":2744.84}
+{"test":"vram","var":"read Zufall","param":4,"unit":"GB/s","value":2766.91}
+{"test":"vram","var":"read Zufall","param":4,"unit":"GB/s","value":2791.22}
+{"test":"vram","var":"read Zufall","param":4,"unit":"GB/s","value":2739.17}
+{"test":"vram","var":"read Zufall","param":8,"unit":"GB/s","value":2679.83}
+{"test":"vram","var":"read Zufall","param":8,"unit":"GB/s","value":2655.7}
+{"test":"vram","var":"read Zufall","param":8,"unit":"GB/s","value":2714.99}
+{"test":"vram","var":"read Zufall","param":8,"unit":"GB/s","value":2741.47}
+{"test":"vram","var":"read Zufall","param":8,"unit":"GB/s","value":2786.08}
+{"test":"vram","var":"read Zufall","param":8,"unit":"GB/s","value":2773.12}
+{"test":"vram","var":"read Zufall","param":8,"unit":"GB/s","value":2759.02}
+{"test":"vram","var":"read Zufall","param":16,"unit":"GB/s","value":999.214}
+{"test":"vram","var":"read Zufall","param":16,"unit":"GB/s","value":938.137}
+{"test":"vram","var":"read Zufall","param":16,"unit":"GB/s","value":997.247}
+{"test":"vram","var":"read Zufall","param":16,"unit":"GB/s","value":978.08}
+{"test":"vram","var":"read Zufall","param":16,"unit":"GB/s","value":1060.27}
+{"test":"vram","var":"read Zufall","param":16,"unit":"GB/s","value":1053.75}
+{"test":"vram","var":"read Zufall","param":16,"unit":"GB/s","value":994.228}
+{"test":"vram","var":"read Zufall","param":32,"unit":"GB/s","value":1052.6}
+{"test":"vram","var":"read Zufall","param":32,"unit":"GB/s","value":984.492}
+{"test":"vram","var":"read Zufall","param":32,"unit":"GB/s","value":1062.47}
+{"test":"vram","var":"read Zufall","param":32,"unit":"GB/s","value":1011.26}
+{"test":"vram","var":"read Zufall","param":32,"unit":"GB/s","value":941.667}
+{"test":"vram","var":"read Zufall","param":32,"unit":"GB/s","value":988.334}
+{"test":"vram","var":"read Zufall","param":32,"unit":"GB/s","value":995.98}
+{"test":"vram","var":"read Zufall","param":64,"unit":"GB/s","value":910.439}
+{"test":"vram","var":"read Zufall","param":64,"unit":"GB/s","value":1014.31}
+{"test":"vram","var":"read Zufall","param":64,"unit":"GB/s","value":1015.33}
+{"test":"vram","var":"read Zufall","param":64,"unit":"GB/s","value":959.283}
+{"test":"vram","var":"read Zufall","param":64,"unit":"GB/s","value":1013.36}
+{"test":"vram","var":"read Zufall","param":64,"unit":"GB/s","value":870.965}
+{"test":"vram","var":"read Zufall","param":64,"unit":"GB/s","value":1016.01}
+{"test":"vram","var":"read Zufall","param":128,"unit":"GB/s","value":311.512}
+{"test":"vram","var":"read Zufall","param":128,"unit":"GB/s","value":308.622}
+{"test":"vram","var":"read Zufall","param":128,"unit":"GB/s","value":305.461}
+{"test":"vram","var":"read Zufall","param":128,"unit":"GB/s","value":318.51}
+{"test":"vram","var":"read Zufall","param":128,"unit":"GB/s","value":308.368}
+{"test":"vram","var":"read Zufall","param":128,"unit":"GB/s","value":312.062}
+{"test":"vram","var":"read Zufall","param":128,"unit":"GB/s","value":311.394}
+{"test":"vram","var":"read Zufall","param":256,"unit":"GB/s","value":306.427}
+{"test":"vram","var":"read Zufall","param":256,"unit":"GB/s","value":317.93}
+{"test":"vram","var":"read Zufall","param":256,"unit":"GB/s","value":311.58}
+{"test":"vram","var":"read Zufall","param":256,"unit":"GB/s","value":312.064}
+{"test":"vram","var":"read Zufall","param":256,"unit":"GB/s","value":314.963}
+{"test":"vram","var":"read Zufall","param":256,"unit":"GB/s","value":311.577}
+{"test":"vram","var":"read Zufall","param":256,"unit":"GB/s","value":318.507}
+{"test":"vram","var":"read Zufall","param":512,"unit":"GB/s","value":307.536}
+{"test":"vram","var":"read Zufall","param":512,"unit":"GB/s","value":312.071}
+{"test":"vram","var":"read Zufall","param":512,"unit":"GB/s","value":311.47}
+{"test":"vram","var":"read Zufall","param":512,"unit":"GB/s","value":307.079}
+{"test":"vram","var":"read Zufall","param":512,"unit":"GB/s","value":318.452}
+{"test":"vram","var":"read Zufall","param":512,"unit":"GB/s","value":311.228}
+{"test":"vram","var":"read Zufall","param":512,"unit":"GB/s","value":309.844}
+{"test":"vram","var":"read Zufall","param":1024,"unit":"GB/s","value":318.517}
+{"test":"vram","var":"read Zufall","param":1024,"unit":"GB/s","value":317.793}
+{"test":"vram","var":"read Zufall","param":1024,"unit":"GB/s","value":311.714}
+{"test":"vram","var":"read Zufall","param":1024,"unit":"GB/s","value":314.149}
+{"test":"vram","var":"read Zufall","param":1024,"unit":"GB/s","value":318.438}
+{"test":"vram","var":"read Zufall","param":1024,"unit":"GB/s","value":311.273}
+{"test":"vram","var":"read Zufall","param":1024,"unit":"GB/s","value":301.05}
+{"test":"vram","var":"read Zufall","param":2048,"unit":"GB/s","value":305.227}
+{"test":"vram","var":"read Zufall","param":2048,"unit":"GB/s","value":318.366}
+{"test":"vram","var":"read Zufall","param":2048,"unit":"GB/s","value":307.555}
+{"test":"vram","var":"read Zufall","param":2048,"unit":"GB/s","value":311.885}
+{"test":"vram","var":"read Zufall","param":2048,"unit":"GB/s","value":312.268}
+{"test":"vram","var":"read Zufall","param":2048,"unit":"GB/s","value":307.28}
+{"test":"vram","var":"read Zufall","param":2048,"unit":"GB/s","value":318.458}
+{"test":"vram","var":"read Zufall","param":4096,"unit":"GB/s","value":312.275}
+{"test":"vram","var":"read Zufall","param":4096,"unit":"GB/s","value":309.952}
+{"test":"vram","var":"read Zufall","param":4096,"unit":"GB/s","value":317.774}
+{"test":"vram","var":"read Zufall","param":4096,"unit":"GB/s","value":311.593}
+{"test":"vram","var":"read Zufall","param":4096,"unit":"GB/s","value":306.687}
+{"test":"vram","var":"read Zufall","param":4096,"unit":"GB/s","value":318.466}
+{"test":"vram","var":"read Zufall","param":4096,"unit":"GB/s","value":317.962}
+{"test":"vram","var":"write","param":1024,"unit":"GB/s","value":273.256}
+{"test":"vram","var":"copy (lesen+schreiben)","param":1024,"unit":"GB/s","value":268.875}
+{"test":"vram","var":"write","param":1024,"unit":"GB/s","value":268.527}
+{"test":"vram","var":"copy (lesen+schreiben)","param":1024,"unit":"GB/s","value":269.774}
+{"test":"vram","var":"write","param":1024,"unit":"GB/s","value":266.601}
+{"test":"vram","var":"copy (lesen+schreiben)","param":1024,"unit":"GB/s","value":272.628}
+{"test":"vram","var":"write","param":1024,"unit":"GB/s","value":265.986}
+{"test":"vram","var":"copy (lesen+schreiben)","param":1024,"unit":"GB/s","value":273.859}
+{"test":"vram","var":"write","param":1024,"unit":"GB/s","value":267.057}
+{"test":"vram","var":"copy (lesen+schreiben)","param":1024,"unit":"GB/s","value":271.174}
+{"test":"vram","var":"write","param":1024,"unit":"GB/s","value":266.268}
+{"test":"vram","var":"copy (lesen+schreiben)","param":1024,"unit":"GB/s","value":264.825}
+{"test":"vram","var":"write","param":1024,"unit":"GB/s","value":266.149}
+{"test":"vram","var":"copy (lesen+schreiben)","param":1024,"unit":"GB/s","value":266.111}
+## gpubench mask=on 20:57:10
+{"device":"AMD Radeon RX 9060 XT","arch":"gfx1200","cus":16,"clock_khz":2780000,"mem_clock_khz":1258000,"bus_bits":128,"l2_bytes":4194304,"hip_runtime":71626385,"hip_headers":71626385}
+{"test":"vram","var":"resident blocks per unit","param":8,"unit":"blocks","value":128}
+{"test":"vram","var":"read Nullen (Gegenprobe)","param":1024,"unit":"GB/s","value":305.617}
+{"test":"vram","var":"read Nullen (Gegenprobe)","param":1024,"unit":"GB/s","value":318.331}
+{"test":"vram","var":"read Nullen (Gegenprobe)","param":1024,"unit":"GB/s","value":314.165}
+{"test":"vram","var":"read Nullen (Gegenprobe)","param":1024,"unit":"GB/s","value":311.457}
+{"test":"vram","var":"read Nullen (Gegenprobe)","param":1024,"unit":"GB/s","value":318.474}
+{"test":"vram","var":"read Nullen (Gegenprobe)","param":1024,"unit":"GB/s","value":314.088}
+{"test":"vram","var":"read Nullen (Gegenprobe)","param":1024,"unit":"GB/s","value":318.467}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":2777.93}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":2649.93}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":2504.43}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":2562.53}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":2454.68}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":2396.82}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":2418.63}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":2859.08}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":2890.24}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":2911.88}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":2920.43}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":2936.24}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":2865.87}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":2802.88}
+{"test":"vram","var":"read Zufall","param":1,"unit":"GB/s","value":3201.24}
+{"test":"vram","var":"read Zufall","param":1,"unit":"GB/s","value":3269.57}
+{"test":"vram","var":"read Zufall","param":1,"unit":"GB/s","value":3355.18}
+{"test":"vram","var":"read Zufall","param":1,"unit":"GB/s","value":3268.97}
+{"test":"vram","var":"read Zufall","param":1,"unit":"GB/s","value":3227.89}
+{"test":"vram","var":"read Zufall","param":1,"unit":"GB/s","value":3167.99}
+{"test":"vram","var":"read Zufall","param":1,"unit":"GB/s","value":3150.51}
+{"test":"vram","var":"read Zufall","param":2,"unit":"GB/s","value":2547.57}
+{"test":"vram","var":"read Zufall","param":2,"unit":"GB/s","value":2689.49}
+{"test":"vram","var":"read Zufall","param":2,"unit":"GB/s","value":2660.04}
+{"test":"vram","var":"read Zufall","param":2,"unit":"GB/s","value":2680.63}
+{"test":"vram","var":"read Zufall","param":2,"unit":"GB/s","value":2731.71}
+{"test":"vram","var":"read Zufall","param":2,"unit":"GB/s","value":2750.46}
+{"test":"vram","var":"read Zufall","param":2,"unit":"GB/s","value":2733.1}
+{"test":"vram","var":"read Zufall","param":4,"unit":"GB/s","value":2720.77}
+{"test":"vram","var":"read Zufall","param":4,"unit":"GB/s","value":2627.62}
+{"test":"vram","var":"read Zufall","param":4,"unit":"GB/s","value":2642.76}
+{"test":"vram","var":"read Zufall","param":4,"unit":"GB/s","value":2715.27}
+{"test":"vram","var":"read Zufall","param":4,"unit":"GB/s","value":2772.26}
+{"test":"vram","var":"read Zufall","param":4,"unit":"GB/s","value":2741.82}
+{"test":"vram","var":"read Zufall","param":4,"unit":"GB/s","value":2700.79}
+{"test":"vram","var":"read Zufall","param":8,"unit":"GB/s","value":2698.96}
+{"test":"vram","var":"read Zufall","param":8,"unit":"GB/s","value":2785.79}
+{"test":"vram","var":"read Zufall","param":8,"unit":"GB/s","value":2823.51}
+{"test":"vram","var":"read Zufall","param":8,"unit":"GB/s","value":2766.76}
+{"test":"vram","var":"read Zufall","param":8,"unit":"GB/s","value":2678.22}
+{"test":"vram","var":"read Zufall","param":8,"unit":"GB/s","value":2631.94}
+{"test":"vram","var":"read Zufall","param":8,"unit":"GB/s","value":2709.58}
+{"test":"vram","var":"read Zufall","param":16,"unit":"GB/s","value":991.162}
+{"test":"vram","var":"read Zufall","param":16,"unit":"GB/s","value":997.46}
+{"test":"vram","var":"read Zufall","param":16,"unit":"GB/s","value":1003.17}
+{"test":"vram","var":"read Zufall","param":16,"unit":"GB/s","value":1012.23}
+{"test":"vram","var":"read Zufall","param":16,"unit":"GB/s","value":1001.84}
+{"test":"vram","var":"read Zufall","param":16,"unit":"GB/s","value":1063.88}
+{"test":"vram","var":"read Zufall","param":16,"unit":"GB/s","value":1061.25}
+{"test":"vram","var":"read Zufall","param":32,"unit":"GB/s","value":1054.79}
+{"test":"vram","var":"read Zufall","param":32,"unit":"GB/s","value":1055.59}
+{"test":"vram","var":"read Zufall","param":32,"unit":"GB/s","value":985.503}
+{"test":"vram","var":"read Zufall","param":32,"unit":"GB/s","value":1061.82}
+{"test":"vram","var":"read Zufall","param":32,"unit":"GB/s","value":1031.26}
+{"test":"vram","var":"read Zufall","param":32,"unit":"GB/s","value":998.452}
+{"test":"vram","var":"read Zufall","param":32,"unit":"GB/s","value":981.091}
+{"test":"vram","var":"read Zufall","param":64,"unit":"GB/s","value":929.794}
+{"test":"vram","var":"read Zufall","param":64,"unit":"GB/s","value":1006.42}
+{"test":"vram","var":"read Zufall","param":64,"unit":"GB/s","value":955.969}
+{"test":"vram","var":"read Zufall","param":64,"unit":"GB/s","value":1014.65}
+{"test":"vram","var":"read Zufall","param":64,"unit":"GB/s","value":958.71}
+{"test":"vram","var":"read Zufall","param":64,"unit":"GB/s","value":1014.83}
+{"test":"vram","var":"read Zufall","param":64,"unit":"GB/s","value":975.361}
+{"test":"vram","var":"read Zufall","param":128,"unit":"GB/s","value":318.522}
+{"test":"vram","var":"read Zufall","param":128,"unit":"GB/s","value":307.634}
+{"test":"vram","var":"read Zufall","param":128,"unit":"GB/s","value":317.896}
+{"test":"vram","var":"read Zufall","param":128,"unit":"GB/s","value":312.149}
+{"test":"vram","var":"read Zufall","param":128,"unit":"GB/s","value":307.542}
+{"test":"vram","var":"read Zufall","param":128,"unit":"GB/s","value":311.448}
+{"test":"vram","var":"read Zufall","param":128,"unit":"GB/s","value":318.376}
+{"test":"vram","var":"read Zufall","param":256,"unit":"GB/s","value":308.546}
+{"test":"vram","var":"read Zufall","param":256,"unit":"GB/s","value":311.921}
+{"test":"vram","var":"read Zufall","param":256,"unit":"GB/s","value":318.261}
+{"test":"vram","var":"read Zufall","param":256,"unit":"GB/s","value":307.672}
+{"test":"vram","var":"read Zufall","param":256,"unit":"GB/s","value":311.317}
+{"test":"vram","var":"read Zufall","param":256,"unit":"GB/s","value":318.506}
+{"test":"vram","var":"read Zufall","param":256,"unit":"GB/s","value":309.777}
+{"test":"vram","var":"read Zufall","param":512,"unit":"GB/s","value":316.921}
+{"test":"vram","var":"read Zufall","param":512,"unit":"GB/s","value":311.21}
+{"test":"vram","var":"read Zufall","param":512,"unit":"GB/s","value":308.523}
+{"test":"vram","var":"read Zufall","param":512,"unit":"GB/s","value":310.896}
+{"test":"vram","var":"read Zufall","param":512,"unit":"GB/s","value":318.033}
+{"test":"vram","var":"read Zufall","param":512,"unit":"GB/s","value":310.129}
+{"test":"vram","var":"read Zufall","param":512,"unit":"GB/s","value":315.823}
+{"test":"vram","var":"read Zufall","param":1024,"unit":"GB/s","value":311.72}
+{"test":"vram","var":"read Zufall","param":1024,"unit":"GB/s","value":307.212}
+{"test":"vram","var":"read Zufall","param":1024,"unit":"GB/s","value":318.367}
+{"test":"vram","var":"read Zufall","param":1024,"unit":"GB/s","value":311.526}
+{"test":"vram","var":"read Zufall","param":1024,"unit":"GB/s","value":311.74}
+{"test":"vram","var":"read Zufall","param":1024,"unit":"GB/s","value":307.719}
+{"test":"vram","var":"read Zufall","param":1024,"unit":"GB/s","value":311.608}
+{"test":"vram","var":"read Zufall","param":2048,"unit":"GB/s","value":312.208}
+{"test":"vram","var":"read Zufall","param":2048,"unit":"GB/s","value":277.153}
+{"test":"vram","var":"read Zufall","param":2048,"unit":"GB/s","value":311.018}
+{"test":"vram","var":"read Zufall","param":2048,"unit":"GB/s","value":311.16}
+{"test":"vram","var":"read Zufall","param":2048,"unit":"GB/s","value":310.848}
+{"test":"vram","var":"read Zufall","param":2048,"unit":"GB/s","value":317.186}
+{"test":"vram","var":"read Zufall","param":2048,"unit":"GB/s","value":317.401}
+{"test":"vram","var":"read Zufall","param":4096,"unit":"GB/s","value":318.317}
+{"test":"vram","var":"read Zufall","param":4096,"unit":"GB/s","value":318.348}
+{"test":"vram","var":"read Zufall","param":4096,"unit":"GB/s","value":318.687}
+{"test":"vram","var":"read Zufall","param":4096,"unit":"GB/s","value":318.915}
+{"test":"vram","var":"read Zufall","param":4096,"unit":"GB/s","value":310.483}
+{"test":"vram","var":"read Zufall","param":4096,"unit":"GB/s","value":318.726}
+{"test":"vram","var":"read Zufall","param":4096,"unit":"GB/s","value":318.892}
+{"test":"vram","var":"write","param":1024,"unit":"GB/s","value":270.936}
+{"test":"vram","var":"copy (lesen+schreiben)","param":1024,"unit":"GB/s","value":271.099}
+{"test":"vram","var":"write","param":1024,"unit":"GB/s","value":268.252}
+{"test":"vram","var":"copy (lesen+schreiben)","param":1024,"unit":"GB/s","value":271.153}
+{"test":"vram","var":"write","param":1024,"unit":"GB/s","value":267.479}
+{"test":"vram","var":"copy (lesen+schreiben)","param":1024,"unit":"GB/s","value":270.304}
+{"test":"vram","var":"write","param":1024,"unit":"GB/s","value":267.621}
+{"test":"vram","var":"copy (lesen+schreiben)","param":1024,"unit":"GB/s","value":271.868}
+{"test":"vram","var":"write","param":1024,"unit":"GB/s","value":266.592}
+{"test":"vram","var":"copy (lesen+schreiben)","param":1024,"unit":"GB/s","value":270.9}
+{"test":"vram","var":"write","param":1024,"unit":"GB/s","value":267.367}
+{"test":"vram","var":"copy (lesen+schreiben)","param":1024,"unit":"GB/s","value":270.668}
+{"test":"vram","var":"write","param":1024,"unit":"GB/s","value":268.774}
+{"test":"vram","var":"copy (lesen+schreiben)","param":1024,"unit":"GB/s","value":270.151}
+## gpubench mask=off 20:57:11
+{"device":"AMD Radeon RX 9060 XT","arch":"gfx1200","cus":16,"clock_khz":2780000,"mem_clock_khz":1258000,"bus_bits":128,"l2_bytes":4194304,"hip_runtime":71626385,"hip_headers":71626385}
+{"test":"vram","var":"resident blocks per unit","param":8,"unit":"blocks","value":128}
+{"test":"vram","var":"read Nullen (Gegenprobe)","param":1024,"unit":"GB/s","value":316.111}
+{"test":"vram","var":"read Nullen (Gegenprobe)","param":1024,"unit":"GB/s","value":316.077}
+{"test":"vram","var":"read Nullen (Gegenprobe)","param":1024,"unit":"GB/s","value":316.193}
+{"test":"vram","var":"read Nullen (Gegenprobe)","param":1024,"unit":"GB/s","value":316.197}
+{"test":"vram","var":"read Nullen (Gegenprobe)","param":1024,"unit":"GB/s","value":316.218}
+{"test":"vram","var":"read Nullen (Gegenprobe)","param":1024,"unit":"GB/s","value":316.046}
+{"test":"vram","var":"read Nullen (Gegenprobe)","param":1024,"unit":"GB/s","value":316.525}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":4697.99}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":4652.4}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":4559.16}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":4488.07}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":4365.45}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":4236.11}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":4201.96}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":4823.35}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":4802.85}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":4954.89}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":4882.8}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":4871.06}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":4799.21}
+{"test":"vram","var":"read Zufall","param":0,"unit":"GB/s","value":4654.01}
+{"test":"vram","var":"read Zufall","param":1,"unit":"GB/s","value":5034.82}
+{"test":"vram","var":"read Zufall","param":1,"unit":"GB/s","value":5043.81}
+{"test":"vram","var":"read Zufall","param":1,"unit":"GB/s","value":5082.97}
+{"test":"vram","var":"read Zufall","param":1,"unit":"GB/s","value":5098.9}
+{"test":"vram","var":"read Zufall","param":1,"unit":"GB/s","value":5118.83}
+{"test":"vram","var":"read Zufall","param":1,"unit":"GB/s","value":5300.78}
+{"test":"vram","var":"read Zufall","param":1,"unit":"GB/s","value":5368.37}
+{"test":"vram","var":"read Zufall","param":2,"unit":"GB/s","value":4428.83}
+{"test":"vram","var":"read Zufall","param":2,"unit":"GB/s","value":4497.47}
+{"test":"vram","var":"read Zufall","param":2,"unit":"GB/s","value":4619.17}
+{"test":"vram","var":"read Zufall","param":2,"unit":"GB/s","value":4789.79}
+{"test":"vram","var":"read Zufall","param":2,"unit":"GB/s","value":4609.26}
+{"test":"vram","var":"read Zufall","param":2,"unit":"GB/s","value":4522.67}
+{"test":"vram","var":"read Zufall","param":2,"unit":"GB/s","value":4319.27}
+{"test":"vram","var":"read Zufall","param":4,"unit":"GB/s","value":4361.73}
+{"test":"vram","var":"read Zufall","param":4,"unit":"GB/s","value":4345.84}
+{"test":"vram","var":"read Zufall","param":4,"unit":"GB/s","value":4422.08}
+{"test":"vram","var":"read Zufall","param":4,"unit":"GB/s","value":4462.15}
+{"test":"vram","var":"read Zufall","param":4,"unit":"GB/s","value":4512.98}
+{"test":"vram","var":"read Zufall","param":4,"unit":"GB/s","value":4518.1}
+{"test":"vram","var":"read Zufall","param":4,"unit":"GB/s","value":4559.16}
+{"test":"vram","var":"read Zufall","param":8,"unit":"GB/s","value":1005.19}
+{"test":"vram","var":"read Zufall","param":8,"unit":"GB/s","value":1028.7}
+{"test":"vram","var":"read Zufall","param":8,"unit":"GB/s","value":1084.01}
+{"test":"vram","var":"read Zufall","param":8,"unit":"GB/s","value":1170.71}
+{"test":"vram","var":"read Zufall","param":8,"unit":"GB/s","value":1194.74}
+{"test":"vram","var":"read Zufall","param":8,"unit":"GB/s","value":1189.76}
+{"test":"vram","var":"read Zufall","param":8,"unit":"GB/s","value":1193.52}
+{"test":"vram","var":"read Zufall","param":16,"unit":"GB/s","value":1175.47}
+{"test":"vram","var":"read Zufall","param":16,"unit":"GB/s","value":1195.54}
+{"test":"vram","var":"read Zufall","param":16,"unit":"GB/s","value":1193.2}
+{"test":"vram","var":"read Zufall","param":16,"unit":"GB/s","value":1191.81}
+{"test":"vram","var":"read Zufall","param":16,"unit":"GB/s","value":1191.2}
+{"test":"vram","var":"read Zufall","param":16,"unit":"GB/s","value":1193.47}
+{"test":"vram","var":"read Zufall","param":16,"unit":"GB/s","value":1192.8}
+{"test":"vram","var":"read Zufall","param":32,"unit":"GB/s","value":1128.24}
+{"test":"vram","var":"read Zufall","param":32,"unit":"GB/s","value":1188.24}
+{"test":"vram","var":"read Zufall","param":32,"unit":"GB/s","value":1174.85}
+{"test":"vram","var":"read Zufall","param":32,"unit":"GB/s","value":1184.72}
+{"test":"vram","var":"read Zufall","param":32,"unit":"GB/s","value":1191.08}
+{"test":"vram","var":"read Zufall","param":32,"unit":"GB/s","value":1191.59}
+{"test":"vram","var":"read Zufall","param":32,"unit":"GB/s","value":1191.36}
+{"test":"vram","var":"read Zufall","param":64,"unit":"GB/s","value":317.967}
+{"test":"vram","var":"read Zufall","param":64,"unit":"GB/s","value":317.891}
+{"test":"vram","var":"read Zufall","param":64,"unit":"GB/s","value":317.733}
+{"test":"vram","var":"read Zufall","param":64,"unit":"GB/s","value":317.959}
+{"test":"vram","var":"read Zufall","param":64,"unit":"GB/s","value":317.915}
+{"test":"vram","var":"read Zufall","param":64,"unit":"GB/s","value":317.955}
+{"test":"vram","var":"read Zufall","param":64,"unit":"GB/s","value":317.745}
+{"test":"vram","var":"read Zufall","param":128,"unit":"GB/s","value":316.904}
+{"test":"vram","var":"read Zufall","param":128,"unit":"GB/s","value":316.054}
+{"test":"vram","var":"read Zufall","param":128,"unit":"GB/s","value":316.165}
+{"test":"vram","var":"read Zufall","param":128,"unit":"GB/s","value":315.99}
+{"test":"vram","var":"read Zufall","param":128,"unit":"GB/s","value":316.187}
+{"test":"vram","var":"read Zufall","param":128,"unit":"GB/s","value":316.145}
+{"test":"vram","var":"read Zufall","param":128,"unit":"GB/s","value":316.013}
+{"test":"vram","var":"read Zufall","param":256,"unit":"GB/s","value":316.169}
+{"test":"vram","var":"read Zufall","param":256,"unit":"GB/s","value":316.157}
+{"test":"vram","var":"read Zufall","param":256,"unit":"GB/s","value":316.108}
+{"test":"vram","var":"read Zufall","param":256,"unit":"GB/s","value":316.637}
+{"test":"vram","var":"read Zufall","param":256,"unit":"GB/s","value":316.145}
+{"test":"vram","var":"read Zufall","param":256,"unit":"GB/s","value":316.198}
+{"test":"vram","var":"read Zufall","param":256,"unit":"GB/s","value":316.13}
+{"test":"vram","var":"read Zufall","param":512,"unit":"GB/s","value":316.03}
+{"test":"vram","var":"read Zufall","param":512,"unit":"GB/s","value":316.165}
+{"test":"vram","var":"read Zufall","param":512,"unit":"GB/s","value":315.361}
+{"test":"vram","var":"read Zufall","param":512,"unit":"GB/s","value":315.653}
+{"test":"vram","var":"read Zufall","param":512,"unit":"GB/s","value":316.017}
+{"test":"vram","var":"read Zufall","param":512,"unit":"GB/s","value":316.183}
+{"test":"vram","var":"read Zufall","param":512,"unit":"GB/s","value":316.167}
+{"test":"vram","var":"read Zufall","param":1024,"unit":"GB/s","value":316.029}
+{"test":"vram","var":"read Zufall","param":1024,"unit":"GB/s","value":316.184}
+{"test":"vram","var":"read Zufall","param":1024,"unit":"GB/s","value":316.227}
+{"test":"vram","var":"read Zufall","param":1024,"unit":"GB/s","value":316.009}
+{"test":"vram","var":"read Zufall","param":1024,"unit":"GB/s","value":316.785}
+{"test":"vram","var":"read Zufall","param":1024,"unit":"GB/s","value":316.203}
+{"test":"vram","var":"read Zufall","param":1024,"unit":"GB/s","value":316.19}
+{"test":"vram","var":"read Zufall","param":2048,"unit":"GB/s","value":316.023}
+{"test":"vram","var":"read Zufall","param":2048,"unit":"GB/s","value":316.156}
+{"test":"vram","var":"read Zufall","param":2048,"unit":"GB/s","value":316.206}
+{"test":"vram","var":"read Zufall","param":2048,"unit":"GB/s","value":316.901}
+{"test":"vram","var":"read Zufall","param":2048,"unit":"GB/s","value":316.241}
+{"test":"vram","var":"read Zufall","param":2048,"unit":"GB/s","value":315.745}
+{"test":"vram","var":"read Zufall","param":2048,"unit":"GB/s","value":315.087}
+{"test":"vram","var":"read Zufall","param":4096,"unit":"GB/s","value":316.196}
+{"test":"vram","var":"read Zufall","param":4096,"unit":"GB/s","value":316.232}
+{"test":"vram","var":"read Zufall","param":4096,"unit":"GB/s","value":316.206}
+{"test":"vram","var":"read Zufall","param":4096,"unit":"GB/s","value":315.992}
+{"test":"vram","var":"read Zufall","param":4096,"unit":"GB/s","value":316.879}
+{"test":"vram","var":"read Zufall","param":4096,"unit":"GB/s","value":316.235}
+{"test":"vram","var":"read Zufall","param":4096,"unit":"GB/s","value":316.098}
+{"test":"vram","var":"write","param":1024,"unit":"GB/s","value":277.665}
+{"test":"vram","var":"copy (lesen+schreiben)","param":1024,"unit":"GB/s","value":279.919}
+{"test":"vram","var":"write","param":1024,"unit":"GB/s","value":277.604}
+{"test":"vram","var":"copy (lesen+schreiben)","param":1024,"unit":"GB/s","value":282.313}
+{"test":"vram","var":"write","param":1024,"unit":"GB/s","value":276.501}
+{"test":"vram","var":"copy (lesen+schreiben)","param":1024,"unit":"GB/s","value":280.636}
+{"test":"vram","var":"write","param":1024,"unit":"GB/s","value":276.936}
+{"test":"vram","var":"copy (lesen+schreiben)","param":1024,"unit":"GB/s","value":280.72}
+{"test":"vram","var":"write","param":1024,"unit":"GB/s","value":286.967}
+{"test":"vram","var":"copy (lesen+schreiben)","param":1024,"unit":"GB/s","value":282.303}
+{"test":"vram","var":"write","param":1024,"unit":"GB/s","value":277.567}
+{"test":"vram","var":"copy (lesen+schreiben)","param":1024,"unit":"GB/s","value":281.844}
+{"test":"vram","var":"write","param":1024,"unit":"GB/s","value":277.959}
+{"test":"vram","var":"copy (lesen+schreiben)","param":1024,"unit":"GB/s","value":282.557}

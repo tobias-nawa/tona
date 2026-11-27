@@ -1,0 +1,203 @@
+{
+  "id": "nemotron-3.5-parse",
+  "name": "Nemotron 3.5 Parse",
+  "vendor": "NVIDIA",
+  "release_date": "2026-09-03",
+  "lineage": {
+    "family": "Nemotron Parse",
+    "base_model": "Nemotron Parse 2.0 (earlier generation)"
+  },
+  "purpose": "Turn page images into structured text with semantic layout classes, bounding boxes, reading order, tables and chart data; small and fast for high page throughput (card).",
+  "tasks": [
+    "documents",
+    "vision"
+  ],
+  "modalities": {
+    "input": [
+      "image",
+      "document"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "many"
+    ]
+  },
+  "license": {
+    "name": "OpenMDW-1.1 (tokenizer MIT)",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "LICENSE read: permission to deal in the model materials without restriction; when distributing keep the agreement and origin notices; patent/copyright suit against anyone over the materials ends the grant; no restrictions on outputs."
+  },
+  "architecture": {
+    "kind": "encoder-decoder VLM: C-RADIOv4-SO400M vision encoder (439M) plus 10-layer mBART causal visual-prefix decoder (191.8M)",
+    "params_total_b": 0.631,
+    "layers": 10,
+    "attention": "GQA decoder, 16 query / 8 KV heads; dynamic rectangular NaViT preprocessing",
+    "recurrent": "none",
+    "drafter": "bundled one-step MTP head plus optional 89.3M DFlash2 drafter in dflash2/",
+    "why_this_design": "not stated beyond small size and high throughput; the card describes the parts (1D-conv adapter compressing the vision sequence, content-normalized coordinates)"
+  },
+  "variants": [
+    {
+      "repo": "nvidia/Nemotron-3.5-Parse",
+      "format": "safetensors BF16",
+      "size_gb": 2.52,
+      "official": true,
+      "notes": "plus dflash2 drafter 0.18 GB; custom code (trust_remote_code)"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "variant": "BF16 (2.5 GB plus drafter)",
+      "basis": "estimate",
+      "notes": "2.7 GB against a VRAM budget of 9.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "BF16 (2.5 GB plus drafter)",
+      "basis": "estimate",
+      "notes": "2.7 GB against a VRAM budget of 13.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "BF16 (2.5 GB plus drafter)",
+      "basis": "estimate",
+      "notes": "2.7 GB against a VRAM budget of 21.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "BF16 (2.5 GB plus drafter)",
+      "basis": "estimate",
+      "notes": "2.7 GB against a VRAM budget of 29.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "variant": "BF16 (2.5 GB plus drafter)",
+      "basis": "estimate",
+      "notes": "2.7 GB against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "BF16 (2.5 GB plus drafter)",
+      "basis": "estimate",
+      "notes": "2.7 GB against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "BF16 (2.5 GB plus drafter)",
+      "basis": "estimate",
+      "notes": "2.7 GB against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "transformers (custom code)",
+      "vLLM with native Parse and DFlash2 plugin",
+      "NVIDIA Build API"
+    ],
+    "notes": "llama.cpp support not mentioned on the card."
+  },
+  "benchmarks": [
+    {
+      "name": "ParseBench overall",
+      "score": 75.2,
+      "kind": "vendor",
+      "variant": "triple pass, DFlash2",
+      "harness": "2,078 pages; double pass 74.92, single pass 72.74",
+      "source": "https://huggingface.co/nvidia/Nemotron-3.5-Parse"
+    },
+    {
+      "name": "ParseBench tables / charts / faithfulness / formatting / grounding",
+      "score": "84.67 / 64.40 / 87.96 / 68.28 / 70.67",
+      "kind": "vendor",
+      "variant": "triple pass",
+      "source": "https://huggingface.co/nvidia/Nemotron-3.5-Parse"
+    },
+    {
+      "name": "throughput on one H200, BF16, DFlash2",
+      "score": "18.57 / 14.60 / 13.49",
+      "unit": "pages/s (single / double / triple pass)",
+      "kind": "vendor",
+      "source": "https://huggingface.co/nvidia/Nemotron-3.5-Parse"
+    },
+    {
+      "name": "IndicVisionBench OCR",
+      "score": 83.73,
+      "unit": "ANLS-char",
+      "kind": "vendor",
+      "source": "https://huggingface.co/nvidia/Nemotron-3.5-Parse"
+    },
+    {
+      "name": "MOSCAR (163 language/script entries, synthetic renderings)",
+      "score": 99.51,
+      "unit": "char-bag F1",
+      "kind": "vendor",
+      "source": "https://huggingface.co/nvidia/Nemotron-3.5-Parse"
+    },
+    {
+      "name": "olmOCR-bench / OmniDocBench v1.6",
+      "score": "62.7 / 80.13",
+      "kind": "independent",
+      "variant": "as listed in another vendor's comparison table",
+      "source": "https://huggingface.co/typhoon-ai/typhoon-ocr2-2b",
+      "date": "2026-11"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "highest ParseBench score in NVIDIA's own comparison, above LightOnOCR-3-4B 75.10 and 0.8B 74.60",
+      "very fast: 13 to 19 pages/s on one H200",
+      "tables 84.67 and layout boxes with classes"
+    ],
+    "weaknesses": [
+      "third-party tables put it well behind on olmOCR-bench (62.7) and OmniDocBench v1.6 (80.13), so the lead is specific to ParseBench",
+      "MOSCAR measures only simple synthetic renderings"
+    ],
+    "best_for": [
+      "high-volume page parsing with boxes and table HTML"
+    ],
+    "maturity": "NVIDIA Nemotron line; 27k downloads; derivatives already exist (OpenThai2.1)"
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "0.6B, most permissive licence of the parsers (OpenMDW), strong on ParseBench tables and charts, built for throughput. The wide gap between ParseBench (leader) and olmOCR/OmniDocBench (behind the field) means the lead is benchmark-dependent; compare on our own German documents before offering it.",
+    "blockers": [
+      "custom encoder-decoder architecture without a Tona or llama.cpp module",
+      "ParseBench scores are NVIDIA's own"
+    ]
+  },
+  "open_questions": [
+    "ParseBench numbers by a third party",
+    "German pages",
+    "why olmOCR-bench and OmniDocBench results trail the ParseBench lead"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/nvidia/Nemotron-3.5-Parse",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README and config read"
+    },
+    {
+      "url": "https://huggingface.co/nvidia/Nemotron-3.5-Parse/raw/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "OpenMDW-1.1 text read"
+    },
+    {
+      "url": "https://huggingface.co/typhoon-ai/typhoon-ocr2-2b",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "third-party comparison table"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

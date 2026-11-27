@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# usage: run.sh CMD... ; takes its turn in the GPU line (scripts/gpu_queue.py, the flock on work/gpu.lock), then env.sh.
+# gpu_queue.py sets TONA_GPU_LOCK_HELD=1 for CMD. RUN_LABEL names the entry in `gpu_queue.py --status`.
+cd <worktree> || exit 1
+# shellcheck disable=SC1091
+source toolchain/env.sh
+exec python3 scripts/gpu_queue.py --label "scale1126 ${RUN_LABEL:-block}" -- "$@"

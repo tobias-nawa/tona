@@ -1,0 +1,62 @@
+{
+  "schema": 1,
+  "product": "tona",
+  "version": "0.3.0",
+  "seq": 3,
+  "released": "2026-11-05T00:00:00Z",
+  "expires": "2027-05-04T00:00:00Z",
+  "commit": "cccccccccccccccccccccccccccccccccccccccc",
+  "rocm_lock_sha256": "8888888888888888888888888888888888888888888888888888888888888888",
+  "severity": "normal",
+  "changelog": "Test release.",
+  "files": [
+    {
+      "asset": "tona",
+      "path": "bin/tona",
+      "platform": "linux-x86_64-gfx1200",
+      "size": 14,
+      "sha256": "0adf426a19102ed9a50bc7a3afef1a3b5328cf7d4fd0e06ef0dcce215c8e4f2d",
+      "mode": "0755"
+    },
+    {
+      "asset": "tona-server",
+      "path": "bin/tona-server",
+      "platform": "linux-x86_64-gfx1200",
+      "size": 14,
+      "sha256": "57d5d086940bfb4230aab0908fa994a6aaa3617bcb7b43671d03c4c38d207bb5",
+      "mode": "0755"
+    },
+    {
+      "asset": "rocm-888888888888-libhip.so.7",
+      "path": "runtime/libhip.so.7",
+      "platform": "linux-x86_64-gfx1200",
+      "size": 16,
+      "sha256": "f57a666babd8988acc0adc862d8f157577131d23c4f6f8faa362df59d82e26df",
+      "mode": "0644"
+    },
+    {
+      "asset": "macos-arm64-tona",
+      "path": "bin/tona",
+      "platform": "macos-arm64",
+      "size": 18,
+      "sha256": "c442ed3f5a9c95a7d671c1182a3ac58aa7896b21d2d688b1f5816d3afe521fbe",
+      "mode": "0755"
+    },
+    {
+      "asset": "macos-arm64-tona-server",
+      "path": "bin/tona-server",
+      "platform": "macos-arm64",
+      "size": 18,
+      "sha256": "5bf16573d04db2deb9b7b21116345b3f0fb64265625da2ee0e3ea4bf645b5246",
+      "mode": "0755"
+    },
+    {
+      "asset": "macos-arm64-tona.metallib",
+      "path": "bin/tona.metallib",
+      "platform": "macos-arm64",
+      "size": 8,
+      "sha256": "b8efee1d6a3a567552aeb89af9c21f46eef7de2648e6ab399b08abb40162830c",
+      "mode": "0644"
+    }
+  ]
+}

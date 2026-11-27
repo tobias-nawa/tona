@@ -1,0 +1,303 @@
+{
+  "id": "nemotron-3.5-bolt-74b-a9b-24gb",
+  "name": "NVIDIA Nemotron 3.5 Bolt 74B-A9B (24GB variant)",
+  "vendor": "NVIDIA",
+  "release_date": "2026-10-15",
+  "lineage": {
+    "base_model": "Nemotron 3.5 Super VL 120B-A12B",
+    "family": "Nemotron 3.5",
+    "how_derived": "Star Elastic router-guided architecture search (experts and widths pruned, top-K 22 to 9), about 120B tokens of recovery distillation, RL for agentic/MCP/SWE tasks, quantization-aware distillation to 2-bit experts"
+  },
+  "purpose": "NVIDIA states: a vision-language model for everyday agentic tasks run locally; 2-bit quantization lets it fit in 24 GB of memory next to other applications. Aimed at local agent harnesses with tool calling, web browsing and terminal use. Primary task is general agentic work, not coding; it is a Tona model, so it has a file here.",
+  "tasks": [
+    "general",
+    "coding",
+    "vision"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image",
+      "video"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en",
+      "fr",
+      "es",
+      "it",
+      "de",
+      "ja",
+      "hi",
+      "ko",
+      "pt",
+      "zh"
+    ],
+    "programming": {
+      "Go": {
+        "level": "weak",
+        "evidence": "one user report: Go FIFO queue did not compile first, 2 tests failed after one repair; n = 2 tasks, uncontrolled",
+        "sources": [
+          "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB-GGUF/discussions/6"
+        ]
+      }
+    }
+  },
+  "license": {
+    "name": "OpenMDW-1.1",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "LICENSE read (\"Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES\", OpenMDW-1.1 text, identical to the Poolside copy): permission \"to deal in the Model Materials without restriction, including under all copyright, patent, database, and trade secret rights\"; distribution requires keeping a copy of the agreement and the notices of origin; patent-suit termination clause; \"no restrictions or obligations with respect to any use, modification, or sharing of any outputs\". The GGUF repo has no LICENSE file but its card names OpenMDW-1.1; the same text sits in the LiLiCorr drafter repo (nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB-LiLiCorr-GGUF, LICENSE 2,618 bytes) and in the Lightning repo."
+  },
+  "architecture": {
+    "kind": "hybrid Mamba-2 + attention LatentMoE with vision encoder (C-RADIO v4-H)",
+    "gguf_arch": "nemotron_h_moe",
+    "params_total_b": 74,
+    "params_active_b": 9,
+    "layers": 88,
+    "attention": "40 Mamba-2 blocks, 8 attention blocks (no RoPE), 40 latent MoE blocks",
+    "recurrent": "Mamba-2",
+    "experts": 512,
+    "experts_active": 9,
+    "context_native": 262144,
+    "context_max": 262144,
+    "drafter": "DFlash drafter (LiliCorr GGUF, 1.13B, parallel drafter; acceptance length 4.68 at 7 draft tokens on vLLM); the LiLiCorr drafter file (998 MB) is under the same OpenMDW-1.1: it may be redistributed (for example in a signed Tona release) if the license text and notices of origin are shipped with it",
+    "why_this_design": "NVIDIA states the compression targets higher speed than dense models and higher intelligence than MoE models of a similar memory footprint; expert top-K was reduced from 22 to 9 for speed; experts IQ2_XXS (2.06 bpw), Mamba linears NVFP4, attention and embeddings Q8_0 for the 24 GB goal."
+  },
+  "variants": [
+    {
+      "repo": "nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB-GGUF",
+      "format": "GGUF mixed: experts IQ2_XXS, Mamba NVFP4, attention Q8_0",
+      "size_gb": 22.0,
+      "bits_per_weight": 2.06,
+      "official": true,
+      "notes": "plus mmproj file and the LiliCorr drafter (1.0 GB); card recipes for 28 and 32 GB machines; sizes read from the HF API: main GGUF 22.0 GB, mmproj 1.73 GB, LiLiCorr drafter 1.0 GB"
+    },
+    {
+      "repo": "aidevco/Nemotron-3.5-Bolt-74B-A9B-W4A16-g128",
+      "format": "compressed-tensors W4A16",
+      "size_gb": 52,
+      "official": false,
+      "notes": "expert modules alone 51.6 GB; llama.cpp b11822 cannot load it"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "estimate from file size against the budget of docs/hardware (12 GB VRAM with 64 GB RAM); experts beyond VRAM stream from RAM, decode speed depends on that path",
+      "variant": "24GB GGUF"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "measured",
+      "variant": "24GB GGUF",
+      "notes": "Tona B6 server smoke on the reference: 142 expert slots per layer, 0.2 GB pinned host memory, decode 39.1 tok/s (one sequence), prefill about 690 tok/s end to end"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "estimate from file size against the budget of docs/hardware (24 GB VRAM with 96 GB RAM); experts beyond VRAM stream from RAM, decode speed depends on that path",
+      "variant": "24GB GGUF"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "estimate from file size against the budget of docs/hardware (32 GB VRAM with 128 GB RAM); experts beyond VRAM stream from RAM, decode speed depends on that path",
+      "variant": "24GB GGUF"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "basis": "estimate",
+      "notes": "estimate from file size against the budget of docs/hardware (unified memory 16-24 GB, GPU share about 12 GB)",
+      "variant": "24GB GGUF"
+    },
+    "mac-32gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "notes": "estimate from file size against the budget of docs/hardware (unified 32 GB, GPU share about 22 GB)",
+      "variant": "24GB GGUF"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "estimate from file size against the budget of docs/hardware (unified 64 GB, GPU share about 52 GB)",
+      "variant": "24GB GGUF"
+    }
+  },
+  "engine_support": {
+    "tona": "runs",
+    "llama_cpp": "yes",
+    "other": [
+      "vLLM (BF16 parent)"
+    ],
+    "notes": "Tona B6 module (nemotron_h_moe) with logits within KL 0.0035 of llama.cpp-hip; llama.cpp needs a recent build from source per the card; our pinned b11822 loading was not tested in the Rust/Go run"
+  },
+  "benchmarks": [
+    {
+      "name": "Terminal-Bench 2.1",
+      "score": 50.98,
+      "kind": "vendor",
+      "source": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB-GGUF",
+      "variant": "Bolt IQ2 24GB against BF16 competitors"
+    },
+    {
+      "name": "GPQA Diamond",
+      "score": 86.43,
+      "kind": "vendor",
+      "source": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB-GGUF",
+      "variant": "Bolt IQ2"
+    },
+    {
+      "name": "SciCode",
+      "score": 41.02,
+      "kind": "vendor",
+      "source": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB-GGUF",
+      "variant": "Bolt IQ2"
+    },
+    {
+      "name": "MCP-Atlas",
+      "score": 52.2,
+      "kind": "vendor",
+      "source": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB-GGUF",
+      "variant": "Bolt IQ2"
+    },
+    {
+      "name": "BrowseComp",
+      "score": 66.75,
+      "kind": "vendor",
+      "source": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB-GGUF",
+      "variant": "Bolt IQ2"
+    },
+    {
+      "name": "HLE (no tools)",
+      "score": 25.3,
+      "kind": "vendor",
+      "source": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB-GGUF",
+      "variant": "Bolt IQ2"
+    },
+    {
+      "name": "Logit agreement with llama.cpp-hip (64 teacher-forced steps)",
+      "score": "top-1 95.3 to 100 %, mean KL 0.0027 to 0.0036",
+      "kind": "ours",
+      "source": "research/measurements/2026-11-19-bolt-b6.md",
+      "variant": "24GB GGUF, Tona GPU path",
+      "harness": "N7 check",
+      "date": "2026-11-19"
+    },
+    {
+      "name": "Decode speed on Tona, one sequence",
+      "score": 39.1,
+      "kind": "ours",
+      "source": "research/measurements/2026-11-19-bolt-b6.md",
+      "variant": "24GB GGUF, pass width 1, 128 tokens",
+      "harness": "by-product, not an ab.py measurement",
+      "unit": "tok/s (decode)",
+      "date": "2026-11-19"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "Top scores for its size on agentic and browsing benchmarks (vendor): Terminal-Bench 2.1 50.98 against 44.38 for Qwen3.6-35B",
+      "Vision and video input, 256K context",
+      "Mamba layers keep state small, so long context is cheap in memory"
+    ],
+    "weaknesses": [
+      "No coding accuracy published (no SWE-bench, Aider, MultiPL-E); NVIDIA's coding table is throughput only",
+      "2-bit pruned experts with undisclosed calibration data; user reports of broken code",
+      "Not run on our Rust/Go eval (maintainer decision)"
+    ],
+    "behavior": "Reasoning toggled with enable_thinking, medium_effort option; reasoning tokens share max_tokens with the answer; recommended sampling 1.0 / 0.95.",
+    "best_for": [
+      "agent workers that browse and use tools with vision, on 24 GB-class memory"
+    ],
+    "avoid_for": [
+      "code generation as the main task (unproven)"
+    ],
+    "user_reports": [
+      {
+        "summary": "Go FIFO queue with Aider: first pass missed an import, after one repair 2 tests failed; Qwen3-Coder passed first try (uncontrolled)",
+        "sentiment": "negative",
+        "source": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB-GGUF/discussions/6",
+        "date": "2026-10"
+      },
+      {
+        "summary": "Inconsistent and wrong output for coding or creative tasks (JS MCP server)",
+        "sentiment": "negative",
+        "source": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB-GGUF/discussions/5",
+        "date": "2026-10"
+      },
+      {
+        "summary": "Looping and poor Russian",
+        "sentiment": "negative",
+        "source": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB-GGUF/discussions/3",
+        "date": "2026-10"
+      }
+    ],
+    "maturity": "NVIDIA first party release with technical report; 9 open discussions without maintainer replies seen."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Runs end to end on Tona (B6) but is not a coding recommendation: maintainer decision of 2026-11-15, no coding accuracy published, user reports negative for code.",
+    "blockers": [
+      "no coding evidence",
+      "2-bit pruned, calibration undisclosed"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB-GGUF",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "page text read through a summarizer (WebFetch); last 10 KB of the page not read"
+    },
+    {
+      "url": "https://research.nvidia.com/labs/nemotron/Nemotron-3.5-Bolt-24GB/",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "read in research/70, technical report PDF not extracted"
+    },
+    {
+      "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB-GGUF/discussions/6",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "user report read in research/70"
+    },
+    {
+      "url": "research/measurements/2026-11-19-bolt-b6.md",
+      "kind": "own",
+      "checked": "2026-11-19",
+      "note": "B6 results"
+    },
+    {
+      "url": "research/70-ornith-bolt-rust-go.md",
+      "kind": "own",
+      "checked": "2026-11-19",
+      "note": "web research"
+    },
+    {
+      "url": "research/measurements/2026-11-15-model-eval-ornith-bolt.md",
+      "kind": "own",
+      "checked": "2026-11-19",
+      "note": "plan and files of the comparison"
+    },
+    {
+      "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB-LiLiCorr-GGUF/raw/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    }
+  ],
+  "open_questions": [
+    "Technical report text (calibration data, languages)",
+    "Any independent coding score",
+    "Native context beyond the 256K claim and layers per recipe",
+    "Whether pinned llama.cpp b11822 loads the GGUF",
+    "Is shipping the drafter in a Tona release covered by the maintainers' distribution decision (docs/architecture/model-architectures.md section 8)? The license allows it with the notices; the decision is the maintainers'."
+  ],
+  "last_checked": "2026-11-19"
+}

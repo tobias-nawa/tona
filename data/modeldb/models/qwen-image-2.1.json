@@ -1,0 +1,180 @@
+{
+  "id": "qwen-image-2.1",
+  "name": "Qwen-Image-2.1",
+  "vendor": "Alibaba Qwen",
+  "release_date": "2026-09-20",
+  "purpose": "Unified model for text-to-image generation and image editing, up to 10 reference images, local edits via masks or annotations, RGBA output.",
+  "tasks": [
+    "image-generation"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image"
+    ],
+    "output": [
+      "image"
+    ]
+  },
+  "license": {
+    "name": "Qwen Research License Agreement",
+    "verified": true,
+    "commercial_use": "no",
+    "redistribution": "limited",
+    "notes": "Text read 2026-11-19 (LICENSE, Release Date September 20, 2026). Grant is 'FOR NON-COMMERCIAL PURPOSES ONLY' and 'Non-Commercial' means 'for research or evaluation purposes only'; 'You shall not use the Materials for any commercial purpose without obtaining a separate commercial license'. Redistribution allowed with a copy of the agreement, change notices and a Notice file; 'Built with Qwen' display if used to train a distributed model. Tag and text agree. Verdict policy (README, 2026-11-19): this licence term does not lower tona_fit; kept here for an installer label."
+  },
+  "architecture": {
+    "kind": "single-stream diffusion transformer, dense",
+    "params_total_b": 7,
+    "layers": 32,
+    "why_this_design": "Card: mixed-granularity attention and prefix KV cache reuse make it compact and efficient."
+  },
+  "variants": [
+    {
+      "repo": "unsloth GGUF",
+      "format": "GGUF Q4_K_M",
+      "size_gb": 4.2,
+      "official": false,
+      "notes": "Q8_0 7.64 GB, from research/52"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "Q4"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": " Independent: NF4 peaked at 15.2 GB VRAM on an RTX 5090 (1024px, 40 steps), so 16 GB is tight without offload. No seconds-per-image figure for RDNA3 or RDNA4 (or any AMD card) for this model found in web searches on 2026-11-19."
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "stable-diffusion.cpp",
+      "diffusers"
+    ]
+  },
+  "benchmarks": [
+    {
+      "name": "VDEBench local",
+      "score": 0.81,
+      "kind": "vendor",
+      "variant": "BF16",
+      "source": "https://huggingface.co/Qwen/Qwen-Image-2.1"
+    },
+    {
+      "name": "VDEBench global",
+      "score": 0.83,
+      "kind": "vendor",
+      "variant": "BF16",
+      "source": "https://huggingface.co/Qwen/Qwen-Image-2.1"
+    },
+    {
+      "name": "Seconds per image, 8-bit fp8",
+      "score": 19.3,
+      "kind": "independent",
+      "variant": "RTX 5090, 1024x1024, 40 steps, diffusers 0.41 dev, torchao fp8, peak VRAM 21.3 GB, Windows 11",
+      "source": "https://huggingface.co/Qwen/Qwen-Image-2.1/discussions/32",
+      "unit": "s",
+      "harness": "diffusers",
+      "date": "2026-09-22"
+    },
+    {
+      "name": "Seconds per image, 4-bit NF4",
+      "score": 19.2,
+      "kind": "independent",
+      "variant": "RTX 5090, 1024x1024, 40 steps, bitsandbytes NF4, peak VRAM 15.2 GB",
+      "source": "https://huggingface.co/Qwen/Qwen-Image-2.1/discussions/32",
+      "unit": "s",
+      "harness": "diffusers",
+      "date": "2026-09-22"
+    },
+    {
+      "name": "Seconds per image, 2048x2048",
+      "score": "115.7 (fp8) / 118.8 (NF4)",
+      "kind": "independent",
+      "variant": "RTX 5090, 40 steps",
+      "source": "https://huggingface.co/Qwen/Qwen-Image-2.1/discussions/32",
+      "unit": "s",
+      "harness": "diffusers",
+      "date": "2026-09-22"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "generation and editing, RGBA, many reference images"
+    ],
+    "weaknesses": [
+      "research-only license"
+    ],
+    "maturity": "Qwen: large vendor, many Qwen-Image releases."
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "Top open-weight image quality claim and a small 7B checkpoint that fits every class (about 19 s per image at 8-bit, independent). Compare with z-image-turbo and flux3-image-klein on our own prompts before choosing the default.",
+    "blockers": [
+      "Tona has no image engine",
+      "~15 to 21 GB VRAM at 1024px in diffusers"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/Qwen/Qwen-Image-2.1",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "research/52-purpose-models.md",
+      "kind": "own",
+      "checked": "2026-11-19",
+      "note": "our research note 52, facts fetched 2026-11-15, not a measurement"
+    },
+    {
+      "url": "https://huggingface.co/Qwen/Qwen-Image-2.1/raw/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "license text read directly"
+    },
+    {
+      "url": "https://huggingface.co/Qwen/Qwen-Image-2.1/discussions/32",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "user-run RTX 5090 measurements (author laxmimerit), read through a summarizer"
+    }
+  ],
+  "open_questions": [
+    "Languages not stated",
+    "Speed on RDNA3/RDNA4 not found; No seconds-per-image figure for RDNA3 or RDNA4 (or any AMD card) for this model found in web searches on 2026-11-19.",
+    "Does the 4.2 GB unsloth Q4_K_M reduce VRAM enough for a 16 GB card (diffusers peak was 15.2 GB at NF4)?"
+  ],
+  "last_checked": "2026-11-19"
+}

@@ -1,0 +1,441 @@
+{
+  "config": {
+    "A": {
+      "build": "work/build/mtl",
+      "env": {
+        "TONA_DETERMINISTIC": "1"
+      },
+      "tooling": {
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0",
+        "TONA_DETERMINISTIC": "1"
+      },
+      "commit": "stand-2026-10-25-1022-g42e1beb752-dirty",
+      "model": "<repo>/work/models/coder-dmt/coder-DMT-164e-00001-of-00002.gguf"
+    },
+    "B": {
+      "build": "work/build/mtl",
+      "env": {
+        "TONA_DETERMINISTIC": "1",
+        "TONA_METAL_GPU_PICK": "1",
+        "TONA_METAL_PICK_CHECK": "1"
+      },
+      "tooling": {
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0",
+        "TONA_DETERMINISTIC": "1",
+        "TONA_METAL_GPU_PICK": "1",
+        "TONA_METAL_PICK_CHECK": "1"
+      },
+      "commit": "stand-2026-10-25-1022-g42e1beb752-dirty",
+      "model": "<repo>/work/models/coder-dmt/coder-DMT-164e-00001-of-00002.gguf"
+    },
+    "workload": "set,server",
+    "targets": "8000:100 bench-set at --ctx 32768",
+    "deterministic": true,
+    "plan_info": {
+      "expect": [
+        [
+          "decode-code",
+          -10.0,
+          10.0
+        ],
+        [
+          "decode-text",
+          -10.0,
+          10.0
+        ],
+        [
+          "decode@8000",
+          -10.0,
+          10.0
+        ],
+        [
+          "prefill@8000",
+          -10.0,
+          10.0
+        ]
+      ],
+      "source": "research/measurements/2026-11-14-mac-mtp-gpu-pick.md",
+      "workload": "set,server",
+      "targets": "8000:100 bench-set at --ctx 32768",
+      "primary": "",
+      "why_size": "identity run: answers and pick checks, not speed",
+      "decode_tokens": 200,
+      "noise": {},
+      "warmup": true,
+      "round_warmup": true,
+      "load_log": true,
+      "A": {
+        "build": "work/build/mtl",
+        "env": {
+          "TONA_DETERMINISTIC": "1"
+        },
+        "tooling": {
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0",
+          "TONA_DETERMINISTIC": "1"
+        },
+        "commit": "stand-2026-10-25-1022-g42e1beb752-dirty",
+        "model": "<repo>/work/models/coder-dmt/coder-DMT-164e-00001-of-00002.gguf"
+      },
+      "B": {
+        "build": "work/build/mtl",
+        "env": {
+          "TONA_DETERMINISTIC": "1",
+          "TONA_METAL_GPU_PICK": "1",
+          "TONA_METAL_PICK_CHECK": "1"
+        },
+        "tooling": {
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0",
+          "TONA_DETERMINISTIC": "1",
+          "TONA_METAL_GPU_PICK": "1",
+          "TONA_METAL_PICK_CHECK": "1"
+        },
+        "commit": "stand-2026-10-25-1022-g42e1beb752-dirty",
+        "model": "<repo>/work/models/coder-dmt/coder-DMT-164e-00001-of-00002.gguf"
+      }
+    },
+    "reference_sha": {
+      "30000": "ee58880d3f5b558f",
+      "130000": "7d2996546076d1b0"
+    },
+    "corpus_sha256": "e13a800340859f7d39c63712d90383faae7e5a47c3865f0811e40d912612d38e",
+    "corpus_is_reference": true,
+    "commit": "42e1beb",
+    "noise": {}
+  },
+  "rounds": [
+    {
+      "order": "AB",
+      "sha": {
+        "A": {
+          "8000": "727ff658ae742fa7"
+        },
+        "B": {
+          "8000": "727ff658ae742fa7"
+        }
+      },
+      "A": {
+        "prefill@8000": 169.19765909919323,
+        "decode@8000": 23.37162989130965,
+        "decode-code": 33.4,
+        "decode-text": 26.4
+      },
+      "counters": {
+        "A": {
+          "8000": {
+            "expert_hits": 0,
+            "expert_misses": 0
+          }
+        },
+        "B": {
+          "8000": {
+            "expert_hits": 0,
+            "expert_misses": 0
+          }
+        }
+      },
+      "B": {
+        "prefill@8000": 175.98144774498314,
+        "decode@8000": 23.423671337872673,
+        "decode-code": 33.4,
+        "decode-text": 26.3
+      },
+      "seconds": 837.5027073749807
+    },
+    {
+      "order": "BA",
+      "sha": {
+        "B": {
+          "8000": "727ff658ae742fa7"
+        },
+        "A": {
+          "8000": "727ff658ae742fa7"
+        }
+      },
+      "B": {
+        "prefill@8000": 173.85551223167948,
+        "decode@8000": 23.372623853836586,
+        "decode-code": 33.4,
+        "decode-text": 26.3
+      },
+      "counters": {
+        "B": {
+          "8000": {
+            "expert_hits": 0,
+            "expert_misses": 0
+          }
+        },
+        "A": {
+          "8000": {
+            "expert_hits": 0,
+            "expert_misses": 0
+          }
+        }
+      },
+      "A": {
+        "prefill@8000": 171.18121245604593,
+        "decode@8000": 23.60407144267908,
+        "decode-code": 33.9,
+        "decode-text": 26.9
+      },
+      "seconds": 833.1860349590424
+    }
+  ],
+  "stop_reason": "2 rounds (undecided metrics stay open)",
+  "wall_seconds": 1880.9317332091741,
+  "loads": [
+    {
+      "start": 1,
+      "arm": "A",
+      "cpu_own": 5.5,
+      "cpu_system": 20.3,
+      "cpu_other": 8.0,
+      "gpu_own": 93.9,
+      "gpu_system": 0.2,
+      "gpu_other": 0.3,
+      "pageins": 2601.2,
+      "swapins": 12.2,
+      "compressions": 13229.7,
+      "level_min": 9,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 210,
+      "idle_before_s": null,
+      "ready_s": 2.0
+    },
+    {
+      "start": 2,
+      "arm": "A",
+      "cpu_own": 5.2,
+      "cpu_system": 15.1,
+      "cpu_other": 8.1,
+      "gpu_own": 94.2,
+      "gpu_system": 0.2,
+      "gpu_other": 0.3,
+      "pageins": 2651.0,
+      "swapins": 5.8,
+      "compressions": 12592.6,
+      "level_min": 9,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 208,
+      "idle_before_s": 0.1,
+      "ready_s": 2.0
+    },
+    {
+      "start": 3,
+      "arm": "A",
+      "cpu_own": 5.2,
+      "cpu_system": 14.8,
+      "cpu_other": 7.8,
+      "gpu_own": 94.2,
+      "gpu_system": 0.2,
+      "gpu_other": 0.3,
+      "pageins": 2345.2,
+      "swapins": 4.1,
+      "compressions": 12329.0,
+      "level_min": 9,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 208,
+      "idle_before_s": 0.1,
+      "ready_s": 2.0
+    },
+    {
+      "start": 4,
+      "arm": "B",
+      "cpu_own": 5.1,
+      "cpu_system": 16.8,
+      "cpu_other": 7.6,
+      "gpu_own": 94.4,
+      "gpu_system": 0.2,
+      "gpu_other": 0.3,
+      "pageins": 2294.5,
+      "swapins": 29.3,
+      "compressions": 11980.6,
+      "level_min": 9,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 208,
+      "idle_before_s": 0.1,
+      "ready_s": 2.0
+    },
+    {
+      "start": 5,
+      "arm": "B",
+      "cpu_own": 5.0,
+      "cpu_system": 13.8,
+      "cpu_other": 7.5,
+      "gpu_own": 94.8,
+      "gpu_system": 0.2,
+      "gpu_other": 0.3,
+      "pageins": 2008.1,
+      "swapins": 3.0,
+      "compressions": 12609.6,
+      "level_min": 9,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 208,
+      "idle_before_s": 0.1,
+      "ready_s": 2.0
+    },
+    {
+      "start": 6,
+      "arm": "B",
+      "cpu_own": 5.0,
+      "cpu_system": 14.9,
+      "cpu_other": 7.6,
+      "gpu_own": 94.8,
+      "gpu_system": 0.2,
+      "gpu_other": 0.3,
+      "pageins": 1978.0,
+      "swapins": 4.4,
+      "compressions": 12523.2,
+      "level_min": 9,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 208,
+      "idle_before_s": 0.1,
+      "ready_s": 2.0
+    },
+    {
+      "start": 7,
+      "arm": "B",
+      "cpu_own": 5.0,
+      "cpu_system": 14.5,
+      "cpu_other": 7.7,
+      "gpu_own": 94.6,
+      "gpu_system": 0.2,
+      "gpu_other": 0.3,
+      "pageins": 2288.4,
+      "swapins": 4.3,
+      "compressions": 11965.8,
+      "level_min": 9,
+      "backup_share": 0.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 208,
+      "idle_before_s": 0.1,
+      "ready_s": 2.0
+    },
+    {
+      "start": 8,
+      "arm": "A",
+      "cpu_own": 5.0,
+      "cpu_system": 15.5,
+      "cpu_other": 7.7,
+      "gpu_own": 94.8,
+      "gpu_system": 0.2,
+      "gpu_other": 0.3,
+      "pageins": 2108.7,
+      "swapins": 5.8,
+      "compressions": 12715.5,
+      "level_min": 9,
+      "backup_share": 0.04,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 208,
+      "idle_before_s": 0.1,
+      "ready_s": 2.0
+    },
+    {
+      "start": 9,
+      "arm": "A",
+      "cpu_own": 5.8,
+      "cpu_system": 53.4,
+      "cpu_other": 8.2,
+      "gpu_own": 93.9,
+      "gpu_system": 0.2,
+      "gpu_other": 0.2,
+      "pageins": 2509.1,
+      "swapins": 7.5,
+      "compressions": 15074.5,
+      "level_min": 8,
+      "backup_share": 1.0,
+      "warning_share": 0.0,
+      "battery_share": 0.0,
+      "cpu_limit_min": null,
+      "power_mode": "2",
+      "seconds": 205,
+      "idle_before_s": 0.2,
+      "ready_s": 2.0
+    }
+  ],
+  "warmup": {
+    "prefill@8000": 171.69057663803102,
+    "decode@8000": 23.493903029914676,
+    "decode-code": 33.4,
+    "decode-text": 26.4
+  },
+  "plan": {
+    "alpha": 0.05,
+    "margin": 0.5,
+    "max_rounds": 2,
+    "min_rounds": 2,
+    "prior_sd": 0.5,
+    "prior_df": 4.0
+  },
+  "decisions": {
+    "prefill@8000": {
+      "decided_at_round": 2,
+      "decision": "B faster",
+      "mean_diff_percent": 2.7858246274411025,
+      "ci_diff_percent": [
+        1.161223235305211,
+        4.4104260195769935
+      ]
+    },
+    "decode@8000": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": -0.37893582621920663,
+      "ci_diff_percent": [
+        -1.4462250208765475,
+        0.6883533684381342
+      ]
+    },
+    "decode-code": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": -0.7374631268436571,
+      "ci_diff_percent": [
+        -1.9119978693184196,
+        0.4370716156311054
+      ]
+    },
+    "decode-text": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": -1.304635575081664,
+      "ci_diff_percent": [
+        -2.643903262757107,
+        0.03463211259377896
+      ]
+    }
+  }
+}

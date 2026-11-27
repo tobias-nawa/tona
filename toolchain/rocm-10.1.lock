@@ -1,0 +1,16 @@
+# ROCm 10.1.0 for gfx1200, Python wheels from AMD (TheRock).
+# Generated from `pip install --dry-run --report`, hashes from the index. Install: scripts/setup.sh
+--index-url https://stable.repo.amd.com/rocm/whl-next/
+
+rocm==10.1.0 \
+    --hash=sha256:e6616e62ebd1324031681e6e59349d46ee4f143a8d8f4f901a91c35c993041fc
+rocm-profiler==10.1.0 \
+    --hash=sha256:7cf3dcdcf2782b1cc6c6bb92fc3ec6f7071e4499707decd3f004477d30822724
+rocm-sdk-core==10.1.0 \
+    --hash=sha256:a1a2433334ac61a526c6bae2f58f6bbc9b525f5a9e008e76a1a48d07f64f0703
+rocm-sdk-devel==10.1.0 \
+    --hash=sha256:05ae5a21df8909c37e692dd74477ce58b083a740be8b3d857b43ab0808ef4a1a
+rocm-sdk-device-gfx1200==10.1.0 \
+    --hash=sha256:60433865c41a1a0cf25f1ecf850b8109c11385d8fdb16b229efbc314f77906b1
+rocm-sdk-libraries==10.1.0 \
+    --hash=sha256:ffb36d5e1d97e96c191052a10c39a1a7a4ddb4da4a88d3166ab4bf7bfdb94cf6

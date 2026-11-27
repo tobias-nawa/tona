@@ -1,0 +1,65 @@
+{
+  "id": "ming-3.0-asr-tiny",
+  "name": "Ming-3.0-asr-tiny",
+  "vendor": "Ant Group (inclusionAI)",
+  "release_date": "2026-10-14",
+  "lineage": {
+    "base_model": "Ling-tiny-v3 language backbone plus an audio encoder (card)",
+    "family": "ming-3.0"
+  },
+  "purpose": "Context-aware speech recognition for Chinese, English and regional dialects; hotwords or preceding dialogue can be put into the prompt to improve domain terms (card).",
+  "tasks": ["audio-transcription"],
+  "modalities": {"input": ["audio", "text"], "output": ["text"]},
+  "languages": {"natural": ["zh", "en"]},
+  "license": {
+    "name": "MIT",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "LICENSE read: MIT, Copyright 2026 inclusionAI. Bundled Apache-2.0 source files and Whisper-derived encoder code keep their own notices."
+  },
+  "architecture": {
+    "kind": "MoE language backbone (128 routed experts, 8 active, 1 shared; MLA-style kv_lora_rank 512; 24 layers, hidden 1536; MTP layer in config) with Whisper-style audio encoder (hidden 1280)",
+    "params_total_b": 17.75,
+    "layers": 24,
+    "experts": 128,
+    "experts_active": 8,
+    "context_native": 8192,
+    "recurrent": "KDA-style linear attention settings in the config (kda_safe_gate, short_conv_kernel_size 4); exact layer mix not stated on the card"
+  },
+  "variants": [
+    {"repo": "inclusionAI/Ming-3.0-asr-tiny", "format": "safetensors", "size_gb": 17.75, "official": true, "notes": "HF API sum of files"}
+  ],
+  "hardware_fit": {
+    "pc-12gb": {"fits": "marginal", "basis": "estimate", "notes": "17.8 GB in BF16 without an official quant; MoE with small active size would allow RAM offload"},
+    "pc-16gb": {"fits": "yes", "basis": "estimate", "notes": "experts offloaded to RAM"},
+    "pc-24gb": {"fits": "yes", "basis": "estimate"},
+    "pc-32gb": {"fits": "yes", "basis": "estimate"},
+    "mac-16-24gb": {"fits": "marginal", "basis": "estimate", "notes": "BF16 17.8 GB against the 12 or 22 GB GPU share"},
+    "mac-32gb": {"fits": "yes", "basis": "estimate"},
+    "mac-64gb+": {"fits": "yes", "basis": "estimate"}
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": ["SGLang-Omni (/v1/audio/transcriptions, streaming output)", "Transformers custom code (CUDA, torch 2.11, fla-core)"],
+    "notes": "Card: example does not support streaming input; output has no timestamps or diarization."
+  },
+  "benchmarks": [],
+  "soft": {
+    "strengths": ["Hotword and dialogue-context prompting", "15 Chinese dialect test sets evaluated by the builder"],
+    "weaknesses": ["Chinese and English only: no German", "Evaluation results are published only as images in the card (not readable as numbers here)", "No word timestamps, no speaker diarization, no streaming input"],
+    "avoid_for": ["German transcription"],
+    "maturity": "Ant Group Ming family, first release 2026-10."
+  },
+  "tona_fit": {
+    "verdict": "reject",
+    "reason": "Chinese and English only; no German. Listed for completeness of the Ming 3.0 family and its context-ASR idea (hotwords in the prompt) that German-capable ASR models may copy.",
+    "blockers": ["no German", "benchmarks only as images"]
+  },
+  "sources": [
+    {"url": "https://huggingface.co/inclusionAI/Ming-3.0-asr-tiny", "kind": "primary", "checked": "2026-11-19", "note": "README, config.json, LICENSE read"}
+  ],
+  "open_questions": ["Numeric WER/CER values (card shows images only)", "Why this design (builder gives none)", "Exact layer mix of the linear-attention backbone"],
+  "last_checked": "2026-11-19"
+}

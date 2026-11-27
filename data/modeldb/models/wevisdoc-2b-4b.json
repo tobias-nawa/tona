@@ -1,0 +1,189 @@
+{
+  "id": "wevisdoc-2b-4b",
+  "name": "WeVisDoc 2B / 4B",
+  "vendor": "Tencent (WeChat Vision)",
+  "release_date": "2026-09-16",
+  "lineage": {
+    "family": "Qwen3-VL",
+    "base_model": "Qwen3-VL-2B-Instruct and Qwen3-VL-4B-Instruct",
+    "how_derived": "fine-tuned into an end-to-end page parser (Markdown, LaTeX formulas, HTML tables)"
+  },
+  "purpose": "End-to-end document parser for page images: a page becomes structured Markdown with LaTeX formulas and HTML tables (card).",
+  "tasks": [
+    "documents",
+    "vision"
+  ],
+  "modalities": {
+    "input": [
+      "image",
+      "document"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en",
+      "zh"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card tag apache-2.0; no LICENSE file in the repo, text not read."
+  },
+  "architecture": {
+    "kind": "dense vision-language transformer (Qwen3-VL); 4B text part: 36 layers, hidden 2560, GQA 32/8",
+    "params_total_b": 4.0,
+    "layers": 36,
+    "attention": "GQA 32 Q / 8 KV",
+    "recurrent": "none",
+    "context_native": 262144
+  },
+  "variants": [
+    {
+      "repo": "tencent/WeVisDoc-4B",
+      "format": "safetensors BF16",
+      "size_gb": 9.67,
+      "official": true
+    },
+    {
+      "repo": "tencent/WeVisDoc-2B",
+      "format": "safetensors BF16",
+      "size_gb": 4.89,
+      "official": true
+    },
+    {
+      "repo": "prithivMLmods/WeVisDoc-4B-GGUF",
+      "format": "GGUF Q4_K_M",
+      "size_gb": 2.72,
+      "official": false,
+      "notes": "Q8_0 4.69 GB, mmproj F16 0.84 GB; same files in mradermacher repos (plus imatrix)"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "variant": "GGUF Q8_0 4B plus mmproj F16 (4.69 + 0.84 GB)",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (9.6 GB)"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "GGUF Q8_0 4B plus mmproj F16 (4.69 + 0.84 GB)",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (13.6 GB)"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "GGUF Q8_0 4B plus mmproj F16 (4.69 + 0.84 GB)",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (21.6 GB)"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "GGUF Q8_0 4B plus mmproj F16 (4.69 + 0.84 GB)",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (29.6 GB)"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "variant": "GGUF Q8_0 4B plus mmproj F16 (4.69 + 0.84 GB)",
+      "basis": "estimate",
+      "notes": "5.5 GB file against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "GGUF Q8_0 4B plus mmproj F16 (4.69 + 0.84 GB)",
+      "basis": "estimate",
+      "notes": "5.5 GB file against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "GGUF Q8_0 4B plus mmproj F16 (4.69 + 0.84 GB)",
+      "basis": "estimate",
+      "notes": "5.5 GB file against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "Transformers",
+      "vLLM (Qwen3-VL architecture)"
+    ],
+    "notes": "Qwen3-VL architecture, so llama.cpp GGUF with mmproj works (community conversions)."
+  },
+  "benchmarks": [
+    {
+      "name": "OmniDocBench v1.6 Overall",
+      "score": 95.38,
+      "kind": "vendor",
+      "variant": "WeVisDoc-4B, mean of 3 runs (TextEdit 0.036, FormulaCDM 96.81, TableTEDS 92.95)",
+      "source": "https://huggingface.co/tencent/WeVisDoc-4B"
+    },
+    {
+      "name": "OmniDocBench v1.6 Overall",
+      "score": 95.06,
+      "kind": "vendor",
+      "variant": "WeVisDoc-2B",
+      "source": "https://huggingface.co/tencent/WeVisDoc-4B"
+    },
+    {
+      "name": "PureDocBench mean over Clean/Digital/Real",
+      "score": 75.54,
+      "kind": "vendor",
+      "variant": "WeVisDoc-4B",
+      "source": "https://huggingface.co/tencent/WeVisDoc-4B"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "highest OmniDocBench v1.6 among Apache-class end-to-end parsers in its own table (ahead of HunyuanOCR-1.5 94.74, Unlimited-OCR 93.92, dots.mocr 92.57)",
+      "the 2B is within 0.3 points of the 4B"
+    ],
+    "weaknesses": [
+      "vendor-only evidence; comparison table includes models marked * as re-run by the vendor",
+      "English and Chinese only on the card"
+    ],
+    "maturity": "released 2026-09-16, 11k downloads for the 4B"
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "Top vendor score on OmniDocBench v1.6 at 2B and 4B, Apache-2.0 tag, standard Qwen3-VL architecture; fits every class. German is the open point and needs an own check (Chandra-class models have German numbers).",
+    "blockers": [
+      "no Tona vision path",
+      "license text not read",
+      "no independent benchmark yet"
+    ]
+  },
+  "open_questions": [
+    "independent OmniDocBench or MDPBench result",
+    "German pages",
+    "builder's reasons beyond the card text (paper arXiv 2609.20423 not opened)"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/tencent/WeVisDoc-4B",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README and config.json read"
+    },
+    {
+      "url": "https://huggingface.co/api/models/prithivMLmods/WeVisDoc-4B-GGUF?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "sizes"
+    },
+    {
+      "url": "https://arxiv.org/abs/2609.20423",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "linked from card, not opened"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

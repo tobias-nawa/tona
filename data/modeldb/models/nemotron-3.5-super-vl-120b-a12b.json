@@ -1,0 +1,273 @@
+{
+  "id": "nemotron-3.5-super-vl-120b-a12b",
+  "name": "NVIDIA Nemotron 3.5 Super VL 120B-A12B",
+  "vendor": "NVIDIA",
+  "release_date": "2026-10-15",
+  "purpose": "Vision-language model for reasoning, coding, tool use, and document and video understanding; the BF16 release is for customization and full-precision evaluation, NVFP4 for deployment.",
+  "tasks": [
+    "general",
+    "research",
+    "documents",
+    "vision",
+    "coding"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image",
+      "video"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en"
+    ]
+  },
+  "license": {
+    "name": "OpenMDW-1.1",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "OpenMDW-1.1 text read in the Nemotron 3.5 Lightning repo LICENSE and on openmdw.ai: 'permission is hereby granted, free of charge, to deal in the Model Materials without restriction, including under all copyright, patent, database, and trade secret rights'; conditions are only to keep the agreement and notices when distributing, and termination if you sue over patent or copyright infringement by the materials; 'no restrictions or obligations with respect to ... outputs'. This repo has no LICENSE file; the card tag names openmdw-1.1 with the same link, so the Lightning text applies."
+  },
+  "architecture": {
+    "kind": "hybrid Mamba-2 + Transformer sparse MoE with C-RADIO vision encoder",
+    "gguf_arch": "nemotron_h_moe",
+    "params_total_b": 120,
+    "params_active_b": 12,
+    "experts": 512,
+    "recurrent": "Mamba-2",
+    "context_native": 1000000,
+    "drafter": "MTP for native speculative decoding",
+    "why_this_design": "Card: the hybrid combines Mamba-2, MoE and attention layers for long-context processing (up to 1M tokens) with sparse expert computation (512 routed experts per MoE layer); a shared MTP head predicts future tokens recursively for speculative decoding and is boosted after post-training to raise acceptance; the backbone is initialized from Nemotron 3 Super Base and distilled from Nemotron 3 Ultra Base."
+  },
+  "variants": [
+    {
+      "repo": "nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-BF16",
+      "format": "safetensors BF16",
+      "official": true
+    },
+    {
+      "repo": "nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4",
+      "format": "NVFP4",
+      "official": true
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "no",
+      "basis": "estimate"
+    },
+    "pc-16gb": {
+      "fits": "no",
+      "basis": "estimate",
+      "notes": "NVFP4 about 65-70 GB estimate (120 B at about 4.5 bit); 12 B active is 4x the reference's per-token read."
+    },
+    "pc-24gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "variant": "NVFP4 about 68 GB estimate, 96 GB RAM"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "NVFP4 about 68 GB estimate, 128 GB RAM"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "basis": "estimate"
+    },
+    "mac-32gb": {
+      "fits": "no",
+      "basis": "estimate"
+    },
+    "mac-64gb+": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "variant": "needs a 3-bit quant"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "unknown",
+    "other": [
+      "vLLM",
+      "SGLang"
+    ],
+    "notes": "Card names vLLM and SGLang on Hopper and Blackwell; no GGUF found."
+  },
+  "benchmarks": [
+    {
+      "name": "GPQA Diamond",
+      "score": 89.52,
+      "kind": "vendor",
+      "source": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-BF16"
+    },
+    {
+      "name": "HLE (text only)",
+      "score": 31.79,
+      "kind": "vendor",
+      "source": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-BF16"
+    },
+    {
+      "name": "MMLU-ProX",
+      "score": 76.91,
+      "kind": "vendor",
+      "source": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-BF16"
+    },
+    {
+      "name": "GraphWalks",
+      "score": 89.71,
+      "kind": "vendor",
+      "source": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-BF16"
+    },
+    {
+      "name": "MMLongBench-Doc",
+      "score": 62.82,
+      "kind": "vendor",
+      "source": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-BF16"
+    },
+    {
+      "name": "BrowseComp",
+      "score": 78,
+      "kind": "vendor",
+      "source": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-BF16"
+    },
+    {
+      "name": "WMT24++",
+      "score": 84.8,
+      "kind": "vendor",
+      "source": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-BF16"
+    },
+    {
+      "name": "SWE-bench Verified",
+      "score": 71.1,
+      "kind": "vendor",
+      "source": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-BF16"
+    },
+    {
+      "name": "Terminal-Bench 2.1",
+      "score": 60.67,
+      "kind": "vendor",
+      "source": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-BF16"
+    },
+    {
+      "name": "Tau2 retail / airline / telecom",
+      "score": "69.24 / 76.50 / 73.19",
+      "kind": "vendor",
+      "source": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-BF16"
+    },
+    {
+      "name": "GermEval NER (German, PeerBench DACH, preliminary)",
+      "score": 82.0,
+      "kind": "independent",
+      "source": "https://dach.peerbench.ai/",
+      "variant": "not stated on the page",
+      "harness": "PeerBench DACH German Language LLM Index, page 2026-10-16 (preliminary marker; entry not yet in the JSON export of 2026-10-25), read through a summarizer",
+      "date": "2026-10"
+    },
+    {
+      "name": "INCLUDE (German, PeerBench DACH, preliminary)",
+      "score": 86.9,
+      "kind": "independent",
+      "source": "https://dach.peerbench.ai/",
+      "variant": "not stated on the page",
+      "harness": "PeerBench DACH German Language LLM Index, page 2026-10-16 (preliminary marker; entry not yet in the JSON export of 2026-10-25), read through a summarizer",
+      "date": "2026-10"
+    },
+    {
+      "name": "MMLU-ProX (German, PeerBench DACH, preliminary)",
+      "score": 79.3,
+      "kind": "independent",
+      "source": "https://dach.peerbench.ai/",
+      "variant": "not stated on the page",
+      "harness": "PeerBench DACH German Language LLM Index, page 2026-10-16 (preliminary marker; entry not yet in the JSON export of 2026-10-25), read through a summarizer",
+      "date": "2026-10"
+    },
+    {
+      "name": "MuSR (German, PeerBench DACH, preliminary)",
+      "score": 84.0,
+      "kind": "independent",
+      "source": "https://dach.peerbench.ai/",
+      "variant": "not stated on the page",
+      "harness": "PeerBench DACH German Language LLM Index, page 2026-10-16 (preliminary marker; entry not yet in the JSON export of 2026-10-25), read through a summarizer",
+      "date": "2026-10"
+    },
+    {
+      "name": "SB10K (German, PeerBench DACH, preliminary)",
+      "score": 61.4,
+      "kind": "independent",
+      "source": "https://dach.peerbench.ai/",
+      "variant": "not stated on the page",
+      "harness": "PeerBench DACH German Language LLM Index, page 2026-10-16 (preliminary marker; entry not yet in the JSON export of 2026-10-25), read through a summarizer",
+      "date": "2026-10"
+    },
+    {
+      "name": "ScaLA (German, PeerBench DACH, preliminary)",
+      "score": 67.9,
+      "kind": "independent",
+      "source": "https://dach.peerbench.ai/",
+      "variant": "not stated on the page",
+      "harness": "PeerBench DACH German Language LLM Index, page 2026-10-16 (preliminary marker; entry not yet in the JSON export of 2026-10-25), read through a summarizer",
+      "date": "2026-10"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "Best vendor research numbers in this set: BrowseComp 78, GPQA 89.5, WMT24++ 84.8",
+      "1M context with Mamba KV",
+      "Video up to 2 minutes"
+    ],
+    "weaknesses": [
+      "Needs 4 H100 per the card; local use only via 4-bit and 96-128 GB RAM",
+      "Vendor numbers only"
+    ],
+    "best_for": [
+      "Research agents on 32 GB VRAM plus 128 GB RAM"
+    ],
+    "maturity": "NVIDIA."
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "Strong research and German numbers (preliminary independent Elo 1565, INCLUDE DE 86.9, MMLU-ProX DE 79.3), OpenMDW-1.1 (text read), 1M context, but 120B total (12B active) needs 64 GB+ unified memory or a 32 GB PC with large RAM and has no GGUF on record. Missing GGUF and nemotron_h_moe support are only blockers.",
+    "blockers": [
+      "no GGUF or llama.cpp evidence",
+      "size"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-BF16",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "model card"
+    },
+    {
+      "url": "https://huggingface.co/api/models?author=nvidia&search=Nemotron-3.5&sort=createdAt&direction=-1&limit=20",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "repo dates"
+    },
+    {
+      "url": "https://openmdw.ai/license/1-1/",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "OpenMDW-1.1 page, summarizer read"
+    },
+    {
+      "url": "https://dach.peerbench.ai/",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "PeerBench DACH page, summarizer read: Super VL Elo 1565 (preliminary), above Gemma 4 31B (1477)"
+    }
+  ],
+  "open_questions": [
+    "The header says 6 languages, the text says English plus 19: official language list",
+    "NVFP4 file size not read",
+    "Final (non-preliminary) PeerBench numbers"
+  ],
+  "last_checked": "2026-11-19"
+}

@@ -1,0 +1,765 @@
+// Prefill (#30): viele Tokens eines Prompts auf einmal, mit gewöhnlichen Kerneln statt des Megakernels. Die Matmuls
+// laufen als f16-GEMM mit WMMA (gpu/gemm), Gewichte je Schicht nach f16 entpackt; Experten direkt aus ihren Slots im
+// VRAM bzw. aus dem gepinnten RAM. Rechnung wie cpu/ref.cpp und der Megakernel (Formeln dort); Reihenfolgen von Summen
+// und die Genauigkeit der Matmuls (f16 statt int8) weichen ab. Am Ende stehen Zustände, KV-Cache, Indexer, Ringpuffer
+// und der Kontext des Drafters so, wie sie nach forward + commit stünden.
+#include <hip/hip_runtime.h>
+
+#include <algorithm>
+#include <cmath>
+#include <cstring>
+#include <format>
+#include <stdexcept>
+#include <string>
+#include <thread>
+
+#include "gpu/gemm.h"
+#include "gpu/matvec_dev.h"
+#include "gpu/mega.h"
+#include "gpu/mega_dev.h"
+#include "model/quant.h"
+
+#define HIPCHECK(x)                                                                                          \
+    do {                                                                                                     \
+        hipError_t err_ = (x);                                                                               \
+        if (err_ != hipSuccess) throw std::runtime_error(std::format("{}: {}", #x, hipGetErrorString(err_)));   \
+    } while (0)
+
+namespace ie::gpu {
+
+namespace {
+
+constexpr int DS = 128;  // DeltaNet-Kopfgröße
+constexpr int BMAX = MEGA_BMAX, RAW_RING = MEGA_RAW_RING, MAX_CELLS = MEGA_MAX_CELLS;
+constexpr int EB = 8;          // Größe von w16 in Experten (Ausschnitte dichter Matrizen, Kopierpuffer der Experten)
+constexpr int MB = 32;         // Experten je Stapel im MoE höchstens (Zwischenpuffer im RAM: 40)
+constexpr int SCORE_TOK = 32;  // Tokens je Durchgang beim Bewerten der Indexer-Blöcke
+constexpr int TPB = 256;       // Threads je Block der einfachen Kernel
+
+inline unsigned blocks_for(int64_t n) { return (unsigned)((n + TPB - 1) / TPB); }
+
+__device__ __forceinline__ float block_sum256(float v, float* red) {
+    v = wave_sum(v);
+    __syncthreads();
+    if (threadIdx.x % WAVE == 0) red[threadIdx.x / WAVE] = v;
+    __syncthreads();
+    float t = 0;
+    for (int i = 0; i < TPB / WAVE; i++) t += red[i];
+    return t;
+}
+__device__ __forceinline__ float block_max256(float v, float* red) {
+    v = wave_max(v);
+    __syncthreads();
+    if (threadIdx.x % WAVE == 0) red[threadIdx.x / WAVE] = v;
+    __syncthreads();
+    float t = -INFINITY;
+    for (int i = 0; i < TPB / WAVE; i++) t = fmaxf(t, red[i]);
+    return t;
+}
+
+// ---- Residualströme und Gated Residual ------------------------------------------------------------------------
+
+// R[t][g·d + i] = e[t][i] (e: je Token 2·d, Embedding vorne)
+__global__ void k_bcast(const float* e, float* R, int n, int hc, int d) {
+    const int64_t i = (int64_t)blockIdx.x * TPB + threadIdx.x, nd = (int64_t)hc * d;
+    if (i >= n * nd) return;
+    R[i] = e[i / nd * 2 * d + i % nd % d];
+}
+
+// Block je Token: Skala je Strom (1/RMS) nach sc[t][4], xn16 = R · Skala · w
+__global__ void __launch_bounds__(TPB) k_norm16(const float* R, const float* w, _Float16* xn, float* sc, int hc, int d,
+                                                float eps) {
+    __shared__ float red[TPB / WAVE][4], s[4];
+    const int t = blockIdx.x, lane = threadIdx.x % WAVE, wv = threadIdx.x / WAVE;
+    const int64_t nd = (int64_t)hc * d;
+    const float* r = R + t * nd;
+    for (int g = 0; g < hc; g++) {
+        float ss = 0;
+        for (int i = threadIdx.x; i < d; i += TPB) ss += r[g * d + i] * r[g * d + i];
+        ss = wave_sum(ss);
+        if (lane == 0) red[wv][g] = ss;
+    }
+    __syncthreads();
+    if ((int)threadIdx.x < hc) {
+        float tt = 0;
+        for (int i = 0; i < TPB / WAVE; i++) tt += red[i][threadIdx.x];
+        s[threadIdx.x] = rsqrtf(tt / d + eps);
+        sc[t * 4 + threadIdx.x] = s[threadIdx.x];
+    }
+    __syncthreads();
+    for (int64_t j = threadIdx.x; j < nd; j += TPB) xn[t * nd + j] = (_Float16)(r[j] * s[j / d] * w[j]);
+}
+
+// y16 = f16(silu(x · scale)), n Werte
+__global__ void k_act16(const float* x, _Float16* y, int64_t n, float scale) {
+    const int64_t i = (int64_t)blockIdx.x * TPB + threadIdx.x;
+    if (i < n) y[i] = (_Float16)silu_f(x[i] * scale);
+}
+
+// mixed = Mittel über die Ströme von Norm(R) · σ(gate), float und f16
+__global__ void k_mix(const float* R, const float* sc, const float* w, const float* gate, float* mixed,
+                      _Float16* mixed16, int n, int hc, int d) {
+    const int64_t i = (int64_t)blockIdx.x * TPB + threadIdx.x;
+    if (i >= (int64_t)n * d) return;
+    const int64_t t = i / d, k = i % d, nd = (int64_t)hc * d;
+    float s = 0;
+    for (int g = 0; g < hc; g++) {
+        const int64_t j = t * nd + g * d + k;
+        s += R[j] * sc[t * 4 + g] * w[g * d + k] * sigm(gate[j]);
+    }
+    const float m = s / hc;
+    mixed[i] = m;
+    mixed16[i] = (_Float16)m;
+}
+
+// R += y · 2σ(inject/hc) je Strom; inject: je Token 4 Werte
+__global__ void k_combine(float* R, const float* y, const float* inj, int n, int hc, int d) {
+    const int64_t i = (int64_t)blockIdx.x * TPB + threadIdx.x, nd = (int64_t)hc * d;
+    if (i >= n * nd) return;
+    const int64_t t = i / nd, j = i % nd;
+    R[i] += y[t * d + j % d] * 2.0f * sigm(inj[t * 4 + j / d] / hc);
+}
+
+// f16-Kopie: rows Zeilen à cols Werte, Zeilenabstand ldx bzw. ldy
+__global__ void k_to16(const float* x, int64_t ldx, _Float16* y, int64_t ldy, int rows, int cols) {
+    const int64_t i = (int64_t)blockIdx.x * TPB + threadIdx.x;
+    if (i >= (int64_t)rows * cols) return;
+    y[i / cols * ldy + i % cols] = (_Float16)x[i / cols * ldx + i % cols];
+}
+
+// Mittel über die Ströme von R (Merkmale für den Drafter): F[t][col0 + i]
+__global__ void k_hc_mean(const float* R, float* F, int n, int hc, int d, int ldf, int col0) {
+    const int64_t i = (int64_t)blockIdx.x * TPB + threadIdx.x;
+    if (i >= (int64_t)n * d) return;
+    const int64_t t = i / d, k = i % d;
+    float s = 0;
+    for (int g = 0; g < hc; g++) s += R[t * hc * d + g * d + k];
+    F[t * ldf + col0 + k] = s * (1.0f / hc);
+}
+
+// Ring nach dem Stück: die letzten min(n, ring) Zeilen von src an Position mod ring
+__global__ void k_ring_store(const float* src, float* ring, int n, int64_t pos0, int cols, int nring) {
+    const int keep = min(n, nring);
+    const int64_t i = (int64_t)blockIdx.x * TPB + threadIdx.x;
+    if (i >= (int64_t)keep * cols) return;
+    const int64_t t = n - keep + i / cols, c = i % cols;
+    ring[((pos0 + t) % nring) * cols + c] = src[t * cols + c];
+}
+
+// ---- DeltaNet -------------------------------------------------------------------------------------------------
+
+// Kausale Conv + SiLU; Eingang an Position p aus dem Stück (p ≥ pos0) oder dem Ring (K − 1 + BMAX Plätze, wie der
+// Megakernel), vor Position 0 null
+__global__ void k_dn_conv(const float* qkv, const float* ring, const float* w, float* out, int n, int64_t pos0, int ch,
+                          int K) {
+    const int64_t i = (int64_t)blockIdx.x * TPB + threadIdx.x;
+    if (i >= (int64_t)n * ch) return;
+    const int64_t t = i / ch, c = i % ch, pos = pos0 + t, R = K - 1 + BMAX;
+    float acc = 0;
+    for (int k = 0; k < K - 1; k++) {
+        const int64_t p = pos - (K - 1 - k);
+        const float x = p >= pos0 ? qkv[(p - pos0) * ch + c] : p >= 0 ? ring[(p % R) * ch + c] : 0.0f;
+        acc += w[c * K + k] * x;
+    }
+    acc += w[c * K + K - 1] * qkv[i];
+    out[i] = silu_f(acc);
+}
+
+// L2-Norm der q- und k-Köpfe (die ersten 2·nk Köpfe), Wave je (Token, Kopf), wie build_gdn_l2_norm
+__global__ void k_dn_l2(float* conv, int n, int heads, int ch, float eps) {
+    const int64_t u = ((int64_t)blockIdx.x * TPB + threadIdx.x) / WAVE;
+    const int lane = threadIdx.x % WAVE;
+    if (u >= (int64_t)n * heads) return;
+    float* p = conv + u / heads * ch + u % heads * DS;
+    float v[4], ss = 0;
+#pragma unroll
+    for (int k = 0; k < 4; k++) v[k] = p[lane + 32 * k], ss += v[k] * v[k];
+    const float scale = rsqrtf(wave_sum(ss) / DS + eps / DS) * rsqrtf((float)DS);
+#pragma unroll
+    for (int k = 0; k < 4; k++) p[lane + 32 * k] = v[k] * scale;
+}
+
+// Delta-Regel über die Tokens des Stücks, nacheinander. Block je (V-Kopf j, 32 v-Spalten), Lane = Spalte, Wave w hält
+// die k-Zeilen 16w … 16w + 15 des Zustands (S[ki][vi] wie im Megakernel). Erst die m noch offenen Tokens des letzten
+// Decode-Passes festschreiben (Hälfte half der Zwischenpuffer, Formeln wie dn_stream), dann je Token
+// δ = β (v − α Sᵀk), S = α S + k δᵀ, o = Sᵀq / √128.
+// conv: je Token ch; ba: je Token [β-Logits nv | α-Logits nv]; raw: je Token vd
+__global__ void __launch_bounds__(TPB) k_dn_recur(const float* conv, const float* ba, const float* dt_bias,
+                                                  const float* A, float* state, const float* pk, const float* pd,
+                                                  const float* pa, int m, int half, float* raw, int n, int nk, int nv,
+                                                  int kd, int ch) {
+    const int j = blockIdx.x, lane = threadIdx.x % WAVE, w = threadIdx.x / WAVE;
+    const int vi = blockIdx.y * 32 + lane, kh = j % nk, vd = nv * DS;
+    float* st = state + (int64_t)j * DS * DS + vi;
+    float S[16];
+#pragma unroll
+    for (int r = 0; r < 16; r++) S[r] = st[(16 * w + r) * DS];
+    if (m > 0) {
+        const float* ok = pk + (int64_t)half * BMAX * kd;
+        const float* od = pd + (int64_t)half * BMAX * vd;
+        const float* oa = pa + (int64_t)half * BMAX * nv;
+        float g_old[BMAX], d_old[BMAX], p_old = 1;
+#pragma unroll
+        for (int i = BMAX - 1; i >= 0; i--) {
+            g_old[i] = 0, d_old[i] = 0;
+            if (i < m) {
+                g_old[i] = p_old;
+                p_old *= oa[i * nv + j];
+                d_old[i] = od[(int64_t)i * vd + j * DS + vi];
+            }
+        }
+#pragma unroll
+        for (int r = 0; r < 16; r++) {
+            float s = S[r] * p_old;
+            for (int i = 0; i < m; i++) s += g_old[i] * ok[(int64_t)i * kd + kh * DS + 16 * w + r] * d_old[i];
+            S[r] = s;
+        }
+    }
+    // Werte des nächsten Tokens laden, während das laufende rechnet; k und q im LDS in zwei Puffern abwechselnd.
+    // Je Token zwei Abgleiche statt drei. Vorher 2,9 µs je Token (Ladelatenz in der Kette).
+    __shared__ float kq[2][2][DS];  // [Puffer][k | q][DS]
+    __shared__ float red[2][TPB / WAVE][32];
+    const float dtb = dt_bias[j], Aj = A[j];
+    const int off_kq = threadIdx.x < DS ? kd + kh * DS + threadIdx.x : kh * DS + threadIdx.x - DS;
+    auto fetch = [&](int t, float& kqv, float& bl, float& al, float& v) {
+        const float* c = conv + (int64_t)t * ch;
+        kqv = c[off_kq];
+        bl = ba[(int64_t)t * 2 * nv + j];
+        al = ba[(int64_t)t * 2 * nv + nv + j];
+        v = c[2 * kd + j * DS + vi];
+    };
+    float kqv = 0, bl = 0, al = 0, v = 0;
+    if (n > 0) fetch(0, kqv, bl, al, v);
+    (&kq[0][0][0])[threadIdx.x] = kqv;
+    __syncthreads();
+    for (int t = 0; t < n; t++) {
+        const int b = t & 1;
+        const float beta = sigm(bl);
+        const float xa = al + dtb;
+        const float alpha = expf((xa > 20.0f ? xa : log1pf(expf(xa))) * Aj);
+        const float vt = v;
+        if (t + 1 < n) fetch(t + 1, kqv, bl, al, v);
+        float part = 0;
+#pragma unroll
+        for (int r = 0; r < 16; r++) {
+            S[r] *= alpha;
+            part += S[r] * kq[b][0][16 * w + r];
+        }
+        red[0][w][lane] = part;
+        __syncthreads();
+        float sk = 0;
+#pragma unroll
+        for (int i = 0; i < TPB / WAVE; i++) sk += red[0][i][lane];
+        const float dl = beta * (vt - sk);
+        float po = 0;
+#pragma unroll
+        for (int r = 0; r < 16; r++) {
+            S[r] += kq[b][0][16 * w + r] * dl;
+            po += S[r] * kq[b][1][16 * w + r];
+        }
+        red[1][w][lane] = po;
+        if (t + 1 < n) (&kq[b ^ 1][0][0])[threadIdx.x] = kqv;
+        __syncthreads();
+        if (w == 0) {
+            float o = 0;
+#pragma unroll
+            for (int i = 0; i < TPB / WAVE; i++) o += red[1][i][lane];
+            raw[(int64_t)t * vd + j * DS + vi] = o * rsqrtf((float)DS);
+        }
+    }
+#pragma unroll
+    for (int r = 0; r < 16; r++) st[(16 * w + r) * DS] = S[r];
+}
+
+// Summen von 16 Werten über die 32 Lanes verteilen (Reduce-Scatter): danach hält Lane l die volle Summe von Wert
+// (l >> 1) & 15 (in v[0]), Lanes 2c und 2c + 1 gleich
+template <int M, int H>
+__device__ __forceinline__ void scatter_step(float (&v)[16], int lane) {
+    const bool up = lane & M;
+#pragma unroll
+    for (int i = 0; i < H; i++) {
+        const float send = up ? v[i] : v[i + H], keep = up ? v[i + H] : v[i];
+        v[i] = keep + __shfl_xor(send, M);
+    }
+}
+__device__ __forceinline__ float wave_scatter16(float (&v)[16], int lane) {
+    scatter_step<16, 8>(v, lane);
+    scatter_step<8, 4>(v, lane);
+    scatter_step<4, 2>(v, lane);
+    scatter_step<2, 1>(v, lane);
+    return v[0] + __shfl_xor(v[0], 1);
+}
+
+// Delta-Regel Token für Token ohne Abgleich im Block: eine Wave je (V-Kopf j, 16 v-Spalten), Lane l hält die
+// k-Zeilen 4l … 4l + 3 dieser Spalten (64 Werte), Summen über k per Lane-Tausch, δ per readlane an alle Lanes.
+// Vorbild llama.cpp #20340: dort war ein solcher fusionierter Kernel für Qwen3.5 schneller als die Chunk-Form.
+// Die offenen Tokens des letzten Decode-Passes schreibt vorher k_dn_recur (n = 0) fest.
+__global__ void __launch_bounds__(64) k_dn_wave(const float* conv, const float* ba, const float* dt_bias, const float* A,
+                                                float* state, float* raw, int n, int nk, int nv, int kd, int ch) {
+    constexpr int NC = 16;
+    const int lane = threadIdx.x & 31, gw = blockIdx.x * 2 + threadIdx.x / 32, slices = DS / NC;
+    if (gw >= nv * slices) return;
+    const int j = gw / slices, c0 = (gw % slices) * NC, kh = j % nk, vd = nv * DS, my = (lane >> 1) & 15;
+    float* st = state + (int64_t)j * DS * DS + c0;
+    float S[4][NC];
+#pragma unroll
+    for (int r = 0; r < 4; r++)
+#pragma unroll
+        for (int c = 0; c < NC; c++) S[r][c] = st[(4 * lane + r) * DS + c];
+    const float dtb = dt_bias[j], Aj = A[j];
+    float4 kn = {}, qn = {};
+    float bn = 0, an = 0, vn = 0;
+    auto fetch = [&](int t) {
+        const float* p = conv + (int64_t)t * ch;
+        kn = *reinterpret_cast<const float4*>(p + kd + kh * DS + 4 * lane);
+        qn = *reinterpret_cast<const float4*>(p + kh * DS + 4 * lane);
+        vn = p[2 * kd + j * DS + c0 + my];
+        bn = ba[(int64_t)t * 2 * nv + j];
+        an = ba[(int64_t)t * 2 * nv + nv + j];
+    };
+    if (n > 0) fetch(0);
+    for (int t = 0; t < n; t++) {
+        const float k[4] = {kn.x, kn.y, kn.z, kn.w}, q[4] = {qn.x, qn.y, qn.z, qn.w};
+        const float beta = sigm(bn), xa = an + dtb, v = vn;
+        const float alpha = expf((xa > 20.0f ? xa : log1pf(expf(xa))) * Aj);
+        if (t + 1 < n) fetch(t + 1);
+        float p[NC];
+#pragma unroll
+        for (int c = 0; c < NC; c++) {
+            float s = 0;
+#pragma unroll
+            for (int r = 0; r < 4; r++) S[r][c] *= alpha, s += S[r][c] * k[r];
+            p[c] = s;
+        }
+        const float dl = beta * (v - wave_scatter16(p, lane));
+#pragma unroll
+        for (int c = 0; c < NC; c++) {
+            const float dc = __builtin_bit_cast(float, __builtin_amdgcn_readlane(__builtin_bit_cast(int, dl), 2 * c));
+            float s = 0;
+#pragma unroll
+            for (int r = 0; r < 4; r++) S[r][c] += k[r] * dc, s += S[r][c] * q[r];
+            p[c] = s;
+        }
+        const float o = wave_scatter16(p, lane);
+        if (!(lane & 1)) raw[(int64_t)t * vd + j * DS + c0 + my] = o * rsqrtf((float)DS);
+    }
+#pragma unroll
+    for (int r = 0; r < 4; r++)
+#pragma unroll
+        for (int c = 0; c < NC; c++) st[(4 * lane + r) * DS + c] = S[r][c];
+}
+
+// Norm je V-Kopf ⊙ w ⊙ σ(z) → f16, Wave je (Token, Kopf)
+__global__ void k_dn_norm(const float* raw, const float* wn, const float* z, _Float16* o, int n, int nv, float eps) {
+    const int64_t u = ((int64_t)blockIdx.x * TPB + threadIdx.x) / WAVE;
+    const int lane = threadIdx.x % WAVE;
+    if (u >= (int64_t)n * nv) return;
+    const int64_t base = u * DS;  // Token u / nv, Kopf u % nv: je Token nv · DS Werte am Stück
+    float v[4], ss = 0;
+#pragma unroll
+    for (int k = 0; k < 4; k++) v[k] = raw[base + lane + 32 * k], ss += v[k] * v[k];
+    const float scale = rsqrtf(wave_sum(ss) / DS + eps);
+#pragma unroll
+    for (int k = 0; k < 4; k++) {
+        const int i = lane + 32 * k;
+        o[base + i] = (_Float16)(v[k] * scale * wn[i] * sigm(z[base + i]));
+    }
+}
+
+// ---- QSA ------------------------------------------------------------------------------------------------------
+
+__device__ __forceinline__ bool qsa_sel(int64_t pos, int blk, int topk) {
+    const int64_t n_pool = (pos + 1) / blk;
+    return n_pool > std::min<int64_t>(n_pool, topk / blk);
+}
+
+// Wave je (Token, Einheit) wie op_qsa_prep: q-Köpfe (Norm + RoPE, Gate abtrennen), K/V je KV-Kopf → int8 in den
+// KV-Cache, Pool des Indexers (wenn das Token einen Block abschließt), Indexer-q (Norm + RoPE).
+// qfull: je Token 2·nh·hd; qn, g: je Token nh·hd; tk, tv: je Token nkv·hd; rk: roher Indexer-Key je Token idim;
+// iq: je Token ih·idim; ring: rohe Keys vor dem Stück (Position mod RAW_RING)
+__global__ void k_qsa_prep(const float* qfull, float* qn, float* g, const float* q_norm, float* tk, const float* k_norm,
+                           const float* tv, uint8_t* kv, int64_t row, const float* rk, const float* ring, float* pool,
+                           const float* idx_k_norm, float* iq, const float* idx_q_norm, int n, int64_t pos0, int nh,
+                           int nkv, int hd, int idim, int ih, int blk, float eps, float base) {
+    const int64_t per = nh + 2 * nkv + 1 + ih;
+    const int64_t u0 = ((int64_t)blockIdx.x * TPB + threadIdx.x) / WAVE;
+    const int lane = threadIdx.x % WAVE;
+    if (u0 >= n * per) return;
+    const int64_t t = u0 / per, u = u0 % per, pos = pos0 + t;
+    const float* qf = qfull + t * 2 * nh * hd;
+    if (u < nh) {
+        wave_norm_rope<8>(qf + u * 2 * hd, qn + t * nh * hd + u * hd, q_norm, pos, base, eps);
+        for (int i = lane; i < hd; i += WAVE) g[t * nh * hd + u * hd + i] = qf[u * 2 * hd + hd + i];
+    } else if (u < nh + 2 * nkv) {
+        const bool is_v = u >= nh + nkv;
+        const int h = (int)(u - nh - (is_v ? nkv : 0));
+        float* src = (is_v ? (float*)tv : tk) + (t * nkv + h) * hd;
+        if (!is_v) wave_norm_rope<8>(src, src, k_norm, pos, base, eps);
+        float v[8];
+#pragma unroll
+        for (int k = 0; k < 8; k++) v[k] = src[lane + 32 * k];
+        uint8_t* r = kv + pos * row;
+        wave_q8_256(v, (int8_t*)r + h * 2 * hd + (is_v ? hd : 0),
+                    (float*)(r + (int64_t)nkv * 2 * hd) + h * 16 + (is_v ? 8 : 0), lane);
+    } else if (u == nh + 2 * nkv) {
+        if ((pos + 1) % blk != 0) return;
+        const int64_t first = pos + 1 - blk;
+        float* dst = pool + (pos / blk) * idim;
+        float v[4], ss = 0;
+#pragma unroll
+        for (int k = 0; k < 4; k++) {
+            float m = 0;
+            for (int r = 0; r < blk; r++) {
+                const int64_t p = first + r;
+                m += (p >= pos0 ? rk + (p - pos0) * idim : ring + (p % RAW_RING) * idim)[lane + 32 * k];
+            }
+            v[k] = m * (1.0f / blk);
+            ss += v[k] * v[k];
+        }
+        const float scale = rsqrtf(wave_sum(ss) / idim + eps);
+#pragma unroll
+        for (int k = 0; k < 4; k++) v[k] *= scale * idx_k_norm[lane + 32 * k];
+        rope_pair(v[0], v[1], lane, 64, first, base);
+#pragma unroll
+        for (int k = 0; k < 4; k++) dst[lane + 32 * k] = v[k];
+    } else {
+        float* q = iq + t * ih * idim + (u - nh - 2 * nkv - 1) * idim;
+        wave_norm_rope<4>(q, q, idx_q_norm, pos, base, eps);
+    }
+}
+
+// Wave je (Token t0 + tt, Pool-Block pb): Score Σ_h ReLU(q_h · k̄_b) / √dim, nur für Tokens mit Auswahl
+__global__ void k_idx_score(const float* iq, const float* pool, float* score, int t0, int cnt, int64_t pos0, int heads,
+                            int dim, int blk, int topk, int64_t per, int64_t sstride) {
+    const int64_t u = ((int64_t)blockIdx.x * TPB + threadIdx.x) / WAVE;
+    const int lane = threadIdx.x % WAVE;
+    if (u >= cnt * per) return;
+    const int64_t tt = u / per, pb = u % per, pos = pos0 + t0 + tt;
+    if (!qsa_sel(pos, blk, topk) || pb >= (pos + 1) / blk) return;
+    const float* qb = iq + (t0 + tt) * heads * dim;
+    float total = 0;
+    for (int h = 0; h < heads; h++) {
+        float dot = 0;
+        for (int i = lane; i < dim; i += WAVE) dot += qb[h * dim + i] * pool[pb * dim + i];
+        total += fmaxf(wave_sum(dot), 0.0f);
+    }
+    if (lane == 0) score[tt * sstride + pb] = total * rsqrtf((float)dim);
+}
+
+// Dasselbe mit WMMA für 4 Köpfe à 128: Zeilen der Kachel sind (Token, Kopf), Token-weise mit den Köpfen innen, Spalten
+// Pool-Blöcke. Block: 32 Tokens (128 Zeilen) × 128 Pool-Blöcke, K = 128 in zwei Schritten; Waves 2 × 4 à 64 × 32.
+// Im Ergebnis hält eine Lane je WMMA-Kachel 8 aufeinanderfolgende Zeilen = 2 Tokens × 4 Köpfe: ReLU-Summe ohne Tausch.
+// Die skalare Fassung lief mit ~0,4 TFLOPS (1,5 s von 23 s bei 20.000 Tokens).
+namespace ix {
+typedef _Float16 half8 __attribute__((ext_vector_type(8)));
+typedef float float8 __attribute__((ext_vector_type(8)));
+constexpr int TT = 32, RB = 128, PB = 128, KS = 64, LD = KS + 8;
+}  // namespace ix
+__global__ void __launch_bounds__(TPB) k_idx_score_wmma(const float* iq, const float* pool, float* score, int t0, int cnt,
+                                                        int64_t pos0, int blk, int topk, int64_t per, int64_t sstride) {
+    using namespace ix;
+    __shared__ __attribute__((aligned(16))) _Float16 Qs[RB * LD], Ps[PB * LD];
+    const int tt0 = blockIdx.y * TT;
+    const int64_t pb0 = (int64_t)blockIdx.x * PB;
+    const int64_t last = pos0 + t0 + std::min(tt0 + TT, cnt) - 1;
+    if (pb0 >= (last + 1) / blk) return;  // ganze Kachel hinter dem letzten sichtbaren Block
+    const int tid = threadIdx.x, lane = tid & 31, w = tid >> 5;
+    const int wr = (w >> 2) * 64, wc = (w & 3) * 32;
+    const int r16 = lane & 15, kh = (lane >> 4) * 8;
+    float8 acc[4][2] = {};
+    for (int k0 = 0; k0 < 128; k0 += KS) {
+        // je Thread: Zeile tid >> 1, Hälfte (tid & 1) · 32 von Q und vom Pool
+        {
+            const int r = tid >> 1, c = (tid & 1) * 32;
+            const bool qv = tt0 + r / 4 < cnt;
+            const float* qs = iq + ((int64_t)(t0 + tt0) * 4 + r) * 128 + k0 + c;
+            const bool pv = pb0 + r < per;
+            const float* ps = pool + (pb0 + r) * 128 + k0 + c;
+#pragma unroll
+            for (int q8 = 0; q8 < 4; q8++) {
+                half8 a, b;
+#pragma unroll
+                for (int j = 0; j < 8; j++) {
+                    a[j] = qv ? (_Float16)qs[8 * q8 + j] : (_Float16)0.0f;
+                    b[j] = pv ? (_Float16)ps[8 * q8 + j] : (_Float16)0.0f;
+                }
+                *reinterpret_cast<half8*>(&Qs[r * LD + c + 8 * q8]) = a;
+                *reinterpret_cast<half8*>(&Ps[r * LD + c + 8 * q8]) = b;
+            }
+        }
+        __syncthreads();
+#pragma unroll
+        for (int kk = 0; kk < KS; kk += 16) {
+            half8 a[4], b[2];
+#pragma unroll
+            for (int i = 0; i < 4; i++) a[i] = *reinterpret_cast<const half8*>(&Qs[(wr + i * 16 + r16) * LD + kk + kh]);
+#pragma unroll
+            for (int j = 0; j < 2; j++) b[j] = *reinterpret_cast<const half8*>(&Ps[(wc + j * 16 + r16) * LD + kk + kh]);
+#pragma unroll
+            for (int i = 0; i < 4; i++)
+#pragma unroll
+                for (int j = 0; j < 2; j++) acc[i][j] = __builtin_amdgcn_wmma_f32_16x16x16_f16_w32_gfx12(a[i], b[j], acc[i][j]);
+        }
+        __syncthreads();
+    }
+    const float sc = rsqrtf(128.0f);
+#pragma unroll
+    for (int i = 0; i < 4; i++)
+#pragma unroll
+        for (int h2 = 0; h2 < 2; h2++) {
+            const int tt = tt0 + (wr + i * 16 + kh) / 4 + h2;
+            if (tt >= cnt) continue;
+            const int64_t pos = pos0 + t0 + tt;
+            if (!qsa_sel(pos, blk, topk)) continue;
+            const int64_t nv = (pos + 1) / blk;
+#pragma unroll
+            for (int j = 0; j < 2; j++) {
+                const int64_t pb = pb0 + wc + j * 16 + r16;
+                if (pb >= nv) continue;
+                float tot = 0;
+#pragma unroll
+                for (int e = 0; e < 4; e++) tot += fmaxf(acc[i][j][4 * h2 + e], 0.0f);
+                score[(int64_t)tt * sstride + pb] = tot * sc;
+            }
+        }
+}
+
+// Block (512 Threads) je Token mit Auswahl: die n_top besten Pool-Blöcke wie op_topk (Radix-Auswahl, bei Gleichstand
+// die vorderen, Zellen aufsteigend, dann der Schwanz). cells: je Token MAX_CELLS; ncells: je Token
+constexpr int TK = 512;
+__global__ void __launch_bounds__(TK) k_topk(const float* score_f, int32_t* cells_all, int32_t* ncells, int t0,
+                                             int64_t pos0, int blk, int topk, int64_t sstride) {
+    const int tt = blockIdx.x, t = t0 + tt;
+    const int64_t pos = pos0 + t;
+    if (!qsa_sel(pos, blk, topk)) return;
+    const uint32_t* sc = (const uint32_t*)score_f + tt * sstride;
+    int32_t* cells = cells_all + (int64_t)t * MAX_CELLS;
+    const int64_t n_pool = (pos + 1) / blk;
+    const int n_top = (int)std::min<int64_t>(n_pool, topk / blk);
+    __shared__ int cnt[TK + 2];
+    const int th = threadIdx.x, chunk = (int)((n_pool + TK - 1) / TK);
+    const int64_t lo = (int64_t)th * chunk, hi = std::min<int64_t>(n_pool, lo + chunk);
+    uint32_t prefix = 0;
+    for (int bit = 31; bit >= 0; bit--) {
+        const uint32_t cand = prefix | (1u << bit);
+        int local = 0;
+        for (int64_t i = lo; i < hi; i++) local += sc[i] >= cand;
+        __syncthreads();
+        if (th == 0) cnt[TK] = 0;
+        __syncthreads();
+        atomicAdd(&cnt[TK], local);
+        __syncthreads();
+        if (cnt[TK] >= n_top) prefix = cand;
+    }
+    int gt = 0, eq = 0;
+    for (int64_t i = lo; i < hi; i++) gt += sc[i] > prefix, eq += sc[i] == prefix;
+    __syncthreads();
+    cnt[th] = gt;
+    __syncthreads();
+    if (th == 0) {
+        int s = 0;
+        for (int i = 0; i < TK; i++) s += cnt[i];
+        cnt[TK] = s;
+    }
+    __syncthreads();
+    const int need_eq = n_top - cnt[TK];
+    __syncthreads();
+    cnt[th] = eq;
+    __syncthreads();
+    if (th == 0) {
+        int s = 0;
+        for (int i = 0; i < TK; i++) {
+            const int v = cnt[i];
+            cnt[i] = s;
+            s += v;
+        }
+    }
+    __syncthreads();
+    const int take_eq = std::max(0, std::min(eq, need_eq - cnt[th]));
+    __syncthreads();
+    cnt[th] = gt + take_eq;
+    __syncthreads();
+    if (th == 0) {
+        int s = 0;
+        for (int i = 0; i < TK; i++) {
+            const int v = cnt[i];
+            cnt[i] = s;
+            s += v;
+        }
+    }
+    __syncthreads();
+    int out = cnt[th], eq_seen = 0;
+    for (int64_t i = lo; i < hi; i++) {
+        bool take = sc[i] > prefix;
+        if (sc[i] == prefix) take = eq_seen++ < take_eq;
+        if (take) {
+            for (int k = 0; k < blk; k++) cells[out * blk + k] = (int32_t)(i * blk + k);
+            out++;
+        }
+    }
+    const int tail = (int)(pos + 1 - n_pool * blk);
+    for (int k = th; k < tail; k += TK) cells[n_top * blk + k] = (int32_t)(n_pool * blk + k);
+    if (th == 0) ncells[t] = n_top * blk + tail;
+}
+
+// Block je (Token, Kopf), 256 Threads (= hd): Softmax-Attention über die Zellen (Auswahl oder alle bis pos),
+// · σ(gate) → f16. q, g: je Token nh·hd; o: je Token nh·hd
+__global__ void __launch_bounds__(TPB) k_attn(const float* q, const uint8_t* kv, int64_t row, const int32_t* cells_all,
+                                              const int32_t* ncells, const float* gate, _Float16* o, int64_t pos0,
+                                              int nh, int nkv, int hd, int blk, int topk, float scale) {
+    __shared__ float red[TPB / WAVE], qh[256], sc[MAX_CELLS];
+    const int b = blockIdx.x / nh, h = blockIdx.x % nh, lane = threadIdx.x % WAVE, wv = threadIdx.x / WAVE;
+    const int64_t pos = pos0 + b;
+    const bool sel = qsa_sel(pos, blk, topk);
+    const int32_t* cells = sel ? cells_all + (int64_t)b * MAX_CELLS : nullptr;
+    const int n_cells = sel ? ncells[b] : (int)(pos + 1);
+    const int kvh = h / (nh / nkv);
+    for (int i = threadIdx.x; i < hd; i += TPB) qh[i] = q[((int64_t)b * nh + h) * hd + i];
+    __syncthreads();
+    for (int ci = wv; ci < n_cells; ci += TPB / WAVE) {
+        const int64_t cell = cells ? cells[ci] : ci;
+        const uint8_t* r = kv + cell * row;
+        const int8_t* kc = (const int8_t*)r + kvh * 2 * hd;
+        const float* ks = (const float*)(r + (int64_t)nkv * 2 * hd) + kvh * 16;
+        float dot = 0;
+        for (int k = 0; k < hd / WAVE; k++) dot += qh[lane + WAVE * k] * (float)kc[lane + WAVE * k] * ks[k];
+        dot = wave_sum(dot);
+        if (lane == 0) sc[ci] = dot * scale;
+    }
+    __syncthreads();
+    float mx = -INFINITY;
+    for (int ci = threadIdx.x; ci < n_cells; ci += TPB) mx = fmaxf(mx, sc[ci]);
+    mx = block_max256(mx, red);
+    float sum = 0;
+    for (int ci = threadIdx.x; ci < n_cells; ci += TPB) {
+        const float e = __expf(sc[ci] - mx);
+        sc[ci] = e;
+        sum += e;
+    }
+    sum = block_sum256(sum, red);
+    __syncthreads();
+    const int i = threadIdx.x;
+    if (i < hd) {
+        float acc = 0;
+        for (int ci = 0; ci < n_cells; ci++) {
+            const int64_t cell = cells ? cells[ci] : ci;
+            const uint8_t* r = kv + cell * row;
+            acc += sc[ci] * (float)((const int8_t*)r)[kvh * 2 * hd + hd + i] *
+                   ((const float*)(r + (int64_t)nkv * 2 * hd))[kvh * 16 + 8 + i / 32];
+        }
+        o[((int64_t)b * nh + h) * hd + i] = (_Float16)(acc / sum * sigm(gate[((int64_t)b * nh + h) * hd + i]));
+    }
+}
+
+// Flash-Attention mit WMMA: Block je (Token, KV-Kopf). Die nh/nkv q-Köpfe der Gruppe (12) sind die Zeilen einer
+// 16er-Kachel; sie sehen dieselben Zellen (Auswahl je Token). Je 32 Zellen: K und V aus dem int8-Cache nach f16 in den
+// LDS (V transponiert), S = Q·Kᵀ (8 Waves: je Zellkachel und Viertel der Dimensionen, dann summiert), Softmax online,
+// O += P·V (je Wave 32 Dimensionen). Am Ende O / l · σ(gate) → f16.
+namespace fa {
+typedef _Float16 half8 __attribute__((ext_vector_type(8)));
+typedef float float8 __attribute__((ext_vector_type(8)));
+constexpr int HD = 256, CC = 32, LQ = HD + 8, LV = CC + 8;
+}  // namespace fa
+__global__ void __launch_bounds__(TPB) k_attn_wmma(const float* q, const uint8_t* kv, int64_t row,
+                                                   const int32_t* cells_all, const int32_t* ncells, const float* gate,
+                                                   _Float16* o, int64_t pos0, int nh, int nkv, int blk, int topk,
+                                                   float scale) {
+    using namespace fa;
+    __shared__ __attribute__((aligned(16))) _Float16 Qs[16 * LQ], Ks[CC * LQ], Vt[HD * LV], Ps[16 * LV];
+    __shared__ float part[4][16][CC], mrow[16], lrow[16], arow[16];
+    const int t = blockIdx.x / nkv, kvh = blockIdx.x % nkv, g = nh / nkv;
+    const int tid = threadIdx.x, lane = tid & 31, w = tid >> 5;
+    const int64_t pos = pos0 + t;
+    const bool sel = qsa_sel(pos, blk, topk);
+    const int32_t* cells = sel ? cells_all + (int64_t)t * MAX_CELLS : nullptr;
+    const int n_cells = sel ? ncells[t] : (int)(pos + 1);
+    // Q der Gruppe (Zeilen ≥ g null), mit der Skala 1/√hd
+    for (int i = tid; i < 16 * HD; i += TPB) {
+        const int r = i / HD, k = i % HD;
+        Qs[r * LQ + k] = r < g ? (_Float16)(q[((int64_t)t * nh + kvh * g + r) * HD + k] * scale) : (_Float16)0.0f;
+    }
+    if (tid < 16) mrow[tid] = -INFINITY, lrow[tid] = 0;
+    float8 acc[2] = {};
+    const int r16 = lane & 15, kh = (lane >> 4) * 8;
+    for (int c0 = 0; c0 < n_cells; c0 += CC) {
+        const int cn = min(CC, n_cells - c0);
+        {  // K, V nach f16: Thread je (Zelle, 32 Dimensionen). Zelle schnell laufend: die transponierten V-Schreibe-
+           // zugriffe einer Wave liegen nebeneinander (mit gq schnell trafen 8 Threads dieselbe Bank)
+            const int c = tid & 31, gq = tid >> 5;
+            if (c < cn) {
+                const int64_t cell = cells ? cells[c0 + c] : c0 + c;
+                const uint8_t* r = kv + cell * row;
+                const int8_t* kc = (const int8_t*)r + kvh * 2 * HD + gq * 32;
+                const int8_t* vc = kc + HD;
+                const float* sc = (const float*)(r + (int64_t)nkv * 2 * HD) + kvh * 16;
+                const float ks = sc[gq], vs = sc[8 + gq];
+                int8_t kb[32], vb[32];
+                *reinterpret_cast<uint4*>(kb) = *reinterpret_cast<const uint4*>(kc);
+                *reinterpret_cast<uint4*>(kb + 16) = *reinterpret_cast<const uint4*>(kc + 16);
+                *reinterpret_cast<uint4*>(vb) = *reinterpret_cast<const uint4*>(vc);
+                *reinterpret_cast<uint4*>(vb + 16) = *reinterpret_cast<const uint4*>(vc + 16);
+#pragma unroll
+                for (int q8 = 0; q8 < 4; q8++) {
+                    half8 h;
+#pragma unroll
+                    for (int j = 0; j < 8; j++) h[j] = (_Float16)((float)kb[8 * q8 + j] * ks);
+                    *reinterpret_cast<half8*>(&Ks[c * LQ + gq * 32 + 8 * q8]) = h;
+                }
+#pragma unroll
+                for (int j = 0; j < 32; j++) Vt[(gq * 32 + j) * LV + c] = (_Float16)((float)vb[j] * vs);
+            } else {
+#pragma unroll
+                for (int j = 0; j < 32; j++) Ks[c * LQ + gq * 32 + j] = (_Float16)0.0f, Vt[(gq * 32 + j) * LV + c] = (_Float16)0.0f;
+            }
+        }
+        __syncthreads();
+        {  // S-Teile: Wave w → Zellkachel w & 1, Dimensionen (w >> 1) · 64 … + 63
+            const int ct = w & 1, d0 = (w >> 1) * 64;
+            float8 s = {};
+#pragma unroll
+            for (int kk = 0; kk < 64; kk += 16) {
+                const half8 a = *reinterpret_cast<const half8*>(&Qs[r16 * LQ + d0 + kk + kh]);
+                const half8 b = *reinterpret_cast<const half8*>(&Ks[(ct * 16 + r16) * LQ + d0 + kk + kh]);
+                s = __builtin_amdgcn_wmma_f32_16x16x16_f16_w32_gfx12(a, b, s);
+            }
+#pragma unroll
+            for (int e = 0; e < 8; e++) part[w >> 1][kh + e][ct * 16 + r16] = s[e];
+        }
+        __syncthreads();
+        {  // Softmax online: 16 Threads je Zeile, je Thread 2 Zellen, Summen per Shuffle in der 16er-Gruppe
+            const int r = tid >> 4, c = (tid & 15) * 2;
+            float s2[2];
+#pragma unroll
+            for (int q = 0; q < 2; q++)
+                s2[q] = c + q < cn ? part[0][r][c + q] + part[1][r][c + q] + part[2][r][c + q] + part[3][r][c + q] : -INFINITY;
+            const float mo = mrow[r];
+            float mx = fmaxf(mo, fmaxf(s2[0], s2[1]));
+#pragma unroll
+            for (int o = 8; o > 0; o >>= 1) mx = fmaxf(mx, __shfl_xor(mx, o, 16));
+            float l = 0;
+#pragma unroll
+            for (int q = 0; q < 2; q++) {
+                const float e = s2[q] > -INFINITY ? __expf(s2[q] - mx) : 0.0f;
+                l += e;
+                Ps[r * LV + c + q] = (_Float16)e;
+            }
+#pragma unroll
+            for (int o = 8; o > 0; o >>= 1) l += __shfl_xor(l, o, 16);
+            __syncthreads();  // alle haben mrow gelesen
+            if ((tid & 15) == 0) {
+                const float al = mo > -INFINITY ? __expf(mo - mx) : 0.0f;
+                mrow[r] = mx, lrow[r] = lrow[r] * al + l, arow[r] = al;
+            }
+        }
+        __syncthreads();
+        // O = α · O + P·V; Wave w: Dimensionen 32w … 32w + 31 (zwei Kacheln)
+#pragma unroll
+        for (int j = 0; j < 2; j++)
+#pragma unroll
+            for (int e = 0; e < 8; e++) acc[j][e] *= arow[kh + e];
+#pragma unroll
+        for (int kk = 0; kk < CC; kk += 16) {
+            const half8 a = *reinterpret_cast<const half8*>(&Ps[r16 * LV + kk + kh]);
+#pragma unroll
+            for (int j = 0; j < 2; j++) {
+                const half8 b = *reinterpret_cast<const half8*>(&Vt[(w * 32 + j * 16 + r16) * 

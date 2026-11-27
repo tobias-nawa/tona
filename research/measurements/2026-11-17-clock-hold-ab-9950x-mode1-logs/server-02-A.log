@@ -1,0 +1,10 @@
+Tona (tona-server) on http://127.0.0.1:8099 (Anthropic: /v1/messages, OpenAI: /v1/chat/completions), without key, loading ...
+host memory: GTT (probe 64 MB grew the GTT use by 64 MB; 0.1 of 32.5 GB in use)
+evicted_ms counter: /sys/class/kfd/kfd/proc/76090/stats_7773/evicted_ms (0 ms so far), evictions do not count against the pass deadline
+Initialization: 512 MTP experts as Q2_0, converted on the GPU (708 MB) in 0.8 s
+Releasing page cache: 8.25 GB of file mappings removed from the address space
+loaded in 18.8 s: context 140000 (KV int8 1.94 GB in RAM), VRAM 14.21 GB, 82 expert slots per layer, 27.4 GB pinned
+21:00:07 Request: 1934 prompt tokens (0 reused, 1934 computed in 1.3 s, new conversation (stashing 0 ms), slot 0), 400 tokens in 5.2 s = 76.6 tok/s, 3.56 tokens per pass, 0 of 112 passes from the history (0.00 per pass)
+21:00:07 POST /v1/chat/completions → 200
+21:00:11 Request: 1816 prompt tokens (0 reused, 1816 computed in 1.0 s, new conversation (stashing 0 ms), slot 1), 400 tokens in 3.2 s = 126.0 tok/s, 7.82 tokens per pass, 48 of 51 passes from the history (8.00 per pass)
+21:00:11 POST /v1/chat/completions → 200

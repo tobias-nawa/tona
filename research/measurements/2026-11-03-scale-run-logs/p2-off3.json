@@ -1,0 +1,216 @@
+{
+ "label": "p2-off3",
+ "build": "merged",
+ "env": {
+  "IE_DIAG": "1",
+  "IE_PREFILL_FP8": "0"
+ },
+ "jobs": [
+  {
+   "ctx": 140000,
+   "env": {},
+   "log": "/var/tmp/claude/scale1103/p2-off3-server-1-ctx140000.log",
+   "start_s": 20.01885479700286,
+   "metrics": {
+    "prefill@2000": 1343.7729175294712,
+    "decode@2000": 66.4694224669007,
+    "prefill@2000:write": 1324.511582451913,
+    "decode@2000:write": 122.53138338503143,
+    "prefill@30000": 1774.0576327199767,
+    "decode@30000": 67.49717462733012
+   },
+   "shas": {
+    "2000": "f6573f396c15300f",
+    "2000:write": "a6f07fd6fb86e448",
+    "30000": "1fad1ead2f1ac34c"
+   },
+   "counters": {
+    "2000": {
+     "expert_hits": 133965,
+     "expert_misses": 17731
+    },
+    "2000:write": {
+     "expert_hits": 85451,
+     "expert_misses": 23108
+    },
+    "30000": {
+     "expert_hits": 68039,
+     "expert_misses": 9493
+    }
+   },
+   "status": {
+    "ready": true,
+    "uptime": 52.567140865,
+    "phases": [
+     {
+      "name": "Open model",
+      "done": 0.0,
+      "total": 0.0,
+      "t0": 0.000116559,
+      "t1": 0.086786325
+     },
+     {
+      "name": "Weights into VRAM",
+      "done": 6893261312.0,
+      "total": 37377879552.0,
+      "t0": 0.086786325,
+      "t1": 3.706842815
+     },
+     {
+      "name": "Expert cache in VRAM",
+      "done": 48.0,
+      "total": 48.0,
+      "t0": 3.706842815,
+      "t1": 8.841897626
+     },
+     {
+      "name": "Pinning experts in RAM",
+      "done": 48.0,
+      "total": 48.0,
+      "t0": 8.841897626,
+      "t1": 17.969384136
+     },
+     {
+      "name": "Releasing page cache",
+      "done": 0.0,
+      "total": 0.0,
+      "t0": 17.969384136,
+      "t1": 18.929514795
+     }
+    ],
+    "system": {
+     "gpu": {
+      "vram_used": 16477323264.0,
+      "vram_total": 17095983104.0,
+      "busy": 97.0,
+      "power_w": 131.0,
+      "power_cap_w": 182.0,
+      "sclk_mhz": 3317.0,
+      "temp_c": 51.0,
+      "temp_junction_c": 63.0
+     },
+     "ram": {
+      "total": 64924282880.0,
+      "available": 24609484800.0
+     }
+    },
+    "config": {
+     "model": "Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf",
+     "drafter": "mtp",
+     "host": "127.0.0.1",
+     "port": 8097,
+     "n_ctx": 140000,
+     "pid": 3118201,
+     "kv_gb": 1.93536,
+     "kv_in": "RAM",
+     "vram_gb": 14.356006196,
+     "pinned_gb": 27.392098304,
+     "slots": 83,
+     "load_s": 18.929398936
+    },
+    "engine": {
+     "state": "idle",
+     "elapsed": 0.0,
+     "prompt": 0,
+     "prefill_done": 0,
+     "prefill_total": 0,
+     "out_tokens": 0,
+     "tok_s": 0.0,
+     "active": [],
+     "slots": 2,
+     "queue": 0,
+     "waiting": []
+    },
+    "totals": {
+     "requests": 3,
+     "passes": 239,
+     "gen_tokens": 962,
+     "tokens_per_pass": 4.02510460251046,
+     "stashed": 2,
+     "on_disk": 0,
+     "expert_hits": 287455,
+     "expert_misses": 50332,
+     "early_hits": 31003,
+     "early_misses": 8211,
+     "mtp_passes": 678,
+     "multi_passes": 0,
+     "yields": 0
+    },
+    "recent": [
+     {
+      "time": 1793695711,
+      "prompt": 1934,
+      "reused": 0,
+      "computed": 1934,
+      "prefill_s": 1.439231268,
+      "out": 361,
+      "gen_s": 5.431068702,
+      "tok_s": 66.4694224669007,
+      "prefill_tok_s": 1343.7729175294712,
+      "tokens_per_pass": 2.9836065573770494,
+      "slot": -1,
+      "cancel": false,
+      "effort": "off",
+      "think_tokens": 0,
+      "think_budget": -1,
+      "project": "",
+      "session": "",
+      "agent": "",
+      "role": "main"
+     },
+     {
+      "time": 1793695716,
+      "prompt": 1816,
+      "reused": 0,
+      "computed": 1816,
+      "prefill_s": 1.371071438,
+      "out": 400,
+      "gen_s": 3.264469795,
+      "tok_s": 122.53138338503143,
+      "prefill_tok_s": 1324.511582451913,
+      "tokens_per_pass": 7.823529411764706,
+      "slot": -1,
+      "cancel": false,
+      "effort": "off",
+      "think_tokens": 0,
+      "think_budget": -1,
+      "project": "",
+      "session": "",
+      "agent": "",
+      "role": "main"
+     },
+     {
+      "time": 1793695736,
+      "prompt": 29642,
+      "reused": 0,
+      "computed": 29642,
+      "prefill_s": 16.708589086,
+      "out": 200,
+      "gen_s": 2.96308699,
+      "tok_s": 67.49717462733012,
+      "prefill_tok_s": 1774.0576327199767,
+      "tokens_per_pass": 3.015151515151515,
+      "slot": -1,
+      "cancel": false,
+      "effort": "off",
+      "think_tokens": 0,
+      "think_budget": -1,
+      "project": "",
+      "session": "",
+      "agent": "",
+      "role": "main"
+     }
+    ]
+   },
+   "hwm_gb_final": 7.881290435791016,
+   "peaks": {
+    "rss_gb": 2.51220703125,
+    "gtt_gb": 29.021610260009766,
+    "vram_gb": 15.345703125,
+    "hwm_gb": 7.881290435791016,
+    "avail_min_gb": 22.92308807373047
+   }
+  }
+ ],
+ "wall_s": 52.789580455981195
+}

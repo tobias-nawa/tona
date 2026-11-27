@@ -1,0 +1,26 @@
+dense   pos0       0 x  40 tokens kv vram: identical
+dense   pos0     100 x  70 tokens kv vram: identical
+dense   pos0    2000 x  40 tokens kv vram: identical
+random  pos0    2060 x  64 tokens kv vram: identical
+drift   pos0    2051 x 130 tokens kv vram: identical
+drift   pos0    9000 x 100 tokens kv vram: identical
+repeat  pos0   33000 x  40 tokens kv vram: identical
+ragged  pos0    5000 x 100 tokens kv vram: identical
+ragged  pos0  120000 x  50 tokens kv vram: identical
+drift   pos0  131000 x  96 tokens kv vram: identical
+random  pos0  200000 x  64 tokens kv vram: identical
+drift   pos0  262000 x  64 tokens kv vram: identical
+dense   pos0       0 x  40 tokens kv host: identical
+dense   pos0     100 x  70 tokens kv host: identical
+dense   pos0    2000 x  40 tokens kv host: identical
+random  pos0    2060 x  64 tokens kv host: identical
+drift   pos0    2051 x 130 tokens kv host: identical
+drift   pos0    9000 x 100 tokens kv host: identical
+repeat  pos0   33000 x  40 tokens kv host: identical
+ragged  pos0    5000 x 100 tokens kv host: identical
+ragged  pos0  120000 x  50 tokens kv host: identical
+drift   pos0  131000 x  96 tokens kv host: identical
+random  pos0  200000 x  64 tokens kv host: identical
+drift   pos0  262000 x  64 tokens kv host: identical
+all identical
+rc=0

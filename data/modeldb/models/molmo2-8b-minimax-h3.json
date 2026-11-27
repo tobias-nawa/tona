@@ -1,0 +1,135 @@
+{
+  "id": "molmo2-8b-minimax-h3",
+  "name": "Molmo2-8B-Minimax-H3 (community INT8 ConvRot package, MolmoPoint trackers)",
+  "vendor": "Alissonerdx (community, not Ai2 or MiniMax)",
+  "release_date": "2026-10-31",
+  "lineage": {
+    "base_model": "allenai/Molmo2-8B and allenai/MolmoPoint-8B",
+    "how_derived": "INT8 ConvRot (block-Hadamard rotations plus per-channel INT8 weights, dynamic INT8 activations) and NVFP4 AWQ quantizations; a separate projector maps Molmo2 features to the MiniMax H3 video model's CLIP space"
+  },
+  "purpose": "Experimental text and visual conditioning for the MiniMax H3 video model through ComfyUI nodes, plus MolmoPoint-8B point tracking for video segmentation (card).",
+  "tasks": [
+    "vision",
+    "video-generation"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image",
+      "video"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "LICENSE and NOTICE read at the head (Apache License 2.0); upstream Molmo2 licences were not opened."
+  },
+  "architecture": {
+    "kind": "Molmo2 8B vision-language with custom INT8 ConvRot loaders",
+    "params_total_b": 8.0
+  },
+  "variants": [
+    {
+      "repo": "Alissonerdx/Molmo2-8B-Minimax-H3",
+      "format": "INT8 ConvRot safetensors",
+      "size_gb": 9.29,
+      "official": false,
+      "notes": "MolmoPoint INT8 10.42 GB, MolmoPoint NVFP4 AWQ 7.38 GB, H3 projector 0.34 GB; custom loaders only"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "no",
+      "variant": "INT8 ConvRot package (about 9.65 GB)",
+      "basis": "estimate",
+      "notes": "9.65 GB against a VRAM budget of 9.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "INT8 ConvRot package (about 9.65 GB)",
+      "basis": "estimate",
+      "notes": "9.65 GB against a VRAM budget of 13.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "INT8 ConvRot package (about 9.65 GB)",
+      "basis": "estimate",
+      "notes": "9.65 GB against a VRAM budget of 21.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "INT8 ConvRot package (about 9.65 GB)",
+      "basis": "estimate",
+      "notes": "9.65 GB against a VRAM budget of 29.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "variant": "INT8 ConvRot package (about 9.65 GB)",
+      "basis": "estimate",
+      "notes": "9.65 GB against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "INT8 ConvRot package (about 9.65 GB)",
+      "basis": "estimate",
+      "notes": "9.65 GB against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "INT8 ConvRot package (about 9.65 GB)",
+      "basis": "estimate",
+      "notes": "9.65 GB against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "ComfyUI nodes (Molmo2-H3)",
+      "custom convrot_runtime.py loader on CUDA PyTorch"
+    ]
+  },
+  "benchmarks": [],
+  "soft": {
+    "weaknesses": [
+      "the Molmo2 to H3 projection is experimental and inconsistent for reference-to-video (card)",
+      "no accuracy benchmark for the quantized packages, only a smoke test on an eight-frame clip"
+    ],
+    "maturity": "18.6k downloads, 25 likes; community repack"
+  },
+  "tona_fit": {
+    "verdict": "reject",
+    "reason": "ComfyUI video-conditioning packaging of existing Molmo2/MolmoPoint weights with custom quantization loaders; outside Tona's scope.",
+    "blockers": [
+      "purpose"
+    ]
+  },
+  "open_questions": [
+    "upstream Molmo2 licence text and benchmarks (not part of this repack)"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/Alissonerdx/Molmo2-8B-Minimax-H3",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README read"
+    },
+    {
+      "url": "https://huggingface.co/api/models/Alissonerdx/Molmo2-8B-Minimax-H3?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "sizes"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

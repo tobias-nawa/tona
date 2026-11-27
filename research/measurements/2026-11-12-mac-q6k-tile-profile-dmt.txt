@@ -1,0 +1,21 @@
+Metal profile (GPU time per part, all passes):
+  attend             49.4 ms    1.7 %  216 buffers
+  attn_proj         202.5 ms    7.1 %  648 buffers
+  dn_proj           563.3 ms   19.7 %  1296 buffers
+  dn_scan            80.6 ms    2.8 %  648 buffers
+  embed               0.4 ms    0.0 %  18 buffers
+  experts           769.5 ms   26.9 %  864 buffers
+  experts_down      334.0 ms   11.7 %  864 buffers
+  gated_read        455.5 ms   15.9 %  2592 buffers
+  head               76.4 ms    2.7 %  16 buffers
+  indexer           103.6 ms    3.6 %  432 buffers
+  ple                11.8 ms    0.4 %  18 buffers
+  router             58.7 ms    2.1 %  864 buffers
+  shared_exp        155.0 ms    5.4 %  864 buffers
+  total            2860.8 ms
+Backend metal-apple-m1-max, prefill 64, decode 32 in passes of 4, 1 rounds
+  warmup: prefill 62.92 tok/s, decode 34.77 tok/s (not counted)
+  round 1: prefill 90.62 tok/s, decode 36.32 tok/s, pass 110.13 ms, MTP fill 0.00 ms, step 0.00 ms
+prefill: median 90.62 tok/s, range 90.62 ... 90.62 (1 rounds)
+decode: median 36.32 tok/s, range 36.32 ... 36.32 (1 rounds)
+pass: median 110.13 ms, range 110.13 ... 110.13 (1 rounds)

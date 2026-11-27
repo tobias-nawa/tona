@@ -1,0 +1,8 @@
+Here is a summary of the provided code, broken down by its functional components:
+
+### Python Inference Engine Benchmark Harness (`ibench`)
+*   **CLI Interface:** Provides commands to `run` benchmarks against a target model, `compare` two JSON reports, `proxy` requests to record traces, and `env` to print environment details.
+*   **Target Configuration:** Loads target definitions (URL, API type, model) from `targets.toml` or command-line arguments.
+*   **Suite Execution:** Loads test cases from TOML files, manages warm-up runs, and executes requests against OpenAI or Anthropic-compatible APIs.
+*   **Client Implementation:** Streams responses using `http.client`, parsing SSE events to extract text, reasoning, tool calls, and token usage statistics.
+*   **Environment Snapshot:** Collects system information (OS, CPU, GPU, RAM, swap, git status) and queries the inference server for model lists and status to ensure

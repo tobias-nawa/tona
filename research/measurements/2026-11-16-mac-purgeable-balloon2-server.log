@@ -1,0 +1,30 @@
+Metal arena: budget 17.05 GB, at start 14.35 GB (RAM 34.4 GB, held by all processes 9.6, our weights mapped 5.4, kept 5.0; working set 26.8, our buffers 9.2)
+Metal arena: 6271 of 7872 experts (96.1 % of the profile's uses) in 13.33 GB, cache 32 per layer (3.27 GB), staging 451 MB, blocks of 32 MB
+Metal arena: resident experts read in 0.0 s
+Metal arena: filled 17.05 of 17.05 GB in steps in 2.4 s, stopped by the budget; free RAM 23.46 GB (raw), compressed meanwhile 0.00 GB (of our process +0.00 GB); the experts' page cache dropped first: 0.00 GB
+Metal arena: governor on, reserve 0.00 GB, free RAM calibrated by +0.00 GB
+Metal arena: calm (free 1.60 GB), holds 17.05 GB
+Metal: stop sleeps 5000, planned 0.522 ms, slept 0.787 ms, flag there on waking 1.5 %
+Metal: stop sleeps 10000, planned 0.482 ms, slept 0.728 ms, flag there on waking 0.8 %
+Metal: stop sleeps 15000, planned 0.469 ms, slept 0.709 ms, flag there on waking 0.5 %
+Metal: stop sleeps 20000, planned 0.462 ms, slept 0.699 ms, flag there on waking 0.4 %
+Metal: stop sleeps 25000, planned 0.458 ms, slept 0.693 ms, flag there on waking 0.3 %
+Metal: stop sleeps 30000, planned 0.455 ms, slept 0.689 ms, flag there on waking 0.3 %
+Metal: stop sleeps 35000, planned 0.454 ms, slept 0.686 ms, flag there on waking 0.3 %
+Metal: stop sleeps 40000, planned 0.452 ms, slept 0.684 ms, flag there on waking 0.2 %
+Metal: stop sleeps 45000, planned 0.451 ms, slept 0.683 ms, flag there on waking 0.2 %
+Metal: stop sleeps 50000, planned 0.451 ms, slept 0.682 ms, flag there on waking 0.2 %
+Metal arena: pressure at 1794864332.789: 410 blocks (13.76 GB) volatile at once
+Metal arena: short (free 0.94 GB), holds 17.05 GB
+Metal arena: pressure over at 1794864334.263: 1501 experts read again meanwhile, hold 4 passes
+Metal arena: calm (free 0.60 GB), holds 17.05 GB
+Metal: stop sleeps 55000, planned 0.452 ms, slept 0.684 ms, flag there on waking 0.2 %
+Metal: stop sleeps 60000, planned 0.452 ms, slept 0.683 ms, flag there on waking 0.2 %
+Metal: stop sleeps 65000, planned 0.451 ms, slept 0.683 ms, flag there on waking 0.2 %
+Metal: stop sleeps 70000, planned 0.451 ms, slept 0.682 ms, flag there on waking 0.2 %
+Metal: stop sleeps 75000, planned 0.450 ms, slept 0.681 ms, flag there on waking 0.2 %
+Metal: stop sleeps 80000, planned 0.450 ms, slept 0.681 ms, flag there on waking 0.2 %
+Metal: stop sleeps 85000, planned 0.450 ms, slept 0.680 ms, flag there on waking 0.2 %
+Metal: stop sleeps 90000, planned 0.449 ms, slept 0.680 ms, flag there on waking 0.1 %
+Metal: stop sleeps 95000, planned 0.449 ms, slept 0.679 ms, flag there on waking 0.1 %
+Metal: stop sleeps 100000, planned 0.449 ms, slept 0.679 ms, flag there on waking 0.1 %

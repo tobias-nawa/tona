@@ -1,0 +1,176 @@
+{
+  "id": "nex-n2.5-mini",
+  "name": "Nex-N2.5-mini",
+  "vendor": "Nex-AGI",
+  "release_date": "2026-09-08",
+  "lineage": {
+    "family": "Nex-N2.5 (mini, Pro, Max)",
+    "how_derived": "builds on the multimodal foundation of Nex-N2 with post-training for computer use, web browsing and visually grounded agent work; the Max model is a separate 1.6T text-only MoE"
+  },
+  "purpose": "Agentic model family for long-horizon tasks in real-world environments; the mini and Pro models add computer-use and browsing with visual feedback (card).",
+  "tasks": [
+    "coding",
+    "general",
+    "vision"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en",
+      "zh"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0 (card tag)",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card tag apache-2.0; no LICENSE file in the repo, text not read."
+  },
+  "architecture": {
+    "kind": "hybrid Gated-DeltaNet plus full attention MoE with vision (Qwen3.5-MoE layout, hidden 2048)",
+    "gguf_arch": "qwen35moe",
+    "params_total_b": 35,
+    "layers": 40,
+    "attention": "full attention every 4th layer",
+    "recurrent": "Gated DeltaNet",
+    "drafter": "not stated"
+  },
+  "variants": [
+    {
+      "repo": "nex-agi/Nex-N2.5-mini",
+      "format": "safetensors BF16",
+      "size_gb": 70.24,
+      "official": true,
+      "notes": "total parameters inferred from the file size (about 35B); the card was not read for a parameter count"
+    },
+    {
+      "repo": "bartowski/nex-agi_Nex-N2.5-mini-GGUF",
+      "format": "GGUF Q4_K_M",
+      "size_gb": 22.32,
+      "official": false,
+      "notes": "IQ4_XS 19.89, Q3_K_M 17.34, IQ2_M 13.23, Q6_K 29.37, Q8_0 36.91 GB; 12.5k downloads"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "marginal",
+      "variant": "bartowski GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "22.32 GB file against 9.6 GB VRAM plus 50 GB RAM budget; experts stream from RAM (~3 B active, decode bound by RAM bandwidth)"
+    },
+    "pc-16gb": {
+      "fits": "marginal",
+      "variant": "bartowski GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "22.32 GB file against 13.6 GB VRAM plus 50 GB RAM budget; experts stream from RAM (~3 B active, decode bound by RAM bandwidth)"
+    },
+    "pc-24gb": {
+      "fits": "marginal",
+      "variant": "bartowski GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "22.32 GB file against 21.6 GB VRAM plus 82 GB RAM budget; experts stream from RAM (~3 B active, decode bound by RAM bandwidth)"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "bartowski GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "22.32 GB file fits the VRAM budget (29.6 GB) with room for KV"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "bartowski GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "22.32 GB file against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "no",
+      "variant": "bartowski GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "22.32 GB file against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "bartowski GGUF Q4_K_M",
+      "basis": "estimate",
+      "notes": "22.32 GB file against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "Transformers"
+    ],
+    "notes": "Same layout as the Qwen3.5/3.6 35B-A3B MoE, GGUFs exist."
+  },
+  "benchmarks": [
+    {
+      "name": "Terminal-Bench 2.1",
+      "score": 73.4,
+      "kind": "vendor",
+      "variant": "BF16; Nex-N2.5-Pro 82.7, Max 86.1, Claude Opus 5 89.1 (first column of the card table, read as mini)",
+      "source": "https://huggingface.co/nex-agi/Nex-N2.5-mini"
+    },
+    {
+      "name": "SWE-Bench Pro",
+      "score": 43.8,
+      "kind": "vendor",
+      "variant": "BF16; Pro 61.2, Max 65.7",
+      "source": "https://huggingface.co/nex-agi/Nex-N2.5-mini"
+    },
+    {
+      "name": "DeepSWE v1.1",
+      "score": 36.1,
+      "kind": "vendor",
+      "variant": "BF16; Pro 55.8, Max 65.6",
+      "source": "https://huggingface.co/nex-agi/Nex-N2.5-mini"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "vendor Terminal-Bench 2.1 73.4 would equal Qwen3.8-27B (73.0 in another vendor table) at about 3B active"
+    ],
+    "weaknesses": [
+      "SWE-Bench Pro 43.8 is far below Qwen3.8-27B (61.7 in the Nanbeige table)",
+      "parameter count and active size not read from the card"
+    ],
+    "maturity": "885 likes but only 2.7k downloads; hosted on OpenRouter per the card"
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "A Qwen3.5-MoE-layout agent fine-tune with mixed vendor numbers (strong terminal, weak SWE-Pro). Same machinery as our reference MoE, so cheap to test; no reason to prefer it over Qwen3.8-27B or Qwen3.6-35B-A3B without our own run.",
+    "blockers": [
+      "vendor-only",
+      "licence text not read"
+    ]
+  },
+  "open_questions": [
+    "exact parameter and active counts",
+    "the column assignment of the card table was read from the HTML header order",
+    "independent evaluation"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/nex-agi/Nex-N2.5-mini",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README, config.json read"
+    },
+    {
+      "url": "https://huggingface.co/api/models/bartowski/nex-agi_Nex-N2.5-mini-GGUF?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "GGUF sizes"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

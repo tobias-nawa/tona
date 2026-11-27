@@ -1,0 +1,11 @@
+# Large files: builds, models, raw measurement data
+work/
+build/
+*.gguf
+__pycache__/
+bench/traces/*.jsonl
+.rocprofv3/
+.coverage
+
+# Personal agent instructions of a maintainer (not shared)
+CLAUDE.local.md

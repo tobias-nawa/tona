@@ -1,0 +1,160 @@
+{
+  "id": "flux3-image-klein",
+  "name": "FLUX 3 Image Klein",
+  "vendor": "Black Forest Labs",
+  "release_date": "2026-10-13",
+  "purpose": "Open-weights 5.6B image editing, text-to-image and multi-reference composition (up to 10 images) with bounding-box layout guidance; distilled checkpoint for editing, generation and self-hosting; a separate Klein Base is for fine-tuning.",
+  "tasks": [
+    "image-generation"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image"
+    ],
+    "output": [
+      "image"
+    ]
+  },
+  "license": {
+    "name": "FLUX Kommunity License v1.0",
+    "verified": true,
+    "commercial_use": "limited",
+    "redistribution": "limited",
+    "notes": "Text read in LICENSE.md of the unsloth GGUF repo (copy of the BFL file; the BFL repo is gated). 'Non-Commercial Purpose' covers personal, research and hobby use; commercial use only as 'Qualifying User' (\"gross annualized revenue is less than US$5,000,000\" together with affiliates), then with content filters or output review and AI disclosure; redistribution of weights and derivatives allowed with the license, an attribution notice and a modified-notice. Excluded: military, surveillance, biometric processing. Verdict policy (README, 2026-11-19): this licence term does not lower tona_fit; kept here for an installer label."
+  },
+  "architecture": {
+    "kind": "diffusion transformer, dense, separate text encoder Qwen3-VL-4B-Instruct (Apache-2.0)",
+    "params_total_b": 5.6
+  },
+  "variants": [
+    {
+      "repo": "black-forest-labs/flux-3-image-klein",
+      "format": "safetensors",
+      "official": true,
+      "notes": "gated; 16 steps, no guidance"
+    },
+    {
+      "repo": "unsloth/flux-3-image-klein-GGUF",
+      "format": "GGUF UD-Q4_K_XL",
+      "official": false,
+      "size_gb": 3.93,
+      "notes": "recommended by unsloth; Q4_K_M 3.67, Q5_K_M 4.22, Q6_K 4.80, Q8_0 6.09, UD-Q2_K_XL 2.62, BF16 11.10 GB; text encoder Qwen3-VL-4B-Instruct and VAE separate"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "Q4"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": " No seconds-per-image figure for RDNA3 or RDNA4 (or any AMD card) for this model found in web searches on 2026-11-19."
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "mflux lists it"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "mflux (MLX)",
+      "stable-diffusion.cpp (support not checked)"
+    ]
+  },
+  "soft": {
+    "weaknesses": [
+      "license limits commercial use of outputs for larger companies",
+      "gated download"
+    ],
+    "maturity": "Black Forest Labs",
+    "user_reports": [
+      {
+        "summary": "Launch-day community tests compared it with Krea 2, Qwen-Image 2.1 and FLUX.2 klein and pointed to anatomy errors and artifacts; one editing test found collateral changes beyond the requested edit; reviews are mostly launch-period SEO pages.",
+        "sentiment": "mixed",
+        "source": "https://aireiter.com/blog/flux-3-image-klein-review-tested",
+        "date": "2026-10"
+      }
+    ]
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "Newest BFL klein (5.6B, 16 steps, generation plus editing, multi-reference). Independent quality tests are still thin, so compare with z-image-turbo and qwen-image-2.1-turbo on our own prompts before choosing the default.",
+    "blockers": [
+      "Tona has no image engine"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/black-forest-labs/flux-3-image-klein",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "research/52-purpose-models.md",
+      "kind": "own",
+      "checked": "2026-11-19",
+      "note": "our research note 52, facts fetched 2026-11-15, not a measurement"
+    },
+    {
+      "url": "https://huggingface.co/unsloth/flux-3-image-klein-GGUF/raw/main/LICENSE.md",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "license text (copy of BFL file; BFL repo gated)"
+    },
+    {
+      "url": "https://huggingface.co/unsloth/flux-3-image-klein-GGUF",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "model card with LPIPS table; unsloth is the quantizer, not the vendor"
+    },
+    {
+      "url": "https://huggingface.co/api/models/black-forest-labs/flux-3-image-klein",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "createdAt 2026-10-13"
+    }
+  ],
+  "open_questions": [
+    "No independent quality benchmark found (vendor claims it beats Qwen-Image 2.1 in internal evals)",
+    "Seconds per image on any consumer GPU: not found; No seconds-per-image figure for RDNA3 or RDNA4 (or any AMD card) for this model found in web searches on 2026-11-19.",
+    "The BFL repo is gated; license text was read from the unsloth copy, confirm it is identical to the BFL file"
+  ],
+  "last_checked": "2026-11-19",
+  "benchmarks": [
+    {
+      "name": "LPIPS vs bf16 (mean, lower is better)",
+      "score": 0.038,
+      "kind": "independent",
+      "variant": "UD-Q4_K_XL; Q4_K_M 0.060, Q8_0 0.006, UD-Q2_K_XL 0.152; 16 steps, 19 renders (quantizer's own test)",
+      "source": "https://huggingface.co/unsloth/flux-3-image-klein-GGUF",
+      "harness": "unsloth",
+      "date": "2026-10-16"
+    }
+  ]
+}

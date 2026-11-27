@@ -1,0 +1,127 @@
+{
+  "id": "zonos2",
+  "name": "ZONOS2",
+  "vendor": "Zyphra",
+  "release_date": "2026",
+  "purpose": "Zyphra's earlier TTS model with strong voice cloning trained on over 6 million hours of multilingual speech (card).",
+  "tasks": [
+    "speech-synthesis"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "audio"
+    ],
+    "output": [
+      "audio"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en",
+      "zh",
+      "ja",
+      "de",
+      "fr",
+      "es",
+      "it",
+      "pt",
+      "ru",
+      "ko",
+      "many"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card metadata: apache-2.0; no LICENSE file in the HF repo and none found in the zonos2.cpp GitHub repo root. Canonical Apache-2.0 text read in the Qwen repo (canonical Apache-2.0 text read in https://github.com/QwenLM/Qwen3-ASR/blob/main/LICENSE); the per-repo declaration, not a repo file, is the evidence."
+  },
+  "architecture": {
+    "kind": "AUTOREGRESSIVE MoE backbone generating DAC tokens from NeMo-normalized text bytes + ECAPA-TDNN speaker embedding",
+    "params_total_b": 8,
+    "params_active_b": 0.9
+  },
+  "variants": [
+    {
+      "repo": "ZONOS2 GGUF",
+      "format": "GGUF Q4_K",
+      "size_gb": 4.92,
+      "official": false,
+      "notes": "size from research/52, not rechecked"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "unknown",
+    "other": [
+      "Mini-SGLang server (NVIDIA, Linux x86_64)",
+      "zonos2.cpp (CPU, Vulkan, Metal)"
+    ]
+  },
+  "soft": {
+    "strengths": [
+      "German Tier 2"
+    ],
+    "weaknesses": [
+      "Reference server is NVIDIA-only",
+      "No latency figures on the card"
+    ],
+    "maturity": "Zyphra."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Superseded by ZONOS3-Mini on size and language coverage; same license.",
+    "blockers": [
+      "no Tona audio module"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/Zyphra/ZONOS2",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "research/52-purpose-models.md",
+      "kind": "own",
+      "checked": "2026-11-19"
+    }
+  ],
+  "open_questions": [
+    "Total and active parameter counts (card gives none; 8B/0.9B from a secondary source in research/52)",
+    "Release date"
+  ],
+  "last_checked": "2026-11-19"
+}

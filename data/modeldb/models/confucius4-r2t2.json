@@ -1,0 +1,171 @@
+{
+  "id": "confucius4-r2t2",
+  "name": "Confucius4-R2T2",
+  "vendor": "NetEase Youdao",
+  "release_date": "2026-09-10",
+  "lineage": {
+    "base_model": "Qwen/Qwen3-ASR-1.7B",
+    "how_derived": "Longest Stable Prefix (LSP) learning on 1,500 hours of Chinese and English audio, SFT then GRPO; only the language decoder is updated, audio encoder and projector stay frozen (card)",
+    "family": "qwen3-asr"
+  },
+  "purpose": "Low-latency stable-prefix streaming ASR for real real-time transcription: chunks from 80 ms to 2 s, monotonic output that commits text permanently without revising earlier words, for applications that act on the text immediately (card).",
+  "tasks": [
+    "audio-transcription"
+  ],
+  "modalities": {
+    "input": [
+      "audio",
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "zh",
+      "en",
+      "de",
+      "ar"
+    ]
+  },
+  "license": {
+    "name": "NetEase Youdao Model Use License Agreement (code: Apache-2.0)",
+    "verified": true,
+    "commercial_use": "limited",
+    "redistribution": "limited",
+    "notes": "MODEL_LICENSE read (first 5 of 11k characters in detail): royalty-free limited license; users or affiliates with over 100 million monthly active users or over RMB 1 billion annual revenue must request a separate license that NetEase may grant at its sole discretion; downstream recipients must be bound to the same terms; derivative works (fine-tunes, quantizations, outputs-based models) are covered. Code repository is Apache-2.0. Verdict policy (README, 2026-11-19): this licence term does not lower tona_fit; kept here for an installer label."
+  },
+  "architecture": {
+    "kind": "Qwen3-ASR-1.7B (audio encoder plus Qwen3 decoder) with stable-prefix streaming decoding",
+    "params_total_b": 2.04,
+    "why_this_design": "Card: LSP learning teaches the decoder which prefix of its hypothesis is stable so that committed text is never revised; chunk size and the number of withheld provisional tokens (U) trade accuracy against emission lag without retraining."
+  },
+  "variants": [
+    {
+      "repo": "netease-youdao/Confucius4-R2T2",
+      "format": "safetensors BF16",
+      "size_gb": 4.09,
+      "official": true,
+      "notes": "card lists further backends (vLLM; llama.cpp route via the r2t2_llama package with separate audio encoder and decoder modes)"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "partial",
+    "other": [
+      "vLLM",
+      "r2t2_llama package (llama.cpp-based decoding routes)"
+    ],
+    "notes": "Qwen3-ASR architecture, shared with qwen3-asr-1.7b and rumble-2-flash records."
+  },
+  "benchmarks": [
+    {
+      "name": "English WER LibriSpeech test-clean, streaming 160 ms, U=1",
+      "score": 1.91,
+      "unit": "% WER",
+      "kind": "vendor",
+      "variant": "BF16 (base offline 1.62, base streaming 160 ms 18.37, Voxtral RT 3.05, Nemotron 3.5 3.71)",
+      "source": "https://huggingface.co/netease-youdao/Confucius4-R2T2",
+      "date": "2026-11-19"
+    },
+    {
+      "name": "English WER AMI, streaming 160 ms, U=1",
+      "score": 10.07,
+      "unit": "% WER",
+      "kind": "vendor",
+      "variant": "BF16 (Voxtral RT 17.58, Nemotron 3.5 18.11)",
+      "source": "https://huggingface.co/netease-youdao/Confucius4-R2T2"
+    },
+    {
+      "name": "German FLEURS WER, streaming 160 ms, U=1 (U=0 12.35)",
+      "score": 8.05,
+      "unit": "% WER",
+      "kind": "vendor",
+      "variant": "BF16; base offline 3.95, base streaming 160 ms 36.49 (language not in post-training)",
+      "source": "https://huggingface.co/netease-youdao/Confucius4-R2T2"
+    },
+    {
+      "name": "German MLS WER, streaming 160 ms, U=1",
+      "score": 9.52,
+      "unit": "% WER",
+      "kind": "vendor",
+      "variant": "BF16; base offline 6.99",
+      "source": "https://huggingface.co/netease-youdao/Confucius4-R2T2"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "At 160 ms chunks the English WER stays near the offline base model while other streaming models in the card table are much higher",
+      "German transfers from English/Chinese post-training: FLEURS 8.05% streaming versus 36.49% for the unmodified base at 160 ms",
+      "Hotword and context support"
+    ],
+    "weaknesses": [
+      "Post-training was Chinese and English only; German streaming WER (8.05% FLEURS) is about twice the offline base (3.95%)",
+      "Restrictive license for large companies",
+      "Vendor-only numbers, comparison rows include API products run by the builder"
+    ],
+    "best_for": [
+      "live dictation and real-time captions where committed text must not change"
+    ],
+    "maturity": "NetEase Youdao; paper arXiv 2611.06043 (not read); 39k downloads on the HF API."
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "Streaming dictation is a distinct use case from offline ASR and this is the only stable-prefix model seen in the sweep; German works but at a clear cost against offline. Qwen3-ASR backbone shared with other candidates.",
+    "blockers": [
+      "Qwen3-ASR architecture not in Tona",
+      "German quality only measured by the builder on FLEURS and MLS"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/netease-youdao/Confucius4-R2T2",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README read"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/netease-youdao/Confucius4-R2T2/refs/heads/master/MODEL_LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "model license read through section 3.4"
+    }
+  ],
+  "open_questions": [
+    "Paper arXiv 2611.06043 not read",
+    "Emission lag numbers for German",
+    "Remaining license clauses after section 3.4"
+  ],
+  "last_checked": "2026-11-19"
+}

@@ -1,0 +1,91 @@
+{
+  "id": "sarvam-105b-1711",
+  "name": "Sarvam-105B-1711",
+  "vendor": "Sarvam AI",
+  "release_date": "2026-11-15",
+  "lineage": {
+    "base_model": "sarvamai/sarvam-105b (same base model)",
+    "family": "Sarvam 105B",
+    "how_derived": "further post-training of Sarvam-105B for tool calling, instruction following, agentic tasks and Indian languages; this repo is the NVFP4 build of the BF16 checkpoint sarvam-105b-1711-bf16"
+  },
+  "purpose": "The builder says it improves Sarvam-105B on tool calling, instruction following, agentic tasks and Indian languages; its own benchmark suite is aimed at chat, tools, agents and Indic-language quality.",
+  "tasks": ["general", "research"],
+  "modalities": {"input": ["text"], "output": ["text"]},
+  "languages": {"natural": ["en", "hi", "many"]},
+  "license": {
+    "name": "Apache-2.0",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card tag apache-2.0 on both repos; no LICENSE file in the repo (404 on raw/main/LICENSE, 2026-11-19), so the text was not read."
+  },
+  "architecture": {
+    "kind": "MoE with multi-head latent attention (config model_type sarvam_mla)",
+    "gguf_arch": "unknown",
+    "params_total_b": 105,
+    "params_active_b": 10.3,
+    "layers": 32,
+    "attention": "MLA (latent attention), 64 heads, hidden 4096",
+    "recurrent": "none",
+    "experts": 128,
+    "experts_active": 8,
+    "context_native": 131072,
+    "context_max": 163840,
+    "drafter": "DSpark speculative decoding documented for vLLM (5 draft tokens)",
+    "why_this_design": "The card gives no architecture reasons; it gives vLLM hosting and DSpark throughput recipes only. Context 131,072 is the evaluated window, config max positions is 163,840."
+  },
+  "variants": [
+    {"repo": "sarvamai/sarvam-105b-1711", "format": "NVFP4 (and MXFP8 tag)", "size_gb": 70.19, "official": true, "notes": "NVFP4 is a Blackwell-native format; the card benchmarks it against BF16 (small loss)"},
+    {"repo": "sarvamai/sarvam-105b-1711-bf16", "format": "safetensors BF16", "size_gb": 218.26, "official": true}
+  ],
+  "hardware_fit": {
+    "pc-12gb": {"fits": "no", "basis": "estimate", "notes": "70 GB NVFP4 against 9.6 GB VRAM plus about 50 GB RAM; a 4-bit GGUF would be about 60 GB, borderline and slow"},
+    "pc-16gb": {"fits": "marginal", "basis": "estimate", "notes": "about 4-bit 105B needs roughly 60 to 70 GB; 13.6 GB VRAM + 50 GB RAM does not hold NVFP4 (70 GB); needs a smaller quant, none found"},
+    "pc-24gb": {"fits": "marginal", "basis": "estimate", "notes": "21.6 GB VRAM budget + about 70 GB RAM at 96 GB machines holds 70 GB, experts stream from RAM (10.3 B active makes decode RAM-bound)"},
+    "pc-32gb": {"fits": "yes", "basis": "estimate", "variant": "NVFP4", "notes": "29.6 GB VRAM budget + 128 GB RAM; NVFP4 needs a runtime that reads it (vLLM 0.33 per the card); on a non-NVIDIA GPU a GGUF requant is needed"},
+    "mac-16-24gb": {"fits": "no", "basis": "estimate"},
+    "mac-32gb": {"fits": "no", "basis": "estimate"},
+    "mac-64gb+": {"fits": "no", "basis": "estimate", "notes": "70 GB against about 52 GB GPU share; only a quant below 4 bits could fit a 64 GB Mac, larger Macs fit"}
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "unknown",
+    "other": ["vLLM 0.33.0 (documented)"],
+    "notes": "Custom MLA MoE architecture 'sarvam_mla'; no GGUF found; NVFP4 repo is for NVIDIA Blackwell stacks."
+  },
+  "benchmarks": [
+    {"name": "IFBench", "score": 82.5, "kind": "vendor", "variant": "BF16", "unit": "% prompt-level strict, 8 samples (Gemma-4-31B 77.8)", "source": "https://huggingface.co/sarvamai/sarvam-105b-1711"},
+    {"name": "τ²-Bench", "score": 85.5, "kind": "vendor", "variant": "BF16", "unit": "(Gemma-4-31B 81.1, GPT-5.6 Luna 79.5)", "source": "https://huggingface.co/sarvamai/sarvam-105b-1711"},
+    {"name": "BFCL v4", "score": 62.4, "kind": "vendor", "variant": "BF16", "unit": "(Gemma-4-31B 68.8)", "source": "https://huggingface.co/sarvamai/sarvam-105b-1711"},
+    {"name": "GPQA Diamond", "score": 80.4, "kind": "vendor", "variant": "BF16 (NVFP4 78.2)", "unit": "(Gemma-4-31B 84.3)", "source": "https://huggingface.co/sarvamai/sarvam-105b-1711"},
+    {"name": "LiveCodeBench v6", "score": 75.3, "kind": "vendor", "variant": "BF16 (NVFP4 74.7)", "unit": "(Gemma-4-31B 81.9)", "source": "https://huggingface.co/sarvamai/sarvam-105b-1711"},
+    {"name": "MMLU-Pro", "score": 85.2, "kind": "vendor", "variant": "BF16", "source": "https://huggingface.co/sarvamai/sarvam-105b-1711"},
+    {"name": "BrowseComp", "score": 41.4, "kind": "vendor", "variant": "BF16 (NVFP4 35.0)", "source": "https://huggingface.co/sarvamai/sarvam-105b-1711"},
+    {"name": "Indic Suite (internal)", "score": 79.1, "kind": "vendor", "variant": "BF16", "unit": "rubric score (Nemotron-Super-120B 39.5)", "source": "https://huggingface.co/sarvamai/sarvam-105b-1711"},
+    {"name": "Decode speed, one RTX PRO 6000 Blackwell (96 GB), 1 user, DSpark", "score": 61.8, "kind": "vendor", "unit": "tok/s (decode)", "variant": "NVFP4, 50k context", "source": "https://huggingface.co/sarvamai/sarvam-105b-1711"}
+  ],
+  "soft": {
+    "strengths": ["Instruction following and tool-calling scores at or above Gemma-4-31B in the builder's own runs", "Strong Indian-language quality against Western open models (vendor suite)", "Vendor evaluation is documented in detail: same harness and settings for all models, grader and judge named"],
+    "weaknesses": ["Behind Gemma-4-31B on coding, math and BrowseComp in the vendor table", "NVFP4 loses visibly on BrowseComp (35.0 against 41.4)", "All numbers are the builder's own runs, with an internal Indic suite and LLM judges"],
+    "behavior": "Thinking on by default (temperature 1.0 recommended with thinking, 0.6 without); thinking can be turned off per request with chat_template_kwargs.",
+    "best_for": ["Indian-language assistants and tool-calling agents on a workstation class machine"],
+    "avoid_for": ["16 GB GPU machines without a smaller quant"],
+    "maturity": "Sarvam AI is an Indian lab shipping the 105B and a 30B class; the repo is four days old (327 downloads of the BF16 repo), no discussions."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "105B-A10B with 128 GB of RAM fits only the biggest class, and the strength is Indic languages and tool calling, not coding. The MLA MoE architecture would be new work for Tona. No smaller quant exists yet.",
+    "blockers": ["70 GB smallest official file", "new architecture sarvam_mla", "license file missing"]
+  },
+  "sources": [
+    {"url": "https://huggingface.co/sarvamai/sarvam-105b-1711", "kind": "primary", "checked": "2026-11-19", "note": "README and config.json read"},
+    {"url": "https://huggingface.co/sarvamai/sarvam-105b-1711-bf16", "kind": "primary", "checked": "2026-11-19", "note": "size via the HF API"}
+  ],
+  "open_questions": [
+    "GGUF or other quants for non-NVIDIA GPUs",
+    "Independent coding or agent evaluation",
+    "License text and the base model sarvam-105b release date",
+    "How MLA and 128 experts are laid out compared with 'sarvam-105b' (the earlier release)"
+  ],
+  "last_checked": "2026-11-19"
+}

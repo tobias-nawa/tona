@@ -1,0 +1,24 @@
+{"pair": 0, "target": 30000, "pressured": false, "decode": 70.5092977959854, "evicted_ms": 32, "error": null}
+{"pair": 0, "target": 130000, "pressured": false, "decode": 67.06094642690539, "evicted_ms": 0, "error": null}
+{"pair": 1, "target": 30000, "pressured": true, "decode": 64.98169801684698, "evicted_ms": 0, "error": null}
+{"pair": 1, "target": 130000, "pressured": true, "decode": 58.080151373229846, "evicted_ms": 7, "error": null}
+{"pair": 2, "target": 30000, "pressured": false, "decode": 69.62541084753903, "evicted_ms": 0, "error": null}
+{"pair": 2, "target": 130000, "pressured": false, "decode": 61.291129990448994, "evicted_ms": 0, "error": null}
+{"pair": 3, "target": 30000, "pressured": true, "decode": 66.11447087056264, "evicted_ms": 56, "error": null}
+{"pair": 3, "target": 130000, "pressured": true, "decode": 61.83412171488126, "evicted_ms": 17, "error": null}
+{"pair": 4, "target": 30000, "pressured": false, "decode": 70.21427342129611, "evicted_ms": 0, "error": null}
+{"pair": 4, "target": 130000, "pressured": false, "decode": 70.2897992119379, "evicted_ms": 0, "error": null}
+{"pair": 5, "target": 30000, "pressured": true, "decode": 65.03748933071775, "evicted_ms": 9, "error": null}
+{"pair": 5, "target": 130000, "pressured": true, "decode": 62.845848836830775, "evicted_ms": 33, "error": null}
+{"pair": 6, "target": 30000, "pressured": false, "decode": 70.1977659442354, "evicted_ms": 0, "error": null}
+{"pair": 6, "target": 130000, "pressured": false, "decode": 69.3658346729723, "evicted_ms": 0, "error": null}
+{"pair": 7, "target": 30000, "pressured": true, "decode": 69.45220100129822, "evicted_ms": 884, "error": null}
+{"pair": 7, "target": 130000, "pressured": true, "decode": 62.92009082336417, "evicted_ms": 56, "error": null}
+{"pair": 8, "target": 30000, "pressured": false, "decode": 73.09490242264893, "evicted_ms": 41, "error": null}
+{"pair": 8, "target": 130000, "pressured": false, "decode": 68.82216624605742, "evicted_ms": 0, "error": null}
+{"pair": 9, "target": 30000, "pressured": true, "decode": 62.71705657915619, "evicted_ms": 48, "error": null}
+{"pair": 9, "target": 130000, "pressured": true, "decode": 61.84396151739334, "evicted_ms": 152, "error": null}
+ok    no failed request
+ok    slow decodes (below 55 tok/s) at most 3 of 10 pressured
+ok    evicted time 1.3 s below 5 s in the pressured requests
+ok    longest eviction episode 0.8 s below 3 s

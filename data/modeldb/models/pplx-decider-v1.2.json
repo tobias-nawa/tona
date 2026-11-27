@@ -1,0 +1,169 @@
+{
+  "id": "pplx-decider-v1.2",
+  "name": "pplx-decider-v1.2 (27B decision model; also flash)",
+  "vendor": "Perplexity",
+  "release_date": "2026-10-15",
+  "lineage": {
+    "base_model": "Qwen/Qwen3.8-27B",
+    "how_derived": "decision-model fine-tune; v1.2 reads a state plus several questions in one sequence with one readout per question; trained on a reworked data mix including decontaminated Decision Index training splits; checkpoints combined by model souping (card)",
+    "family": "pplx-decider (v1-27b, v1.1-27b, v1.2, flash v1.2, GGUF flash)"
+  },
+  "purpose": "Decision model: answers multiple-choice style questions about a state (text or image up to 1.6 MP) with one forward pass instead of generating text, so that routing, tool and retrieval decisions are cheap (card).",
+  "tasks": [
+    "other"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image"
+    ],
+    "output": [
+      "embedding"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0 (card tag)",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card tag; a LICENSE file exists in the repo (not read)."
+  },
+  "architecture": {
+    "kind": "Qwen3.5-architecture hybrid backbone (Qwen3_5Model, full-attention interval 4, hidden 5120) used as a classifier with per-question readout markers",
+    "params_total_b": 27.0
+  },
+  "variants": [
+    {
+      "repo": "perplexity-ai/pplx-decider-v1.2",
+      "format": "safetensors BF16",
+      "official": true,
+      "size_gb": 52.19,
+      "notes": "repo total per HF API; 6.1k downloads, 81 likes"
+    },
+    {
+      "repo": "perplexity-ai/pplx-decider-flash-v1.2",
+      "format": "smaller 'flash' version",
+      "official": true,
+      "notes": "7.4k downloads; size not checked"
+    },
+    {
+      "repo": "perplexity-ai/pplx-decider-flash-gguf-v1.2",
+      "format": "GGUF",
+      "official": true,
+      "notes": "12.4k downloads; size not checked"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "marginal",
+      "variant": "BF16 (the flash GGUF is the practical local option)",
+      "basis": "estimate",
+      "notes": "52.2 GB file against 9.6 GB VRAM plus 50 GB RAM budget; part streams from RAM (dense: decode is bandwidth bound)"
+    },
+    "pc-16gb": {
+      "fits": "marginal",
+      "variant": "BF16 (the flash GGUF is the practical local option)",
+      "basis": "estimate",
+      "notes": "52.2 GB file against 13.6 GB VRAM plus 50 GB RAM budget; part streams from RAM (dense: decode is bandwidth bound)"
+    },
+    "pc-24gb": {
+      "fits": "marginal",
+      "variant": "BF16 (the flash GGUF is the practical local option)",
+      "basis": "estimate",
+      "notes": "52.2 GB file against 21.6 GB VRAM plus 82 GB RAM budget; part streams from RAM (dense: decode is bandwidth bound)"
+    },
+    "pc-32gb": {
+      "fits": "marginal",
+      "variant": "BF16 (the flash GGUF is the practical local option)",
+      "basis": "estimate",
+      "notes": "52.2 GB file against 29.6 GB VRAM plus 114 GB RAM budget; part streams from RAM (dense: decode is bandwidth bound)"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "BF16 (the flash GGUF is the practical local option)",
+      "basis": "estimate",
+      "notes": "52.2 GB file against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "no",
+      "variant": "BF16 (the flash GGUF is the practical local option)",
+      "basis": "estimate",
+      "notes": "52.2 GB file against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "no",
+      "variant": "BF16 (the flash GGUF is the practical local option)",
+      "basis": "estimate",
+      "notes": "52.2 GB file against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "vLLM /v1/systemone endpoint"
+    ],
+    "notes": "llama.cpp b11447 'models: support pplx-decider' (2026-10-06)."
+  },
+  "benchmarks": [
+    {
+      "name": "Decision Index 0.3 overall",
+      "score": 68.09,
+      "kind": "vendor",
+      "source": "https://huggingface.co/perplexity-ai/pplx-decider-v1.2",
+      "unit": "score",
+      "variant": "joint requests",
+      "harness": "v1.1-27b: 62.30; one question per request 67.75; the card says the training mix now includes official training splits of several Decision Index benchmarks (decontaminated)"
+    },
+    {
+      "name": "Vision Decision Index 0.3 overall",
+      "score": 77.43,
+      "kind": "vendor",
+      "source": "https://huggingface.co/perplexity-ai/pplx-decider-v1.2",
+      "unit": "score",
+      "variant": "v1.2 (v1.1: 73.22)"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "one pass for several questions about the same state",
+      "image input"
+    ],
+    "weaknesses": [
+      "52 GB BF16; the flash variants are the small option",
+      "benchmark partly in-domain after training on public splits (card says so)"
+    ],
+    "maturity": "Perplexity; v1 in October, v1.2 within three weeks; llama.cpp and vLLM support landed quickly."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Part of a new family of decision models (Liquid d1, Cloudflare Clef, Granite Switch Decision, CLM) that llama.cpp and vLLM now support natively. Potentially useful as a router or tool-choice head in agent loops; too specialised to offer as a worker model today.",
+    "blockers": [
+      "needs a decision-model API in the server"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/perplexity-ai/pplx-decider-v1.2",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README, config, HF API"
+    },
+    {
+      "url": "https://github.com/ggml-org/llama.cpp/releases",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "b11447"
+    }
+  ],
+  "open_questions": [
+    "Flash model sizes and quality",
+    "Independent results beyond the vendor's Decision Index"
+  ],
+  "last_checked": "2026-11-19"
+}

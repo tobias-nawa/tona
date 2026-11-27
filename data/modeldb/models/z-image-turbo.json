@@ -1,0 +1,236 @@
+{
+  "id": "z-image-turbo",
+  "name": "Z-Image-Turbo",
+  "vendor": "Tongyi-MAI (Alibaba Tongyi)",
+  "release_date": "2025-11-25",
+  "lineage": {
+    "family": "Z-Image",
+    "how_derived": "distilled from Z-Image with Decoupled-DMD and DMDR (RL regularized by distribution matching), as the card states"
+  },
+  "purpose": "Fast distilled text-to-image model for photorealistic images, bilingual (Chinese/English) text rendering and instruction adherence on consumer GPUs. The undistilled Z-Image is meant for fine-tuning and downstream development.",
+  "tasks": [
+    "image-generation"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "image"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en",
+      "zh"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Apache License 2.0 text read in the Z-Image GitHub repository LICENSE (repo-level, covers the Turbo weights as the card tags apache-2.0); the HF repo itself has no LICENSE file. HF API createdAt 2025-11-25."
+  },
+  "architecture": {
+    "kind": "single-stream diffusion transformer (S3-DiT), dense",
+    "params_total_b": 6,
+    "why_this_design": "Single stream: text, visual semantic tokens and VAE tokens are concatenated into one sequence, which the authors say maximizes parameter efficiency versus dual-stream designs. 8 NFEs via Decoupled-DMD plus RL (DMDR) for alignment and aesthetics."
+  },
+  "variants": [
+    {
+      "repo": "Tongyi-MAI/Z-Image-Turbo",
+      "format": "safetensors BF16",
+      "size_gb": 12.3,
+      "official": true,
+      "notes": "size from research/52 (unsloth tree)"
+    },
+    {
+      "repo": "unsloth GGUF of Z-Image-Turbo",
+      "format": "GGUF Q4_K_M",
+      "size_gb": 3.85,
+      "official": false,
+      "notes": "size from research/52; text encoder is separate"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "Q4_K_M 3.85 GB plus text encoder and VAE"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "card: fits comfortably in 16 GB; beside the coder only after the coder releases VRAM. Independent: a 12 GB RTX 4070 runs it at 1024px but hit memory errors at 2048x2048 (ascii.jp 2025-12-12). No seconds-per-image figure for RDNA3 or RDNA4 (or any AMD card) for this model found in web searches on 2026-11-19."
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "BF16 fits"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "BF16 fits"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "GGUF or MLX (mflux lists Z-Image)"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": ""
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "stable-diffusion.cpp (GGUF, ROCm/HIP and Metal builds)",
+      "ComfyUI",
+      "diffusers",
+      "mflux (MLX)"
+    ],
+    "notes": "Tona has no image path; plan in research/52 is stable-diffusion.cpp as a separate backend (one model at a time). No seconds-per-image was measured on gfx1200 yet."
+  },
+  "benchmarks": [
+    {
+      "name": "Elo human preference (Alibaba AI Arena)",
+      "score": "state of the art among open-source models (no number on card)",
+      "kind": "vendor",
+      "variant": "BF16",
+      "source": "https://huggingface.co/Tongyi-MAI/Z-Image-Turbo"
+    },
+    {
+      "name": "Seconds per image, BF16, no compile",
+      "score": 12.1,
+      "kind": "independent",
+      "variant": "GB10 (DGX Spark class, not a consumer GPU), 1024x1024, 9 steps, average of last 5 runs",
+      "source": "https://forums.developer.nvidia.com/t/image-diffusion-speeds/369095",
+      "unit": "s",
+      "harness": "diffusers",
+      "date": "2026-05-05"
+    },
+    {
+      "name": "Seconds per image, BF16, compiled",
+      "score": 8.1,
+      "kind": "independent",
+      "variant": "GB10, 1024x1024, 9 steps",
+      "source": "https://forums.developer.nvidia.com/t/image-diffusion-speeds/369095",
+      "unit": "s",
+      "harness": "diffusers",
+      "date": "2026-05-05"
+    },
+    {
+      "name": "Seconds per image, GGUF Q8_0, compiled",
+      "score": 9.1,
+      "kind": "independent",
+      "variant": "GB10, 1024x1024, 9 steps",
+      "source": "https://forums.developer.nvidia.com/t/image-diffusion-speeds/369095",
+      "unit": "s",
+      "date": "2026-05-05"
+    },
+    {
+      "name": "Seconds per image (portrait, anime, billboard prompts)",
+      "score": "16.2 to 18.2",
+      "kind": "independent",
+      "variant": "GeForce RTX 4070 12 GB; steps and resolution not stated for these runs; 2048x2048 took 78.3 s",
+      "source": "https://weekly.ascii.jp/elem/000/004/358/4358055/3/",
+      "unit": "s",
+      "date": "2025-12-12"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "8 steps, guidance_scale 0 (no CFG pass)",
+      "bilingual text rendering",
+      "Apache-2.0"
+    ],
+    "weaknesses": [
+      "card rates output diversity as Low",
+      "no negative prompts or fine-tuning support on Turbo (card table)",
+      "no editing: Z-Image-Edit and Omni-Base were 'to be released' on the card"
+    ],
+    "best_for": [
+      "fast local text-to-image, posters with Chinese or English text"
+    ],
+    "avoid_for": [
+      "editing existing images",
+      "fine-tuning (use Z-Image base)"
+    ],
+    "maturity": "Alibaba Tongyi lab with several image releases; papers Nov 2025.",
+    "user_reports": [
+      {
+        "summary": "LoRA training on the Turbo checkpoint suffers from 'Turbo drift' (updates undo the distillation); guides advise training on Z-Image base and applying the LoRA to Turbo. Negative prompts have no effect.",
+        "sentiment": "mixed",
+        "source": "https://huggingface.co/Tongyi-MAI/Z-Image/discussions/18",
+        "date": "2026-01"
+      }
+    ]
+  },
+  "tona_fit": {
+    "verdict": "offer",
+    "reason": "Small (6B, 8 steps, no CFG), Apache-2.0 verified, strong photoreal and bilingual text, fits 12 to 16 GB; first image model for the 16 GB class. Plain generation only (no edit); FLUX.2 klein 4B is the editing alternative.",
+    "blockers": [
+      "Tona has no image engine; stable-diffusion.cpp or a diffusers sidecar",
+      "no measured speed on gfx1200"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/Tongyi-MAI/Z-Image-Turbo",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "research/52-purpose-models.md",
+      "kind": "own",
+      "checked": "2026-11-19",
+      "note": "our research note 52, facts fetched 2026-11-15, not a measurement"
+    },
+    {
+      "url": "https://github.com/leejet/stable-diffusion.cpp",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "engine list as recorded in research/52"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Tongyi-MAI/Z-Image/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "license text, read through a summarizer"
+    },
+    {
+      "url": "https://huggingface.co/api/models/Tongyi-MAI/Z-Image-Turbo",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "createdAt 2025-11-25"
+    },
+    {
+      "url": "https://forums.developer.nvidia.com/t/image-diffusion-speeds/369095",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "user measurements on a DGX Spark class GB10; read through a summarizer"
+    },
+    {
+      "url": "https://weekly.ascii.jp/elem/000/004/358/4358055/3/",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "Japanese review, RTX 4070 12 GB timings; read through a summarizer"
+    }
+  ],
+  "open_questions": [
+    "Seconds per image on gfx1200 (own run with stable-diffusion.cpp ROCm); No seconds-per-image figure for RDNA3 or RDNA4 (or any AMD card) for this model found in web searches on 2026-11-19.",
+    "Has Z-Image-Edit been released since the card was read?",
+    "Release date of the Turbo weights: HF createdAt is 2025-11-25, paper dates are Nov 2025"
+  ],
+  "last_checked": "2026-11-19"
+}

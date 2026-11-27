@@ -1,0 +1,46 @@
+ie-server on http://127.0.0.1:8097 (Anthropic: /v1/messages, OpenAI: /v1/chat/completions), without key, loading ...
+Initialization: 512 MTP experts as Q2_0, converted on the GPU (708 MB) in 0.9 s
+loaded in 19.7 s: context 140000 (KV int8 1.94 GB in RAM), VRAM 14.45 GB, 84 expert slots per layer, 27.4 GB pinned
+02:03:41 POST /v1/messages/count_tokens → 200
+02:03:41 POST /v1/messages/count_tokens → 200
+02:03:42 POST /v1/messages/count_tokens → 200
+02:03:42 POST /v1/messages/count_tokens → 200
+02:03:42 POST /v1/messages/count_tokens → 200
+02:03:42 POST /v1/messages/count_tokens → 200
+02:03:42 POST /v1/messages/count_tokens → 200
+02:03:42 POST /v1/messages/count_tokens → 200
+02:03:42 POST /v1/messages/count_tokens → 200
+02:03:42 POST /v1/messages/count_tokens → 200
+02:03:42 POST /v1/messages/count_tokens → 200
+02:03:42 POST /v1/messages/count_tokens → 200
+02:03:49 Request: 1934 prompt tokens (0 reused, 1934 computed in 1.5 s, new conversation (stashing 0 ms), slot 0), 361 tokens in 5.5 s = 65.9 tok/s, 2.98 tokens per pass, 0 of 122 passes from the history (0.00 per pass)
+02:03:49 POST /v1/chat/completions → 200
+02:03:49 POST /v1/messages/count_tokens → 200
+02:03:49 POST /v1/messages/count_tokens → 200
+02:03:49 POST /v1/messages/count_tokens → 200
+02:03:49 POST /v1/messages/count_tokens → 200
+02:03:49 POST /v1/messages/count_tokens → 200
+02:03:49 POST /v1/messages/count_tokens → 200
+02:03:49 POST /v1/messages/count_tokens → 200
+02:03:49 POST /v1/messages/count_tokens → 200
+02:03:49 POST /v1/messages/count_tokens → 200
+02:03:49 POST /v1/messages/count_tokens → 200
+02:03:49 POST /v1/messages/count_tokens → 200
+02:03:54 Request: 1816 prompt tokens (0 reused, 1816 computed in 1.4 s, new conversation (stashing 0 ms), slot 1), 400 tokens in 3.4 s = 117.2 tok/s, 7.82 tokens per pass, 48 of 51 passes from the history (8.00 per pass)
+02:03:54 POST /v1/chat/completions → 200
+02:03:54 POST /v1/messages/count_tokens → 200
+02:03:54 POST /v1/messages/count_tokens → 200
+02:03:54 POST /v1/messages/count_tokens → 200
+02:03:54 POST /v1/messages/count_tokens → 200
+02:03:54 POST /v1/messages/count_tokens → 200
+02:03:54 POST /v1/messages/count_tokens → 200
+02:03:54 POST /v1/messages/count_tokens → 200
+02:03:54 POST /v1/messages/count_tokens → 200
+02:03:54 POST /v1/messages/count_tokens → 200
+02:03:54 POST /v1/messages/count_tokens → 200
+02:03:54 POST /v1/messages/count_tokens → 200
+02:03:54 POST /v1/messages/count_tokens → 200
+Conversation of 1934 tokens stashed: 181 MB (state 149, KV 29, pool 3, drafter 0) in 0.03 s
+Conversation of 29614 tokens stashed: 642 MB (state 149, KV 443, pool 49, drafter 0) in 0.09 s
+02:04:14 Request: 29642 prompt tokens (0 reused, 29642 computed in 16.9 s, new conversation (stashing 113 ms), checkpoint at 29614 (before the fixed end), slot 0), 200 tokens in 2.9 s = 69.2 tok/s, 3.12 tokens per pass, 0 of 64 passes from the history (0.00 per pass)
+02:04:14 POST /v1/chat/completions → 200

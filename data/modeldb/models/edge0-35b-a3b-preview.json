@@ -1,0 +1,190 @@
+{
+  "id": "edge0-35b-a3b-preview",
+  "name": "Edge0-35B-A3B Preview",
+  "vendor": "Edge0",
+  "release_date": "2026-09-08",
+  "lineage": {
+    "family": "Edge0",
+    "base_model": "Qwen/Qwen3.6-35B-A3B",
+    "how_derived": "int4 quantization with Recover-LoRA (distillation from the FP teacher) plus a trained prerouter head that predicts expert routing one step ahead; adapters stay unmerged"
+  },
+  "purpose": "Run a 35B-class MoE in phone-class memory (under 3 GiB active): expert weights stay on storage and are streamed on demand by the edge0 inference framework (native engines for iOS, macOS, Android, Windows) (card).",
+  "tasks": [
+    "general",
+    "coding"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0 (card tag)",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card tag apache-2.0; the repo has no LICENSE file, text not read. Base Qwen3.6-35B-A3B is Apache-2.0 in our database."
+  },
+  "architecture": {
+    "kind": "hybrid Gated-DeltaNet plus full attention MoE (Qwen3.6-35B-A3B)",
+    "gguf_arch": "qwen35moe",
+    "params_total_b": 35,
+    "params_active_b": 3,
+    "layers": 40,
+    "attention": "hybrid GDN / full attention",
+    "recurrent": "Gated DeltaNet",
+    "experts": 256,
+    "experts_active": 8,
+    "drafter": "prerouter head (predicts expert routing, not tokens)",
+    "why_this_design": "SSD expert offload keeps only active weights in RAM; the prerouter overlaps expert loads with the forward pass (up to +59 percent decode throughput, grows with storage latency); Recover-LoRA recovers int4 quality (card)."
+  },
+  "variants": [
+    {
+      "repo": "Edge0/Edge0-35B-A3B-preview",
+      "format": "MLX int4 (affine, group 64) plus LoRA and prerouter adapters",
+      "size_gb": 19.74,
+      "official": true,
+      "notes": "larger siblings Edge0-120B and Edge0-145B (NVFP4, q3k) and an 8B-A1B preview exist; not examined"
+    },
+    {
+      "repo": "Edge0/Edge0-8B-A1B-preview",
+      "format": "int4 plus LoRA and prerouter adapters (edge0 engine)",
+      "size_gb": 4.6,
+      "official": true,
+      "notes": "8B-class MoE, vendor claims under 1 GiB active memory and 25 tok/s; 2.9k downloads, 118 likes; card not read beyond the header"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "marginal",
+      "variant": "MLX int4 on SSD offload",
+      "basis": "estimate",
+      "notes": "19.74 GB file against 9.6 GB VRAM plus 50 GB RAM budget; experts stream from RAM (~3 B active, decode bound by RAM bandwidth)"
+    },
+    "pc-16gb": {
+      "fits": "marginal",
+      "variant": "MLX int4 on SSD offload",
+      "basis": "estimate",
+      "notes": "19.74 GB file against 13.6 GB VRAM plus 50 GB RAM budget; experts stream from RAM (~3 B active, decode bound by RAM bandwidth)"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "MLX int4 on SSD offload",
+      "basis": "estimate",
+      "notes": "19.74 GB file fits the VRAM budget (21.6 GB) with room for KV"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "MLX int4 on SSD offload",
+      "basis": "estimate",
+      "notes": "19.74 GB file fits the VRAM budget (29.6 GB) with room for KV"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "variant": "edge0 engine, SSD expert streaming",
+      "basis": "estimate",
+      "notes": "vendor-measured (not ours) 14.9-17.7 tok/s decode and 113/140 tok/s prefill (cold/warm) on a Mac mini M4 Pro 24 GB at 2.9 GiB peak active memory, short context"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "MLX int4 on SSD offload",
+      "basis": "estimate",
+      "notes": "19.74 GB file against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "MLX int4 on SSD offload",
+      "basis": "estimate",
+      "notes": "19.74 GB file against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "edge0 native engines (open source, iOS, macOS, Android, Windows)",
+      "MLX"
+    ],
+    "notes": "Only runs on the vendor's engine with its adapters."
+  },
+  "benchmarks": [
+    {
+      "name": "AIME 2026",
+      "score": 86.6,
+      "kind": "vendor",
+      "variant": "int4 + adapters; Qwen3.6-35B-A3B fp16 92.7; run by the vendor with OpenCompass",
+      "source": "https://huggingface.co/Edge0/Edge0-35B-A3B-preview"
+    },
+    {
+      "name": "HumanEval",
+      "score": 90.9,
+      "kind": "vendor",
+      "variant": "int4 + adapters; fp16 95.1",
+      "source": "https://huggingface.co/Edge0/Edge0-35B-A3B-preview"
+    },
+    {
+      "name": "GPQA Diamond",
+      "score": 79.8,
+      "kind": "vendor",
+      "variant": "int4 + adapters; fp16 81.8",
+      "source": "https://huggingface.co/Edge0/Edge0-35B-A3B-preview"
+    },
+    {
+      "name": "MMLU-Pro",
+      "score": 81.0,
+      "kind": "vendor",
+      "variant": "int4 + adapters; fp16 84.6",
+      "source": "https://huggingface.co/Edge0/Edge0-35B-A3B-preview"
+    },
+    {
+      "name": "average of five",
+      "score": 79.2,
+      "kind": "vendor",
+      "variant": "int4 + adapters; fp16 83.2 (3.9 points lost)",
+      "source": "https://huggingface.co/Edge0/Edge0-35B-A3B-preview"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "35B-class quality in about 3 GiB resident memory on a Mac mini",
+      "the prerouter idea (predict next-step experts to hide SSD latency) is directly relevant to our expert streaming"
+    ],
+    "weaknesses": [
+      "4 points average loss against fp16",
+      "15 tok/s decode on an M4 Pro, short contexts only",
+      "preview; runs only on the vendor engine"
+    ],
+    "maturity": "1.1k likes, 6k downloads; an accompanying paper is tagged (arXiv 2609.18063, not read)"
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "As a model it is a lossy Qwen3.6-35B-A3B; the interest is the technique (learned prerouter plus Recover-LoRA for SSD-streamed experts), which maps to our Mac and low-RAM paths. Base is older than Qwen3.8-27B.",
+    "blockers": [
+      "weights only usable with the vendor engine",
+      "paper not read"
+    ]
+  },
+  "open_questions": [
+    "paper details: prerouter accuracy and cost",
+    "whether the prerouter head can be trained for other MoE models",
+    "independent speed and quality reproduction",
+    "licence text"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/Edge0/Edge0-35B-A3B-preview",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README, config.json read"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

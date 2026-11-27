@@ -1,0 +1,6 @@
+OpenSSL 3 is linked statically into tona on macOS (the installer checks the signature of a release and fetches
+files over HTTPS with it). Copyright (c) The OpenSSL Project Authors.
+
+OpenSSL 3 is licensed under the Apache License, Version 2.0, <https://www.openssl.org/source/license.html>. The text of
+that license is the Apache-2.0 part of the license printed with the LLVM OpenMP runtime in this file (the "LLVM
+Exceptions" at its end are an addition of the LLVM project and do not apply to OpenSSL).

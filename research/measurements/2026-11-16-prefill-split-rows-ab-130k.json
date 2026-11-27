@@ -1,0 +1,195 @@
+{
+  "config": {
+    "A": {
+      "build": "<worktree>/work/build/w7",
+      "env": {
+        "TONA_DETERMINISTIC": "1",
+        "TONA_PF_SPLIT_ROWS": "0"
+      },
+      "tooling": {
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0",
+        "TONA_DETERMINISTIC": "1",
+        "TONA_EXPERT_PROFILE": "<repo>/work/profile/experts-coder.bin",
+        "TONA_PF_SPLIT_ROWS": "0"
+      },
+      "commit": "v0.0.2-956-gf8aadec8c9-dirty",
+      "model": "<repo>/work/models/coder-iq1_m/Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf",
+      "drafter": "<repo>/work/models/draft/mtp-Qwen3.8-Flash-Next-Q8_0.gguf"
+    },
+    "B": {
+      "build": "<worktree>/work/build/w7",
+      "env": {
+        "TONA_DETERMINISTIC": "1"
+      },
+      "tooling": {
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0",
+        "TONA_DETERMINISTIC": "1",
+        "TONA_EXPERT_PROFILE": "<repo>/work/profile/experts-coder.bin"
+      },
+      "commit": "v0.0.2-956-gf8aadec8c9-dirty",
+      "model": "<repo>/work/models/coder-iq1_m/Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf",
+      "drafter": "<repo>/work/models/draft/mtp-Qwen3.8-Flash-Next-Q8_0.gguf"
+    },
+    "workload": "long",
+    "targets": "130000:200 at --ctx 140000",
+    "deterministic": true,
+    "plan_info": {
+      "expect": [
+        [
+          "prefill@130000",
+          0.1,
+          1.5
+        ],
+        [
+          "decode",
+          -0.5,
+          0.5
+        ]
+      ],
+      "source": "research/measurements/2026-11-16-prefill-idle-gaps.md: the four split kernels precede about 3,000 of the 9,658 gaps of 280 us at 130K (0.85 s of 72 s)",
+      "workload": "long",
+      "targets": "130000:200 at --ctx 140000",
+      "primary": "prefill",
+      "why_size": "the shortest runs that show the effect: 130000 tokens, gaps are 4 % of the window",
+      "decode_tokens": 200,
+      "noise": {
+        "prefill@130000": [
+          0.018,
+          9,
+          "research/measurements/2026-11-02-ab-tool.md: first A/A run (rounds 2-6; round 1 had no warm-up); second A/A run with warm-up (6 rounds)"
+        ],
+        "decode@130000": [
+          0.42,
+          9,
+          "research/measurements/2026-11-02-ab-tool.md: first A/A run (rounds 2-6; round 1 had no warm-up); second A/A run with warm-up (6 rounds)"
+        ]
+      },
+      "warmup": true,
+      "round_warmup": false,
+      "load_log": false,
+      "A": {
+        "build": "<worktree>/work/build/w7",
+        "env": {
+          "TONA_DETERMINISTIC": "1",
+          "TONA_PF_SPLIT_ROWS": "0"
+        },
+        "tooling": {
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0",
+          "TONA_DETERMINISTIC": "1",
+          "TONA_EXPERT_PROFILE": "<repo>/work/profile/experts-coder.bin",
+          "TONA_PF_SPLIT_ROWS": "0"
+        },
+        "commit": "v0.0.2-956-gf8aadec8c9-dirty",
+        "model": "<repo>/work/models/coder-iq1_m/Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf",
+        "drafter": "<repo>/work/models/draft/mtp-Qwen3.8-Flash-Next-Q8_0.gguf"
+      },
+      "B": {
+        "build": "<worktree>/work/build/w7",
+        "env": {
+          "TONA_DETERMINISTIC": "1"
+        },
+        "tooling": {
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0",
+          "TONA_DETERMINISTIC": "1",
+          "TONA_EXPERT_PROFILE": "<repo>/work/profile/experts-coder.bin"
+        },
+        "commit": "v0.0.2-956-gf8aadec8c9-dirty",
+        "model": "<repo>/work/models/coder-iq1_m/Qwen3.8-Flash-Next-GSQ-RCO-IQ1_M-00001-of-00002.gguf",
+        "drafter": "<repo>/work/models/draft/mtp-Qwen3.8-Flash-Next-Q8_0.gguf"
+      }
+    },
+    "reference_sha": {
+      "30000": "ee58880d3f5b558f",
+      "130000": "7d2996546076d1b0"
+    },
+    "corpus_sha256": "e13a800340859f7d39c63712d90383faae7e5a47c3865f0811e40d912612d38e",
+    "corpus_is_reference": true,
+    "commit": "951600b",
+    "noise": {
+      "prefill@130000": [
+        0.018,
+        9
+      ],
+      "decode@130000": [
+        0.42,
+        9
+      ]
+    }
+  },
+  "rounds": [
+    {
+      "order": "AB",
+      "sha": {
+        "A": {
+          "130000": "7d2996546076d1b0"
+        },
+        "B": {
+          "130000": "7d2996546076d1b0"
+        }
+      },
+      "A": {
+        "prefill@130000": 1866.2902839670473,
+        "decode@130000": 64.65962245902095
+      },
+      "counters": {
+        "A": {
+          "130000": {
+            "expert_hits": 75832,
+            "expert_misses": 8119
+          }
+        },
+        "B": {
+          "130000": {
+            "expert_hits": 75832,
+            "expert_misses": 8119
+          }
+        }
+      },
+      "B": {
+        "prefill@130000": 1885.7568646933232,
+        "decode@130000": 64.81880512647756
+      },
+      "seconds": 188.98740254199947
+    }
+  ],
+  "discarded": [],
+  "stop_reason": "all metrics decided after round 1",
+  "wall_seconds": 284.903571139992,
+  "loads": [],
+  "warmup": {
+    "prefill@130000": 1864.1004139985246,
+    "decode@130000": 64.22440300300117
+  },
+  "plan": {
+    "alpha": 0.05,
+    "margin": 0.5,
+    "max_rounds": 6,
+    "min_rounds": 2,
+    "prior_sd": 0.5,
+    "prior_df": 4.0
+  },
+  "decisions": {
+    "prefill@130000": {
+      "decided_at_round": 1,
+      "decision": "B faster",
+      "mean_diff_percent": 1.0430628554148225,
+      "ci_diff_percent": [
+        0.9871475236729268,
+        1.0989781871567181
+      ]
+    },
+    "decode@130000": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": 0.24618558136104696,
+      "ci_diff_percent": [
+        -1.0585054926165187,
+        1.5508766553386126
+      ]
+    }
+  }
+}

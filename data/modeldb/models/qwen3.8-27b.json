@@ -1,0 +1,482 @@
+{
+  "id": "qwen3.8-27b",
+  "name": "Qwen3.8-27B",
+  "vendor": "Alibaba Qwen",
+  "release_date": "2026-08-13",
+  "lineage": {
+    "family": "Qwen3.5/3.6/3.8 (qwen3_5 hybrid DeltaNet)",
+    "base_model": "Qwen3.5 architecture",
+    "how_derived": "post-trained dense successor of Qwen3.6-27B"
+  },
+  "purpose": "Qwen states a compact, deployment-friendly dense model for coding, professional work, research and long-horizon agentic tasks, with greater reliability on multi-step tasks; for developers who self-host or plug it into existing tooling.",
+  "tasks": [
+    "coding",
+    "general",
+    "vision",
+    "research",
+    "documents"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image",
+      "video"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "many"
+    ],
+    "programming": {}
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "LICENSE read: Apache License 2.0 full text. The sibling Qwen3.8-Flash-Next uses the Qwen Community License instead. LICENSE file in the repo read: Apache License 2.0 with the vendor copyright appendix ('Copyright 2026 Alibaba Cloud'), no additional terms. Same md5 as the Qwen3.5-35B-A3B and 9B LICENSE files."
+  },
+  "architecture": {
+    "kind": "dense hybrid Gated DeltaNet + gated attention with vision encoder",
+    "gguf_arch": "qwen35",
+    "params_total_b": 27,
+    "layers": 64,
+    "attention": "16 x (3 Gated DeltaNet + 1 gated attention); 24 Q / 4 KV heads, head dim 256",
+    "recurrent": "Gated DeltaNet",
+    "context_native": 262144,
+    "context_max": 1000000,
+    "drafter": "MTP trained (multi-step); a DFlash2 drafter exists (research/08-models.md)",
+    "params_active_b": 27,
+    "why_this_design": "The card pitches coding and agents first and a native vision-language dense model; reasons for the dense layout are not stated in the text we read. Check: the Qwen3.8 blog. Card: built on the Qwen3.5 architectural foundation (hybrid Gated DeltaNet and gated attention); Qwen3.8-27B 'brings these advances to a compact, deployment-friendly dense model'. Qwen3.5 card: 'Efficient Hybrid Architecture: Gated Delta Networks combined with sparse Mixture-of-Experts deliver high-throughput inference with minimal latency and cost overhead.'"
+  },
+  "variants": [
+    {
+      "repo": "ISTA-DASLab/Qwen3.8-27B-GSQ-RCO-GGUF",
+      "format": "GGUF IQ2_XS 8.4 GB, IQ3_XXS 10.1 GB, IQ3_S 11.8 GB",
+      "size_gb": 10.1,
+      "official": false,
+      "notes": "per research/08; IQ3_S called task-lossless by ISTA on AIME, GPQA, LCB, agent tasks not checked"
+    },
+    {
+      "repo": "unsloth/Qwen3.8-27B-GGUF",
+      "format": "GGUF many quants incl. Q4_K_M",
+      "official": false
+    },
+    {
+      "repo": "Qwen/Qwen3.8-27B",
+      "format": "safetensors BF16",
+      "official": true
+    },
+    {
+      "repo": "Qwen/Qwen3.8-27B-FP8",
+      "format": "FP8",
+      "official": true
+    },
+    {
+      "repo": "unsloth/Qwen3.8-27B-GGUF",
+      "format": "GGUF UD-IQ3_XXS",
+      "size_gb": 10.93,
+      "official": false
+    },
+    {
+      "repo": "unsloth/Qwen3.8-27B-GGUF",
+      "format": "GGUF UD-Q4_K_M",
+      "size_gb": 16.56,
+      "official": false
+    },
+    {
+      "repo": "unsloth/Qwen3.8-27B-GGUF",
+      "format": "GGUF UD-Q6_K",
+      "size_gb": 21.98,
+      "official": false
+    },
+    {
+      "repo": "unsloth/Qwen3.8-27B-GGUF",
+      "format": "GGUF Q8_0",
+      "size_gb": 29.05,
+      "official": false,
+      "notes": "mmproj F16 0.93 GB extra"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "variant": "UD-Q4_K_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (16.6 GB) against the budget of docs/hardware: 9.6 GB VRAM plus 50 GB RAM = 60 GB; about 58% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that)"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "UD-Q4_K_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (16.6 GB) against the budget of docs/hardware: 13.6 GB VRAM plus 50 GB RAM = 64 GB; about 82% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that)"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "UD-Q4_K_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (16.6 GB) against the budget of docs/hardware: 21.6 GB VRAM plus 82 GB RAM = 104 GB; about 100% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that)"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "UD-Q4_K_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (16.6 GB) against the budget of docs/hardware: 29.6 GB VRAM plus 114 GB RAM = 144 GB; about 100% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that)"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "UD-Q4_K_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (16.6 GB) against the GPU share of docs/hardware (about 12 GB)"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "UD-Q4_K_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (16.6 GB) against the GPU share of docs/hardware (about 22 GB)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "UD-Q4_K_M",
+      "basis": "estimate",
+      "notes": "estimate from the file size (16.6 GB) against the GPU share of docs/hardware (about 52 GB)"
+    }
+  },
+  "engine_support": {
+    "tona": "planned",
+    "llama_cpp": "yes",
+    "other": [
+      "vLLM",
+      "SGLang",
+      "Transformers",
+      "TokenSpeed"
+    ],
+    "notes": "Tona: dense qwen3_5 module not built; research/08-models.md section 2 rates it effort M and reuses the DeltaNet kernels. llama.cpp: community GGUFs exist (unsloth); not run by us."
+  },
+  "benchmarks": [
+    {
+      "name": "Terminal-Bench 2.1",
+      "score": 73.0,
+      "kind": "vendor",
+      "source": "https://huggingface.co/Qwen/Qwen3.8-27B",
+      "variant": "BF16",
+      "harness": "Terminus"
+    },
+    {
+      "name": "SWE-bench Pro",
+      "score": 61.7,
+      "kind": "vendor",
+      "source": "https://huggingface.co/Qwen/Qwen3.8-27B",
+      "variant": "BF16",
+      "harness": "Claude Code harness, temp 1.0, 256K",
+      "unit": "%"
+    },
+    {
+      "name": "DeepSWE 1.1",
+      "score": 42.2,
+      "kind": "vendor",
+      "source": "https://huggingface.co/Qwen/Qwen3.8-27B",
+      "variant": "BF16",
+      "harness": "Claude Code harness"
+    },
+    {
+      "name": "LiveCodeBench v6",
+      "score": 90.3,
+      "kind": "vendor",
+      "source": "https://huggingface.co/Qwen/Qwen3.8-27B",
+      "variant": "BF16"
+    },
+    {
+      "name": "NL2Repo",
+      "score": 42.3,
+      "kind": "vendor",
+      "source": "https://huggingface.co/Qwen/Qwen3.8-27B",
+      "variant": "BF16",
+      "harness": "Claude Code harness"
+    },
+    {
+      "name": "QwenSWEBench (in-house)",
+      "score": 79.0,
+      "kind": "vendor",
+      "source": "https://huggingface.co/Qwen/Qwen3.8-27B",
+      "variant": "BF16",
+      "harness": "Claude Code, avg@3"
+    },
+    {
+      "name": "GPQA Diamond",
+      "score": 89.2,
+      "kind": "vendor",
+      "source": "https://huggingface.co/Qwen/Qwen3.8-27B",
+      "variant": "BF16"
+    },
+    {
+      "name": "OSWorld-Verified",
+      "score": 84.3,
+      "kind": "vendor",
+      "source": "https://huggingface.co/Qwen/Qwen3.8-27B",
+      "variant": "BF16"
+    },
+    {
+      "name": "GPQA Diamond",
+      "score": 89.2,
+      "kind": "vendor",
+      "source": "https://huggingface.co/Qwen/Qwen3.8-27B",
+      "unit": "%",
+      "variant": "BF16 thinking"
+    },
+    {
+      "name": "HLE",
+      "score": 30.8,
+      "kind": "vendor",
+      "source": "https://huggingface.co/Qwen/Qwen3.8-27B",
+      "unit": "%",
+      "variant": "BF16 thinking"
+    },
+    {
+      "name": "IFBench",
+      "score": 79.5,
+      "kind": "vendor",
+      "source": "https://huggingface.co/Qwen/Qwen3.8-27B",
+      "variant": "BF16"
+    },
+    {
+      "name": "Terminal-Bench 2.1 (Terminus)",
+      "score": 73.0,
+      "kind": "vendor",
+      "source": "https://huggingface.co/Qwen/Qwen3.8-27B"
+    },
+    {
+      "name": "AA-Omniscience v1.1 (knowledge reliability, higher is better, wrong answers penalized)",
+      "score": -6,
+      "kind": "independent",
+      "source": "https://artificialanalysis.ai/models/comparisons/qwen3-8-27b-vs-gemma-4-31b",
+      "variant": "hosted, effort xhigh",
+      "harness": "Artificial Analysis",
+      "date": "2026-11"
+    },
+    {
+      "name": "AA-Omniscience v1.1",
+      "score": -36,
+      "kind": "independent",
+      "source": "https://artificialanalysis.ai/models/comparisons/qwen3-8-27b-vs-gemma-4-31b",
+      "variant": "hosted, effort medium",
+      "harness": "Artificial Analysis"
+    },
+    {
+      "name": "AA-Omniscience v1.1",
+      "score": -7,
+      "kind": "independent",
+      "source": "https://artificialanalysis.ai/models/comparisons/qwen3-8-27b-vs-gemma-4-31b",
+      "variant": "hosted, non-reasoning",
+      "harness": "Artificial Analysis"
+    },
+    {
+      "name": "HLE-Diamond",
+      "score": 15.3,
+      "kind": "independent",
+      "source": "https://artificialanalysis.ai/models/comparisons/qwen3-8-27b-vs-gemma-4-31b",
+      "unit": "%",
+      "variant": "hosted, effort xhigh",
+      "harness": "Artificial Analysis"
+    },
+    {
+      "name": "AA Coding Index (aggregator mirror)",
+      "score": 68.1,
+      "kind": "independent",
+      "source": "https://benchlm.ai/benchmarks/aacodingindex",
+      "variant": "Qwen3.8-27B, API / full precision",
+      "unit": "%",
+      "date": "2026-11-19",
+      "harness": "aggregator mirror of the Artificial Analysis Coding Index, read 2026-11-19; no per-row dates; upstream AA pages not reachable"
+    },
+    {
+      "name": "MMLU-ProX (German, PeerBench DACH)",
+      "score": 79.9,
+      "kind": "independent",
+      "source": "https://dach.peerbench.ai/api/leaderboard.json",
+      "variant": "bf16",
+      "harness": "PeerBench DACH German Language LLM Index, run by PeerBench",
+      "date": "2026-08-15"
+    },
+    {
+      "name": "INCLUDE (German, PeerBench DACH)",
+      "score": 87.9,
+      "kind": "independent",
+      "source": "https://dach.peerbench.ai/api/leaderboard.json",
+      "variant": "bf16",
+      "harness": "PeerBench DACH German Language LLM Index, run by PeerBench",
+      "date": "2026-08-15"
+    },
+    {
+      "name": "GermEval NER (German, PeerBench DACH)",
+      "score": 81.5,
+      "kind": "independent",
+      "source": "https://dach.peerbench.ai/api/leaderboard.json",
+      "variant": "bf16",
+      "harness": "PeerBench DACH German Language LLM Index, run by PeerBench",
+      "date": "2026-08-15"
+    },
+    {
+      "name": "ScaLA (German, PeerBench DACH)",
+      "score": 66.9,
+      "kind": "independent",
+      "source": "https://dach.peerbench.ai/api/leaderboard.json",
+      "variant": "bf16",
+      "harness": "PeerBench DACH German Language LLM Index, run by PeerBench",
+      "date": "2026-08-15"
+    },
+    {
+      "name": "SB10K (German, PeerBench DACH)",
+      "score": 62.6,
+      "kind": "independent",
+      "source": "https://dach.peerbench.ai/api/leaderboard.json",
+      "variant": "bf16",
+      "harness": "PeerBench DACH German Language LLM Index, run by PeerBench",
+      "date": "2026-08-15"
+    },
+    {
+      "name": "MuSR (German, PeerBench DACH)",
+      "score": 86.1,
+      "kind": "independent",
+      "source": "https://dach.peerbench.ai/api/leaderboard.json",
+      "variant": "bf16",
+      "harness": "PeerBench DACH German Language LLM Index, run by PeerBench",
+      "date": "2026-08-15"
+    },
+    {
+      "name": "German Language LLM Index overall Elo (PeerBench DACH)",
+      "score": 1634,
+      "kind": "independent",
+      "source": "https://dach.peerbench.ai/",
+      "variant": "bf16 (FP8: 1577)",
+      "harness": "PeerBench DACH page 2026-10-16, summarizer read",
+      "date": "2026-10-16"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "Almost level with Flash-Next on SWE-bench Pro (61.7 vs 62.5, vendor)",
+      "Fits entirely in 16 GB VRAM as IQ3 (10.1 GB)",
+      "Vision and computer-use capability",
+      "Strongest knowledge and reasoning numbers of the models that fit 16 GB at 3-bit (vendor GPQA 89.2)",
+      "Vision and video input in the same checkpoint",
+      "1M context via YaRN"
+    ],
+    "weaknesses": [
+      "Full attention KV at 256K does not fit VRAM next to the weights (about 36K tokens fp16 with IQ3 on 16 GB, estimate)",
+      "About 4x the prefill cost per token of Flash-Next (research/08 estimate)",
+      "Thinking on by default; lower reasoning effort does not always cut task time (card)",
+      "Overthinks by default (effort xhigh); time to first answer token 128 s at xhigh in the Artificial Analysis run",
+      "AA-Omniscience is negative at every effort level: more wrong answers than correct ones",
+      "Dense: one user found it 7 to 8x slower than the 35B-A3B MoE"
+    ],
+    "behavior": "Thinking on by default, reasoning_effort xhigh; medium, low and enable_thinking=false are available. Vendor sampling T=1.0, top_p 0.95, top_k 20 (thinking). The card warns that lower effort can raise latency in multi-turn agent tasks.",
+    "best_for": [
+      "fully-in-VRAM coding agent on 16 to 24 GB cards with moderate context",
+      "Hard reasoning and research synthesis where latency is acceptable",
+      "Long documents up to roughly 64-75K tokens on 16 GB (KV bound, research/08)"
+    ],
+    "avoid_for": [
+      "very long contexts on 16 GB",
+      "Quick chat on 12 GB cards",
+      "Factual look-ups without a search tool"
+    ],
+    "maturity": "Qwen: very large community (1,873 quantizations listed on the card), fast release cadence.",
+    "user_reports": [
+      {
+        "summary": "Simon Willison: excellent but overthinks by default; one SVG test took 21 minutes and 22,276 reasoning tokens at the default setting.",
+        "sentiment": "mixed",
+        "source": "https://aiweekly.co/alerts/qwen-38-27b-strong-open-model-wildly-overthinks-by-default",
+        "date": "2026-08-16"
+      },
+      {
+        "summary": "Infinite tool-call loops with thinking switched off on some questions; a reply says it becomes weak on complex coding or debugging tasks and loops on tool calls, simple tasks are fine. Deployment details not given.",
+        "sentiment": "negative",
+        "source": "https://huggingface.co/Qwen/Qwen3.8-27B/discussions/243",
+        "date": "2026-11-11"
+      },
+      {
+        "summary": "Independent C++/CUDA engine converted it to NVFP4 (15 GB, 14.1 GiB resident on one RTX 5090): greedy decoding byte-identical across runs and reloads, native XML tool-call format parses without heuristics, tokenizer reproduced exactly.",
+        "sentiment": "positive",
+        "source": "https://huggingface.co/Qwen/Qwen3.8-27B/discussions/234",
+        "date": "2026-11-03"
+      }
+    ]
+  },
+  "tona_fit": {
+    "verdict": "offer",
+    "reason": "Strongest independent coding evidence of the 16 GB class: Coding Index 68.1 (mirror of the Artificial Analysis index) against 41.9 for Qwen3.6-35B-A3B, Apache-2.0 text verified, vendor LiveCodeBench v6 90.3, fits 12 to 16 GB VRAM at 10 to 17 GB (UD-Q4_K_M 16.6 GB). Offered for the 12 and 16 GB classes as the dense option; long default thinking is a usage caveat. Best dense generalist for 16-24 GB by independent evidence too: PeerBench German Elo 1634 (INCLUDE DE 87.9, MuSR DE 86.1, MMLU-ProX DE 79.9), highest Elo among the 27-31B open models listed (Qwen3.6 27B 1615, Gemma 4 31B 1477), plus Apache-2.0 (text read) and the vendor numbers. Costs: long default thinking (reasoning_effort default xhigh) and tool-loop reports with thinking off. Missing dense module in Tona is only a blocker.",
+    "blockers": [
+      "Tona has no dense Qwen3.8 module yet (engine support, not quality)",
+      "default thinking length hurts chat latency",
+      "dense decode on 16 GB is slower per token than the A3B MoEs (bandwidth bound, estimate)",
+      "no dense qwen3_5 module in Tona",
+      "default thinking length",
+      "tool-call loops reported with thinking off"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/Qwen/Qwen3.8-27B",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "page text read through a summarizer (WebFetch)"
+    },
+    {
+      "url": "research/08-models.md",
+      "kind": "own",
+      "checked": "2026-11-19",
+      "note": "config.json derived numbers, quants and estimates"
+    },
+    {
+      "url": "https://huggingface.co/api/models/unsloth/Qwen3.8-27B-GGUF?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "GGUF sizes"
+    },
+    {
+      "url": "https://artificialanalysis.ai/models/comparisons/qwen3-8-27b-vs-gemma-4-31b",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "Artificial Analysis comparison page, read through a summarizer"
+    },
+    {
+      "url": "https://aiweekly.co/alerts/qwen-38-27b-strong-open-model-wildly-overthinks-by-default",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "search result, not opened"
+    },
+    {
+      "url": "https://huggingface.co/Qwen/Qwen3.8-27B/raw/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://benchlm.ai/benchmarks/aacodingindex",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "aggregator mirror of the Artificial Analysis Coding Index, read 2026-11-19; no per-row dates; upstream AA pages not reachable"
+    },
+    {
+      "url": "https://dach.peerbench.ai/api/leaderboard.json",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "PeerBench DACH JSON export (generated 2026-10-25, last run 2026-10-16), read directly"
+    }
+  ],
+  "open_questions": [
+    "Programming languages evidence",
+    "Agent quality of the ISTA IQ3 quants (only Quesma's Terminal-Bench per quant, Q4_K_M = BF16)",
+    "SWE-bench Verified not published",
+    "Languages the vendor supports (the card gives no number)",
+    "German quality: no German benchmark found",
+    "Quality of IQ3 quants on knowledge tasks (ISTA claims task-lossless on AIME, GPQA and LCB only)",
+    "Release date: two research passes found 2026-08-13 and 2026-08-05; check the model card history.",
+    "Per-language quality and independent coding evidence: the Aider polyglot board is stale (mirrors: last update 2025-11-20, no entry for any model of this database), LiveCodeBench and swebench.com publish no per-language numbers for it that we could retrieve. Check: our own Exercism polyglot run per language.",
+    "Reason for the large INCLUDE DE gap between Qwen3.8-27B (87.9) and Qwen3.6-35B-A3B (68.3): the index has 107 INCLUDE questions, so a few answers move the score"
+  ],
+  "last_checked": "2026-11-19"
+}

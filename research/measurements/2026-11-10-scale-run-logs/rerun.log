@@ -1,0 +1,23 @@
+STEP e2 06:51:11
+VRAM-desktop e2 06:51:11 1919 MiB
+SLOTS e2: loaded in 20.5 s: context 140000 (KV int8 1.94 GB in RAM), VRAM 13.67 GB, 76 expert slots per layer, 27.4 GB pinned
+STEP c1r 07:10:59
+VRAM-desktop c1r 07:10:59 1215 MiB
+SLOTS c1r: loaded in 19.8 s: context 32768 (KV int8 0.45 GB in RAM), VRAM 14.39 GB, 87 expert slots per layer, 25.8 GB pinned
+STEP c3r2 07:13:16
+VRAM-desktop c3r2 07:13:16 1216 MiB
+SLOTS c3r2: loaded in 18.7 s: context 140000 (KV int8 1.94 GB in RAM), VRAM 14.36 GB, 83 expert slots per layer, 27.4 GB pinned
+STEP c4r3 07:16:15
+VRAM-desktop c4r3 07:16:15 1201 MiB
+SLOTS c4r3: loaded in 19.7 s: context 1048576 (KV int8 14.50 GB in RAM), VRAM 14.41 GB, 72 expert slots per layer, 25.1 GB pinned
+STEP fr 07:38:41
+VRAM-desktop fr 07:38:41 1199 MiB
+SLOTS fr: loaded in 20.0 s: context 262144 (KV int8 3.62 GB in RAM), VRAM 14.37 GB, 79 expert slots per layer, 29.2 GB pinned
+STEP f2r 07:42:33
+VRAM-desktop f2r 07:42:33 1199 MiB
+SLOTS f2r: loaded in 19.8 s: context 1048576 (KV int8 14.50 GB in RAM), VRAM 14.41 GB, 72 expert slots per layer, 25.1 GB pinned
+STEP ir 07:58:51
+VRAM-desktop ir 07:58:51 1197 MiB
+STEP rerun-done 08:14:09
+VRAM-desktop rerun-done 08:14:09 15670 MiB
+finished

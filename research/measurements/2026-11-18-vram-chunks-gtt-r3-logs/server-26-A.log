@@ -1,0 +1,35 @@
+Tona (tona-server) on http://127.0.0.1:8099 (Anthropic: /v1/messages, OpenAI: /v1/chat/completions), without key, loading ...
+host memory: GTT (probe 64 MB grew the GTT use by 64 MB; 0.1 of 32.5 GB in use)
+evicted_ms counter: /sys/class/kfd/kfd/proc/742824/stats_7773/evicted_ms (0 ms so far), evictions do not count against the pass deadline
+PCIe link: 32 GT/s x16, GPU-direct expert priced at 15.0 us (TONA_GD_US overrides)
+Initialization: 512 MTP experts as Q2_0, converted on the GPU (708 MB) in 0.8 s
+Releasing page cache: 8.25 GB of file mappings removed from the address space
+loaded in 18.3 s: context 32768 (KV int8 0.45 GB in RAM), VRAM 12.97 GB, 73 expert slots per layer, 25.8 GB pinned
+06:52:32 Request: 24 prompt tokens (0 reused, 24 computed in 0.3 s, new conversation (stashing 0 ms), slot 0), 111 tokens in 1.2 s = 92.4 tok/s, 5.75 tokens per pass, 0 of 20 passes from the history (0.00 per pass)
+06:52:32 POST /v1/chat/completions → 200
+06:52:37 Request: 26 prompt tokens (0 reused, 26 computed in 0.3 s, new conversation (stashing 0 ms), slot 1), 400 tokens in 3.9 s = 102.5 tok/s, 5.39 tokens per pass, 1 of 74 passes from the history (7.00 per pass)
+06:52:37 POST /v1/chat/completions → 200
+06:52:39 Request: 29 prompt tokens (0 reused, 29 computed in 0.3 s, new conversation (stashing 0 ms), slot 0), 163 tokens in 1.7 s = 95.1 tok/s, 4.53 tokens per pass, 0 of 36 passes from the history (0.00 per pass)
+06:52:39 POST /v1/chat/completions → 200
+06:52:43 Request: 27 prompt tokens (0 reused, 27 computed in 0.3 s, new conversation (stashing 0 ms), slot 1), 400 tokens in 4.0 s = 99.9 tok/s, 5.12 tokens per pass, 7 of 78 passes from the history (3.14 per pass)
+06:52:43 POST /v1/chat/completions → 200
+06:52:47 Request: 28 prompt tokens (0 reused, 28 computed in 0.3 s, new conversation (stashing 0 ms), slot 0), 400 tokens in 4.2 s = 95.4 tok/s, 4.40 tokens per pass, 0 of 91 passes from the history (0.00 per pass)
+06:52:47 POST /v1/chat/completions → 200
+06:52:52 Request: 30 prompt tokens (0 reused, 30 computed in 0.3 s, new conversation (stashing 0 ms), slot 1), 400 tokens in 4.4 s = 91.5 tok/s, 4.34 tokens per pass, 1 of 92 passes from the history (5.00 per pass)
+06:52:52 POST /v1/chat/completions → 200
+06:52:53 Request: 74 prompt tokens (0 reused, 74 computed in 0.3 s, new conversation (stashing 0 ms), slot 0), 29 tokens in 0.2 s = 123.3 tok/s, 7.50 tokens per pass, 0 of 4 passes from the history (0.00 per pass)
+06:52:53 POST /v1/chat/completions → 200
+06:52:57 Request: 38 prompt tokens (0 reused, 38 computed in 0.3 s, new conversation (stashing 0 ms), slot 1), 400 tokens in 4.0 s = 99.2 tok/s, 4.88 tokens per pass, 1 of 82 passes from the history (3.00 per pass)
+06:52:57 POST /v1/chat/completions → 200
+06:53:00 Request: 31 prompt tokens (0 reused, 31 computed in 0.3 s, new conversation (stashing 0 ms), slot 0), 242 tokens in 2.6 s = 94.6 tok/s, 5.00 tokens per pass, 6 of 49 passes from the history (1.50 per pass)
+06:53:00 POST /v1/chat/completions → 200
+06:53:03 Request: 32 prompt tokens (0 reused, 32 computed in 0.3 s, new conversation (stashing 0 ms), slot 1), 275 tokens in 3.3 s = 83.6 tok/s, 3.93 tokens per pass, 7 of 70 passes from the history (5.29 per pass)
+06:53:03 POST /v1/chat/completions → 200
+06:53:06 Request: 27 prompt tokens (0 reused, 27 computed in 0.3 s, new conversation (stashing 0 ms), slot 0), 229 tokens in 2.4 s = 96.1 tok/s, 4.73 tokens per pass, 3 of 49 passes from the history (3.00 per pass)
+06:53:06 POST /v1/chat/completions → 200
+06:53:12 Request: 25 prompt tokens (0 reused, 25 computed in 0.3 s, new conversation (stashing 0 ms), slot 1), 364 tokens in 5.8 s = 62.4 tok/s, 2.40 tokens per pass, 0 of 154 passes from the history (0.00 per pass)
+06:53:12 POST /v1/chat/completions → 200
+06:53:16 Request: 28 prompt tokens (0 reused, 28 computed in 0.3 s, new conversation (stashing 0 ms), slot 0), 274 tokens in 3.7 s = 74.8 tok/s, 3.05 tokens per pass, 0 of 91 passes from the history (0.00 per pass)
+06:53:16 POST /v1/chat/completions → 200
+06:53:22 Request: 26 prompt tokens (0 reused, 26 computed in 0.3 s, new conversation (stashing 0 ms), slot 1), 400 tokens in 5.6 s = 71.2 tok/s, 2.80 tokens per pass, 0 of 143 passes from the history (0.00 per pass)
+06:53:22 POST /v1/chat/completions → 200

@@ -1,0 +1,137 @@
+{
+  "id": "granite-4.1-llmon-preview",
+  "name": "Granite-4.1-LLMON-preview (3B and 8B)",
+  "vendor": "IBM Granite",
+  "release_date": "2026-10-01",
+  "lineage": {
+    "family": "Granite 4.1 experiments",
+    "base_model": "ibm-granite/granite-4.1-8b-base (and the 3B base)",
+    "how_derived": "instruct fine-tune to read prompts in LLMON (LLM Object Notation, arXiv 2603.22519): every prompt part is an addressable block and an exec block names the instruction, inputs and output location"
+  },
+  "purpose": "Consume prompts in the LLMON structured-block format instead of a conventional chat template; the builder states no further purpose in the part of the card read.",
+  "tasks": [
+    "general"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en",
+      "de",
+      "es",
+      "fr",
+      "ja",
+      "pt",
+      "ar",
+      "cs",
+      "it",
+      "ko",
+      "nl",
+      "zh"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0 (card tag)",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card tag apache-2.0; LICENSE file present but text not read."
+  },
+  "architecture": {
+    "kind": "dense transformer (Granite 4.1)",
+    "params_total_b": 8,
+    "params_active_b": 8,
+    "drafter": "none stated"
+  },
+  "variants": [
+    {
+      "repo": "ibm-granite/granite-4.1-8b-llmon-preview",
+      "format": "safetensors",
+      "size_gb": 17.59,
+      "official": true,
+      "notes": "3B variant: 7.33 GB"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "variant": "Q4 estimate for an 8B dense (about 5 GB); no quant published",
+      "basis": "estimate",
+      "notes": "5 GB file fits the VRAM budget (9.6 GB) with room for KV"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "Q4 estimate for an 8B dense (about 5 GB); no quant published",
+      "basis": "estimate",
+      "notes": "5 GB file fits the VRAM budget (13.6 GB) with room for KV"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "Q4 estimate for an 8B dense (about 5 GB); no quant published",
+      "basis": "estimate",
+      "notes": "5 GB file fits the VRAM budget (21.6 GB) with room for KV"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "Q4 estimate for an 8B dense (about 5 GB); no quant published",
+      "basis": "estimate",
+      "notes": "5 GB file fits the VRAM budget (29.6 GB) with room for KV"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "variant": "Q4 estimate for an 8B dense (about 5 GB); no quant published",
+      "basis": "estimate",
+      "notes": "5 GB file against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "Q4 estimate for an 8B dense (about 5 GB); no quant published",
+      "basis": "estimate",
+      "notes": "5 GB file against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "Q4 estimate for an 8B dense (about 5 GB); no quant published",
+      "basis": "estimate",
+      "notes": "5 GB file against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [],
+    "notes": "Granite architecture; requires the LLMON prompt format."
+  },
+  "benchmarks": [],
+  "soft": {
+    "weaknesses": [
+      "preview; needs a special prompt format"
+    ],
+    "maturity": "low traction (2.6k downloads of the 3B)"
+  },
+  "tona_fit": {
+    "verdict": "reject",
+    "reason": "A prompt-format experiment, not a better coding or chat model; no evidence of quality benefits in the card part read.",
+    "blockers": [
+      "no benchmarks read"
+    ]
+  },
+  "open_questions": [
+    "injection-robustness evaluation in the paper"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/ibm-granite/granite-4.1-8b-llmon-preview",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README, config.json read"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

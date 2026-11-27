@@ -1,0 +1,178 @@
+{
+  "id": "tiny-aya-thinkers",
+  "name": "Tiny Aya En-Thinker and L2-Thinker",
+  "vendor": "Cohere Labs",
+  "release_date": "2026-09-02",
+  "lineage": {
+    "base_model": "CohereLabs/tiny-aya-base-32K (stated on the base card as the base of both thinkers)",
+    "family": "Tiny Aya",
+    "how_derived": "supervised fine-tuning after pretraining: En-Thinker reasons in English; L2-Thinker reasons in the language of the prompt (44 languages plus English in-language, 20+ more via non-reasoning instruction data), per the L2 card text. The base is a pretrained-only model (not instruction-tuned) with 32K context versus 8K for tiny-aya-base; the card does not say how the 32K was reached."
+  },
+  "purpose": "An open-weights research release of a 3.35 B multilingual reasoning model for math, science, general reasoning, instruction following and multilingual open-ended generation; En-Thinker reasons in English and answers in the user's language, L2-Thinker thinks in the language of the prompt (German is among its 44 in-language languages), and the pair supports research comparing English reasoning with target-language reasoning.",
+  "tasks": [
+    "general",
+    "math",
+    "translation"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en",
+      "ar",
+      "zh",
+      "hi",
+      "sw",
+      "yo",
+      "zu",
+      "many"
+    ]
+  },
+  "license": {
+    "name": "CC-BY-NC-4.0 plus Cohere Labs Acceptable Use Policy",
+    "verified": false,
+    "commercial_use": "no",
+    "redistribution": "limited",
+    "notes": "Tag and card summary: non-commercial; commercial use goes through Cohere sales. Files are gated, license text not read (2026-11-19). Verdict policy (README, 2026-11-19): this licence term does not lower tona_fit; kept here for an installer label."
+  },
+  "architecture": {
+    "kind": "dense auto-regressive transformer (Tiny Aya / Cohere family)",
+    "params_total_b": 3.35,
+    "params_active_b": 3.35,
+    "context_native": 32768,
+    "context_max": 32768,
+    "drafter": "none stated",
+    "attention": "interleaved sliding-window and global-attention layers with rotary positions (base card summary)"
+  },
+  "variants": [
+    {
+      "repo": "CohereLabs/tiny-aya-en-thinker",
+      "format": "safetensors BF16",
+      "size_gb": 6.73,
+      "official": true,
+      "notes": "gated"
+    },
+    {
+      "repo": "CohereLabs/tiny-aya-l2-thinker",
+      "format": "safetensors BF16",
+      "size_gb": 6.73,
+      "official": true,
+      "notes": "gated; card text read through a summarizing fetch: thinking in the prompt language, sampling temperature 0.6, top_p 0.95, max_new_tokens 32768; main branch has extra training so the model states its name, intermediate checkpoints in ckpt-xxx branches (last ckpt-61875)"
+    },
+    {
+      "repo": "CohereLabs/tiny-aya-base-32K",
+      "format": "safetensors BF16",
+      "size_gb": 6.73,
+      "official": true,
+      "notes": "gated; pretrained base of both thinkers, text completion prompts (no chat template); card names 70+ languages with emphasis on high-resource European languages and 32K context; no benchmark numbers"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "BF16",
+      "notes": "6.7 GB"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "BF16"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "BF16"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "BF16"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "BF16"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "BF16"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "BF16"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "unknown",
+    "notes": "Not checked."
+  },
+  "benchmarks": [],
+  "soft": {
+    "behavior": "Thinking on by default; enable_thinking=False skips it; the card recommends capping max_new_tokens because thinking traces can be long.",
+    "best_for": [
+      "multilingual reasoning research"
+    ],
+    "avoid_for": [
+      "commercial products (license)",
+      "coding"
+    ],
+    "weaknesses": [
+      "Non-commercial license",
+      "No benchmark numbers on the card page"
+    ],
+    "maturity": "Under 300 downloads per repo in two and a half months; arXiv 2609.10445 linked in tags."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Small multilingual reasoning models (3.35B) that fit every class, but no coding focus and no benchmark numbers recorded."
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/CohereLabs/tiny-aya-en-thinker",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "card text read through a page summarizer (WebFetch); files gated"
+    },
+    {
+      "url": "https://huggingface.co/api/models/CohereLabs/tiny-aya-l2-thinker",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "metadata and size via the HF API; tree API lists files (config.json 1986 bytes, README 10734 bytes) but their content is gated"
+    },
+    {
+      "url": "https://huggingface.co/CohereLabs/tiny-aya-l2-thinker",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "card text via a summarizing page fetch; raw README, config.json and resolve/main all HTTP 401"
+    },
+    {
+      "url": "https://huggingface.co/CohereLabs/tiny-aya-base-32K",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "card text via a summarizing page fetch; raw files HTTP 401; HF API lists 6.73 GB, cc-by-nc-4.0, created 2026-09-08"
+    },
+    {
+      "url": "https://arxiv.org/abs/2609.10445",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "paper title and authors as quoted by the L2 card; paper itself not opened"
+    }
+  ],
+  "open_questions": [
+    "Benchmarks: none on the cards read; paper arXiv 2609.10445 (data mixing for in-language reasoning) not opened",
+    "Raw README, config.json and the license text of all three repos remain unreadable (gated, HTTP 401 on raw, resolve and API; no mirror of the thinkers or of base-32K found by HF search); the architecture details beyond 'interleaved sliding-window and global attention, rotary embeddings' are from the card summary",
+    "How the 32K context was reached in tiny-aya-base-32K (not stated on the card)",
+    "GGUF availability: only DevQuasar/CohereLabs.tiny-aya-base-GGUF (the 8K base) found, none for the thinkers"
+  ],
+  "last_checked": "2026-11-19"
+}

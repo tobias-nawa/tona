@@ -1,0 +1,156 @@
+{"run": 1, "kind": "check", "gate": "IQ2S", "down": "IQ4NL", "B": 1, "rel_err": 9.49e-08}
+{"run": 1, "kind": "check", "gate": "IQ2S", "down": "IQ4NL", "B": 2, "rel_err": 1.08e-07}
+{"run": 1, "kind": "check", "gate": "IQ2S", "down": "IQ4NL", "B": 3, "rel_err": 1.27e-07}
+{"run": 1, "kind": "check", "gate": "IQ2S", "down": "IQ4NL", "B": 4, "rel_err": 1.63e-07}
+{"run": 1, "kind": "check", "gate": "IQ3XXS", "down": "IQ4NL", "B": 1, "rel_err": 1.02e-07}
+{"run": 1, "kind": "check", "gate": "IQ3XXS", "down": "IQ4NL", "B": 2, "rel_err": 1.13e-07}
+{"run": 1, "kind": "check", "gate": "IQ3XXS", "down": "IQ4NL", "B": 3, "rel_err": 1.33e-07}
+{"run": 1, "kind": "check", "gate": "IQ3XXS", "down": "IQ4NL", "B": 4, "rel_err": 2.76e-07}
+{"run": 1, "kind": "check", "gate": "IQ3S", "down": "IQ4NL", "B": 1, "rel_err": 2.70e-07}
+{"run": 1, "kind": "check", "gate": "IQ3S", "down": "IQ4NL", "B": 2, "rel_err": 2.60e-07}
+{"run": 1, "kind": "check", "gate": "IQ3S", "down": "IQ4NL", "B": 3, "rel_err": 2.09e-07}
+{"run": 1, "kind": "check", "gate": "IQ3S", "down": "IQ4NL", "B": 4, "rel_err": 2.09e-07}
+{"run": 1, "kind": "check", "gate": "IQ4XS", "down": "IQ4NL", "B": 1, "rel_err": 1.31e-07}
+{"run": 1, "kind": "check", "gate": "IQ4XS", "down": "IQ4NL", "B": 2, "rel_err": 1.35e-07}
+{"run": 1, "kind": "check", "gate": "IQ4XS", "down": "IQ4NL", "B": 3, "rel_err": 1.35e-07}
+{"run": 1, "kind": "check", "gate": "IQ4XS", "down": "IQ4NL", "B": 4, "rel_err": 1.35e-07}
+{"run": 1, "kind": "check", "gate": "IQ2S", "down": "Q20", "B": 1, "rel_err": 1.01e-07}
+{"run": 1, "kind": "check", "gate": "IQ2S", "down": "Q20", "B": 2, "rel_err": 1.73e-07}
+{"run": 1, "kind": "check", "gate": "IQ2S", "down": "Q20", "B": 3, "rel_err": 3.14e-07}
+{"run": 1, "kind": "check", "gate": "IQ2S", "down": "Q20", "B": 4, "rel_err": 3.93e-07}
+{"run": 1, "kind": "check", "gate": "IQ3XXS", "down": "Q20", "B": 1, "rel_err": 1.96e-07}
+{"run": 1, "kind": "check", "gate": "IQ3XXS", "down": "Q20", "B": 2, "rel_err": 1.96e-07}
+{"run": 1, "kind": "check", "gate": "IQ3XXS", "down": "Q20", "B": 3, "rel_err": 1.86e-07}
+{"run": 1, "kind": "check", "gate": "IQ3XXS", "down": "Q20", "B": 4, "rel_err": 3.87e-07}
+{"run": 1, "kind": "type", "kernel": "gate_up_IQ2S", "B": 1, "us_per_layer_median": 218.8, "us_min": 218.4, "us_max": 219.3, "gbs": 48.0}
+{"run": 1, "kind": "type", "kernel": "gate_up_IQ3XXS", "B": 1, "us_per_layer_median": 148.9, "us_min": 147.7, "us_max": 149.4, "gbs": 84.2}
+{"run": 1, "kind": "type", "kernel": "gate_up_IQ3S", "B": 1, "us_per_layer_median": 167.3, "us_min": 165.7, "us_max": 169.1, "gbs": 84.1}
+{"run": 1, "kind": "type", "kernel": "gate_up_IQ4XS", "B": 1, "us_per_layer_median": 139.6, "us_min": 138.1, "us_max": 140.1, "gbs": 124.7}
+{"run": 1, "kind": "type", "kernel": "down_IQ4NL", "B": 1, "us_per_layer_median": 77.1, "us_min": 76.2, "us_max": 77.5, "gbs": 119.6}
+{"run": 1, "kind": "type", "kernel": "down_Q20", "B": 1, "us_per_layer_median": 72.9, "us_min": 71.0, "us_max": 73.2, "gbs": 63.2}
+{"run": 1, "kind": "type", "kernel": "gate_up_IQ2S", "B": 2, "us_per_layer_median": 352.5, "us_min": 351.3, "us_max": 354.0, "gbs": 29.8}
+{"run": 1, "kind": "type", "kernel": "gate_up_IQ3XXS", "B": 2, "us_per_layer_median": 224.2, "us_min": 223.1, "us_max": 224.6, "gbs": 56.0}
+{"run": 1, "kind": "type", "kernel": "gate_up_IQ3S", "B": 2, "us_per_layer_median": 253.4, "us_min": 251.9, "us_max": 254.2, "gbs": 55.6}
+{"run": 1, "kind": "type", "kernel": "gate_up_IQ4XS", "B": 2, "us_per_layer_median": 211.5, "us_min": 210.5, "us_max": 212.4, "gbs": 82.3}
+{"run": 1, "kind": "type", "kernel": "down_IQ4NL", "B": 2, "us_per_layer_median": 113.2, "us_min": 112.6, "us_max": 113.7, "gbs": 81.4}
+{"run": 1, "kind": "type", "kernel": "down_Q20", "B": 2, "us_per_layer_median": 91.9, "us_min": 89.7, "us_max": 92.5, "gbs": 50.1}
+{"run": 1, "kind": "type", "kernel": "gate_up_IQ2S", "B": 3, "us_per_layer_median": 465.9, "us_min": 464.1, "us_max": 468.3, "gbs": 22.5}
+{"run": 1, "kind": "type", "kernel": "gate_up_IQ3XXS", "B": 3, "us_per_layer_median": 338.9, "us_min": 336.4, "us_max": 339.4, "gbs": 37.0}
+{"run": 1, "kind": "type", "kernel": "gate_up_IQ3S", "B": 3, "us_per_layer_median": 370.2, "us_min": 368.7, "us_max": 371.1, "gbs": 38.0}
+{"run": 1, "kind": "type", "kernel": "gate_up_IQ4XS", "B": 3, "us_per_layer_median": 323.2, "us_min": 322.6, "us_max": 324.5, "gbs": 53.9}
+{"run": 1, "kind": "type", "kernel": "down_IQ4NL", "B": 3, "us_per_layer_median": 152.9, "us_min": 151.8, "us_max": 154.3, "gbs": 60.3}
+{"run": 1, "kind": "type", "kernel": "down_Q20", "B": 3, "us_per_layer_median": 127.6, "us_min": 126.5, "us_max": 128.5, "gbs": 36.1}
+{"run": 1, "kind": "type", "kernel": "gate_up_IQ2S", "B": 4, "us_per_layer_median": 604.9, "us_min": 603.1, "us_max": 606.4, "gbs": 17.4}
+{"run": 1, "kind": "type", "kernel": "gate_up_IQ3XXS", "B": 4, "us_per_layer_median": 472.2, "us_min": 470.9, "us_max": 473.3, "gbs": 26.6}
+{"run": 1, "kind": "type", "kernel": "gate_up_IQ3S", "B": 4, "us_per_layer_median": 505.4, "us_min": 503.4, "us_max": 506.9, "gbs": 27.9}
+{"run": 1, "kind": "type", "kernel": "gate_up_IQ4XS", "B": 4, "us_per_layer_median": 444.5, "us_min": 442.4, "us_max": 446.5, "gbs": 39.2}
+{"run": 1, "kind": "type", "kernel": "down_IQ4NL", "B": 4, "us_per_layer_median": 194.2, "us_min": 193.1, "us_max": 194.7, "gbs": 47.5}
+{"run": 1, "kind": "type", "kernel": "down_Q20", "B": 4, "us_per_layer_median": 162.3, "us_min": 161.2, "us_max": 163.0, "gbs": 28.4}
+{"run": 1, "kind": "token", "layers": 48, "B": 1, "ms_median": 12.383, "ms_min": 12.337, "ms_max": 12.421, "expert_bytes": 982272000, "gbs": 79.3}
+{"run": 1, "kind": "token", "layers": 48, "B": 2, "ms_median": 18.832, "ms_min": 18.729, "ms_max": 18.921, "expert_bytes": 982272000, "gbs": 52.2}
+{"run": 1, "kind": "token", "layers": 48, "B": 3, "ms_median": 26.187, "ms_min": 26.023, "ms_max": 26.367, "expert_bytes": 982272000, "gbs": 37.5}
+{"run": 1, "kind": "token", "layers": 48, "B": 4, "ms_median": 34.637, "ms_min": 34.460, "ms_max": 34.747, "expert_bytes": 982272000, "gbs": 28.4}
+{"run": 2, "kind": "check", "gate": "IQ2S", "down": "IQ4NL", "B": 1, "rel_err": 9.49e-08}
+{"run": 2, "kind": "check", "gate": "IQ2S", "down": "IQ4NL", "B": 2, "rel_err": 1.08e-07}
+{"run": 2, "kind": "check", "gate": "IQ2S", "down": "IQ4NL", "B": 3, "rel_err": 1.27e-07}
+{"run": 2, "kind": "check", "gate": "IQ2S", "down": "IQ4NL", "B": 4, "rel_err": 1.63e-07}
+{"run": 2, "kind": "check", "gate": "IQ3XXS", "down": "IQ4NL", "B": 1, "rel_err": 1.02e-07}
+{"run": 2, "kind": "check", "gate": "IQ3XXS", "down": "IQ4NL", "B": 2, "rel_err": 1.13e-07}
+{"run": 2, "kind": "check", "gate": "IQ3XXS", "down": "IQ4NL", "B": 3, "rel_err": 1.33e-07}
+{"run": 2, "kind": "check", "gate": "IQ3XXS", "down": "IQ4NL", "B": 4, "rel_err": 2.76e-07}
+{"run": 2, "kind": "check", "gate": "IQ3S", "down": "IQ4NL", "B": 1, "rel_err": 2.70e-07}
+{"run": 2, "kind": "check", "gate": "IQ3S", "down": "IQ4NL", "B": 2, "rel_err": 2.60e-07}
+{"run": 2, "kind": "check", "gate": "IQ3S", "down": "IQ4NL", "B": 3, "rel_err": 2.09e-07}
+{"run": 2, "kind": "check", "gate": "IQ3S", "down": "IQ4NL", "B": 4, "rel_err": 2.09e-07}
+{"run": 2, "kind": "check", "gate": "IQ4XS", "down": "IQ4NL", "B": 1, "rel_err": 1.31e-07}
+{"run": 2, "kind": "check", "gate": "IQ4XS", "down": "IQ4NL", "B": 2, "rel_err": 1.35e-07}
+{"run": 2, "kind": "check", "gate": "IQ4XS", "down": "IQ4NL", "B": 3, "rel_err": 1.35e-07}
+{"run": 2, "kind": "check", "gate": "IQ4XS", "down": "IQ4NL", "B": 4, "rel_err": 1.35e-07}
+{"run": 2, "kind": "check", "gate": "IQ2S", "down": "Q20", "B": 1, "rel_err": 1.01e-07}
+{"run": 2, "kind": "check", "gate": "IQ2S", "down": "Q20", "B": 2, "rel_err": 1.73e-07}
+{"run": 2, "kind": "check", "gate": "IQ2S", "down": "Q20", "B": 3, "rel_err": 3.14e-07}
+{"run": 2, "kind": "check", "gate": "IQ2S", "down": "Q20", "B": 4, "rel_err": 3.93e-07}
+{"run": 2, "kind": "check", "gate": "IQ3XXS", "down": "Q20", "B": 1, "rel_err": 1.96e-07}
+{"run": 2, "kind": "check", "gate": "IQ3XXS", "down": "Q20", "B": 2, "rel_err": 1.96e-07}
+{"run": 2, "kind": "check", "gate": "IQ3XXS", "down": "Q20", "B": 3, "rel_err": 1.86e-07}
+{"run": 2, "kind": "check", "gate": "IQ3XXS", "down": "Q20", "B": 4, "rel_err": 3.87e-07}
+{"run": 2, "kind": "type", "kernel": "gate_up_IQ2S", "B": 1, "us_per_layer_median": 218.9, "us_min": 217.7, "us_max": 220.1, "gbs": 48.0}
+{"run": 2, "kind": "type", "kernel": "gate_up_IQ3XXS", "B": 1, "us_per_layer_median": 149.4, "us_min": 148.5, "us_max": 149.6, "gbs": 84.0}
+{"run": 2, "kind": "type", "kernel": "gate_up_IQ3S", "B": 1, "us_per_layer_median": 167.0, "us_min": 165.8, "us_max": 167.8, "gbs": 84.3}
+{"run": 2, "kind": "type", "kernel": "gate_up_IQ4XS", "B": 1, "us_per_layer_median": 139.7, "us_min": 139.5, "us_max": 140.9, "gbs": 124.6}
+{"run": 2, "kind": "type", "kernel": "down_IQ4NL", "B": 1, "us_per_layer_median": 77.0, "us_min": 75.4, "us_max": 77.4, "gbs": 119.6}
+{"run": 2, "kind": "type", "kernel": "down_Q20", "B": 1, "us_per_layer_median": 73.4, "us_min": 71.6, "us_max": 73.7, "gbs": 62.8}
+{"run": 2, "kind": "type", "kernel": "gate_up_IQ2S", "B": 2, "us_per_layer_median": 352.2, "us_min": 350.5, "us_max": 353.1, "gbs": 29.8}
+{"run": 2, "kind": "type", "kernel": "gate_up_IQ3XXS", "B": 2, "us_per_layer_median": 223.9, "us_min": 222.7, "us_max": 225.0, "gbs": 56.0}
+{"run": 2, "kind": "type", "kernel": "gate_up_IQ3S", "B": 2, "us_per_layer_median": 253.4, "us_min": 252.4, "us_max": 254.5, "gbs": 55.6}
+{"run": 2, "kind": "type", "kernel": "gate_up_IQ4XS", "B": 2, "us_per_layer_median": 212.1, "us_min": 211.5, "us_max": 213.5, "gbs": 82.1}
+{"run": 2, "kind": "type", "kernel": "down_IQ4NL", "B": 2, "us_per_layer_median": 113.4, "us_min": 112.6, "us_max": 113.8, "gbs": 81.3}
+{"run": 2, "kind": "type", "kernel": "down_Q20", "B": 2, "us_per_layer_median": 91.8, "us_min": 89.6, "us_max": 92.6, "gbs": 50.2}
+{"run": 2, "kind": "type", "kernel": "gate_up_IQ2S", "B": 3, "us_per_layer_median": 465.1, "us_min": 464.1, "us_max": 465.8, "gbs": 22.6}
+{"run": 2, "kind": "type", "kernel": "gate_up_IQ3XXS", "B": 3, "us_per_layer_median": 338.9, "us_min": 337.8, "us_max": 339.5, "gbs": 37.0}
+{"run": 2, "kind": "type", "kernel": "gate_up_IQ3S", "B": 3, "us_per_layer_median": 370.2, "us_min": 368.1, "us_max": 370.8, "gbs": 38.0}
+{"run": 2, "kind": "type", "kernel": "gate_up_IQ4XS", "B": 3, "us_per_layer_median": 323.1, "us_min": 321.8, "us_max": 324.0, "gbs": 53.9}
+{"run": 2, "kind": "type", "kernel": "down_IQ4NL", "B": 3, "us_per_layer_median": 153.0, "us_min": 152.1, "us_max": 154.3, "gbs": 60.2}
+{"run": 2, "kind": "type", "kernel": "down_Q20", "B": 3, "us_per_layer_median": 127.9, "us_min": 127.2, "us_max": 128.2, "gbs": 36.0}
+{"run": 2, "kind": "type", "kernel": "gate_up_IQ2S", "B": 4, "us_per_layer_median": 605.3, "us_min": 604.3, "us_max": 606.3, "gbs": 17.3}
+{"run": 2, "kind": "type", "kernel": "gate_up_IQ3XXS", "B": 4, "us_per_layer_median": 472.0, "us_min": 470.7, "us_max": 472.5, "gbs": 26.6}
+{"run": 2, "kind": "type", "kernel": "gate_up_IQ3S", "B": 4, "us_per_layer_median": 505.1, "us_min": 503.7, "us_max": 506.8, "gbs": 27.9}
+{"run": 2, "kind": "type", "kernel": "gate_up_IQ4XS", "B": 4, "us_per_layer_median": 444.3, "us_min": 441.5, "us_max": 446.1, "gbs": 39.2}
+{"run": 2, "kind": "type", "kernel": "down_IQ4NL", "B": 4, "us_per_layer_median": 194.3, "us_min": 193.9, "us_max": 195.5, "gbs": 47.4}
+{"run": 2, "kind": "type", "kernel": "down_Q20", "B": 4, "us_per_layer_median": 162.6, "us_min": 161.4, "us_max": 163.1, "gbs": 28.3}
+{"run": 2, "kind": "token", "layers": 48, "B": 1, "ms_median": 12.356, "ms_min": 12.283, "ms_max": 12.458, "expert_bytes": 982272000, "gbs": 79.5}
+{"run": 2, "kind": "token", "layers": 48, "B": 2, "ms_median": 18.803, "ms_min": 18.631, "ms_max": 18.942, "expert_bytes": 982272000, "gbs": 52.2}
+{"run": 2, "kind": "token", "layers": 48, "B": 3, "ms_median": 26.070, "ms_min": 25.999, "ms_max": 26.388, "expert_bytes": 982272000, "gbs": 37.7}
+{"run": 2, "kind": "token", "layers": 48, "B": 4, "ms_median": 34.597, "ms_min": 34.446, "ms_max": 34.734, "expert_bytes": 982272000, "gbs": 28.4}
+{"run": 3, "kind": "check", "gate": "IQ2S", "down": "IQ4NL", "B": 1, "rel_err": 9.49e-08}
+{"run": 3, "kind": "check", "gate": "IQ2S", "down": "IQ4NL", "B": 2, "rel_err": 1.08e-07}
+{"run": 3, "kind": "check", "gate": "IQ2S", "down": "IQ4NL", "B": 3, "rel_err": 1.27e-07}
+{"run": 3, "kind": "check", "gate": "IQ2S", "down": "IQ4NL", "B": 4, "rel_err": 1.63e-07}
+{"run": 3, "kind": "check", "gate": "IQ3XXS", "down": "IQ4NL", "B": 1, "rel_err": 1.02e-07}
+{"run": 3, "kind": "check", "gate": "IQ3XXS", "down": "IQ4NL", "B": 2, "rel_err": 1.13e-07}
+{"run": 3, "kind": "check", "gate": "IQ3XXS", "down": "IQ4NL", "B": 3, "rel_err": 1.33e-07}
+{"run": 3, "kind": "check", "gate": "IQ3XXS", "down": "IQ4NL", "B": 4, "rel_err": 2.76e-07}
+{"run": 3, "kind": "check", "gate": "IQ3S", "down": "IQ4NL", "B": 1, "rel_err": 2.70e-07}
+{"run": 3, "kind": "check", "gate": "IQ3S", "down": "IQ4NL", "B": 2, "rel_err": 2.60e-07}
+{"run": 3, "kind": "check", "gate": "IQ3S", "down": "IQ4NL", "B": 3, "rel_err": 2.09e-07}
+{"run": 3, "kind": "check", "gate": "IQ3S", "down": "IQ4NL", "B": 4, "rel_err": 2.09e-07}
+{"run": 3, "kind": "check", "gate": "IQ4XS", "down": "IQ4NL", "B": 1, "rel_err": 1.31e-07}
+{"run": 3, "kind": "check", "gate": "IQ4XS", "down": "IQ4NL", "B": 2, "rel_err": 1.35e-07}
+{"run": 3, "kind": "check", "gate": "IQ4XS", "down": "IQ4NL", "B": 3, "rel_err": 1.35e-07}
+{"run": 3, "kind": "check", "gate": "IQ4XS", "down": "IQ4NL", "B": 4, "rel_err": 1.35e-07}
+{"run": 3, "kind": "check", "gate": "IQ2S", "down": "Q20", "B": 1, "rel_err": 1.01e-07}
+{"run": 3, "kind": "check", "gate": "IQ2S", "down": "Q20", "B": 2, "rel_err": 1.73e-07}
+{"run": 3, "kind": "check", "gate": "IQ2S", "down": "Q20", "B": 3, "rel_err": 3.14e-07}
+{"run": 3, "kind": "check", "gate": "IQ2S", "down": "Q20", "B": 4, "rel_err": 3.93e-07}
+{"run": 3, "kind": "check", "gate": "IQ3XXS", "down": "Q20", "B": 1, "rel_err": 1.96e-07}
+{"run": 3, "kind": "check", "gate": "IQ3XXS", "down": "Q20", "B": 2, "rel_err": 1.96e-07}
+{"run": 3, "kind": "check", "gate": "IQ3XXS", "down": "Q20", "B": 3, "rel_err": 1.86e-07}
+{"run": 3, "kind": "check", "gate": "IQ3XXS", "down": "Q20", "B": 4, "rel_err": 3.87e-07}
+{"run": 3, "kind": "type", "kernel": "gate_up_IQ2S", "B": 1, "us_per_layer_median": 218.8, "us_min": 217.3, "us_max": 219.9, "gbs": 48.0}
+{"run": 3, "kind": "type", "kernel": "gate_up_IQ3XXS", "B": 1, "us_per_layer_median": 149.1, "us_min": 148.1, "us_max": 150.3, "gbs": 84.1}
+{"run": 3, "kind": "type", "kernel": "gate_up_IQ3S", "B": 1, "us_per_layer_median": 167.1, "us_min": 165.5, "us_max": 167.3, "gbs": 84.3}
+{"run": 3, "kind": "type", "kernel": "gate_up_IQ4XS", "B": 1, "us_per_layer_median": 139.9, "us_min": 138.8, "us_max": 140.5, "gbs": 124.4}
+{"run": 3, "kind": "type", "kernel": "down_IQ4NL", "B": 1, "us_per_layer_median": 77.0, "us_min": 75.4, "us_max": 77.3, "gbs": 119.8}
+{"run": 3, "kind": "type", "kernel": "down_Q20", "B": 1, "us_per_layer_median": 73.1, "us_min": 72.0, "us_max": 73.7, "gbs": 63.0}
+{"run": 3, "kind": "type", "kernel": "gate_up_IQ2S", "B": 2, "us_per_layer_median": 352.6, "us_min": 351.6, "us_max": 353.8, "gbs": 29.8}
+{"run": 3, "kind": "type", "kernel": "gate_up_IQ3XXS", "B": 2, "us_per_layer_median": 224.1, "us_min": 221.9, "us_max": 225.7, "gbs": 56.0}
+{"run": 3, "kind": "type", "kernel": "gate_up_IQ3S", "B": 2, "us_per_layer_median": 253.5, "us_min": 251.6, "us_max": 254.0, "gbs": 55.6}
+{"run": 3, "kind": "type", "kernel": "gate_up_IQ4XS", "B": 2, "us_per_layer_median": 212.1, "us_min": 211.2, "us_max": 213.9, "gbs": 82.1}
+{"run": 3, "kind": "type", "kernel": "down_IQ4NL", "B": 2, "us_per_layer_median": 113.3, "us_min": 112.1, "us_max": 115.3, "gbs": 81.3}
+{"run": 3, "kind": "type", "kernel": "down_Q20", "B": 2, "us_per_layer_median": 92.1, "us_min": 89.9, "us_max": 93.3, "gbs": 50.0}
+{"run": 3, "kind": "type", "kernel": "gate_up_IQ2S", "B": 3, "us_per_layer_median": 464.9, "us_min": 463.6, "us_max": 466.0, "gbs": 22.6}
+{"run": 3, "kind": "type", "kernel": "gate_up_IQ3XXS", "B": 3, "us_per_layer_median": 338.6, "us_min": 337.1, "us_max": 339.4, "gbs": 37.0}
+{"run": 3, "kind": "type", "kernel": "gate_up_IQ3S", "B": 3, "us_per_layer_median": 370.3, "us_min": 368.2, "us_max": 372.0, "gbs": 38.0}
+{"run": 3, "kind": "type", "kernel": "gate_up_IQ4XS", "B": 3, "us_per_layer_median": 322.3, "us_min": 321.3, "us_max": 323.8, "gbs": 54.0}
+{"run": 3, "kind": "type", "kernel": "down_IQ4NL", "B": 3, "us_per_layer_median": 152.4, "us_min": 151.6, "us_max": 154.8, "gbs": 60.5}
+{"run": 3, "kind": "type", "kernel": "down_Q20", "B": 3, "us_per_layer_median": 127.5, "us_min": 126.8, "us_max": 127.8, "gbs": 36.2}
+{"run": 3, "kind": "type", "kernel": "gate_up_IQ2S", "B": 4, "us_per_layer_median": 604.9, "us_min": 603.0, "us_max": 607.0, "gbs": 17.4}
+{"run": 3, "kind": "type", "kernel": "gate_up_IQ3XXS", "B": 4, "us_per_layer_median": 471.1, "us_min": 470.5, "us_max": 471.8, "gbs": 26.6}
+{"run": 3, "kind": "type", "kernel": "gate_up_IQ3S", "B": 4, "us_per_layer_median": 504.9, "us_min": 503.4, "us_max": 506.2, "gbs": 27.9}
+{"run": 3, "kind": "type", "kernel": "gate_up_IQ4XS", "B": 4, "us_per_layer_median": 444.4, "us_min": 443.3, "us_max": 445.1, "gbs": 39.2}
+{"run": 3, "kind": "type", "kernel": "down_IQ4NL", "B": 4, "us_per_layer_median": 194.1, "us_min": 193.3, "us_max": 196.3, "gbs": 47.5}
+{"run": 3, "kind": "type", "kernel": "down_Q20", "B": 4, "us_per_layer_median": 162.2, "us_min": 160.3, "us_max": 163.6, "gbs": 28.4}
+{"run": 3, "kind": "token", "layers": 48, "B": 1, "ms_median": 12.311, "ms_min": 12.192, "ms_max": 12.391, "expert_bytes": 982272000, "gbs": 79.8}
+{"run": 3, "kind": "token", "layers": 48, "B": 2, "ms_median": 18.823, "ms_min": 18.713, "ms_max": 18.927, "expert_bytes": 982272000, "gbs": 52.2}
+{"run": 3, "kind": "token", "layers": 48, "B": 3, "ms_median": 26.177, "ms_min": 25.994, "ms_max": 26.345, "expert_bytes": 982272000, "gbs": 37.5}
+{"run": 3, "kind": "token", "layers": 48, "B": 4, "ms_median": 34.660, "ms_min": 34.464, "ms_max": 34.752, "expert_bytes": 982272000, "gbs": 28.3}

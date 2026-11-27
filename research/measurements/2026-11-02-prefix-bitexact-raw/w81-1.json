@@ -1,0 +1,78 @@
+{
+ "build": "work/build/w81",
+ "warm_s": 4.8736608028411865,
+ "requests": [
+  {
+   "wall_s": 0.3043947219848633,
+   "usage": {
+    "input_tokens": 29,
+    "cache_read_input_tokens": 7369,
+    "cache_creation_input_tokens": 0,
+    "output_tokens": 1
+   }
+  },
+  {
+   "wall_s": 0.299593448638916,
+   "usage": {
+    "input_tokens": 29,
+    "cache_read_input_tokens": 7369,
+    "cache_creation_input_tokens": 0,
+    "output_tokens": 1
+   }
+  },
+  {
+   "wall_s": 0.3088846206665039,
+   "usage": {
+    "input_tokens": 29,
+    "cache_read_input_tokens": 7369,
+    "cache_creation_input_tokens": 0,
+    "output_tokens": 1
+   }
+  },
+  {
+   "wall_s": 0.328228235244751,
+   "usage": {
+    "input_tokens": 29,
+    "cache_read_input_tokens": 7369,
+    "cache_creation_input_tokens": 0,
+    "output_tokens": 1
+   }
+  },
+  {
+   "wall_s": 0.31064701080322266,
+   "usage": {
+    "input_tokens": 29,
+    "cache_read_input_tokens": 7369,
+    "cache_creation_input_tokens": 0,
+    "output_tokens": 1
+   }
+  },
+  {
+   "wall_s": 0.3248920440673828,
+   "usage": {
+    "input_tokens": 29,
+    "cache_read_input_tokens": 7369,
+    "cache_creation_input_tokens": 0,
+    "output_tokens": 1
+   }
+  },
+  {
+   "wall_s": 0.3120262622833252,
+   "usage": {
+    "input_tokens": 29,
+    "cache_read_input_tokens": 7369,
+    "cache_creation_input_tokens": 0,
+    "output_tokens": 1
+   }
+  },
+  {
+   "wall_s": 0.3257875442504883,
+   "usage": {
+    "input_tokens": 29,
+    "cache_read_input_tokens": 7369,
+    "cache_creation_input_tokens": 0,
+    "output_tokens": 1
+   }
+  }
+ ]
+}

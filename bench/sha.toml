@@ -1,0 +1,18 @@
+# Output SHA (first 16 hex digits of the sha256 of the text) of main in deterministic mode (TONA_DETERMINISTIC=1), per
+# request of scripts/ab.py: the prompt from the reference corpus (scripts/make_corpus.py, commit e3660c0), --ctx 140000,
+# 200 decoded tokens, MTP. Source: research/measurements/2026-11-02-ab-tool.md (work/build/merged = main e3660c0).
+# A change that must not alter numbers (rule 3) has to reproduce them; whoever changes tokens on purpose records them
+# again in the same pull request. "130000" was e9545d70f2400b87 until the checkpoint rule changed: the 130K request follows the 30K one on the same
+# server and continues a fork checkpoint, which no longer ends in a forward token (research/measurements/2026-11-02-prefix-bitexact.md,
+# section 5.2). ab.py compares against this file only in deterministic mode with the reference corpus.
+# FP8 prefill on by default (2026-11-03): 30000 was 08f0bd31e0c0277f and 130000 536592a9aa29bd56 with the f16
+# prefill (TONA_PREFILL_FP8=0 reproduces them); research/measurements/2026-11-03-fp8-default-r4.md.
+# Output projections of the layers (ssm_out, attn_output) back on the f16 GEMM in the FP8 prefill (2026-11-11): 30000 was
+# 6ef803431673370a and 130000 453d981764536e4f (TONA_PF_FP8_OUT=1 reproduces them);
+# research/measurements/2026-11-10-fp8-quality.md.
+# Coder shard 1 of 2026-10-19 (revision bba88856) is the reference (2026-11-12): 30000 was 5b4e7ef2b0fc2495 and 130000
+# 9340252c318b7217 with the shard of 2026-09-29 (revision 5348543e; arm A of the same run reproduced both);
+# research/measurements/2026-11-12-shard-1019-switch.md.
+[server]
+"30000" = "ee58880d3f5b558f"
+"130000" = "7d2996546076d1b0"

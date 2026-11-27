@@ -1,0 +1,93 @@
+{
+  "id": "minicpm-v-4.7",
+  "name": "MiniCPM-V 4.7 (35B-A3B and 1B)",
+  "vendor": "OpenBMB",
+  "release_date": "2026-10-06",
+  "lineage": {
+    "base_model": "Qwen3.5-architecture language models (config model_type qwen3_5_moe_text for 35B-A3B, qwen3_5_text for 1B); the card does not name the initialization checkpoint",
+    "family": "MiniCPM-V (earlier record: minicpm-v-4.5)",
+    "how_derived": "vision-language model with a 27-layer ViT using intra-ViT early token compression (LLaVA-UHD v4); first MoE model of the MiniCPM-V series"
+  },
+  "purpose": "Single-image, multi-image and video understanding for on-device and local use; the 35B-A3B variant targets smooth on-device MoE inference (phones, tablets) without capability loss, the 1B variant the smallest footprint.",
+  "tasks": ["vision", "documents", "general"],
+  "modalities": {"input": ["text", "image", "video"], "output": ["text"]},
+  "languages": {"natural": ["en", "zh", "many"]},
+  "license": {
+    "name": "Apache-2.0",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card tag apache-2.0 on all repos; LICENSE text not opened."
+  },
+  "architecture": {
+    "kind": "hybrid Gated DeltaNet + full attention MoE with ViT vision encoder (35B-A3B); dense 1B",
+    "gguf_arch": "qwen35moe (language model of the 35B-A3B, inferred from config model_type qwen3_5_moe_text; mmproj separate)",
+    "params_total_b": 35,
+    "params_active_b": 3,
+    "layers": 40,
+    "attention": "30 linear-attention and 10 full-attention layers (full_attention_interval 4)",
+    "recurrent": "Gated DeltaNet (linear attention)",
+    "experts": 256,
+    "experts_active": 8,
+    "drafter": "DSpark drafter heads (35B-A3B-DSpark 0.78 GB, 1B-DSpark), BF16 and GGUF; the 1B config also lists an MTP layer",
+    "why_this_design": "Card: early compression inside the ViT reduces compute of later encoder layers and supports mixed 4x/16x visual token compression; the MoE is made on-device-capable by Lookahead Expert Scheduling (cross-layer routing prediction preloads the next layer's experts, computation still follows the real router), fine-grained layer-wise quantization of expert weights and DSpark speculative sampling. The 1B layer count (24) is from config.json."
+  },
+  "variants": [
+    {"repo": "openbmb/MiniCPM-V-4.7-35B-A3B-gguf", "format": "GGUF Q4_K_M", "size_gb": 21.17, "official": true, "notes": "IQ3_XS 14.48, IQ3_M 15.44, IQ4_XS 18.73, Q4_0 19.71, IQ4_NL 19.78, Q4_1 21.85, F16 69.38; language model only, mmproj files separate (a 4x mmproj exists); thinking/ subfolder with a thinking template"},
+    {"repo": "openbmb/MiniCPM-V-4.7-35B-A3B", "format": "safetensors BF16", "size_gb": 70.45, "official": true},
+    {"repo": "openbmb/MiniCPM-V-4.7-1B-gguf", "format": "GGUF Q4_K_M", "size_gb": 0.67, "official": true, "notes": "F16 2.02; BF16 repo openbmb/MiniCPM-V-4.7-1B 3.13 GB"},
+    {"repo": "openbmb/MiniCPM-V-4.7-35B-A3B-DSpark", "format": "drafter", "size_gb": 0.78, "official": true}
+  ],
+  "hardware_fit": {
+    "pc-12gb": {"fits": "yes", "basis": "estimate", "variant": "Q4_K_M", "notes": "a user reports 37.5 tok/s with vision on an 8 GB RTX 2060 Super with 32 GB RAM using cpu-moe, q4_0 KV cache and the DSpark drafter (llama.cpp, HF discussion 13); IQ3_M 15.4 GB nearly fits VRAM"},
+    "pc-16gb": {"fits": "yes", "basis": "estimate", "variant": "Q4_K_M", "notes": "21.2 GB file against 13.6 GB VRAM budget, rest from RAM"},
+    "pc-24gb": {"fits": "yes", "basis": "estimate", "variant": "Q4_K_M", "notes": "a user ran Q4_K_M on 24 GB VRAM with 64 GB RAM (discussion 10)"},
+    "pc-32gb": {"fits": "yes", "basis": "estimate", "variant": "Q4_K_M"},
+    "mac-16-24gb": {"fits": "no", "basis": "estimate", "variant": "IQ3_XS", "notes": "14.5 GB against a 12 GB GPU share; the vendor demos a 3 GB on-device mode (SSD streaming with LES) on a phone, not a general Mac recipe"},
+    "mac-32gb": {"fits": "yes", "basis": "estimate", "variant": "Q4_K_M", "notes": "21.2 GB against about 22 GB GPU share, tight with vision and KV"},
+    "mac-64gb+": {"fits": "yes", "basis": "estimate", "variant": "Q4_K_M"}
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": ["Transformers >= 5.18", "vLLM", "SGLang", "Ollama", "OpenBMB llama.cpp-omni (LES)"],
+    "notes": "Official GGUF with llama.cpp and DSpark speculative decoding works per user report; LES lives in OpenBMB's llama.cpp-omni fork. Tona has a qwen35moe path for the language side, the vision tower and DSpark are not implemented."
+  },
+  "benchmarks": [
+    {"name": "Overall score vs inference time in Instruct mode", "score": "higher overall score in less time than Qwen3.6-35B-A3B", "kind": "vendor", "source": "https://huggingface.co/openbmb/MiniCPM-V-4.7-35B-A3B", "variant": "BF16; numbers only in images"},
+    {"name": "On-device decode speed, iPhone 17 Pro Max", "score": "13+", "kind": "vendor", "unit": "tok/s (decode), 3 GB memory", "variant": "35B-A3B with LES, layer-wise quantization, DSpark", "source": "https://huggingface.co/openbmb/MiniCPM-V-4.7-35B-A3B"},
+    {"name": "Decode speed RTX 2060 Super 8 GB + 32 GB RAM", "score": 37.5, "kind": "independent", "unit": "tok/s (decode)", "variant": "Q4_K_M, cpu-moe, q4_0 KV, DSpark, vision enabled", "harness": "llama.cpp, community config", "date": "2026-10-15", "source": "https://huggingface.co/openbmb/MiniCPM-V-4.7-35B-A3B/discussions/13"},
+    {"name": "NanoBench 12 coding/agentic/system tasks (OMP harness, reasoning off)", "score": "9/12 (92.1)", "kind": "independent", "unit": "task score", "variant": "Q4_K_M", "harness": "OMP; Hermes agent harness 8/12 (85.8)", "date": "2026-10-14", "source": "https://huggingface.co/openbmb/MiniCPM-V-4.7-35B-A3B/discussions/10"}
+  ],
+  "soft": {
+    "strengths": ["MoE with vision at 3 B active runs on an 8 GB GPU with RAM offload (user report)", "Official quantized GGUF and DSpark drafter at release", "Early-compressed visual tokens (4x/16x) make images cheap"],
+    "weaknesses": ["Benchmark numbers on the card are images only, not text", "A discussion questions the vendor's reproduction of Qwen3.6-35B-A3B numbers (MMMU-Pro 69.9 against 75.3 official); vendor reply pending in the text read", "Needs transformers >= 5.18 for the BF16 path"],
+    "behavior": "Instruct and thinking templates are shipped as separate GGUF template sets (thinking/ folder).",
+    "best_for": ["image and video understanding on 12 to 32 GB machines", "general multimodal assistant"],
+    "avoid_for": ["Mac with 16 GB (does not fit)"],
+    "user_reports": [
+      {"summary": "37.5 tok/s with vision on an RTX 2060 Super 8 GB, Ryzen 5 5600G, 32 GB RAM; draft n_max tuning matters because RAM latency bounds the model", "sentiment": "positive", "source": "https://huggingface.co/openbmb/MiniCPM-V-4.7-35B-A3B/discussions/13", "date": "2026-10-15"},
+      {"summary": "NanoBench local run (24 GB VRAM, 64 GB RAM): 9/12 tasks in two harnesses, called very fast", "sentiment": "positive", "source": "https://huggingface.co/openbmb/MiniCPM-V-4.7-35B-A3B/discussions/10", "date": "2026-10-14"}
+    ],
+    "maturity": "OpenBMB ships MiniCPM-V since 2024; 869k downloads of the 35B-A3B repo and 423k of its GGUF within six weeks; 20 discussion threads."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "A vision-capable A3B MoE with an official GGUF and the architecture family Tona already runs on the text side (Qwen3.5 MoE), plus LES, a prior-art technique for expert prefetch (relevant to our expert streaming). The vision tower would have to be added; text quality relative to Qwen3.6-35B-A3B is unverified.",
+    "blockers": ["vision tower and mmproj not implemented in Tona", "numbers only as images, no independent coding result"]
+  },
+  "sources": [
+    {"url": "https://huggingface.co/openbmb/MiniCPM-V-4.7-35B-A3B", "kind": "primary", "checked": "2026-11-19", "note": "README and config.json read"},
+    {"url": "https://huggingface.co/openbmb/MiniCPM-V-4.7-1B", "kind": "primary", "checked": "2026-11-19", "note": "README head and config.json read"},
+    {"url": "https://huggingface.co/openbmb/MiniCPM-V-4.7-35B-A3B-gguf", "kind": "primary", "checked": "2026-11-19", "note": "sizes via the HF API"},
+    {"url": "https://huggingface.co/openbmb/MiniCPM-V-4.7-35B-A3B/discussions", "kind": "primary", "checked": "2026-11-19", "note": "discussion text via the HF API"}
+  ],
+  "open_questions": [
+    "Numeric vision and text benchmark tables (images on the card)",
+    "Initialization checkpoint of the language model (Qwen3.5 architecture, base not stated)",
+    "License text",
+    "Q4_K_M text-only quality against Qwen3.6-35B-A3B",
+    "Whether LES works with llama.cpp upstream or only the llama.cpp-omni fork"
+  ],
+  "last_checked": "2026-11-19"
+}

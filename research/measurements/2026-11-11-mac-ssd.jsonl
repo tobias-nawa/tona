@@ -1,0 +1,73 @@
+{"kind": "block", "block": "W", "time": "12:20:07", "load": "13,01 10,70 8,54", "power": "AC Power", "bg_cpu_pct": 56.5}
+{"kind": "write", "bytes": 17179869184, "s": 9.013, "gbs": 1.906}
+{"kind": "block", "block": "A1", "time": "12:20:26", "load": "15,61 11,42 8,84", "power": "AC Power", "bg_cpu_pct": 67.3}
+{"kind": "read", "pattern": "rand", "block": 4096, "qd": 1, "nocache": 1, "requests": 20000, "s": 1.7643, "gbs": 0.046, "iops": 11336, "lat_med_us": 85.5, "lat_p99_us": 108.8}
+{"kind": "read", "pattern": "rand", "block": 4096, "qd": 8, "nocache": 1, "requests": 20000, "s": 0.2303, "gbs": 0.356, "iops": 86857, "lat_med_us": 88.9, "lat_p99_us": 149.5}
+{"kind": "read", "pattern": "rand", "block": 4096, "qd": 32, "nocache": 1, "requests": 20000, "s": 0.1213, "gbs": 0.675, "iops": 164839, "lat_med_us": 190.0, "lat_p99_us": 275.0}
+{"kind": "read", "pattern": "rand", "block": 680000, "qd": 1, "nocache": 1, "requests": 3158, "s": 1.1131, "gbs": 1.929, "iops": 2837, "lat_med_us": 360.0, "lat_p99_us": 426.8}
+{"kind": "read", "pattern": "rand", "block": 680000, "qd": 4, "nocache": 1, "requests": 3158, "s": 0.4001, "gbs": 5.367, "iops": 7892, "lat_med_us": 479.9, "lat_p99_us": 855.2}
+{"kind": "read", "pattern": "rand", "block": 680000, "qd": 16, "nocache": 1, "requests": 3158, "s": 0.3265, "gbs": 6.577, "iops": 9671, "lat_med_us": 1627.8, "lat_p99_us": 2633.4}
+{"kind": "read", "pattern": "rand", "block": 2046000, "qd": 1, "nocache": 1, "requests": 1049, "s": 0.6004, "gbs": 3.575, "iops": 1747, "lat_med_us": 565.6, "lat_p99_us": 762.4}
+{"kind": "read", "pattern": "rand", "block": 2046000, "qd": 4, "nocache": 1, "requests": 1049, "s": 0.1924, "gbs": 11.154, "iops": 5452, "lat_med_us": 709.0, "lat_p99_us": 1106.3}
+{"kind": "read", "pattern": "rand", "block": 2046000, "qd": 16, "nocache": 1, "requests": 1049, "s": 0.1631, "gbs": 13.161, "iops": 6433, "lat_med_us": 2467.7, "lat_p99_us": 3346.8}
+{"kind": "read", "pattern": "seq", "block": 16777216, "qd": 1, "nocache": 1, "requests": 128, "s": 0.3331, "gbs": 6.446, "iops": 384, "lat_med_us": 2592.8, "lat_p99_us": 3212.1}
+{"kind": "read", "pattern": "seq", "block": 16777216, "qd": 4, "nocache": 1, "requests": 128, "s": 0.2974, "gbs": 7.222, "iops": 430, "lat_med_us": 9277.5, "lat_p99_us": 10185.7}
+{"kind": "block", "block": "A2", "time": "12:20:42", "load": "16,66 11,87 9,05", "power": "AC Power", "bg_cpu_pct": 57.2}
+{"kind": "read", "pattern": "rand", "block": 4096, "qd": 1, "nocache": 1, "requests": 20000, "s": 1.6543, "gbs": 0.050, "iops": 12090, "lat_med_us": 84.7, "lat_p99_us": 105.6}
+{"kind": "read", "pattern": "rand", "block": 4096, "qd": 8, "nocache": 1, "requests": 20000, "s": 0.2178, "gbs": 0.376, "iops": 91821, "lat_med_us": 88.9, "lat_p99_us": 141.6}
+{"kind": "read", "pattern": "rand", "block": 4096, "qd": 32, "nocache": 1, "requests": 20000, "s": 0.1176, "gbs": 0.696, "iops": 169998, "lat_med_us": 191.0, "lat_p99_us": 307.2}
+{"kind": "read", "pattern": "rand", "block": 680000, "qd": 1, "nocache": 1, "requests": 3158, "s": 1.0774, "gbs": 1.993, "iops": 2931, "lat_med_us": 354.2, "lat_p99_us": 414.7}
+{"kind": "read", "pattern": "rand", "block": 680000, "qd": 4, "nocache": 1, "requests": 3158, "s": 0.3815, "gbs": 5.629, "iops": 8278, "lat_med_us": 466.6, "lat_p99_us": 827.4}
+{"kind": "read", "pattern": "rand", "block": 680000, "qd": 16, "nocache": 1, "requests": 3158, "s": 0.3067, "gbs": 7.001, "iops": 10296, "lat_med_us": 1561.7, "lat_p99_us": 2567.2}
+{"kind": "read", "pattern": "rand", "block": 2046000, "qd": 1, "nocache": 1, "requests": 1049, "s": 0.5787, "gbs": 3.709, "iops": 1813, "lat_med_us": 553.4, "lat_p99_us": 651.0}
+{"kind": "read", "pattern": "rand", "block": 2046000, "qd": 4, "nocache": 1, "requests": 1049, "s": 0.1904, "gbs": 11.270, "iops": 5508, "lat_med_us": 702.0, "lat_p99_us": 1040.5}
+{"kind": "read", "pattern": "rand", "block": 2046000, "qd": 16, "nocache": 1, "requests": 1049, "s": 0.1639, "gbs": 13.094, "iops": 6400, "lat_med_us": 2467.2, "lat_p99_us": 3407.7}
+{"kind": "read", "pattern": "seq", "block": 16777216, "qd": 1, "nocache": 1, "requests": 128, "s": 0.3171, "gbs": 6.773, "iops": 404, "lat_med_us": 2498.2, "lat_p99_us": 2818.5}
+{"kind": "read", "pattern": "seq", "block": 16777216, "qd": 4, "nocache": 1, "requests": 128, "s": 0.2831, "gbs": 7.587, "iops": 452, "lat_med_us": 8762.1, "lat_p99_us": 10594.7}
+{"kind": "block", "block": "A3", "time": "12:20:57", "load": "17,16 12,29 9,26", "power": "AC Power", "bg_cpu_pct": 67.6}
+{"kind": "read", "pattern": "rand", "block": 4096, "qd": 1, "nocache": 1, "requests": 20000, "s": 1.5983, "gbs": 0.051, "iops": 12513, "lat_med_us": 85.8, "lat_p99_us": 110.8}
+{"kind": "read", "pattern": "rand", "block": 4096, "qd": 8, "nocache": 1, "requests": 20000, "s": 0.2088, "gbs": 0.392, "iops": 95771, "lat_med_us": 88.8, "lat_p99_us": 141.8}
+{"kind": "read", "pattern": "rand", "block": 4096, "qd": 32, "nocache": 1, "requests": 20000, "s": 0.1173, "gbs": 0.698, "iops": 170462, "lat_med_us": 194.9, "lat_p99_us": 357.4}
+{"kind": "read", "pattern": "rand", "block": 680000, "qd": 1, "nocache": 1, "requests": 3158, "s": 1.0511, "gbs": 2.043, "iops": 3004, "lat_med_us": 347.0, "lat_p99_us": 423.2}
+{"kind": "read", "pattern": "rand", "block": 680000, "qd": 4, "nocache": 1, "requests": 3158, "s": 0.3617, "gbs": 5.937, "iops": 8730, "lat_med_us": 454.2, "lat_p99_us": 799.7}
+{"kind": "read", "pattern": "rand", "block": 680000, "qd": 16, "nocache": 1, "requests": 3158, "s": 0.2923, "gbs": 7.347, "iops": 10804, "lat_med_us": 1473.2, "lat_p99_us": 2663.8}
+{"kind": "read", "pattern": "rand", "block": 2046000, "qd": 1, "nocache": 1, "requests": 1049, "s": 0.6134, "gbs": 3.499, "iops": 1710, "lat_med_us": 557.2, "lat_p99_us": 1424.0}
+{"kind": "read", "pattern": "rand", "block": 2046000, "qd": 4, "nocache": 1, "requests": 1049, "s": 0.1920, "gbs": 11.180, "iops": 5465, "lat_med_us": 710.7, "lat_p99_us": 1084.9}
+{"kind": "read", "pattern": "rand", "block": 2046000, "qd": 16, "nocache": 1, "requests": 1049, "s": 0.1654, "gbs": 12.973, "iops": 6341, "lat_med_us": 2448.0, "lat_p99_us": 4362.3}
+{"kind": "read", "pattern": "seq", "block": 16777216, "qd": 1, "nocache": 1, "requests": 128, "s": 0.3091, "gbs": 6.948, "iops": 414, "lat_med_us": 2425.5, "lat_p99_us": 2841.5}
+{"kind": "read", "pattern": "seq", "block": 16777216, "qd": 4, "nocache": 1, "requests": 128, "s": 0.2679, "gbs": 8.015, "iops": 478, "lat_med_us": 8369.9, "lat_p99_us": 9351.6}
+{"kind": "block", "block": "B", "time": "12:21:13", "load": "16,46 12,37 9,34", "power": "AC Power", "bg_cpu_pct": 56.4}
+{"kind": "read", "pattern": "rand", "block": 2046000, "qd": 16, "nocache": 0, "requests": 2099, "s": 0.5528, "gbs": 7.768, "iops": 3797, "lat_med_us": 4040.6, "lat_p99_us": 11515.4}
+{"kind": "read", "pattern": "rand", "block": 2046000, "qd": 16, "nocache": 0, "requests": 2099, "s": 0.0952, "gbs": 45.122, "iops": 22054, "lat_med_us": 373.6, "lat_p99_us": 7400.0}
+{"kind": "block", "block": "C1-old", "time": "12:22:42", "load": "14,60 13,00 9,89", "power": "AC Power", "bg_cpu_pct": 62.5}
+{"kind": "read", "pattern": "rand", "block": 680000, "qd": 1, "nocache": 1, "requests": 1579, "s": 0.5638, "gbs": 1.905, "iops": 2801, "lat_med_us": 351.6, "lat_p99_us": 513.7}
+{"kind": "read", "pattern": "rand", "block": 680000, "qd": 4, "nocache": 1, "requests": 1579, "s": 0.1992, "gbs": 5.389, "iops": 7925, "lat_med_us": 492.0, "lat_p99_us": 812.1}
+{"kind": "read", "pattern": "rand", "block": 680000, "qd": 16, "nocache": 1, "requests": 1579, "s": 0.1635, "gbs": 6.566, "iops": 9656, "lat_med_us": 1628.2, "lat_p99_us": 2623.0}
+{"kind": "read", "pattern": "rand", "block": 2046000, "qd": 1, "nocache": 1, "requests": 524, "s": 0.3265, "gbs": 3.284, "iops": 1605, "lat_med_us": 621.2, "lat_p99_us": 795.9}
+{"kind": "read", "pattern": "rand", "block": 2046000, "qd": 4, "nocache": 1, "requests": 524, "s": 0.0990, "gbs": 10.824, "iops": 5291, "lat_med_us": 749.4, "lat_p99_us": 1171.0}
+{"kind": "read", "pattern": "rand", "block": 2046000, "qd": 16, "nocache": 1, "requests": 524, "s": 0.0812, "gbs": 13.210, "iops": 6457, "lat_med_us": 2456.5, "lat_p99_us": 3557.5}
+{"kind": "read", "pattern": "seq", "block": 16777216, "qd": 4, "nocache": 1, "requests": 128, "s": 0.2904, "gbs": 7.395, "iops": 441, "lat_med_us": 9204.2, "lat_p99_us": 10681.0}
+{"kind": "block", "block": "C2-old", "time": "12:22:54", "load": "12,50 12,62 9,81", "power": "AC Power", "bg_cpu_pct": 58.2}
+{"kind": "read", "pattern": "rand", "block": 680000, "qd": 1, "nocache": 1, "requests": 1579, "s": 0.5229, "gbs": 2.053, "iops": 3019, "lat_med_us": 336.2, "lat_p99_us": 451.5}
+{"kind": "read", "pattern": "rand", "block": 680000, "qd": 4, "nocache": 1, "requests": 1579, "s": 0.1864, "gbs": 5.761, "iops": 8472, "lat_med_us": 472.2, "lat_p99_us": 773.2}
+{"kind": "read", "pattern": "rand", "block": 680000, "qd": 16, "nocache": 1, "requests": 1579, "s": 0.1517, "gbs": 7.076, "iops": 10405, "lat_med_us": 1563.9, "lat_p99_us": 2618.6}
+{"kind": "read", "pattern": "rand", "block": 2046000, "qd": 1, "nocache": 1, "requests": 524, "s": 0.3145, "gbs": 3.409, "iops": 1666, "lat_med_us": 604.3, "lat_p99_us": 810.0}
+{"kind": "read", "pattern": "rand", "block": 2046000, "qd": 4, "nocache": 1, "requests": 524, "s": 0.0980, "gbs": 10.938, "iops": 5346, "lat_med_us": 740.9, "lat_p99_us": 1133.6}
+{"kind": "read", "pattern": "rand", "block": 2046000, "qd": 16, "nocache": 1, "requests": 524, "s": 0.0824, "gbs": 13.016, "iops": 6362, "lat_med_us": 2428.3, "lat_p99_us": 4565.8}
+{"kind": "read", "pattern": "seq", "block": 16777216, "qd": 4, "nocache": 1, "requests": 128, "s": 0.2745, "gbs": 7.822, "iops": 466, "lat_med_us": 8721.8, "lat_p99_us": 9882.4}
+{"kind": "block", "block": "C3-old", "time": "12:23:06", "load": "11,27 12,35 9,74", "power": "AC Power", "bg_cpu_pct": 69.3}
+{"kind": "read", "pattern": "rand", "block": 680000, "qd": 1, "nocache": 1, "requests": 1579, "s": 0.5025, "gbs": 2.137, "iops": 3142, "lat_med_us": 330.6, "lat_p99_us": 454.5}
+{"kind": "read", "pattern": "rand", "block": 680000, "qd": 4, "nocache": 1, "requests": 1579, "s": 0.1799, "gbs": 5.969, "iops": 8778, "lat_med_us": 462.5, "lat_p99_us": 779.5}
+{"kind": "read", "pattern": "rand", "block": 680000, "qd": 16, "nocache": 1, "requests": 1579, "s": 0.1461, "gbs": 7.351, "iops": 10811, "lat_med_us": 1508.7, "lat_p99_us": 3416.8}
+{"kind": "read", "pattern": "rand", "block": 2046000, "qd": 1, "nocache": 1, "requests": 524, "s": 0.3038, "gbs": 3.529, "iops": 1725, "lat_med_us": 586.0, "lat_p99_us": 775.5}
+{"kind": "read", "pattern": "rand", "block": 2046000, "qd": 4, "nocache": 1, "requests": 524, "s": 0.0984, "gbs": 10.898, "iops": 5326, "lat_med_us": 742.3, "lat_p99_us": 1119.2}
+{"kind": "read", "pattern": "rand", "block": 2046000, "qd": 16, "nocache": 1, "requests": 524, "s": 0.0830, "gbs": 12.925, "iops": 6317, "lat_med_us": 2494.4, "lat_p99_us": 3720.5}
+{"kind": "read", "pattern": "seq", "block": 16777216, "qd": 4, "nocache": 1, "requests": 128, "s": 0.2639, "gbs": 8.139, "iops": 485, "lat_med_us": 8369.3, "lat_p99_us": 9917.2}
+{"kind": "block", "block": "C-new", "time": "12:23:17", "load": "11,23 12,29 9,76", "power": "AC Power", "bg_cpu_pct": 71.3}
+{"kind": "read", "pattern": "rand", "block": 680000, "qd": 1, "nocache": 1, "requests": 1579, "s": 0.5722, "gbs": 1.876, "iops": 2759, "lat_med_us": 363.3, "lat_p99_us": 493.5}
+{"kind": "read", "pattern": "rand", "block": 680000, "qd": 4, "nocache": 1, "requests": 1579, "s": 0.1954, "gbs": 5.495, "iops": 8081, "lat_med_us": 474.2, "lat_p99_us": 800.2}
+{"kind": "read", "pattern": "rand", "block": 680000, "qd": 16, "nocache": 1, "requests": 1579, "s": 0.1625, "gbs": 6.609, "iops": 9720, "lat_med_us": 1614.2, "lat_p99_us": 2620.7}
+{"kind": "read", "pattern": "rand", "block": 2046000, "qd": 1, "nocache": 1, "requests": 524, "s": 0.2910, "gbs": 3.684, "iops": 1800, "lat_med_us": 552.2, "lat_p99_us": 656.1}
+{"kind": "read", "pattern": "rand", "block": 2046000, "qd": 4, "nocache": 1, "requests": 524, "s": 0.0945, "gbs": 11.343, "iops": 5544, "lat_med_us": 692.5, "lat_p99_us": 1081.4}
+{"kind": "read", "pattern": "rand", "block": 2046000, "qd": 16, "nocache": 1, "requests": 524, "s": 0.0819, "gbs": 13.088, "iops": 6397, "lat_med_us": 2467.2, "lat_p99_us": 3530.2}
+{"kind": "read", "pattern": "seq", "block": 16777216, "qd": 4, "nocache": 1, "requests": 128, "s": 0.3062, "gbs": 7.013, "iops": 418, "lat_med_us": 9577.8, "lat_p99_us": 10568.1}

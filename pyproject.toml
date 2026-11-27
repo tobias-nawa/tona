@@ -1,0 +1,15 @@
+# Test and coverage settings only; the Python lint settings live in ruff.toml.
+
+[tool.pytest.ini_options]
+testpaths = ["tools/tests"]
+addopts = "-ra --strict-markers"
+
+[tool.coverage.run]
+# Everything the repository ships as Python, also files no test imports (they count as uncovered)
+source_dirs = ["tools", "scripts"]
+omit = ["tools/tests/*"]
+# diff-cover matches report paths against `git diff` paths: both must be relative to the repository root
+relative_files = true
+
+[tool.coverage.report]
+exclude_also = ["if __name__ == .__main__.:"]

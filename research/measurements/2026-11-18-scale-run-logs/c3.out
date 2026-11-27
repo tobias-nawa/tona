@@ -1,0 +1,52 @@
+desktop guard: a monitor is on, scale1118 c3 waits until the monitors power off (TONA_DESKTOP_GUARD=off skips this when the user allows it)
+{
+ "ctx": 140000,
+ "metrics": {
+  "prefill@30000": 1959.0550046377161,
+  "decode@30000": 75.04888318387292,
+  "prefill@130000": 1855.2839383015869,
+  "decode@130000": 64.71833051647123
+ },
+ "shas": {
+  "30000": "ee58880d3f5b558f",
+  "130000": "6e4f01e0e47ec72c"
+ },
+ "counters": {
+  "30000": {
+   "expert_hits": 64262,
+   "expert_misses": 10025
+  },
+  "130000": {
+   "expert_hits": 72089,
+   "expert_misses": 9817
+  }
+ },
+ "peaks": {
+  "rss_gb": 3.3895721435546875,
+  "gtt_gb": 29.20279312133789,
+  "vram_gb": 14.884464263916016,
+  "hwm_gb": 6.793983459472656,
+  "avail_min_gb": 24.546836853027344
+ },
+ "load": {
+  "cpu_own": 137.0,
+  "cpu_system": 14.2,
+  "cpu_other": 3.2,
+  "gpu_own": 0.0,
+  "gpu_system": 0.0,
+  "gpu_other": 0.3,
+  "pageins": 27398.6,
+  "swapins": 0.0,
+  "compressions": 0.0,
+  "level_min": 41,
+  "backup_share": 0.0,
+  "warning_share": 0.0,
+  "battery_share": 0.0,
+  "cpu_limit_min": null,
+  "power_mode": null,
+  "seconds": 101,
+  "idle_before_s": null,
+  "ready_s": 10.0
+ }
+}
+wall 102 s

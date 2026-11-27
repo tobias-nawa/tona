@@ -1,0 +1,150 @@
+{
+  "id": "sensenova-6.8-code2video",
+  "name": "SenseNova 6.8 Code2Video",
+  "vendor": "SenseTime (SenseNova)",
+  "release_date": "2026-10-24",
+  "lineage": {
+    "family": "SenseNova 6.8",
+    "base_model": "not stated on the card (tags: qwen3.8; config is a 64-layer Qwen3.5-architecture model with hidden size 5120)"
+  },
+  "purpose": "Lightweight open model for code-driven video creation: builds and renders short videos entirely as executable code, reviews frames and revises; long term a model that coordinates generative models and creative tools through code (card).",
+  "tasks": [
+    "coding",
+    "video-generation",
+    "vision"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en",
+      "zh"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0 (card tag)",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card tag apache-2.0; no LICENSE file in the repo."
+  },
+  "architecture": {
+    "kind": "Qwen3.5-architecture dense vision-language model (64 layers, hidden 5120 per config)",
+    "layers": 64,
+    "context_native": 262144,
+    "context_max": 524288,
+    "why_this_design": "card: code is the entry point to video because it connects image, video, 3D and editing tools; no architecture rationale"
+  },
+  "variants": [
+    {
+      "repo": "sensenova/SenseNova-6.8-Code2Video",
+      "format": "safetensors BF16",
+      "size_gb": 54.7,
+      "official": true,
+      "notes": "card serves it with tensor parallel 4 and 524,288 context via an override"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "no",
+      "variant": "BF16 (54.7 GB, no quantization found)",
+      "basis": "estimate",
+      "notes": "54.7 GB against a VRAM budget of 9.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-16gb": {
+      "fits": "no",
+      "variant": "BF16 (54.7 GB, no quantization found)",
+      "basis": "estimate",
+      "notes": "54.7 GB against a VRAM budget of 13.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-24gb": {
+      "fits": "no",
+      "variant": "BF16 (54.7 GB, no quantization found)",
+      "basis": "estimate",
+      "notes": "54.7 GB against a VRAM budget of 21.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-32gb": {
+      "fits": "no",
+      "variant": "BF16 (54.7 GB, no quantization found)",
+      "basis": "estimate",
+      "notes": "54.7 GB against a VRAM budget of 29.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "BF16 (54.7 GB, no quantization found)",
+      "basis": "estimate",
+      "notes": "54.7 GB against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "no",
+      "variant": "BF16 (54.7 GB, no quantization found)",
+      "basis": "estimate",
+      "notes": "54.7 GB against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "no",
+      "variant": "BF16 (54.7 GB, no quantization found)",
+      "basis": "estimate",
+      "notes": "54.7 GB against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "unknown",
+    "other": [
+      "LightLLM",
+      "vLLM",
+      "SGLang (qwen3 reasoning parser, qwen3_coder tool parser)"
+    ],
+    "notes": "Card names Claude Code as the recommended harness (Anthropic-compatible endpoint, 512K context, 2,000+ turns, 10 h+ runs)."
+  },
+  "benchmarks": [],
+  "soft": {
+    "strengths": [
+      "sustains runs of more than 10 hours and 2,000 turns in a coding-agent harness (vendor statement)",
+      "example trajectories published (trajectories/all.openai.jsonl)"
+    ],
+    "weaknesses": [
+      "no benchmark numbers on the card; results described as preliminary"
+    ],
+    "best_for": [
+      "agentic code-driven motion design"
+    ],
+    "maturity": "1.7k downloads, 116 likes"
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "A long-horizon agentic coder tuned for a niche (code-rendered video) at 55 GB BF16; interesting as evidence of 10-hour agent runs on a 27B-class dense model, but unquantified quality and no benchmarks.",
+    "blockers": [
+      "size without quantization",
+      "no benchmarks"
+    ]
+  },
+  "open_questions": [
+    "base model and training recipe",
+    "any benchmark",
+    "general coding quality outside video"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/sensenova/SenseNova-6.8-Code2Video",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README and config read"
+    },
+    {
+      "url": "https://huggingface.co/api/models/sensenova/SenseNova-6.8-Code2Video?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "size"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

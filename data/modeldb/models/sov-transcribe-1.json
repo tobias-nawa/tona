@@ -1,0 +1,180 @@
+{
+  "id": "sov-transcribe-1",
+  "name": "SOV-Transcribe-1",
+  "vendor": "Salesforce (Sovereign Intelligence)",
+  "release_date": "2026-11",
+  "lineage": {
+    "base_model": "Whisper large-v3 encoder + Gemma 4 26B-A4B MoE",
+    "how_derived": "speech-augmented LM: audio encoder, projector, MoE LLM"
+  },
+  "purpose": "Open-weight speech-augmented LM for non-streaming ASR that organizations can run on their own infrastructure and keep audio data under their control (card).",
+  "tasks": [
+    "audio-transcription"
+  ],
+  "modalities": {
+    "input": [
+      "audio"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en",
+      "fr",
+      "de",
+      "es",
+      "it",
+      "pt",
+      "nl"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card metadata: apache-2.0; no LICENSE file in the repo. Canonical Apache-2.0 text read in the Qwen repo (canonical Apache-2.0 text read in https://github.com/QwenLM/Qwen3-ASR/blob/main/LICENSE). Built on Gemma 4 (Apache-2.0) and Whisper large-v3 (MIT)."
+  },
+  "architecture": {
+    "kind": "AUTOREGRESSIVE speech-augmented LLM: Whisper large-v3 encoder + projector + Gemma 4 26B-A4B MoE (decode memory-bound)",
+    "params_total_b": 26.6,
+    "params_active_b": 4.6,
+    "drafter": "DFlash speculative decoding with a separate draft model (about 2-3x single-request speed per card)"
+  },
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "no",
+      "basis": "estimate"
+    },
+    "pc-16gb": {
+      "fits": "no",
+      "basis": "estimate"
+    },
+    "pc-24gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "notes": "4-bit needs a quantized runtime, none known"
+    },
+    "pc-32gb": {
+      "fits": "marginal",
+      "basis": "estimate"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "basis": "estimate"
+    },
+    "mac-32gb": {
+      "fits": "no",
+      "basis": "estimate"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "BF16 about 54 GB"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "unknown",
+    "other": [
+      "vLLM 0.32.0 plugin",
+      "Transformers 5.19-5.22 with remote code"
+    ],
+    "notes": "Gemma 4 MoE decoder; reference deployment RTX PRO 6000 96 GB"
+  },
+  "benchmarks": [
+    {
+      "name": "Artificial Analysis non-streaming STT rank among open weights",
+      "score": "#1 (overall #7)",
+      "kind": "vendor",
+      "source": "https://huggingface.co/salesforce-sovereign-intelligence/SOV-Transcribe-1"
+    },
+    {
+      "name": "VoiceCodeBench",
+      "score": "rank 2 of 23 (2026-11-12)",
+      "kind": "vendor",
+      "source": "https://huggingface.co/salesforce-sovereign-intelligence/SOV-Transcribe-1"
+    },
+    {
+      "name": "30 s clip latency, RTX PRO 6000",
+      "score": 0.22,
+      "kind": "vendor",
+      "source": "https://huggingface.co/salesforce-sovereign-intelligence/SOV-Transcribe-1",
+      "unit": "s"
+    },
+    {
+      "name": "Server throughput RTX PRO 6000",
+      "score": 1039,
+      "kind": "vendor",
+      "source": "https://huggingface.co/salesforce-sovereign-intelligence/SOV-Transcribe-1",
+      "unit": "x real time"
+    },
+    {
+      "name": "German WER, Open ASR multilingual track (6 of 8 datasets)",
+      "score": 4.12,
+      "kind": "independent",
+      "source": "https://huggingface.co/spaces/hf-audio/open_asr_leaderboard",
+      "date": "2026-11-19",
+      "harness": "Open ASR Leaderboard multilingual track, German column (WER %), read from the Space config JSON 2026-11-19; rows differ in how many of the 8 datasets they cover",
+      "unit": "% WER"
+    },
+    {
+      "name": "Open ASR English avg WER (leaderboard rank 10 of 69)",
+      "score": 5.96,
+      "kind": "independent",
+      "source": "https://huggingface.co/spaces/hf-audio/open_asr_leaderboard",
+      "date": "2026-11-19",
+      "harness": "Open ASR Leaderboard English track, read 2026-11-19",
+      "unit": "% WER"
+    },
+    {
+      "name": "RTFx on the leaderboard (English track, leaderboard GPU)",
+      "score": 600.92,
+      "kind": "independent",
+      "source": "https://huggingface.co/spaces/hf-audio/open_asr_leaderboard",
+      "date": "2026-11-19",
+      "harness": "Open ASR Leaderboard, read 2026-11-19"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "Open-weight #1 on a third-party leaderboard (Artificial Analysis) per the card",
+      "German included"
+    ],
+    "weaknesses": [
+      "Tested to 30 min per file; longer needs splitting",
+      "Occasional repetition loops until token limit",
+      "No diarization mentioned",
+      "Claims strongest for English; no per-language table in text"
+    ],
+    "maturity": "Very new (HF createdAt 2026-11-10), 91 likes, 826 downloads, no user reports found."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Quality fine (German 4.12 on 6 of 8 sets, English rank 10 of 69) and Apache-2.0, but 26.6B total / 4.6B active needs 24-32 GB or more; 12-16 GB classes do not fit and there is no quantised runtime. The decoder is Gemma 4 26B-A4B: a Tona Gemma 4 MoE backend plus a Whisper encoder would serve it.",
+    "blockers": [
+      "too large for 12-16 GB",
+      "no quantised runtime",
+      "no Tona Gemma 4 MoE backend"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/salesforce-sovereign-intelligence/SOV-Transcribe-1",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/spaces/hf-audio/open_asr_leaderboard",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "Space /config JSON read directly"
+    }
+  ],
+  "open_questions": [
+    "Quantised size and any GGML runtime"
+  ],
+  "last_checked": "2026-11-19"
+}

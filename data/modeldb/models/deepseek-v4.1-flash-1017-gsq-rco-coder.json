@@ -1,0 +1,181 @@
+{
+  "id": "deepseek-v4.1-flash-1017-gsq-rco-coder",
+  "name": "DeepSeek-V4.1-Flash-1017 GSQ-RCO Coder (ISTA-DASLab)",
+  "vendor": "ISTA-DASLab (compression of a DeepSeek model)",
+  "release_date": "2026-11-02",
+  "lineage": {
+    "base_model": "deepseek-ai/DeepSeek-V4.1-Flash-1017",
+    "how_derived": "192 of 384 routed experts per layer removed by RCO (KL minimization on calibration data incl. SVG and three.js), remaining experts at the IQ2_XXS quant types (about 1 bit per transformer parameter)"
+  },
+  "purpose": "ISTA states: a compressed DeepSeek V4.1 Flash aimed at code and agentic workflows, long context and vision; unpruned releases recommended for general use; release experimental.",
+  "tasks": [
+    "coding",
+    "general"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en",
+      "zh"
+    ],
+    "programming": {}
+  },
+  "license": {
+    "name": "MIT (inherited from the base)",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Base repo deepseek-ai/DeepSeek-V4.1-Flash-1017 LICENSE read: standard MIT (\"to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies\"). The ISTA GGUF repo has no LICENSE file; its card states the weights inherit the base license and the GSQ-RCO tooling is under its repository license (not read)."
+  },
+  "architecture": {
+    "kind": "sparse MoE with MQA, compressed KV, top-512 indexer, hyper-connections and Engram lookup tables",
+    "params_total_b": 763,
+    "params_active_b": 16,
+    "experts": 384,
+    "experts_active": 6,
+    "context_native": 1000000,
+    "context_max": 1000000,
+    "drafter": "3 MTP layers, DSpark draft (base)",
+    "why_this_design": "Not restated by ISTA; the base vendor's architecture (research/49). Pruned file keeps 280.1 B transformer parameters and 196.6 B Engram parameters."
+  },
+  "variants": [
+    {
+      "repo": "ISTA-DASLab/DeepSeek-V4.1-Flash-1017-GSQ-RCO-Coder-GGUF",
+      "format": "GGUF, transformer 72.12 GB in 5 shards plus Engram 110.60 GB (SSD) plus mmproj 0.97 GB",
+      "size_gb": 182.72,
+      "official": false,
+      "notes": "Engram table is read one row per token from disk"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "no",
+      "variant": "GGUF transformer part",
+      "basis": "estimate",
+      "notes": "estimate from the file size (72.1 GB) against the budget of docs/hardware: 9.6 GB VRAM plus 50 GB RAM = 60 GB; about 13% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that); plus 110.6 GB Engram table read from SSD"
+    },
+    "pc-16gb": {
+      "fits": "no",
+      "variant": "GGUF transformer part",
+      "basis": "estimate",
+      "notes": "estimate from the file size (72.1 GB) against the budget of docs/hardware: 13.6 GB VRAM plus 50 GB RAM = 64 GB; about 19% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that); plus 110.6 GB Engram table read from SSD"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "GGUF transformer part",
+      "basis": "estimate",
+      "notes": "estimate from the file size (72.1 GB) against the budget of docs/hardware: 21.6 GB VRAM plus 82 GB RAM = 104 GB; about 30% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that); plus 110.6 GB Engram table read from SSD"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "GGUF transformer part",
+      "basis": "estimate",
+      "notes": "estimate from the file size (72.1 GB) against the budget of docs/hardware: 29.6 GB VRAM plus 114 GB RAM = 144 GB; about 41% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that); plus 110.6 GB Engram table read from SSD"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "GGUF transformer part",
+      "basis": "estimate",
+      "notes": "estimate from the file size (72.1 GB) against the GPU share of docs/hardware (about 12 GB); plus 110.6 GB Engram table read from SSD"
+    },
+    "mac-32gb": {
+      "fits": "no",
+      "variant": "GGUF transformer part",
+      "basis": "estimate",
+      "notes": "estimate from the file size (72.1 GB) against the GPU share of docs/hardware (about 22 GB); plus 110.6 GB Engram table read from SSD"
+    },
+    "mac-64gb+": {
+      "fits": "no",
+      "variant": "GGUF transformer part",
+      "basis": "estimate",
+      "notes": "estimate from the file size (72.1 GB) against the GPU share of docs/hardware (about 52 GB); plus 110.6 GB Engram table read from SSD"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [],
+    "notes": "card: llama.cpp b11870 or newer; research/49 found two cards disagreeing on support"
+  },
+  "benchmarks": [
+    {
+      "name": "SWE-bench Verified",
+      "score": 77.0,
+      "kind": "vendor",
+      "source": "https://huggingface.co/ISTA-DASLab/DeepSeek-V4.1-Flash-1017-GSQ-RCO-Coder-GGUF",
+      "variant": "GSQ-RCO Coder 72.1 GB",
+      "harness": "reasoning effort 50",
+      "unit": "%"
+    },
+    {
+      "name": "SWE-bench Verified",
+      "score": 81.2,
+      "kind": "vendor",
+      "source": "https://huggingface.co/ISTA-DASLab/DeepSeek-V4.1-Flash-1017-GSQ-RCO-Coder-GGUF",
+      "variant": "base FP8/FP4",
+      "harness": "effort 50"
+    },
+    {
+      "name": "LiveCodeBench v6",
+      "score": 88.57,
+      "kind": "vendor",
+      "source": "https://huggingface.co/ISTA-DASLab/DeepSeek-V4.1-Flash-1017-GSQ-RCO-Coder-GGUF",
+      "variant": "GSQ-RCO Coder",
+      "harness": "effort 50"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "94.8 % of base SWE-bench Verified retained (ISTA)",
+      "Strongest coding evidence of anything within reach of 32 GB VRAM plus 128 GB RAM (research/49 ranking)"
+    ],
+    "weaknesses": [
+      "Multi-step agentic tasks lose more than single-problem code (maker)",
+      "182 GB on disk, 110 GB Engram on fast storage",
+      "Capabilities outside the calibration mix degrade"
+    ],
+    "behavior": "Effort level 50 in the vendor benchmark.",
+    "maturity": "ISTA; 244 likes, 523k downloads within weeks."
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "Best coding evidence (vendor LiveCodeBench 88.6) for the 32 GB VRAM + 128 GB RAM class, MIT text verified. Judged for its users, not for what Tona runs today; 72 GB resident plus 110 GB Engram on SSD does not fit the 16 GB + 64 GB class.",
+    "blockers": [
+      "Tona has no DeepSeek-V4 module (MQA, indexer, hyper-connections, Engram): engine support, not quality",
+      "does not fit 16 GB + 64 GB"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/ISTA-DASLab/DeepSeek-V4.1-Flash-1017-GSQ-RCO-Coder-GGUF",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "page text read through a summarizer (WebFetch)"
+    },
+    {
+      "url": "research/49-moe-models-2026-11.md",
+      "kind": "own",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017/raw/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    }
+  ],
+  "open_questions": [
+    "Same Rust-style language gaps as the Qwen Coder? no per-language data",
+    "Context length of the GGUF",
+    "Independent coding score: the Coding Index mirror lists DeepSeek V4 Flash 0731 (69.1) and V4 Pro (68.8), not V4.1-Flash-1017 or the pruned Coder. Check: later mirror updates.",
+    "Per-language quality and independent coding evidence: the Aider polyglot board is stale (mirrors: last update 2025-11-20, no entry for any model of this database), LiveCodeBench and swebench.com publish no per-language numbers for it that we could retrieve. Check: our own Exercism polyglot run per language."
+  ],
+  "last_checked": "2026-11-19"
+}

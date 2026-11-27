@@ -1,0 +1,57 @@
+# Known noise of the workloads of scripts/ab.py: sd_percent is the standard deviation of the paired
+# difference B against A in percent between two measurements of the same build; df its degrees of freedom
+# (paired differences minus one per run set). Entries with df < 4 are listed but not used. See
+# scripts/ab_noise.py. ab.py proposes updates after a run; it never writes this file unasked.
+
+[bench-set."decode-code"]
+sd_percent = 0.065
+df = 2
+source = "research/measurements/2026-10-31-moe-sum-fault.md: 3 rounds main against w72, bench-set code, values rounded to 0.1 tok/s"
+
+[server."decode@130000"]
+sd_percent = 0.42
+df = 9
+decode_tokens = 200
+source = "research/measurements/2026-11-02-ab-tool.md: first A/A run (rounds 2-6; round 1 had no warm-up); second A/A run with warm-up (6 rounds)"
+
+[server."decode@2000"]
+sd_percent = 0.184
+df = 9
+decode_tokens = 400
+source = "research/measurements/2026-11-02-ab-tool.md: run 7, short, A/A merged against merged, 5 rounds with warm-up; 2026-11-02-86-ab-codepath (6 rounds, merged vs w83)"
+
+[server."decode@2000:write"]
+sd_percent = 0.453
+df = 9
+decode_tokens = 400
+source = "research/measurements/2026-11-02-ab-tool.md: run 7, short, A/A merged against merged, 5 rounds with warm-up; 2026-11-02-86-ab-codepath (6 rounds, merged vs w83)"
+
+[server."decode@30000"]
+sd_percent = 0.241
+df = 14
+decode_tokens = 200
+source = "research/measurements/2026-11-02-ab-tool.md: first A/A run (rounds 2-6; round 1 had no warm-up); second A/A run with warm-up (6 rounds); 2026-11-02-86-ab-codepath (6 rounds, merged vs w83)"
+
+[server."prefill@130000"]
+sd_percent = 0.018
+df = 9
+decode_tokens = 200
+source = "research/measurements/2026-11-02-ab-tool.md: first A/A run (rounds 2-6; round 1 had no warm-up); second A/A run with warm-up (6 rounds)"
+
+[server."prefill@2000"]
+sd_percent = 0.178
+df = 9
+decode_tokens = 400
+source = "research/measurements/2026-11-02-ab-tool.md: run 7, short, A/A merged against merged, 5 rounds with warm-up; 2026-11-02-86-ab-codepath (6 rounds, merged vs w83)"
+
+[server."prefill@2000:write"]
+sd_percent = 0.157
+df = 9
+decode_tokens = 400
+source = "research/measurements/2026-11-02-ab-tool.md: run 7, short, A/A merged against merged, 5 rounds with warm-up; 2026-11-02-86-ab-codepath (6 rounds, merged vs w83)"
+
+[server."prefill@30000"]
+sd_percent = 0.035
+df = 14
+decode_tokens = 200
+source = "research/measurements/2026-11-02-ab-tool.md: first A/A run (rounds 2-6; round 1 had no warm-up); second A/A run with warm-up (6 rounds); 2026-11-02-86-ab-codepath (6 rounds, merged vs w83)"

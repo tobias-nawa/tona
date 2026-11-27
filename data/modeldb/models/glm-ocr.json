@@ -1,0 +1,216 @@
+{
+  "id": "glm-ocr",
+  "name": "GLM-OCR",
+  "vendor": "Z.ai (Zhipu)",
+  "release_date": "2026-02",
+  "lineage": {
+    "family": "GLM-V",
+    "base_model": "GLM-V encoder-decoder (CogViT encoder, GLM-0.5B decoder)"
+  },
+  "purpose": "Complex document understanding: parsing of text, formulas and tables, and information extraction to JSON; designed small for high-concurrency serving and edge deployment.",
+  "languages": {
+    "natural": [
+      "zh",
+      "en",
+      "fr",
+      "es",
+      "ru",
+      "de",
+      "ja",
+      "ko"
+    ]
+  },
+  "license": {
+    "name": "MIT (model, card section \"License\"); Apache-2.0 (GitHub repo LICENSE and PP-DocLayoutV3)",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "HF repo has no LICENSE file; card says \"The GLM-OCR model is released under the MIT License\" and the pipeline uses PP-DocLayoutV3 (Apache-2.0). The zai-org/GLM-OCR GitHub LICENSE read is the unmodified Apache-2.0 text (code). Both permit commercial use and redistribution."
+  },
+  "architecture": {
+    "kind": "encoder-decoder VLM with a layout-analysis stage (PP-DocLayout-V3) and parallel region recognition",
+    "gguf_arch": "glm4v-based (llama.cpp PR 19677)",
+    "params_total_b": 0.9,
+    "drafter": "multi-token prediction layer (nextn)",
+    "why_this_design": "Small decoder cuts latency and compute for high-concurrency and edge use; MTP loss and RL improve training efficiency; the two-stage layout-then-recognition pipeline handles complex tables, code-heavy pages and seals (card)."
+  },
+  "variants": [
+    {
+      "repo": "zai-org/GLM-OCR",
+      "format": "safetensors BF16",
+      "official": true
+    },
+    {
+      "repo": "ggml-org/GLM-OCR-GGUF",
+      "format": "GGUF",
+      "official": true,
+      "notes": "named in the llama.cpp PR; ggml-org is the llama.cpp organisation Files: Q8_0 0.95 GB, f16 1.79 GB, mmproj Q8_0 0.48 GB."
+    }
+  ],
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "vLLM",
+      "SGLang",
+      "Ollama",
+      "transformers"
+    ],
+    "notes": "llama.cpp support merged 2026-02-18 (PR 19677); use the API with the specific prompts, the web UI degrades results"
+  },
+  "benchmarks": [
+    {
+      "name": "OmniDocBench v1.5 overall",
+      "score": 94.62,
+      "kind": "vendor",
+      "source": "https://huggingface.co/zai-org/GLM-OCR"
+    },
+    {
+      "name": "olmOCR-bench overall (without headers/footers, hosted API)",
+      "score": 75.2,
+      "kind": "vendor",
+      "source": "https://huggingface.co/zai-org/GLM-OCR"
+    },
+    {
+      "name": "ParseBench mean",
+      "score": 29.6,
+      "kind": "vendor",
+      "source": "https://huggingface.co/zai-org/GLM-OCR"
+    },
+    {
+      "name": "throughput PDFs",
+      "score": 1.86,
+      "unit": "pages/s (single replica, concurrency 1)",
+      "kind": "vendor",
+      "source": "https://huggingface.co/zai-org/GLM-OCR"
+    },
+    {
+      "name": "OmniDocBench v1.6 overall (third-party blog table)",
+      "score": 95.22,
+      "kind": "independent",
+      "source": "https://roboflow.com/blog/best-open-source-ocr-models",
+      "harness": "search summary of a third-party table, unverified"
+    },
+    {
+      "name": "MDPBench German pages (DE column)",
+      "score": 82.7,
+      "kind": "independent",
+      "source": "https://huggingface.co/datasets/Delores-Lin/MDPBench",
+      "variant": "GLM-OCR",
+      "date": "2026-07"
+    },
+    {
+      "name": "MDPBench overall (17 languages)",
+      "score": 67.3,
+      "kind": "independent",
+      "source": "https://huggingface.co/datasets/Delores-Lin/MDPBench",
+      "variant": "GLM-OCR (Latin-script strong, non-Latin weak: Hindi 21.7, Thai 27.4)",
+      "date": "2026-07"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "MIT license",
+      "official llama.cpp path with GGUF",
+      "information extraction to a JSON schema",
+      "German is listed on the card and third-party scores are good for its size (MDPBench DE 82.7)"
+    ],
+    "weaknesses": [
+      "prompts restricted to two supported scenarios",
+      "SDK only parses documents, not extraction",
+      "low ParseBench mean (29.6)",
+      "MDPBench: weak on non-Latin scripts (Hindi 21.7, Thai 27.4), irrelevant for German use"
+    ],
+    "best_for": [
+      "invoice/form extraction to JSON",
+      "bulk page parsing"
+    ],
+    "maturity": "Zhipu is an established vendor; model is a few months old"
+  },
+  "tona_fit": {
+    "verdict": "candidate",
+    "reason": "MIT, 0.9B, German on the card and 82.7 on third-party German pages, official ggml-org GGUF; at least as good for German as the larger parsers. Missing Tona support is a blocker only.",
+    "blockers": [
+      "Tona engine has no vision/OCR architecture; would run through llama.cpp"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/zai-org/GLM-OCR",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://github.com/ggml-org/llama.cpp/pull/19677",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://roboflow.com/blog/best-open-source-ocr-models",
+      "kind": "secondary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/zai-org/GLM-OCR/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/ggml-org/GLM-OCR-GGUF",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/datasets/Delores-Lin/MDPBench",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "MDPBench README table read directly; an earlier summarizer pass mislabeled the Latin-average column as DE, the DE values here come from the dataset README"
+    }
+  ],
+  "tasks": [
+    "documents",
+    "vision"
+  ],
+  "modalities": {
+    "input": [
+      "image",
+      "document"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "about 1B parameters, BF16 about 2 GB"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "notes": "BF16 about 2 GB; Tona runs one model at a time, so it replaces the resident model while it works"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate"
+    }
+  },
+  "last_checked": "2026-11-19"
+}

@@ -1,0 +1,129 @@
+{
+  "id": "wevisone-vl-2b-4b",
+  "name": "WeVisOne-VL 2B / 4B",
+  "vendor": "Tencent (WeChat Vision)",
+  "release_date": "2026-10-22",
+  "lineage": {
+    "family": "Qwen3-VL",
+    "base_model": "Qwen3-VL (2B and 4B)",
+    "how_derived": "adds coordinate tokens and a 9.6M-parameter pixel decoder (mask_decoder.pt)"
+  },
+  "purpose": "Unified visual perception from objects to pixels: open-vocabulary detection, referring localization, counting, pointing, OCR localization, referring segmentation and alpha matting through structured next-token prediction (card). Intended for research.",
+  "tasks": [
+    "vision"
+  ],
+  "modalities": {
+    "input": [
+      "image"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0 (Tencent code); third-party components keep their licenses",
+    "verified": false,
+    "commercial_use": "unknown",
+    "redistribution": "unknown",
+    "notes": "Card tag apache-2.0 and a License section saying Tencent-authored code is Apache-2.0; the weights' terms are not stated separately and no LICENSE text was opened."
+  },
+  "architecture": {
+    "kind": "dense vision-language transformer (Qwen3-VL 4B: 36 layers, hidden 2560) plus pixel decoder with deformable cross-attention",
+    "params_total_b": 4.0,
+    "layers": 36,
+    "context_native": 262144
+  },
+  "variants": [
+    {
+      "repo": "tencent/WeVisOne-VL-4B",
+      "format": "safetensors BF16",
+      "size_gb": 9.71,
+      "official": true
+    },
+    {
+      "repo": "tencent/WeVisOne-VL-2B",
+      "format": "safetensors BF16",
+      "size_gb": 4.93,
+      "official": true
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "marginal",
+      "variant": "4B BF16",
+      "basis": "estimate",
+      "notes": "9.7 GB file against 9.6 GB VRAM plus 50 GB RAM budget; part streams from RAM (dense: decode is bandwidth bound)"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "4B BF16",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (13.6 GB)"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "4B BF16",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (21.6 GB)"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "4B BF16",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (29.6 GB)"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "variant": "4B BF16",
+      "basis": "estimate",
+      "notes": "9.7 GB file against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "4B BF16",
+      "basis": "estimate",
+      "notes": "9.7 GB file against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "4B BF16",
+      "basis": "estimate",
+      "notes": "9.7 GB file against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "own wevisone_vl package"
+    ],
+    "notes": "the mask decoder is a custom component, so plain llama.cpp would only give the text/box part"
+  },
+  "benchmarks": [],
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "A perception model for detection, segmentation and matting, not a document or coding model; only of interest if Tona later gets image-grounding tools. Single-turn only.",
+    "blockers": [
+      "custom pixel decoder"
+    ]
+  },
+  "open_questions": [
+    "benchmark numbers (paper huggingface.co/papers/2610.31329 not opened)",
+    "weights license"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/tencent/WeVisOne-VL-4B",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README and config read"
+    },
+    {
+      "url": "https://huggingface.co/api/models/tencent/WeVisOne-VL-2B?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "sizes"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

@@ -1,0 +1,78 @@
+{
+  "id": "hy-simulmt-30b-a3b",
+  "name": "Hy-SimulMT-30B-A3B (and Interleave)",
+  "vendor": "Tencent Hunyuan",
+  "release_date": "2026-10-26",
+  "lineage": {
+    "family": "hunyuan-v3",
+    "how_derived": "speech-capable HYV3 MoE (HYV3SpeechForCausalLM) trained for simultaneous translation; base checkpoint not named on the card"
+  },
+  "purpose": "Real-time simultaneous speech translation between Chinese and English for live settings (meetings, speeches, interviews): translates while the speaker talks, outputs translated text and, with an external TTS service, speech with real-time voice cloning (card).",
+  "tasks": ["translation", "audio-transcription"],
+  "modalities": {"input": ["audio", "text"], "output": ["text"]},
+  "languages": {"natural": ["zh", "en"]},
+  "license": {
+    "name": "Apache-2.0 (Tencent LICENSE.txt)",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "LICENSE.txt in the HF repo read: states Hy-SimulMT (code, parameters, weights) is Apache-2.0 except listed third-party components; full Apache-2.0 text follows. No territory exclusion found in the head of the file (checked by keyword search for European, Territory, Korea: no hits)."
+  },
+  "architecture": {
+    "kind": "speech-input MoE decoder (HYV3SpeechForCausalLM, audio encoder in config)",
+    "params_total_b": 30.4,
+    "layers": 48,
+    "attention": "GQA 32 heads / 4 KV heads, head_dim 128, QK norm",
+    "recurrent": "none",
+    "experts": 128,
+    "experts_active": 8,
+    "context_native": 262144,
+    "drafter": "none"
+  },
+  "variants": [
+    {"repo": "tencent/Hy-SimulMT-30B-A3B", "format": "safetensors BF16", "size_gb": 60.86, "official": true, "notes": "translation-only output; sum of repo files incl. assets"},
+    {"repo": "tencent/Hy-SimulMT-30B-A3B-GGUF", "format": "GGUF Q4_K_M", "size_gb": 19.75, "official": true, "notes": "Q8_0 33.31 GB; needs the vendor's llama.cpp PR #31198"},
+    {"repo": "tencent/Hy-SimulMT-30B-A3B-Interleave-GGUF", "format": "GGUF Q4_K_M", "size_gb": 19.75, "official": true, "notes": "source text and translation output; Q8_0 33.31 GB"},
+    {"repo": "tencent/Hy-SimulMT-30B-A3B-Interleave-FP8", "format": "safetensors FP8", "size_gb": 32.16, "official": true}
+  ],
+  "hardware_fit": {
+    "pc-12gb": {"fits": "marginal", "variant": "GGUF Q4_K_M", "basis": "estimate", "notes": "19.7 GB: MoE with 3B active, experts in RAM"},
+    "pc-16gb": {"fits": "yes", "variant": "GGUF Q4_K_M", "basis": "estimate", "notes": "experts offloaded to RAM, about 3B active parameters"},
+    "pc-24gb": {"fits": "yes", "variant": "GGUF Q4_K_M", "basis": "estimate"},
+    "pc-32gb": {"fits": "yes", "variant": "GGUF Q4_K_M", "basis": "estimate"},
+    "mac-16-24gb": {"fits": "marginal", "variant": "GGUF Q4_K_M", "basis": "estimate", "notes": "19.7 GB against 12 or 22 GB GPU share"},
+    "mac-32gb": {"fits": "yes", "variant": "GGUF Q4_K_M", "basis": "estimate"},
+    "mac-64gb+": {"fits": "yes", "variant": "GGUF Q8_0", "basis": "estimate"}
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "partial",
+    "other": ["vLLM >= 0.31 with HYV3ForCausalLM support plus the simulst package (SimulInfer, NVIDIA CUDA)", "SimulInfer service with WebSocket realtime API"],
+    "notes": "Card: architecture-specific llama.cpp support submitted as PR #31198 (not verified merged by us). The card's own SimulInfer deployment is Linux with NVIDIA GPU; the FP8, GGUF and Interleave checkpoints are not covered by its speech-output integration."
+  },
+  "benchmarks": [
+    {"name": "StreamLAAL on RealSI long-form audio", "score": "about 3", "unit": "s", "kind": "vendor", "source": "https://huggingface.co/tencent/Hy-SimulMT-30B-A3B", "date": "2026-11-19", "harness": "lowest of the systems in the card figure"},
+    {"name": "Speech translation score FLEURS", "score": 90.3, "kind": "vendor", "source": "https://huggingface.co/tencent/Hy-SimulMT-30B-A3B", "harness": "card table, metric not named in text (GEMBA used for long-form)"},
+    {"name": "Speech translation score CoVoST2", "score": 75.5, "kind": "vendor", "source": "https://huggingface.co/tencent/Hy-SimulMT-30B-A3B"},
+    {"name": "Speech translation score ACL6060", "score": 81.2, "kind": "vendor", "source": "https://huggingface.co/tencent/Hy-SimulMT-30B-A3B"},
+    {"name": "Speech translation score RealSI-Sentence", "score": 84.7, "kind": "vendor", "source": "https://huggingface.co/tencent/Hy-SimulMT-30B-A3B", "harness": "highest of all listed systems incl. commercial APIs"}
+  ],
+  "soft": {
+    "strengths": ["Card reports lower lag than the compared open-source and commercial systems at competitive quality", "Matched small test (18 recordings) against CATTI level 1 and 2 interpreters: builder reports quality on par and often lower latency"],
+    "weaknesses": ["Chinese-English only for speech translation; card language list names 36 languages for text", "Card comparison table lists Qwen3.8-LiveTranslate ahead on CoVoST2 (82.1 vs 75.5)", "Speech output and voice cloning need a separate TTS service", "Vendor-only evaluation"],
+    "best_for": ["live Chinese-English interpretation"],
+    "avoid_for": ["German or other European speech translation (not offered)"],
+    "maturity": "Tencent Hunyuan, first release 2026-10-26 with SimulInfer and SimulTrain code."
+  },
+  "tona_fit": {
+    "verdict": "reject",
+    "reason": "Only Chinese-English speech translation; no German use case. Kept as a record of what streaming translation with a speech-capable MoE looks like (A3B, 19.7 GB at Q4).",
+    "blockers": ["Hunyuan V3 speech architecture not in Tona", "llama.cpp support is an open PR per card"]
+  },
+  "sources": [
+    {"url": "https://huggingface.co/tencent/Hy-SimulMT-30B-A3B", "kind": "primary", "checked": "2026-11-19", "note": "README, config.json, LICENSE.txt read"},
+    {"url": "https://huggingface.co/api/models/tencent/Hy-SimulMT-30B-A3B-GGUF?blobs=true", "kind": "primary", "checked": "2026-11-19", "note": "GGUF file sizes"}
+  ],
+  "open_questions": ["Base checkpoint of the HYV3 speech model", "Whether llama.cpp PR #31198 is merged", "Why this design (card gives none)", "Difference in quality and latency between the translation-only and Interleave variants"],
+  "last_checked": "2026-11-19"
+}

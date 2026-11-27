@@ -1,0 +1,156 @@
+{
+  "id": "thor-t-35b-a3b",
+  "name": "Thor-T-35B-A3B",
+  "vendor": "Anjielon (individual)",
+  "release_date": "2026-11-10",
+  "lineage": {
+    "family": "Ornith 1.5",
+    "base_model": "ornith-ai/Ornith-1.5-35B-A3B",
+    "how_derived": "post-training ternary quantization (weights -1, 0, +1 in one to four planes per tensor) with a ternary multi-token-prediction head in every file, built with the open forge Fucina on a Ryzen AI Max+ 395 APU"
+  },
+  "purpose": "Ternary GGUF files of Ornith-1.5-35B-A3B in three sizes that keep near-teacher quality at 2 bits per weight and add an MTP head for speed (card).",
+  "tasks": [
+    "general",
+    "coding"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en"
+    ]
+  },
+  "license": {
+    "name": "CC BY 4.0 (card); base licence file shipped as LICENSE.base-model",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card tag cc-by-4.0; the licence text was not read and the base model's own licence is unconfirmed in our database (Ornith 1.5 card tag MIT, LICENSE missing)."
+  },
+  "architecture": {
+    "kind": "hybrid Gated-DeltaNet plus full attention MoE (Qwen3.6-35B-A3B layout) in ternary planes",
+    "gguf_arch": "custom (forked llama.cpp)",
+    "params_total_b": 35,
+    "params_active_b": 3,
+    "drafter": "ternary MTP head inside every file"
+  },
+  "variants": [
+    {
+      "repo": "Anjielon/Thor-T-35B-A3B",
+      "format": "GGUF ternary M",
+      "size_gb": 13.09,
+      "bits_per_weight": 2.949,
+      "official": true,
+      "notes": "M 12.19 GiB; S 8.82 GiB (2.135 bpw); XS 8.04 GiB (1.946 bpw); root 8.24 GiB; GB figure converted from GiB"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "marginal",
+      "variant": "Thor-T M ternary",
+      "basis": "estimate",
+      "notes": "13.09 GB file against 9.6 GB VRAM plus 50 GB RAM budget; experts stream from RAM (~3 B active, decode bound by RAM bandwidth)"
+    },
+    "pc-16gb": {
+      "fits": "marginal",
+      "variant": "Thor-T M ternary",
+      "basis": "estimate",
+      "notes": "13.09 GB file against 13.6 GB VRAM plus 50 GB RAM budget; experts stream from RAM (~3 B active, decode bound by RAM bandwidth)"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "Thor-T M ternary",
+      "basis": "estimate",
+      "notes": "13.09 GB file fits the VRAM budget (21.6 GB) with room for KV"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "Thor-T M ternary",
+      "basis": "estimate",
+      "notes": "13.09 GB file fits the VRAM budget (29.6 GB) with room for KV"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "Thor-T M ternary",
+      "basis": "estimate",
+      "notes": "13.09 GB file against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "Thor-T M ternary",
+      "basis": "estimate",
+      "notes": "13.09 GB file against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "Thor-T M ternary",
+      "basis": "estimate",
+      "notes": "13.09 GB file against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "partial",
+    "other": [
+      "fork Anjielon/llama.cpp tag thor-t-v1 (Vulkan, CUDA, CPU)"
+    ],
+    "notes": "Does not load in upstream llama.cpp yet (card)."
+  },
+  "benchmarks": [
+    {
+      "name": "full MMLU (14,042 questions, zero-shot, log-probability)",
+      "score": 80.06,
+      "kind": "vendor",
+      "variant": "M ternary 12.19 GiB; Q8_0 teacher 80.59, Q4_K_M 80.16; same engine, author's measurement",
+      "source": "https://huggingface.co/Anjielon/Thor-T-35B-A3B"
+    },
+    {
+      "name": "decode speed with MTP",
+      "score": 77.53,
+      "unit": "tok/s",
+      "kind": "vendor",
+      "variant": "M on AMD Ryzen AI Max+ 395 APU (Vulkan); XS 95.42; on an RTX 4060 Laptop 8 GB with experts partly in RAM M 39.2",
+      "source": "https://huggingface.co/Anjielon/Thor-T-35B-A3B"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "MMLU level with Q4_K_M at 60 percent of the bytes (author's paired test)",
+      "XS file at 8 GB gives 66 tok/s on an 8 GB laptop GPU with RAM experts"
+    ],
+    "weaknesses": [
+      "needs a forked llama.cpp",
+      "one author, MMLU is the main quality measure"
+    ],
+    "maturity": "20.7k downloads, 6 likes; paper PDF in the repo (not read)"
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "A concrete test of ternary multi-plane quantization on a 35B-A3B MoE with an MTP head, relevant to our bandwidth-bound RAM path. Base is Ornith 1.5 and quality beyond MMLU is not shown; the technique, not the files, is what to study.",
+    "blockers": [
+      "custom runtime",
+      "licence unclear for a derived work",
+      "only MMLU quality evidence"
+    ]
+  },
+  "open_questions": [
+    "coding and agentic quality of the ternary files",
+    "paper details and reproducibility of the Fucina recipe",
+    "licence chain"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/Anjielon/Thor-T-35B-A3B",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README read; the config.json and LICENSE paths 404 (GGUF-only repo)"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

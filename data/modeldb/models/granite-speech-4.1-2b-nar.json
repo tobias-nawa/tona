@@ -1,0 +1,166 @@
+{
+  "id": "granite-speech-4.1-2b-nar",
+  "name": "Granite Speech 4.1 2B NAR",
+  "vendor": "IBM",
+  "release_date": "2026-06",
+  "purpose": "Latency-sensitive ASR: edits a CTC hypothesis in a single forward pass instead of decoding token by token (card).",
+  "tasks": [
+    "audio-transcription"
+  ],
+  "modalities": {
+    "input": [
+      "audio"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en",
+      "fr",
+      "de",
+      "es",
+      "pt"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card metadata: apache-2.0; the repo has no LICENSE file. Canonical Apache-2.0 text read in the Qwen repo (canonical Apache-2.0 text read in https://github.com/QwenLM/Qwen3-ASR/blob/main/LICENSE)."
+  },
+  "architecture": {
+    "kind": "NON-AUTOREGRESSIVE (NLE): 440M CTC Conformer + 160M Q-Former + 1B bidirectional LLM editor (granite-4.0-1b-base + LoRA)",
+    "params_total_b": 2.0,
+    "why_this_design": "Single-pass CTC-hypothesis editing for latency-sensitive applications (card)."
+  },
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "unknown",
+    "other": [
+      "Transformers >= 5.5.3 with trust_remote_code",
+      "flash-attn 2 required"
+    ]
+  },
+  "benchmarks": [
+    {
+      "name": "LibriSpeech clean WER",
+      "score": 1.29,
+      "kind": "vendor",
+      "source": "https://huggingface.co/ibm-granite/granite-speech-4.1-2b-nar",
+      "unit": "% WER"
+    },
+    {
+      "name": "AMI SDM WER",
+      "score": 19.59,
+      "kind": "vendor",
+      "source": "https://huggingface.co/ibm-granite/granite-speech-4.1-2b-nar",
+      "unit": "% WER"
+    },
+    {
+      "name": "RTFx H100 batch 128",
+      "score": 1820,
+      "kind": "vendor",
+      "source": "https://huggingface.co/ibm-granite/granite-speech-4.1-2b-nar",
+      "unit": "x real time"
+    },
+    {
+      "name": "German WER, Open ASR multilingual track (4 of 8 datasets)",
+      "score": 4.32,
+      "kind": "independent",
+      "source": "https://huggingface.co/spaces/hf-audio/open_asr_leaderboard",
+      "date": "2026-11-19",
+      "harness": "Open ASR Leaderboard multilingual track, German column (WER %), read from the Space config JSON 2026-11-19; rows differ in how many of the 8 datasets they cover",
+      "unit": "% WER"
+    },
+    {
+      "name": "Open ASR English avg WER (leaderboard rank 43 of 69)",
+      "score": 7.16,
+      "kind": "independent",
+      "source": "https://huggingface.co/spaces/hf-audio/open_asr_leaderboard",
+      "date": "2026-11-19",
+      "harness": "Open ASR Leaderboard English track, read 2026-11-19",
+      "unit": "% WER"
+    },
+    {
+      "name": "RTFx on the leaderboard (English track, leaderboard GPU)",
+      "score": 2112.58,
+      "kind": "independent",
+      "source": "https://huggingface.co/spaces/hf-audio/open_asr_leaderboard",
+      "date": "2026-11-19",
+      "harness": "Open ASR Leaderboard, read 2026-11-19"
+    },
+    {
+      "name": "MLS German WER / CommonVoice 15 German WER",
+      "score": "4.75 / 4.73",
+      "kind": "vendor",
+      "source": "https://huggingface.co/ibm-granite/granite-speech-4.1-2b-nar",
+      "date": "2026-11-19",
+      "unit": "% WER"
+    }
+  ],
+  "soft": {
+    "weaknesses": [
+      "FlashAttention-2 required (NVIDIA)",
+      "Less accurate than the autoregressive 4.1-2b; no punctuation"
+    ],
+    "maturity": "IBM."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Quality is solid but not best (German 4.32 on 4 of 8 sets, English 7.16) and RTFx is very high (2112); it needs flash-attn 2, a risk on gfx1200. The former reject was only about missing Tona support; now a speed-niche option next to the Parakeet class.",
+    "blockers": [
+      "flash-attn 2 required (AMD support unverified)",
+      "no Tona audio module"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/ibm-granite/granite-speech-4.1-2b-nar",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/spaces/hf-audio/open_asr_leaderboard",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "Space /config JSON read directly"
+    }
+  ],
+  "open_questions": [
+    "flash-attn 2 on gfx1200 (CK/Triton build) untested"
+  ],
+  "last_checked": "2026-11-19"
+}

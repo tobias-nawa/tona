@@ -1,0 +1,18 @@
+host memory: GTT (probe 64 MB grew the GTT use by 64 MB; 0.2 of 32.5 GB in use)
+evicted_ms counter: /sys/class/kfd/kfd/proc/1405301/stats_7773/evicted_ms (0 ms so far), evictions do not count against the pass deadline
+PCIe link: 32 GT/s x16, GPU-direct expert priced at 15.0 us (TONA_GD_US overrides)
+loaded in 16.2 s, VRAM 13.22 GB (expert cache 83 per layer), megakernel: 1076 steps, 32 blocks (at most 32, LDS 29976 B, 192 VGPRs), verify pass 32 blocks (max 32, 192 VGPRs)
+  step 0: max |d| 0.2429 (relative 1.99e-02), top-1 GPU 220 CPU 220
+  step 1: max |d| 0.3861 (relative 2.44e-02), top-1 GPU 314 CPU 314
+  step 2: max |d| 0.4026 (relative 2.65e-02), top-1 GPU 279 CPU 279
+  step 3: max |d| 0.8826 (relative 4.65e-02), top-1 GPU 369 CPU 369
+  step 4: max |d| 1.2528 (relative 7.46e-02), top-1 GPU 11751 CPU 11751
+The capital of France is Paris  step 5: max |d| 1.3028 (relative 7.01e-02), top-1 GPU 13 CPU 13
+.
+
+ThePrompt 5 tokens in 47.05 s; generation 4 tokens in 0.14 s = 28.57 tok/s decode
+Experts during generation: 91.3 % hits, 1891 MB reloaded
+Megakernel: 9 launches, barrier: 0 aborts, start skew max 0.2 µs, wait max 9558.0 µs
+Check: 6 steps, top-1 equal in 6, worst relative deviation 7.46e-02
+
+rc=0

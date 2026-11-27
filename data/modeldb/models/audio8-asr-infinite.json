@@ -1,0 +1,155 @@
+{
+  "id": "audio8-asr-infinite",
+  "name": "Audio8 ASR Infinite (preview)",
+  "vendor": "Edge0",
+  "release_date": "2026-09-21",
+  "lineage": {
+    "base_model": "Voxtral Realtime 4B audio tower + Qwen2.5-3B-Instruct decoder",
+    "how_derived": "audio tower initialised from Voxtral Realtime, projector and frame-length embedding random, decoder from Qwen2.5-3B-Instruct, all trained (card table)",
+    "family": "Audio8"
+  },
+  "purpose": "Native streaming speech recognition that is as responsive as possible: selectable 80/120/160 ms clock, 240-560 ms delay, and unlimited-length 24/7 transcription via a rolling KV cache (card).",
+  "tasks": [
+    "audio-transcription"
+  ],
+  "modalities": {
+    "input": [
+      "audio"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "zh",
+      "en"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0 (card badge, repo tag)",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "No LICENSE file in the HF repo (404); badge links to the GitHub LICENSE, not opened."
+  },
+  "architecture": {
+    "kind": "streaming speech LLM: causal audio tower (32 layers, hidden 1280, window 750) + Qwen2.5-3B decoder (36 layers, hidden 2048, 16 heads / 2 KV heads) + semantic-VAD heads",
+    "params_total_b": 4.1,
+    "layers": 36,
+    "context_native": 30,
+    "why_this_design": "Builder states a native streaming architecture decoding 12.5 times per second, with semantic VAD to tell thinking pauses and stutters from end of turn (card)."
+  },
+  "variants": [
+    {
+      "repo": "Edge0/Audio8-ASR-Infinite",
+      "format": "safetensors BF16",
+      "official": true,
+      "size_gb": 8.17,
+      "notes": "model.safetensors 8.17 GB per card; plus semantic_vad_heads.safetensors"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (9.6 GB)"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (13.6 GB)"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (21.6 GB)"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "fits in the VRAM budget (29.6 GB)"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "8.2 GB file against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "8.2 GB file against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "BF16",
+      "basis": "estimate",
+      "notes": "8.2 GB file against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "adapted vLLM build for the unlimited-length mode",
+      "Transformers custom code"
+    ]
+  },
+  "benchmarks": [
+    {
+      "name": "AISHELL-1 test CER, 480 ms delay, 80 ms clock",
+      "score": 1.75,
+      "kind": "vendor",
+      "source": "https://huggingface.co/Edge0/Audio8-ASR-Infinite",
+      "unit": "% CER",
+      "variant": "bf16 greedy",
+      "harness": "Voxtral-Mini-4B-Realtime-2602 on the same: 16.795"
+    },
+    {
+      "name": "LibriSpeech test-clean / test-other WER",
+      "score": "3.04 / 6.81",
+      "kind": "vendor",
+      "source": "https://huggingface.co/Edge0/Audio8-ASR-Infinite",
+      "unit": "% WER",
+      "variant": "bf16 greedy, 480 ms",
+      "harness": "Voxtral Realtime 2602: 2.21 / 5.55 (better); nemotron-3.5-asr-streaming-0.6b 3.35 / 7.14 at 560 ms"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "Chinese+English streaming CER far below Voxtral Realtime on Mandarin"
+    ],
+    "weaknesses": [
+      "English only slightly worse than Voxtral Realtime 2602",
+      "German not supported",
+      "preview, formal release still in progress"
+    ],
+    "maturity": "878 likes in two months, anonymous-ish small org."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Chinese/English only; German users get nothing. Relevant only as a design reference for rolling-KV streaming ASR.",
+    "blockers": [
+      "no German"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/Edge0/Audio8-ASR-Infinite",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README incl. architecture and evaluation tables, config.json, HF API"
+    }
+  ],
+  "open_questions": [
+    "Parameter total 4.1B is my sum of the stated components, not a listed number",
+    "arXiv paper 'coming soon' per card"
+  ],
+  "last_checked": "2026-11-19"
+}

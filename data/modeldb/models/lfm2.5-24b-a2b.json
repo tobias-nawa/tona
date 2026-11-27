@@ -1,0 +1,321 @@
+{
+  "id": "lfm2.5-24b-a2b",
+  "name": "LFM2.5-24B-A2B",
+  "vendor": "Liquid AI",
+  "release_date": "2026-10-12",
+  "lineage": {
+    "base_model": "LiquidAI/LFM2.5-24B-A2B-Base",
+    "family": "LFM2.5",
+    "how_derived": "post-training of the base: SFT, teacher specialization, two multi-domain on-policy distillation stages (non-agentic, agentic) and agentic RL inside agent harnesses; architecture kept from LFM2-24B-A2B, context 32K to 131K and vocabulary 65K to 128K"
+  },
+  "purpose": "Built for fast, private agents on-device: a reasoning model that calls tools and runs reliably locally. The builder states it is not recommended for knowledge-heavy tasks on its own and should be paired with retrieval or web search.",
+  "tasks": [
+    "general",
+    "research"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en",
+      "ar",
+      "zh",
+      "fr",
+      "de",
+      "ja",
+      "ko",
+      "es",
+      "pt",
+      "it",
+      "vi",
+      "th",
+      "id",
+      "hi",
+      "ru",
+      "pl"
+    ]
+  },
+  "license": {
+    "name": "LFM Open License v1.0",
+    "verified": true,
+    "commercial_use": "limited",
+    "redistribution": "yes",
+    "notes": "Read LICENSE (HF raw, 2026-11-19). Apache-2.0-style grant (copyright, patent, redistribution, derivative works) but section 5 conditions Commercial Use on the user or its legal entity staying below an annual revenue Threshold of 10 million USD; above it commercial use is not licensed. The threshold does not apply to qualified non-profits for non-commercial or research use. Private individuals and small companies are covered. Verdict policy (README, 2026-11-19): this licence term does not lower tona_fit; kept here for an installer label."
+  },
+  "architecture": {
+    "kind": "hybrid gated short-convolution + GQA attention MoE",
+    "gguf_arch": "lfm2moe",
+    "params_total_b": 24.0,
+    "params_active_b": 2.45,
+    "layers": 40,
+    "attention": "10 GQA layers (32 Q / 8 KV heads) and 30 gated short-convolution layers; the first 2 layers have dense FFN (num_dense_layers 2)",
+    "recurrent": "none (short convolutions, cache length 3)",
+    "experts": 64,
+    "experts_active": 4,
+    "context_native": 131072,
+    "context_max": 131072,
+    "drafter": "separate DSpark drafter (327.7M parameters, 5 attention layers, block size 9)",
+    "why_this_design": "Sparse activation (24B total, 2B active) for speed on constrained hardware; reasoning-only so the high decode speed pays for the chain of thought; the convolution + GQA hybrid is kept from LFM2-24B-A2B (blog). The card gives no deeper reasons."
+  },
+  "variants": [
+    {
+      "repo": "LiquidAI/LFM2.5-24B-A2B-GGUF",
+      "format": "GGUF Q4_K_M",
+      "size_gb": 14.53,
+      "official": true,
+      "notes": "also Q4_0 13.58, Q5_K_M 17.03, Q6_K 19.69, Q8_0 25.49, BF16 47.96, and QAD (quantization-aware distilled) Q4_0 13.58 and Q2_K_L 9.54; the card says QAD-Q4_0 is the one that makes up for 4-bit loss"
+    },
+    {
+      "repo": "LiquidAI/LFM2.5-24B-A2B",
+      "format": "safetensors BF16",
+      "size_gb": 47.96,
+      "official": true
+    },
+    {
+      "repo": "LiquidAI/LFM2.5-24B-A2B-MLX-4bit",
+      "format": "MLX 4bit",
+      "size_gb": 13.59,
+      "official": true
+    },
+    {
+      "repo": "LiquidAI/LFM2.5-24B-A2B-DSpark",
+      "format": "safetensors BF16 drafter",
+      "size_gb": 0.66,
+      "official": true,
+      "notes": "draft model for speculative decoding (SGLang); on a B300 with the FP8 target 2.4x output throughput at concurrency 1, 1.7x at 256 (vendor)"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q4_K_M",
+      "notes": "14.5 GB file against 9.6 GB VRAM budget; 2.45 B active, experts stream from RAM; QAD-Q2_K_L (9.5 GB) nearly fits VRAM, quality unmeasured"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q4_K_M",
+      "notes": "14.5 GB file against 13.6 GB VRAM budget, remainder from RAM"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q8_0",
+      "notes": "Q6_K 19.7 GB or Q8_0 25.5 GB with a few experts in RAM"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q8_0",
+      "notes": "Q8_0 25.5 GB fits VRAM"
+    },
+    "mac-16-24gb": {
+      "fits": "marginal",
+      "basis": "estimate",
+      "variant": "MLX 4bit",
+      "notes": "13.6 GB against a GPU share of about 12 GB; a user reports Q4 under 16 GB at about 120 tok/s on an M5 Pro (HF discussion), vendor 184 tok/s decode on an M5 Max"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q4_K_M",
+      "notes": "one independent test ran it on an M1 Pro 32 GB: about 52 tok/s generation at Q4_K_M"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "basis": "estimate",
+      "variant": "Q8_0"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "vLLM",
+      "SGLang",
+      "Transformers",
+      "MLX",
+      "ONNX"
+    ],
+    "notes": "Official GGUF; independent test used llama.cpp b10964. Tona needs an lfm2moe backend (short convolution layers plus MoE); DSpark drafter is documented for SGLang only."
+  },
+  "benchmarks": [
+    {
+      "name": "LiveClaw",
+      "score": 48.09,
+      "kind": "vendor",
+      "variant": "BF16, vendor harness",
+      "source": "https://www.liquid.ai/blog/lfm2-5-24b-a2b",
+      "unit": "score (Qwen3.6-35B-A3B 38.19)"
+    },
+    {
+      "name": "BFCL v4",
+      "score": 65.01,
+      "kind": "vendor",
+      "source": "https://www.liquid.ai/blog/lfm2-5-24b-a2b",
+      "unit": "score (Qwen3.6-35B-A3B 65.00)"
+    },
+    {
+      "name": "SWE-bench Verified (OpenCode)",
+      "score": 51.0,
+      "kind": "vendor",
+      "source": "https://www.liquid.ai/blog/lfm2-5-24b-a2b",
+      "unit": "% (Qwen3.6-35B-A3B 66.2)"
+    },
+    {
+      "name": "GPQA Diamond",
+      "score": 74.42,
+      "kind": "vendor",
+      "source": "https://www.liquid.ai/blog/lfm2-5-24b-a2b",
+      "unit": "% (Qwen3.6-35B-A3B 83.69)"
+    },
+    {
+      "name": "IFBench",
+      "score": 74.69,
+      "kind": "vendor",
+      "source": "https://www.liquid.ai/blog/lfm2-5-24b-a2b",
+      "unit": "% (Qwen3.6-35B-A3B 64.21)"
+    },
+    {
+      "name": "AA-Omniscience",
+      "score": -24.9,
+      "kind": "vendor",
+      "source": "https://www.liquid.ai/blog/lfm2-5-24b-a2b",
+      "unit": "index (negative: hallucinates more than it answers right)"
+    },
+    {
+      "name": "75 multi-step tool tasks (7-16 dependent calls), pass rate",
+      "score": "37/75 (49.3 %)",
+      "kind": "independent",
+      "variant": "GGUF Q4_K_M, llama.cpp b10964, card sampler",
+      "harness": "heldoutlab/lfm25-tools-test, pre-registered; Qwen3.6-35B-A3B Q4_K_M solved 68/75",
+      "date": "2026-10-26",
+      "source": "https://huggingface.co/LiquidAI/LFM2.5-24B-A2B-GGUF/discussions/9"
+    },
+    {
+      "name": "Decode speed, Apple M5 Max",
+      "score": 184,
+      "kind": "vendor",
+      "unit": "tok/s (decode)",
+      "variant": "vendor build",
+      "source": "https://www.liquid.ai/blog/lfm2-5-24b-a2b"
+    },
+    {
+      "name": "Decode speed, M1 Pro 32 GB",
+      "score": 52,
+      "kind": "independent",
+      "unit": "tok/s (decode; prompt 430 tok/s)",
+      "variant": "Q4_K_M, llama.cpp",
+      "date": "2026-10-26",
+      "source": "https://huggingface.co/LiquidAI/LFM2.5-24B-A2B-GGUF/discussions/9"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "Instruction following (IFEval 96.75, IFBench 74.7, vendor)",
+      "Fast decode for its quality tier (2.45 B active)",
+      "Correct tool-call syntax: no call needed recovering from text in the independent test"
+    ],
+    "weaknesses": [
+      "Independent multi-step agent test: 49 % against 91 % for Qwen3.6-35B-A3B at Q4_K_M, wrong actions followed by a 'done' summary in 23 of 38 failures",
+      "Knowledge: negative AA-Omniscience, builder says to pair with retrieval",
+      "Always thinks (no non-thinking mode)",
+      "Tool calling in OpenCode reported as poor by one user at Q4 and Q8"
+    ],
+    "behavior": "Pure reasoning model, template inserts the think tag; Pythonic tool calls by default (JSON on request). Recommended sampling temperature 0.1, top_k 50, repetition penalty 1.05. Uses about twice the tokens of Qwen3.6 per solved task in the independent test.",
+    "best_for": [
+      "fast local tool-calling and instruction-following assistants on 16 to 32 GB machines",
+      "retrieval or web-search agents"
+    ],
+    "avoid_for": [
+      "knowledge questions without search",
+      "long multi-step agent tasks (independent evidence weak)",
+      "coding agents"
+    ],
+    "user_reports": [
+      {
+        "summary": "Pre-registered independent test: tool-call parsing fine, 49.3 % against 90.7 % on 75 multi-step tasks, about 52 tok/s on an M1 Pro; vendor replied it will take the feedback into account",
+        "sentiment": "negative",
+        "source": "https://huggingface.co/LiquidAI/LFM2.5-24B-A2B/discussions/12",
+        "date": "2026-10-26"
+      },
+      {
+        "summary": "M5 Pro, llama.cpp: Q4 under 16 GB at about 120 tok/s, Q8 about 24 GB at about 80 tok/s; tool calling and OpenCode use were not good",
+        "sentiment": "mixed",
+        "source": "https://huggingface.co/LiquidAI/LFM2.5-24B-A2B-GGUF/discussions/6",
+        "date": "2026-10-15"
+      }
+    ],
+    "maturity": "Liquid AI ships a dense family (230M to 24B) with GGUF, MLX, ONNX and DSpark drafters at release; the vendor answers in HF discussions; the card calls this the largest and final LFM2.5 model, LFM3 follows."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Fast and small, but the only independent agent evidence is weak (49 % against 91 % for a comparable-size Qwen) and the builder itself excludes knowledge and coding use. Re-check after a Q8 or QAD independent run.",
+    "blockers": [
+      "no lfm2moe backend in Tona",
+      "independent agent score weak"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/LiquidAI/LFM2.5-24B-A2B",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README and config.json read"
+    },
+    {
+      "url": "https://huggingface.co/LiquidAI/LFM2.5-24B-A2B/raw/main/LICENSE",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "LFM Open License v1.0 read"
+    },
+    {
+      "url": "https://huggingface.co/LiquidAI/LFM2.5-24B-A2B-GGUF",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "file sizes from the HF API"
+    },
+    {
+      "url": "https://huggingface.co/LiquidAI/LFM2.5-24B-A2B-DSpark",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "drafter card"
+    },
+    {
+      "url": "https://www.liquid.ai/blog/lfm2-5-24b-a2b",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "benchmark table and design reasons read through a page summarizer (WebFetch)"
+    },
+    {
+      "url": "https://huggingface.co/LiquidAI/LFM2.5-24B-A2B-GGUF/discussions/9",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "independent test, discussion text read through the HF API"
+    },
+    {
+      "url": "https://huggingface.co/LiquidAI/LFM2.5-24B-A2B/discussions/12",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/LiquidAI/LFM2.5-24B-A2B-GGUF/discussions/6",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    }
+  ],
+  "open_questions": [
+    "Does the independent agent gap close at Q8_0, BF16 or the QAD-Q4_0 checkpoint (the tester offered to re-run)?",
+    "Coding quality: only one OpenCode SWE-bench figure (vendor); no independent coding result found",
+    "Real DSpark speedup on consumer GPUs (vendor numbers are B300 with SGLang)",
+    "Exact release day (HF repo created 2026-10-12, secondary sources say 2026-10-13)"
+  ],
+  "last_checked": "2026-11-19"
+}

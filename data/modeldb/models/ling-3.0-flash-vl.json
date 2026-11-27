@@ -1,0 +1,174 @@
+{
+  "id": "ling-3.0-flash-vl",
+  "name": "Ling-3.0-flash-VL",
+  "vendor": "inclusionAI (Ant Group)",
+  "release_date": "2026-09-04",
+  "lineage": {
+    "family": "Ling 3.0",
+    "base_model": "inclusionAI/Ling-3.0-flash (record ling-3.0-flash)",
+    "how_derived": "adds a ViT encoder, a two-layer MLP projector and VideoRoPE for native image and video understanding"
+  },
+  "purpose": "Next-generation native multimodal model that brings visual information into understanding, reasoning, acting and verification: object counting, layouts, charts, documents, web and software interfaces translated into action sequences (card).",
+  "tasks": [
+    "vision",
+    "general",
+    "coding"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image",
+      "video"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en",
+      "zh"
+    ]
+  },
+  "license": {
+    "name": "MIT (card tag)",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card tag mit; the repo has no LICENSE file in its listing."
+  },
+  "architecture": {
+    "kind": "hybrid linear attention MoE vision-language: 42-layer backbone alternating KDA and Gated MLA at 5:1, ViT encoder, VideoRoPE",
+    "params_total_b": 124.0,
+    "params_active_b": 5.5,
+    "layers": 42,
+    "attention": "Kimi Delta Attention to gated MLA 5:1",
+    "recurrent": "Kimi Delta Attention",
+    "context_native": 262144,
+    "why_this_design": "card: the 5:1 KDA/MLA hybrid enables efficient long-context processing across text, images, videos and long agent histories; the sparse MoE keeps 124B capacity at 5.5B active per token"
+  },
+  "variants": [
+    {
+      "repo": "inclusionAI/Ling-3.0-flash-VL",
+      "format": "safetensors BF16",
+      "size_gb": 249.7,
+      "official": true
+    },
+    {
+      "repo": "inclusionAI/Ling-3.0-flash-VL-fp4",
+      "format": "FP4 (as named by the repo)",
+      "size_gb": 69.6,
+      "official": true,
+      "notes": "2.2k downloads; recipe and quality not read"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "no",
+      "variant": "FP4 repo (69.6 GB, expert offload to RAM)",
+      "basis": "estimate",
+      "notes": "69.6 GB against a VRAM budget of 9.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-16gb": {
+      "fits": "no",
+      "variant": "FP4 repo (69.6 GB, expert offload to RAM)",
+      "basis": "estimate",
+      "notes": "69.6 GB against a VRAM budget of 13.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-24gb": {
+      "fits": "no",
+      "variant": "FP4 repo (69.6 GB, expert offload to RAM)",
+      "basis": "estimate",
+      "notes": "69.6 GB against a VRAM budget of 21.6 GB (VRAM minus about 2.4 GB), KV cache not included"
+    },
+    "pc-32gb": {
+      "fits": "marginal",
+      "variant": "FP4 repo (69.6 GB, expert offload to RAM)",
+      "basis": "estimate",
+      "notes": "69.6 GB against a VRAM budget of 29.6 GB (VRAM minus about 2.4 GB), KV cache not included; the rest in system RAM (expert offload, active parameters are few)"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "FP4 repo (69.6 GB, expert offload to RAM)",
+      "basis": "estimate",
+      "notes": "69.6 GB against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "no",
+      "variant": "FP4 repo (69.6 GB, expert offload to RAM)",
+      "basis": "estimate",
+      "notes": "69.6 GB against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "no",
+      "variant": "FP4 repo (69.6 GB, expert offload to RAM)",
+      "basis": "estimate",
+      "notes": "69.6 GB against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "unknown",
+    "other": [
+      "SGLang (dev-Ling-3.0-flash-VL image, 4x 141 GB GPUs recommended)"
+    ],
+    "notes": "The text-only Ling-3.0-flash needs a llama.cpp build with extra support per its record; VL support in llama.cpp not found."
+  },
+  "benchmarks": [
+    {
+      "name": "Artificial Analysis Intelligence Index v4.1.1",
+      "score": 42,
+      "kind": "vendor",
+      "variant": "BF16; Ling-3.0-flash 38; card says Terminal-Bench 2.1 uses the AA protocol (Terminus 2, 2 h timeout, 3 runs)",
+      "source": "https://huggingface.co/inclusionAI/Ling-3.0-flash-VL"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "+4 points on the AA index over its text-only base from adding vision (vendor)",
+      "GUI and web interface understanding named as a target"
+    ],
+    "weaknesses": [
+      "no numeric multimodal benchmark table was readable in the card text (tables are images)"
+    ],
+    "best_for": [
+      "multimodal agent workflows on server hardware"
+    ],
+    "maturity": "7.3k downloads, 128 likes; FP4 repo 2.2k downloads; the earlier sweep missed it"
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "124B total with 5.5B active reaches only the largest PC class (FP4 69.6 GB with expert offload into 128 GB RAM); quality evidence is a single vendor index figure.",
+    "blockers": [
+      "size",
+      "no llama.cpp VL path found",
+      "licence file absent"
+    ]
+  },
+  "open_questions": [
+    "multimodal benchmark values (images in the card)",
+    "FP4 quality",
+    "licence text"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/inclusionAI/Ling-3.0-flash-VL",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README read"
+    },
+    {
+      "url": "https://huggingface.co/api/models/inclusionAI/Ling-3.0-flash-VL?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "sizes"
+    },
+    {
+      "url": "https://huggingface.co/api/models/inclusionAI/Ling-3.0-flash-VL-fp4?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "FP4 size"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

@@ -1,0 +1,54 @@
+# Who reviews what. GitHub requests a review from the owner of every changed path, and the ruleset of `main` requires
+# it once REQUIRED_APPROVALS is 1 or more (scripts/github-setup.sh, docs/contribute/github.md). The last matching line wins, which
+# is how the backend owners below take their folder and the maintainer keeps the AGENTS.md inside it.
+# tools/gates/codeowners.py checks that the paths named in its header stay with the maintainer.
+
+# Instructions that agents load as their own: only the maintainer changes them, and reads the raw bytes
+AGENTS.md                                  @tobias-nawa
+CLAUDE.md                                  @tobias-nawa
+SKILL.md                                   @tobias-nawa
+/.claude/                                  @tobias-nawa
+/.agents/                                  @tobias-nawa
+/.cursor/                                  @tobias-nawa
+/tools/agent_files/                        @tobias-nawa
+/docs/contribute/optimize-for-your-hardware.md @tobias-nawa
+/CONTRIBUTING.md                           @tobias-nawa
+/SECURITY.md                               @tobias-nawa
+
+# CI, gates and everything that runs on the machine of whoever checks the change out
+/.github/                                  @tobias-nawa
+/tools/gates/                              @tobias-nawa
+/tools/tests/test_gates_*.py               @tobias-nawa
+/.pre-commit-config.yaml                   @tobias-nawa
+/justfile                                  @tobias-nawa
+/ruff.toml                                 @tobias-nawa
+/.clang-format                             @tobias-nawa
+/.clang-tidy                               @tobias-nawa
+
+# Updates, installation, releases and the toolchain pins: what users run and what signs it
+/engine/update/                            @tobias-nawa
+/installer/                                @tobias-nawa
+/toolchain/                                @tobias-nawa
+/scripts/release*                          @tobias-nawa
+/scripts/github-setup.sh                   @tobias-nawa
+/scripts/setup.sh                          @tobias-nawa
+/docs/maintain/release.md @tobias-nawa
+/docs/contribute/github.md @tobias-nawa
+
+# The reference backend: the megakernel waits on the CPU inside the kernel, a blocking call hangs the GPU and the
+# desktop with it (AGENTS.md, "GPU safety"); the guards live next to it
+/engine/gpu/                               @tobias-nawa
+/engine/backend/*.h                        @tobias-nawa
+/engine/backend/*.cpp                      @tobias-nawa
+/scripts/gpu*                              @tobias-nawa
+/scripts/desktop_guard.py                  @tobias-nawa
+
+# Backend owners (docs/backends/README.md, "Tiers"): one line per backend, added in the pull request that adds the backend.
+# The owner takes the folder; the maintainer keeps its AGENTS.md, CLAUDE.md and skills (the patterns above are
+# repeated after the owner line, because the last match wins):
+#   /engine/backend/<name>/                @<owner>
+#   /engine/backend/<name>/AGENTS.md       @tobias-nawa
+#   /engine/backend/<name>/CLAUDE.md       @tobias-nawa
+/engine/backend/metal/                     @tobias-nawa
+/engine/backend/metal/AGENTS.md            @tobias-nawa
+/engine/backend/metal/CLAUDE.md            @tobias-nawa

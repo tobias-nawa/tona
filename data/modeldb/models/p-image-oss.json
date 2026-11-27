@@ -1,0 +1,142 @@
+{
+  "id": "p-image-oss",
+  "name": "P-Image-OSS (Pruna, based on MiniMax-H3)",
+  "vendor": "Pruna AI",
+  "release_date": "2026-10-27",
+  "lineage": {
+    "base_model": "MiniMaxAI/MiniMax-H3 (image model, see minimax-h3-image)",
+    "how_derived": "Pruna's optimized variant: 8 steps without CFG, edit with up to 8 input images, ComfyUI components in bf16 / int8 / 4-bit w4a8 (card)",
+    "family": "MiniMax-H3"
+  },
+  "purpose": "Image generation and editing from a 20 GB download (21 GB peak VRAM at 8 MP) versus 143 GB for MiniMax-H3 (card).",
+  "tasks": [
+    "image-generation"
+  ],
+  "modalities": {
+    "input": [
+      "text",
+      "image"
+    ],
+    "output": [
+      "image"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en"
+    ]
+  },
+  "license": {
+    "name": "MiniMax-H3 Community License Agreement (cardData minimax-h3-community-license-agreement)",
+    "verified": false,
+    "commercial_use": "limited",
+    "redistribution": "limited",
+    "notes": "Card tag points to the MiniMax-H3 community licence, whose text was read for the minimax-h3-image record: territory excludes EU, UK, Korea and USA; separate authorization above 1M USD revenue or when hosting as a service. The P-Image-OSS repo's own LICENSE file was not opened."
+  },
+  "architecture": {
+    "kind": "MiniMax-H3 derived diffusion transformer (about 33B), Qwen3-VL-class text encoder, prompt upsampler (about 19 GB of LLM weights) and a 5.56 GB VAE in the diffusers repo",
+    "params_total_b": 33.1
+  },
+  "variants": [
+    {
+      "repo": "PrunaAI/P-Image-OSS",
+      "format": "safetensors BF16 (diffusers)",
+      "official": true,
+      "notes": "transformer 7 shards 66.3 GB, text encoder 8.9 GB, prompt upsampler 18.8 GB, VAE 5.6 GB (HF API); HF API reports 33.1B parameters; 382 likes"
+    },
+    {
+      "repo": "PrunaAI/P-Image-OSS-Comfy",
+      "format": "ComfyUI bf16 / int8 / w4a8",
+      "official": true,
+      "size_gb": 20.0,
+      "notes": "smallest set 20 GB download; repo total 139 GB for all formats; 1.27M downloads"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "no",
+      "variant": "w4a8 smallest set",
+      "basis": "estimate",
+      "notes": "card: from 21 GB VRAM at 8 MP"
+    },
+    "pc-16gb": {
+      "fits": "marginal",
+      "variant": "w4a8",
+      "basis": "estimate",
+      "notes": "needs offload below 21 GB peak; speed not known"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "w4a8",
+      "basis": "estimate",
+      "notes": "card: 21 GB peak at 8 MP"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "int8",
+      "basis": "estimate"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "w4a8",
+      "basis": "estimate",
+      "notes": "12 GB GPU share"
+    },
+    "mac-32gb": {
+      "fits": "marginal",
+      "variant": "w4a8",
+      "basis": "estimate",
+      "notes": "22 GB GPU share vs 21 GB peak; quant format is ComfyUI/CUDA"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "int8",
+      "basis": "estimate"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "ComfyUI native",
+      "Diffusers (PrunaAI/P-Image-OSS)"
+    ]
+  },
+  "benchmarks": [],
+  "soft": {
+    "strengths": [
+      "8-step, CFG-free generation at 8 MP",
+      "edits with up to 8 reference images"
+    ],
+    "weaknesses": [
+      "territory-restricted licence inherited from MiniMax-H3"
+    ],
+    "maturity": "1.27M downloads of the Comfy repo in three weeks (mostly through ComfyUI)."
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "The quantized H3 variant brings a 33B image model into the 24 GB class, but the MiniMax licence excludes the EU, UK and USA, so it cannot be offered to our users; see minimax-h3-image.",
+    "blockers": [
+      "licence territory excludes EU/UK/US"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://huggingface.co/PrunaAI/P-Image-OSS-Comfy",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README, HF API"
+    },
+    {
+      "url": "https://huggingface.co/api/models/PrunaAI/P-Image-OSS?blobs=true",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "API file sizes"
+    }
+  ],
+  "open_questions": [
+    "Quality loss of w4a8/int8 versus bf16 not measured by anyone found",
+    "Own LICENSE file not opened"
+  ],
+  "last_checked": "2026-11-19"
+}

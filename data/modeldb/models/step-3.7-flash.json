@@ -1,0 +1,275 @@
+{
+  "id": "step-3.7-flash",
+  "name": "Step-3.7-Flash",
+  "vendor": "StepFun (stepfun-ai)",
+  "release_date": "2026-05-23",
+  "tasks": [
+    "coding",
+    "general"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/stepfun-ai/Step-3.7-Flash/raw/main/README.md",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "raw card text"
+    },
+    {
+      "url": "https://huggingface.co/stepfun-ai/Step-3.7-Flash/raw/main/config.json",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://huggingface.co/api/models/stepfun-ai/Step-3.7-Flash-GGUF/tree/main",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "file sizes"
+    },
+    {
+      "url": "https://huggingface.co/stepfun-ai/Step-3.7-Flash/discussions",
+      "kind": "primary",
+      "checked": "2026-11-19"
+    },
+    {
+      "url": "https://benchlm.ai/benchmarks/aacodingindex",
+      "kind": "secondary",
+      "checked": "2026-11-19",
+      "note": "aggregator mirror of the Artificial Analysis Coding Index, read 2026-11-19; no per-row dates; upstream AA pages not reachable"
+    },
+    {
+      "url": "research/49-moe-models-2026-11.md",
+      "kind": "own",
+      "checked": "2026-11-19"
+    }
+  ],
+  "last_checked": "2026-11-19",
+  "purpose": "StepFun states: a 198B vision-language MoE for high-frequency production workloads, built for developers who scale agentic workflows combining perception, search and reasoning (financial report parsing, multi-step search loops, concurrent coding agents).",
+  "modalities": {
+    "input": [
+      "text",
+      "image"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en"
+    ]
+  },
+  "lineage": {
+    "family": "Step 3.x"
+  },
+  "license": {
+    "name": "Apache-2.0 (card tag; no LICENSE file in the repository)",
+    "verified": false,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Card YAML says apache-2.0; neither the main repo nor the official GGUF repo has a LICENSE file, so the text could not be read."
+  },
+  "architecture": {
+    "kind": "sparse MoE vision-language model (Step3p5ForCausalLM)",
+    "gguf_arch": "step3p5 (name from config.json; llama.cpp support stated by the vendor)",
+    "params_total_b": 198,
+    "params_active_b": 11,
+    "layers": 45,
+    "attention": "full attention every fourth layer, sliding window 512 on the others (layer_types in config.json)",
+    "context_native": 262144,
+    "context_max": 262144,
+    "drafter": "MTP head (3 layers; separate GGUF 3.7 to 7.0 GB in the official repo)",
+    "why_this_design": "The card states the target (throughput up to 400 tok/s, three selectable reasoning levels, 256k context) but no reasons for the attention layout."
+  },
+  "variants": [
+    {
+      "repo": "stepfun-ai/Step-3.7-Flash",
+      "format": "safetensors BF16",
+      "size_gb": 402.7,
+      "official": true
+    },
+    {
+      "repo": "stepfun-ai/Step-3.7-Flash-GGUF",
+      "format": "GGUF IQ3_XXS",
+      "size_gb": 75.8,
+      "official": true
+    },
+    {
+      "repo": "stepfun-ai/Step-3.7-Flash-GGUF",
+      "format": "GGUF Q3_K_M",
+      "size_gb": 93.8,
+      "official": true
+    },
+    {
+      "repo": "stepfun-ai/Step-3.7-Flash-GGUF",
+      "format": "GGUF Q4_K_S",
+      "size_gb": 111.5,
+      "official": true
+    },
+    {
+      "repo": "stepfun-ai/Step-3.7-Flash-GGUF",
+      "format": "GGUF Q8_0",
+      "size_gb": 209.4,
+      "official": true
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "no",
+      "variant": "IQ3_XXS",
+      "basis": "estimate",
+      "notes": "estimate from the file size (75.8 GB) against the budget of docs/hardware: 9.6 GB VRAM plus 50 GB RAM = 60 GB; about 13% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that)"
+    },
+    "pc-16gb": {
+      "fits": "no",
+      "variant": "IQ3_XXS",
+      "basis": "estimate",
+      "notes": "estimate from the file size (75.8 GB) against the budget of docs/hardware: 13.6 GB VRAM plus 50 GB RAM = 64 GB; about 18% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that)"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "IQ3_XXS",
+      "basis": "estimate",
+      "notes": "estimate from the file size (75.8 GB) against the budget of docs/hardware: 21.6 GB VRAM plus 82 GB RAM = 104 GB; about 28% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that)"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "IQ3_XXS",
+      "basis": "estimate",
+      "notes": "estimate from the file size (75.8 GB) against the budget of docs/hardware: 29.6 GB VRAM plus 114 GB RAM = 144 GB; about 39% of the file can sit in VRAM, the rest streams from RAM (decode speed depends on that)"
+    },
+    "mac-16-24gb": {
+      "fits": "no",
+      "variant": "IQ3_XXS",
+      "basis": "estimate",
+      "notes": "estimate from the file size (75.8 GB) against the GPU share of docs/hardware (about 12 GB)"
+    },
+    "mac-32gb": {
+      "fits": "no",
+      "variant": "IQ3_XXS",
+      "basis": "estimate",
+      "notes": "estimate from the file size (75.8 GB) against the GPU share of docs/hardware (about 22 GB)"
+    },
+    "mac-64gb+": {
+      "fits": "no",
+      "variant": "IQ3_XXS",
+      "basis": "estimate",
+      "notes": "estimate from the file size (75.8 GB) against the GPU share of docs/hardware (about 52 GB)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "vLLM",
+      "SGLang",
+      "Transformers",
+      "NeMo"
+    ],
+    "notes": "Official GGUFs; a llama.cpp reasoning-parser bug was being fixed in July 2026 (PR 25238 per HF discussion 14). Tona would need a new module (step3p5: SWA-512 + full layers, MoE)."
+  },
+  "benchmarks": [
+    {
+      "name": "SWE-bench Pro",
+      "score": 56.3,
+      "kind": "vendor",
+      "source": "https://huggingface.co/stepfun-ai/Step-3.7-Flash/raw/main/README.md",
+      "variant": "official API / weights",
+      "date": "2026-05-29"
+    },
+    {
+      "name": "Terminal-Bench 2.1",
+      "score": 59.5,
+      "kind": "vendor",
+      "source": "https://huggingface.co/stepfun-ai/Step-3.7-Flash/raw/main/README.md",
+      "variant": "official API / weights",
+      "date": "2026-05-29"
+    },
+    {
+      "name": "Toolathlon",
+      "score": 49.5,
+      "kind": "vendor",
+      "source": "https://huggingface.co/stepfun-ai/Step-3.7-Flash/raw/main/README.md",
+      "variant": "official API / weights",
+      "date": "2026-05-29"
+    },
+    {
+      "name": "ClawEval-1.1",
+      "score": 67.1,
+      "kind": "vendor",
+      "source": "https://huggingface.co/stepfun-ai/Step-3.7-Flash/raw/main/README.md",
+      "variant": "official API / weights",
+      "date": "2026-05-29"
+    },
+    {
+      "name": "AA Coding Index (aggregator mirror)",
+      "score": 39.6,
+      "kind": "independent",
+      "source": "https://benchlm.ai/benchmarks/aacodingindex",
+      "variant": "API / full precision",
+      "unit": "%",
+      "date": "2026-11-19",
+      "harness": "aggregator mirror of the Artificial Analysis Coding Index, read 2026-11-19; no per-row dates; upstream AA pages not reachable"
+    },
+    {
+      "name": "AA Intelligence Index",
+      "score": 31,
+      "kind": "independent",
+      "source": "https://artificialanalysis.ai/models/comparisons/glm-5-3-flash-vs-step-3-7-flash",
+      "variant": "Step 3.7 Flash",
+      "date": "2026-11",
+      "harness": "from a search result snippet; the same snippet gives 57 for GLM-5.3-Flash; page not fetched (404 for us)"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "Official GGUFs and MTP; Apache-2.0 by card",
+      "Strong vendor SWE-bench Pro 56.3 and ClawEval"
+    ],
+    "weaknesses": [
+      "Independent Coding Index 39.6 is well below the vendor picture and below Ling 3.0 Flash (50.6)",
+      "Thinks long: stuck-in-thinking loops reported (one user burned 40 M tokens in Kilo Code), no off switch in the stock template",
+      "Raw tool-call tokens leaking into output during long exploration (HF discussion 12)"
+    ],
+    "behavior": "Three reasoning levels; the stock chat template always opens a think block (community patch for enable_thinking).",
+    "best_for": [
+      "agentic workflows with vision input on large-memory machines"
+    ],
+    "avoid_for": [
+      "latency-sensitive coding, 16 GB VRAM classes"
+    ],
+    "maturity": "StepFun: Step 3.5 and 3.7 releases; 9.6k downloads of the main repo, 16 discussions.",
+    "user_reports": [
+      {
+        "summary": "Thinking loop in Kilo Code burned 40 M tokens (vLLM, MTP at 3)",
+        "sentiment": "negative",
+        "source": "https://huggingface.co/stepfun-ai/Step-3.7-Flash/discussions/14",
+        "date": "2026-06-06"
+      },
+      {
+        "summary": "Raw tool-call tokens appear mid-reasoning during long codebase exploration (pi harness, official API)",
+        "sentiment": "negative",
+        "source": "https://huggingface.co/stepfun-ai/Step-3.7-Flash/discussions/12",
+        "date": "2026-06-02"
+      },
+      {
+        "summary": "On a 5090 + RTX PRO 6000 at Q4_K_S it thinks 5 to 60 s per turn, slower than Step 3.5 Flash (3 to 10 s)",
+        "sentiment": "negative",
+        "source": "https://huggingface.co/stepfun-ai/Step-3.7-Flash/discussions/14",
+        "date": "2026-06-14"
+      }
+    ]
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Official GGUFs and a clean Apache-2.0 tag, but the only independent coding number (39.6) is the lowest of the Flash class, thinking behaviour is reported as slow and loop-prone, and the smallest quant (76 GB) reaches only the 32 GB + 128 GB class and the 24 GB + 96 GB class marginally.",
+    "blockers": [
+      "Tona has no step3p5 module (engine support, not a quality judgement)",
+      "no license text",
+      "long thinking"
+    ]
+  },
+  "open_questions": [
+    "Why the independent Coding Index (39.6) is far below the vendor SWE-bench Pro 56.3: index version or harness? Check: AA methodology page and our own SWE subset.",
+    "Per-language coding quality: no public per-language numbers found (vendor tables are aggregates; swebench.com per-language view not retrievable). Check: run our Exercism polyglot set per language on the model."
+  ]
+}

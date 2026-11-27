@@ -1,0 +1,173 @@
+{
+  "id": "twil-8b",
+  "name": "TwIL-8B",
+  "vendor": "webAI",
+  "release_date": "2026-10-14",
+  "lineage": {
+    "family": "TwIL",
+    "base_model": "ibm-granite/granite-4.2-8b",
+    "how_derived": "full-parameter SFT then GRPO/DAPO reinforcement learning; two variants, balanced (default) and verbose"
+  },
+  "purpose": "8.8B reasoning model for math, code and instruction following (card).",
+  "tasks": [
+    "math",
+    "coding",
+    "general"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en"
+    ]
+  },
+  "license": {
+    "name": "webAI Non-Commercial License ver. 1.0",
+    "verified": true,
+    "commercial_use": "no",
+    "redistribution": "limited",
+    "notes": "LICENSE.md read: copyright grant to use, modify and distribute, but sec. 3.3 limits use of the Work and derivatives to non-commercial research and educational purposes; redistribution only under the same licence with notices; patent-suit termination. The base granite-4.2-8b is Apache-2.0 per its card tag (not re-read)."
+  },
+  "architecture": {
+    "kind": "dense transformer (Granite)",
+    "gguf_arch": "granite",
+    "params_total_b": 8.8,
+    "params_active_b": 8.8,
+    "attention": "GQA, hidden 4096",
+    "recurrent": "none",
+    "context_native": 131072,
+    "drafter": "none stated"
+  },
+  "variants": [
+    {
+      "repo": "webAI-Official/TwIL-8B",
+      "format": "GGUF Q4_K_M balanced",
+      "size_gb": 5.35,
+      "official": true,
+      "notes": "also verbose Q4_K_M 5.35, Q8_0 9.35, F16 17.59 GB; main repo holds safetensors (72.8 GB total with GGUFs)"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "variant": "official GGUF Q4_K_M balanced",
+      "basis": "estimate",
+      "notes": "5.35 GB file fits the VRAM budget (9.6 GB) with room for KV"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "official GGUF Q4_K_M balanced",
+      "basis": "estimate",
+      "notes": "5.35 GB file fits the VRAM budget (13.6 GB) with room for KV"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "official GGUF Q4_K_M balanced",
+      "basis": "estimate",
+      "notes": "5.35 GB file fits the VRAM budget (21.6 GB) with room for KV"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "official GGUF Q4_K_M balanced",
+      "basis": "estimate",
+      "notes": "5.35 GB file fits the VRAM budget (29.6 GB) with room for KV"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "variant": "official GGUF Q4_K_M balanced",
+      "basis": "estimate",
+      "notes": "5.35 GB file against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "official GGUF Q4_K_M balanced",
+      "basis": "estimate",
+      "notes": "5.35 GB file against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "official GGUF Q4_K_M balanced",
+      "basis": "estimate",
+      "notes": "5.35 GB file against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": [
+      "Transformers"
+    ],
+    "notes": "Granite architecture; official GGUFs in the repo."
+  },
+  "benchmarks": [
+    {
+      "name": "MATH-500",
+      "score": 98.2,
+      "kind": "vendor",
+      "variant": "balanced; Qwen3.5-9B 96.6, Gemma 4 31B 87.9",
+      "source": "https://huggingface.co/webAI-Official/TwIL-8B"
+    },
+    {
+      "name": "LiveCodeBench",
+      "score": 81.6,
+      "kind": "vendor",
+      "variant": "verbose variant; Gemma 4 31B 80.0, Qwen3.5-9B 65.6",
+      "source": "https://huggingface.co/webAI-Official/TwIL-8B"
+    },
+    {
+      "name": "IFBench",
+      "score": 74.4,
+      "kind": "vendor",
+      "variant": "verbose variant; Qwen3.5-9B 64.5",
+      "source": "https://huggingface.co/webAI-Official/TwIL-8B"
+    },
+    {
+      "name": "AIME 2025",
+      "score": 88.3,
+      "kind": "vendor",
+      "variant": "balanced; Gemma 4 31B 87.1",
+      "source": "https://huggingface.co/webAI-Official/TwIL-8B"
+    }
+  ],
+  "soft": {
+    "strengths": [
+      "vendor reports MATH-500 and LiveCodeBench above Gemma 4 31B at 8.8B"
+    ],
+    "weaknesses": [
+      "trails on knowledge-heavy benchmarks (GPQA Diamond, MMLU-Pro, HLE) by the vendor's own statement",
+      "competitor scores are published figures, not re-run"
+    ],
+    "maturity": "75k downloads, 444 likes"
+  },
+  "tona_fit": {
+    "verdict": "watch",
+    "reason": "Vendor numbers (MATH-500 98.2, LiveCodeBench 81.6 on the verbose variant) are strong for 8.8B but self-reported, and the card admits it trails on knowledge benchmarks. Reasoning/coding-focused Granite RL fine-tune at 5.35 GB Q4_K_M; needs our own coding eval.",
+    "blockers": [
+      "vendor-only benchmarks"
+    ]
+  },
+  "open_questions": [
+    "independent reproduction of the LiveCodeBench and MATH-500 numbers"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/webAI-Official/TwIL-8B",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README, config.json read"
+    },
+    {
+      "url": "https://huggingface.co/webAI-Official/TwIL-8B/raw/main/LICENSE.md",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "licence text read"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

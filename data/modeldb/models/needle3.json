@@ -1,0 +1,130 @@
+{
+  "id": "needle3",
+  "name": "Needle 3",
+  "vendor": "Cactus Compute",
+  "release_date": "2026-09-16",
+  "purpose": "Sub-50 MB-class on-device model for tool calling, structured extraction and text embeddings, run by the Cactus engine (card).",
+  "tasks": [
+    "other"
+  ],
+  "modalities": {
+    "input": [
+      "text"
+    ],
+    "output": [
+      "text"
+    ]
+  },
+  "languages": {
+    "natural": [
+      "en"
+    ]
+  },
+  "license": {
+    "name": "Apache-2.0",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "Apache License 2.0 text read in the repo LICENSE file: commercial use, modification and redistribution allowed with notice and patent grant."
+  },
+  "architecture": {
+    "kind": "small transformer for tool calling (custom, 20 layers, hidden 768)",
+    "params_total_b": 0.14,
+    "layers": 20,
+    "attention": "GQA 12 Q / 2 KV heads",
+    "recurrent": "none",
+    "context_native": 8192,
+    "drafter": "none"
+  },
+  "variants": [
+    {
+      "repo": "Cactus-Compute/needle3",
+      "format": "needle3.cact plus safetensors checkpoint",
+      "size_gb": 0.28,
+      "official": true,
+      "notes": "parameter count estimated from the 0.28 GB repo size, not stated"
+    }
+  ],
+  "hardware_fit": {
+    "pc-12gb": {
+      "fits": "yes",
+      "variant": "needle3.cact",
+      "basis": "estimate",
+      "notes": "0.28 GB file fits the VRAM budget (9.6 GB) with room for KV"
+    },
+    "pc-16gb": {
+      "fits": "yes",
+      "variant": "needle3.cact",
+      "basis": "estimate",
+      "notes": "0.28 GB file fits the VRAM budget (13.6 GB) with room for KV"
+    },
+    "pc-24gb": {
+      "fits": "yes",
+      "variant": "needle3.cact",
+      "basis": "estimate",
+      "notes": "0.28 GB file fits the VRAM budget (21.6 GB) with room for KV"
+    },
+    "pc-32gb": {
+      "fits": "yes",
+      "variant": "needle3.cact",
+      "basis": "estimate",
+      "notes": "0.28 GB file fits the VRAM budget (29.6 GB) with room for KV"
+    },
+    "mac-16-24gb": {
+      "fits": "yes",
+      "variant": "needle3.cact",
+      "basis": "estimate",
+      "notes": "0.28 GB file against a GPU share of about 12 GB (KV cache not included)"
+    },
+    "mac-32gb": {
+      "fits": "yes",
+      "variant": "needle3.cact",
+      "basis": "estimate",
+      "notes": "0.28 GB file against a GPU share of about 22 GB (KV cache not included)"
+    },
+    "mac-64gb+": {
+      "fits": "yes",
+      "variant": "needle3.cact",
+      "basis": "estimate",
+      "notes": "0.28 GB file against a GPU share of about 52 GB (KV cache not included)"
+    }
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "no",
+    "other": [
+      "cactus engine (iOS, Android, desktop, WebAssembly)"
+    ],
+    "notes": "Own format and runtime."
+  },
+  "benchmarks": [],
+  "soft": {
+    "strengths": [
+      "tiny: runs in a browser or a phone"
+    ],
+    "weaknesses": [
+      "not a general model; no benchmark in the card (they are on the vendor website)"
+    ],
+    "maturity": "191k downloads, 423 likes"
+  },
+  "tona_fit": {
+    "verdict": "reject",
+    "reason": "A micro tool-call router in a vendor format, not a coding or chat model; no fit with a local coding worker.",
+    "blockers": [
+      "own runtime"
+    ]
+  },
+  "open_questions": [
+    "benchmarks (website not opened)",
+    "parameter count"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/Cactus-Compute/needle3",
+      "kind": "primary",
+      "checked": "2026-11-19",
+      "note": "README, config.json read"
+    }
+  ],
+  "last_checked": "2026-11-19"
+}

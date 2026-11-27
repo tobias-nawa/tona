@@ -1,0 +1,582 @@
+{
+  "config": {
+    "A": {
+      "build": "merged",
+      "env": {},
+      "tooling": {
+        "HIP_PATH": "./work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+        "IE_EXPERT_PROFILE": "./work/profile/experts-coder.bin",
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0"
+      },
+      "commit": "v0.0.2-137-ge4c1010521"
+    },
+    "B": {
+      "build": "w83",
+      "env": {},
+      "tooling": {
+        "HIP_PATH": "./work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+        "IE_EXPERT_PROFILE": "./work/profile/experts-coder.bin",
+        "OMP_NUM_THREADS": "6",
+        "ROCR_VISIBLE_DEVICES": "0"
+      },
+      "commit": "v0.0.2-147-gcce920d197"
+    },
+    "workload": "mid,short",
+    "targets": "2000:400 2000:write:400 30000:200 at --ctx 140000",
+    "deterministic": false,
+    "plan_info": {
+      "expect": [
+        [
+          "prefill",
+          -1.0,
+          1.0
+        ],
+        [
+          "decode",
+          -2.0,
+          2.0
+        ]
+      ],
+      "source": "s86u1-3, s86f1-2 against s86d1-2 in 2026-11-01-slow-decode.md: GTT with all experts pinned, prefill 16.8-16.9 s against 16.8 s",
+      "workload": "mid,short",
+      "targets": "2000:400 2000:write:400 30000:200 at --ctx 140000",
+      "primary": "prefill",
+      "why_size": "the cap loss showed at a 30K prefill (-20 %) and at 130K (-27 %), so mid shows it; short adds decode and expert counters at 2K",
+      "decode_tokens": 200,
+      "noise": {
+        "prefill@2000": [
+          0.09,
+          4,
+          "research/measurements/2026-11-02-ab-tool.md: run 7, short, A/A merged against merged, 5 rounds with warm-up"
+        ],
+        "decode@2000": [
+          0.231,
+          4,
+          "research/measurements/2026-11-02-ab-tool.md: run 7, short, A/A merged against merged, 5 rounds with warm-up"
+        ],
+        "prefill@2000:write": [
+          0.163,
+          4,
+          "research/measurements/2026-11-02-ab-tool.md: run 7, short, A/A merged against merged, 5 rounds with warm-up"
+        ],
+        "decode@2000:write": [
+          0.605,
+          4,
+          "research/measurements/2026-11-02-ab-tool.md: run 7, short, A/A merged against merged, 5 rounds with warm-up"
+        ],
+        "prefill@30000": [
+          0.04,
+          9,
+          "research/measurements/2026-11-02-ab-tool.md: first A/A run (rounds 2-6; round 1 had no warm-up); second A/A run with warm-up (6 rounds)"
+        ],
+        "decode@30000": [
+          0.279,
+          9,
+          "research/measurements/2026-11-02-ab-tool.md: first A/A run (rounds 2-6; round 1 had no warm-up); second A/A run with warm-up (6 rounds)"
+        ]
+      },
+      "warmup": true,
+      "A": {
+        "build": "merged",
+        "env": {},
+        "tooling": {
+          "HIP_PATH": "./work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+          "IE_EXPERT_PROFILE": "./work/profile/experts-coder.bin",
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0"
+        },
+        "commit": "v0.0.2-137-ge4c1010521"
+      },
+      "B": {
+        "build": "w83",
+        "env": {},
+        "tooling": {
+          "HIP_PATH": "./work/rocm-10.1/lib/python3.14/site-packages/_rocm_sdk_devel",
+          "IE_EXPERT_PROFILE": "./work/profile/experts-coder.bin",
+          "OMP_NUM_THREADS": "6",
+          "ROCR_VISIBLE_DEVICES": "0"
+        },
+        "commit": "v0.0.2-147-gcce920d197"
+      }
+    },
+    "reference_sha": {},
+    "corpus_sha256": "e13a800340859f7d39c63712d90383faae7e5a47c3865f0811e40d912612d38e",
+    "corpus_is_reference": true,
+    "commit": "cce920d",
+    "noise": {
+      "prefill@2000": [
+        0.09,
+        4
+      ],
+      "decode@2000": [
+        0.231,
+        4
+      ],
+      "prefill@2000:write": [
+        0.163,
+        4
+      ],
+      "decode@2000:write": [
+        0.605,
+        4
+      ],
+      "prefill@30000": [
+        0.04,
+        9
+      ],
+      "decode@30000": [
+        0.279,
+        9
+      ]
+    }
+  },
+  "rounds": [
+    {
+      "order": "AB",
+      "sha": {
+        "A": {
+          "2000": "f6573f396c15300f",
+          "2000:write": "a6f07fd6fb86e448",
+          "30000": "cde3f1093dce48a1"
+        },
+        "B": {
+          "2000": "f6573f396c15300f",
+          "2000:write": "a6f07fd6fb86e448",
+          "30000": "cde3f1093dce48a1"
+        }
+      },
+      "A": {
+        "prefill@2000": 1326.2769220019752,
+        "decode@2000": 65.98196559531613,
+        "prefill@2000:write": 1540.3976515331517,
+        "decode@2000:write": 118.38390048468435,
+        "prefill@30000": 1782.7115717745157,
+        "decode@30000": 69.98320271916235
+      },
+      "counters": {
+        "A": {
+          "2000": {
+            "expert_hits": 131811,
+            "expert_misses": 19885
+          },
+          "2000:write": {
+            "expert_hits": 82992,
+            "expert_misses": 25567
+          },
+          "30000": {
+            "expert_hits": 71024,
+            "expert_misses": 10531
+          }
+        },
+        "B": {
+          "2000": {
+            "expert_hits": 131811,
+            "expert_misses": 19885
+          },
+          "2000:write": {
+            "expert_hits": 82992,
+            "expert_misses": 25567
+          },
+          "30000": {
+            "expert_hits": 71024,
+            "expert_misses": 10531
+          }
+        }
+      },
+      "B": {
+        "prefill@2000": 1120.746754188172,
+        "decode@2000": 65.05892418842662,
+        "prefill@2000:write": 1535.2943967670813,
+        "decode@2000:write": 118.69820593768748,
+        "prefill@30000": 1758.0406327341113,
+        "decode@30000": 69.2939864357569
+      },
+      "seconds": 106.13447132497095
+    },
+    {
+      "order": "BA",
+      "sha": {
+        "B": {
+          "2000": "f6573f396c15300f",
+          "2000:write": "a6f07fd6fb86e448",
+          "30000": "cde3f1093dce48a1"
+        },
+        "A": {
+          "2000": "f6573f396c15300f",
+          "2000:write": "a6f07fd6fb86e448",
+          "30000": "cde3f1093dce48a1"
+        }
+      },
+      "B": {
+        "prefill@2000": 1321.405070344811,
+        "decode@2000": 64.93046918369248,
+        "prefill@2000:write": 1531.6103717483197,
+        "decode@2000:write": 118.57453362006537,
+        "prefill@30000": 1772.6997784533796,
+        "decode@30000": 68.8833278873141
+      },
+      "counters": {
+        "B": {
+          "2000": {
+            "expert_hits": 131811,
+            "expert_misses": 19885
+          },
+          "2000:write": {
+            "expert_hits": 82992,
+            "expert_misses": 25567
+          },
+          "30000": {
+            "expert_hits": 71024,
+            "expert_misses": 10531
+          }
+        },
+        "A": {
+          "2000": {
+            "expert_hits": 131811,
+            "expert_misses": 19885
+          },
+          "2000:write": {
+            "expert_hits": 82992,
+            "expert_misses": 25567
+          },
+          "30000": {
+            "expert_hits": 71024,
+            "expert_misses": 10531
+          }
+        }
+      },
+      "A": {
+        "prefill@2000": 1326.0449305531654,
+        "decode@2000": 65.949661231196,
+        "prefill@2000:write": 1544.6509564141893,
+        "decode@2000:write": 118.48623500412809,
+        "prefill@30000": 1782.2053449782363,
+        "decode@30000": 69.98773101077835
+      },
+      "seconds": 105.94822453591041
+    },
+    {
+      "order": "AB",
+      "sha": {
+        "A": {
+          "2000": "f6573f396c15300f",
+          "2000:write": "a6f07fd6fb86e448",
+          "30000": "cde3f1093dce48a1"
+        },
+        "B": {
+          "2000": "f6573f396c15300f",
+          "2000:write": "a6f07fd6fb86e448",
+          "30000": "cde3f1093dce48a1"
+        }
+      },
+      "A": {
+        "prefill@2000": 1325.5940010365487,
+        "decode@2000": 66.1896953004113,
+        "prefill@2000:write": 1542.6460862037106,
+        "decode@2000:write": 118.38645290560117,
+        "prefill@30000": 1782.6149038070455,
+        "decode@30000": 70.05299525203006
+      },
+      "counters": {
+        "A": {
+          "2000": {
+            "expert_hits": 131811,
+            "expert_misses": 19885
+          },
+          "2000:write": {
+            "expert_hits": 82992,
+            "expert_misses": 25567
+          },
+          "30000": {
+            "expert_hits": 71024,
+            "expert_misses": 10531
+          }
+        },
+        "B": {
+          "2000": {
+            "expert_hits": 131811,
+            "expert_misses": 19885
+          },
+          "2000:write": {
+            "expert_hits": 82992,
+            "expert_misses": 25567
+          },
+          "30000": {
+            "expert_hits": 71024,
+            "expert_misses": 10531
+          }
+        }
+      },
+      "B": {
+        "prefill@2000": 1306.5353369772874,
+        "decode@2000": 65.41068924219523,
+        "prefill@2000:write": 1526.445915891236,
+        "decode@2000:write": 119.11505635583309,
+        "prefill@30000": 1761.3205449506513,
+        "decode@30000": 68.93919159868847
+      },
+      "seconds": 105.74199233506806
+    },
+    {
+      "order": "BA",
+      "sha": {
+        "B": {
+          "2000": "f6573f396c15300f",
+          "2000:write": "a6f07fd6fb86e448",
+          "30000": "cde3f1093dce48a1"
+        },
+        "A": {
+          "2000": "f6573f396c15300f",
+          "2000:write": "a6f07fd6fb86e448",
+          "30000": "cde3f1093dce48a1"
+        }
+      },
+      "B": {
+        "prefill@2000": 1304.6655480187223,
+        "decode@2000": 65.60214411474621,
+        "prefill@2000:write": 1520.8992901963013,
+        "decode@2000:write": 117.7831197356382,
+        "prefill@30000": 1767.957162219267,
+        "decode@30000": 69.44202106258024
+      },
+      "counters": {
+        "B": {
+          "2000": {
+            "expert_hits": 131811,
+            "expert_misses": 19885
+          },
+          "2000:write": {
+            "expert_hits": 82992,
+            "expert_misses": 25567
+          },
+          "30000": {
+            "expert_hits": 71024,
+            "expert_misses": 10531
+          }
+        },
+        "A": {
+          "2000": {
+            "expert_hits": 131811,
+            "expert_misses": 19885
+          },
+          "2000:write": {
+            "expert_hits": 82992,
+            "expert_misses": 25567
+          },
+          "30000": {
+            "expert_hits": 71024,
+            "expert_misses": 10531
+          }
+        }
+      },
+      "A": {
+        "prefill@2000": 1332.9601293092078,
+        "decode@2000": 66.09738346414447,
+        "prefill@2000:write": 1541.6683143459009,
+        "decode@2000:write": 118.84048609312143,
+        "prefill@30000": 1783.6891103510038,
+        "decode@30000": 69.87603547593743
+      },
+      "seconds": 105.63098605710547
+    },
+    {
+      "order": "AB",
+      "sha": {
+        "A": {
+          "2000": "f6573f396c15300f",
+          "2000:write": "a6f07fd6fb86e448",
+          "30000": "cde3f1093dce48a1"
+        },
+        "B": {
+          "2000": "f6573f396c15300f",
+          "2000:write": "a6f07fd6fb86e448",
+          "30000": "cde3f1093dce48a1"
+        }
+      },
+      "A": {
+        "prefill@2000": 1328.4004334882452,
+        "decode@2000": 66.01382680924438,
+        "prefill@2000:write": 1541.7512809512323,
+        "decode@2000:write": 117.83181692912001,
+        "prefill@30000": 1782.6993048797196,
+        "decode@30000": 69.97789798826017
+      },
+      "counters": {
+        "A": {
+          "2000": {
+            "expert_hits": 131811,
+            "expert_misses": 19885
+          },
+          "2000:write": {
+            "expert_hits": 82992,
+            "expert_misses": 25567
+          },
+          "30000": {
+            "expert_hits": 71024,
+            "expert_misses": 10531
+          }
+        },
+        "B": {
+          "2000": {
+            "expert_hits": 131811,
+            "expert_misses": 19885
+          },
+          "2000:write": {
+            "expert_hits": 82992,
+            "expert_misses": 25567
+          },
+          "30000": {
+            "expert_hits": 71024,
+            "expert_misses": 10531
+          }
+        }
+      },
+      "B": {
+        "prefill@2000": 1302.4310374331994,
+        "decode@2000": 65.66224848266248,
+        "prefill@2000:write": 1517.7191153505782,
+        "decode@2000:write": 118.65205801724697,
+        "prefill@30000": 1774.6580841280077,
+        "decode@30000": 69.09934709360549
+      },
+      "seconds": 105.65677077602595
+    },
+    {
+      "order": "BA",
+      "sha": {
+        "B": {
+          "2000": "f6573f396c15300f",
+          "2000:write": "a6f07fd6fb86e448",
+          "30000": "cde3f1093dce48a1"
+        },
+        "A": {
+          "2000": "f6573f396c15300f",
+          "2000:write": "a6f07fd6fb86e448",
+          "30000": "cde3f1093dce48a1"
+        }
+      },
+      "B": {
+        "prefill@2000": 1329.0985477202692,
+        "decode@2000": 65.7879835993305,
+        "prefill@2000:write": 1543.1122675797187,
+        "decode@2000:write": 118.3705786186333,
+        "prefill@30000": 1779.2129019034032,
+        "decode@30000": 69.09446602753846
+      },
+      "counters": {
+        "B": {
+          "2000": {
+            "expert_hits": 131811,
+            "expert_misses": 19885
+          },
+          "2000:write": {
+            "expert_hits": 82992,
+            "expert_misses": 25567
+          },
+          "30000": {
+            "expert_hits": 71024,
+            "expert_misses": 10531
+          }
+        },
+        "A": {
+          "2000": {
+            "expert_hits": 131811,
+            "expert_misses": 19885
+          },
+          "2000:write": {
+            "expert_hits": 82992,
+            "expert_misses": 25567
+          },
+          "30000": {
+            "expert_hits": 71024,
+            "expert_misses": 10531
+          }
+        }
+      },
+      "A": {
+        "prefill@2000": 1327.770199551867,
+        "decode@2000": 65.81544106141072,
+        "prefill@2000:write": 1542.2968573227572,
+        "decode@2000:write": 117.50956078277258,
+        "prefill@30000": 1784.3734778495339,
+        "decode@30000": 70.05313167863133
+      },
+      "seconds": 103.67667761899065
+    }
+  ],
+  "stop_reason": "6 rounds (undecided metrics stay open)",
+  "wall_seconds": 687.0421503569232,
+  "warmup": {
+    "prefill@2000": 1331.4823415558888,
+    "decode@2000": 65.91218678383916,
+    "prefill@2000:write": 1312.3328900608622,
+    "decode@2000:write": 117.22369349077523,
+    "prefill@30000": 1759.0397929375474,
+    "decode@30000": 69.1707998605976
+  },
+  "plan": {
+    "alpha": 0.05,
+    "margin": 0.5,
+    "max_rounds": 6,
+    "min_rounds": 2,
+    "prior_sd": 0.5,
+    "prior_df": 4.0
+  },
+  "decisions": {
+    "prefill@2000": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": -3.543667539979689,
+      "ci_diff_percent": [
+        -10.068315701564686,
+        2.980980621605308
+      ]
+    },
+    "decode@2000": {
+      "decided_at_round": 1,
+      "decision": "B slower",
+      "mean_diff_percent": -0.9074712129865214,
+      "ci_diff_percent": [
+        -1.5775583381985294,
+        -0.23738408777451336
+      ]
+    },
+    "prefill@2000:write": {
+      "decided_at_round": 3,
+      "decision": "B slower",
+      "mean_diff_percent": -0.8464595182228529,
+      "ci_diff_percent": [
+        -1.539765062274145,
+        -0.15315397417156074
+      ]
+    },
+    "decode@2000:write": {
+      "decided_at_round": null,
+      "decision": "open",
+      "mean_diff_percent": 0.24909357139512034,
+      "ci_diff_percent": [
+        -0.6540102488067929,
+        1.1521973915970336
+      ]
+    },
+    "prefill@30000": {
+      "decided_at_round": 2,
+      "decision": "B slower",
+      "mean_diff_percent": -0.7890142607226444,
+      "ci_diff_percent": [
+        -1.140737370301947,
+        -0.43729115114334166
+      ]
+    },
+    "decode@30000": {
+      "decided_at_round": 1,
+      "decision": "B slower",
+      "mean_diff_percent": -1.2329740018867053,
+      "ci_diff_percent": [
+        -1.6556358262406925,
+        -0.8103121775327181
+      ]
+    }
+  }
+}

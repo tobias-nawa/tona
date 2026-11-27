@@ -1,0 +1,82 @@
+{
+  "id": "mistral-large-4-1t-a52b",
+  "name": "Mistral Large 4 (1T-A52B)",
+  "vendor": "Mistral AI",
+  "release_date": "2026-09-30",
+  "lineage": {
+    "family": "Mistral 4",
+    "how_derived": "trained from scratch on 3,800 NVIDIA Grace Blackwell GPUs in Mistral's own European datacentres (card); the smaller family members in this database are mistral-small-4-119b-a6b and mistral-medium-3.5-128b"
+  },
+  "purpose": "The card calls it Mistral's largest and most capable model: one set of weights unifying instruction following, reasoning, coding and agentic work, strong in cybersecurity, finance and law, with state-of-the-art visual grounding among open weights and fluency in 160+ languages including every official EU language.",
+  "tasks": ["general", "coding", "research", "vision"],
+  "modalities": {"input": ["text", "image"], "output": ["text"]},
+  "languages": {"natural": ["en", "fr", "de", "es", "pt", "it", "ja", "ko", "ru", "zh", "ar", "many"]},
+  "license": {
+    "name": "Mistral Ecosystem Open-Weight License (modified MIT)",
+    "verified": true,
+    "commercial_use": "yes",
+    "redistribution": "yes",
+    "notes": "LICENSE text read (2.6 KB). MIT-style grant including weights, derivatives and sale. One condition: whoever operates a Model-as-a-Service business must obtain a separate commercial licence from Mistral before using the model or derivatives for any commercial purpose (MaaS means giving third parties inference or post-training access with meaningful control over inputs, parameters or training data). End-user products that embed the model in specific features, mere request relaying, internal use and use via Mistral's official products are not affected. No revenue threshold, no territory exclusion."
+  },
+  "architecture": {
+    "kind": "multimodal sparse MoE with MLA and an indexer (sparse attention), vision encoder, DSpark draft head",
+    "params_total_b": 1000,
+    "params_active_b": 49,
+    "layers": 72,
+    "attention": "MLA (kv_lora_rank 512, 64 heads, hidden 6144) with an indexer (32 index heads, top-k 2048) and shared indexer layers; NoPE layers every 4th; final logit soft-capping 30",
+    "recurrent": "none",
+    "experts": 128,
+    "experts_active": 4,
+    "context_native": 1048576,
+    "context_max": 1048576,
+    "drafter": "DSpark: 3 dense MLA draft layers in BF16 proposing blocks of 3 tokens, shipped inside the checkpoint; up to 1.9x throughput (vendor); standalone DSpark GGUFs of 2.25 to 4.21 GB exist",
+    "why_this_design": "The card names the choices (granular MoE with 128 routed experts, 4 active and 1 shared; 1M context; Pixtral-style variable-size vision encoder) but gives no reasons for the numbers. 49B active (52B including embeddings and output layers)."
+  },
+  "variants": [
+    {"repo": "mistralai/Mistral-Large-4-1T-A52B", "format": "safetensors FP8 block-quantised (config fp8, weight block 128x128)", "size_gb": 1060.62, "official": true},
+    {"repo": "mistralai/Mistral-Large-4-1T-A52B-NVFP4", "format": "NVFP4 (Blackwell)", "official": true, "notes": "vendor says smaller footprint and same performance; size not measured"},
+    {"repo": "unsloth/Mistral-Large-4-1T-A52B-GGUF", "format": "GGUF dynamic UD-IQ1_S", "size_gb": 233.01, "official": false, "notes": "UD-IQ1_M 259.58, UD-IQ2_XXS 302.47, UD-Q2_K_XL 378.25, UD-IQ3_XXS 423.52, UD-Q3_K_XL 492.75, UD-Q4_K_XL 604.79, UD-Q5_K_XL 783.75, UD-Q6_K_XL 890.47, Q8_0 1115.15, BF16 2098.86 GB; DSpark Q8_0 2.25 GB, mmproj 3.4 GB"},
+    {"repo": "ggml-org/Mistral-Large-4-1T-A52B-GGUF", "format": "GGUF IQ2_XXS", "size_gb": 297.68, "official": false, "notes": "Q2_K 380.71, Q4_K_M 634.8, Q8_0 1115.15 GB; linked by the vendor card for llama.cpp"},
+    {"repo": "amd/Mistral-Large-4-1T-A52B-Quark-MXFP4", "format": "MXFP4 (Quark)", "official": false, "notes": "also MLX 2-bit and 4-bit text-only repos (mlx-community) and an MLX Q3i repo; sizes not measured"}
+  ],
+  "hardware_fit": {
+    "pc-12gb": {"fits": "no", "basis": "estimate", "notes": "smallest GGUF 233 GB against about 60 GB"},
+    "pc-16gb": {"fits": "no", "basis": "estimate"},
+    "pc-24gb": {"fits": "no", "basis": "estimate"},
+    "pc-32gb": {"fits": "no", "basis": "estimate", "notes": "UD-IQ1_S 233 GB against about 158 GB (29.6 VRAM + 128 RAM)"},
+    "mac-16-24gb": {"fits": "no", "basis": "estimate"},
+    "mac-32gb": {"fits": "no", "basis": "estimate"},
+    "mac-64gb+": {"fits": "no", "basis": "estimate", "notes": "233 GB against about 52 GB GPU share on a 64 GB Mac; Macs with 256 GB or more not assessed"}
+  },
+  "engine_support": {
+    "tona": "none",
+    "llama_cpp": "yes",
+    "other": ["vLLM", "SGLang", "Transformers", "Unsloth", "MLX (community)"],
+    "notes": "The vendor card links the ggml-org GGUFs for llama.cpp and an Unsloth guide."
+  },
+  "benchmarks": [
+    {"name": "Artificial Analysis Coding Agent Index", "score": "48 %", "kind": "independent", "variant": "full model; effectively tied with GLM-5.3 (47 % fewer tokens per task), as quoted on the vendor card from Artificial Analysis", "source": "https://huggingface.co/mistralai/Mistral-Large-4-1T-A52B"},
+    {"name": "Artificial Analysis Intelligence Index v5", "score": 26, "kind": "independent", "variant": "full model; highest among western open-weight models, below the leading Chinese open models (card)", "source": "https://huggingface.co/mistralai/Mistral-Large-4-1T-A52B"}
+  ],
+  "soft": {
+    "strengths": ["Cybersecurity, finance, law and visual grounding (vendor)", "All EU official languages natively (vendor)", "Fewer tokens per coding task than the leading open model (47 % fewer, Artificial Analysis via vendor card)"],
+    "weaknesses": ["Behind the leading Chinese open models on the aggregate index (card says so)", "1T parameters: smallest GGUF 233 GB"],
+    "behavior": "Reasoning effort low, medium or high (default high); recommended temperature 1.0 and top_p 0.95; keep the tool set small (card).",
+    "maturity": "Mistral is an established European lab; about 26 derivatives on the HF API within seven weeks."
+  },
+  "tona_fit": {
+    "verdict": "reject",
+    "reason": "A 1T-parameter model with 49B active; the smallest public quant (233 GB) exceeds even the 32 GB VRAM + 128 GB RAM class. Its independent Coding Agent Index (48 %) does not beat the far smaller DeepSeek-V4.1-Flash on the vendor numbers we have. The relevant Mistral models for our users are the Small 4 and Medium 3.5 records.",
+    "blockers": ["size"]
+  },
+  "sources": [
+    {"url": "https://huggingface.co/mistralai/Mistral-Large-4-1T-A52B", "kind": "primary", "checked": "2026-11-19", "note": "README, config.json, LICENSE, file sizes via the HF API"},
+    {"url": "https://huggingface.co/unsloth/Mistral-Large-4-1T-A52B-GGUF", "kind": "primary", "checked": "2026-11-19", "note": "file sizes via the HF tree API"},
+    {"url": "https://huggingface.co/ggml-org/Mistral-Large-4-1T-A52B-GGUF", "kind": "primary", "checked": "2026-11-19", "note": "file sizes via the HF tree API"}
+  ],
+  "open_questions": [
+    "Our own check of the Artificial Analysis figures (quoted on the vendor card, charts are images)",
+    "Real decode speed of an IQ1 build on a 256 GB machine (no measurement found)"
+  ],
+  "last_checked": "2026-11-19"
+}
