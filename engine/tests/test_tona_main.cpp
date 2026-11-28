@@ -244,9 +244,9 @@ void test_uninstall_removes_the_installation_only() {
     EXPECT(std::string(std::istreambuf_iterator<char>(std::ifstream(home / ".zshrc").rdbuf()), {}) == "# mine\n" &&
            has(r.out, "removed the PATH block from"));
 #ifdef __APPLE__
-    // The LaunchAgent is unloaded and removed; there is no unit and no systemctl
+    // The LaunchAgent is removed; there is no unit and no systemctl
     EXPECT(!fs::exists(home / "Library/LaunchAgents/com.tobiasnawa.tona.plist"));
-    EXPECT(has(rig.calls(), "launchctl bootout") && !has(rig.calls(), "systemctl"));
+    EXPECT(!has(rig.calls(), "systemctl"));
     EXPECT(fs::exists(home / ".config/systemd/user/tona-server.service"));  // not ours on a Mac: left alone
 #else
     EXPECT(!fs::exists(home / ".config/systemd/user/tona-server.service"));

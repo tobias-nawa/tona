@@ -6,6 +6,7 @@
 #include "core/autostart.h"
 #include "core/unit.h"
 #include "tests/client_testkit.h"
+#include "update/config.h"
 
 using namespace tona::client;
 using namespace tona::test;
@@ -182,13 +183,15 @@ void test_autostart_on_macos_writes_the_launch_agent() {
     EXPECT(has(text, "<string>" + rig.dir.path().string() +
                          "/a&amp;b/current/bin/tona</string><string>start</string><string>--foreground</string>"));
     EXPECT(has(text, "<key>RunAtLoad</key><true/>") && !has(text, "AbandonProcessGroup"));
-    EXPECT(has(text, "a&amp;b/autostart.log"));
+    EXPECT(has(text, "<key>StandardOutPath</key><string>" + tona::update::state_dir() + "/server.log</string>") &&
+           has(text, "<key>StandardErrorPath</key><string>" + tona::update::state_dir() + "/server.log</string>") &&
+           !has(text, "autostart.log"));
 #if defined(__APPLE__)
     EXPECT(std::system(("plutil -lint -s '" + plist.string() + "'").c_str()) == 0);
 #endif
     EXPECT(autostart(rig, env, "status") == 0 && has(rig.out.str(), "on: "));
     EXPECT(autostart(rig, env, "off") == 0 && !fs::exists(plist));
-    EXPECT(has(rig.calls(), "launchctl bootout gui/") && has(rig.calls(), "/com.tobiasnawa.tona"));
+    EXPECT(!has(rig.calls(), "bootout") && !has(rig.calls(), "disable"));  // the running server stays
     EXPECT(autostart(rig, env, "status") == 0 && has(rig.out.str(), "off: "));
     // tona setup with "At login": written and loaded at once
     EXPECT(tona::install::set_autostart(true, env.root, true, true, [](const std::string&) {}).empty());

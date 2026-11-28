@@ -5,6 +5,7 @@
 #include "core/release_steps.h"
 #include "core/sys.h"
 #include "core/unit.h"
+#include "update/config.h"
 
 namespace fs = std::filesystem;
 
@@ -38,13 +39,17 @@ std::string unload_agent(const LineFn& out) {
 std::string set_launch_agent(const std::string& root, bool on, bool now, const LineFn& out) {
     const std::string path = launch_agent_path();
     if (!on) {
-        // No file, nothing to unload: launchctl is never asked about a job this installation did not write
+        // Removing the file is enough for the next login. No bootout and no `launchctl disable`: bootout ends the
+        // running server (launchctl(1)), disable would make a later bootstrap fail until `enable`. A loaded job
+        // stays loaded; `tona stop` ends the server through its pid file.
         if (!fs::exists(path)) return "";
-        unload_agent(out);
         std::error_code ec;
         fs::remove(path, ec);
         return ec ? path + ": " + ec.message() : "";
     }
+    // launchd opens the log before the server runs and may not create the folder (not yet checked on a Mac)
+    std::error_code mk;
+    fs::create_directories(update::state_dir(), mk);
     if (std::string err = write_atomic(path, render_launch_agent(root), 0644); !err.empty()) return err;
     out("written: " + path);
     if (!now) return "";  // launchd loads every agent of ~/Library/LaunchAgents at the next login
@@ -59,6 +64,7 @@ std::string launch_agent_path() { return home() + "/Library/LaunchAgents/" + kLa
 
 std::string render_launch_agent(const std::string& root) {
     const std::string r = xml(root);
+    const std::string log = xml(update::state_dir() + "/server.log");  // the file `tona start` writes too
     // `tona start --foreground` becomes the server (exec), so the job is the server and launchd needs no more
     return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
            "<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" "
@@ -76,11 +82,11 @@ std::string render_launch_agent(const std::string& root) {
            "</string></dict>\n"
            "  <key>RunAtLoad</key><true/>\n"
            "  <key>StandardOutPath</key><string>" +
-           r +
-           "/autostart.log</string>\n"
+           log +
+           "</string>\n"
            "  <key>StandardErrorPath</key><string>" +
-           r +
-           "/autostart.log</string>\n"
+           log +
+           "</string>\n"
            "</dict>\n</plist>\n";
 }
 

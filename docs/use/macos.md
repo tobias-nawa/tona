@@ -32,7 +32,7 @@ The setup verifies the maintainer's signature and every SHA-256 first, then:
 
 `tona start` runs the server in the background (log `~/.local/state/tona/server.log`), `tona stop` stops it. Start at
 login is off unless you choose it in the setup or run `tona autostart on` (a LaunchAgent,
-`~/Library/LaunchAgents/com.tobiasnawa.tona.plist`). `tona` updates as on Linux ([update.md](update.md)). `tona uninstall`
+`~/Library/LaunchAgents/com.tobiasnawa.tona.plist`; same log). `tona autostart off` keeps a running server until `tona stop`. `tona` updates as on Linux ([update.md](update.md)). `tona uninstall`
 removes Tona.
 
 ## Build from source

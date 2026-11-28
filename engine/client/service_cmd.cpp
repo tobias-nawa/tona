@@ -105,8 +105,9 @@ int run_autostart_command(const Env& env, const std::string& arg, std::ostream& 
         err << "tona: " << error << "\n";
         return 1;
     }
-    out << (arg == "on" ? "on: the server starts at the next login (now: tona start)\n"
-                        : "off: the server no longer starts at login\n");
+    out << (arg == "on"
+                ? "on: the server starts at the next login (now: tona start)\n"
+                : "off: the server no longer starts at login (a running server keeps running until tona stop)\n");
     return 0;
 }
 

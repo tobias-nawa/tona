@@ -60,7 +60,7 @@ Plain text without a terminal, `--json` for data. `tona` without a terminal prin
 | `tona doctor [--json]` | one line per check, `ok` or `warn` with the fix: programs, toolchain, model files, expert profile, key, port, service, RAM and VRAM limits |
 | `tona claude\|opencode\|junie\|pi [dir] [options]` | an agent in `dir`; the exit code is the agent's |
 | `tona start`, `tona stop`, `tona restart` | the server in the background (checkout: `just`; release: unit `tona-server`, on macOS a background process) |
-| `tona autostart on\|off\|status` | release: start the server at every login or not (Linux: unit enabled; macOS: LaunchAgent); off by default, `on` starts nothing before the next login |
+| `tona autostart on\|off\|status` | release: start the server at every login or not (Linux: unit enabled; macOS: LaunchAgent); off by default, `on` starts nothing before the next login, `off` leaves a running server alone |
 | `tona setup [options]` | the guided setup again; every option of [installer.md](installer.md#commands-without-a-screen) works here (`--yes`, `--models`, `--print`, `--json`, `--dry-run`) |
 | `tona update [--yes] [--rollback]` | the update of key `u` without the screen: check, show version and size, ask, install, restart; goes back by itself when the new version does not start ([update.md](update.md)) |
 | `tona uninstall [--yes] [--models]` | stop the server, turn autostart off, remove the unit or LaunchAgent, the `tona` link, the settings and the install directory after one question; the models directory after a second one |
