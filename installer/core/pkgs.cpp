@@ -52,7 +52,7 @@ std::vector<Package> common() {
          .brew = "python"},
         same("curl", "the trial run and downloads (just, scripts)"),
         same("jq", "the trial run reads the server status"),
-        same("just", "engine commands (just start, just top …)"),
+        same("just", "engine commands (just lint, just test, just run …)"),
         {.id = "claude",
          .purpose = "Claude Code, with the engine through the command tona claude",
          .required = false,

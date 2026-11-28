@@ -5,14 +5,14 @@ Pick the level that matches what you touched; every level includes the ones abov
 ## 1. Every change: gates
 
 ```sh
-just check       # all gates on your commits since origin/main (else main): pre-commit hooks and clang-tidy
+just lint       # all gates on your commits since origin/main (else main): pre-commit hooks and clang-tidy
 just fmt         # rewrite the changed files with the pinned clang-format and ruff format
-just check-all   # the same on every file and the whole git history
+just lint-all   # the same on every file and the whole git history
 ```
 
 The hooks (`pre-commit install`, done by `scripts/setup.sh`) run on every commit: file length, function size,
 `tools/gates/comments.py`, `tools/gates/english.py`, clang-format, ruff, shellcheck, gitleaks, actionlint, zizmor,
-`tools/gates/workflows.py`; `just check` adds clang-tidy of the ROCm toolchain on changed C++/HIP files
+`tools/gates/workflows.py`; `just lint` adds clang-tidy of the ROCm toolchain on changed C++/HIP files
 (`tools/gates/tidy.py`). Single gates: `python3 tools/gates/file_length.py [FILE...]`,
 `python3 tools/gates/functions.py [FILE...]`, `python3 tools/gates/tidy.py [--all] [--base REF] [FILE...]`. No exception
 lists.
@@ -26,9 +26,9 @@ handled, not swallowed; a suppression (`NOLINT`, `noqa`) names one rule and the 
 |---|---|
 | `check.yml` | hooks on the PR's changes and on all files; installer build and tests |
 | `tests.yml`: `engine-cpu-tests`, `engine-sanitizers`, `coverage` | unit tests, sanitizers, coverage ([testing.md](testing.md)) |
-| `ubuntu-no-gpu` | `scripts/setup.sh --no-gpu`, `just check`, `just test-cpu`, `just test-py` on Ubuntu 24.04 |
-| `clang-tidy` | `tools/gates/tidy.py --system --all` with the distribution's clang-tidy (`just check` decides in a disagreement) |
-| `mini-tokens` | CPU token check on the mini models built from `data/mini-models/` (`just mini-check`, [testing.md](testing.md#the-mini-model)) |
+| `ubuntu-no-gpu` | `scripts/setup.sh --no-gpu`, `just lint`, `just test` on Ubuntu 24.04 |
+| `clang-tidy` | `tools/gates/tidy.py --system --all` with the distribution's clang-tidy (`just lint` decides in a disagreement) |
+| `mini-tokens` | CPU token check on the mini models built from `data/mini-models/` (`just test`, [testing.md](testing.md#the-mini-model)) |
 | `hardening` | FORTIFY_SOURCE=3, stack protector, CET, PIE, full RELRO (`tools/check_hardening.py`) |
 | `fuzz.yml` | libFuzzer on API, GGUF and signature parsers: 60 s per target per PR, 30 min nightly |
 
@@ -116,7 +116,7 @@ dependency log of `--build`, default `work/build/engine`):
 | only test binaries | their unit tests (`ctest -R`) |
 | other tools (`tona`, `tona-chat`, ...) | their unit tests |
 
-Documents, `research/`, `*.md`: gates only. `scripts/`, `tools/`, `bench/`: gates and `just test-py`. `installer/`: its
+Documents, `research/`, `*.md`: gates only. `scripts/`, `tools/`, `bench/`: gates and `just test`. `installer/`: its
 own build and tests. **All** checks: `toolchain/`, the golden scripts and prompt, `scripts/build-mtp-vocab.py`,
 `tools/gen_tables.py`, CMake files outside `engine/`, and anything the tool cannot decide (it never checks less). A
 change of `engine/CMakeLists.txt` configures base and HEAD and compares the build commands of `tona-gpu-gen` and

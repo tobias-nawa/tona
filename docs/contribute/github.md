@@ -27,7 +27,7 @@ gitleaks): update them by hand with the files they reformat.
 
 ## Protecting an agent-first repository
 
-Each gate is a hook (so also in `just check` and `gates`) or a job of `check.yml`; its header says what it misses.
+Each gate is a hook (so also in `just lint` and `gates`) or a job of `check.yml`; its header says what it misses.
 
 | Gate | Where | Refuses |
 |---|---|---|

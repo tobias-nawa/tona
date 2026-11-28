@@ -1,4 +1,4 @@
-# Lint for engine and installer. Run on changed lines (just check) with the ROCm toolchain's clang-tidy, which
+# Lint for engine and installer. Run on changed lines (just lint) with the ROCm toolchain's clang-tidy, which
 # parses HIP. Nesting depth lives here because lizard miscounts it for C++ (tools/gates/functions.py).
 # Families: bugprone, clang-analyzer, performance, cert, misc and chosen modernize and readability checks. The chosen
 # ones are those that found real defects or dead weight when the whole tree was measured (2026-11-25, ROCm clang-tidy

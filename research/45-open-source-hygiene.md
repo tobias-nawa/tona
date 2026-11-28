@@ -184,7 +184,7 @@ unchecked. Residual risk stays with the contributor who signs; it is not removed
    write permissions and is a third party). Build on what exists:
    - `tools/gates/dco.py` (stdlib only): for each non-merge commit in `from..to`, require a `Signed-off-by:` trailer
      whose email equals the author email (as dcoapp does) or the committer email; skip bot authors (e.g.
-     `dependabot[bot]`); print each failing commit with the fix command. Add `tests` in `just test-py`.
+     `dependabot[bot]`); print each failing commit with the fix command. Add `tests` in `just test`.
    - `.pre-commit-config.yaml`: a `repo: local` hook, `language: system`, `pass_filenames: false`, `always_run: true`,
      `stages: [pre-push]`. At pre-push, **not** `commit-msg`: agents commit unsigned, the human signs before push.
      pre-commit passes the range as `PRE_COMMIT_FROM_REF` / `PRE_COMMIT_TO_REF` (so CI can reuse it with `--from-ref`).

@@ -4,7 +4,7 @@ name: check
 # What does not: the engine build, GPU tests, the golden comparison and speed measurements. The reference platform
 # (RDNA4 GPU, ROCm toolchain of several GB, the model) does not exist on GitHub runners; the maintainers check it
 # locally (AGENTS.md, "Verifying", docs/contribute/verification.md level 1 to 3). clang-tidy needs that toolchain too and runs in
-# `just check`.
+# `just lint`.
 
 on:
   pull_request:

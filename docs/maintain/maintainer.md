@@ -114,7 +114,7 @@ A broken backend never blocks a release of the reference ([backends/README.md](.
 
 Building and signing: [release.md](release.md). The order:
 
-1. `just check-all` and `just test` green on `main`; no CodeQL alert of severity high.
+1. `just lint-all` and `just test` green on `main`; no CodeQL alert of severity high.
 2. The scale run ([measurement.md](../contribute/measurement.md#before-a-release)) on the release candidate, with spread and plan; the
    row in [BENCHMARKS.md](../../BENCHMARKS.md); every number the README publishes, three runs. Worse than the last release
    without a reason: stop.

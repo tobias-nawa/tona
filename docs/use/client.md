@@ -37,7 +37,7 @@ tona start, tona stop   # server in the background (also tona restart)
 ```
 
 `tona` is in `~/.local/bin` after a release installation; in a checkout it is `work/build/engine/tona` (`just build`,
-linked by `tona setup`, or `ln -sfn "$PWD/work/build/engine/tona" ~/.local/bin/tona`; `just top` runs it).
+linked by `tona setup`, or `ln -sfn "$PWD/work/build/engine/tona" ~/.local/bin/tona`; `just tona` runs it).
 
 If no server runs, the agent commands start it and wait for the load (about 20 s), and on exit ask whether to stop it (it
 pins about 25 GB of RAM and almost all VRAM); `tona stop` frees both. Each agent keeps its tools, MCP servers and skills.
