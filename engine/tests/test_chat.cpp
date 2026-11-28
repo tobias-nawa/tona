@@ -284,10 +284,35 @@ static void test_nemotron_render() {
            ev.size() == 2 && ev[1].kind == tona::server::OutputParser::Event::tool_call && ev[1].call.name == "f");
 }
 
+static void test_stray_im_start_in_tool_call() {
+    // Quantized Qwen3.8 models can emit <|im_start|> instead of '<' before function= inside <tool_call>
+    // (vllm-project/vllm#69190); streaming and single-shot must still deliver the tool call.
+    const json tools = json::parse(R"([{"type": "function", "function": {"name": "get_weather", "parameters":
+        {"type": "object", "properties": {"city": {"type": "string"}, "days": {"type": "integer"}}}}}])");
+    const std::string out =
+        "Checking.\n</think>\n\n<tool_call>\n<|im_start|>function=get_weather>\n"
+        "<parameter=city>\nParis\n</parameter>\n<parameter=days>\n3\n</parameter>\n</function>\n</tool_call>";
+    for (size_t step : {1, 3, 1000}) {
+        const Result r = run(out, true, tools, step);
+        expect("im_start thinking", r.thinking == "Checking.");
+        expect("im_start one call", r.calls.size() == 1);
+        if (r.calls.size() != 1) continue;
+        expect("im_start name", r.calls[0].name == "get_weather");
+        expect("im_start city", r.calls[0].args["city"] == "Paris");
+        expect("im_start days", r.calls[0].args["days"] == 3);
+    }
+    const std::string no_close =
+        "<tool_call>\n<|im_start|>function=get_weather>\n<parameter=city>\nParis\n</parameter>\n</function>\n";
+    const Result r2 = run(no_close, false, tools, 1000);
+    expect("im_start call without </tool_call>",
+           r2.calls.size() == 1 && r2.calls[0].name == "get_weather" && r2.calls[0].args["city"] == "Paris");
+}
+
 static void run_all() {
     test_format_facts();
     test_nemotron_render();
     test_thinking_and_call();
+    test_stray_im_start_in_tool_call();
     test_python_literals();
     test_nested_python_literals();
     test_truncated();

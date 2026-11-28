@@ -134,6 +134,20 @@ void parse_params(const std::string& b, size_t pos, const json* props, ToolCall&
     }
 }
 
+// Quantized Qwen3.8 models can emit <|im_start|> where the '<' of <function= belongs inside <tool_call>
+// (vllm-project/vllm#69190). Accept that slip inside an already-open <tool_call> block.
+size_t find_function_start(const std::string& b, size_t& prefix_len) {
+    if (const size_t f = b.find("<function="); f != std::string::npos) {
+        prefix_len = 10;
+        return f;
+    }
+    if (const size_t f = b.find("<|im_start|>function="); f != std::string::npos) {
+        prefix_len = 21;
+        return f;
+    }
+    return std::string::npos;
+}
+
 }  // namespace
 
 Qwen3CoderParser::Qwen3CoderParser(bool thinking, const json& tools) : st_(thinking ? think : text), tools_(tools) {}
@@ -223,11 +237,12 @@ ToolCall Qwen3CoderParser::parse_call(const std::string& body) const {
     const std::string b = trim(body);
     if (starts_with(b, "{")) return parse_json_call(b);
     ToolCall c;
-    const size_t f = b.find("<function=");
+    size_t prefix_len = 0;
+    const size_t f = find_function_start(b, prefix_len);
     if (f == std::string::npos) return c;
-    const size_t fe = b.find('>', f);
+    const size_t fe = b.find('>', f + prefix_len);
     if (fe == std::string::npos) return c;
-    c.name = trim(b.substr(f + 10, fe - f - 10));
+    c.name = trim(b.substr(f + prefix_len, fe - f - prefix_len));
     parse_params(b, fe + 1, find_props(tools_, c.name), c);
     return c;
 }
