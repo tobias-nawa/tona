@@ -147,6 +147,7 @@ def test_windows_quiet_check_evaluate_and_measure(monkeypatch):
 
     monkeypatch.setattr(qc.sys, "platform", "win32")
     monkeypatch.setattr(qc.hw.sys, "platform", "win32")
+    monkeypatch.setattr(qc.os, "getloadavg", lambda: (0.0, 0.0, 0.0), raising=False)
     monkeypatch.setattr(hw_win32, "cpu_busy_percent", lambda w: 2.0)
     monkeypatch.setattr(
         hw_win32,
