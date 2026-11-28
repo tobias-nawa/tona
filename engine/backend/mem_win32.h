@@ -1,8 +1,10 @@
 // Windows counterparts of the /proc reads in backend/budget.h. Win32 kernel32 calls, no extra libraries needed.
 #pragma once
 
-#include <psapi.h>
 #include <windows.h>
+
+// Keep <windows.h> above <psapi.h> so clang-format does not reorder them
+#include <psapi.h>
 
 namespace tona::backend::win32 {
 

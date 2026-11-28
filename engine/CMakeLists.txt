@@ -23,7 +23,7 @@ endif()
 # Apple silicon (docs/use/macos.md): clang takes the CPU there through -mcpu, and x86 target names do not exist. The x86 branch is
 # the reference line unchanged.
 if(MSVC)
-    add_compile_options(/W4 /utf-8 /EHsc /bigobj /D_CRT_SECURE_NO_WARNINGS /DNOMINMAX /DWIN32_LEAN_AND_MEAN /D_WIN32_WINNT=0x0A00)
+    add_compile_options(/W4 /utf-8 /EHsc /bigobj /Zc:preprocessor /D_CRT_SECURE_NO_WARNINGS /DNOMINMAX /DWIN32_LEAN_AND_MEAN /D_WIN32_WINNT=0x0A00)
 elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "^(arm64|aarch64)$")
     set(TONA_MCPU apple-m1 CACHE STRING "CPU target of the host code on arm64 (-mcpu)")
     add_compile_options(-mcpu=${TONA_MCPU} -Wall -Wextra -Werror)
@@ -199,8 +199,10 @@ tona_unit_test(mtp_scorer SOURCES tests/test_mtp_scorer.cpp backend/mtp_scorer.c
 tona_unit_test(api_anthropic SOURCES tests/test_api_anthropic.cpp LIBS tona_chat_lib)
 tona_unit_test(api_openai SOURCES tests/test_api_openai.cpp LIBS tona_chat_lib)
 tona_unit_test(api_common SOURCES tests/test_api_common.cpp LIBS tona_chat_lib)
-tona_unit_test(wait_clock SOURCES tests/test_wait_clock.cpp)
-tona_unit_test(evict_counter SOURCES tests/test_evict_counter.cpp)
+if(NOT MSVC)  # HIP megakernel wait_clock.h uses GCC/Clang __ATOMIC_* builtins
+    tona_unit_test(wait_clock SOURCES tests/test_wait_clock.cpp)
+    tona_unit_test(evict_counter SOURCES tests/test_evict_counter.cpp)
+endif()
 if(NOT APPLE AND NOT WIN32)  # KFD and CLOCK_BOOTTIME are Linux only
     tona_unit_test(kfd_smi SOURCES tests/test_kfd_smi.cpp gpu/kfd_smi.cpp gpu/trace_path.cpp)
 endif()
@@ -212,7 +214,9 @@ tona_unit_test(cu_mask SOURCES tests/test_cu_mask.cpp gpu/cu_mask.cpp)
 tona_unit_test(omp_guard SOURCES tests/test_omp_guard.cpp LIBS OpenMP::OpenMP_CXX)
 tona_unit_test(pcie_link SOURCES tests/test_pcie_link.cpp gpu/pcie_link.cpp)
 tona_unit_test(cpu_cost SOURCES tests/test_cpu_cost.cpp)
-tona_unit_test(pf_check SOURCES tests/test_pf_check.cpp)
+if(NOT MSVC)  # gpu/prefill_check.h uses __builtin_inff
+    tona_unit_test(pf_check SOURCES tests/test_pf_check.cpp)
+endif()
 tona_unit_test(class_lru SOURCES tests/test_class_lru.cpp)
 tona_unit_test(route_rank SOURCES tests/test_route_rank.cpp)
 tona_unit_test(expert_layout SOURCES tests/test_expert_layout.cpp)

@@ -26,6 +26,7 @@
 #include "cpu/ref.h"
 #include "cpu/ref_helper.h"
 #include "model/model_registry.h"
+#include "model/quant.h"
 #include "model/tokenizer.h"
 #include "server/sampling.h"
 #include "tona_args.h"
@@ -185,11 +186,11 @@ void add_layer_change(std::vector<LayerSum>& sum, const tona::ref::Trace& tr) {
 
 // One token's MoE data of every layer as F16
 void dump_moe(std::FILE* f, const tona::ref::Trace& tr) {
-    std::vector<_Float16> buf;
+    std::vector<uint16_t> buf;
     for (size_t l = 0; l < tr.moe_x.size(); l++)
         for (const auto* v : {&tr.moe_x[l], &tr.moe_routed[l], &tr.moe_shared[l]})
-            for (float x : *v) buf.push_back((_Float16)x);
-    std::fwrite(buf.data(), sizeof(_Float16), buf.size(), f);
+            for (float x : *v) buf.push_back(tona::fp32_to_fp16(x));
+    std::fwrite(buf.data(), sizeof(uint16_t), buf.size(), f);
 }
 
 struct Run {

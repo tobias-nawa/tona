@@ -57,7 +57,7 @@ void test_list() {
     EXPECT(backend::mtp_vocab_list(100, backend::MtpList::Wide, file.c_str(), "t") == want);
     EXPECT(old_fixed_list(100, file.c_str(), 100) == want);
     EXPECT(test::throws(
-        [&] { backend::mtp_vocab_list(100, backend::MtpList::Wide, (dir.path() / "none").c_str(), "t"); }));
+        [&] { backend::mtp_vocab_list(100, backend::MtpList::Wide, (dir.path() / "none").string().c_str(), "t"); }));
 }
 
 // the ring: Mega::mtp_sync_vocab as it was

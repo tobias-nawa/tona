@@ -213,7 +213,7 @@ int check_random_iq2xxs(Rng& rng) {
         std::vector<uint8_t> bytes((size_t)(out * rb));
         for (auto& b : bytes) b = (uint8_t)rng.gen();
         for (size_t o = 0; o < bytes.size(); o += 66) {
-            const _Float16 d = (_Float16)(0.002f + 0.0001f * (float)(rng.gen() % 100));
+            const uint16_t d = tona::fp32_to_fp16(0.002f + 0.0001f * (float)(rng.gen() % 100));
             std::memcpy(&bytes[o], &d, 2);
         }
         tona::TensorInfo t;
@@ -229,7 +229,7 @@ std::vector<uint8_t> random_iq2xxs(Rng& rng, int64_t rows, int64_t in) {
     std::vector<uint8_t> bytes((size_t)(rows * (in / 256 * 66)));
     for (auto& b : bytes) b = (uint8_t)rng.gen();
     for (size_t o = 0; o < bytes.size(); o += 66) {
-        const _Float16 d = (_Float16)(0.002f + 0.0001f * (float)(rng.gen() % 100));
+        const uint16_t d = tona::fp32_to_fp16(0.002f + 0.0001f * (float)(rng.gen() % 100));
         std::memcpy(&bytes[o], &d, 2);
     }
     return bytes;

@@ -24,6 +24,7 @@ void dequantize_rows(uint32_t type, const void* base, int64_t row0, int64_t nrow
 void tile_q6_k(const uint8_t* src, int64_t k, int64_t t0, int64_t t1, uint8_t* dst);
 
 float fp16_to_fp32(uint16_t h);
+uint16_t fp32_to_fp16(float x);
 float bf16_to_fp32(uint16_t h);
 
 }  // namespace tona

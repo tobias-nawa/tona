@@ -356,9 +356,67 @@ void deq_iq4_xs(const BlockIQ4XS* x, float* y, int64_t k) {
 }  // namespace
 
 float fp16_to_fp32(uint16_t h) {
+#ifdef _MSC_VER
+    const uint32_t sign = static_cast<uint32_t>(h & 0x8000U) << 16;
+    const uint32_t exp = (h >> 10) & 0x1FU;
+    const uint32_t mant = h & 0x03FFU;
+    uint32_t bits = 0;
+    if (exp == 0) {
+        if (mant != 0) {
+            uint32_t m = mant;
+            int e = -14;
+            while ((m & 0x0400U) == 0) m <<= 1, e--;
+            bits = sign | (static_cast<uint32_t>(e + 127) << 23) | ((m & 0x03FFU) << 13);
+        } else {
+            bits = sign;
+        }
+    } else if (exp == 31) {
+        bits = sign | 0x7F800000U | (mant << 13);
+    } else {
+        bits = sign | ((exp + 112U) << 23) | (mant << 13);
+    }
+    float f = 0;
+    std::memcpy(&f, &bits, 4);
+    return f;
+#else
     _Float16 f;
     std::memcpy(&f, &h, 2);
     return (float)f;
+#endif
+}
+
+uint16_t fp32_to_fp16(float x) {
+#ifdef _MSC_VER
+    uint32_t u = 0;
+    std::memcpy(&u, &x, 4);
+    const uint16_t sign = static_cast<uint16_t>((u >> 16) & 0x8000U);
+    const int exp = static_cast<int>((u >> 23) & 0xFFU) - 127;
+    const uint32_t mant = u & 0x007FFFFFU;
+    if (exp == 128)
+        return static_cast<uint16_t>(sign | 0x7C00U | (mant ? static_cast<uint16_t>((mant >> 13) | 1U) : 0));
+    if (exp > 15) return static_cast<uint16_t>(sign | 0x7C00U);
+    if (exp < -24) return sign;
+    if (exp < -14) {
+        const uint32_t full = 0x00800000U | mant;
+        const int shift = -exp - 1;
+        const uint32_t half = full >> shift;
+        const uint32_t rem = full & ((1U << shift) - 1U);
+        const uint32_t mid = 1U << (shift - 1);
+        return static_cast<uint16_t>(sign | (half + (rem > mid || (rem == mid && (half & 1U)) ? 1U : 0U)));
+    }
+    const uint32_t round_bit = mant & 0x1FFFU;
+    uint32_t m = mant >> 13;
+    uint32_t e = static_cast<uint32_t>(exp + 15);
+    if (round_bit > 0x1000U || (round_bit == 0x1000U && (m & 1U))) {
+        if (++m == 0x0400U) m = 0, e++;
+    }
+    return static_cast<uint16_t>(sign | (e >= 31U ? 0x7C00U : ((e << 10) | m)));
+#else
+    const _Float16 h = static_cast<_Float16>(x);
+    uint16_t out = 0;
+    std::memcpy(&out, &h, 2);
+    return out;
+#endif
 }
 
 float bf16_to_fp32(uint16_t h) {
