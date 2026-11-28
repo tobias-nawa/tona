@@ -1,7 +1,9 @@
 // backend/env.h (typed TONA_* variables), backend/idx_share.h (TONA_IDX_SHARE) and backend/budget.h (RAM and VRAM
 // limits). The limits are read once per process, so the program takes the scenario as its argument: `limited`
 // (TONA_RAM_GB=20, TONA_VRAM_GB=9.5) or `unlimited`.
-#include <unistd.h>
+#ifdef _MSC_VER
+#include <intrin.h>
+#endif
 
 #include <algorithm>
 #include <cstdio>
@@ -24,9 +26,9 @@ constexpr const char* VAR = "TONA_TEST_VALUE";
 
 void set(const char* v) {
     if (v)
-        setenv(VAR, v, 1);
+        tona::test::set_env(VAR, v);
     else
-        unsetenv(VAR);
+        tona::test::unset_env(VAR);
 }
 
 void test_text_and_flag() {
@@ -83,23 +85,34 @@ void test_number() {
 
 void test_idx_share() {
     const std::vector<bool> every_second{true, false, true, false, true, false, true, false, true, false, true, false};
-    unsetenv("TONA_IDX_SHARE");
+    tona::test::unset_env("TONA_IDX_SHARE");
     EXPECT(tona::env::idx_full_layers(12) == every_second);
-    setenv("TONA_IDX_SHARE", "all", 1);
+    tona::test::set_env("TONA_IDX_SHARE", "all");
     EXPECT(tona::env::idx_full_layers(12) == std::vector<bool>(12, true));
-    setenv("TONA_IDX_SHARE", "3,9", 1);  // layer 0 is always full
+    tona::test::set_env("TONA_IDX_SHARE", "3,9");  // layer 0 is always full
     const std::vector<bool> listed{true, false, false, true, false, false, false, false, false, true, false, false};
     EXPECT(tona::env::idx_full_layers(12) == listed);
-    unsetenv("TONA_IDX_SHARE");
+    tona::test::unset_env("TONA_IDX_SHARE");
 }
 
 void test_ram_held() {
     const long long before = tona::backend::ram_held_bytes();
     EXPECT(before > 0);
-    std::vector<char> big(64 << 20, 1);               // touched, so the pages count
+    std::vector<char> big(64 << 20, 1);  // touched, so the pages count
+#ifdef _MSC_VER
+    _ReadWriteBarrier();
+    const volatile char* sink = big.data();
+    (void)*sink;
+#else
     asm volatile("" : : "r"(big.data()) : "memory");  // the compiler must not drop the allocation
+#endif
     const long long after = tona::backend::ram_held_bytes();
+#ifdef _MSC_VER
+    _ReadWriteBarrier();
+    (void)*sink;
+#else
     asm volatile("" : : "r"(big.data()) : "memory");
+#endif
     if (after < before + (48 << 20))  // the one failure seen was not reproducible; print what the kernel reported
         std::fprintf(stderr, "ram_held: before %lld after %lld\n", before, after);
     EXPECT(after >= before + (48 << 20));
@@ -107,20 +120,20 @@ void test_ram_held() {
 
 void test_limited() {
     EXPECT(tona::backend::ram_limit_gb() == 20.0 && tona::backend::vram_limit_gb() == 9.5);
-    unsetenv("TONA_PROMPT_RAM_GB");
+    tona::test::unset_env("TONA_PROMPT_RAM_GB");
     // A quarter of the limit when plenty is left
     EXPECT(tona::backend::prompt_ram_gb() == 5.0);
     EXPECT(tona::backend::prompt_reserve_gb() == tona::backend::PROMPT_MIN_GB);
-    setenv("TONA_PROMPT_RAM_GB", "3.5", 1);
+    tona::test::set_env("TONA_PROMPT_RAM_GB", "3.5");
     EXPECT(tona::backend::prompt_ram_gb() == 3.5 &&
            tona::backend::prompt_reserve_gb() == 3.5);  // the finer switch wins
-    setenv("TONA_PROMPT_RAM_GB", "0", 1);
+    tona::test::set_env("TONA_PROMPT_RAM_GB", "0");
     EXPECT(tona::backend::prompt_ram_gb() == 0.0);
 }
 
 void test_unlimited() {
     EXPECT(tona::backend::ram_limit_gb() < 0 && tona::backend::vram_limit_gb() < 0);
-    unsetenv("TONA_PROMPT_RAM_GB");
+    tona::test::unset_env("TONA_PROMPT_RAM_GB");
     EXPECT(tona::backend::prompt_ram_gb() == 12.0 &&
            tona::backend::prompt_reserve_gb() == tona::backend::PROMPT_MIN_GB);
     EXPECT(tona::backend::env_gb("TONA_SURELY_UNSET") < 0);
@@ -130,18 +143,18 @@ void test_unlimited() {
 // text count as balanced
 void test_priority(bool limited) {
     using tona::backend::Priority;
-    unsetenv("TONA_PRIORITY");
+    tona::test::unset_env("TONA_PRIORITY");
     EXPECT(tona::backend::priority() == Priority::Balanced);
-    setenv("TONA_PRIORITY", "tona", 1);
+    tona::test::set_env("TONA_PRIORITY", "tona");
     EXPECT(tona::backend::priority() == Priority::Tona &&
            tona::backend::pass_room_gb(Priority::Tona) == (limited ? tona::backend::TIERED_CACHE_MIN_GB : 0.0));
-    setenv("TONA_PRIORITY", "work", 1);
+    tona::test::set_env("TONA_PRIORITY", "work");
     EXPECT(tona::backend::priority() == Priority::Work &&
            tona::backend::pass_room_gb(Priority::Work) == tona::backend::TIERED_CACHE_MIN_GB);
-    setenv("TONA_PRIORITY", "Tona", 1);  // the installer writes lower case; anything else keeps the memory
+    tona::test::set_env("TONA_PRIORITY", "Tona");  // the installer writes lower case; anything else keeps the memory
     EXPECT(tona::backend::priority() == Priority::Balanced &&
            tona::backend::pass_room_gb(Priority::Balanced) == tona::backend::TIERED_CACHE_MIN_GB);
-    unsetenv("TONA_PRIORITY");
+    tona::test::unset_env("TONA_PRIORITY");
 }
 
 // The stash rule: it must fit the budget alone and the free RAM (plus what eviction frees), with the slack left over
@@ -161,8 +174,7 @@ void test_stash_fits() {
 void test_hang_case() {
     namespace fs = std::filesystem;
     // One folder per process: ctest -j runs env_budget and env_budget_unlimited (the same binary) at the same time
-    const fs::path dir = fs::path(std::getenv("TMPDIR") ? std::getenv("TMPDIR") : "/tmp") /
-                         ("tona-test-hang-" + std::to_string(::getpid()));
+    const fs::path dir = fs::temp_directory_path() / ("tona-test-hang-" + std::to_string(tona::test::pid()));
     fs::create_directories(dir);
     std::ofstream(dir / "memory.max") << "57982058496\n";
     std::ofstream(dir / "memory.stat") << "anon 2000000000\nfile 43171000320\nshmem 43170516992\nkernel 214003712\n";
@@ -180,7 +192,7 @@ void test_stat_and_cgroup() {
     EXPECT(tona::backend::stat_value("a 1\nanon 7\nxanon 9\n", "anon") == 7);  // whole key, at the start of a line
     EXPECT(tona::backend::stat_value("a 1\n", "anon") == -1);
     namespace fs = std::filesystem;
-    const fs::path dir = fs::path(std::getenv("TMPDIR") ? std::getenv("TMPDIR") : "/tmp") / "tona-test-cgroup";
+    const fs::path dir = fs::temp_directory_path() / ("tona-test-cgroup-" + std::to_string(tona::test::pid()));
     fs::create_directories(dir);
     std::ofstream(dir / "memory.max") << "1000000\n";
     std::ofstream(dir / "memory.stat") << "anon 300000\nfile 900000\nshmem 100000\nkernel 50000\n";
@@ -197,8 +209,8 @@ void test_stat_and_cgroup() {
 int main(int argc, char** argv) {
     const bool limited = argc > 1 && std::strcmp(argv[1], "limited") == 0;
     return tona::test::run("test_env_budget", [limited] {
-        unsetenv("TONA_RAM_GB"), unsetenv("TONA_VRAM_GB");
-        if (limited) setenv("TONA_RAM_GB", "20", 1), setenv("TONA_VRAM_GB", "9.5", 1);
+        tona::test::unset_env("TONA_RAM_GB"), tona::test::unset_env("TONA_VRAM_GB");
+        if (limited) tona::test::set_env("TONA_RAM_GB", "20"), tona::test::set_env("TONA_VRAM_GB", "9.5");
         test_text_and_flag();
         test_integer();
         test_number();

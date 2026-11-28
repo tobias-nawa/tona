@@ -192,7 +192,11 @@ std::vector<float> DFlash::attend(const Layer& L, const std::vector<float>& q, c
     const int64_t qd = n_head_ * hd_;
     const AttnIn in{L, q, k, v, pos, n};
     std::vector<float> o(n * qd);
+#ifdef _MSC_VER
+#pragma omp parallel for schedule(static)
+#else
 #pragma omp parallel for collapse(2) schedule(static)
+#endif
     for (int t = 0; t < n; t++)
         for (int64_t hh = 0; hh < n_head_; hh++) {
             std::vector<double> s;

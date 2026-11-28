@@ -7,7 +7,9 @@
 // fault, but the page is already on its way (33 faults and 0.37 ms per 35 cold pages against 33 and 4.7 ms without).
 #pragma once
 
+#ifndef _WIN32
 #include <sys/resource.h>
+#endif
 
 #include <chrono>
 #include <cstdint>
@@ -60,9 +62,13 @@ private:
     static constexpr int64_t kEvery = 1000;  // decode passes per line: about 30 s of decode
 
     static int64_t faults() {
+#ifdef _WIN32
+        return 0;  // Win32 has no per-process major-fault counter matching getrusage(RUSAGE_SELF)
+#else
         rusage ru{};
         getrusage(RUSAGE_SELF, &ru);
         return ru.ru_majflt;
+#endif
     }
 
     void period(Clock::time_point t0) {

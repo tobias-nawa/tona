@@ -117,10 +117,10 @@ void test_fixed_default_temperature() {
 int main(int argc, char** argv) {
     const bool fixed = argc > 1 && std::strcmp(argv[1], "temperature") == 0;
     return tona::test::run("test_request_options", [fixed] {
-        setenv("TONA_THINK_BUDGET", "low=2048,medium=8192,high=oops,xhigh=-1,broken", 1);
-        setenv("TONA_ROLE_EFFORT", "subagent=low,auxiliary=bogus,main", 1);
-        unsetenv("TONA_TEMPERATURE");
-        if (fixed) setenv("TONA_TEMPERATURE", "0", 1);
+        tona::test::set_env("TONA_THINK_BUDGET", "low=2048,medium=8192,high=oops,xhigh=-1,broken");
+        tona::test::set_env("TONA_ROLE_EFFORT", "subagent=low,auxiliary=bogus,main");
+        tona::test::unset_env("TONA_TEMPERATURE");
+        if (fixed) tona::test::set_env("TONA_TEMPERATURE", "0");
         if (fixed) {
             test_fixed_default_temperature();
         } else {

@@ -2,10 +2,15 @@
 // the loader under test.
 #pragma once
 
+#ifdef _WIN32
+#include <process.h>
+#else
 #include <unistd.h>
+#endif
 
 #include <cstdint>
 #include <cstdio>
+#include <cstdlib>
 #include <filesystem>
 #include <fstream>
 #include <functional>
@@ -15,6 +20,30 @@
 #include "tests/test_guard.h"
 
 namespace tona::test {
+
+inline int pid() {
+#ifdef _WIN32
+    return _getpid();
+#else
+    return getpid();
+#endif
+}
+
+inline void set_env(const char* name, const char* value) {
+#ifdef _WIN32
+    _putenv_s(name, value ? value : "");
+#else
+    setenv(name, value, 1);
+#endif
+}
+
+inline void unset_env(const char* name) {
+#ifdef _WIN32
+    _putenv_s(name, "");
+#else
+    unsetenv(name);
+#endif
+}
 
 inline int g_fail = 0;
 
@@ -65,7 +94,7 @@ class TempDir {
 public:
     explicit TempDir(const std::string& name)
         : path_(std::filesystem::canonical(std::filesystem::temp_directory_path()) /
-                ("tona-test-" + name + "-" + std::to_string(getpid()))) {
+                ("tona-test-" + name + "-" + std::to_string(pid()))) {
         std::filesystem::remove_all(path_);
         std::filesystem::create_directories(path_);
     }

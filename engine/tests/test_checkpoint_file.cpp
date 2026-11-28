@@ -1,6 +1,8 @@
 // Checkpoint files of the prompt cache: write and read back, and what a
 // damaged, foreign or truncated file must do.
+#ifndef _WIN32
 #include <sys/stat.h>
+#endif
 
 #include <cstring>
 #include <filesystem>
@@ -83,6 +85,7 @@ void test_without_logits(const std::string& dir) {
     fs::remove(path);
 }
 
+#ifndef _WIN32
 // A checkpoint is a function of the prompt text: only the owner may read it, whatever the umask
 void test_file_is_private(const std::string& dir) {
     const mode_t old = umask(0);
@@ -113,12 +116,17 @@ void test_link_is_not_followed(const std::string& dir) {
     EXPECT(!fs::exists(dir + "/does-not-exist.txt"));
     fs::remove(path), fs::remove(victim);
 }
+#endif
 
 // Others may not be able to write into the checkpoint directory
 void test_directory_is_secured(const std::string& base) {
     std::string why;
     const std::string made = base + "/made", ours = base + "/ours", foreign = base + "/foreign";
     for (const auto& d : {made, ours, foreign}) fs::create_directories(d);
+#ifdef _WIN32
+    EXPECT(secure_checkpoint_dir(made, true, why));
+    EXPECT(!secure_checkpoint_dir(base + "/missing", false, why));
+#else
     for (const auto& d : {made, ours, foreign}) fs::permissions(d, fs::perms::all);  // 0777
     // just created by the server: tightened
     EXPECT(secure_checkpoint_dir(made, true, why));
@@ -136,6 +144,7 @@ void test_directory_is_secured(const std::string& base) {
                     fs::perm_options::replace);
     EXPECT(secure_checkpoint_dir(foreign, false, why));
     EXPECT(!secure_checkpoint_dir(base + "/missing", false, why));
+#endif
 }
 
 void test_file_name() {
@@ -238,8 +247,10 @@ int main() {
         const std::string dir = tmp.path().string();
         test_round_trip(dir);
         test_without_logits(dir);
+#ifndef _WIN32
         test_file_is_private(dir);
         test_link_is_not_followed(dir);
+#endif
         test_directory_is_secured(dir);
         test_file_name();
         test_foreign_files_are_refused(dir);

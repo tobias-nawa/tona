@@ -140,3 +140,32 @@ def test_apple_gpu_counts_the_second_read():
 def test_apple_gpu_absent_is_none_without_waiting():
     waited = []
     assert qc.apple_gpu_busy(read=lambda: "", wait=waited.append) is None and not waited
+
+
+def test_windows_quiet_check_evaluate_and_measure(monkeypatch):
+    import hw_win32
+
+    monkeypatch.setattr(qc.sys, "platform", "win32")
+    monkeypatch.setattr(qc.hw.sys, "platform", "win32")
+    monkeypatch.setattr(hw_win32, "cpu_busy_percent", lambda w: 2.0)
+    monkeypatch.setattr(
+        hw_win32,
+        "gpus",
+        lambda run_fn: [
+            {"vendor": "NVIDIA", "name": "RTX 5090", "vram_gib": 31.8, "vram_used_gib": 0.8, "busy_percent": 1}
+        ],
+    )
+    monkeypatch.setattr(hw_win32, "memory", lambda: {"total_gib": 64.0, "available_gib": 50.0})
+    monkeypatch.setattr(hw_win32, "power", lambda: {"on_battery": False})
+    signals = qc.measure()
+    result = qc.evaluate(signals)
+    assert result["state"] == qc.OK and signals["cpu_busy_percent"] == 2.0
+    assert signals["gpus"] == [{"busy": 1, "vram_gib": 31.8, "used_gib": 0.8}]
+    assert "quiet enough" in qc.request(result)
+
+    monkeypatch.setattr(hw_win32, "cpu_busy_percent", lambda w: None)
+    monkeypatch.setattr(hw_win32, "gpus", lambda run_fn: [])
+    signals_unknown = qc.measure()
+    result_unknown = qc.evaluate(signals_unknown)
+    assert result_unknown["state"] == qc.OK
+    assert "50.0 GiB RAM" in qc.request(result_unknown)

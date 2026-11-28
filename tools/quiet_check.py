@@ -10,7 +10,7 @@ With --compare: 0 the load did not change, 3 it changed (mark the run as disturb
 Privacy: the saved output (Markdown, JSON) holds sums and percentages only, never a program name. Which programs
 cause the load is told to the user in the conversation by `--ask`; never write that text into a file.
 
-Standard library only, Python 3.9+, Linux and macOS. It reads, it never changes anything. The thresholds are
+Standard library only, Python 3.9+, Linux, macOS and Windows. It reads, it never changes anything. The thresholds are
 below, each with its reason; the sampling window is one second so a busy process shows, a load average (which
 lags by a minute) is shown but can only warn.
 """
@@ -26,6 +26,7 @@ import time
 from pathlib import Path
 
 import hw_report as hw
+import hw_win32
 
 WINDOW = 1.0  # seconds of sampling: long enough for a busy process to show, short enough to run before every run
 GIB = hw.GIB
@@ -72,8 +73,18 @@ def swap_traffic() -> int | None:
     return sum(int(x) for x in m) if m else None
 
 
+def _win32_gpu_cards() -> list:
+    return [
+        {"busy": g.get("busy_percent"), "vram_gib": g.get("vram_gib"), "used_gib": g.get("vram_used_gib")}
+        for g in hw_win32.gpus(hw.run)
+        if not g.get("integrated") and (g.get("vram_gib") or g.get("busy_percent") is not None)
+    ]
+
+
 def gpu_cards() -> list:
-    """Busy percent and VRAM of discrete GPUs: sysfs (amdgpu), nvidia-smi, ioreg (macOS)."""
+    """Busy percent and VRAM of discrete GPUs: sysfs (amdgpu), nvidia-smi, ioreg (macOS), Win32."""
+    if sys.platform == "win32":
+        return _win32_gpu_cards()
     out = []
     for gpu, card in zip(hw.gpus_sysfs(), sorted(Path("/sys/class/drm").glob("card[0-9]*")), strict=False):
         busy = hw.to_int(hw.read(card / "device" / "gpu_busy_percent"))
@@ -103,6 +114,8 @@ def apple_gpu_busy(read=lambda: hw.run(["ioreg", "-r", "-d", "1", "-w0", "-c", "
 
 def power() -> dict:
     """{"on_battery": bool | None}; None when there is no battery or it cannot be read."""
+    if sys.platform == "win32":
+        return hw_win32.power()
     if sys.platform == "darwin":
         text = hw.run(["pmset", "-g", "batt"])
         return {"on_battery": ("Battery Power" in text) if text else None}
@@ -115,14 +128,18 @@ def power() -> dict:
 
 def measure() -> dict:
     swap0 = swap_traffic()
-    cpu = cpu_sample()
+    threads = os.cpu_count() or 1
+    if sys.platform == "win32":
+        cpu, cpu_busy = {}, hw_win32.cpu_busy_percent(WINDOW)
+    else:
+        cpu = cpu_sample()
+        cpu_busy = round(sum(cpu.values()) / threads, 1)
     swap1 = swap_traffic()
     ram = hw.memory()
-    threads = os.cpu_count() or 1
     return {
         "taken": time.strftime("%Y-%m-%d %H:%M:%S"),
         "threads": threads,
-        "cpu_busy_percent": round(sum(cpu.values()) / threads, 1),
+        "cpu_busy_percent": cpu_busy,
         "busy_processes": dict(sorted(cpu.items(), key=lambda kv: -kv[1])[:5]),
         "loadavg1": round(os.getloadavg()[0], 2) if hasattr(os, "getloadavg") else None,
         "gpus": gpu_cards(),
@@ -244,6 +261,8 @@ def is_user_program_linux(pid_dir: Path, uid: int) -> bool:
 def user_program_names() -> set | None:
     """Names of programs the user owns and started: same UID and no service (Linux: cgroup, macOS: app bundle).
     None when it cannot be decided, then only SYSTEM_TOOLS filters."""
+    if not hasattr(os, "getuid"):
+        return None
     uid = os.getuid()
     if Path("/proc/self/stat").exists():
         return {hw.read(d / "comm") for d in Path("/proc").glob("[0-9]*") if is_user_program_linux(d, uid)} - {""}
@@ -278,7 +297,10 @@ def free_line(s: dict) -> str:
     for g in s["gpus"]:
         if g["vram_gib"] and g["used_gib"] is not None:
             parts.append(f"{g['vram_gib'] - g['used_gib']:.1f} GiB VRAM")
-    parts.append(f"the CPU is {s['cpu_busy_percent']} % busy")
+    if s["cpu_busy_percent"] is not None:
+        parts.append(f"the CPU is {s['cpu_busy_percent']} % busy")
+    if not parts:
+        return "Right now no live load numbers are available."
     return "Right now " + (", ".join(parts[:-1]) + " are free; " if len(parts) > 1 else "") + parts[-1] + "."
 
 

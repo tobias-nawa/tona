@@ -152,3 +152,41 @@ def test_run_uses_c_locale(monkeypatch):
     monkeypatch.setenv("LC_ALL", "de_DE.UTF-8")
     out = hw.run(["sh", "-c", 'printf "%s %s" "$LC_ALL" "$LANG"'])
     assert out == "C C"
+
+
+def test_scrub_windows_paths_and_json():
+    text = r"model C:\Users\alice\work\m.gguf and D:\data\alice\x, C:/Users/alice/y"
+    out = hw.scrub(text, home=r"C:\Users\alice", user="alice")
+    assert out == r"model ~\work\m.gguf and D:\data\<user>\x, ~/y"
+    rep = json.loads(json.dumps(REPORT))
+    rep["limits"]["env"] = {"TONA_MODEL": r"C:\Users\alice\models\m.gguf"}
+    rendered = hw.render_json(rep, home=r"C:\Users\alice", user="alice")
+    assert "alice" not in rendered
+    assert json.loads(rendered)["limits"]["env"]["TONA_MODEL"] == r"~\models\m.gguf"
+
+
+def test_win32_parsers():
+    import hw_win32
+
+    smi = "NVIDIA GeForce RTX 5090, 32607, 1024, 3, 572.60\nNVIDIA L4, 23034, 512, [N/A], 572.60\n"
+    gpus = hw_win32.parse_nvidia_smi(smi)
+    assert len(gpus) == 2
+    assert gpus[0]["name"] == "NVIDIA GeForce RTX 5090" and gpus[0]["vram_gib"] == 31.8
+    assert gpus[0]["vram_used_gib"] == 1.0 and gpus[0]["busy_percent"] == 3 and gpus[0]["driver"] == "572.60"
+    assert gpus[1]["busy_percent"] is None
+
+    single = json.dumps(
+        {
+            "Name": "Microsoft Basic Display Adapter",
+            "AdapterRAM": 0,
+            "DriverVersion": "10.0.22621.1",
+            "PNPDeviceID": "PCI\\VEN_1234&DEV_1111",
+        }
+    )
+    fallback = hw_win32.parse_video_controllers(single)
+    assert len(fallback) == 1 and fallback[0]["name"] == "Microsoft Basic Display Adapter"
+    assert fallback[0]["vram_gib"] is None and "driver" not in fallback[0]
+
+    nvcc_out = "nvcc: NVIDIA (R) Cuda compiler driver\nCuda compilation tools, release 12.8, V12.8.61\n"
+    assert hw_win32.parse_nvcc_version(nvcc_out) == "12.8"
+    assert hw_win32.parse_nvcc_version("") == ""
