@@ -233,12 +233,12 @@ _test-cpu:
     cmake --build work/build/cpu
     ctest --test-dir work/build/cpu -L unit --output-on-failure
 
-# CPU token check on the mini models, built from the committed headers (CI job `mini-tokens`). 4 threads as on the CI runner: with every thread of a busy 32-thread machine the spinning OpenMP team takes minutes instead of 26 s
+# CPU token check on the mini models, built from the committed headers (exact logits run in CI job `mini-tokens`; local `just test` checks tokens only so other GCC/libm versions pass). 4 threads as on the CI runner: with every thread of a busy 32-thread machine the spinning OpenMP team takes minutes instead of 26 s
 [private]
 _mini-check:
     cmake -S engine -B work/build/cpu -G Ninja -DTONA_MARCH=x86-64-v3 -DTONA_MODEL=/nonexistent/model.gguf -DTONA_LLAMACPP_BUILD=/nonexistent >/dev/null
     cmake --build work/build/cpu --target tona-ref
-    OMP_NUM_THREADS=${OMP_NUM_THREADS:-4} python3 tools/mini_token_check.py compare --build work/build/cpu
+    OMP_NUM_THREADS=${OMP_NUM_THREADS:-4} python3 tools/mini_token_check.py compare --tokens-only --build work/build/cpu
 
 # Installer build and tests (CI job `installer`; no toolchain)
 [private]
