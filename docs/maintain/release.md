@@ -105,7 +105,7 @@ On every ROCm version change (new `toolchain/rocm-*.lock`):
 - [ ] Compare the wheels' licence files (`share/doc/hip`, `amd_comgr`, `rocr`, `rocprofiler-register`) with upstream at
   the pins; `hip/LICENSE.md` must still be there.
 - [ ] Check `licenses/rocm-sysdeps.txt` against the recipes of the new tag.
-- [ ] `release-build.sh`, read the top of `LICENSES.txt`; `just test-py` passes.
+- [ ] `release-build.sh`, read the top of `LICENSES.txt`; `just test` passes.
 
 ## The release build
 

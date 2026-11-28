@@ -32,7 +32,7 @@ std::string render_unit(const std::string& root) {
 ServerLaunch server_launch(const UnitSpec& u, bool macos) {
     ServerLaunch l;
     l.workdir = u.root;
-    // 6 threads: what `just start` gives the server on a Mac (justfile, `run`); without it libomp takes every core
+    // 6 threads: what `just start` gives the server on a Mac (justfile, `limited`); without it libomp takes every core
     if (macos)
         l.env.emplace_back("OMP_NUM_THREADS", "6");
     else

@@ -201,7 +201,7 @@ Single-kernel path (`engine/gpu/matvec.hip`, `forward*.hip`), not the megakernel
 | `TONA_MTP_MULTI` | flag | off | MTP chains of several conversations step together (no measured gain). |
 | `TONA_MTP_SAMPLE` | number | 1 | 0: with sampling, draft greedily instead of from the MTP head's distribution. |
 | `TONA_ERROR_LINGER_S` | integer | 3 | Seconds the server stays up after a failed start so `tona` can read the error. |
-| `TONA_DIAG` | flag (`toolchain/env.sh`, `scripts/tona-service.sh`) | off | Developer machines: `toolchain/env.sh` (every build, test and measurement script) and `just start` / `just install-service` set `TONA_ALLOC_TRACE`, `TONA_KFD_SMI_LOG` and `HSA_COREDUMP_PATTERN` under `TONA_DIAG_DIR` (unless set) and lift the core limit, so a GPU fault leaves a trace and a dump (about 45 GB). `scripts/diag-clean.sh` keeps the newest dump and deletes traces older than 7 days. `just serve` does not use it. |
+| `TONA_DIAG` | flag (`toolchain/env.sh`, `scripts/tona-service.sh`) | off | Developer machines: `toolchain/env.sh` (every build, test and measurement script) and `tona start` and `tona setup` of a checkout set `TONA_ALLOC_TRACE`, `TONA_KFD_SMI_LOG` and `HSA_COREDUMP_PATTERN` under `TONA_DIAG_DIR` (unless set) and lift the core limit, so a GPU fault leaves a trace and a dump (about 45 GB). `scripts/diag-clean.sh` keeps the newest dump and deletes traces older than 7 days. `just run` does not use it. |
 | `TONA_DIAG_DIR` | text | `work/diag` | Directory for `TONA_DIAG` files. |
 
 ### Warm-up requests

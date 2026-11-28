@@ -234,9 +234,9 @@ def render(data: dict, base: str) -> str:
 
 def unit_text(data: dict) -> str:
     if data["unit_all"]:
-        return "all (just test-cpu)"
+        return "all (just test)"
     parts = [f"ctest -R '^({'|'.join(data['unit_tests'])})$'"] if data["unit_tests"] else []
-    parts += ["just test-py"] * data["python_tests"] + ["installer build and ctest"] * data["installer_tests"]
+    parts += ["just test"] * data["python_tests"] + ["installer build and ctest"] * data["installer_tests"]
     return "; ".join(parts) or "none"
 
 

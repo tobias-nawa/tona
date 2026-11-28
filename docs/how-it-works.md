@@ -126,7 +126,7 @@ experts 25.15 GB (2.05 MB per expert and layer), dense weights 4.11 GB ([referen
 
 ## Assumptions
 
-- **Server defaults:** context 16,384 (`--ctx`; `just serve` uses 256K); thinking off unless the request asks
+- **Server defaults:** context 16,384 (`--ctx`; `just run` uses 256K); thinking off unless the request asks
   (`thinking`, `reasoning_effort`) or `--thinking on`.
 - **Prompt cache:** up to `TONA_PROMPT_SLOTS` (16) conversations; the running one in VRAM, the others in RAM as checkpoints
   (about 460 MB at 16K tokens; a switch takes 100-300 ms), together at most `TONA_PROMPT_RAM_GB` (12), and only if 8 GB of
@@ -134,9 +134,9 @@ experts 25.15 GB (2.05 MB per expert and layer), dense weights 4.11 GB ([referen
   end and, after 4,096 or more computed tokens, at the start of the last message; this made Claude Code's auto-mode checker
   take 1.7 instead of 48 s. A hit equals a cold run for checkpoints inside a prompt (`TONA_DETERMINISTIC=1`); a turn that
   continues generated tokens is repeatable but not the cold answer ([prompt-cache.md](use/prompt-cache.md)). With
-  `TONA_PROMPT_CACHE` (`just serve`: `work/prompt-cache`) checkpoints also go to the SSD (`TONA_PROMPT_CACHE_GB` 16), one
+  `TONA_PROMPT_CACHE` (`just run`: `work/prompt-cache`) checkpoints also go to the SSD (`TONA_PROMPT_CACHE_GB` 16), one
   model per file, dir 0700, files 0600.
-- **Context:** int8 KV cache, in pinned RAM from 0.4 GiB (`TONA_KV_HOST`); `just serve` uses 256K positions. Ornith and Bolt
+- **Context:** int8 KV cache, in pinned RAM from 0.4 GiB (`TONA_KV_HOST`); `just run` uses 256K positions. Ornith and Bolt
   keep the first 128,000 cells per attention layer in VRAM (`TONA_KV_VRAM_GB`, at most 13.5 % of free VRAM): decode at 256K
   context +52 % (Ornith after 16K) to +187 % (after 128K), Bolt +22 % after 64K. Up to 1M positions run with `TONA_SEQS=1`
   (Coder: decode 56.5, prefill 1,073 tok/s at 1M); retrieval of the latest of several revisions of a fact is 51 % at 64K and

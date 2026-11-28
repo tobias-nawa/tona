@@ -1,4 +1,4 @@
-# clang-tidy for the lint gate on macOS (tools/gates/tidy.py), installed by `just check` into work/venv-tidy.
+# clang-tidy for the lint gate on macOS (tools/gates/tidy.py), installed by `just lint` into work/venv-tidy.
 # The reference's clang-tidy (ROCm toolchain, toolchain/rocm-10.1.lock) reports "AMD LLVM version 24.0.0git"; PyPI has
 # no 24 wheel yet, so this is the newest one (LLVM 23.1.4). A check that exists or behaves differently only in 24 can
 # therefore report on the PC what the Mac did not. Hashes from PyPI, the two macOS wheels.

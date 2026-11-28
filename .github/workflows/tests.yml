@@ -106,7 +106,7 @@ jobs:
     # .clang-tidy on the host-only sources: the engine configured without ROCm (no GPU build, no compile of the HIP
     # sources) and the installer. The distribution's clang-tidy has another major version than the ROCm toolchain's
     # (the toolchain's is a development build of LLVM, no stock release matches it), so this job is a second opinion on
-    # the host code; `just check` with the toolchain also lints the GPU sources and decides in a disagreement.
+    # the host code; `just lint` with the toolchain also lints the GPU sources and decides in a disagreement.
     # libomp-devel: the sources that include omp.h; clang looks for it in its own resource directory, not in GCC's.
     name: clang-tidy
     permissions:
@@ -206,7 +206,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          fetch-depth: 0 # `just check` measures against the merge base with origin/main
+          fetch-depth: 0 # `just lint` measures against the merge base with origin/main
           persist-credentials: false
       - name: Packages
         run: sudo apt-get install -y --no-install-recommends g++-14 gcc-14 cmake ninja-build libssl-dev pkg-config python3-venv python3-pip jq curl
@@ -223,11 +223,9 @@ jobs:
       - name: Toolchain and gate tools (no GPU)
         run: scripts/setup.sh --no-gpu
       - name: Gates with clang-tidy
-        run: just check
+        run: just lint
       - name: CPU unit tests
-        run: just test-cpu
-      - name: Python tests
-        run: just test-py
+        run: just test
 
   coverage:
     needs: changes
