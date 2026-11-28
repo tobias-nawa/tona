@@ -18,7 +18,9 @@
 // set (also from a launcher) stays.
 #pragma once
 
+#ifndef _WIN32
 #include <unistd.h>
+#endif
 
 #include <cerrno>
 #include <cstdio>

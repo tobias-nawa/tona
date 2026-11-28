@@ -48,7 +48,9 @@ void add_gram(const std::vector<float>& c, size_t n, int d, std::vector<double>&
         for (int j = 0; j <= i; j++) {
             const float* b = &ct[(size_t)j * m];
             float s = 0;
+#ifndef _MSC_VER
 #pragma omp simd reduction(+ : s)
+#endif
             for (size_t k = 0; k < m; k++) s += a[k] * b[k];
             gram[(size_t)i * d + j] += s;
         }
@@ -92,7 +94,9 @@ std::vector<double> top_subspace(std::vector<double>& gram, int d, int r) {
                 const double* gi = &gram[(size_t)i * d];
                 const double* qc = &q[(size_t)c * d];
                 double s = 0;
+#ifndef _MSC_VER
 #pragma omp simd reduction(+ : s)
+#endif
                 for (int k = 0; k < d; k++) s += gi[k] * qc[k];
                 z[(size_t)c * d + i] = s;
             }
@@ -113,7 +117,9 @@ void score_chunk(const std::vector<float>& c, size_t n, int d, const std::vector
             float acc = 0;
             const float* w = &c[(size_t)i * d];
             const float* b = &bt[(size_t)k * d];
+#ifndef _MSC_VER
 #pragma omp simd reduction(+ : acc)
+#endif
             for (int j = 0; j < d; j++) acc += w[j] * b[j];
             p[(size_t)k] = acc, amax = std::max(amax, std::fabs(acc));
         }
@@ -205,19 +211,32 @@ bool write_mtp_scorer(const std::string& path, const MtpScorer& s, int d, size_t
             return false;
         }
     }
+#ifdef _WIN32
+    std::error_code ec;
+    std::filesystem::rename(tmp, path, ec);  // std::rename fails on Windows when path already exists
+    if (!ec) return true;
+#else
     if (std::rename(tmp.c_str(), path.c_str()) == 0) return true;
+#endif
     std::remove(tmp.c_str());
     return false;
 }
 
 namespace {
 
-// $XDG_CACHE_HOME/tona, else ~/.cache/tona; empty if neither is known
+// $XDG_CACHE_HOME/tona, else ~/.cache/tona (or %LOCALAPPDATA%/tona on Windows); empty if none is known
 std::string cache_dir() {
     const char* x = std::getenv("XDG_CACHE_HOME");
     if (x && *x) return std::string(x) + "/tona";
+#ifdef _WIN32
+    const char* local = std::getenv("LOCALAPPDATA");
+    if (local && *local) return std::string(local) + "/tona";
+    const char* prof = std::getenv("USERPROFILE");
+    return prof && *prof ? std::string(prof) + "/.cache/tona" : std::string();
+#else
     const char* home = std::getenv("HOME");
     return home && *home ? std::string(home) + "/.cache/tona" : std::string();
+#endif
 }
 
 }  // namespace

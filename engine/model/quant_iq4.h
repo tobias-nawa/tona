@@ -7,6 +7,8 @@
 #include <cstdint>
 #include <cstring>
 
+#include "model/quant.h"
+
 namespace tona::iq4 {
 
 inline constexpr int8_t kIq4[16] = {-127, -104, -83, -65, -49, -35, -22, -10, 1, 13, 25, 38, 53, 69, 89, 113};
@@ -25,7 +27,8 @@ inline float iq4_candidate(const float* v, float id, uint8_t* q, float& dd) {
         q[j] = (uint8_t)nearest_iq4(v[j] * id);
         xl += v[j] * kIq4[q[j]], ll += kIq4[q[j]] * kIq4[q[j]];
     }
-    dd = (float)(_Float16)(ll > 0 ? xl / ll : 0);
+    const float raw = static_cast<float>(ll > 0 ? xl / ll : 0);
+    dd = tona::fp16_to_fp32(tona::fp32_to_fp16(raw));
     float e = 0;
     for (int j = 0; j < 32; j++) {
         const float r = v[j] - kIq4[q[j]] * dd;
@@ -45,7 +48,7 @@ inline void quantize_iq4_block(const float* v, uint8_t* o) {
         const float e = iq4_candidate(v, (k + kIq4[0]) / mx, q, dd);
         if (e < best_e) best_e = e, best_d = dd, std::memcpy(bq, q, 32);
     }
-    const _Float16 h = (_Float16)best_d;
+    const uint16_t h = tona::fp32_to_fp16(best_d);
     std::memcpy(o, &h, 2);
     for (int j = 0; j < 16; j++) o[2 + j] = (uint8_t)(bq[j] | bq[j + 16] << 4);
 }

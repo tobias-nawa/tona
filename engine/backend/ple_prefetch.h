@@ -6,8 +6,12 @@
 // the bytes copied never change; a failed hint costs only the time it would have saved.
 #pragma once
 
+#ifdef _WIN32
+#include <windows.h>
+#else
 #include <sys/mman.h>
 #include <unistd.h>
+#endif
 
 #include <algorithm>
 #include <cstdint>
@@ -62,6 +66,20 @@ inline std::vector<Range> ranges(uintptr_t base, uint64_t row_bytes, const int32
 // Asks the kernel to read the rows' pages ahead (macOS and Linux read file pages asynchronously on MADV_WILLNEED);
 // returns how many requests failed
 inline int prefetch(const uint8_t* base, uint64_t row_bytes, const int32_t* rows, size_t n) {
+#ifdef _WIN32
+    static const uint64_t page = [] {
+        SYSTEM_INFO si{};
+        GetSystemInfo(&si);
+        return static_cast<uint64_t>(si.dwPageSize);
+    }();
+    const auto rs = ranges(reinterpret_cast<uintptr_t>(base), row_bytes, rows, n, page);
+    if (rs.empty()) return 0;
+    std::vector<WIN32_MEMORY_RANGE_ENTRY> entries;
+    entries.reserve(rs.size());
+    for (const Range& r : rs)
+        entries.push_back({reinterpret_cast<void*>(r.begin), static_cast<SIZE_T>(r.end - r.begin)});
+    return PrefetchVirtualMemory(GetCurrentProcess(), entries.size(), entries.data(), 0) ? 0 : 1;
+#else
     static const auto page = (uint64_t)sysconf(_SC_PAGESIZE);  // 16 KB on Apple silicon, 4 KB on x86-64 Linux
     int failed = 0;
     for (const Range& r : ranges((uintptr_t)base, row_bytes, rows, n, page)) {
@@ -69,6 +87,7 @@ inline int prefetch(const uint8_t* base, uint64_t row_bytes, const int32_t* rows
         failed += madvise(reinterpret_cast<void*>(r.begin), r.end - r.begin, MADV_WILLNEED) != 0;
     }
     return failed;
+#endif
 }
 
 }  // namespace tona::backend::ple_prefetch

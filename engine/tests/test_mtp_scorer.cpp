@@ -1,6 +1,10 @@
 // The scorer cache of the dynamic MTP rows: fingerprint of the head, rejection of a file of another head, of another
 // rank and of a truncated one, no temporary file left behind (host only, no model, no GPU).
+#ifdef _WIN32
+#include <process.h>
+#else
 #include <unistd.h>
+#endif
 
 #include <cstdio>
 #include <filesystem>
@@ -96,8 +100,13 @@ void test_file(const std::filesystem::path& dir) {
 
 int main() {
     return tona::test::guard("mtp_scorer", [&] {
+#ifdef _WIN32
+        const int pid = _getpid();
+#else
+        const int pid = getpid();
+#endif
         const std::filesystem::path dir =
-            std::filesystem::temp_directory_path() / ("tona-test-mtp-scorer-" + std::to_string(getpid()));
+            std::filesystem::temp_directory_path() / ("tona-test-mtp-scorer-" + std::to_string(pid));
         std::filesystem::create_directories(dir);
         test_fingerprint();
         test_file(dir);

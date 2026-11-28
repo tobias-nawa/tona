@@ -40,7 +40,8 @@ int run(int argc, char** argv) {
     };
     auto by_mmap = [&](const std::vector<int64_t>& rows) {
 #pragma omp parallel for schedule(static) num_threads(6)
-        for (size_t i = 0; i < n; i++) std::memcpy(&ref[i * rb], t->data + (uint64_t)rows[i] * rb, rb);
+        for (int64_t i = 0; i < (int64_t)n; i++)
+            std::memcpy(&ref[(size_t)i * rb], t->data + (uint64_t)rows[(size_t)i] * rb, rb);
     };
     for (int rep = 0; rep < 3; rep++) {
         double ms[6];

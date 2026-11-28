@@ -100,12 +100,16 @@ PLATFORM_ONLY = {
         "engine/tools/tona_bench.cpp",
         "engine/tools/tona_width_nll.cpp",
     ),
+    "Windows": (
+        "engine/backend/mem_win32.h",
+        "engine/io/uring_win32.cpp",
+    ),
 }
 
 
 def other_platform(system: str) -> tuple[str, ...]:
     """Prefixes of the sources this platform does not build: what is built only elsewhere."""
-    return PLATFORM_ONLY["Linux" if system == "Darwin" else "Darwin"]
+    return tuple(prefix for name, prefixes in PLATFORM_ONLY.items() if name != system for prefix in prefixes)
 
 
 OTHER_PLATFORM = other_platform(SYSTEM)

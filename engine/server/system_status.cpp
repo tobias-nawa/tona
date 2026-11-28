@@ -9,6 +9,8 @@
 #include <sys/sysctl.h>
 
 #include "backend/mem_macos.h"
+#elif defined(_WIN32)
+#include <windows.h>
 #endif
 
 namespace tona::server {
@@ -48,6 +50,17 @@ void read_ram(double& total, double& avail) {
     size_t len = sizeof ram;
     total = sysctlbyname("hw.memsize", &ram, &len, nullptr, 0) == 0 ? static_cast<double>(ram) : 0;
     avail = backend::macos::available_bytes();
+}
+#elif defined(_WIN32)
+void read_ram(double& total, double& avail) {
+    MEMORYSTATUSEX ms{};
+    ms.dwLength = sizeof ms;
+    if (GlobalMemoryStatusEx(&ms)) {
+        total = static_cast<double>(ms.ullTotalPhys);
+        avail = static_cast<double>(ms.ullAvailPhys);
+    } else {
+        total = avail = 0;
+    }
 }
 #else
 // MemTotal and MemAvailable from /proc/meminfo, in bytes

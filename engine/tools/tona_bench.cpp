@@ -7,7 +7,9 @@
 // the pass: the costs the width choice of speculative decoding needs.
 // Usage: tona-bench MODEL.gguf [--backend NAME|auto] [-p PREFILL] [-d DECODE] [-b WIDTH] [-r ROUNDS] [--ctx N]
 //        [--mtp MTP.gguf] [-k STEPS]
+#ifndef _WIN32
 #include <sys/resource.h>
+#endif
 
 #include <algorithm>
 #include <chrono>
@@ -136,9 +138,11 @@ int run(int argc, char** argv) {
     summary("decode", dec);
     summary("pass", pms, "ms");
     if (!o.mtp.empty()) summary("MTP fill", fms, "ms"), summary("MTP step", sms, "ms");
+#ifndef _WIN32
     rusage ru{};
     getrusage(RUSAGE_SELF, &ru);  // major faults: pages read back from disk (dropped weights, n-gram rows)
     std::printf("page-ins: %ld major faults over the whole run\n", ru.ru_majflt);
+#endif
     return 0;
 }
 

@@ -5,6 +5,9 @@
 // HTTP listens while the model loads: GET /status (JSON, for tona) reports the startup phases and then live
 // numbers; /v1/* answers 503 until loading is done. Sampling: temperature, top_p, top_k, seed of the request; without a
 // temperature Qwen's recommendation (request_options.cpp).
+#ifdef _WIN32
+#include <process.h>
+#endif
 #include <cctype>
 #include <charconv>
 #include <chrono>
@@ -78,7 +81,11 @@ int parse_options(int argc, char** argv, ServerOptions& opt) {
         } else if (a == "--thinking")
             opt.think_default = v == "on";
         else if (a == "--profile")
+#ifdef _WIN32
+            _putenv_s("TONA_EXPERT_PROFILE", v.c_str());
+#else
             setenv("TONA_EXPERT_PROFILE", v.c_str(), 1);
+#endif
         else if (a == "--api-key-file") {
             if (const int rc = read_api_key(v, opt.api_key)) return rc;
         } else {
@@ -159,7 +166,11 @@ static int run(int argc, char** argv) {
                   {"host", opt.host},
                   {"port", opt.port},
                   {"n_ctx", opt.ctx},
+#ifdef _WIN32
+                  {"pid", (int64_t)_getpid()}};
+#else
                   {"pid", (int64_t)getpid()}};
+#endif
     tona::server::register_gate(ctx);
     tona::server::register_status_routes(ctx);
     tona::server::register_anthropic_routes(ctx);

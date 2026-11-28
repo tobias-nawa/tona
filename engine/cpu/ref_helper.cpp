@@ -50,7 +50,8 @@ std::vector<float> helper_apply(const Helper& hp, size_t l, const std::vector<fl
     const size_t d = x.size(), h = (size_t)hp.h;
     std::vector<float> a(h);
 #pragma omp parallel for schedule(static)
-    for (size_t r = 0; r < h; r++) {
+    for (int64_t ri = 0; ri < (int64_t)h; ri++) {
+        const size_t r = (size_t)ri;
         double g = 0, u = 0;
         for (size_t i = 0; i < d; i++)
             g += (double)hp.gate[l][r * d + i] * x[i], u += (double)hp.up[l][r * d + i] * x[i];
@@ -58,7 +59,8 @@ std::vector<float> helper_apply(const Helper& hp, size_t l, const std::vector<fl
     }
     std::vector<float> y(d);
 #pragma omp parallel for schedule(static)
-    for (size_t j = 0; j < d; j++) {
+    for (int64_t ji = 0; ji < (int64_t)d; ji++) {
+        const size_t j = (size_t)ji;
         double acc = 0;
         for (size_t r = 0; r < h; r++) acc += (double)hp.down[l][j * h + r] * a[r];
         y[j] = (float)acc;

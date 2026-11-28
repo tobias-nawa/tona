@@ -66,7 +66,12 @@ public:
     void release(const uint8_t* ptr, size_t n) const;
 
 private:
+#ifdef _WIN32
+    void* file_ = nullptr;
+    void* mapping_ = nullptr;
+#else
     int fd_ = -1;
+#endif
     std::string path_;
     const uint8_t* data_ = nullptr;
     uint64_t size_ = 0;

@@ -1,7 +1,11 @@
 // Read-ahead of the n-gram rows: the page ranges a pass's rows touch (rounded to pages, each page once, neighbours
 // merged), and the hint itself on a real file mapping
+#ifdef _WIN32
+#include <windows.h>
+#else
 #include <sys/mman.h>
 #include <unistd.h>
+#endif
 
 #include <cstdio>
 #include <vector>
@@ -34,6 +38,30 @@ void test_duplicates_once_and_gaps_split() {
 }
 
 void test_the_hint_succeeds_on_a_file_mapping() {
+#ifdef _WIN32
+    SYSTEM_INFO si{};
+    GetSystemInfo(&si);
+    const auto page = static_cast<size_t>(si.dwPageSize);
+    tona::test::TempDir tmp("ple-prefetch");
+    const std::string path = (tmp.path() / "map.bin").string();
+    const std::vector<char> data(page * 3, 'x');
+    std::ofstream(path, std::ios::binary).write(data.data(), static_cast<std::streamsize>(data.size()));
+    HANDLE f = CreateFileA(path.c_str(), GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL,
+                           nullptr);
+    EXPECT(f != INVALID_HANDLE_VALUE);
+    if (f == INVALID_HANDLE_VALUE) return;
+    HANDLE map = CreateFileMappingA(f, nullptr, PAGE_READONLY, 0, 0, nullptr);
+    EXPECT(map != nullptr);
+    void* m = map ? MapViewOfFile(map, FILE_MAP_READ, 0, 0, 0) : nullptr;
+    EXPECT(m != nullptr);
+    if (m != nullptr) {
+        const int32_t rows[] = {0, 2};
+        EXPECT(pf::prefetch(static_cast<const uint8_t*>(m), page, rows, 2) == 0);
+        UnmapViewOfFile(m);
+    }
+    if (map) CloseHandle(map);
+    CloseHandle(f);
+#else
     FILE* f = std::tmpfile();
     EXPECT(f != nullptr);
     if (f == nullptr) return;
@@ -49,6 +77,7 @@ void test_the_hint_succeeds_on_a_file_mapping() {
         munmap(m, data.size());
     }
     std::fclose(f);
+#endif
 }
 
 }  // namespace
