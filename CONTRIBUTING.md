@@ -26,6 +26,8 @@ Requirements: [docs/contribute/development.md](docs/contribute/development.md). 
 
 Open an issue with the fitting form and wait for the label `accepted` before you write more than a small fix (typos and
 broken links need none). Questions go to Discussions, security problems to [SECURITY.md](SECURITY.md).
+A bot asks for required sections of the form that are empty and closes the issue after 28 days without an answer; reopen it
+with the missing details any time.
 
 | You want to | Issue form | Your pull request needs |
 |---|---|---|

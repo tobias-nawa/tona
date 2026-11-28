@@ -1,0 +1,37 @@
+name: issue-check
+
+# Asks for the required sections of an issue form that are empty or `_No response_`: sets `needs-info` and writes one
+# comment, updates it when the sections are filled in, removes the label only if this bot set it (tools/issue_bot.py).
+# No model reads the text: the issue body is compared with the form, never run or pasted into a shell command.
+# The templates come from the default branch, because an `issues` event runs the workflow of the default branch.
+
+on:
+  issues:
+    types: [opened, edited]
+
+permissions: {}
+
+concurrency:
+  group: issue-check-${{ github.event.issue.number }}
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    permissions:
+      issues: write # label and comment
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Check the form
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          ISSUE: ${{ github.event.issue.number }}
+        run: |
+          gh api "repos/${REPO}/issues/${ISSUE}" > "${RUNNER_TEMP}/issue.json"
+          gh api --paginate --slurp "repos/${REPO}/issues/${ISSUE}/comments" > "${RUNNER_TEMP}/comments.json"
+          python3 tools/issue_bot.py check --repo "${REPO}" --issue "${RUNNER_TEMP}/issue.json" \
+            --comments "${RUNNER_TEMP}/comments.json"

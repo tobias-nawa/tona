@@ -18,6 +18,12 @@ Rules, with the reason (GitHub Docs, "Secure use": https://docs.github.com/en/ac
   not a proof: an unknown vendor needs a new line here, and a script that calls a service from a file the workflow
   runs is not seen.
 
+- `pull_request_target` together with the head of the pull request (`pull_request.head`, `github.head_ref`,
+  `refs/pull/`): that trigger runs with a write token and secrets, so it may only look at the base branch
+  (GitHub Security Lab, "Preventing pwn requests"). zizmor reports the trigger itself (`dangerous-triggers`); the one
+  workflow that needs it, .github/workflows/pr-bot.yml, carries a documented `zizmor: ignore`; this rule keeps the
+  head out of it.
+
 Covered by zizmor already (v1.31.1, .pre-commit-config.yaml) and therefore not repeated here: `pull_request_target`,
 `workflow_run`, unpinned actions, missing `persist-credentials: false`.
 """
@@ -46,6 +52,8 @@ LLM_TEXT = re.compile(
     r"@anthropic-ai/|@openai/codex|@google/gemini-cli|@github/copilot|pip3?\s+install\s+[^\n]*\b(?:anthropic|openai)\b",
     re.IGNORECASE,
 )
+TARGET_TRIGGER = re.compile(r"^\s*pull_request_target\s*:")
+PULL_REQUEST_HEAD = re.compile(r"\bpull_request\.head\b|\bgithub\.head_ref\b|refs/pull/|\bworkflow_run\.head")
 RUN_KEY = re.compile(r"^(\s*)(?:-\s+)?run\s*:\s*(.*)$")
 
 
@@ -76,6 +84,7 @@ def check_file(name: str, text: str) -> list[str]:
     lines = text.splitlines()
     in_run = run_lines(lines)
     problems = []
+    target = any(TARGET_TRIGGER.match(strip_comment(raw)) for raw in lines)
     for n, raw in enumerate(lines):
         line = raw if n in in_run else strip_comment(raw)
         where = f"{name}:{n + 1}"
@@ -85,6 +94,8 @@ def check_file(name: str, text: str) -> list[str]:
             problems.append(f"{where}: self-hosted runner; use GitHub-hosted runners for code from pull requests")
         if LLM_ACTION.search(line) or LLM_TEXT.search(line):
             problems.append(f"{where}: sends repository or pull request content to an LLM service; no model runs in CI")
+        if target and PULL_REQUEST_HEAD.search(strip_comment(raw)):
+            problems.append(f"{where}: a `pull_request_target` workflow must not touch the head of the pull request")
         if n in in_run and EVENT_IN_EXPRESSION.search(raw):
             problems.append(f"{where}: github.event.* inside `run:`; pass it through `env:` and use the variable")
     return problems

@@ -32,6 +32,13 @@ handled, not swallowed; a suppression (`NOLINT`, `noqa`) names one rule and the 
 | `hardening` | FORTIFY_SOURCE=3, stack protector, CET, PIE, full RELRO (`tools/check_hardening.py`) |
 | `fuzz.yml` | libFuzzer on API, GGUF and signature parsers: 60 s per target per PR, 30 min nightly |
 
+### Automations
+
+A bot comment on every pull request (`pr-bot.yml`, one comment, updated in place; first line `**Pull request checks**`)
+says how to fix a failed title, prior-art or pull request text check, which checks your change needs (from the file
+paths; `python3 tools/select_checks.py` gives the exact list locally), and welcomes a first contribution. It is a script
+with fixed text (`tools/pr_bot.py`), not a model, and it never runs code of your pull request.
+
 No workflow runs GPU tests, golden comparison or speed. The maintainer sets the status `gpu-golden` after
 `scripts/gpu-status.sh --post`.
 
