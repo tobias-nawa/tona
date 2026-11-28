@@ -4,7 +4,7 @@
 #
 # Usage: scripts/setup.sh [--no-gpu]
 #   --no-gpu  a machine without the reference GPU (any other GPU, a laptop, a CI container): installs the same pinned
-#             ROCm toolchain, which `just check` needs for clang-tidy, and the gate tools, but skips every step that needs
+#             ROCm toolchain, which `just lint` needs for clang-tidy, and the gate tools, but skips every step that needs
 #             /dev/kfd or the gfx1200 device (self-test, WMMA smoke test). The engine itself cannot run there.
 set -euo pipefail
 cd "$(dirname "$0")/.."

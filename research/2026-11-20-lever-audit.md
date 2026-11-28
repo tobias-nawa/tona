@@ -112,7 +112,7 @@ bandwidth-bound with the remaining gains in single digits each (`2026-11-19-bolt
 
 | Lever | Status | Evidence |
 |---|---|---|
-| KV cache int8 (K and V), in pinned RAM from 0.4 GiB; `just serve` 256K, 1M works (decode 53 tok/s) | SHIPPED | README; `2026-10-23-kv-int8.md` |
+| KV cache int8 (K and V), in pinned RAM from 0.4 GiB; `just run` 256K, 1M works (decode 53 tok/s) | SHIPPED | README; `2026-10-23-kv-int8.md` |
 | Decode pass at 250K: indexer scoring once per pass, radix, split-K attention (QSA reads 14 MB per token from RAM) | SHIPPED (63.2 to 47.3 ms at 250K) | README; `2026-10-29-mega-topk.md` |
 | IndexCache (only every second QSA layer runs its indexer) | SHIPPED, NC, calibrated on 600 questions, no loss down to 4 of 12 layers | `2026-10-30-indexcache-main.md`; arXiv 2603.12201 |
 | KV staging into the borrowed slots during layered prefill | SHIPPED (+3 % at 8K, +26 % at 250K) | `2026-10-30-kv-placement.md` |

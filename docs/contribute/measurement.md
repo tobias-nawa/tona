@@ -49,8 +49,8 @@ Named workloads of `scripts/ab.py`; prompts from `scripts/make_corpus.py` (one c
 
 | Recipe | Model | What runs | Rounds |
 |---|---|---|---|
-| R0 gates | none | `just check` | 1 |
-| R1 unit | none | `just test-cpu`; `just test-py` when Python changed | 1 |
+| R0 gates | none | `just lint` | 1 |
+| R1 unit | none | `just test` | 1 |
 | R2 kernels | none | `scripts/isa-diff.py <base build> <your build>`: `all kernels identical` | 1 |
 | R3 golden | big | `scripts/gpu-status.sh`: the checks `tools/select_checks.py` names (all five when undecided) | 1 |
 | R4 bit-exact | big | `scripts/ab.py` with `TONA_DETERMINISTIC=1`, `mid` and `long`; SHAs equal `bench/sha.toml` | 1 |

@@ -87,7 +87,7 @@ bool is_service_command(const std::string& word) { return word == "start" || wor
 
 int run_autostart_command(const Env& env, const std::string& arg, std::ostream& out, std::ostream& err) {
     if (!env.release) {
-        err << "tona: autostart is for a release installation; a checkout has just install-service\n";
+        err << "tona: autostart is for a release installation; a checkout sets it up with tona setup\n";
         return 2;
     }
     if (arg == "status") {

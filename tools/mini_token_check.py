@@ -85,7 +85,7 @@ def measure(build: str, models: str) -> dict:
     return {"env": {"TONA_DETERMINISTIC": "1"}, "models": out}
 
 
-def differences(want: dict, got: dict) -> list[str]:
+def differences(want: dict, got: dict, *, tokens_only: bool = False) -> list[str]:
     found = []
     for model_id, w in want["models"].items():
         g = got["models"][model_id]
@@ -96,7 +96,7 @@ def differences(want: dict, got: dict) -> list[str]:
                 pairs = enumerate(zip(wr["tokens"], gr["tokens"], strict=False))
                 first = next((k for k, (a, b) in pairs if a != b), None)
                 found.append(f"{model_id} run {i}: tokens differ (first at {first}, {len(gr['tokens'])} of {wr['n']})")
-            elif wr["logits_sha256"] != gr["logits_sha256"]:
+            elif not tokens_only and wr["logits_sha256"] != gr["logits_sha256"]:
                 found.append(f"{model_id} run {i}: same tokens, different logits")
     return found
 
@@ -106,6 +106,9 @@ def main() -> int:
     ap.add_argument("mode", choices=("compare", "record"))
     ap.add_argument("--build", default=os.path.join(ROOT, "work", "build", "cpu"))
     ap.add_argument("--models", default=make_mini_model.MODELS)
+    ap.add_argument(
+        "--tokens-only", action="store_true", help="require equal tokens; ignore compiler-specific logit rounding"
+    )
     a = ap.parse_args()
     got = measure(a.build, a.models)
     if a.mode == "record":
@@ -116,7 +119,7 @@ def main() -> int:
         print(f"recorded {EXPECTED}")
         return 0
     with open(EXPECTED) as f:
-        found = differences(json.load(f), got)
+        found = differences(json.load(f), got, tokens_only=a.tokens_only)
     for line in found:
         print("DIFFERS:", line)
     print("mini token check:", "FAILED" if found else "identical")

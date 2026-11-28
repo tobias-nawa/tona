@@ -44,9 +44,8 @@ Requirements:
 - `brew install openssl@3` and `-DOPENSSL_ROOT_DIR=$(brew --prefix openssl@3)` (`openssl@4` breaks `httplib.h` under `-Werror`)
 
 ```sh
-just test-cpu   # unit tests (ctest label unit)
-just test-py    # pytest of the gates and tools
-just check      # gates; clang-tidy in work/venv-tidy (tools/gates/requirements-tidy-macos.txt)
+just test       # unit tests, token check, pytest, installer tests
+just lint       # gates; clang-tidy in work/venv-tidy (tools/gates/requirements-tidy-macos.txt)
 ```
 
 Metal backend (needs `xcodebuild -downloadComponent MetalToolchain`):
@@ -58,8 +57,8 @@ ninja -C work/build/mtl tona-check tona-server
 work/build/mtl/tona-check MODEL.gguf "PROMPT" -n 200   # against the CPU reference
 ```
 
-`just build` builds in `work/build/engine`; `just start` runs the server in the background (log `work/tona-server.log`)
-until `just stop`. `serve` and `top` use `systemd-run` and work on Linux only.
+`just build` builds in `work/build/engine`; `tona start` runs the server in the background (log `work/tona-server.log`)
+until `tona stop`.
 
 CI: job `engine-macos` in `.github/workflows/tests.yml` (`macos-15`) builds with Metal, runs `ctest -L unit` and the
 installer tests, no model ([backends/README.md](../backends/README.md#tiers)). The release assets come from `scripts/release-build-macos.sh`.

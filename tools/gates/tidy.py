@@ -6,16 +6,16 @@ uncommitted and untracked ones. Findings in files that were not changed (headers
 A changed header is linted through the sources that include it (it needs their context, e.g. the HIP macros).
 
 Needs a clang-tidy and a compile database. Linux: the ROCm toolchain's (it parses HIP). macOS: the wheel of
-tools/gates/requirements-tidy-macos.txt in work/venv-tidy (`just check` sets it up), with the SDK from xcrun. The
+tools/gates/requirements-tidy-macos.txt in work/venv-tidy (`just lint` sets it up), with the SDK from xcrun. The
 database comes from configuring only, no build: `source toolchain/env.sh && cmake -S engine -B work/build/engine -G
 Ninja` (macOS: without env.sh, with -DTONA_BACKEND_METAL=ON). A missing toolchain or database is an error, never a
 silent pass.
 
 --system (CI without ROCm): the clang-tidy and run-clang-tidy of the PATH, and only the translation units of the given
 compile database, which then holds the host-only sources (the engine configured without the toolchain, the installer).
-Sources and headers that only the GPU build compiles are not linted there; `just check` lints them with the toolchain.
+Sources and headers that only the GPU build compiles are not linted there; `just lint` lints them with the toolchain.
 The system clang-tidy has another major version than the toolchain's, so a finding that only one of them reports is
-looked at in `just check`, which decides.
+looked at in `just lint`, which decides.
 """
 
 import argparse
@@ -138,7 +138,7 @@ def toolchain(system: str, root: Path) -> Toolchain:
     found = sorted(root.glob(MACOS_LLVM_GLOB))
     if not found or not (found[-1] / "clang-tidy").is_file():
         die(
-            "tidy: clang-tidy missing (work/venv-tidy). Run just check, which sets it up from "
+            "tidy: clang-tidy missing (work/venv-tidy). Run just lint, which sets it up from "
             "tools/gates/requirements-tidy-macos.txt; lint is not skipped silently."
         )
     llvm = found[-1]

@@ -9,8 +9,8 @@
 git clone https://github.com/<you>/tona && cd tona      # your fork
 scripts/setup.sh --no-gpu       # toolchain, gate tools, git hooks; no sudo. Without --no-gpu on the reference GPU
 source toolchain/env.sh
-just check                      # all gates on your commits (hooks alone: pre-commit run --all-files)
-just test-cpu                   # unit tests without model or GPU
+just lint                       # all gates on your commits (hooks alone: pre-commit run --all-files)
+just test                       # everything without GPU and model, what CI runs
 ```
 
 Requirements: [docs/contribute/development.md](docs/contribute/development.md). macOS: [docs/use/macos.md](docs/use/macos.md).
@@ -46,7 +46,7 @@ offer card. Say in the issue who builds it in; a model that is only "downloaded 
 
 ## What you can verify without the reference GPU
 
-Gates, `just test-cpu`, `just test-py`, `just coverage origin/main` (80 % of changed lines), docs, tools, installer, model
+Gates, `just test`, `just coverage origin/main` (80 % of changed lines), docs, tools, installer, model
 records, CPU code. The maintainer runs what needs the reference GPU; say in the pull request which of these you touch
 (`python3 tools/select_checks.py`). Other hardware: you bring the evidence ([docs/backends/README.md](docs/backends/README.md#tiers)).
 
