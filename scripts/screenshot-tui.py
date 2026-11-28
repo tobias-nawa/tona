@@ -39,26 +39,17 @@ from dataclasses import dataclass
 from pathlib import Path
 from xml.sax.saxutils import escape
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from escape_filter import EscapeFilter
+
 # One theme, dark: the 16 ANSI colours of the terminals people use (close to VS Code's dark theme), so the picture
 # looks like the program does in a terminal.
 PALETTE = {
-    "black": "#1e1e1e",
-    "red": "#f14c4c",
-    "green": "#23d18b",
-    "brown": "#e5c07b",
-    "blue": "#3b8eea",
-    "magenta": "#d670d6",
-    "cyan": "#29b8db",
-    "white": "#e5e5e5",
-    "brightblack": "#808080",
-    "brightred": "#f78b8b",
-    "brightgreen": "#5af0aa",
-    "brightbrown": "#f5e08a",
-    "brightblue": "#6fb0ff",
-    "brightmagenta": "#e69be6",
-    "brightcyan": "#5fd4ec",
-    "brightwhite": "#ffffff",
-}
+    "black": "#1e1e1e", "red": "#f14c4c", "green": "#23d18b", "brown": "#e5c07b",
+    "blue": "#3b8eea", "magenta": "#d670d6", "cyan": "#29b8db", "white": "#e5e5e5",
+    "brightblack": "#808080", "brightred": "#f78b8b", "brightgreen": "#5af0aa", "brightbrown": "#f5e08a",
+    "brightblue": "#6fb0ff", "brightmagenta": "#e69be6", "brightcyan": "#5fd4ec", "brightwhite": "#ffffff",
+}  # fmt: skip
 DEFAULT_FG = "#d4d4d4"
 DEFAULT_BG = "#1e1e1e"
 FRAME_BG = "#2b2b2b"
@@ -260,15 +251,9 @@ def squeeze(rows: list[list[Cell]], keep: int) -> list[list[Cell]]:
 def neutral_env(home: str, lang: str, extra: dict[str, str]) -> dict[str, str]:
     """The environment of the program: nothing of this machine but the PATH to find it."""
     env = {
-        "PATH": os.environ.get("PATH", "/usr/bin:/bin"),
-        "HOME": home,
-        "TERM": "xterm-256color",
-        "LANG": lang,
-        "LC_ALL": lang,
-        "USER": "dev",
-        "LOGNAME": "dev",
-        "TZ": "UTC",  # times on a screen are the same on every machine
-    }
+        "PATH": os.environ.get("PATH", "/usr/bin:/bin"), "HOME": home, "TERM": "xterm-256color",
+        "LANG": lang, "LC_ALL": lang, "USER": "dev", "LOGNAME": "dev", "TZ": "UTC",
+    }  # fmt: skip
     env.update(extra)
     return env
 
@@ -316,9 +301,7 @@ def faint_screen(pyte):
     return FaintScreen
 
 
-# What FTXUI asks of a terminal that pyte does not know and would print as text: DECRQM (CSI ? n $ p) and the cursor
-# shape DECSCUSR (CSI n SP q)
-UNKNOWN_CSI = re.compile(rb"\x1b\[(?:\?[0-9;]*\$p|[0-9]* q)")
+# Sequences FTXUI emits that pyte does not understand are stripped by EscapeFilter (scripts/escape_filter.py).
 
 
 # Runs in the child after start_new_session: takes the pty on stdin as controlling terminal, then becomes the program.
@@ -341,6 +324,7 @@ class Session:
             master, data.encode()
         )  # answers to the program's queries
         self.stream = pyte.ByteStream(self.screen)
+        self.escape_filter = EscapeFilter()
         self.proc = subprocess.Popen(
             [sys.executable, "-c", CONTROLLING_TTY_EXEC, *argv],
             stdin=slave,
@@ -366,7 +350,7 @@ class Session:
                 return
             if not data:
                 return
-            self.stream.feed(UNKNOWN_CSI.sub(b"", data))
+            self.stream.feed(self.escape_filter.feed(data))
             last = time.monotonic()
 
     def pump(self, seconds: float) -> None:
@@ -381,7 +365,7 @@ class Session:
                     return
                 if not data:
                     return
-                self.stream.feed(UNKNOWN_CSI.sub(b"", data))
+                self.stream.feed(self.escape_filter.feed(data))
 
     def send(self, data: str) -> None:
         os.write(self.master, data.encode())
@@ -430,18 +414,8 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
     ap.add_argument("--lang", default="en_US.UTF-8", help="LANG of the program")
     ap.add_argument("--title", default="", help="title in the window bar")
     ap.add_argument("--cwd", default="", help="working directory (default: a fresh folder named projects/shop)")
-    ap.add_argument(
-        "--home-parent",
-        default="/var/tmp",
-        help="where the neutral home is made (a disk, not RAM: the free space on it is what a screen may show)",
-    )
-    ap.add_argument(
-        "--squeeze",
-        type=int,
-        default=-1,
-        metavar="N",
-        help="cut every run of blank rows to N rows (default: keep the screen as it is)",
-    )
+    ap.add_argument("--home-parent", default="/var/tmp", help="parent for the neutral home (disk, not RAM)")
+    ap.add_argument("--squeeze", type=int, default=-1, metavar="N", help="cut blank-row runs to N rows")
     ap.add_argument("--env", action="append", default=[], metavar="NAME=VALUE", help="environment variable to add")
     ap.add_argument("--show", action="store_true", help="also print the screen as plain text (to find the keys)")
     ap.add_argument("cmd", nargs=argparse.REMAINDER, help="-- PROGRAM [ARGS]")

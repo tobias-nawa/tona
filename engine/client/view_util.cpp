@@ -11,6 +11,45 @@ std::string paint_ok(const std::string& s) { return top::paint(top::kGreen, s); 
 std::string paint_warn(const std::string& s) { return top::paint(top::kYellow, s); }
 std::string paint_bad(const std::string& s) { return top::paint(top::kRed, s); }
 std::string paint_info(const std::string& s) { return top::paint(top::kCyan, s); }
+std::string paint_active(const std::string& s) { return top::paint(top::kActive, s); }
+
+namespace {
+
+// Removes CSI escape sequences so a selected row's blue background runs uninterrupted across all columns
+std::string strip_ansi(const std::string& s) {
+    std::string out;
+    out.reserve(s.size());
+    for (size_t i = 0; i < s.size(); i++) {
+        if (s[i] == '\x1b' && i + 1 < s.size() && s[i + 1] == '[') {
+            i += 2;
+            while (i < s.size() && (s[i] < '@' || s[i] > '~')) i++;
+            continue;
+        }
+        out += s[i];
+    }
+    return out;
+}
+
+std::string pad_plain(const std::string& s, int w) {
+    std::string out;
+    int n = 0;
+    for (size_t i = 0; i < s.size(); i++) {
+        if (((unsigned char)s[i] & 0xc0) != 0x80) {
+            if (n == w) break;
+            n++;
+        }
+        out += s[i];
+    }
+    return out + std::string(static_cast<size_t>(std::max(0, w - n)), ' ');
+}
+
+}  // namespace
+
+std::string paint_selected(const std::string& s, int w) {
+    return top::paint(top::kSelected, pad_plain(strip_ansi(s), w));
+}
+
+std::string rule_line(int w) { return " " + dim(top::repeat("─", std::max(0, w - 2))); }
 
 std::string hint_row(const KeyHints& hints) {
     std::string row = " ";
@@ -39,9 +78,9 @@ Lines wrap_lines(const std::string& text, int w) {
 Lines box_lines(const std::string& title, const Lines& body, int inner) {
     Lines out;
     const std::string t = " " + title + " ";
-    out.push_back("┌─" + bold(t) + top::repeat("─", std::max(0, inner - 1 - top::width(t))) + "┐");
-    for (const std::string& row : body) out.push_back("│ " + top::fit(row, inner - 2) + " │");
-    out.push_back("└" + top::repeat("─", inner) + "┘");
+    out.push_back(dim("┌─") + bold(t) + dim(top::repeat("─", std::max(0, inner - 1 - top::width(t))) + "┐"));
+    for (const std::string& row : body) out.push_back(dim("│") + " " + top::fit(row, inner - 2) + " " + dim("│"));
+    out.push_back(dim("└" + top::repeat("─", inner) + "┘"));
     return out;
 }
 

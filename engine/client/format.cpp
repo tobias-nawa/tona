@@ -30,7 +30,12 @@ std::string meter2(double a, double b, int w) {
     w = std::max(w, 1);
     const int fa = std::clamp((int)std::lround(std::clamp(a, 0.0, 1.0) * w), 0, w);
     const int fb = std::clamp((int)std::lround(std::clamp(b, 0.0, 1.0) * w), 0, w - fa);
-    return top::repeat("█", fa) + top::repeat("▒", fb) + top::repeat("░", w - fa - fb);
+    const int fc = w - fa - fb;
+    std::string out;
+    if (fa > 0) out += top::paint(top::kBlue, top::repeat("█", fa));
+    if (fb > 0) out += top::paint(top::kDim, top::repeat("▒", fb));
+    if (fc > 0) out += top::paint(top::kDim, top::repeat("░", fc));
+    return out;
 }
 
 std::string sparkline(const std::vector<double>& values, int w, double top_value) {
