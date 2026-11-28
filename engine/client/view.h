@@ -42,6 +42,9 @@ std::string paint_ok(const std::string& s);
 std::string paint_warn(const std::string& s);
 std::string paint_bad(const std::string& s);
 std::string paint_info(const std::string& s);
+std::string paint_active(const std::string& s);
+std::string paint_selected(const std::string& s, int w);
+std::string rule_line(int w);
 // `text` broken at spaces into lines of at most `w` columns (no escape sequences in `text`); at least one line
 Lines wrap_lines(const std::string& text, int w);
 // A box of the dialog kind around `body`, `inner` columns wide inside, as lines

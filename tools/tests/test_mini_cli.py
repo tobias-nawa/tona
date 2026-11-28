@@ -131,6 +131,17 @@ def test_compare_fails_when_the_tokens_change(fake_check, monkeypatch, capsys):
     assert "tokens differ (first at 1" in capsys.readouterr().out
 
 
+def test_compare_tokens_only_ignores_logit_rounding(fake_check, monkeypatch, capsys):
+    run_main(mini_token_check, monkeypatch, "record", *fake_check)
+    saved = json.loads(Path(mini_token_check.EXPECTED).read_text())
+    saved["models"]["coder"]["runs"][0]["logits_sha256"] = "0" * 64
+    Path(mini_token_check.EXPECTED).write_text(json.dumps(saved))
+    assert run_main(mini_token_check, monkeypatch, "compare", *fake_check) == 1
+    assert "different logits" in capsys.readouterr().out
+    assert run_main(mini_token_check, monkeypatch, "compare", "--tokens-only", *fake_check) == 0
+    assert "identical" in capsys.readouterr().out
+
+
 def test_failing_reference_stops_the_check(fake_check, monkeypatch):
     ref = Path(fake_check[1]) / "tona-ref"
     ref.write_text("#!/bin/sh\necho broken >&2\nexit 3\n")

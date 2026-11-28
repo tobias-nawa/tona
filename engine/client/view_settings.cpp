@@ -37,7 +37,8 @@ Lines right_pane(const UiState& s, const std::vector<const SettingSpec*>& rows) 
         const SettingSpec& spec = *rows[i];
         const bool focus = i == s.settings.row;
         const std::string label = cell(tr("set_" + spec.key), kLabelWidth);
-        out.push_back((focus ? bold(label) : label) + " " + value_text(s.config, spec));
+        const std::string row = label + " " + value_text(s.config, spec);
+        out.push_back(focus ? paint_selected(row, 57) : row);
         // the help of the row under the cursor only: the others are one line each
         if (focus)
             for (const std::string& l : wrap_lines(tr(spec.help), kHelpWidth)) out.push_back("   " + dim(l));
@@ -52,12 +53,15 @@ Lines view_settings(const UiState& s, int rows_available) {
     const std::vector<const SettingSpec*> rows = group_rows(s.settings.group);
     const Lines right = right_pane(s, rows);
     Lines out;
-    const int body = rows_available - 5;
+    const int body = rows_available - 4;
     for (int i = 0; i < body; i++) {
-        const std::string left = (size_t)i < groups.size()
-                                     ? std::string((size_t)i == s.settings.group ? " ▸ " : "   ") +
-                                           cell(tr(groups[(size_t)i]), kGroupWidth - 3)
-                                     : std::string(kGroupWidth, ' ');
+        std::string left(kGroupWidth, ' ');
+        if ((size_t)i < groups.size()) {
+            const bool active = (size_t)i == s.settings.group;
+            left = active ? " " + paint_selected("▸ " + cell(tr(groups[(size_t)i]), kGroupWidth - 4), kGroupWidth - 2) +
+                                " "
+                          : "   " + cell(tr(groups[(size_t)i]), kGroupWidth - 3);
+        }
         out.push_back(left + dim("│") + " " + ((size_t)i < right.size() ? right[(size_t)i] : ""));
     }
     out.emplace_back("");

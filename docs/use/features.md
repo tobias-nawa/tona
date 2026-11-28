@@ -99,7 +99,7 @@ Details in [how-it-works](../how-it-works.md#how-the-engine-computes).
 
 - "Optimize Tona for my hardware" starts an agent playbook ([optimize-for-your-hardware.md](../contribute/optimize-for-your-hardware.md)).
 - Code gates in every commit and in CI ([AGENTS.md](../../AGENTS.md#code-gates)); measurement tooling
-  ([measurement.md](../contribute/measurement.md), [testing.md](../contribute/testing.md)); unit tests without model and GPU (`just test-cpu`),
+  ([measurement.md](../contribute/measurement.md), [testing.md](../contribute/testing.md)); unit tests without model and GPU (`just test`),
   sanitizers, coverage floor and fuzzers.
 - Backend blueprint and one page per candidate platform ([blueprint.md](../backends/blueprint.md), [backends/](../backends/)).
 - macOS: the shared part builds and its tests pass; the Metal backend is in development and off by default (`partial`,

@@ -49,23 +49,24 @@ Element Wizard::crumbs() {
     Elements parts;
     for (Page p : page_order(st_.selection)) {
         if (!parts.empty()) parts.push_back(ui::dim(" › "));
-        parts.push_back(p == page_ ? ui::title(page_name(p)) | inverted : ui::dim(page_name(p)));
+        parts.push_back(p == page_ ? ui::pill(page_name(p)) : ui::dim(page_name(p)));
     }
     return hbox(parts);
 }
 
-Element Wizard::frame(const Element& content, const std::string& keys) {
+Element Wizard::frame(const Element& content, Element keys) {
     // while the steps run and after them the pages are behind us: no step count of the pages, no crumbs
     if (installing_ && page_ == Page::Go && view_ == View::Pages) {
         const auto [head, tail] = run_header();
-        return vbox({ui::spread(head, tail), separator(), content | size(HEIGHT, EQUAL, ui::kBody + 1), separator(),
-                     ui::dim(keys)});
+        Element top = finishing_now() ? ui::spread_good(head, tail) : ui::spread(head, tail);
+        return vbox(
+            {std::move(top), ui::rule(), content | size(HEIGHT, EQUAL, ui::kBody + 1), ui::rule(), std::move(keys)});
     }
     const std::vector<Page> order = page_order(st_.selection);
     const auto at = std::find(order.begin(), order.end(), page_);
     const std::string step = std::format("{}/{}", at - order.begin() + 1, order.size());
-    return vbox({ui::spread("Set up Tona", "tona setup  " + step), crumbs(), separator(),
-                 content | size(HEIGHT, EQUAL, ui::kBody), separator(), ui::dim(keys)});
+    return vbox({ui::spread("Set up Tona", "tona setup  " + step), crumbs(), ui::rule(),
+                 content | size(HEIGHT, EQUAL, ui::kBody), ui::rule(), std::move(keys)});
 }
 
 Element Wizard::too_small(int w, int h) {
@@ -110,7 +111,7 @@ Element Wizard::body() {
 
 namespace {
 
-// The key line of every page and state: one text per line
+// The key hints of every page and state: bold key plus dimmed description
 enum KeyLine {
     kHelp,
     kDetails,
@@ -128,25 +129,27 @@ enum KeyLine {
     kGoDone,
     kFinish
 };
-constexpr struct {
-    const char* en;
-} kKeyTexts[] = {
-    {"Esc back"},
-    {"Esc back  ? help"},
-    {"↑↓ row  ←→ choice  type a number  Esc back  ? help"},
-    {"↑↓ choose  Enter go on  b report  ? help  q quit"},
-    {"↑↓ choose  Enter take  p check again  Esc back  ? help"},
-    {"↑↓ choose  Enter run  l log  ? help"},
-    {"Enter next  ? help  q quit"},
-    {"↑↓ choose  Space on/off  Enter next  Esc back  ? help"},
-    {"←↑↓→ choose  Space on/off  Enter next  Esc back  ? help"},
-    {"↑↓ choose  Space on/off  i details  Enter next  Esc back  ? help"},
-    {"↑↓ row  ←→ choice  e more  Enter next  Esc back  ? help"},
-    {"Enter start  e more  Esc back  ? help"},
-    {"l log  Ctrl+C ends after the step; a download resumes where it left off"},
-    {"Enter finish  l log"},
-    {"↑↓ choose  Space on/off  Enter apply"},
-};
+
+const std::vector<ui::KeyHint>& hints_for(int k) {
+    static const std::vector<ui::KeyHint> kTable[] = {
+        {{"Esc", "back"}},
+        {{"Esc", "back"}, {"?", "help"}},
+        {{"↑↓", "row"}, {"←→", "choice"}, {"", "type a number"}, {"Esc", "back"}, {"?", "help"}},
+        {{"↑↓", "choose"}, {"Enter", "go on"}, {"b", "report"}, {"?", "help"}, {"q", "quit"}},
+        {{"↑↓", "choose"}, {"Enter", "take"}, {"p", "check again"}, {"Esc", "back"}, {"?", "help"}},
+        {{"↑↓", "choose"}, {"Enter", "run"}, {"l", "log"}, {"?", "help"}},
+        {{"Enter", "next"}, {"?", "help"}, {"q", "quit"}},
+        {{"↑↓", "choose"}, {"Space", "on/off"}, {"Enter", "next"}, {"Esc", "back"}, {"?", "help"}},
+        {{"←↑↓→", "choose"}, {"Space", "on/off"}, {"Enter", "next"}, {"Esc", "back"}, {"?", "help"}},
+        {{"↑↓", "choose"}, {"Space", "on/off"}, {"i", "details"}, {"Enter", "next"}, {"Esc", "back"}, {"?", "help"}},
+        {{"↑↓", "row"}, {"←→", "choice"}, {"e", "more"}, {"Enter", "next"}, {"Esc", "back"}, {"?", "help"}},
+        {{"Enter", "start"}, {"e", "more"}, {"Esc", "back"}, {"?", "help"}},
+        {{"l", "log"}, {"Ctrl+C", "ends after the step; a download resumes where it left off"}},
+        {{"Enter", "finish"}, {"l", "log"}},
+        {{"↑↓", "choose"}, {"Space", "on/off"}, {"Enter", "apply"}},
+    };
+    return kTable[k];
+}
 
 }  // namespace
 
@@ -168,7 +171,7 @@ int Wizard::page_keys() const {
     return !installing_ ? kGoReady : finishing_now() ? kFinish : finished_ ? kGoDone : kGoRunning;
 }
 
-std::string Wizard::keys_line() {
+Element Wizard::keys_element() {
     int k = kMachine;
     switch (view_) {
         case View::Help:
@@ -193,7 +196,7 @@ std::string Wizard::keys_line() {
             k = page_keys();
             break;
     }
-    return kKeyTexts[k].en;
+    return ui::key_hints(hints_for(k));
 }
 
 // The installation thread cannot touch the view; the screen follows its flag here
@@ -205,7 +208,7 @@ Element Wizard::render() {
     sync_view();
     const Dimensions d = Terminal::Size();
     if (d.dimx < ui::kWidth || d.dimy < ui::kHeight) return too_small(d.dimx, d.dimy);
-    return frame(body(), keys_line());
+    return frame(body(), keys_element());
 }
 
 std::vector<int> Wizard::task_rows() const {

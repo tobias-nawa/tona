@@ -55,7 +55,7 @@ int run_screenless(const std::vector<std::string>& args, const Env& env) {
 }
 
 // The control centre. `tona` and `tona top` start the server when none answers; the bare options (--url, --tab) as the
-// screenshots and `just top` give them do so only with --start.
+// screenshots and `just tona` give them do so only with --start.
 int run_center(const std::vector<std::string>& args, const Env& env, bool autostart) {
     CenterOptions opts;
     opts.url = env.url();

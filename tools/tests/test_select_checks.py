@@ -400,9 +400,9 @@ def test_a_failing_git_call_stops_the_tool_so_that_callers_check_everything(repo
 
 
 def test_the_unit_test_line_names_what_to_run():
-    assert sc.unit_text({"unit_all": True}) == "all (just test-cpu)"
+    assert sc.unit_text({"unit_all": True}) == "all (just test)"
     data = {"unit_all": False, "unit_tests": ["a", "b"], "python_tests": True, "installer_tests": True}
-    assert sc.unit_text(data) == "ctest -R '^(a|b)$'; just test-py; installer build and ctest"
+    assert sc.unit_text(data) == "ctest -R '^(a|b)$'; just test; installer build and ctest"
     assert (
         sc.unit_text({"unit_all": False, "unit_tests": [], "python_tests": False, "installer_tests": False}) == "none"
     )

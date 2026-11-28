@@ -14,13 +14,24 @@ std::string radio(bool on, const std::string& label) { return std::string(on ? "
 
 std::string field_row(const UiState& s, int field, const char* label, const std::string& value) {
     const bool focus = s.agents.field == field;
-    return std::string(focus ? " ▸ " : "   ") + (focus ? bold(cell(tr(label), 12)) : cell(tr(label), 12)) + " " + value;
+    if (focus) return " " + paint_selected("▸ " + cell(tr(label), 12) + " " + value, 78);
+    return "   " + cell(tr(label), 12) + " " + value;
 }
 
 Lines project_rows(const UiState& s) {
     const bool focus = s.agents.field == AgentForm::Project;
     const std::string text = s.agents.project.empty() ? dim(tr("agents_project_hint")) : s.agents.project;
-    Lines out{field_row(s, AgentForm::Project, "agents_project", text + (focus ? top::paint(top::kInverse, " ") : ""))};
+    std::string line;
+    if (focus) {
+        const std::string head = "▸ " + cell(tr("agents_project"), 12) + " " +
+                                 (s.agents.project.empty() ? tr("agents_project_hint") : s.agents.project);
+        const int used = top::width(head);
+        line = " " + paint_selected(head, used) + top::paint(top::kInverse, " ") +
+               (used + 1 < 78 ? paint_selected("", 78 - used - 1) : "");
+    } else {
+        line = field_row(s, AgentForm::Project, "agents_project", text);
+    }
+    Lines out{std::move(line)};
     const std::string langs = languages_text(s.languages);
     out.push_back("                " +
                   dim(langs.empty() ? tr("agents_no_languages") : tr("agents_detected") + " " + langs));

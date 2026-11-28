@@ -36,6 +36,8 @@ inline constexpr const char* kYellow = "\x1b[33m";
 inline constexpr const char* kBlue = "\x1b[34m";
 inline constexpr const char* kMagenta = "\x1b[35m";
 inline constexpr const char* kCyan = "\x1b[36m";
+inline constexpr const char* kActive = "\x1b[1;97;44m";  // bold bright white on blue: active tab
+inline constexpr const char* kSelected = "\x1b[97;44m";  // bright white on blue: selected row
 
 std::string paint(const char* color, const std::string& text);
 // Visible width: escape sequences count zero, every UTF-8 character one column (all used here are narrow)

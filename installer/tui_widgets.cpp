@@ -28,6 +28,35 @@ Element good(const std::string& s) { return styled(s, Color::Green); }
 Element warn(const std::string& s) { return styled(s, Color::Yellow); }
 Element bad(const std::string& s) { return styled(s, Color::Red); }
 Element blank() { return text(""); }
+Element rule() { return use_color() ? separator() | ftxui::dim : separator(); }
+
+Element pill(const std::string& s) {
+    const std::string padded = " " + s + " ";
+    return use_color() ? text(padded) | bold | color(Color::White) | bgcolor(Color::Blue)
+                       : text(padded) | bold | inverted;
+}
+
+Element highlight(Element e, bool on) {
+    if (!on || !use_color()) return e;
+    return hbox({std::move(e), filler()}) | color(Color::White) | bgcolor(Color::Blue);
+}
+
+Element highlight_cell(const std::string& s, bool on) {
+    if (!on || !use_color()) return plain(s);
+    return text(s) | color(Color::White) | bgcolor(Color::Blue);
+}
+
+Element key_hints(const std::vector<KeyHint>& hints) {
+    Elements parts;
+    for (size_t i = 0; i < hints.size(); i++) {
+        if (i > 0) parts.push_back(plain("  "));
+        const auto& [key, label] = hints[i];
+        if (!key.empty()) parts.push_back(title(key));
+        if (!key.empty() && !label.empty()) parts.push_back(plain(" "));
+        if (!label.empty()) parts.push_back(dim(label));
+    }
+    return hbox(std::move(parts));
+}
 std::vector<std::string> wrap_lines(const std::string& s, int width) {
     std::vector<std::string> out;
     std::string line;
@@ -66,6 +95,10 @@ Element spread(const std::string& left, const std::string& right, int width) {
     return hbox({title(pad(left, width - string_width(right))), dim(right)});
 }
 
+Element spread_good(const std::string& left, const std::string& right, int width) {
+    return hbox({title(pad(left, width - string_width(right))), good(right)});
+}
+
 std::string fit(const std::string& s, int width) {
     if (string_width(s) <= width) return s;
     std::string out;
@@ -100,6 +133,31 @@ std::string bar(const std::vector<double>& parts, int width) {
     }
     return out;
 }
+
+Element bar_el(const std::vector<double>& parts, int width) {
+    static const char* const glyph[] = {"█", "▒", "░"};
+    double total = 0;
+    for (double p : parts) total += p;
+    Elements segs;
+    int used = 0;
+    for (size_t i = 0; i < parts.size() && total > 0; i++) {
+        const int n = i + 1 == parts.size() ? width - used : static_cast<int>(std::lround(parts[i] / total * width));
+        std::string seg;
+        for (int k = 0; k < n && used < width; k++, used++) seg += glyph[std::min<size_t>(i, 2)];
+        if (!seg.empty()) segs.push_back(i == 0 ? styled(seg, Color::Blue) : dim(seg));
+    }
+    return hbox(std::move(segs));
+}
+
+Element progress_bar(int pct, int width) {
+    const int fill = std::clamp(static_cast<int>(std::lround(pct / 100.0 * width)), 0, width);
+    std::string done, rest;
+    for (int i = 0; i < fill; i++) done += "█";
+    for (int i = fill; i < width; i++) rest += "░";
+    return hbox({styled(done, Color::Blue), dim(rest)});
+}
+
+Element swatch(const std::string& glyph, bool accent) { return accent ? styled(glyph, Color::Blue) : dim(glyph); }
 
 bool is_back(const Event& e) { return e == Event::Escape || e == Event::Backspace; }
 bool is_space(const Event& e) { return e == Event::Character(' '); }

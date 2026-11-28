@@ -19,6 +19,9 @@ install_bin="${TONA_INSTALL_BIN:-work/build/engine/tona}"
 client_bin="${TONA_CLIENT_BIN:-work/build/engine/tona}"
 out="${TONA_SHOT_OUT:-docs/images}"
 shot=("$py" scripts/screenshot-tui.py --size 80x24 --squeeze 1)
+if [ -n "${TONA_SHOT_HOME_PARENT:-}" ]; then
+    shot+=(--home-parent "$TONA_SHOT_HOME_PARENT")
+fi
 
 if [ ! -x "$py" ]; then
     python3 -m venv work/venv-screenshot

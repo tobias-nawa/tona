@@ -161,6 +161,17 @@ def test_capture_in_a_pseudo_terminal(tmp_path):
     assert str(tmp_path) not in svg
 
 
+def test_escape_filter_strips_dcs_and_unknown_csi_across_chunks():
+    # FTXUI sends DECRQSS (ESC P $ q SP q ESC \) and DECRQM / DECSCUSR on start; none may leak as literal text
+    payload = b"\x1bP$q q\x1b\\\x1b[?2026$p\x1b[2 q\x1b[1;32mSet up Tona\x1b[0m\x1b[>0q\x1b_apc\x1b\\!"
+    f = S.EscapeFilter()
+    assert f.feed(payload) == b"\x1b[1;32mSet up Tona\x1b[0m!"
+    # Feeding byte-by-byte across every possible split boundary yields the exact same output
+    f2 = S.EscapeFilter()
+    rebuilt = b"".join(f2.feed(bytes([b])) for b in payload)
+    assert rebuilt == b"\x1b[1;32mSet up Tona\x1b[0m!"
+
+
 def test_capture_is_refused_when_the_screen_shows_the_home(tmp_path):
     pytest.importorskip("pyte")
     out = tmp_path / "p.svg"

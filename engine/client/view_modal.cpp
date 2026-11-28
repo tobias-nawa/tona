@@ -121,7 +121,7 @@ Lines dialog_close(const UiState& s) {
         static const char* text[] = {"close_keep", "close_stop", "close_cancel"};
         static const char* key[] = {"Enter", "s", "Esc"};
         const std::string line = std::string(on ? "▸ " : "  ") + cell(tr(text[options[i]]), 52) + key[options[i]];
-        body.push_back(on ? bold(line) : line);
+        body.push_back(on ? paint_selected(line, kDialogInner + 4) : line);
         if (options[i] == 1 && n > 0) body.push_back("    " + paint_warn(fill(tr("close_cut"), fnum(n))));
     }
     body.emplace_back("");

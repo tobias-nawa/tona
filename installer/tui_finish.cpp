@@ -48,11 +48,13 @@ void Wizard::build_finish() {
 Element Wizard::finish_body() {
     Elements l = {ui::title("Last two things"), ui::blank()};
     for (size_t i = 0; i < finish_.size(); i++) {
+        if (i > 0) l.push_back(ui::blank());
+        const bool here = static_cast<int>(i) == cursor_;
         const std::vector<std::string> lines = ui::wrap_lines(finish_[i].label, 68);
         for (size_t k = 0; k < lines.size(); k++)
-            l.push_back(
-                ui::plain(k == 0 ? ui::cursor(static_cast<int>(i) == cursor_) + ui::box(finish_[i].on) + " " + lines[k]
-                                 : "      " + lines[k]));
+            l.push_back(ui::highlight(
+                ui::plain(k == 0 ? ui::cursor(here) + ui::box(finish_[i].on) + " " + lines[k] : "      " + lines[k]),
+                here && k == 0));
         l.push_back(ui::dim("      " + finish_[i].note));
     }
     if (!finish_errors_.empty()) l.push_back(ui::blank());

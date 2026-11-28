@@ -54,9 +54,11 @@ std::string model_row_text(const UiState& s, const ModelRow& r, bool cursor) {
     const bool usual = c.coming || c.speed_basis == Basis::Measured;
     const std::string basis = usual ? std::string() : basis_word(c.speed_basis);
     const std::string size = c.size_gb > 0 ? fnum(c.size_gb) + " GB" : "";
-    std::string row = std::string(cursor ? " ▸ " : "   ") + cell(c.name, 22) + " " + cell(row_note(s, r), 32) + " " +
-                      top::right(size, 7) + "  " + basis;
-    return cursor ? bold(row) : row;
+    const std::string note = row_note(s, r);
+    const std::string row = std::string(cursor ? "▸ " : "  ") + cell(c.name, 22) + " " +
+                            (cursor || !r.loaded ? cell(note, 32) : paint_ok(cell(note, 32))) + " " +
+                            top::right(size, 7) + "  " + basis;
+    return " " + (cursor ? paint_selected(row, 78) : row);
 }
 
 // All rows of the list with their section headers; `cursor_line` receives the line of the cursor row
@@ -149,8 +151,9 @@ std::string action_line(const UiState& s, const ModelRow* row) {
 Lines view_models(const UiState& s, int rows_available) {
     const std::vector<ModelRow> rows = model_rows(s);
     const ModelRow* row = selected_model(s, rows);
+    const std::string action = action_line(s, row);
     Lines out{filter_line(s)};
-    const int room = rows_available - 1 - kCardRows - 2;  // filter line, card, rule and action line
+    const int room = rows_available - 1 - kCardRows - 1 - (action.empty() ? 0 : 1);
     int cursor_line = 0;
     Lines list = list_lines(s, rows, cursor_line);
     // Keep the cursor row in view when the list is longer than its room
@@ -159,8 +162,10 @@ Lines view_models(const UiState& s, int rows_available) {
     while ((int)out.size() < 1 + room) out.emplace_back("");
     out.push_back(" " + dim(top::repeat("─", 78)));
     for (std::string& l : card_lines(s, row)) out.push_back(std::move(l));
-    out.resize((size_t)(rows_available - 1));
-    out.push_back(action_line(s, row));
+    if (!action.empty()) {
+        out.resize((size_t)(rows_available - 1));
+        out.push_back(action);
+    }
     return out;
 }
 

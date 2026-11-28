@@ -40,14 +40,14 @@ Change type: <!-- exactly one word: bugfix | technique | backend | refactor | no
 
 ## Checks
 
-- [ ] `just check` is green (gates: file/function size, format, lint, scripts, secrets)
-- [ ] `just test` is green on the platform above (or `just test-cpu` and `just test-py` when you have no GPU; say which
+- [ ] `just lint` is green (gates: file/function size, format, lint, scripts, secrets)
+- [ ] `just test` and `just test-gpu` are green on the platform above (`just test` alone when you have no GPU; say which
       checks only the maintainer can run: `python3 tools/select_checks.py`)
 - [ ] a bug fix has a test that fails without it; no test, gate or golden reference was weakened
 - [ ] no new dependency, or it has an accepted issue, a pin and a row in docs/contribute/licenses.md
 
 ```text
-<last lines of `just check` and `just test`>
+<last lines of `just lint` and `just test`>
 ```
 
 ## Correctness
