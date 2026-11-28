@@ -42,23 +42,11 @@ from xml.sax.saxutils import escape
 # One theme, dark: the 16 ANSI colours of the terminals people use (close to VS Code's dark theme), so the picture
 # looks like the program does in a terminal.
 PALETTE = {
-    "black": "#1e1e1e",
-    "red": "#f14c4c",
-    "green": "#23d18b",
-    "brown": "#e5c07b",
-    "blue": "#3b8eea",
-    "magenta": "#d670d6",
-    "cyan": "#29b8db",
-    "white": "#e5e5e5",
-    "brightblack": "#808080",
-    "brightred": "#f78b8b",
-    "brightgreen": "#5af0aa",
-    "brightbrown": "#f5e08a",
-    "brightblue": "#6fb0ff",
-    "brightmagenta": "#e69be6",
-    "brightcyan": "#5fd4ec",
-    "brightwhite": "#ffffff",
-}
+    "black": "#1e1e1e", "red": "#f14c4c", "green": "#23d18b", "brown": "#e5c07b",
+    "blue": "#3b8eea", "magenta": "#d670d6", "cyan": "#29b8db", "white": "#e5e5e5",
+    "brightblack": "#808080", "brightred": "#f78b8b", "brightgreen": "#5af0aa", "brightbrown": "#f5e08a",
+    "brightblue": "#6fb0ff", "brightmagenta": "#e69be6", "brightcyan": "#5fd4ec", "brightwhite": "#ffffff",
+}  # fmt: skip
 DEFAULT_FG = "#d4d4d4"
 DEFAULT_BG = "#1e1e1e"
 FRAME_BG = "#2b2b2b"
@@ -260,15 +248,9 @@ def squeeze(rows: list[list[Cell]], keep: int) -> list[list[Cell]]:
 def neutral_env(home: str, lang: str, extra: dict[str, str]) -> dict[str, str]:
     """The environment of the program: nothing of this machine but the PATH to find it."""
     env = {
-        "PATH": os.environ.get("PATH", "/usr/bin:/bin"),
-        "HOME": home,
-        "TERM": "xterm-256color",
-        "LANG": lang,
-        "LC_ALL": lang,
-        "USER": "dev",
-        "LOGNAME": "dev",
-        "TZ": "UTC",  # times on a screen are the same on every machine
-    }
+        "PATH": os.environ.get("PATH", "/usr/bin:/bin"), "HOME": home, "TERM": "xterm-256color",
+        "LANG": lang, "LC_ALL": lang, "USER": "dev", "LOGNAME": "dev", "TZ": "UTC",
+    }  # fmt: skip
     env.update(extra)
     return env
 
@@ -316,9 +298,56 @@ def faint_screen(pyte):
     return FaintScreen
 
 
-# What FTXUI asks of a terminal that pyte does not know and would print as text: DECRQM (CSI ? n $ p) and the cursor
-# shape DECSCUSR (CSI n SP q)
-UNKNOWN_CSI = re.compile(rb"\x1b\[(?:\?[0-9;]*\$p|[0-9]* q)")
+# Sequences FTXUI emits that pyte does not understand and would print as literal text:
+# - DCS/APC/PM/SOS strings (ESC P/ _/ ^/ X ... ESC \), e.g. DECRQSS (ESC P $ q SP q ESC \)
+# - DECRQM (CSI ? n $ p), DECSCUSR (CSI n SP q), Kitty keyboard / XTVERSION queries (CSI [><=] ... [uq])
+UNKNOWN_CSI = re.compile(rb"\x1b\[(?:\?[0-9;]*\$p|[0-9]* q|[><=][0-9;]*[uq])")
+STRING_INTRO = frozenset(b"P_^X")
+
+
+class EscapeFilter:
+    """Strips DCS/APC/PM/SOS strings and unknown CSI queries across read chunk boundaries."""
+
+    def __init__(self) -> None:
+        self._buf = bytearray()
+
+    def feed(self, chunk: bytes) -> bytes:
+        self._buf.extend(chunk)
+        out, buf = bytearray(), self._buf
+        i, n = 0, len(buf)
+        while i < n:
+            esc = buf.find(0x1B, i)
+            if esc < 0:
+                out.extend(buf[i:])
+                i = n
+                break
+            out.extend(buf[i:esc])
+            if esc + 1 == n:
+                i = esc
+                break
+            nxt = buf[esc + 1]
+            if nxt in STRING_INTRO:
+                st = buf.find(b"\x1b\\", esc + 2)
+                if st < 0:
+                    i = esc
+                    break
+                i = st + 2
+            elif nxt == ord("["):
+                j = esc + 2
+                while j < n and not (0x40 <= buf[j] <= 0x7E):
+                    j += 1
+                if j == n:
+                    i = esc
+                    break
+                seq = bytes(buf[esc : j + 1])
+                if not UNKNOWN_CSI.fullmatch(seq):
+                    out.extend(seq)
+                i = j + 1
+            else:
+                out.extend(buf[esc : esc + 2])
+                i = esc + 2
+        del buf[:i]
+        return bytes(out)
 
 
 # Runs in the child after start_new_session: takes the pty on stdin as controlling terminal, then becomes the program.
@@ -337,62 +366,51 @@ class Session:
         fcntl.ioctl(slave, termios.TIOCSWINSZ, struct.pack("HHHH", size[1], size[0], 0, 0))
         self.screen = faint_screen(pyte)(*size)
         master = self.master
-        self.screen.write_process_input = lambda data: os.write(
-            master, data.encode()
-        )  # answers to the program's queries
+        self.screen.write_process_input = lambda data: os.write(master, data.encode())
         self.stream = pyte.ByteStream(self.screen)
+        self.escape_filter = EscapeFilter()
         self.proc = subprocess.Popen(
             [sys.executable, "-c", CONTROLLING_TTY_EXEC, *argv],
-            stdin=slave,
-            stdout=slave,
-            stderr=slave,
-            env=env,
-            cwd=cwd,
-            start_new_session=True,
-        )
+            stdin=slave, stdout=slave, stderr=slave, env=env, cwd=cwd, start_new_session=True,
+        )  # fmt: skip
         os.close(slave)
+
+    def _read_once(self, timeout: float) -> bool | None:
+        ready, _, _ = select.select([self.master], [], [], timeout)
+        if not ready:
+            return False
+        try:
+            data = os.read(self.master, 65536)
+        except OSError:
+            return None
+        if not data:
+            return None
+        self.stream.feed(self.escape_filter.feed(data))
+        return True
 
     def drain(self, quiet: float, limit: float = 10.0) -> None:
         """Reads until the output has been quiet for `quiet` seconds (at most `limit`)."""
-        end = time.monotonic() + limit
-        last = time.monotonic()
+        end, last = time.monotonic() + limit, time.monotonic()
         while time.monotonic() < end and time.monotonic() - last < quiet:
-            ready, _, _ = select.select([self.master], [], [], 0.05)
-            if not ready:
-                continue
-            try:
-                data = os.read(self.master, 65536)
-            except OSError:
+            got = self._read_once(0.05)
+            if got is None:
                 return
-            if not data:
-                return
-            self.stream.feed(UNKNOWN_CSI.sub(b"", data))
-            last = time.monotonic()
+            if got:
+                last = time.monotonic()
 
     def pump(self, seconds: float) -> None:
         """Reads for exactly `seconds`, whatever the program draws meanwhile (a pause between two keys)."""
         end = time.monotonic() + seconds
         while (left := end - time.monotonic()) > 0:
-            ready, _, _ = select.select([self.master], [], [], min(left, 0.05))
-            if ready:
-                try:
-                    data = os.read(self.master, 65536)
-                except OSError:
-                    return
-                if not data:
-                    return
-                self.stream.feed(UNKNOWN_CSI.sub(b"", data))
+            if self._read_once(min(left, 0.05)) is None:
+                return
 
     def send(self, data: str) -> None:
         os.write(self.master, data.encode())
 
     def cells(self) -> list[list[Cell]]:
         scr = self.screen
-        rows = []
-        for y in range(scr.lines):
-            line = scr.buffer[y]
-            rows.append([to_cell(line[x]) for x in range(scr.columns)])
-        return rows
+        return [[to_cell(scr.buffer[y][x]) for x in range(scr.columns)] for y in range(scr.lines)]
 
     def close(self) -> None:
         if self.proc.poll() is None:
@@ -430,18 +448,8 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
     ap.add_argument("--lang", default="en_US.UTF-8", help="LANG of the program")
     ap.add_argument("--title", default="", help="title in the window bar")
     ap.add_argument("--cwd", default="", help="working directory (default: a fresh folder named projects/shop)")
-    ap.add_argument(
-        "--home-parent",
-        default="/var/tmp",
-        help="where the neutral home is made (a disk, not RAM: the free space on it is what a screen may show)",
-    )
-    ap.add_argument(
-        "--squeeze",
-        type=int,
-        default=-1,
-        metavar="N",
-        help="cut every run of blank rows to N rows (default: keep the screen as it is)",
-    )
+    ap.add_argument("--home-parent", default="/var/tmp", help="parent for the neutral home (disk, not RAM)")
+    ap.add_argument("--squeeze", type=int, default=-1, metavar="N", help="cut blank-row runs to N rows")
     ap.add_argument("--env", action="append", default=[], metavar="NAME=VALUE", help="environment variable to add")
     ap.add_argument("--show", action="store_true", help="also print the screen as plain text (to find the keys)")
     ap.add_argument("cmd", nargs=argparse.REMAINDER, help="-- PROGRAM [ARGS]")

@@ -17,6 +17,12 @@ const char* priority_word(Priority p) {
 
 }  // namespace
 
+Element plan_line(const std::string& prefix, const std::string& text) {
+    const size_t at = text.find("(already here)");
+    if (at == std::string::npos) return hbox({ui::dim(prefix), ui::plain(text)});
+    return hbox({ui::dim(prefix), ui::plain(text.substr(0, at)), ui::good(text.substr(at))});
+}
+
 // The numbered steps of the plan; a step without text (the drafter, part of its model) has no row
 Elements Wizard::plan_rows() const {
     Elements l;
@@ -28,7 +34,7 @@ Elements Wizard::plan_rows() const {
         number++;
         const std::vector<std::string> lines = ui::wrap_lines(text, 72);
         for (size_t k = 0; k < lines.size(); k++)
-            l.push_back(ui::plain((k == 0 ? std::format("{:>2}. ", number) : "    ") + lines[k]));
+            l.push_back(plan_line(k == 0 ? std::format("{:>2}. ", number) : "    ", lines[k]));
     }
     return l;
 }
@@ -43,19 +49,20 @@ Element Wizard::go_body() {
     const bool gap = l.size() + 6 <= static_cast<size_t>(ui::kBody);
     if (gap) l.push_back(ui::blank());
     l.push_back(ui::title("What you get"));
-    l.push_back(ui::plain(std::format("{}  {} {} · {} · {}", ui::pad("Server", 10), "port", s().port,
-                                      s().network ? other_machines(mac) + " with a key" : this_machine(mac) + " only",
-                                      s().service ? "starts at login" : "not at login")));
-    l.push_back(ui::plain(std::format("{}  {} · Tona {:g} GB, {} {:g} GB", ui::pad("Memory", 10),
-                                      priority_word(priority_), s().ram_gb, "video up to", s().vram_gb)));
-    l.push_back(ui::plain(
-        std::format("{}  {} · {}", ui::pad("Agents", 10), s().seqs,
-                    s().ctx_auto ? std::string("context auto") : std::format("context {}K", s().ctx / 1024))));
-    const uint64_t load = load_split(s(), models_dir_of(target_)).download;
+    const auto kv = [](const char* k, const std::string& v) { return hbox({ui::dim(ui::pad(k, 12)), ui::plain(v)}); };
     l.push_back(
-        ui::plain(ui::pad("Download", 10) + "  " +
-                  (load == 0 ? std::string("nothing, all models are here")
-                             : size_text(static_cast<double>(load)) + " · " + duration_text(seconds_to_load(load)))));
+        kv("Server", std::format("port {} · {} · {}", s().port,
+                                 s().network ? other_machines(mac) + " with a key" : this_machine(mac) + " only",
+                                 s().service ? "starts at login" : "not at login")));
+    l.push_back(kv("Memory", std::format("{} · Tona {:g} GB, video up to {:g} GB", priority_word(priority_), s().ram_gb,
+                                         s().vram_gb)));
+    l.push_back(kv("Agents", std::format("{} · {}", s().seqs,
+                                         s().ctx_auto ? std::string("context auto")
+                                                      : std::format("context {}K", s().ctx / 1024))));
+    const uint64_t load = load_split(s(), models_dir_of(target_)).download;
+    l.push_back(kv("Download",
+                   load == 0 ? std::string("nothing, all models are here")
+                             : size_text(static_cast<double>(load)) + " · " + duration_text(seconds_to_load(load))));
     if (!message_.empty()) l.push_back(ui::warn(message_));
     return vbox(l);
 }
@@ -97,8 +104,8 @@ Element Wizard::no_gpu_body() {
         l.push_back(std::move(w));
     for (Element& r : Elements{ui::blank(), ui::blank(), ui::title("What you can do now"),
                                ui::dim(ui::cursor(false) + "Set up with the processor only: not in the installer yet"),
-                               ui::plain(ui::cursor(true) + "Quit, nothing is installed"), ui::blank(),
-                               ui::dim("Tona changed nothing. Report for developers: key b")})
+                               ui::highlight(ui::plain(ui::cursor(true) + "Quit, nothing is installed"), true),
+                               ui::blank(), ui::dim("Tona changed nothing. Report for developers: key b")})
         l.push_back(std::move(r));
     if (report_)
         for (Element& w : ui::wrap(hardware_text(st_.h, nullptr))) l.push_back(std::move(w));
@@ -122,7 +129,8 @@ Element Wizard::no_space_body() {
                   ui::blank(),
                   ui::title("What you can do")};
     for (size_t i = 0; i < space_opts_.size(); i++) {
-        l.push_back(ui::plain(ui::cursor(static_cast<int>(i) == cursor_) + ui::fit(space_opts_[i].label, 76)));
+        const bool here = static_cast<int>(i) == cursor_;
+        l.push_back(ui::highlight(ui::plain(ui::cursor(here) + ui::fit(space_opts_[i].label, 76)), here));
         if (!space_opts_[i].note.empty()) l.push_back(ui::dim("    " + space_opts_[i].note));
     }
     if (space_opts_.empty()) l.push_back(ui::warn("None of it fits. Free some space, then p."));
@@ -186,7 +194,7 @@ Element Wizard::failed_body() {
                   ui::blank(),
                   ui::title("What you can do")};
     const char* const en[] = {"Resume", "Quit; the next tona setup goes on"};
-    for (int i = 0; i < 2; i++) l.push_back(ui::plain(ui::cursor(i == cursor_) + en[i]));
+    for (int i = 0; i < 2; i++) l.push_back(ui::highlight(ui::plain(ui::cursor(i == cursor_) + en[i]), i == cursor_));
     l.push_back(ui::dim("Same from a shell: tona setup --models <name> --yes"));
     return vbox(l);
 }

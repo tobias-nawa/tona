@@ -10,7 +10,7 @@ namespace tona::install {
 std::string Wizard::dump_all() {
     std::string out;
     const auto shot = [&](const std::string& name) {
-        out += "=== " + name + "\n" + ui::render_text(frame(body(), keys_line())) + "\n";
+        out += "=== " + name + "\n" + ui::render_text(frame(body(), keys_element())) + "\n";
     };
     for (Page p : {Page::Machine, Page::Tasks}) enter_page(p), shot(page_name(p));
     for (const char* l : {"python", "typescript", "rust"}) toggle_language(st_.selection, l);

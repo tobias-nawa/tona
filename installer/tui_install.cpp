@@ -141,8 +141,8 @@ Elements Wizard::step_detail(StepState st) {
     if (st == StepState::Running && has_progress_) {
         const int pct = percent_of(progress_);
         const char* what = progress_.phase == Phase::Download ? "downloading" : "verifying SHA-256";
-        l.push_back(ui::dim(ui::pad("", kMark) + ui::pad(what, 18) + ui::bar({double(pct), double(100 - pct)}, 30) +
-                            std::format(" {} %", pct)));
+        l.push_back(hbox({ui::dim(ui::pad("", kMark) + ui::pad(what, 18)), ui::progress_bar(pct, 30),
+                          ui::plain(std::format(" {} %", pct))}));
         l.push_back(ui::dim(ui::pad("", kMark) + progress_text(progress_, meters_[static_cast<int>(progress_.phase)])));
     } else if (st == StepState::Failed) {
         // The whole error, wrapped: the cause and the command to fix it must not be cut at the screen edge
@@ -166,11 +166,15 @@ Elements Wizard::step_row(size_t i) {
     constexpr int kMark = 3;
     const std::vector<std::string> text = ui::wrap_lines(step_label(plan_[i]), 72);
     for (size_t k = 0; k < text.size(); k++) {
-        const std::string line = ui::pad(k == 0 ? mark : "", kMark) + text[k];
-        l.push_back(st == StepState::Done      ? ui::good(line)
-                    : st == StepState::Failed  ? ui::bad(line)
-                    : st == StepState::Waiting ? ui::dim(line)
-                                               : ui::plain(line));
+        const std::string prefix = ui::pad(k == 0 ? mark : "", kMark);
+        if (st == StepState::Done)
+            l.push_back(hbox({ui::good(prefix), ui::plain(text[k])}));
+        else if (st == StepState::Running)
+            l.push_back(ui::title(prefix + text[k]));
+        else if (st == StepState::Failed)
+            l.push_back(ui::bad(prefix + text[k]));
+        else
+            l.push_back(ui::dim(prefix + text[k]));
     }
     for (Element& e : step_detail(st)) l.push_back(std::move(e));
     return l;
@@ -183,13 +187,12 @@ Element Wizard::total_rows() {
     const bool fetching = has_progress_ && progress_.phase == Phase::Download;
     const uint64_t done = std::min(dl_total_, dl_base_ + (fetching ? progress_.done : dl_step_total_));
     const int pct = static_cast<int>(done * 100 / dl_total_);
-    std::string line = ui::pad("Total", 8) + ui::bar({double(pct), double(100 - pct)}, 24) +
-                       std::format(" {} %  {} of {}", pct, size_text(double(done)), size_text(double(dl_total_)));
+    std::string tail = std::format(" {} %  {} of {}", pct, size_text(double(done)), size_text(double(dl_total_)));
     const double left = fetching ? total_meter_.remaining(dl_total_) : -1;
-    if (left >= 0) line += "  " + duration_text(left) + " left";
+    if (left >= 0) tail += "  " + duration_text(left) + " left";
     std::string rule;
     for (int i = 0; i < 78; i++) rule += "─";
-    return vbox({ui::dim(rule), ui::plain(line)});
+    return vbox({ui::dim(rule), hbox({ui::plain(ui::pad("Total", 8)), ui::progress_bar(pct, 24), ui::plain(tail)})});
 }
 
 // What follows when the steps are over: the next commands, or why it stopped
@@ -205,10 +208,16 @@ Elements Wizard::finish_rows() {
     const std::string bin = target_.bin_dir.empty() ? home() + "/.local/bin" : target_.bin_dir;
     const std::vector<std::string> hint =
         s().shell ? path_advice(path_env_, bin, s().modify_path) : std::vector<std::string>{};
-    for (const std::string& line : what_next_lines(hint, installed_agents()))
-        l.push_back(line == kAgentsTitle                                                      ? ui::title(line)
-                    : line.contains("(not installed)") || line.starts_with("No coding agent") ? ui::dim(line)
-                                                                                              : ui::plain(line));
+    for (const std::string& line : what_next_lines(hint, installed_agents())) {
+        if (line == kAgentsTitle || line.contains("(not installed)") || line.starts_with("No coding agent"))
+            l.push_back(ui::dim(line));
+        else if (line.starts_with("✓"))
+            l.push_back(hbox({ui::good("✓"), ui::plain(line.substr(3))}));
+        else if (line.starts_with("tona") && line.size() > kCommandWidth)
+            l.push_back(hbox({ui::title(line.substr(0, kCommandWidth)), ui::plain(line.substr(kCommandWidth))}));
+        else
+            l.push_back(ui::plain(line));
+    }
     return l;
 }
 

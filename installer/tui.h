@@ -57,7 +57,7 @@ public:
     void stage_finished();
     void stage_failed(const std::string& message);  // the last step failed and said `message`
     bool press(const ftxui::Event& e) { return on_event(e); }
-    std::string screen_text() { return ui::render_text(frame(body(), keys_line())); }
+    std::string screen_text() { return ui::render_text(frame(body(), keys_element())); }
 
     // Every page and state as text at 80 x 24, for the documentation and for a look without a terminal. Uses the
     // machine as it is; the states that need a special machine are staged.
@@ -66,12 +66,12 @@ public:
 private:
     // rendering (tui.cpp)
     ftxui::Element render();
-    ftxui::Element frame(const ftxui::Element& body, const std::string& keys);
+    ftxui::Element frame(const ftxui::Element& body, ftxui::Element keys);
     ftxui::Element crumbs();
     ftxui::Element too_small(int w, int h);
     std::string page_name(Page p) const;
     ftxui::Element body();
-    std::string keys_line();
+    ftxui::Element keys_element();
     int page_keys() const;
 
     // pages (tui_pages.cpp)

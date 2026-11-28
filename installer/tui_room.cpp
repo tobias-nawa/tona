@@ -1,4 +1,4 @@
-// The page "Platz" (how much Tona may take) and the advanced settings behind the key `e`.
+// The Room page (how much Tona may take) and the advanced settings behind the key `e`.
 #include <algorithm>
 #include <chrono>
 #include <cmath>
@@ -18,7 +18,7 @@ namespace tona::install {
 
 namespace {
 
-constexpr int kBarWidth = 28;
+constexpr int kBarWidth = 48;
 
 std::string radios(const std::vector<std::string>& labels, int selected) {
     std::string out;
@@ -138,16 +138,45 @@ std::string room_help(Row row, const Limits& l) {
                           : "The size this backend is measured with.";
 }
 
-// "8662  free", "8662  yours (running)" or "8662  in use -> 8663". The probe may wait up to a second on a port that
-// answers without being a server, so the answer of the last second is reused between two key presses.
-std::string port_text(int port) {
+// Cached port probe so key presses do not stall for a second on an unresponsive port
+PortState cached_port_state(int port) {
     static int last_port = 0;
     static std::chrono::steady_clock::time_point at;
     static PortState state = PortState::Free;
     const auto now = std::chrono::steady_clock::now();
     if (port != last_port || now - at > std::chrono::seconds(1)) state = probe_port(port), last_port = port, at = now;
-    if (state == PortState::Busy) return std::format("{}  in use → {}", port, next_free_port(port + 1));
-    return std::format("{}  {}", port, state == PortState::Ours ? "yours (running)" : "free");
+    return state;
+}
+
+// "8662  free", "8662  yours (running)" or "8662  in use -> 8663"
+Element port_value_el(int port, bool here) {
+    const PortState state = cached_port_state(port);
+    const std::string num = std::format("{}  ", port);
+    const std::string status = state == PortState::Busy   ? std::format("in use → {}", next_free_port(port + 1))
+                               : state == PortState::Ours ? "yours (running)"
+                                                          : "free";
+    if (here) return ui::plain(num + status);
+    return hbox({ui::plain(num), state == PortState::Busy ? ui::warn(status) : ui::good(status)});
+}
+
+// Two-line bars (label + blue/dim bar, then legend with matching swatches underneath)
+Elements room_bars(const RoomPlan& r) {
+    Elements out;
+    out.push_back(hbox({ui::dim(ui::pad(std::format("Memory {:g} GB", r.ram_total), 15)),
+                        ui::bar_el({r.tona, r.programs, r.system}, kBarWidth)}));
+    out.push_back(hbox({ui::plain(ui::pad("", 15)), ui::swatch("█", true),
+                        ui::plain(std::format(" Tona {:g} GB   ", std::round(r.tona))), ui::swatch("▒", false),
+                        ui::dim(std::format(" your programs {:g} GB   ", std::round(r.programs))),
+                        ui::swatch("░", false), ui::dim(std::format(" system {:g} GB", std::round(r.system)))}));
+    if (!r.unified && r.vram_total > 0) {
+        out.push_back(hbox({ui::dim(ui::pad(std::format("Video {:g} GB", r.vram_total), 15)),
+                            ui::bar_el({r.vram_tona, r.vram_screen}, kBarWidth)}));
+        out.push_back(
+            hbox({ui::plain(ui::pad("", 15)), ui::swatch("█", true),
+                  ui::plain(std::format(" Tona {:g} GB   ", std::round(r.vram_tona * 10) / 10)), ui::swatch("▒", false),
+                  ui::dim(std::format(" screen {:g} GB", std::round(r.vram_screen * 10) / 10))}));
+    }
+    return out;
 }
 
 // Digits type a port, Backspace deletes, Esc drops it, any other key keeps it and does its own work (Enter, `e`, the
@@ -169,37 +198,37 @@ Element Wizard::room_body() {
     const RoomPlan r = room_plan(st_.h, server_only_, priority_, s().vram_gb);
     const bool mac = st_.h.os == "macos";
     const std::vector<Row> rows = room_rows();
+    const auto is_at = [&](Row id) { return rows[static_cast<size_t>(cursor_)] == id; };
+    const auto row_el = [&](Row id, const std::string& label, Element val) {
+        const bool here = is_at(id);
+        return ui::highlight(hbox({ui::plain(ui::cursor(here) + ui::pad(label, 20)), std::move(val)}), here);
+    };
     const auto row = [&](Row id, const std::string& label, const std::string& value) {
-        const bool here = rows[static_cast<size_t>(cursor_)] == id;
-        return ui::plain(ui::cursor(here) + ui::pad(label, 20) + value);
+        return row_el(id, label, ui::plain(value));
     };
     const Limits lim = st_.module ? st_.module->limits() : Limits{};
     const std::vector<int> ctx = context_options(s(), lim);
-    Elements l = {ui::title("How much may Tona take?"), ui::dim("What for")};
+    Elements l = {ui::title("What for")};
     l.push_back(
         row(Row::Use, "Use", radios({"I work on " + this_machine(mac), "only for Tona, a server"}, server_only_)));
     l.push_back(row(Row::Access, "Access",
                     radios({this_machine(mac) + " only", other_machines(mac) + ", with a key"}, s().network ? 1 : 0)));
-    l.push_back(row(Row::Port, "Port", editing_ ? edit_ + "_" : port_text(s().port)));
-    l.push_back(row(Row::Login, "At login", ui::box(s().service) + " " + "start the server (then it holds memory)"));
+    l.push_back(
+        row_el(Row::Port, "Port", editing_ ? ui::plain(edit_ + "_") : port_value_el(s().port, is_at(Row::Port))));
+    l.push_back(row_el(Row::Login, "At login",
+                       is_at(Row::Login) ? ui::plain(ui::box(s().service) + " start the server (then it holds memory)")
+                                         : hbox({ui::plain(ui::box(s().service) + " start the server "),
+                                                 ui::dim("(then it holds memory)")})));
     l.push_back(ui::blank());
-    l.push_back(ui::dim("How much"));
-    l.push_back(row(Row::Tight, "When it gets tight",
-                    radios({"work first", "balanced", "Tona first"}, static_cast<int>(priority_)) + "  (coming)"));
+    l.push_back(ui::title("How much"));
+    const std::string tight_radios = radios({"work first", "balanced", "Tona first"}, static_cast<int>(priority_));
+    l.push_back(row_el(Row::Tight, "When it gets tight",
+                       is_at(Row::Tight) ? ui::plain(tight_radios + "  (coming)")
+                                         : hbox({ui::plain(tight_radios), ui::dim("  (coming)")})));
     l.push_back(row(Row::Agents, "Parallel agents", radios(agent_labels(lim.max_agents), s().seqs - 1)));
     l.push_back(row(Row::Context, "Context per agent", radios(context_labels(ctx), context_choice(s(), ctx))));
-    l.push_back(ui::blank());
-    // one line per bar: the numbers stand behind it, so the bars and the speed fit the page
-    const auto bar_row = [&](const std::string& label, const std::vector<double>& parts, const std::string& legend) {
-        return ui::plain(ui::pad(label, 15) + ui::bar(parts, kBarWidth) + "  " + legend);
-    };
-    l.push_back(bar_row(std::format("Memory {:g} GB", r.ram_total), {r.tona, r.programs, r.system},
-                        std::format("█ Tona {:g} ▒ yours {:g} ░ system {:g}", std::round(r.tona),
-                                    std::round(r.programs), std::round(r.system))));
-    if (!r.unified && r.vram_total > 0)
-        l.push_back(bar_row(std::format("Video {:g} GB", r.vram_total), {r.vram_tona, r.vram_screen},
-                            std::format("█ Tona {:g}  ▒ screen {:g}", std::round(r.vram_tona * 10) / 10,
-                                        std::round(r.vram_screen * 10) / 10)));
+    if (models_of(s()).size() <= 2 || message_.empty()) l.push_back(ui::blank());
+    for (Element& b : room_bars(r)) l.push_back(std::move(b));
     const std::string speed = speed_line();
     for (size_t at = 0, end; at < speed.size(); at = end + 1) {
         end = std::min(speed.find('\n', at), speed.size());
@@ -347,7 +376,7 @@ Element Wizard::advanced_body() {
     for (size_t i = 0; i < rows.size(); i++) {
         const bool here = static_cast<int>(i) == adv_cursor_;
         const std::string value = here && editing_ ? edit_ + "_" : rows[i].value;
-        l.push_back(ui::plain(ui::cursor(here) + ui::pad(rows[i].label, 32) + value));
+        l.push_back(ui::highlight(ui::plain(ui::cursor(here) + ui::pad(rows[i].label, 32) + value), here));
     }
     l.push_back(ui::blank());
     if (adv_cursor_ < static_cast<int>(rows.size()))

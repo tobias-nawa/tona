@@ -14,7 +14,8 @@ namespace {
 
 std::string option_row(const UiState& s, int index, const std::string& text, const std::string& note = "") {
     const bool on = s.start_cursor == index;
-    return std::string(on ? " ▸ " : "   ") + (on ? bold(text) : text) + (note.empty() ? "" : "    " + dim(note));
+    if (on) return " " + paint_selected("▸ " + text + (note.empty() ? "" : "    " + note), 78);
+    return "   " + text + (note.empty() ? "" : "    " + dim(note));
 }
 
 std::string check_row(const Check& c) {
@@ -95,10 +96,13 @@ Lines view_help(const UiState& s, int) {
     const auto row = [&](const std::string& key, const std::string& text, const std::string& note = "") {
         out.push_back("   " + bold(top::fit(key, 8)) + cell(text, 28) + (note.empty() ? "" : dim(note)));
     };
+    const auto row2 = [&](const std::string& k1, const std::string& t1, const std::string& k2, const std::string& t2) {
+        out.push_back("   " + bold(top::fit(k1, 8)) + cell(t1, 24) + bold(top::fit(k2, 8)) + t2);
+    };
     if (s.tab == Tab::Start) {
         row("a", tr("k_agent")), row("w", tr("k_switch"), tr("help_asks")),
             row("u", tr("help_update"), tr("help_asks"));
-        row("r", tr("help_restart"), tr("help_asks")), row("p", tr("help_project")), row("l", tr("k_log"));
+        row("r", tr("help_restart"), tr("help_asks")), row2("p", tr("help_project"), "l", tr("k_log"));
     } else if (s.tab == Tab::Models) {
         row("Enter", tr("k_switch_to"), tr("help_asks")), row("d", tr("k_download")),
             row("x", tr("k_remove"), tr("help_asks"));
@@ -112,9 +116,6 @@ Lines view_help(const UiState& s, int) {
     }
     out.push_back(section_row(tr("help_everywhere")));
     // Two entries per row so that the page fits 80 x 24
-    const auto row2 = [&](const std::string& k1, const std::string& t1, const std::string& k2, const std::string& t2) {
-        out.push_back("   " + bold(top::fit(k1, 8)) + cell(t1, 24) + bold(top::fit(k2, 8)) + t2);
-    };
     row2("↑↓ j k", tr("help_move"), "Enter", tr("help_main"));
     row2("Esc ⌫", tr("help_back"), "Space", tr("help_toggle"));
     row2("1-4", tr("help_tabs"), "Tab", tr("help_next_field"));
