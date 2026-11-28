@@ -190,3 +190,118 @@ def test_win32_parsers():
     nvcc_out = "nvcc: NVIDIA (R) Cuda compiler driver\nCuda compilation tools, release 12.8, V12.8.61\n"
     assert hw_win32.parse_nvcc_version(nvcc_out) == "12.8"
     assert hw_win32.parse_nvcc_version("") == ""
+    assert hw_win32.parse_nvidia_smi("bad,line\n") == []
+    assert hw_win32.parse_video_controllers("{not-json") == []
+    nv_ctrl = json.dumps({"Name": "NVIDIA RTX 5090", "AdapterRAM": 4 * hw_win32.GIB, "DriverVersion": "572.60"})
+    parsed_nv = hw_win32.parse_video_controllers(nv_ctrl)
+    assert parsed_nv[0]["vendor"] == "NVIDIA" and parsed_nv[0]["driver"] == "572.60"
+    assert hw_win32._vendor_from_pnp("", "AMD Radeon RX 9060 XT") == "AMD"
+    assert hw_win32._vendor_from_pnp("", "Unknown GPU") == hw_win32.UNKNOWN
+
+
+class _FakeKernel32:
+    def __init__(self, hw_win32):
+        self.hw = hw_win32
+        self.times = iter([(100, 200, 200), (250, 400, 200)])
+        self.power_vals = (1, 1)
+        self.fail = False
+
+    def IsProcessorFeaturePresent(self, flag):
+        if self.fail:
+            raise OSError("boom")
+        return flag == self.hw.PF_AVX512F
+
+    def GlobalMemoryStatusEx(self, ptr):
+        import ctypes
+
+        if self.fail:
+            return 0
+        st = ctypes.cast(ptr, ctypes.POINTER(self.hw._MemoryStatusEx)).contents
+        st.ullTotalPhys, st.ullAvailPhys = 64 * self.hw.GIB, 48 * self.hw.GIB
+        return 1
+
+    def GetSystemTimes(self, idle_p, kern_p, user_p):
+        import ctypes
+
+        if self.fail:
+            return 0
+        for p, v in zip((idle_p, kern_p, user_p), next(self.times), strict=True):
+            ctypes.cast(p, ctypes.POINTER(self.hw._FileTime)).contents.dwLowDateTime = v
+        return 1
+
+    def GetSystemPowerStatus(self, ptr):
+        import ctypes
+
+        if self.fail:
+            return 0
+        st = ctypes.cast(ptr, ctypes.POINTER(self.hw._SystemPowerStatus)).contents
+        st.ACLineStatus, st.BatteryFlag = self.power_vals
+        return 1
+
+
+def test_win32_kernel32_probes(monkeypatch):
+    import ctypes
+    import types
+
+    import hw_win32
+
+    k32 = _FakeKernel32(hw_win32)
+    monkeypatch.setattr(ctypes, "windll", types.SimpleNamespace(kernel32=k32), raising=False)
+    monkeypatch.setattr(hw_win32.time, "sleep", lambda _: None)
+
+    assert hw_win32.memory() == {"total_gib": 64.0, "available_gib": 48.0}
+    assert hw_win32.cpu_busy_percent(0.01) == 25.0
+    assert hw_win32.power() == {"on_battery": False}
+    k32.power_vals = (0, 1)
+    assert hw_win32.power() == {"on_battery": True}
+    k32.power_vals = (1, 128)
+    assert hw_win32.power() == {"on_battery": None}
+    assert "Windows" in hw_win32.os_info()["name"]
+
+    k32.fail = True
+    assert hw_win32._has_avx512() is False
+    assert hw_win32.memory() == {"total_gib": None, "available_gib": None}
+    assert hw_win32.cpu_busy_percent(0.01) is None
+    assert hw_win32.power() == {"on_battery": None}
+
+
+def test_win32_cpu_and_gpu_probes(monkeypatch):
+    import ctypes
+    import sys
+    import types
+
+    import hw_win32
+
+    k32 = _FakeKernel32(hw_win32)
+    monkeypatch.setattr(ctypes, "windll", types.SimpleNamespace(kernel32=k32), raising=False)
+
+    def fake_run(cmd, timeout=10):
+        if cmd[0] == "nvidia-smi":
+            return "NVIDIA GeForce RTX 5090, 32607, 1024, 2, 572.60\n"
+        if cmd[0] == "nvcc":
+            return "release 12.8"
+        if "NumberOfCores" in cmd[-1]:
+            return "16\n"
+        return "AMD Ryzen 9 9950X\n"
+
+    assert hw_win32.nvcc_toolkit(fake_run) == "12.8"
+    assert hw_win32.gpus(fake_run)[0]["name"] == "NVIDIA GeForce RTX 5090"
+    fallback = hw_win32.gpus(lambda cmd, timeout=10: "" if cmd[0] == "nvidia-smi" else '[{"Name":"Intel GPU"}]')
+    assert fallback[0]["vendor"] == "Intel"
+    cpu_info = hw_win32.cpu(fake_run)
+    assert cpu_info["model"] == "AMD Ryzen 9 9950X" and cpu_info["cores"] == 16 and cpu_info["avx512"] is True
+
+    class FakeKey:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            return False
+
+    fake_winreg = types.SimpleNamespace(
+        HKEY_LOCAL_MACHINE=1,
+        OpenKey=lambda h, p: FakeKey(),
+        QueryValueEx=lambda k, n: ("Registry CPU", 1),
+    )
+    monkeypatch.setitem(sys.modules, "winreg", fake_winreg)
+    assert hw_win32._cpu_brand_registry() == "Registry CPU"
