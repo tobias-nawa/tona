@@ -177,10 +177,10 @@ int main(int argc, char** argv) {
     return tona::test::guard("expert_route", [&] {
         // The OEA variants of the environment, before oea_config() reads it for the first time
         if (argc > 1 && std::string(argv[1]) == "variants") {
-            setenv("TONA_OEA_TAU", "0.08", 1);
-            setenv("TONA_OEA_ROW0", "1", 1);
-            setenv("TONA_OEA_EXTRA", "3", 1);
-            setenv("TONA_OEA_HITS", "0", 1);
+            tona::test::set_env("TONA_OEA_TAU", "0.08");
+            tona::test::set_env("TONA_OEA_ROW0", "1");
+            tona::test::set_env("TONA_OEA_EXTRA", "3");
+            tona::test::set_env("TONA_OEA_HITS", "0");
         }
         return tona::test::run("test_expert_route", [] {
             std::mt19937 rng(7);

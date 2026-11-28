@@ -13,6 +13,8 @@
 #include "backend/env.h"
 #if defined(__APPLE__)
 #include "backend/mem_macos.h"
+#elif defined(_WIN32)
+#include "backend/mem_win32.h"
 #endif
 
 namespace tona::backend {
@@ -65,6 +67,8 @@ inline double prompt_reserve_gb() {
 inline long long ram_held_bytes() {
 #if defined(__APPLE__)
     return macos::held_bytes();
+#elif defined(_WIN32)
+    return win32::held_bytes();
 #else
     long long anon = 0, shmem = 0;
     if (FILE* f = std::fopen("/proc/self/status", "r")) {
@@ -117,6 +121,8 @@ inline double cgroup_headroom_bytes(const std::string& dir) {
 inline double free_ram_bytes() {
 #if defined(__APPLE__)
     return macos::available_bytes();  // no cgroups on macOS
+#elif defined(_WIN32)
+    return win32::available_bytes();
 #else
     double room = std::max(0LL, stat_value(read_text("/proc/meminfo"), "MemAvailable:")) * 1024.0;
     std::string path = read_text("/proc/self/cgroup");

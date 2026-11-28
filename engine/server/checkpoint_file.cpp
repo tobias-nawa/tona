@@ -1,9 +1,14 @@
 #include "server/checkpoint_file.h"
 
+#ifdef _WIN32
+#include <windows.h>
+#else
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#endif
 
+#include <algorithm>
 #include <cerrno>
 #include <filesystem>
 #include <format>
@@ -14,17 +19,28 @@ namespace tona::server {
 namespace {
 
 // A new file that is ours alone: any old file or link under the name is removed first, and the open refuses to
-// create it through a link (O_EXCL, O_NOFOLLOW), so a link planted in a writable directory cannot make us truncate
-// or overwrite another file. Written through the descriptor of that one open.
+// create it through a link (O_EXCL, O_NOFOLLOW on POSIX; CREATE_NEW on Windows), so a link planted in a writable
+// directory cannot make us truncate or overwrite another file. Written through the handle of that one open.
 class NewFile {
 public:
     explicit NewFile(const std::string& path) {
+#ifdef _WIN32
+        DeleteFileA(path.c_str());
+        h_ = CreateFileA(path.c_str(), GENERIC_WRITE, 0, nullptr, CREATE_NEW,
+                         FILE_ATTRIBUTE_NORMAL | FILE_FLAG_OPEN_REPARSE_POINT, nullptr);
+        ok_ = h_ != INVALID_HANDLE_VALUE;
+#else
         ::unlink(path.c_str());
         fd_ = ::open(path.c_str(), O_WRONLY | O_CREAT | O_EXCL | O_NOFOLLOW | O_CLOEXEC, 0600);
         ok_ = fd_ >= 0;
+#endif
     }
     ~NewFile() {
+#ifdef _WIN32
+        if (h_ != INVALID_HANDLE_VALUE) CloseHandle(h_);
+#else
         if (fd_ >= 0) ::close(fd_);
+#endif
     }
     NewFile(const NewFile&) = delete;
     NewFile& operator=(const NewFile&) = delete;
@@ -32,18 +48,31 @@ public:
     void put(const void* p, size_t bytes) {
         const char* c = static_cast<const char*>(p);
         while (ok_ && bytes > 0) {
+#ifdef _WIN32
+            const DWORD chunk = static_cast<DWORD>(std::min<size_t>(bytes, 0x7fffffffu));
+            DWORD n = 0;
+            if (!WriteFile(h_, c, chunk, &n, nullptr) || n == 0)
+                ok_ = false;
+            else
+                c += n, bytes -= n;
+#else
             const ssize_t n = ::write(fd_, c, bytes);
             if (n < 0 && errno == EINTR) continue;
             if (n <= 0)
                 ok_ = false;
             else
                 c += n, bytes -= (size_t)n;
+#endif
         }
     }
     bool ok() const { return ok_; }
 
 private:
+#ifdef _WIN32
+    HANDLE h_ = INVALID_HANDLE_VALUE;
+#else
     int fd_ = -1;
+#endif
     bool ok_ = false;
 };
 
@@ -79,6 +108,12 @@ bool write_checkpoint(const std::string& path, uint64_t fingerprint, const std::
 
 bool secure_checkpoint_dir(const std::string& dir, bool created, std::string& why) {
     namespace fs = std::filesystem;
+#ifdef _WIN32
+    (void)created;
+    std::error_code ec;
+    if (!fs::is_directory(dir, ec)) return why = "cannot read the directory", false;
+    return true;
+#else
     struct stat st{};
     if (::stat(dir.c_str(), &st) != 0) return why = "cannot read the directory", false;
     std::error_code ec;
@@ -93,6 +128,7 @@ bool secure_checkpoint_dir(const std::string& dir, bool created, std::string& wh
         return why = "writable by others and cannot be restricted to the owner (foreign owner or foreign files in it)",
                false;
     return true;
+#endif
 }
 
 bool read_checkpoint_tokens(const std::string& path, uint64_t fingerprint, std::vector<int32_t>& tokens,

@@ -1,9 +1,13 @@
 #include "model/gguf.h"
 
+#ifdef _WIN32
+#include <windows.h>
+#else
 #include <fcntl.h>
 #include <sys/mman.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#endif
 
 #include <algorithm>
 #include <cstring>
@@ -156,6 +160,34 @@ uint64_t TensorInfo::elements() const {
 }
 
 MappedFile::MappedFile(const std::string& path) : path_(path) {
+#ifdef _WIN32
+    HANDLE h = CreateFileA(path.c_str(), GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL,
+                           nullptr);
+    if (h == INVALID_HANDLE_VALUE)
+        throw std::runtime_error(std::format("{}: CreateFileA failed (error {})", path, GetLastError()));
+    LARGE_INTEGER sz{};
+    if (!GetFileSizeEx(h, &sz)) {
+        const DWORD err = GetLastError();
+        CloseHandle(h);
+        throw std::runtime_error(std::format("{}: GetFileSizeEx failed (error {})", path, err));
+    }
+    size_ = static_cast<uint64_t>(sz.QuadPart);
+    HANDLE m = CreateFileMappingA(h, nullptr, PAGE_READONLY, 0, 0, nullptr);
+    if (!m) {
+        const DWORD err = GetLastError();
+        CloseHandle(h);
+        throw std::runtime_error(std::format("{}: CreateFileMappingA failed (error {})", path, err));
+    }
+    void* p = MapViewOfFile(m, FILE_MAP_READ, 0, 0, 0);
+    if (!p) {
+        const DWORD err = GetLastError();
+        CloseHandle(m);
+        CloseHandle(h);
+        throw std::runtime_error(std::format("{}: MapViewOfFile failed (error {})", path, err));
+    }
+    file_ = h, mapping_ = m;
+    data_ = static_cast<const uint8_t*>(p);
+#else
     int fd = ::open(path.c_str(), O_RDONLY | O_CLOEXEC);
     if (fd < 0) throw std::runtime_error(std::format("{}: {}", path, std::strerror(errno)));
     struct stat st{};
@@ -171,15 +203,36 @@ MappedFile::MappedFile(const std::string& path) : path_(path) {
     }
     fd_ = fd;  // stays open for read()
     data_ = static_cast<const uint8_t*>(p);
+#endif
 }
 
 MappedFile::~MappedFile() {
+#ifdef _WIN32
+    if (data_) UnmapViewOfFile(data_);
+    if (mapping_) CloseHandle(static_cast<HANDLE>(mapping_));
+    if (file_) CloseHandle(static_cast<HANDLE>(file_));
+#else
     if (data_) munmap(const_cast<uint8_t*>(data_), size_);
     if (fd_ >= 0) ::close(fd_);
+#endif
 }
 
 void MappedFile::read(const uint8_t* ptr, void* dst, size_t n) const {
     if (!contains(ptr) || ptr + n > data_ + size_) throw std::runtime_error(path_ + ": read outside the file");
+#ifdef _WIN32
+    uint64_t off = static_cast<uint64_t>(ptr - data_);
+    auto* out = static_cast<uint8_t*>(dst);
+    while (n > 0) {
+        OVERLAPPED ov{};
+        ov.Offset = static_cast<DWORD>(off & 0xffffffffu);
+        ov.OffsetHigh = static_cast<DWORD>(off >> 32);
+        const DWORD chunk = static_cast<DWORD>(std::min<size_t>(n, 0x7fffffffu));
+        DWORD got = 0;
+        if (!ReadFile(static_cast<HANDLE>(file_), out, chunk, &got, &ov) || got == 0)
+            throw std::runtime_error(std::format("{}: ReadFile failed (error {})", path_, GetLastError()));
+        out += got, off += got, n -= got;
+    }
+#else
     off_t off = ptr - data_;
     auto* out = static_cast<uint8_t*>(dst);
     while (n > 0) {
@@ -188,6 +241,7 @@ void MappedFile::read(const uint8_t* ptr, void* dst, size_t n) const {
         if (r <= 0) throw std::runtime_error(std::format("{}: pread: {}", path_, std::strerror(errno)));
         out += r, off += r, n -= (size_t)r;
     }
+#endif
 }
 
 Gguf::Gguf(const std::string& path) {
@@ -310,6 +364,10 @@ void Gguf::parse(int fi, bool first) {
 }
 
 void MappedFile::drop(const uint8_t* ptr, size_t n) const {
+#ifdef _WIN32
+    // Windows has no unprivileged MADV_DONTNEED for read-only file views
+    (void)ptr, (void)n;
+#else
     // Whole pages only, otherwise the neighbors would be hit
     const uintptr_t pg = 4096, a = (reinterpret_cast<uintptr_t>(ptr) + pg - 1) & ~(pg - 1),
                     e = (reinterpret_cast<uintptr_t>(ptr) + n) & ~(pg - 1);
@@ -319,9 +377,14 @@ void MappedFile::drop(const uint8_t* ptr, size_t n) const {
     // macOS has no POSIX_FADV_DONTNEED; there the madvise above is all (docs/use/macos.md)
     posix_fadvise(fd_, (off_t)(a - reinterpret_cast<uintptr_t>(data_)), (off_t)(e - a), POSIX_FADV_DONTNEED);
 #endif
+#endif
 }
 
 void MappedFile::release(const uint8_t* ptr, size_t n) const {
+#ifdef _WIN32
+    // Windows cannot split or replace a sub-range of a MapViewOfFile view in place
+    (void)ptr, (void)n;
+#else
     const uintptr_t pg = 4096, a = (reinterpret_cast<uintptr_t>(ptr) + pg - 1) & ~(pg - 1),
                     e = (reinterpret_cast<uintptr_t>(ptr) + n) & ~(pg - 1);
     if (e <= a) return;
@@ -329,6 +392,7 @@ void MappedFile::release(const uint8_t* ptr, size_t n) const {
     void* r = mmap(reinterpret_cast<void*>(a), e - a, PROT_NONE,
                    MAP_PRIVATE | MAP_ANONYMOUS | MAP_FIXED | MAP_NORESERVE, -1, 0);
     if (r == MAP_FAILED) throw std::runtime_error(std::format("{}: release: {}", path_, std::strerror(errno)));
+#endif
 }
 
 size_t Gguf::release(const TensorInfo& t) const {

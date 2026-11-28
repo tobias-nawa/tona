@@ -46,18 +46,18 @@ void test_shape_and_off() {
 }
 
 void test_env() {
-    unsetenv("TONA_ROPE_YARN"), unsetenv("TONA_YARN_MSCALE");
+    tona::test::unset_env("TONA_ROPE_YARN"), tona::test::unset_env("TONA_YARN_MSCALE");
     EXPECT(tona::rope::yarn_from_env(BASE).factor == 1.0);
     for (const char* off : {"off", "0", ""}) {
-        setenv("TONA_ROPE_YARN", off, 1);
+        tona::test::set_env("TONA_ROPE_YARN", off);
         EXPECT(tona::rope::yarn_from_env(BASE).factor == 1.0);
     }
-    setenv("TONA_ROPE_YARN", "4", 1);
+    tona::test::set_env("TONA_ROPE_YARN", "4");
     auto t = tona::rope::yarn_from_env(BASE);
     EXPECT(t.factor == 4.0 && std::fabs(t.mscale - 1.1386294f) < 1e-6f);
-    setenv("TONA_YARN_MSCALE", "1.0", 1);
+    tona::test::set_env("TONA_YARN_MSCALE", "1.0");
     EXPECT(tona::rope::yarn_from_env(BASE).mscale == 1.0f);
-    unsetenv("TONA_ROPE_YARN"), unsetenv("TONA_YARN_MSCALE");
+    tona::test::unset_env("TONA_ROPE_YARN"), tona::test::unset_env("TONA_YARN_MSCALE");
 }
 
 }  // namespace

@@ -5,7 +5,7 @@
     python3 tools/hw_report.py --json                # machine-readable
     python3 tools/hw_report.py --model work/models/coder-iq1_m/<file>.gguf
 
-Standard library only, Python 3.9+, Linux and macOS. It reads, it never changes anything and never starts the
+Standard library only, Python 3.9+, Linux, macOS and Windows. It reads, it never changes anything and never starts the
 engine. Every field that cannot be determined is "unknown" (an honest gap beats a guess). The home directory and the
 user name never appear in the output, so the block can be pasted into a public pull request.
 """
@@ -23,6 +23,8 @@ import subprocess
 import sys
 import time
 from pathlib import Path
+
+import hw_win32
 
 ROOT = Path(__file__).resolve().parents[1]
 UNKNOWN = "unknown"
@@ -53,12 +55,13 @@ def read(path) -> str:
 
 def scrub(text: str, home: str = "", user: str = "") -> str:
     """Replaces the home directory by `~` and the user name inside paths, so nothing private is published."""
-    home = home or str(Path.home())
-    user = user or os.environ.get("USER", "")
-    if home and home != "/":
-        text = text.replace(home, "~")
+    home = home or os.environ.get("USERPROFILE", "") or str(Path.home())
+    user = user or os.environ.get("USER") or os.environ.get("USERNAME", "")
+    if home and home not in ("/", "\\"):
+        for variant in dict.fromkeys((home, home.replace("\\", "\\\\"), home.replace("\\", "/"))):
+            text = text.replace(variant, "~")
     if user and len(user) > 2:
-        text = re.sub(rf"(?<=/){re.escape(user)}(?=/|$)", "<user>", text)
+        text = re.sub(rf"(?<=[/\\]){re.escape(user)}(?=[/\\]|$)", "<user>", text)
     return text
 
 
@@ -197,6 +200,8 @@ def gpus_macos() -> list:
 
 
 def memory() -> dict:
+    if sys.platform == "win32":
+        return hw_win32.memory()
     if sys.platform == "darwin":
         total = int(run(["sysctl", "-n", "hw.memsize"]).strip() or 0)
         return {"total_gib": round(total / GIB, 1) if total else None, "available_gib": None}
@@ -209,6 +214,8 @@ def memory() -> dict:
 
 
 def os_info() -> dict:
+    if sys.platform == "win32":
+        return hw_win32.os_info()
     if sys.platform == "darwin":
         name = f"macOS {run(['sw_vers', '-productVersion']).strip()}".strip()
     else:
@@ -234,6 +241,8 @@ def toolkit() -> dict:
     m = re.search(r"CUDA Version:\s*([\d.]+)", run(["nvidia-smi"]))
     if m:
         out["cuda"] = m.group(1)
+    if nvcc := hw_win32.nvcc_toolkit(run):
+        out["nvcc"] = nvcc
     amdgpu = read("/sys/module/amdgpu/version")
     if amdgpu:
         out["amdgpu_module"] = amdgpu
@@ -277,6 +286,8 @@ def cpu_ticks() -> dict:
 def cpu_busy_percent() -> float | None:
     """Share of all hardware threads that other processes use over SAMPLE_SECONDS. A sum: no names are kept,
     which programs run is nobody's business but the user's."""
+    if sys.platform == "win32":
+        return hw_win32.cpu_busy_percent(SAMPLE_SECONDS)
     if not Path("/proc/self/stat").exists():
         rows = run(["ps", "-Ao", "pcpu="]).split()  # macOS: share over the process lifetime, the best available
         return round(sum(float(x) for x in rows) / (os.cpu_count() or 1), 1) if rows else None
@@ -354,14 +365,14 @@ def model_info(path: str, hash_it: bool) -> dict:
 
 
 def collect(model: str = "", hash_model: bool = False) -> dict:
-    mac = sys.platform == "darwin"
+    mac, win = sys.platform == "darwin", sys.platform == "win32"
     report = {
-        "cpu": cpu_macos() if mac else cpu_linux(),
-        "gpus": gpus_macos() if mac else gpus_linux(),
+        "cpu": hw_win32.cpu(run) if win else cpu_macos() if mac else cpu_linux(),
+        "gpus": hw_win32.gpus(run) if win else gpus_macos() if mac else gpus_linux(),
         "ram": memory(),
         "os": os_info(),
         "toolkit": toolkit(),
-        "limits": {"env": tona_env(), "cgroup": {} if mac else cgroup_limits()},
+        "limits": {"env": tona_env(), "cgroup": {} if (mac or win) else cgroup_limits()},
         "foreign_load": foreign_load(),
         "build": build_info(),
     }

@@ -22,15 +22,19 @@ endif()
 # x86-64-v3; the default leaves every compiler command of the reference build as it was.
 # Apple silicon (docs/use/macos.md): clang takes the CPU there through -mcpu, and x86 target names do not exist. The x86 branch is
 # the reference line unchanged.
-if(CMAKE_SYSTEM_PROCESSOR MATCHES "^(arm64|aarch64)$")
+if(MSVC)
+    add_compile_options(/W4 /utf-8 /EHsc /bigobj /Zc:preprocessor /D_CRT_SECURE_NO_WARNINGS /DNOMINMAX /DWIN32_LEAN_AND_MEAN /D_WIN32_WINNT=0x0A00)
+elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "^(arm64|aarch64)$")
     set(TONA_MCPU apple-m1 CACHE STRING "CPU target of the host code on arm64 (-mcpu)")
     add_compile_options(-mcpu=${TONA_MCPU} -Wall -Wextra -Werror)
 else()
     set(TONA_MARCH znver5 CACHE STRING "CPU target of the host code (-march)")
     add_compile_options(-march=${TONA_MARCH} -Wall -Wextra -Werror)
 endif()
-# macOS has no io_uring: the same DirectRows interface over pread (docs/use/macos.md)
-if(APPLE)
+# macOS and Windows have no io_uring: the same DirectRows interface over pread / ReadFile
+if(WIN32)
+    set(TONA_ROWS_SOURCE io/uring_win32.cpp)
+elseif(APPLE)
     set(TONA_ROWS_SOURCE io/uring_pread.cpp)
 else()
     set(TONA_ROWS_SOURCE io/uring.cpp)
@@ -87,7 +91,9 @@ endif()
 add_library(tona_model model/gguf.cpp model/quant.cpp model/quant_tile.cpp model/qwen4exp.cpp model/qwen35moe.cpp model/nemotron_h_moe.cpp model/arch.cpp model/binder.cpp model/blocks.cpp model/model_registry.cpp model/tokenizer.cpp model/pretok_pixtral.cpp model/progress.cpp ${TONA_ROWS_SOURCE})
 target_include_directories(tona_model PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 # The reference must match ggml bit for bit: no FMA contraction
-set_source_files_properties(model/quant.cpp model/quant_tile.cpp PROPERTIES COMPILE_OPTIONS -ffp-contract=off)
+if(NOT MSVC)
+    set_source_files_properties(model/quant.cpp model/quant_tile.cpp PROPERTIES COMPILE_OPTIONS -ffp-contract=off)
+endif()
 # CPU experts must round bit-identically to the GPU (cpu/detmath.h): explicit fma only
 
 if(APPLE)
@@ -96,19 +102,29 @@ if(APPLE)
 endif()
 find_package(OpenMP REQUIRED)
 include(openmp_pragmas.cmake)  # tona_openmp_for_pragmas(): -fopenmp for HIP sources that have a pragma
-if(CMAKE_SYSTEM_PROCESSOR MATCHES "^(arm64|aarch64)$")
-    # experts.cpp is AVX-512 only; on arm64 every expert entry point throws (docs/use/macos.md)
+if(CMAKE_SYSTEM_PROCESSOR MATCHES "^(arm64|aarch64)$" OR MSVC)
+    # experts.cpp is AVX-512 only (GCC/Clang syntax); on arm64 and MSVC every expert entry point throws
     add_library(tona_cpu cpu/ref_factory.cpp cpu/ref_ops.cpp cpu/ref_blocks.cpp cpu/ref_helper.cpp cpu/ref_qwen4exp.cpp cpu/ref_qwen35moe.cpp cpu/ref_mamba2.cpp cpu/ref_nemotron_h.cpp cpu/dflash.cpp cpu/experts_unsupported.cpp)
 else()
     add_library(tona_cpu cpu/ref_factory.cpp cpu/ref_ops.cpp cpu/ref_blocks.cpp cpu/ref_helper.cpp cpu/ref_qwen4exp.cpp cpu/ref_qwen35moe.cpp cpu/ref_mamba2.cpp cpu/ref_nemotron_h.cpp cpu/dflash.cpp cpu/experts.cpp)
 endif()
-set_source_files_properties(cpu/experts.cpp PROPERTIES COMPILE_OPTIONS -ffp-contract=off)
-if(NOT TONA_MARCH STREQUAL "znver5" AND NOT CMAKE_SYSTEM_PROCESSOR MATCHES "^(arm64|aarch64)$")
-    # experts.cpp uses AVX-512 intrinsics (VNNI, VBMI, ...) directly and needs the full Zen 5 instruction set to
-    # compile; it only has to run on such a CPU, so no unit test calls it (test_cpu_experts needs the model anyway)
-    set_property(SOURCE cpu/experts.cpp APPEND PROPERTY COMPILE_OPTIONS -march=znver5)
+if(NOT MSVC)
+    set_source_files_properties(cpu/experts.cpp PROPERTIES COMPILE_OPTIONS -ffp-contract=off)
+    if(NOT TONA_MARCH STREQUAL "znver5" AND NOT CMAKE_SYSTEM_PROCESSOR MATCHES "^(arm64|aarch64)$")
+        # experts.cpp uses AVX-512 intrinsics (VNNI, VBMI, ...) directly and needs the full Zen 5 instruction set to
+        # compile; it only has to run on such a CPU, so no unit test calls it (test_cpu_experts needs the model anyway)
+        set_property(SOURCE cpu/experts.cpp APPEND PROPERTY COMPILE_OPTIONS -march=znver5)
+    endif()
 endif()
 target_link_libraries(tona_cpu PUBLIC tona_model OpenMP::OpenMP_CXX)
+
+if(WIN32)
+    set(TONA_THREAD_LIB "")
+    set(TONA_NET_LIB ws2_32)
+else()
+    set(TONA_THREAD_LIB pthread)
+    set(TONA_NET_LIB "")
+endif()
 
 add_executable(tona-ple-io tools/tona_ple_io.cpp)
 target_link_libraries(tona-ple-io PRIVATE tona_model OpenMP::OpenMP_CXX)
@@ -183,9 +199,11 @@ tona_unit_test(mtp_scorer SOURCES tests/test_mtp_scorer.cpp backend/mtp_scorer.c
 tona_unit_test(api_anthropic SOURCES tests/test_api_anthropic.cpp LIBS tona_chat_lib)
 tona_unit_test(api_openai SOURCES tests/test_api_openai.cpp LIBS tona_chat_lib)
 tona_unit_test(api_common SOURCES tests/test_api_common.cpp LIBS tona_chat_lib)
-tona_unit_test(wait_clock SOURCES tests/test_wait_clock.cpp)
-tona_unit_test(evict_counter SOURCES tests/test_evict_counter.cpp)
-if(NOT APPLE)  # KFD and CLOCK_BOOTTIME are Linux only
+if(NOT MSVC)  # HIP megakernel wait_clock.h uses GCC/Clang __ATOMIC_* builtins
+    tona_unit_test(wait_clock SOURCES tests/test_wait_clock.cpp)
+    tona_unit_test(evict_counter SOURCES tests/test_evict_counter.cpp)
+endif()
+if(NOT APPLE AND NOT WIN32)  # KFD and CLOCK_BOOTTIME are Linux only
     tona_unit_test(kfd_smi SOURCES tests/test_kfd_smi.cpp gpu/kfd_smi.cpp gpu/trace_path.cpp)
 endif()
 tona_unit_test(runtime_env SOURCES tests/test_runtime_env.cpp)
@@ -196,7 +214,9 @@ tona_unit_test(cu_mask SOURCES tests/test_cu_mask.cpp gpu/cu_mask.cpp)
 tona_unit_test(omp_guard SOURCES tests/test_omp_guard.cpp LIBS OpenMP::OpenMP_CXX)
 tona_unit_test(pcie_link SOURCES tests/test_pcie_link.cpp gpu/pcie_link.cpp)
 tona_unit_test(cpu_cost SOURCES tests/test_cpu_cost.cpp)
-tona_unit_test(pf_check SOURCES tests/test_pf_check.cpp)
+if(NOT MSVC)  # gpu/prefill_check.h uses __builtin_inff
+    tona_unit_test(pf_check SOURCES tests/test_pf_check.cpp)
+endif()
 tona_unit_test(class_lru SOURCES tests/test_class_lru.cpp)
 tona_unit_test(route_rank SOURCES tests/test_route_rank.cpp)
 tona_unit_test(expert_layout SOURCES tests/test_expert_layout.cpp)
@@ -216,7 +236,7 @@ tona_unit_test(expert_host SOURCES tests/test_expert_host.cpp)
 tona_unit_test(expert_tiers SOURCES tests/test_expert_tiers.cpp)
 tona_unit_test(vram_governor SOURCES tests/test_vram_governor.cpp)
 tona_unit_test(quant_tile SOURCES tests/test_quant_tile.cpp LIBS tona_model)
-tona_unit_test(http_util SOURCES tests/test_http_util.cpp server/http_util.cpp LIBS pthread)
+tona_unit_test(http_util SOURCES tests/test_http_util.cpp server/http_util.cpp LIBS ${TONA_THREAD_LIB} ${TONA_NET_LIB})
 tona_unit_test(request_guard SOURCES tests/test_request_guard.cpp server/request_guard.cpp)
 tona_unit_test(env_budget SOURCES tests/test_env_budget.cpp ARGS limited)
 add_test(NAME env_budget_unlimited COMMAND test_env_budget unlimited)
@@ -228,16 +248,16 @@ tona_unit_test(trace_path SOURCES tests/test_trace_path.cpp gpu/trace_path.cpp)
 tona_unit_test(prompt_list SOURCES tests/test_prompt_list.cpp tools/tona_prompt_list.cpp)
 tona_unit_test(rope_yarn SOURCES tests/test_rope_yarn.cpp ARGS ${CMAKE_CURRENT_SOURCE_DIR}/tests/data/yarn_ref.txt)
 tona_unit_test(route_policy SOURCES tests/test_route_policy.cpp ARGS ${CMAKE_CURRENT_SOURCE_DIR}/tests/data/route_ref.txt)
-tona_unit_test(progress SOURCES tests/test_progress.cpp model/progress.cpp LIBS pthread)
-tona_unit_test(uring SOURCES tests/test_uring.cpp ${TONA_ROWS_SOURCE} LIBS pthread)
+tona_unit_test(progress SOURCES tests/test_progress.cpp model/progress.cpp LIBS ${TONA_THREAD_LIB})
+tona_unit_test(uring SOURCES tests/test_uring.cpp ${TONA_ROWS_SOURCE} LIBS ${TONA_THREAD_LIB})
 set_tests_properties(uring PROPERTIES SKIP_RETURN_CODE 77)
 tona_unit_test(pyjson SOURCES tests/test_pyjson.cpp LIBS tona_chat_lib)
 tona_unit_test(checkpoint_file SOURCES tests/test_checkpoint_file.cpp server/checkpoint_file.cpp)
 tona_unit_test(run_split SOURCES tests/test_run_split.cpp)
 tona_unit_test(drafter_options SOURCES tests/test_drafter_options.cpp LIBS tona_model)
-tona_unit_test(job SOURCES tests/test_job.cpp server/job.cpp LIBS pthread)
+tona_unit_test(job SOURCES tests/test_job.cpp server/job.cpp LIBS ${TONA_THREAD_LIB} ${TONA_NET_LIB})
 # Environment read once per process: two scenarios as two processes
-tona_unit_test(request_options SOURCES tests/test_request_options.cpp server/request_options.cpp LIBS tona_chat_lib pthread
+tona_unit_test(request_options SOURCES tests/test_request_options.cpp server/request_options.cpp LIBS tona_chat_lib ${TONA_THREAD_LIB} ${TONA_NET_LIB}
              ARGS defaults)
 add_test(NAME request_options_temperature COMMAND test_request_options temperature)
 set_tests_properties(request_options_temperature PROPERTIES LABELS unit)
@@ -543,10 +563,16 @@ if(APPLE)
 endif()
 
 
-# Updater (docs/use/update.md): signature check, download, install. Needs OpenSSL for HTTPS and Ed25519; only `tona` and
-# the update tests link it, so no other program of the reference build gains the dependency. The httplib macro is
-# PUBLIC on purpose: every translation unit of one program must see httplib.h with the same macros.
-find_package(OpenSSL REQUIRED)
+# Windows: the server and backend tools as plain C++; backends (CUDA) link in once added
+if(WIN32)
+    add_executable(tona-server ${TONA_SERVER_SOURCES} server/suffix.cpp)
+    target_link_libraries(tona-server PRIVATE tona_cpu tona_chat_lib tona_backend ws2_32)
+    add_executable(tona-check tools/tona_check.cpp tools/tona_check_mtp.cpp)
+    target_link_libraries(tona-check PRIVATE tona_cpu tona_backend)
+    add_executable(tona-bench tools/tona_bench.cpp)
+    target_link_libraries(tona-bench PRIVATE tona_cpu tona_backend)
+endif()
+
 # The commit a build was made from, next to the binary (scripts/ab_plan.py reads tona-server.commit)
 if(TARGET tona-server)
     add_custom_command(TARGET tona-server POST_BUILD
@@ -554,6 +580,13 @@ if(TARGET tona-server)
                 -P ${CMAKE_CURRENT_SOURCE_DIR}/cmake/commit_stamp.cmake
         VERBATIM)
 endif()
+
+# Updater, installer core, and `tona` client (Phase 1b ports these to Windows)
+if(NOT WIN32)
+# Updater (docs/use/update.md): signature check, download, install. Needs OpenSSL for HTTPS and Ed25519; only `tona` and
+# the update tests link it, so no other program of the reference build gains the dependency. The httplib macro is
+# PUBLIC on purpose: every translation unit of one program must see httplib.h with the same macros.
+find_package(OpenSSL REQUIRED)
 
 include(update/sources.cmake)  # the source list is shared with the installer project (installer/CMakeLists.txt)
 add_library(tona_update ${TONA_UPDATE_SOURCES})
@@ -616,3 +649,4 @@ tona_unit_test(client_stub SOURCES tests/test_client_stub.cpp LIBS tona_client
 # Fuzz entry (scripts/fuzz.sh builds the fuzzer with clang): an object target only, so the gates see the file
 add_library(tona_fuzz_minisig OBJECT EXCLUDE_FROM_ALL tests/fuzz/fuzz_minisig.cpp)
 target_link_libraries(tona_fuzz_minisig PRIVATE tona_update)
+endif()
