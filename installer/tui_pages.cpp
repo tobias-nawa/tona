@@ -77,6 +77,25 @@ std::string chosen_language_labels(const Selection& sel) {
     return out;
 }
 
+void push_labeled_verdict(Elements& parts, const std::string& text, bool is_good) {
+    const size_t colon = text.find(':');
+    const auto accent = [is_good](const std::string& s) { return is_good ? ui::good(s) : ui::warn(s); };
+    if (colon == std::string::npos) {
+        parts.push_back(accent(text));
+        return;
+    }
+    parts.push_back(accent(text.substr(0, colon + 1)));
+    parts.push_back(ui::dim(text.substr(colon + 1)));
+}
+
+Element verdict_row(const VerdictParts& v) {
+    Elements parts = {ui::plain("      ")};
+    if (!v.strong.empty()) push_labeled_verdict(parts, v.strong, true);
+    if (!v.strong.empty() && !v.weak.empty()) parts.push_back(ui::dim(" · "));
+    if (!v.weak.empty()) push_labeled_verdict(parts, v.weak, false);
+    return hbox(std::move(parts));
+}
+
 }  // namespace
 
 Elements Wizard::machine_rows() {
@@ -124,7 +143,8 @@ Element Wizard::tasks_body() {
                                  (t.available ? ui::box(contains(st_.selection.tasks, t.id)) : "[–]") + " " +
                                  ui::pad(t.label, 24);
         if (t.available && at != rows.end()) {
-            l.push_back(hbox({ui::plain(head), ui::dim(t.help)}));
+            Element row = here ? ui::plain(head + t.help) : hbox({ui::plain(head), ui::dim(t.help)});
+            l.push_back(ui::highlight(std::move(row), here));
         } else if (t.available) {
             l.push_back(
                 ui::dim("[–] " + ui::pad(t.label, 24) + "not on " + this_machine(st_.h.os == "macos") + " yet"));
@@ -155,13 +175,15 @@ Element Wizard::languages_body() const {
     Elements l = {ui::title("Which languages do you program in?"), ui::blank()};
     const auto& langs = offer::languages();
     for (size_t row = 0; row * 4 < langs.size(); row++) {
-        std::string line;
+        Elements cols;
         for (size_t col = 0; col < 4 && row * 4 + col < langs.size(); col++) {
             const size_t i = row * 4 + col;
-            line += ui::cursor(static_cast<int>(i) == cursor_) +
-                    ui::box(contains(st_.selection.languages, langs[i].id)) + " " + ui::pad(langs[i].label, 12);
+            const bool here = static_cast<int>(i) == cursor_;
+            const std::string cell = ui::cursor(here) + ui::box(contains(st_.selection.languages, langs[i].id)) + " " +
+                                     ui::pad(langs[i].label, 12);
+            cols.push_back(ui::highlight_cell(cell, here));
         }
-        l.push_back(ui::plain(line));
+        l.push_back(hbox(std::move(cols)));
     }
     const std::vector<LanguageProposal> props = language_proposals(st_.selection, st_.match.cls);
     if (!props.empty()) {
@@ -206,23 +228,27 @@ bool Wizard::key_languages(const Event& e) {
 // Per task a group: the rows in fixed columns (name, speed, size, status), then what the model is strong and weak in
 Elements Wizard::model_list(const std::string& dir) const {
     // the column names above the rows, in the columns of the rows (cursor and box take 6)
-    Elements l = {ui::dim(ui::pad("", 6) + ui::pad("Model", 22) + ui::pad("Speed per agent", 16) + ui::pad("Size", 9) +
+    Elements l = {ui::dim(ui::pad("", 6) + ui::pad("Model", 22) + ui::pad("Speed per agent", 17) + ui::pad("Size", 10) +
                           "Status")};
     int row = 0;
     for (const TaskModels& tm : task_models(st_.selection, st_.match.cls)) {
         const std::string langs = tm.task->id == "coding" ? chosen_language_labels(st_.selection) : "";
         if (l.size() > 1) l.push_back(ui::blank());
-        l.push_back(ui::title(tm.task->label + (langs.empty() ? "" : " · " + langs)));
+        l.push_back(langs.empty() ? ui::title(tm.task->label)
+                                  : hbox({ui::title(tm.task->label), ui::dim(" · " + langs)}));
         for (const offer::ModelCard* c : {tm.recommended, tm.alternative}) {
             if (!c) continue;
+            const bool here = row == cursor_;
+            const bool present = model_split(c->id, dir).download == 0;
             const std::string name = c->name + (c == tm.recommended ? "" : " (alternative)");
-            l.push_back(ui::plain(ui::cursor(row == cursor_) + ui::box(contains(st_.selection.models, c->id)) + " " +
-                                  ui::pad(name, 22) + ui::pad(speed_text(model_estimate(c->id)), 16) +
-                                  ui::pad(size_text(static_cast<double>(model_bytes(c->id))), 9) +
-                                  (model_split(c->id, dir).download == 0 ? "already here" : "download")));
-            const VerdictParts v = verdict_parts(*c);
-            l.push_back(hbox({ui::dim("      " + v.strong), ui::dim(v.strong.empty() || v.weak.empty() ? "" : " · "),
-                              v.weak.empty() ? ui::dim("") : ui::warn(v.weak)}));
+            const std::string prefix = ui::cursor(here) + ui::box(contains(st_.selection.models, c->id)) + " " +
+                                       ui::pad(name, 22) + ui::pad(speed_text(model_estimate(c->id)), 17) +
+                                       ui::pad(size_text(static_cast<double>(model_bytes(c->id))), 10);
+            const std::string status = present ? "already here" : "download";
+            Element line = here ? ui::plain(prefix + status)
+                                : hbox({ui::plain(prefix), present ? ui::good(status) : ui::plain(status)});
+            l.push_back(ui::highlight(std::move(line), here));
+            l.push_back(verdict_row(verdict_parts(*c)));
             row++;
         }
     }
@@ -234,11 +260,14 @@ Elements Wizard::model_totals(const std::string& dir) const {
     const LoadSplit load = load_split(apply_selection(s(), st_.selection), dir);
     std::string rule;
     for (int i = 0; i < 78; i++) rule += "─";
-    Elements l = {ui::dim(rule), ui::plain(ui::pad("To download", 14) + load_text(load)),
-                  ui::plain(ui::pad("Free", 14) + ui::pad(size_text(static_cast<double>(st_.h.disk_free)), 10) + "in " +
-                            short_path(target_.dir())),
-                  ui::plain(ui::pad("Time", 14) + duration_text(seconds_to_load(load.download)) +
-                            std::format("  (assumed {:.0f} Mbit/s)", kAssumedMbit))};
+    Elements l = {
+        ui::dim(rule),
+        hbox({ui::dim(ui::pad("To download", 14)), ui::title(load_text(load))}),
+        hbox({ui::dim(ui::pad("Free", 14)), ui::plain(ui::pad(size_text(static_cast<double>(st_.h.disk_free)), 10)),
+              ui::dim(ui::fit("in " + short_path(target_.dir()), 54))}),
+        hbox({ui::dim(ui::pad("Time", 14)), ui::plain(duration_text(seconds_to_load(load.download))),
+              ui::dim(std::format("  (assumed {:.0f} Mbit/s)", kAssumedMbit))}),
+    };
     for (const std::string& id : unfit_)
         if (const offer::ModelCard* c = offer::model_card(id); c && !contains(st_.selection.models, id))
             l.push_back(ui::warn(ui::fit(std::format("{} ({}) is off: not enough free disk", c->name,

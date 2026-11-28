@@ -155,6 +155,10 @@ void test_agents_and_settings_pages() {
     EXPECT(!has(t, "Tona never switches") && !has(t, "Enter starts."));
     EXPECT(has(t, "A switch would cut the 2 running conversations."));
     EXPECT(has(t, "Started recently") && has(t, "17 min ago"));
+    s.agents.field = AgentForm::Project;
+    expect_fits(render(s), 80, 24);
+    s.agents.project.clear();
+    expect_fits(render(s), 80, 24);
     dump("agents", lines);
     s.tab = Tab::Settings;
     s.config.s.ram_gb = 40;

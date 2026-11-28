@@ -16,7 +16,7 @@ std::string tab_bar(const UiState& s) {
     std::string bar = " " + bold("tona") + "   ";
     for (int i = 0; i < 4; i++) {
         const std::string label = std::format(" {} {} ", i + 1, tr(keys[i]));
-        bar += (int)s.tab == i ? top::paint(top::kInverse, label) : label;
+        bar += (int)s.tab == i ? paint_active(label) : dim(label);
         bar += ' ';
     }
     return bar;
@@ -102,14 +102,15 @@ void draw_dialog(const UiState& s, Lines& screen) {
 
 Lines render(const UiState& s) {
     if (s.width < kMinWidth || s.height < kMinHeight) return view_too_small(s);
-    const int rows = s.height - 4;  // header, status line, message line, keys
+    const int rows = s.height - 5;  // header, status line, top rule, bottom rule/message, keys
     Lines screen;
     screen.push_back(tab_bar(s));
     screen.push_back(status_line(s));
+    screen.push_back(rule_line(s.width));
     Lines body = content(s, rows);
     body.resize((size_t)rows);
     for (std::string& row : body) screen.push_back(std::move(row));
-    screen.push_back(s.message.empty() ? "" : " " + paint_warn(s.message));
+    screen.push_back(s.message.empty() ? rule_line(s.width) : " " + paint_warn(s.message));
     screen.push_back(hint_row(footer_hints(s)));
     draw_dialog(s, screen);
     for (std::string& row : screen) row = top::fit(row, s.width);
