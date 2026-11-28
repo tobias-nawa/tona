@@ -94,36 +94,37 @@ void test_proj() {
     }
 }
 
-constexpr int WORDS = 5;  // words per row of the test head
-
 struct Selected {
     std::vector<int32_t> slots;
-    std::vector<uint32_t> rows;
+    std::vector<uint8_t> rows;
 };
 
-// Row t of the test head: word k = t * WORDS + k
-Selected run_select(const Scorer& s, const std::vector<float>& p, int m) {
-    const size_t nslots = (size_t)g::MTP_PARTS * m, nrows = 1000 + s.pad;
-    std::vector<uint32_t> head(nrows * WORDS);
-    for (size_t i = 0; i < head.size(); i++) head[i] = (uint32_t)i;
+uint8_t head_byte(size_t row, int b) { return (uint8_t)((row * 31 + (size_t)b) ^ 0x5au); }
+
+// Row t of the test head: byte b = head_byte(t, b); op.i[4] takes bytes per row (copy_row handles % 4 == 0 and != 0)
+Selected run_select(const Scorer& s, const std::vector<float>& p, int m, int row_bytes) {
+    const size_t nslots = (size_t)g::MTP_PARTS * m, nrows = 1000 + s.pad, rb = (size_t)row_bytes;
+    std::vector<uint8_t> head(nrows * rb);
+    for (size_t t = 0; t < nrows; t++)
+        for (int b = 0; b < row_bytes; b++) head[t * rb + b] = head_byte(t, b);
     DeviceBuffer d_t(s.tiles.size()), d_s(s.pad * 4), d_i(s.pad * 4), d_e(s.pad), d_p(p.size() * 4), d_o(nslots * 4),
-        d_h(head.size() * 4), d_r(nslots * WORDS * 4);
+        d_h(head.size()), d_r(nslots * rb);
     CHECK(hipMemcpy(d_t.get(), s.tiles.data(), s.tiles.size(), hipMemcpyHostToDevice));
     CHECK(hipMemcpy(d_s.get(), s.scale.data(), s.pad * 4, hipMemcpyHostToDevice));
     CHECK(hipMemcpy(d_i.get(), s.ids.data(), s.pad * 4, hipMemcpyHostToDevice));
     CHECK(hipMemcpy(d_e.get(), s.excl.data(), s.pad, hipMemcpyHostToDevice));
     CHECK(hipMemcpy(d_p.get(), p.data(), p.size() * 4, hipMemcpyHostToDevice));
-    CHECK(hipMemcpy(d_h.get(), head.data(), head.size() * 4, hipMemcpyHostToDevice));
-    CHECK(hipMemset(d_r.get(), 0xff, nslots * WORDS * 4));
+    CHECK(hipMemcpy(d_h.get(), head.data(), head.size(), hipMemcpyHostToDevice));
+    CHECK(hipMemset(d_r.get(), 0xff, nslots * rb));
     g::MegaOp op;
     op.p[0] = d_t.get(), op.p[1] = d_s.get(), op.p[2] = d_i.get(), op.p[3] = d_e.get(), op.p[4] = d_p.get();
     op.p[5] = d_o.get(), op.p[6] = d_h.get(), op.p[7] = d_r.get();
-    op.i[0] = (int)(s.pad / 32), op.i[1] = R, op.i[3] = m, op.i[4] = WORDS;
+    op.i[0] = (int)(s.pad / 32), op.i[1] = R, op.i[3] = m, op.i[4] = row_bytes;
     k_step<<<GRID, g::THREADS>>>(op, 1);
     CHECK(hipDeviceSynchronize());
-    Selected out{std::vector<int32_t>(nslots), std::vector<uint32_t>(nslots * WORDS)};
+    Selected out{std::vector<int32_t>(nslots), std::vector<uint8_t>(nslots * rb)};
     CHECK(hipMemcpy(out.slots.data(), d_o.get(), nslots * 4, hipMemcpyDeviceToHost));
-    CHECK(hipMemcpy(out.rows.data(), d_r.get(), nslots * WORDS * 4, hipMemcpyDeviceToHost));
+    CHECK(hipMemcpy(out.rows.data(), d_r.get(), nslots * rb, hipMemcpyDeviceToHost));
     return out;
 }
 
@@ -131,12 +132,13 @@ Selected run_select(const Scorer& s, const std::vector<float>& p, int m) {
 int part_of(size_t i) { return (int)((i / 32) % g::MTP_PARTS); }
 
 // The row of every selected token is in its slot (a free slot keeps what the buffer held)
-void check_rows(const Selected& sel, int m, int part) {
+void check_rows(const Selected& sel, int m, int part, int row_bytes) {
+    const size_t rb = (size_t)row_bytes;
     for (int k = 0; k < m; k++) {
         const size_t slot = (size_t)part * m + k;
-        for (int w = 0; w < WORDS; w++)
-            EXPECT(sel.rows[slot * WORDS + w] ==
-                   (sel.slots[slot] < 0 ? 0xffffffffu : (uint32_t)(sel.slots[slot] * WORDS + w)));
+        const int32_t tok = sel.slots[slot];
+        for (int b = 0; b < row_bytes; b++)
+            EXPECT(sel.rows[slot * rb + b] == (tok < 0 ? 0xffu : head_byte((size_t)tok, b)));
     }
 }
 
@@ -162,7 +164,7 @@ void check_boundary(const Scorer& s, const std::vector<std::pair<float, size_t>>
     }
 }
 
-void check_partition(const Scorer& s, const Selected& sel, int m, int part) {
+void check_partition(const Scorer& s, const Selected& sel, int m, int part, int row_bytes) {
     const auto valid = valid_of(s, part);
     const size_t want = std::min<size_t>(m, valid.size());
     std::set<int32_t> got;
@@ -173,7 +175,7 @@ void check_partition(const Scorer& s, const Selected& sel, int m, int part) {
     EXPECT(got.size() == want);
     check_boundary(s, valid, got, want);
     for (int32_t id : got) EXPECT(id >= 1000 && !s.excl[(size_t)id - 1000]);
-    check_rows(sel, m, part);
+    check_rows(sel, m, part, row_bytes);
 }
 
 void test_select() {
@@ -184,10 +186,14 @@ void test_select() {
     for (size_t cand : {size_t{500}, size_t{20000}, size_t{90001}}) {
         const Scorer s = make_scorer(cand, p, (uint32_t)cand);
         for (int m : {16, 128}) {
-            const Selected out = run_select(s, p, m);
-            for (int part = 0; part < g::MTP_PARTS; part++) check_partition(s, out, m, part);
+            const Selected out = run_select(s, p, m, 20);
+            for (int part = 0; part < g::MTP_PARTS; part++) check_partition(s, out, m, part, 20);
         }
     }
+    // Non-4-byte row size exercises the byte-copy branch of copy_row (e.g. Q6_K rows at 210 bytes per 256 columns)
+    const Scorer s = make_scorer(500, p, 501);
+    const Selected out = run_select(s, p, 16, 10);
+    for (int part = 0; part < g::MTP_PARTS; part++) check_partition(s, out, 16, part, 10);
 }
 
 }  // namespace
