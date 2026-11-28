@@ -264,7 +264,7 @@ Elements Wizard::model_totals(const std::string& dir) const {
         ui::dim(rule),
         hbox({ui::dim(ui::pad("To download", 14)), ui::title(load_text(load))}),
         hbox({ui::dim(ui::pad("Free", 14)), ui::plain(ui::pad(size_text(static_cast<double>(st_.h.disk_free)), 10)),
-              ui::dim("in " + short_path(target_.dir()))}),
+              ui::dim(ui::fit("in " + short_path(target_.dir()), 54))}),
         hbox({ui::dim(ui::pad("Time", 14)), ui::plain(duration_text(seconds_to_load(load.download))),
               ui::dim(std::format("  (assumed {:.0f} Mbit/s)", kAssumedMbit))}),
     };
